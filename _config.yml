@@ -1,0 +1,314 @@
+# Welcome to the Jekyll config file for <PARENT_PRODUCT_NAME> product documentation!
+#
+# This config file is meant for settings that affect the entire site for this set of Scalar parent product docs. 
+# After initially setting up this parent product docs site, the values in this config file should rarely be edited. 
+# If edits are needed to this config file, you may need to consider editing the config files of other Scalar parent product docs sites so that we can ensure consistency.
+# For technical reasons, this file is *NOT* reloaded automatically when you use `jekyll serve`. 
+# If you make changes to this file, please restart the server process.
+
+remote_theme             : "mmistakes/minimal-mistakes@4.24.0"
+
+minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+
+# Site Settings
+locale                   : "en-US"
+title                    : "[PARENT_PRODUCT_NAME] documentation &#124; Scalar, Inc." # To change the "| Docs" site title, see `includes/masthead.html`.
+title_separator          : "-"
+#subtitle                 : ""
+description              : &description "[PARENT_PRODUCT_NAME_AND_DESCRIPTION]" # the official description of the parent product
+url                      : "https://scalar-labs.github.io" # the base hostname & protocol for your site (i.e., "https://docs.scalar-labs.com"); use `localhost` for testing locally
+baseurl                  : "" # The subpath of the parent product docs site (e.g. "/scalardb"). When selecting the "Scalar Docs" logo, you will be taken to the Scalar Docs site (`https://docs.scalar-labs.com/`). For the URL, see `includes/masthead.html`.
+repository               : "scalar-labs/docs-<PARENT_PRODUCT_NAME>" # the repository path of the Scalar parent product (e.g., scalar-labs/docs-scalardb)
+logo                     : "/assets/images/scalar-logo.png" # the Scalar company logo
+breadcrumbs              : # true or false (default)
+
+#atom_feed:
+#  path                   : # blank (default) uses feed.xml
+
+# Search function
+search                   : true # true, false (default)
+search_full_content      : true # true, false (default)
+search_provider          : lunr
+lunr:
+  search_within_pages: true
+
+# SEO Related
+google_site_verification : # Replace this with your ID, or delete; not necessary since we have included our Google Analytics tracking ID
+bing_site_verification   : # Replace this with your ID, or delete
+
+# Social Sharing
+twitter:
+  username               : &twitter "scalar_labs"
+og_image                 : "/assets/images/scalar-logo.png" # Open Graph/Twitter default site image
+# For specifying social profiles, used in _includes/seo.html
+# - https://developers.google.com/structured-data/customize/social-profiles
+social:
+  type                   : Organization # Person or Organization (defaults to Person)
+  name                   : Scalar Inc. # If the user or organization name differs from the site's name
+  links: # An array of links to social media profiles that appear in the Google Knowledge Panel in search results
+    - "https://twitter.com/scalar_labs"
+    - "https://github.com/scalar-labs"
+    - "https://www.linkedin.com/company/scalarlabs"
+    - "https://www.facebook.com/scalar.labs"
+
+# Analytics
+analytics:
+  provider               : "google-gtag" # false (default), "google", "google-universal", "google-gtag", "custom"
+  google:
+    tracking_id          : G-Q4TKS77KCP # Replace this with your ID, or delete
+    anonymize_ip         : false
+
+# Site Footer
+footer:
+  links:
+    - label: "" # Leave `label` blank so that only the social icon appears
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/scalar_labs"
+    - label: "" # Leave `label` blank so that only the social icon appears
+      icon: "fab fa-fw fa-facebook-square"
+      url: "https://www.facebook.com/scalar.labs"
+    - label: "" # Leave `label` blank so that only the social icon appears
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/scalar_labs"
+    - label: "" # Leave `label` blank so that only the social icon appears
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/company/scalarlabs"
+
+# Reading Files
+include:
+  - .htaccess
+  - _home
+# exclude:
+#   - '*.sublime-project'
+#   - '*.sublime-workspace'
+#   - vendor
+#   - .asset-cache
+#   - .bundle
+#   - .jekyll-assets-cache
+#   - .sass-cache
+#   - assets/js/plugins
+#   - assets/js/_main.js
+#   - assets/js/vendor
+#   - Capfile
+#   - CHANGELOG
+#   - config
+#   - Gemfile
+#   - Gruntfile.js
+#   - gulpfile.js
+#   - LICENSE
+#   - log
+#   - node_modules
+#   - package.json
+#   - package-lock.json
+#   - Rakefile
+#   - README
+#   - tmp
+#   - "assets/cs/*"
+#   - "assets/js/*"
+#   - robots.txt
+#   - banner.js
+#   - feed.xml
+keep_files:
+  - .git
+  - .svn
+encoding: "utf-8"
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+
+# Conversion
+markdown: kramdown
+highlighter: rouge
+lsi: false
+excerpt_separator: "\n\n"
+incremental: false
+
+## Mermaid support
+mermaid: true
+
+# Markdown Processing
+kramdown:
+  input: GFM
+  hard_wrap: false
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+  enable_coderay: false
+
+# Collection directories - Add list of folders containing versioned docs to add to the site.
+collection_dir: 
+  - "<VERSION>"
+
+# Collections - This collection is for sitewide usage.
+collections:
+  home: # Must add `home` so that the parent product docs home page, error page, and other common pages are is located. Jekyll recognizes that this collection starts with an underscore, so we do not need to include the underscore in the name.
+    output: true
+    permalink: /:collection/:path/
+
+# Defaults
+defaults:
+  # _home - Do not change the `_home` scope.
+  - scope:
+      path: "_home" # Specifies the name of the folder where the parent product docs home page, error page, and other common pages are located.
+      type: home # Specifies the collection type for the parent product home page.
+    values:
+      layout: page # Specifies the type of template used from the "_layouts" folder.
+      read_time: false # Shows the average reading time for pages.
+      share: false # Shows social media buttons to share pages.
+      sidebar: # Shows side navigation content from `_data/navigation.yml`.
+        nav: "<VERSION>"
+      toc: false
+      toc_sticky: false
+      search: false
+      classes: wide # Expands the page to take up space where the TOC would normally be.
+
+  ############### Template for versions. When adding a new version (`scope`), copy this template and replace `<VERSION>` with the version number`,  and change `search` for the previous version to `false`. ###############
+
+  # # <VERSION>
+  # - scope:
+  #     path: "<VERSION>" # Specifies the name of the folder where this version of docs are located.
+  #     # type: "" # Since this scope uses `collection_dir`, we do not need to specify the type here.
+  #   values:
+  #     layout: page # Specifies the type of template used from the "_layouts" folder.
+  #     read_time: false # Shows the average reading time for pages.
+  #     share: false # Shows social media buttons to share pages.
+  #     sidebar: # Shows side navigation content from `_data/navigation.yml`.
+  #       nav: "<VERSION>"  # Add the version enclosed within quotation marks. This version must match the version that you previously specified in `_data/navigation.yml`.
+  #     toc: true
+  #     toc_sticky: true
+  #     search: true
+
+  ############### Add new versions (`scopes`) below this line. ###############
+
+  
+  # Remove irrelevant search results
+  - scope:
+      path: "assets"
+    values:
+      layout: none
+      hidden: true
+      search: false
+      sitemap: false
+  - scope:
+      path: "robots.txt"
+    values:
+      layout: none
+      search: false
+  - scope:
+      path: "sitemap.xml"
+    values:
+      layout: none
+      search: false
+  - scope:
+      path: "sitemap"
+    values:
+      layout: none
+      search: false
+  - scope:
+      path: "package.json"
+    values:
+      layout: none
+      search: false
+      sitemap: false
+  - scope:
+      path: "banner.js"
+    values:
+      layout: none
+      search: false
+      sitemap: false
+  - scope:
+      path: "feed.xml"
+    values:
+      layout: none
+      search: false
+
+# Sass/SCSS
+sass:
+  sass_dir: _sass
+  style: compressed # http://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
+
+# Outputting
+permalink: pretty
+# paginate: 5 # amount of posts to show
+# paginate_path: /page:num/
+# timezone: Asia/Tokyo # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+
+# Plugins (previously gems:)
+plugins:
+  - jekyll-mermaid
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jemoji
+  - jekyll-include-cache
+  - json
+  - nokogiri
+  - premonition
+  - kramdown
+  - kramdown-parser-gfm
+  - mdl
+  - webrick
+  - faraday-retry
+  - jekyll-optional-front-matter
+  - jekyll-titles-from-headings
+
+# mimic GitHub Pages with --safe
+whitelist:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jekyll-include-cache
+  - jekyll-mermaid
+  - jemoji
+  - json
+  - nokogiri
+  - premonition
+  - kramdown
+  - kramdown-parser-gfm
+  - mdl
+  - webrick
+  - faraday-retry
+  - jekyll-optional-front-matter
+  - jekyll-titles-from-headings
+
+titles_from_headings:
+  enabled:     true
+  strip_title: true
+  collections: true
+
+# Archives
+#  Type
+#  - GitHub Pages compatible archive pages built with Liquid ~> type: liquid (default)
+#  - Jekyll Archives plugin archive pages ~> type: jekyll-archives
+#  Path (examples)
+#  - Archive page should exist at path when using Liquid method or you can
+#    expect broken links (especially with breadcrumbs enabled)
+#  - <base_path>/tags/my-awesome-tag/index.html ~> path: /tags/
+#  - <base_path>/categories/my-awesome-category/index.html ~> path: /categories/
+#  - <base_path>/my-awesome-category/index.html ~> path: /
+# category_archive:
+#  type: liquid
+#  path: /categories/
+# tag_archive:
+#  type: liquid
+#  path: /tags/
+# https://github.com/jekyll/jekyll-archives
+# jekyll-archives:
+#   enabled:
+#     - categories
+#     - tags
+#   layouts:
+#     category: archive-taxonomy
+#     tag: archive-taxonomy
+#   permalinks:
+#     category: /categories/:name/
+#     tag: /tags/:name/
+
+# HTML Compression
+# - http://jch.penibelst.de/
+compress_html:
+  clippings: all
+  ignore:
+    envs: development

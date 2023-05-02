@@ -1,0 +1,117 @@
+# Site Header
+# Make sure the `main` navigation in the `/_data/navigation.yml` file matches across all `docs-[scalar-product]` repos.
+main:
+  - title: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+    url: https://scalar-labs.com/
+  - title: "Products"
+    children:
+      - title: "ScalarDB"
+        description: Cloud-native Universal Transaction Manager in Microservice Era
+        url: https://scalar-labs.com/products/scalardb
+      - title: "ScalarDL"
+        url: https://scalar-labs.com/products/scalardl
+        description: Scalable and Practical Byzantine-fault Detection Middleware for Transactional Database Systems
+  - title: "Solution"
+    children:
+      - title: Preservation of documents
+        description: About Scalar's electronic document evidence preservation solutions.
+        url: https://scalar-labs.com/solution/doc
+      - title: "Consent management"
+        description: About Scalar's consent management solutions.
+        url: https://scalar-labs.com/solution/consent
+  - title: "Company"
+    children:
+      - title: "About us"
+        description: The company profile of Scalar Inc.
+        url: https://scalar-labs.com/company
+      - title: "News"
+        description: Scalar's announcements, product news, case studies, etc. are posted here.
+        url: https://scalar-labs.com/news
+  - title: "Support"
+    url: https://support.scalar-labs.com/
+
+# This navigation is for adding product versions that appear in the dropdown menu. Make sure the latest version is labeled `<VERSION> (latest)`.
+versions:
+  - version-top-title: "" # This title is taken from the `version_label` in `_data/ui-text.yml`.
+    version-children:
+    - version-title: "<VERSION_FOLDER> (latest)"
+      version-url: /
+    # - version-title: "<VERSION_FOLDER>"
+    #   version-url: /<VERSION>
+    # - version-title: "<VERSION_FOLDER>"
+    #   version-url: /<VERSION>
+
+# ----- Adding navigation for versions ----- #
+
+# When adding a version, copy the existing navigation and paste it below the latest version in the navigation. 
+# Then, replace the version with the new version number and confirm if any docs need to be added or removed from the new navigation.
+# After that, add a new scope in `_config.yml` to include an item that provides the proper versioned navigation to the site when someone visits the page (i.e., make sure people who visit a version 3.8 doc are shown a side navigation that includes only 3.8 docs.)
+
+"<VERSION>":
+  - title: "⬅ <PARENT_PRODUCT_NAME> home" 
+    url: / # Don't change this URL. This links back to the parent product home page.
+  - title: "<PRODUCT_NAME>"
+    children:
+  # Get Started docs
+  - title: "Get Started"
+    children:
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>/<URL>
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>/<URL>
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>/<URL>
+  # Samples docs
+  - title: "Samples" 
+    children:
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>/<URL>
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>/<URL>
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>/<URL>
+  # Develop docs
+  - title: "Develop"
+    children:
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>/<URL>
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>/<URL>
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>/<URL>   
+  # Deploy docs
+  - title: "Deploy"
+    children:
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>
+      - title: "<DOC_TITLE>"
+        url: /<VERSION> 
+  # Manage docs
+  - title: "Manage"
+    children:
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>/<URL>
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>/<URL>
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>/<URL>
+  # Migrate docs
+  - title: "Migrate"
+    children:
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>/<URL>
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>/<URL>
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>/<URL>
+  # Reference docs
+  - title: "Reference"
+    children:      
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>/<URL>
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>/<URL>
+      - title: "<DOC_TITLE>"
+        url: /<VERSION>/<URL>

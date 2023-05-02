@@ -1,0 +1,104 @@
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+   .page__footer {
+    @include clearfix;
+    float: left;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    /* margin-top: 3em; /* Commented out to reduce spacing between the feature items and footer (modified by josh-wong) */
+    color: $lighter-gray; /* Make the font lighter against the dark-gray background; originally `$muted-text-color;` (modified by josh-wong) */
+    -webkit-animation: $intro-transition;
+    animation: $intro-transition;
+    -webkit-animation-delay: 0.45s;
+    animation-delay: 0.45s;
+    background-color: $scalar-footer-background-color;
+  
+    footer {
+      @include clearfix;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 2em;
+      max-width: 100%;
+      padding: 0 1em 2em;
+  
+      @include breakpoint($x-large) {
+        max-width: 100%;
+      }
+    }
+  
+    a {
+      color: inherit;
+      text-decoration: none;
+  
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  
+    .fas,
+    .fab,
+    .far,
+    .fal {
+      color: $muted-text-color;
+    }
+  }
+  
+  .page__footer-follow {
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      display: inline; /* Added to allow the copyright to float left and the social icons to float right to match the Scalar home page design (added by josh-wong) */
+    }
+    
+    .page__footer-copyright { /* Moved this style to a nested style under `.page__footer-follow` style to allow the copyright to float left and the social icons to float right to match the Scalar home page design; originally a non-nested style above the `.page__footer-follow` style (modified by josh-wong) */
+      font-family: $global-font-family;
+      font-size: $type-size-6;
+      color: $light-gray;
+      float: left; /* Added to allow the copyright to float left to match the Scalar home page design (added by josh-wong) */
+    }
+  
+    .page__footer-privacy-policy {
+      font-family: $global-font-family;
+      font-size: $type-size-6;
+      color: $light-gray;
+      float: left;
+      margin-left: 1rem;
+    }
+    
+    li {
+      /* display: inline-block; /* Commented out to allow the copyright to float left and the social icons to float right to match the Scalar home page design (modified by josh-wong) */
+      padding-top: 0; /* Reduced the padding at the bottom of the footer; originally `5px;` (modified by josh-wong) */
+      padding-bottom: 0; /* Reduced the padding at the bottom of the footer; originally `5px;` (modified by josh-wong) */
+      font-family: $sans-serif-narrow;
+      font-size: $type-size-4; /* Increased the font size so that the social icons are bigger and we can remove the social labels to match the Scalar home page footer design; originally `$type-size-6;` (modified by josh-wong) */
+      /* text-transform: uppercase; /* Commented out so that standard sentence-style capitalization is used (modified by josh-wong) */
+      float: right; /* Added to allow the social icons to float right to match the Scalar home page design (added by josh-wong) */
+    }
+  
+    li + li:before {
+      content: "";
+      padding-right: 5px;
+    }
+  
+    a {
+      padding-right: 10px;
+      /* font-weight: bold; /* Commented out since links in the footer don't need to be bold (modified by josh-wong) */
+  
+      /* Makes link lighter when hovered over (added by josh-wong) */
+      &:hover {
+        color: $lighter-gray;
+        text-decoration: none;
+      }
+    }
+  
+    .social-icons {
+      a {
+        white-space: nowrap;
+      }
+    }
+  }
+  

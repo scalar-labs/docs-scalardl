@@ -1,0 +1,38 @@
+<div class="page__footer-follow">
+  <ul><!-- Removed to allow the copy right to float left and the social icons to float right to match the Scalar home page design; originally `<ul class="social-icons">` (modified by josh-wong) -->
+
+    <!-- Hide the "Follow:" label since the social icons/labels should be enough (modified by josh-wong)
+      {% if site.data.ui-text[site.locale].follow_label %}
+    <li><strong>{{ site.data.ui-text[site.locale].follow_label }}</strong></li>
+    {% endif %} -->
+    
+    <!-- Hard coding the company name in the footer lets us have wording in the copyright boilerplate text that is different from the `title` component in `_config.yml`, which is also shown in the page title shown in the tab; originally `<div class="page__footer-copyright">&copy; {{ site.time | date: '%Y' }} Scalar, Inc.</div>{{ site.name | default: site.title }}` and located after the closing `<div class="page__footer-follow">` tag (modified by josh-wong) -->
+    <div class="page__footer-copyright">
+      <li>
+        &copy; {{ site.time | date: '%Y' }} Scalar, Inc. All Rights Reserved.
+      </li>
+    </div>
+
+    <!-- Added the privacy policy to match the footer on the Scalar home page (added by josh-wong) -->
+    <div class="page__footer-privacy-policy">
+      <li>
+        <a href="https://scalar-labs.com/privacy-policy">Our Privacy Policy</a>
+      </li>
+    </div>
+    
+    <!-- Put the social links in a `div` to allow the copy right to float left and the social icons to float right to match the Scalar home page design (added by josh-wong) -->
+    <div class="social-icons">
+    {% if site.footer.links %}
+      {% for link in site.footer.links %}
+        {% if link.label and link.url %}
+          <li><a href="{{ link.url }}" rel="nofollow noopener noreferrer"><i class="{{ link.icon | default: 'fas fa-link' }}" aria-hidden="true"></i> {{ link.label }}</a></li>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    </div>
+    <!-- Hide the RSS feed link (modified by josh-wong)
+       {% unless site.atom_feed.hide %}
+      <li><a href="{% if site.atom_feed.path %}{{ site.atom_feed.path }}{% else %}{{ '/feed.xml' | relative_url }}{% endif %}"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].feed_label | default: "Feed" }}</a></li>
+    {% endunless %} -->
+  </ul>
+</div>
