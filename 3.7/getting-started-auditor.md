@@ -1,16 +1,16 @@
-# Getting Started with ScalarDL Auditor
+# Getting Started with Scalar DL Auditor
 
-This document explains how to get started with ScalarDL Auditor.
-Here, we assume that you have already finished reading the following guides and gained some experience in overall ScalarDL.
+This document explains how to get started with Scalar DL Auditor.
+Here, we assume that you have already finished reading the following guides and gained some experience in overall Scalar DL.
 
-* [Getting Started with ScalarDL](getting-started.md)
-* [A Guide on How to Write a Good Contract for ScalarDL](how-to-write-contract.md)
-* [A Guide on How to Write Function for ScalarDL](how-to-write-function.md)
-* [A Guide on How to Use Asset Proofs in ScalarDL](how-to-use-proof.md)
+* [Getting Started with Scalar DL](getting-started.md)
+* [A Guide on How to Write a Good Contract for Scalar DL](how-to-write-contract.md)
+* [A Guide on How to Write Function for Scalar DL](how-to-write-function.md)
+* [A Guide on How to Use Asset Proofs in Scalar DL](how-to-use-proof.md)
 
-## What is ScalarDL Auditor?
+## What is Scalar DL Auditor?
 
-ScalarDL Auditor is a component that manages the identical states of Ledger to help clients to detect Byzantine faults.
+Scalar DL Auditor is a component that manages the identical states of Ledger to help clients to detect Byzantine faults.
 Using Auditor brings great benefit from the security perspective but it comes with extra processing costs,
 so please think carefully if you really need it.
 
@@ -21,7 +21,7 @@ However, for this getting started guide, we assume they are placed in the same n
 
 ## Assumptions
 
-In this guide, we assume Ledger and Auditor both use Cassandra through ScalarDB,
+In this guide, we assume Ledger and Auditor both use Cassandra through Scalar DB,
 both Cassandra instances use default username and password for the admin privilege.
 Also, Ledger, Auditor, and Cassandra are all located in the same network so that they can access each other.
 
@@ -40,7 +40,7 @@ scalar.dl.ledger.auditor.enabled=true
 #scalar.dl.ledger.auditor.cert_version=1
 ```
 
-You first need to set `scalar.dl.ledger.auditor.enabled` to true to let Ledger know if the ScalarDL system uses Auditor.
+You first need to set `scalar.dl.ledger.auditor.enabled` to true to let Ledger know if the Scalar DL system uses Auditor.
 Note that you also need to enable `scalar.dl.ledger.proof.enabled` and set a proper private key to `scalar.dl.ledger.proof.private_key_path` since Auditor uses [AssetProof](how-to-use-proof.md) to work.
 If they are not properly and consistently configured, Ledger will throw an exception.
 
@@ -66,7 +66,7 @@ By default, Auditor assumes Ledger registers its certificate with a name `ledger
 
 Other values are optional here but they need to be updated depending on an environment.
 For example, if you place Ledger and Auditor in different hosts, you need to update `scalar.dl.auditor.ledger.host` for Auditor to be able to access Ledger.
-Please check [the configuration file](https://github.com/scalar-labs/scalar/blob/master/auditor/conf/auditor.properties) for more detail.
+Please check [the configuration file](https://github.com/scalar-labs/scalar/blob/master/auditor/conf/auditor.properties.tmpl) for more detail.
 
 
 ## Start Ledger and Auditor
@@ -107,7 +107,7 @@ Note that `scalar.dl.client.cert_holder_id` has to be properly set to match with
 
 ## Register your certificate
 
-You also need to update the properties file of a client before interacting with ScalarDL with Auditor.
+You also need to update the properties file of a client before interacting with Scalar DL with Auditor.
 Please update the following entries:
 ```
 [client.properties]

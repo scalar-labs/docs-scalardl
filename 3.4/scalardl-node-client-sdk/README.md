@@ -25,7 +25,7 @@ It provides following functions to request Scalar DL network.
 |registerCertificate|To register a client's certificate on a Scalar DL network|
 |registerContract|To register a contract (of a registered client) on the Scalar DL network|
 |listContracts|To list the client's registered contracts|
-|execute and executeContract (deprecated in the feature)|To execute a client's registered contract|
+|executeContract|To execute a client's registered contract|
 |validateLedger|To validate an asset on the Scalar DL network to determine if it has been tampered|
 
 If an error occurs when executing one of the above methods, a `ClientError` will be thrown. The
@@ -100,22 +100,17 @@ const constracts = await clientService.listContracts();
 ```
 
 ### Execute a contract
-Use `execute` function to execute a registered contract and function (optionally).
+Use `executeContract` function to execute a registered contract. It will also execute a function if `_functions_` is given in the argument.
 ```javascript
-const response = await clientService.execute('contractId', argumentObject);
+const response = await clientService.executeContract('contractId', argumentObject);
 const executionResult = response.getResult();
 const proofsList = response.getProofs();
 ```
 
 ```javascript
-const response = await clientService.execute(
-    'contractId',
-    { 'arg1': 'a' },
-    'functionId',
-    { 'arg2': 'b' }
-);
+const response = await clientService.executeContract('contractId', { 'arg1': 'a', '_functions_': [functionId] }, { 'arg2': 'b' });
 ```
-`{ 'arg1': 'a' }` will be passed via [contractArgument](https://github.com/scalarindetail/scalardl-node-client-sdk/blob/3e531b4c62fb14702a873b07f44cb37212f04be4/test/TestFunction.java#L14), while `{ 'arg2': 'b' }` will be passed via [functionArgument](https://github.com/scalarindetail/scalardl-node-client-sdk/blob/3e531b4c62fb14702a873b07f44cb37212f04be4/test/TestFunction.java#L15).
+`{ 'arg1': 'a', ` will be passed via [contractArgument](https://github.com/scalarindetail/scalardl-node-client-sdk/blob/3e531b4c62fb14702a873b07f44cb37212f04be4/test/TestFunction.java#L14), while `{ 'arg2': 'b' }` will be passed via [functionArgument](https://github.com/scalarindetail/scalardl-node-client-sdk/blob/3e531b4c62fb14702a873b07f44cb37212f04be4/test/TestFunction.java#L15).
 
 ### Validate an asset
 Use the `validateLedger` function to validate an asset in the Scalar DL network.
@@ -125,15 +120,20 @@ const statusCode = response.getCode();
 const proof = response.getProof();
 ```
 
-#### Ledger validation when Auditor is used
-See [here](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md#validate-the-states-of-ledger-and-auditor) and use the above Node SDK interfaces (`registerContract` and `validateLedger`) in the same manner to validate the states of Ledger and Auditor. You can set the contract ID of [ValidateLedger](https://github.com/scalar-labs/scalardl-java-client-sdk/blob/master/src/main/java/com/scalar/dl/client/contract/ValidateLedger.java) to `scalar.dl.client.auditor.linearizable_validation.contract_id` property, otherwise the default ID `validate-ledger` will be used.
-
+#### Validate an asset linearizably
+The default ledger validation in a Auditor-enabled Scalar DL network is non-linearizable; i.e., there might be cases where Ledger and Auditor look inconsistent temporarily.
+Scalar DL supports linearizable ledger validation.
+To use it, we can configure the properties as follows
 ```javascript
 {
     'scalar.dl.client.auditor.enabled': true,
+    ...
+    'scalar.dl.client.auditor.linearizable_validation.enabled': true,
     'scalar.dl.client.auditor.linearizable_validation.contract_id': '<choose a contract ID>',
 }
 ```
+and, register the [ValidateLedger](https://github.com/scalar-labs/scalardl-java-client-sdk/blob/master/src/main/java/com/scalar/dl/client/contract/ValidateLedger.java) contract as the contract ID we specified in the properties.
+Then, the ClientService.validateLedger function can provide linearizable ledger validation.
 
 ### Runtime error
 Error thrown by the client present a status code.

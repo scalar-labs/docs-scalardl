@@ -96,7 +96,7 @@ As clientService is created successfully, users can use its functions to send th
 |ExecuteContract|Contract execution|
 |ValidateLedger|Ledger validation|
 
-The souce code in the [example](https://github.com/scalar-labs/scalardl-go-client-sdk/tree/main/example) sub-folder demonstrate the details respectively.
+The souce code in the [example](./example) sub-folder demonstrate the details respectively.
 
 ### ClientError
 

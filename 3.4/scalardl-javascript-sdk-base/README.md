@@ -3,7 +3,7 @@
 NPM package `@scalar-labs/scalardl-javascript-sdk-base` is the common part for package [@scalar-labs/scalardl-web-client-sdk](https://github.com/scalar-labs/scalardl-web-client-sdk) and [@scalar-labs/scalardl-node-client-sdk](https://github.com/scalar-labs/scalardl-node-client-sdk).
 Although those two packages use different gRPC tools to generate the service and the Protobuf objects, they can use @scalar-labs/scalardl-javascript-sdk-base after they inject the objects. We will introduce how to generate related static files later in this README.
 
-![relationship](https://github.com/scalar-labs/scalardl-javascript-sdk-base/raw/master/docs/README.png)
+![relationship](./README.png)
 
 The developers might not really need to use this package. Please reference [@scalar-labs/scalardl-web-client-sdk](https://github.com/scalar-labs/scalardl-web-client-sdk) or [@scalar-labs/scalardl-node-client-sdk](https://github.com/scalar-labs/scalardl-node-client-sdk) to create Scalar DLT applications.
 
@@ -15,7 +15,7 @@ This means we cannot guarantee the package nominal behaviour when using other No
 The files *scalardl-web-client-sdk* and *scalardl-node-client-sdk* are based on *scalardl-javascript-sdk-base*. So if you update the *scalardl-javascript-sdk-base*, you also need to update those SDKs. This following describes how to do it properly.
 
 ### Use the recommended Node/Npm version for development
-You can use nvm to set the recommended Node version stated in [.nvmrc](https://github.com/scalar-labs/scalardl-javascript-sdk-base/blob/master/.nvmrc)
+You can use nvm to set the recommended Node version stated in [.nvmrc](.nvmrc)
 
 ```bash
 nvm use
@@ -58,7 +58,7 @@ Make sure in the code that the ClientServiceBase has been initialized correctly.
 Make sure you have installed [grpc-tools](https://www.npmjs.com/package/grpc-tools) (global installation recommended). Then, go to the folder containing scalar.proto and execute the command:
 
 ```
-grpc_tools_node_protoc --js_out=import_style=commonjs,binary:. --grpc_out=grpc_js:. --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` scalar.proto
+grpc_tools_node_protoc --js_out=import_style=commonjs,binary:. --grpc_out=. --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` scalar.proto
 ```
 
 *Note: If you install grpc-tools locally, you will need to modify the above command to manually include the path of the grpc tools in the node_modules folder.
