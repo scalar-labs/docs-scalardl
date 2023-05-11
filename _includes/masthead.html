@@ -5,9 +5,9 @@
     <div class="masthead__menu">
       <nav id="site-nav" class="greedy-nav">
         {% unless logo_path == empty %}
-          <a class="site-logo" href="https://scalar-labs.github.io/docs-scalar/"><img src="{{ logo_path | relative_url }}" alt="{{ site.masthead_title | default:  }}"></a>
+          <a class="site-logo" href="https://developers.scalar-labs.com/docs"><img src="{{ logo_path | relative_url }}" alt="{{ site.masthead_title | default:  }}"></a>
         {% endunless %}
-        <a class="site-title" href="https://scalar-labs.github.io/docs-scalar/">
+        <a class="site-title" href="https://developers.scalar-labs.com/docs">
           {{ site.masthead_title | default: "|&nbsp;&nbsp;Docs" }}
           {% if site.subtitle %}<span class="site-subtitle">{{ site.subtitle }}</span>{% endif %}
         </a>
