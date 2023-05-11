@@ -4,7 +4,7 @@
 # documentation.
 
 # Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: Deploy <PARENT_PRODUCT_NAME> docs site to Pages
+name: Deploy ScalarDL docs site to Pages
 
 on:
   # Runs on pushes targeting the default branch
