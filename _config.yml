@@ -16,8 +16,8 @@ title                    : "ScalarDL documentation &#124; Scalar, Inc." # To cha
 title_separator          : "-"
 #subtitle                 : ""
 description              : &description "Scalable and practical Byzantine-fault detection middleware for transactional database systems" # the official description of the parent product
-url                      : "https://scalar-labs.github.io" # the base hostname & protocol for your site (i.e., "https://docs.scalar-labs.com"); use `localhost` for testing locally
-baseurl                  : "" # The subpath of the parent product docs site (e.g. "/scalardb"). When selecting the "Scalar Docs" logo, you will be taken to the Scalar Docs site (`https://docs.scalar-labs.com/`). For the URL, see `includes/masthead.html`.
+url                      : "https://scalardl.scalar-labs.com" # the base hostname & protocol for your site.
+baseurl : "" # Leave this blank when publishing. If you need to run this site locally, add the value "/docs". When selecting the "Scalar Docs" logo, you will be taken to the Scalar Docs site (`https://docs.scalar-labs.com/`). For the URL, see `includes/masthead.html`.
 repository               : "scalar-labs/docs-scalardl" # the repository path of the Scalar parent product (e.g., scalar-labs/docs-scalardb)
 logo                     : "/assets/images/scalar-logo.png" # the Scalar company logo
 breadcrumbs              : # true or false (default)
@@ -77,6 +77,7 @@ footer:
 # Reading Files
 include:
   - .htaccess
+  - docs
   - _home
 # exclude:
 #   - '*.sublime-project'
@@ -137,11 +138,7 @@ kramdown:
 
 # Collection directories - Add list of folders containing versioned docs to add to the site.
 collection_dir: 
-  - "3.8"
-  - "3.7"
-  - "3.6"
-  - "3.5"
-  - "3.4"
+  - docs
 
 # Collections - This collection is for sitewide usage.
 collections:
@@ -186,7 +183,7 @@ defaults:
 
   # 3.8
   - scope:
-      path: "3.8" # Specifies the name of the folder where this version of docs are located.
+      path: "docs/3.8" # Specifies the name of the folder where this version of docs are located.
       # type: "" # Since this scope uses `collection_dir`, we do not need to specify the type here.
     values:
       layout: page # Specifies the type of template used from the "_layouts" folder.
@@ -199,7 +196,7 @@ defaults:
       search: true
   # 3.7
   - scope:
-      path: "3.7" # Specifies the name of the folder where this version of docs are located.
+      path: "docs/3.7" # Specifies the name of the folder where this version of docs are located.
       # type: "" # Since this scope uses `collection_dir`, we do not need to specify the type here.
     values:
       layout: page # Specifies the type of template used from the "_layouts" folder.
@@ -212,7 +209,7 @@ defaults:
       search: false # Excludes previous versions from search to reduce noise and search loading time. We should improve this function in the future to allow people to search for versioned docs.
   # 3.6
   - scope:
-      path: "3.6" # Specifies the name of the folder where this version of docs are located.
+      path: "docs/3.6" # Specifies the name of the folder where this version of docs are located.
       # type: "" # Since this scope uses `collection_dir`, we do not need to specify the type here.
     values:
       layout: page # Specifies the type of template used from the "_layouts" folder.
@@ -225,7 +222,7 @@ defaults:
       search: false # Excludes previous versions from search to reduce noise and search loading time. We should improve this function in the future to allow people to search for versioned docs.
   # 3.5
   - scope:
-      path: "3.5" # Specifies the name of the folder where this version of docs are located.
+      path: "docs/3.5" # Specifies the name of the folder where this version of docs are located.
       # type: "" # Since this scope uses `collection_dir`, we do not need to specify the type here.
     values:
       layout: page # Specifies the type of template used from the "_layouts" folder.
@@ -238,7 +235,7 @@ defaults:
       search: false # Excludes previous versions from search to reduce noise and search loading time. We should improve this function in the future to allow people to search for versioned docs.
   # 3.4
   - scope:
-      path: "3.4" # Specifies the name of the folder where this version of docs are located.
+      path: "docs/3.4" # Specifies the name of the folder where this version of docs are located.
       # type: "" # Since this scope uses `collection_dir`, we do not need to specify the type here.
     values:
       layout: page # the type of template used from the "_layouts" folder
