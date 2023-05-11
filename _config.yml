@@ -318,6 +318,7 @@ plugins:
   - faraday-retry
   - jekyll-optional-front-matter
   - jekyll-titles-from-headings
+  - jekyll-redirect-from
 
 # mimic GitHub Pages with --safe
 whitelist:
@@ -338,6 +339,7 @@ whitelist:
   - faraday-retry
   - jekyll-optional-front-matter
   - jekyll-titles-from-headings
+  - jekyll-redirect-from
 
 titles_from_headings:
   enabled:     true
