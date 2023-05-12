@@ -8,9 +8,7 @@ For the architecture, novelty and Byzantine fault detection protocol of Scalar D
 
 Scalar DL is middleware that runs on top of databases and is mainly written in Java. Scalar DL is composed of Ledger, Auditor, and Client SDK. Let's look at each component.
 
-<p align="center">
-<img src="images/scalardl.png" width="480" />
-</p>
+![](images/scalardl.png)
 
 ### Ledger
 

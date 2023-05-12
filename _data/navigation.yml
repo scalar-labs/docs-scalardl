@@ -144,7 +144,7 @@ versions:
 
 "3.7":
   - title: "⬅ ScalarDL home" 
-    url: /docs/ # Don't change this URL. This links back to the parent product home page.
+    url: /docs # Don't change this URL. This links back to the parent product home page.
   - title: "ScalarDL 3.7"
     children:
   # Get Started docs
@@ -231,7 +231,7 @@ versions:
 
 "3.6":
   - title: "⬅ ScalarDL home" 
-    url: /docs/ # Don't change this URL. This links back to the parent product home page.
+    url: /docs # Don't change this URL. This links back to the parent product home page.
   - title: "ScalarDL 3.6"
     children:
   # Get Started docs
@@ -318,7 +318,7 @@ versions:
 
 "3.5":
   - title: "⬅ ScalarDL home" 
-    url: /docs/ # Don't change this URL. This links back to the parent product home page.
+    url: /docs # Don't change this URL. This links back to the parent product home page.
   - title: "ScalarDL 3.5"
     children:
   # Get Started docs
@@ -411,7 +411,7 @@ versions:
 
 "3.4":
   - title: "⬅ ScalarDL home" 
-    url: /docs/ # Don't change this URL. This links back to the parent product home page.
+    url: /docs # Don't change this URL. This links back to the parent product home page.
   - title: "ScalarDL 3.4"
     children:
   # Get Started docs
