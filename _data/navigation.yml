@@ -143,7 +143,7 @@ versions:
         url: /docs/3.8/scalardl-benchmarks
 
 "3.7":
-  - title: "⬅ ScalarDL home" 
+  - title: "⬅ ScalarDL docs home" 
     url: /docs # Don't change this URL. This links back to the parent product home page.
   - title: "ScalarDL 3.7"
     children:
@@ -230,7 +230,7 @@ versions:
         url: /docs/3.7/scalardl-benchmarks
 
 "3.6":
-  - title: "⬅ ScalarDL home" 
+  - title: "⬅ ScalarDL docs home" 
     url: /docs # Don't change this URL. This links back to the parent product home page.
   - title: "ScalarDL 3.6"
     children:
@@ -317,7 +317,7 @@ versions:
         url: /docs/3.6/scalardl-benchmarks
 
 "3.5":
-  - title: "⬅ ScalarDL home" 
+  - title: "⬅ ScalarDL docs home" 
     url: /docs # Don't change this URL. This links back to the parent product home page.
   - title: "ScalarDL 3.5"
     children:
@@ -410,7 +410,7 @@ versions:
         url: /docs/3.5/scalardl-node-client-sdk
 
 "3.4":
-  - title: "⬅ ScalarDL home" 
+  - title: "⬅ ScalarDL docs home" 
     url: /docs # Don't change this URL. This links back to the parent product home page.
   - title: "ScalarDL 3.4"
     children:
