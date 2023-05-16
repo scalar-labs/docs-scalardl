@@ -73,13 +73,13 @@ versions:
   - title: "Samples" 
     children:
       - title: "A simple bank account application"
-        url: /docs/3.8/applications/simple-bank-account
+        url: /docs/3.8/applications/simple-bank-account/README
       - title: "API endpoints"
         url: /docs/3.8/applications/simple-bank-account/docs/api_endpoints
       - title: "ScalarDL Escrow payment CLI"
-        url: /docs/3.8/applications/escrow-payment
+        url: /docs/3.8/applications/escrow-payment/README
       - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/3.8/helm-charts/samples/scalardl/scalardl-auditor-mode-sample
+        url: /docs/3.8/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README
   # Develop docs
   - title: "Develop"
     children:
@@ -140,7 +140,7 @@ versions:
       - title: "ScalarDL Implementation"
         url: /docs/3.8/implementation
       - title: "ScalarDL Benchmarks"
-        url: /docs/3.8/scalardl-benchmarks
+        url: /docs/3.8/scalardl-benchmarks/README
 
 "3.7":
   - title: "⬅ ScalarDL docs home" 
@@ -164,13 +164,13 @@ versions:
   - title: "Samples" 
     children:
       - title: "A simple bank account application"
-        url: /docs/3.7/applications/simple-bank-account
+        url: /docs/3.7/applications/simple-bank-account/README
       - title: "API endpoints"
         url: /docs/3.7/applications/simple-bank-account/docs/api_endpoints
       - title: "ScalarDL Escrow payment CLI"
-        url: /docs/3.7/applications/escrow-payment
+        url: /docs/3.7/applications/escrow-payment/README
       - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/3.7/helm-charts/samples/scalardl/scalardl-auditor-mode-sample
+        url: /docs/3.7/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README
   # Develop docs
   - title: "Develop"
     children:
@@ -227,7 +227,7 @@ versions:
       - title: "ScalarDL Implementation"
         url: /docs/3.7/implementation
       - title: "ScalarDL Benchmarks"
-        url: /docs/3.7/scalardl-benchmarks
+        url: /docs/3.7/scalardl-benchmarks/README
 
 "3.6":
   - title: "⬅ ScalarDL docs home" 
@@ -251,13 +251,13 @@ versions:
   - title: "Samples" 
     children:
       - title: "A simple bank account application"
-        url: /docs/3.6/applications/simple-bank-account
+        url: /docs/3.6/applications/simple-bank-account/README
       - title: "API endpoints"
         url: /docs/3.6/applications/simple-bank-account/docs/api_endpoints
       - title: "ScalarDL Escrow payment CLI"
-        url: /docs/3.6/applications/escrow-payment
+        url: /docs/3.6/applications/escrow-payment/README
       - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/3.6/helm-charts/samples/scalardl/scalardl-auditor-mode-sample
+        url: /docs/3.6/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README
   # Develop docs
   - title: "Develop"
     children:
@@ -314,7 +314,7 @@ versions:
       - title: "ScalarDL Implementation"
         url: /docs/3.6/implementation
       - title: "ScalarDL Benchmarks"
-        url: /docs/3.6/scalardl-benchmarks
+        url: /docs/3.6/scalardl-benchmarks/README
 
 "3.5":
   - title: "⬅ ScalarDL docs home" 
@@ -338,13 +338,13 @@ versions:
   - title: "Samples" 
     children:
       - title: "A simple bank account application"
-        url: /docs/3.5/applications/simple-bank-account
+        url: /docs/3.5/applications/simple-bank-account/README
       - title: "API endpoints"
         url: /docs/3.5/applications/simple-bank-account/docs/api_endpoints
       - title: "ScalarDL Escrow payment CLI"
-        url: /docs/3.5/applications/escrow-payment
+        url: /docs/3.5/applications/escrow-payment/README
       - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/3.5/helm-charts/samples/scalardl/scalardl-auditor-mode-sample
+        url: /docs/3.5/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README
   # Develop docs
   - title: "Develop"
     children:
@@ -401,13 +401,13 @@ versions:
       - title: "ScalarDL Implementation"
         url: /docs/3.5/implementation
       - title: "ScalarDL Benchmarks"
-        url: /docs/3.5/scalardl-benchmarks
+        url: /docs/3.5/scalardl-benchmarks/README
       - title: "ScalarDL Go Client SDK"
-        url: /docs/3.5/scalardl-go-client-sdk
+        url: /docs/3.5/scalardl-go-client-sdk/README
       - title: "ScalarDL Java Client SDK"
-        url: /docs/3.5/scalardl-java-client-sdk
+        url: /docs/3.5/scalardl-java-client-sdk/README
       - title: "ScalarDL Node Client SDK"
-        url: /docs/3.5/scalardl-node-client-sdk
+        url: /docs/3.5/scalardl-node-client-sdk/README
 
 "3.4":
   - title: "⬅ ScalarDL docs home" 
@@ -431,13 +431,13 @@ versions:
   - title: "Samples" 
     children:
       - title: "A simple bank account application"
-        url: /docs/3.4/applications/simple-bank-account
+        url: /docs/3.4/applications/simple-bank-account/README
       - title: "API endpoints"
         url: /docs/3.4/applications/simple-bank-account/docs/api_endpoints
       - title: "ScalarDL Escrow payment CLI"
-        url: /docs/3.4/applications/escrow-payment
+        url: /docs/3.4/applications/escrow-payment/README
       - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/3.4/helm-charts/samples/scalardl/scalardl-auditor-mode-sample
+        url: /docs/3.4/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README
   # Develop docs
   - title: "Develop"
     children:
@@ -494,13 +494,13 @@ versions:
       - title: "ScalarDL Implementation"
         url: /docs/3.4/implementation
       - title: "ScalarDL Benchmarks"
-        url: /docs/3.4/scalardl-benchmarks
+        url: /docs/3.4/scalardl-benchmarks/README
       - title: "ScalarDL Go Client SDK"
-        url: /docs/3.4/scalardl-go-client-sdk
+        url: /docs/3.4/scalardl-go-client-sdk/README
       - title: "ScalarDL Java Client SDK"
-        url: /docs/3.4/scalardl-java-client-sdk
+        url: /docs/3.4/scalardl-java-client-sdk/README
       - title: "ScalarDL Node Client SDK"
-        url: /docs/3.4/scalardl-node-client-sdk
+        url: /docs/3.4/scalardl-node-client-sdk/README
       - title: "ScalarDL Web Client SDK"
-        url: /docs/3.4/scalardl-web-client-sdk
+        url: /docs/3.4/scalardl-web-client-sdk/README
 
