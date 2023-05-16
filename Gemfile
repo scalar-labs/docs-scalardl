@@ -26,4 +26,5 @@ group :jekyll_plugins do
   gem "jekyll-optional-front-matter", "~> 0.3.2"
   gem "jekyll-redirect-from", "~> 0.16.0"
   gem "jekyll-titles-from-headings", "~> 0.5.3"
+  gem "jekyll-readme-index", "~> 0.3.0"
 end

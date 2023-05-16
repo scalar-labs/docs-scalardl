@@ -319,6 +319,7 @@ plugins:
   - jekyll-optional-front-matter
   - jekyll-titles-from-headings
   - jekyll-redirect-from
+  - jekyll-readme-index
 
 # mimic GitHub Pages with --safe
 whitelist:
@@ -340,11 +341,17 @@ whitelist:
   - jekyll-optional-front-matter
   - jekyll-titles-from-headings
   - jekyll-redirect-from
+  - jekyll-readme-index
 
 titles_from_headings:
   enabled:     true
   strip_title: true
   collections: true
+
+readme_index:
+  enabled:          false
+  remove_originals: false
+  with_frontmatter: false
 
 # Archives
 #  Type
