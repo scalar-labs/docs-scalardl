@@ -53,6 +53,7 @@
   line-height: initial;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: $type-size-4-5;
 
   a[rel="permalink"]::before {
     content: '';
@@ -78,7 +79,7 @@
 
 .archive__item-excerpt {
   margin-top: 0;
-  font-size: $type-size-6;
+  font-size: $type-size-5-5;
 
   & + p {
     text-indent: 0;
@@ -270,7 +271,7 @@
   position: relative;
   margin-bottom: 1em;
   font-size: 1.125em;
-  padding: 1em 1em 0.1em 1em; /* Adds padding around the contents of feature items on the home page; padding below buttons already exists, so `0.1em` reduces extra, unnecessary `padding-below` spacing, particularly on mobile devices (added by josh-wong) */
+  padding: 0 1em 0.1em 1em; /* Adds padding around the contents of feature items on the home page; padding below buttons already exists, so `0.1em` reduces extra, unnecessary `padding-below` spacing, particularly on mobile devices (added by josh-wong) */
   min-height: 100%; /* Specifies the minimum height so that all feature items on the docs home page are the same height (added by josh-wong) */
   background-color: $background-color; /* Specifies the background color for feature items on the home page, which matches the style used on the Scalar home page (added by josh-wong) */
   text-align: center; /* Centers contents within feature items (added by josh-wong) */
