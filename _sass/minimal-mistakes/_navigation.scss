@@ -178,6 +178,7 @@
     align-items: center;
     min-height: $nav-height;
     background: $background-color;
+    font-size: $type-size-4-75;
   
     a {
       display: block;
@@ -198,7 +199,7 @@
   
       &.site-title {
         margin-left: 0;
-        font-size: $type-size-5 // Added to make "Docs" in the site title a little larger than the navigation items in `masthead.html` (added by josh-wong)
+        font-size: $type-size-4-5 // Added to make "Docs" in the site title a little larger than the navigation items in `masthead.html` (added by josh-wong)
       }
     }
 
