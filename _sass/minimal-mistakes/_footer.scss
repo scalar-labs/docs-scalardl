@@ -56,14 +56,14 @@
     
     .page__footer-copyright { /* Moved this style to a nested style under `.page__footer-follow` style to allow the copyright to float left and the social icons to float right to match the Scalar home page design; originally a non-nested style above the `.page__footer-follow` style (modified by josh-wong) */
       font-family: $global-font-family;
-      font-size: $type-size-6;
+      font-size: $type-size-7;
       color: $light-gray;
       float: left; /* Added to allow the copyright to float left to match the Scalar home page design (added by josh-wong) */
     }
   
     .page__footer-privacy-policy {
       font-family: $global-font-family;
-      font-size: $type-size-6;
+      font-size: $type-size-7;
       color: $light-gray;
       float: left;
       margin-left: 1rem;
