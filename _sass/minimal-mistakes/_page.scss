@@ -70,6 +70,13 @@ body {
     .page__error {
       text-align: center;
     }
+    
+    /* This `img` style applies only to .png and .jpg files (added by josh-wong) */
+    img[src$=".png"], img[src$=".jpg"] {
+      max-height: 400px;
+      margin: auto;
+      display: block;
+    }
   }
 }
 
