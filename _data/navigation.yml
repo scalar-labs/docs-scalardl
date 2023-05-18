@@ -406,6 +406,8 @@ versions:
         url: /docs/3.5/scalardl-go-client-sdk/README
       - title: "ScalarDL Java Client SDK"
         url: /docs/3.5/scalardl-java-client-sdk/README
+      - title: "ScalarDL JavaScript Client SDK"
+        url: /docs/3.5/scalardl-javascript-sdk-base/README
       - title: "ScalarDL Node Client SDK"
         url: /docs/3.5/scalardl-node-client-sdk/README
 
@@ -499,6 +501,8 @@ versions:
         url: /docs/3.4/scalardl-go-client-sdk/README
       - title: "ScalarDL Java Client SDK"
         url: /docs/3.4/scalardl-java-client-sdk/README
+      - title: "ScalarDL JavaScript Client SDK"
+        url: /docs/3.4/scalardl-javascript-sdk-base/README
       - title: "ScalarDL Node Client SDK"
         url: /docs/3.4/scalardl-node-client-sdk/README
       - title: "ScalarDL Web Client SDK"
