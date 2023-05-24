@@ -13,11 +13,10 @@
 
 ### Type of change
 
-- [ ] Bug fix (nonbreaking change that fixes an issue)
-- [ ] New feature (nonbreaking change that adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] Documentation (new or updated documentation)
 - [ ] Improvement (an improvement to the existing state)
-- [ ] This change requires a documentation update
+- [ ] New feature (nonbreaking change that adds functionality)
+- [ ] Bug fix (nonbreaking change that fixes an issue)
 
 ## How has this been tested?
 
