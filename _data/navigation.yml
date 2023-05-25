@@ -112,6 +112,8 @@ versions:
         url: /docs/3.8/helm-charts/configure-custom-values-scalardl-ledger
       - title: "Configure a custom values file for ScalarDL Schema Loader"
         url: /docs/3.8/helm-charts/configure-custom-values-scalardl-schema-loader
+      - title: "Mount any files or volumes on Scalar product pods"
+        url: /docs/3.8/helm-charts/mount-files-or-volumes-on-scalar-pods
       - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
         url: /docs/3.8/helm-charts/use-secret-for-credentilas
       - title: "Deploy Scalar products using Scalar Helm Charts"
@@ -199,6 +201,8 @@ versions:
         url: /docs/3.7/helm-charts/configure-custom-values-scalardl-ledger
       - title: "Configure a custom values file for ScalarDL Schema Loader"
         url: /docs/3.7/helm-charts/configure-custom-values-scalardl-schema-loader
+      - title: "Mount any files or volumes on Scalar product pods"
+        url: /docs/3.7/helm-charts/mount-files-or-volumes-on-scalar-pods
       - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
         url: /docs/3.7/helm-charts/use-secret-for-credentilas
       - title: "Deploy Scalar products using Scalar Helm Charts"
@@ -286,6 +290,8 @@ versions:
         url: /docs/3.6/helm-charts/configure-custom-values-scalardl-ledger
       - title: "Configure a custom values file for ScalarDL Schema Loader"
         url: /docs/3.6/helm-charts/configure-custom-values-scalardl-schema-loader
+      - title: "Mount any files or volumes on Scalar product pods"
+        url: /docs/3.6/helm-charts/mount-files-or-volumes-on-scalar-pods
       - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
         url: /docs/3.6/helm-charts/use-secret-for-credentilas
       - title: "Deploy Scalar products using Scalar Helm Charts"
@@ -373,6 +379,8 @@ versions:
         url: /docs/3.5/helm-charts/configure-custom-values-scalardl-ledger
       - title: "Configure a custom values file for ScalarDL Schema Loader"
         url: /docs/3.5/helm-charts/configure-custom-values-scalardl-schema-loader
+      - title: "Mount any files or volumes on Scalar product pods"
+        url: /docs/3.5/helm-charts/mount-files-or-volumes-on-scalar-pods
       - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
         url: /docs/3.5/helm-charts/use-secret-for-credentilas
       - title: "Deploy Scalar products using Scalar Helm Charts"
@@ -468,6 +476,8 @@ versions:
         url: /docs/3.4/helm-charts/configure-custom-values-scalardl-ledger
       - title: "Configure a custom values file for ScalarDL Schema Loader"
         url: /docs/3.4/helm-charts/configure-custom-values-scalardl-schema-loader
+      - title: "Mount any files or volumes on Scalar product pods"
+        url: /docs/3.4/helm-charts/mount-files-or-volumes-on-scalar-pods
       - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
         url: /docs/3.4/helm-charts/use-secret-for-credentilas
       - title: "Deploy Scalar products using Scalar Helm Charts"
