@@ -512,16 +512,27 @@
   .nav__list .nav__items {
     margin: 0 1em 0 0; /* Adjusted spacing since the default spacing is too close to the scroll bar; originally `margin: 0;` (modified by josh-wong) */
     font-size: 1.25rem;
+    
+    ul {
+      padding-left: 0.5em;
+    }
   
     a {
       color: inherit;
+
+      /* Added a hover element to make navigation items more prominent when a visitor hovers over a link (added by josh-wong) */
+      &:hover {
+        color: $scalar-primary-color;
+      }
     }
   
     .active {
       margin-left: -0.5em;
       padding-left: 0.5em;
-      padding-right: 0.5em;
       font-weight: bold;
+      color: $scalar-primary-color;
+      background-color: $scalar-light-gray-background-color; /* Added to make the page that visitors are on more prominent in the side navigation (added by josh-wong) */
+      display: block; /* Added to make the background color take up 100% of space in the side navigation (added by josh-wong) */
     }
   
     @include breakpoint(max-width $large - 1px) {
