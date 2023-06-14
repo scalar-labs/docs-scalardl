@@ -30,12 +30,12 @@ main:
   - title: "Support"
     url: https://support.scalar-labs.com/
 
-# This navigation is for adding product versions that appear in the dropdown menu. Make sure the latest version is labeled `<VERSION> (latest)`.
+# This navigation is for adding product versions that appear in the dropdown menu. Make sure the latest version is labeled `<VERSION> (stable)`.
 versions:
   - version-top-title: "" # This title is taken from the `version_label` in `_data/ui-text.yml`.
     version-children:
-    - version-title: "3.8 (latest)"
-      version-url: /docs/3.8
+    - version-title: "3.8 (stable)"
+      version-url: /docs/stable
     - version-title: "3.7"
       version-url: /docs/3.7
     - version-title: "3.6"
@@ -48,85 +48,87 @@ versions:
 # ----- Adding navigation for versions ----- #
 
 # When adding a version, copy the existing navigation and paste it below the latest version in the navigation. 
+# The latest version of the docs should be `"stable":`.
+# Make sure other navigation sets are named with the appropriate product version number (e.g., `"3.8":`) for those docs.
 # Then, replace the version with the new version number and confirm if any docs need to be added or removed from the new navigation.
 # After that, add a new scope in `_config.yml` to include an item that provides the proper versioned navigation to the site when someone visits the page (i.e., make sure people who visit a version 3.8 doc are shown a side navigation that includes only 3.8 docs.)
 
-"3.8":
+"stable":
   - title: "⬅ ScalarDL docs home" 
     url: /docs # Don't change this URL. This links back to the parent product home page.
-  - title: "ScalarDL 3.8 (latest)"
+  - title: "ScalarDL 3.8"
     children:
   # Get Started docs
   - title: "Get Started"
     children:
       - title: "Getting Started with ScalarDL"
-        url: /docs/3.8/getting-started/
+        url: /docs/stable/getting-started/
       - title: "Getting Started with ScalarDL Auditor"
-        url: /docs/3.8/getting-started-auditor/
+        url: /docs/stable/getting-started-auditor/
       - title: "Getting Started with Scalar Helm Charts"
-        url: /docs/3.8/helm-charts/getting-started-scalar-helm-charts/
+        url: /docs/stable/helm-charts/getting-started-scalar-helm-charts/
       - title: "Getting Started with Helm Charts (ScalarDL Ledger and Auditor / Auditor mode)"
-        url: /docs/3.8/helm-charts/getting-started-scalardl-auditor/
+        url: /docs/stable/helm-charts/getting-started-scalardl-auditor/
       - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
-        url: /docs/3.8/helm-charts/getting-started-scalardl-ledger/
+        url: /docs/stable/helm-charts/getting-started-scalardl-ledger/
   # Samples docs
   - title: "Samples" 
     children:
       - title: "A simple bank account application"
-        url: /docs/3.8/applications/simple-bank-account/README/
+        url: /docs/stable/applications/simple-bank-account/README/
       - title: "API endpoints"
-        url: /docs/3.8/applications/simple-bank-account/docs/api_endpoints/
+        url: /docs/stable/applications/simple-bank-account/docs/api_endpoints/
       - title: "ScalarDL Escrow payment CLI"
-        url: /docs/3.8/applications/escrow-payment/README/
+        url: /docs/stable/applications/escrow-payment/README/
       - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/3.8/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
+        url: /docs/stable/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
   # Develop docs
   - title: "Develop"
     children:
       - title: "A Guide on How to Use Asset Proofs in ScalarDL"
-        url: /docs/3.8/how-to-use-proof/
+        url: /docs/stable/how-to-use-proof/
       - title: "A Guide on How to Write a Good Contract for ScalarDL"
-        url: /docs/3.8/how-to-write-contract/
+        url: /docs/stable/how-to-write-contract/
       - title: "A Guide on How to Write Function for ScalarDL"
-        url: /docs/3.8/how-to-write-function/
+        url: /docs/stable/how-to-write-function/
       - title: "How to get a certificate"
-        url: /docs/3.8/ca/caclient-getting-started/
+        url: /docs/stable/ca/caclient-getting-started/
       - title: "ScalarDL Authentication Guide"
-        url: /docs/3.8/authentication/
+        url: /docs/stable/authentication/
       - title: "A Guide on How to Handle Errors in ScalarDL"
-        url: /docs/3.8/how-to-handle-errors/
+        url: /docs/stable/how-to-handle-errors/
   # Deploy docs
   - title: "Deploy"
     children:
       - title: "How to install ScalarDL in your local environment with Docker"
-        url: /docs/3.8/installation-with-docker/
+        url: /docs/stable/installation-with-docker/
       - title: "ScalarDL Schema Loader"
-        url: /docs/3.8/schema-loader/
+        url: /docs/stable/schema-loader/
       - title: "How to start CA sever with CFSSL"
-        url: /docs/3.8/ca/caserver-getting-started/
+        url: /docs/stable/ca/caserver-getting-started/
       - title: "Configure a custom values file for Scalar Envoy"
-        url: /docs/3.8/helm-charts/configure-custom-values-envoy/
+        url: /docs/stable/helm-charts/configure-custom-values-envoy/
       - title: "Configure a custom values file for ScalarDL Auditor"
-        url: /docs/3.8/helm-charts/configure-custom-values-scalardl-auditor/
+        url: /docs/stable/helm-charts/configure-custom-values-scalardl-auditor/
       - title: "Configure a custom values file for ScalarDL Ledger"
-        url: /docs/3.8/helm-charts/configure-custom-values-scalardl-ledger/
+        url: /docs/stable/helm-charts/configure-custom-values-scalardl-ledger/
       - title: "Configure a custom values file for ScalarDL Schema Loader"
-        url: /docs/3.8/helm-charts/configure-custom-values-scalardl-schema-loader/
+        url: /docs/stable/helm-charts/configure-custom-values-scalardl-schema-loader/
       - title: "Mount any files or volumes on Scalar product pods"
-        url: /docs/3.8/helm-charts/mount-files-or-volumes-on-scalar-pods/
+        url: /docs/stable/helm-charts/mount-files-or-volumes-on-scalar-pods/
       - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
-        url: /docs/3.8/helm-charts/use-secret-for-credentials/
+        url: /docs/stable/helm-charts/use-secret-for-credentials/
       - title: "Deploy Scalar products using Scalar Helm Charts"
-        url: /docs/3.8/helm-charts/how-to-deploy-scalar-products/
+        url: /docs/stable/helm-charts/how-to-deploy-scalar-products/
       - title: "How to deploy ScalarDL Auditor"
-        url: /docs/3.8/helm-charts/how-to-deploy-scalardl-auditor/
+        url: /docs/stable/helm-charts/how-to-deploy-scalardl-auditor/
       - title: "How to deploy ScalarDL Ledger"
-        url: /docs/3.8/helm-charts/how-to-deploy-scalardl-ledger/
+        url: /docs/stable/helm-charts/how-to-deploy-scalardl-ledger/
   # Manage docs
   - title: "Manage"
     children:
       - title: "A Guide on How to Backup and Restore Data in ScalarDL"
-        url: /docs/3.8/backup-restore/
+        url: /docs/stable/backup-restore/
   # Migrate docs
   # - title: "Migrate"
   #   children:
@@ -136,13 +138,13 @@ versions:
   - title: "Reference"
     children:      
       - title: "ScalarDL design document"
-        url: /docs/3.8/design/
+        url: /docs/stable/design/
       - title: "ScalarDL Compatibility Matrix"
-        url: /docs/3.8/compatibility/
+        url: /docs/stable/compatibility/
       - title: "ScalarDL Implementation"
-        url: /docs/3.8/implementation/
+        url: /docs/stable/implementation/
       - title: "ScalarDL Benchmarks"
-        url: /docs/3.8/scalardl-benchmarks/README/
+        url: /docs/stable/scalardl-benchmarks/README/
 
 "3.7":
   - title: "⬅ ScalarDL docs home" 

@@ -157,7 +157,7 @@ defaults:
       read_time: false # Shows the average reading time for pages.
       share: false # Shows social media buttons to share pages.
       sidebar: # Shows side navigation content from `_data/navigation.yml`.
-        nav: "3.8"
+        nav: "stable"
       toc: false
       toc_sticky: false
       search: false
@@ -181,6 +181,20 @@ defaults:
 
   ############### Add new versions (`scopes`) below this line. ###############
 
+  # stable
+  - scope:
+      path: "docs/stable" # Specifies the name of the folder where this version of docs are located.
+      # type: "" # Since this scope uses `collection_dir`, we do not need to specify the type here.
+    values:
+      layout: page # Specifies the type of template used from the "_layouts" folder.
+      read_time: false # Shows the average reading time for pages.
+      share: false # Shows social media buttons to share pages.
+      sidebar: # Shows side navigation content from `_data/navigation.yml`.
+        nav: "stable" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"stable"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
+      toc: true
+      toc_sticky: true
+      search: true
+
   # 3.8
   - scope:
       path: "docs/3.8" # Specifies the name of the folder where this version of docs are located.
@@ -190,10 +204,10 @@ defaults:
       read_time: false # Shows the average reading time for pages.
       share: false # Shows social media buttons to share pages.
       sidebar: # Shows side navigation content from `_data/navigation.yml`.
-        nav: "3.8" # Add the version enclosed within quotation marks. This version must match the version that you previously specified in `_data/navigation.yml`.
+        nav: "stable" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"stable"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
       toc: true
       toc_sticky: true
-      search: true
+      search: false
   # 3.7
   - scope:
       path: "docs/3.7" # Specifies the name of the folder where this version of docs are located.
@@ -203,7 +217,7 @@ defaults:
       read_time: false # Shows the average reading time for pages.
       share: false # Shows social media buttons to share pages.
       sidebar: # Shows side navigation content from `_data/navigation.yml`.
-        nav: "3.7" # Add the version enclosed within quotation marks. This version must match the version that you previously specified in `_data/navigation.yml`.
+        nav: "3.7" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"stable"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
       toc: true
       toc_sticky: true
       search: false # Excludes previous versions from search to reduce noise and search loading time. We should improve this function in the future to allow people to search for versioned docs.
@@ -216,7 +230,7 @@ defaults:
       read_time: false # show the average reading time for the page
       share: false # Shows social media buttons to share pages.
       sidebar: # Shows side navigation content from `_data/navigation.yml`.
-        nav: "3.6" # Add the version enclosed within quotation marks. This version must match the version that you previously specified in `_data/navigation.yml`.
+        nav: "3.6" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"stable"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
       toc: true
       toc_sticky: true
       search: false # Excludes previous versions from search to reduce noise and search loading time. We should improve this function in the future to allow people to search for versioned docs.
@@ -229,7 +243,7 @@ defaults:
       read_time: false # Shows the average reading time for pages.
       share: false # Shows social media buttons to share pages.
       sidebar: # Shows side navigation content from `_data/navigation.yml`.
-        nav: "3.5" # Add the version enclosed within quotation marks. This version must match the version that you previously specified in `_data/navigation.yml`.
+        nav: "3.5" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"stable"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
       toc: true
       toc_sticky: true
       search: false # Excludes previous versions from search to reduce noise and search loading time. We should improve this function in the future to allow people to search for versioned docs.
@@ -242,7 +256,7 @@ defaults:
       read_time: false # Shows the average reading time for pages.
       share: false # Shows social media buttons to share pages.
       sidebar: # Shows side navigation content from `_data/navigation.yml`.
-        nav: "3.4" # Add the version enclosed within quotation marks. This version must match the version that you previously specified in `_data/navigation.yml`.
+        nav: "3.4" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"stable"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
       toc: true
       toc_sticky: true
       search: false # Excludes previous versions from search to reduce noise and search loading time. We should improve this function in the future to allow people to search for versioned docs.
