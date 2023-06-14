@@ -35,7 +35,7 @@ versions:
   - version-top-title: "" # This title is taken from the `version_label` in `_data/ui-text.yml`.
     version-children:
     - version-title: "3.8 (stable)"
-      version-url: /docs/3.8
+      version-url: /docs/stable
     - version-title: "3.7"
       version-url: /docs/3.7
     - version-title: "3.6"
