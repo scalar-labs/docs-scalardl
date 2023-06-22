@@ -263,7 +263,7 @@ defaults:
   
   # Hides ScalarDB-related pages (e.g., Helm Charts docs) from search results.
   - scope:
-      path: "docs/**/*scalardb*" # Specifies the folder where docs with `scalardb` in the file name live.
+      path: "docs/**/helm-charts/**/*scalardb*" # Specifies the folder where docs with `scalardb` in the file name live.
       # type: "" # Since this scope uses `collection_dir`, we do not need to specify the type here.
     values:
       layout: page # Specifies the type of template used from the "_layouts" folder.
