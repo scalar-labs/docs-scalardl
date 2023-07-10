@@ -77,6 +77,8 @@ versions:
   # Develop docs
   - title: "Develop"
     children:
+      - title: "SDKs for ScalarDL"
+        url: /docs/latest/sdks/
       - title: "How to Use Asset Proofs in ScalarDL"
         url: /docs/latest/how-to-use-proof/
       - title: "How to Write a Good Contract for ScalarDL"
@@ -102,10 +104,6 @@ versions:
         url: /docs/latest/helm-charts/getting-started-scalardl-auditor/
       - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
         url: /docs/latest/helm-charts/getting-started-scalardl-ledger/
-      - title: "ScalarDL Schema Loader"
-        url: /docs/latest/schema-loader/
-      - title: "How to start CA server with CFSSL"
-        url: /docs/latest/ca/caserver-getting-started/
       - title: "Configure a custom values file for Scalar Helm Charts"
         url: /docs/latest/helm-charts/configure-custom-values-file/
       - title: "Deploy Scalar products using Scalar Helm Charts"
@@ -114,6 +112,10 @@ versions:
         url: /docs/latest/helm-charts/mount-files-or-volumes-on-scalar-pods/
       - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
         url: /docs/latest/helm-charts/use-secret-for-credentials/
+      - title: "ScalarDL Schema Loader"
+        url: /docs/latest/schema-loader/
+      - title: "How to start CA server with CFSSL"
+        url: /docs/latest/ca/caserver-getting-started/
   # Manage docs
   - title: "Manage"
     children:
@@ -160,6 +162,8 @@ versions:
   # Develop docs
   - title: "Develop"
     children:
+      - title: "SDKs for ScalarDL"
+        url: /docs/3.7/sdks/
       - title: "How to Use Asset Proofs in ScalarDL"
         url: /docs/3.7/how-to-use-proof/
       - title: "How to Write a Good Contract for ScalarDL"
@@ -183,10 +187,6 @@ versions:
         url: /docs/3.7/helm-charts/getting-started-scalardl-auditor/
       - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
         url: /docs/3.7/helm-charts/getting-started-scalardl-ledger/
-      - title: "ScalarDL Schema Loader"
-        url: /docs/3.7/schema-loader/
-      - title: "How to start CA server with CFSSL"
-        url: /docs/3.7/ca/caserver-getting-started/
       - title: "Configure a custom values file for Scalar Helm Charts"
         url: /docs/3.7/helm-charts/configure-custom-values-file/
       - title: "Deploy Scalar products using Scalar Helm Charts"
@@ -195,6 +195,10 @@ versions:
         url: /docs/3.7/helm-charts/mount-files-or-volumes-on-scalar-pods/
       - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
         url: /docs/3.7/helm-charts/use-secret-for-credentials/
+      - title: "ScalarDL Schema Loader"
+        url: /docs/3.7/schema-loader/
+      - title: "How to start CA server with CFSSL"
+        url: /docs/3.7/ca/caserver-getting-started/
   # Manage docs
   - title: "Manage"
     children:
@@ -241,6 +245,8 @@ versions:
   # Develop docs
   - title: "Develop"
     children:
+      - title: "SDKs for ScalarDL"
+        url: /docs/3.6/sdks/
       - title: "How to Use Asset Proofs in ScalarDL"
         url: /docs/3.6/how-to-use-proof/
       - title: "How to Write a Good Contract for ScalarDL"
@@ -264,10 +270,6 @@ versions:
         url: /docs/3.6/helm-charts/getting-started-scalardl-auditor/
       - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
         url: /docs/3.6/helm-charts/getting-started-scalardl-ledger/
-      - title: "ScalarDL Schema Loader"
-        url: /docs/3.6/schema-loader/
-      - title: "How to start CA server with CFSSL"
-        url: /docs/3.6/ca/caserver-getting-started/
       - title: "Configure a custom values file for Scalar Helm Charts"
         url: /docs/3.6/helm-charts/configure-custom-values-file/
       - title: "Deploy Scalar products using Scalar Helm Charts"
@@ -276,6 +278,10 @@ versions:
         url: /docs/3.6/helm-charts/mount-files-or-volumes-on-scalar-pods/
       - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
         url: /docs/3.6/helm-charts/use-secret-for-credentials/
+      - title: "ScalarDL Schema Loader"
+        url: /docs/3.6/schema-loader/
+      - title: "How to start CA server with CFSSL"
+        url: /docs/3.6/ca/caserver-getting-started/
   # Manage docs
   - title: "Manage"
     children:
@@ -322,6 +328,8 @@ versions:
   # Develop docs
   - title: "Develop"
     children:
+      - title: "SDKs for ScalarDL"
+        url: /docs/3.5/sdks/
       - title: "How to Use Asset Proofs in ScalarDL"
         url: /docs/3.5/how-to-use-proof/
       - title: "How to Write a Good Contract for ScalarDL"
@@ -345,10 +353,6 @@ versions:
         url: /docs/3.5/helm-charts/getting-started-scalardl-auditor/
       - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
         url: /docs/3.5/helm-charts/getting-started-scalardl-ledger/
-      - title: "ScalarDL Schema Loader"
-        url: /docs/3.5/schema-loader/
-      - title: "How to start CA server with CFSSL"
-        url: /docs/3.5/ca/caserver-getting-started/
       - title: "Configure a custom values file for Scalar Helm Charts"
         url: /docs/3.5/helm-charts/configure-custom-values-file/
       - title: "Deploy Scalar products using Scalar Helm Charts"
@@ -357,6 +361,10 @@ versions:
         url: /docs/3.5/helm-charts/mount-files-or-volumes-on-scalar-pods/
       - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
         url: /docs/3.5/helm-charts/use-secret-for-credentials/
+      - title: "ScalarDL Schema Loader"
+        url: /docs/3.5/schema-loader/
+      - title: "How to start CA server with CFSSL"
+        url: /docs/3.5/ca/caserver-getting-started/
   # Manage docs
   - title: "Manage"
     children:
@@ -378,14 +386,6 @@ versions:
         url: /docs/3.5/implementation/
       - title: "ScalarDL Benchmarks"
         url: /docs/3.5/scalardl-benchmarks/README/
-      - title: "ScalarDL Go Client SDK"
-        url: /docs/3.5/scalardl-go-client-sdk/README/
-      - title: "ScalarDL Java Client SDK"
-        url: /docs/3.5/scalardl-java-client-sdk/README/
-      - title: "ScalarDL JavaScript Client SDK"
-        url: /docs/3.5/scalardl-javascript-sdk-base/README/
-      - title: "ScalarDL Node Client SDK"
-        url: /docs/3.5/scalardl-node-client-sdk/README/
 
 "3.4":
   - title: "⬅ ScalarDL docs home" 
@@ -411,6 +411,8 @@ versions:
   # Develop docs
   - title: "Develop"
     children:
+      - title: "SDKs for ScalarDL"
+        url: /docs/3.4/sdks/
       - title: "How to Use Asset Proofs in ScalarDL"
         url: /docs/3.4/how-to-use-proof/
       - title: "How to Write a Good Contract for ScalarDL"
@@ -434,10 +436,6 @@ versions:
         url: /docs/3.4/helm-charts/getting-started-scalardl-auditor/
       - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
         url: /docs/3.4/helm-charts/getting-started-scalardl-ledger/
-      - title: "ScalarDL Schema Loader"
-        url: /docs/3.4/schema-loader/
-      - title: "How to start CA server with CFSSL"
-        url: /docs/3.4/ca/caserver-getting-started/
       - title: "Configure a custom values file for Scalar Helm Charts"
         url: /docs/3.4/helm-charts/configure-custom-values-file/
       - title: "Deploy Scalar products using Scalar Helm Charts"
@@ -446,6 +444,10 @@ versions:
         url: /docs/3.4/helm-charts/mount-files-or-volumes-on-scalar-pods/
       - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
         url: /docs/3.4/helm-charts/use-secret-for-credentials/
+      - title: "ScalarDL Schema Loader"
+        url: /docs/3.4/schema-loader/
+      - title: "How to start CA server with CFSSL"
+        url: /docs/3.4/ca/caserver-getting-started/
   # Manage docs
   - title: "Manage"
     children:
@@ -467,13 +469,3 @@ versions:
         url: /docs/3.4/implementation/
       - title: "ScalarDL Benchmarks"
         url: /docs/3.4/scalardl-benchmarks/README/
-      - title: "ScalarDL Go Client SDK"
-        url: /docs/3.4/scalardl-go-client-sdk/README/
-      - title: "ScalarDL Java Client SDK"
-        url: /docs/3.4/scalardl-java-client-sdk/README/
-      - title: "ScalarDL JavaScript Client SDK"
-        url: /docs/3.4/scalardl-javascript-sdk-base/README/
-      - title: "ScalarDL Node Client SDK"
-        url: /docs/3.4/scalardl-node-client-sdk/README/
-      - title: "ScalarDL Web Client SDK"
-        url: /docs/3.4/scalardl-web-client-sdk/README/
