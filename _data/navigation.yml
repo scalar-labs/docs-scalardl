@@ -92,8 +92,6 @@ versions:
   # Deploy docs
   - title: "Deploy"
     children:
-      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/latest/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "How to install ScalarDL in your local environment with Docker"
         url: /docs/latest/installation-with-docker/
       - title: "Getting Started with Scalar Helm Charts"
@@ -102,6 +100,8 @@ versions:
         url: /docs/latest/helm-charts/getting-started-scalardl-auditor/
       - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
         url: /docs/latest/helm-charts/getting-started-scalardl-ledger/
+      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
+        url: /docs/latest/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "ScalarDL Schema Loader"
         url: /docs/latest/schema-loader/
       - title: "How to start CA server with CFSSL"
@@ -173,8 +173,6 @@ versions:
   # Deploy docs
   - title: "Deploy"
     children:
-      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/3.7/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "How to install ScalarDL in your local environment with Docker"
         url: /docs/3.7/installation-with-docker/
       - title: "Getting Started with Scalar Helm Charts"
@@ -183,6 +181,10 @@ versions:
         url: /docs/3.7/helm-charts/getting-started-scalardl-auditor/
       - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
         url: /docs/3.7/helm-charts/getting-started-scalardl-ledger/
+      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
+        url: /docs/3.7/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
+      - title: "ScalarDL Schema Loader"
+        url: /docs/3.7/schema-loader/
       - title: "How to start CA server with CFSSL"
         url: /docs/3.7/ca/caserver-getting-started/
       - title: "Configure a custom values file for Scalar Helm Charts"
@@ -252,8 +254,6 @@ versions:
   # Deploy docs
   - title: "Deploy"
     children:
-      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/3.6/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "How to install ScalarDL in your local environment with Docker"
         url: /docs/3.6/installation-with-docker/
       - title: "Getting Started with Scalar Helm Charts"
@@ -262,6 +262,10 @@ versions:
         url: /docs/3.6/helm-charts/getting-started-scalardl-auditor/
       - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
         url: /docs/3.6/helm-charts/getting-started-scalardl-ledger/
+      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
+        url: /docs/3.6/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
+      - title: "ScalarDL Schema Loader"
+        url: /docs/3.6/schema-loader/
       - title: "How to start CA server with CFSSL"
         url: /docs/3.6/ca/caserver-getting-started/
       - title: "Configure a custom values file for Scalar Helm Charts"
@@ -331,8 +335,6 @@ versions:
   # Deploy docs
   - title: "Deploy"
     children:
-      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/3.5/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "How to install ScalarDL in your local environment with Docker"
         url: /docs/3.5/installation-with-docker/
       - title: "Getting Started with Scalar Helm Charts"
@@ -341,6 +343,10 @@ versions:
         url: /docs/3.5/helm-charts/getting-started-scalardl-auditor/
       - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
         url: /docs/3.5/helm-charts/getting-started-scalardl-ledger/
+      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
+        url: /docs/3.5/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
+      - title: "ScalarDL Schema Loader"
+        url: /docs/3.5/schema-loader/
       - title: "How to start CA server with CFSSL"
         url: /docs/3.5/ca/caserver-getting-started/
       - title: "Configure a custom values file for Scalar Helm Charts"
@@ -418,8 +424,6 @@ versions:
   # Deploy docs
   - title: "Deploy"
     children:
-      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/3.4/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "How to install ScalarDL in your local environment with Docker"
         url: /docs/3.4/installation-with-docker/
       - title: "Getting Started with Scalar Helm Charts"
@@ -428,6 +432,10 @@ versions:
         url: /docs/3.4/helm-charts/getting-started-scalardl-auditor/
       - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
         url: /docs/3.4/helm-charts/getting-started-scalardl-ledger/
+      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
+        url: /docs/3.4/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
+      - title: "ScalarDL Schema Loader"
+        url: /docs/3.4/schema-loader/
       - title: "How to start CA server with CFSSL"
         url: /docs/3.4/ca/caserver-getting-started/
       - title: "Configure a custom values file for Scalar Helm Charts"
