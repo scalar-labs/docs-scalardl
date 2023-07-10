@@ -77,21 +77,23 @@ versions:
   # Develop docs
   - title: "Develop"
     children:
-      - title: "A Guide on How to Use Asset Proofs in ScalarDL"
+      - title: "How to Use Asset Proofs in ScalarDL"
         url: /docs/latest/how-to-use-proof/
-      - title: "A Guide on How to Write a Good Contract for ScalarDL"
+      - title: "How to Write a Good Contract for ScalarDL"
         url: /docs/latest/how-to-write-contract/
-      - title: "A Guide on How to Write Function for ScalarDL"
+      - title: "How to Write Function for ScalarDL"
         url: /docs/latest/how-to-write-function/
       - title: "How to get a certificate"
         url: /docs/latest/ca/caclient-getting-started/
       - title: "ScalarDL Authentication Guide"
         url: /docs/latest/authentication/
-      - title: "A Guide on How to Handle Errors in ScalarDL"
+      - title: "How to Handle Errors in ScalarDL"
         url: /docs/latest/how-to-handle-errors/
   # Deploy docs
   - title: "Deploy"
     children:
+      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
+        url: /docs/latest/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "How to install ScalarDL in your local environment with Docker"
         url: /docs/latest/installation-with-docker/
       - title: "Getting Started with Scalar Helm Charts"
@@ -100,8 +102,6 @@ versions:
         url: /docs/latest/helm-charts/getting-started-scalardl-auditor/
       - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
         url: /docs/latest/helm-charts/getting-started-scalardl-ledger/
-      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/latest/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "ScalarDL Schema Loader"
         url: /docs/latest/schema-loader/
       - title: "How to start CA server with CFSSL"
@@ -117,7 +117,7 @@ versions:
   # Manage docs
   - title: "Manage"
     children:
-      - title: "A Guide on How to Backup and Restore Data in ScalarDL"
+      - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/latest/backup-restore/
   # Migrate docs
   # - title: "Migrate"
@@ -160,19 +160,21 @@ versions:
   # Develop docs
   - title: "Develop"
     children:
-      - title: "A Guide on How to Use Asset Proofs in ScalarDL"
+      - title: "How to Use Asset Proofs in ScalarDL"
         url: /docs/3.7/how-to-use-proof/
-      - title: "A Guide on How to Write a Good Contract for ScalarDL"
+      - title: "How to Write a Good Contract for ScalarDL"
         url: /docs/3.7/how-to-write-contract/
-      - title: "A Guide on How to Write Function for ScalarDL"
+      - title: "How to Write Function for ScalarDL"
         url: /docs/3.7/how-to-write-function/
       - title: "How to get a certificate"
         url: /docs/3.7/ca/caclient-getting-started/
-      - title: "A Guide on How to Handle Errors in ScalarDL"
+      - title: "How to Handle Errors in ScalarDL"
         url: /docs/3.7/how-to-handle-errors/
   # Deploy docs
   - title: "Deploy"
     children:
+      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
+        url: /docs/3.7/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "How to install ScalarDL in your local environment with Docker"
         url: /docs/3.7/installation-with-docker/
       - title: "Getting Started with Scalar Helm Charts"
@@ -181,8 +183,6 @@ versions:
         url: /docs/3.7/helm-charts/getting-started-scalardl-auditor/
       - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
         url: /docs/3.7/helm-charts/getting-started-scalardl-ledger/
-      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/3.7/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "ScalarDL Schema Loader"
         url: /docs/3.7/schema-loader/
       - title: "How to start CA server with CFSSL"
@@ -198,7 +198,7 @@ versions:
   # Manage docs
   - title: "Manage"
     children:
-      - title: "A Guide on How to Backup and Restore Data in ScalarDL"
+      - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/3.7/backup-restore/
   # Migrate docs
   # - title: "Migrate"
@@ -241,19 +241,21 @@ versions:
   # Develop docs
   - title: "Develop"
     children:
-      - title: "A Guide on How to Use Asset Proofs in ScalarDL"
+      - title: "How to Use Asset Proofs in ScalarDL"
         url: /docs/3.6/how-to-use-proof/
-      - title: "A Guide on How to Write a Good Contract for ScalarDL"
+      - title: "How to Write a Good Contract for ScalarDL"
         url: /docs/3.6/how-to-write-contract/
-      - title: "A Guide on How to Write Function for ScalarDL"
+      - title: "How to Write Function for ScalarDL"
         url: /docs/3.6/how-to-write-function/
       - title: "How to get a certificate"
         url: /docs/3.6/ca/caclient-getting-started/
-      - title: "A Guide on How to Handle Errors in ScalarDL"
+      - title: "How to Handle Errors in ScalarDL"
         url: /docs/3.6/how-to-handle-errors/
   # Deploy docs
   - title: "Deploy"
     children:
+      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
+        url: /docs/3.6/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "How to install ScalarDL in your local environment with Docker"
         url: /docs/3.6/installation-with-docker/
       - title: "Getting Started with Scalar Helm Charts"
@@ -262,8 +264,6 @@ versions:
         url: /docs/3.6/helm-charts/getting-started-scalardl-auditor/
       - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
         url: /docs/3.6/helm-charts/getting-started-scalardl-ledger/
-      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/3.6/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "ScalarDL Schema Loader"
         url: /docs/3.6/schema-loader/
       - title: "How to start CA server with CFSSL"
@@ -279,7 +279,7 @@ versions:
   # Manage docs
   - title: "Manage"
     children:
-      - title: "A Guide on How to Backup and Restore Data in ScalarDL"
+      - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/3.6/backup-restore/
   # Migrate docs
   # - title: "Migrate"
@@ -322,19 +322,21 @@ versions:
   # Develop docs
   - title: "Develop"
     children:
-      - title: "A Guide on How to Use Asset Proofs in ScalarDL"
+      - title: "How to Use Asset Proofs in ScalarDL"
         url: /docs/3.5/how-to-use-proof/
-      - title: "A Guide on How to Write a Good Contract for ScalarDL"
+      - title: "How to Write a Good Contract for ScalarDL"
         url: /docs/3.5/how-to-write-contract/
-      - title: "A Guide on How to Write Function for ScalarDL"
+      - title: "How to Write Function for ScalarDL"
         url: /docs/3.5/how-to-write-function/
       - title: "How to get a certificate"
         url: /docs/3.5/ca/caclient-getting-started/
-      - title: "A Guide on How to Handle Errors in ScalarDL"
+      - title: "How to Handle Errors in ScalarDL"
         url: /docs/3.5/how-to-handle-errors/
   # Deploy docs
   - title: "Deploy"
     children:
+      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
+        url: /docs/3.5/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "How to install ScalarDL in your local environment with Docker"
         url: /docs/3.5/installation-with-docker/
       - title: "Getting Started with Scalar Helm Charts"
@@ -343,8 +345,6 @@ versions:
         url: /docs/3.5/helm-charts/getting-started-scalardl-auditor/
       - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
         url: /docs/3.5/helm-charts/getting-started-scalardl-ledger/
-      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/3.5/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "ScalarDL Schema Loader"
         url: /docs/3.5/schema-loader/
       - title: "How to start CA server with CFSSL"
@@ -360,7 +360,7 @@ versions:
   # Manage docs
   - title: "Manage"
     children:
-      - title: "A Guide on How to Backup and Restore Data in ScalarDL"
+      - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/3.5/backup-restore/
   # Migrate docs
   # - title: "Migrate"
@@ -411,19 +411,21 @@ versions:
   # Develop docs
   - title: "Develop"
     children:
-      - title: "A Guide on How to Use Asset Proofs in ScalarDL"
+      - title: "How to Use Asset Proofs in ScalarDL"
         url: /docs/3.4/how-to-use-proof/
-      - title: "A Guide on How to Write a Good Contract for ScalarDL"
+      - title: "How to Write a Good Contract for ScalarDL"
         url: /docs/3.4/how-to-write-contract/
-      - title: "A Guide on How to Write Function for ScalarDL"
+      - title: "How to Write Function for ScalarDL"
         url: /docs/3.4/how-to-write-function/
       - title: "How to get a certificate"
         url: /docs/3.4/ca/caclient-getting-started/
-      - title: "A Guide on How to Handle Errors in ScalarDL"
+      - title: "How to Handle Errors in ScalarDL"
         url: /docs/3.4/how-to-handle-errors/
   # Deploy docs
   - title: "Deploy"
     children:
+      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
+        url: /docs/3.4/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "How to install ScalarDL in your local environment with Docker"
         url: /docs/3.4/installation-with-docker/
       - title: "Getting Started with Scalar Helm Charts"
@@ -432,8 +434,6 @@ versions:
         url: /docs/3.4/helm-charts/getting-started-scalardl-auditor/
       - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
         url: /docs/3.4/helm-charts/getting-started-scalardl-ledger/
-      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/3.4/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "ScalarDL Schema Loader"
         url: /docs/3.4/schema-loader/
       - title: "How to start CA server with CFSSL"
@@ -449,7 +449,7 @@ versions:
   # Manage docs
   - title: "Manage"
     children:
-      - title: "A Guide on How to Backup and Restore Data in ScalarDL"
+      - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/3.4/backup-restore/
   # Migrate docs
   # - title: "Migrate"
