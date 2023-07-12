@@ -33,8 +33,8 @@ lunr:
   search_within_pages: true
 
 # SEO Related
-google_site_verification : # Replace this with your ID, or delete; not necessary since we have included our Google Analytics tracking ID
-bing_site_verification   : # Replace this with your ID, or delete
+google_site_verification : f4A1_o8ea-_b8wsvLMeTii2rmUpHU3veODTLjFZGL50 # Replace this with your ID, or delete; not necessary since we have included our Google Analytics tracking ID
+bing_site_verification   : FF58F572E4C7F663AFCCC989725A581D # Replace this with your ID, or delete
 
 # Social Sharing
 twitter:
