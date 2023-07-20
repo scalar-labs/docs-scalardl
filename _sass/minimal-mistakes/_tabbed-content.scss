@@ -1,0 +1,49 @@
+/* ==========================================================================
+   Tabbed content (added by josh-wong)
+   ========================================================================== */
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  background-color: transparent;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: transparent;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: $doc-font-size;
+  font-weight: 600;
+  color: inherit;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  color: $scalar-primary-color;
+  background-color: $scalar-light-gray-background-color;
+  border-bottom: 4px solid $scalar-primary-color;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  color: white;
+  background-color: $scalar-primary-color;
+  border-bottom: 4px solid $scalar-primary-color;
+  transition: 0s;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding-top: 25px;
+  border-top: 1px solid $lighter-gray;
+
+  & img {
+    margin: auto;
+    display: block;
+  }
+}
