@@ -96,6 +96,8 @@ versions:
     children:
       - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
         url: /docs/latest/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
+      - title: "Deploying ScalarDL on Managed Kubernetes Services"
+        url: /docs/latest/scalar-kubernetes/deploy-kubernetes/
       - title: "How to install ScalarDL in your local environment with Docker"
         url: /docs/latest/installation-with-docker/
       - title: "Getting Started with Scalar Helm Charts"
@@ -119,6 +121,8 @@ versions:
   # Manage docs
   - title: "Manage"
     children:
+      - title: "Managing ScalarDL on Managed Kubernetes Services"
+        url: /docs/latest/scalar-kubernetes/manage-kubernetes/
       - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/latest/backup-restore/
   # Migrate docs
@@ -179,6 +183,8 @@ versions:
     children:
       - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
         url: /docs/3.7/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
+      - title: "Deploying ScalarDL on Managed Kubernetes Services"
+        url: /docs/3.7/scalar-kubernetes/deploy-kubernetes/
       - title: "How to install ScalarDL in your local environment with Docker"
         url: /docs/3.7/installation-with-docker/
       - title: "Getting Started with Scalar Helm Charts"
@@ -202,6 +208,8 @@ versions:
   # Manage docs
   - title: "Manage"
     children:
+      - title: "Managing ScalarDL on Managed Kubernetes Services"
+        url: /docs/3.7/scalar-kubernetes/manage-kubernetes/
       - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/3.7/backup-restore/
   # Migrate docs
@@ -262,6 +270,8 @@ versions:
     children:
       - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
         url: /docs/3.6/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
+      - title: "Deploying ScalarDL on Managed Kubernetes Services"
+        url: /docs/3.6/scalar-kubernetes/deploy-kubernetes/
       - title: "How to install ScalarDL in your local environment with Docker"
         url: /docs/3.6/installation-with-docker/
       - title: "Getting Started with Scalar Helm Charts"
@@ -285,6 +295,8 @@ versions:
   # Manage docs
   - title: "Manage"
     children:
+      - title: "Managing ScalarDL on Managed Kubernetes Services"
+        url: /docs/3.6/scalar-kubernetes/manage-kubernetes/
       - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/3.6/backup-restore/
   # Migrate docs
@@ -345,6 +357,8 @@ versions:
     children:
       - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
         url: /docs/3.5/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
+      - title: "Deploying ScalarDL on Managed Kubernetes Services"
+        url: /docs/3.5/scalar-kubernetes/deploy-kubernetes/
       - title: "How to install ScalarDL in your local environment with Docker"
         url: /docs/3.5/installation-with-docker/
       - title: "Getting Started with Scalar Helm Charts"
@@ -368,6 +382,8 @@ versions:
   # Manage docs
   - title: "Manage"
     children:
+      - title: "Managing ScalarDL on Managed Kubernetes Services"
+        url: /docs/3.5/scalar-kubernetes/manage-kubernetes/
       - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/3.5/backup-restore/
   # Migrate docs
@@ -428,6 +444,8 @@ versions:
     children:
       - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
         url: /docs/3.4/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
+      - title: "Deploying ScalarDL on Managed Kubernetes Services"
+        url: /docs/3.4/scalar-kubernetes/deploy-kubernetes/
       - title: "How to install ScalarDL in your local environment with Docker"
         url: /docs/3.4/installation-with-docker/
       - title: "Getting Started with Scalar Helm Charts"
@@ -451,6 +469,8 @@ versions:
   # Manage docs
   - title: "Manage"
     children:
+      - title: "Managing ScalarDL on Managed Kubernetes Services"
+        url: /docs/3.4/scalar-kubernetes/manage-kubernetes/
       - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/3.4/backup-restore/
   # Migrate docs
