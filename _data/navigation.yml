@@ -70,8 +70,8 @@ versions:
     children:
       - title: "A simple bank account application"
         url: /docs/latest/applications/simple-bank-account/README/
-      - title: "API endpoints"
-        url: /docs/latest/applications/simple-bank-account/docs/api_endpoints/
+      # - title: "API endpoints"
+      #   url: /docs/latest/applications/simple-bank-account/docs/api_endpoints/
       - title: "ScalarDL Escrow payment CLI"
         url: /docs/latest/applications/escrow-payment/README/
   # Develop docs
@@ -79,6 +79,8 @@ versions:
     children:
       - title: "SDKs for ScalarDL"
         url: /docs/latest/sdks/
+      - title: "ScalarDL Schema Loader"
+        url: /docs/latest/schema-loader/
       - title: "How to Use Asset Proofs in ScalarDL"
         url: /docs/latest/how-to-use-proof/
       - title: "How to Write a Good Contract for ScalarDL"
@@ -114,8 +116,6 @@ versions:
         url: /docs/latest/helm-charts/mount-files-or-volumes-on-scalar-pods/
       - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
         url: /docs/latest/helm-charts/use-secret-for-credentials/
-      - title: "ScalarDL Schema Loader"
-        url: /docs/latest/schema-loader/
       - title: "How to start CA server with CFSSL"
         url: /docs/latest/ca/caserver-getting-started/
   # Manage docs
@@ -159,8 +159,8 @@ versions:
     children:
       - title: "A simple bank account application"
         url: /docs/3.7/applications/simple-bank-account/README/
-      - title: "API endpoints"
-        url: /docs/3.7/applications/simple-bank-account/docs/api_endpoints/
+      # - title: "API endpoints"
+      #   url: /docs/3.7/applications/simple-bank-account/docs/api_endpoints/
       - title: "ScalarDL Escrow payment CLI"
         url: /docs/3.7/applications/escrow-payment/README/
   # Develop docs
@@ -168,6 +168,8 @@ versions:
     children:
       - title: "SDKs for ScalarDL"
         url: /docs/3.7/sdks/
+      - title: "ScalarDL Schema Loader"
+        url: /docs/3.7/schema-loader/
       - title: "How to Use Asset Proofs in ScalarDL"
         url: /docs/3.7/how-to-use-proof/
       - title: "How to Write a Good Contract for ScalarDL"
@@ -201,8 +203,6 @@ versions:
         url: /docs/3.7/helm-charts/mount-files-or-volumes-on-scalar-pods/
       - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
         url: /docs/3.7/helm-charts/use-secret-for-credentials/
-      - title: "ScalarDL Schema Loader"
-        url: /docs/3.7/schema-loader/
       - title: "How to start CA server with CFSSL"
         url: /docs/3.7/ca/caserver-getting-started/
   # Manage docs
@@ -246,8 +246,8 @@ versions:
     children:
       - title: "A simple bank account application"
         url: /docs/3.6/applications/simple-bank-account/README/
-      - title: "API endpoints"
-        url: /docs/3.6/applications/simple-bank-account/docs/api_endpoints/
+      # - title: "API endpoints"
+      #   url: /docs/3.6/applications/simple-bank-account/docs/api_endpoints/
       - title: "ScalarDL Escrow payment CLI"
         url: /docs/3.6/applications/escrow-payment/README/
   # Develop docs
@@ -255,6 +255,8 @@ versions:
     children:
       - title: "SDKs for ScalarDL"
         url: /docs/3.6/sdks/
+      - title: "ScalarDL Schema Loader"
+        url: /docs/3.6/schema-loader/
       - title: "How to Use Asset Proofs in ScalarDL"
         url: /docs/3.6/how-to-use-proof/
       - title: "How to Write a Good Contract for ScalarDL"
@@ -288,8 +290,6 @@ versions:
         url: /docs/3.6/helm-charts/mount-files-or-volumes-on-scalar-pods/
       - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
         url: /docs/3.6/helm-charts/use-secret-for-credentials/
-      - title: "ScalarDL Schema Loader"
-        url: /docs/3.6/schema-loader/
       - title: "How to start CA server with CFSSL"
         url: /docs/3.6/ca/caserver-getting-started/
   # Manage docs
@@ -333,8 +333,8 @@ versions:
     children:
       - title: "A simple bank account application"
         url: /docs/3.5/applications/simple-bank-account/README
-      - title: "API endpoints"
-        url: /docs/3.5/applications/simple-bank-account/docs/api_endpoints
+      # - title: "API endpoints"
+      #   url: /docs/3.5/applications/simple-bank-account/docs/api_endpoints
       - title: "ScalarDL Escrow payment CLI"
         url: /docs/3.5/applications/escrow-payment/README
   # Develop docs
@@ -342,6 +342,8 @@ versions:
     children:
       - title: "SDKs for ScalarDL"
         url: /docs/3.5/sdks/
+      - title: "ScalarDL Schema Loader"
+        url: /docs/3.5/schema-loader/
       - title: "How to Use Asset Proofs in ScalarDL"
         url: /docs/3.5/how-to-use-proof/
       - title: "How to Write a Good Contract for ScalarDL"
@@ -375,8 +377,6 @@ versions:
         url: /docs/3.5/helm-charts/mount-files-or-volumes-on-scalar-pods/
       - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
         url: /docs/3.5/helm-charts/use-secret-for-credentials/
-      - title: "ScalarDL Schema Loader"
-        url: /docs/3.5/schema-loader/
       - title: "How to start CA server with CFSSL"
         url: /docs/3.5/ca/caserver-getting-started/
   # Manage docs
@@ -420,8 +420,8 @@ versions:
     children:
       - title: "A simple bank account application"
         url: /docs/3.4/applications/simple-bank-account/README/
-      - title: "API endpoints"
-        url: /docs/3.4/applications/simple-bank-account/docs/api_endpoints/
+      # - title: "API endpoints"
+      #   url: /docs/3.4/applications/simple-bank-account/docs/api_endpoints/
       - title: "ScalarDL Escrow payment CLI"
         url: /docs/3.4/applications/escrow-payment/README/
   # Develop docs
@@ -429,6 +429,8 @@ versions:
     children:
       - title: "SDKs for ScalarDL"
         url: /docs/3.4/sdks/
+      - title: "ScalarDL Schema Loader"
+        url: /docs/3.4/schema-loader/
       - title: "How to Use Asset Proofs in ScalarDL"
         url: /docs/3.4/how-to-use-proof/
       - title: "How to Write a Good Contract for ScalarDL"
@@ -462,8 +464,6 @@ versions:
         url: /docs/3.4/helm-charts/mount-files-or-volumes-on-scalar-pods/
       - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
         url: /docs/3.4/helm-charts/use-secret-for-credentials/
-      - title: "ScalarDL Schema Loader"
-        url: /docs/3.4/schema-loader/
       - title: "How to start CA server with CFSSL"
         url: /docs/3.4/ca/caserver-getting-started/
   # Manage docs
