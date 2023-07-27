@@ -1,6 +1,6 @@
 # Managing ScalarDL on Managed Kubernetes Services
 
-The following documentation is to help you create a ScalarDL environment on managed Kubernetes services.
+The following documentation is to help you manage a ScalarDL environment on managed Kubernetes services.
 
 ## Monitoring guides
 

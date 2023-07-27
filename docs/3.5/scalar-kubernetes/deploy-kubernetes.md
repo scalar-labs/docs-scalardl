@@ -1,6 +1,6 @@
 # Deploying ScalarDL on Managed Kubernetes Services
 
-The following documentation is to help you create a ScalarDL environment on managed Kubernetes services.
+The following documentation is to help you set up and deploy a ScalarDL environment on managed Kubernetes services.
 
 ## Database setup guides
 
