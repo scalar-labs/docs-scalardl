@@ -121,10 +121,10 @@ versions:
   # Manage docs
   - title: "Manage"
     children:
-      - title: "Managing ScalarDL on Managed Kubernetes Services"
-        url: /docs/latest/scalar-kubernetes/manage-kubernetes/
       - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/latest/backup-restore/
+      - title: "Managing ScalarDL on Managed Kubernetes Services"
+        url: /docs/latest/scalar-kubernetes/manage-kubernetes/
   # Migrate docs
   # - title: "Migrate"
   #   children:
@@ -208,10 +208,10 @@ versions:
   # Manage docs
   - title: "Manage"
     children:
-      - title: "Managing ScalarDL on Managed Kubernetes Services"
-        url: /docs/3.7/scalar-kubernetes/manage-kubernetes/
       - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/3.7/backup-restore/
+      - title: "Managing ScalarDL on Managed Kubernetes Services"
+        url: /docs/3.7/scalar-kubernetes/manage-kubernetes/
   # Migrate docs
   # - title: "Migrate"
   #   children:
@@ -295,10 +295,10 @@ versions:
   # Manage docs
   - title: "Manage"
     children:
-      - title: "Managing ScalarDL on Managed Kubernetes Services"
-        url: /docs/3.6/scalar-kubernetes/manage-kubernetes/
       - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/3.6/backup-restore/
+      - title: "Managing ScalarDL on Managed Kubernetes Services"
+        url: /docs/3.6/scalar-kubernetes/manage-kubernetes/
   # Migrate docs
   # - title: "Migrate"
   #   children:
@@ -382,10 +382,10 @@ versions:
   # Manage docs
   - title: "Manage"
     children:
-      - title: "Managing ScalarDL on Managed Kubernetes Services"
-        url: /docs/3.5/scalar-kubernetes/manage-kubernetes/
       - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/3.5/backup-restore/
+      - title: "Managing ScalarDL on Managed Kubernetes Services"
+        url: /docs/3.5/scalar-kubernetes/manage-kubernetes/
   # Migrate docs
   # - title: "Migrate"
   #   children:
@@ -469,10 +469,10 @@ versions:
   # Manage docs
   - title: "Manage"
     children:
-      - title: "Managing ScalarDL on Managed Kubernetes Services"
-        url: /docs/3.4/scalar-kubernetes/manage-kubernetes/
       - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/3.4/backup-restore/
+      - title: "Managing ScalarDL on Managed Kubernetes Services"
+        url: /docs/3.4/scalar-kubernetes/manage-kubernetes/
   # Migrate docs
   # - title: "Migrate"
   #   children:
