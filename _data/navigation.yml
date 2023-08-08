@@ -141,6 +141,23 @@ versions:
         url: /docs/latest/implementation/
       - title: "ScalarDL Benchmarks"
         url: /docs/latest/scalardl-benchmarks/README/
+  # Release docs and notes
+  - title: "Releases"
+    children:
+      - title: "Release Notes"
+        url: /docs/releases/
+      # - title: "v3.8"
+      #   url: /docs/releases/release-3.8/
+      # - title: "v3.7"
+      #   url: /docs/releases/release-3.7/
+      # - title: "v3.6"
+      #   url: /docs/releases/release-3.6/
+      # - title: "v3.5"
+      #   url: /docs/releases/release-3.5/
+      # - title: "v3.4"
+      #   url: /docs/releases/release-3.4/
+      # - title: "Release Support Policy"
+      #   url: /docs/releases/release-support-policy
 
 "3.7":
   - title: "⬅ ScalarDL docs home" 
@@ -228,6 +245,23 @@ versions:
         url: /docs/3.7/implementation/
       - title: "ScalarDL Benchmarks"
         url: /docs/3.7/scalardl-benchmarks/README/
+  # Release docs and notes
+  - title: "Releases"
+    children:
+      - title: "Release Notes"
+        url: /docs/releases/
+      # - title: "v3.8"
+      #   url: /docs/releases/release-3.8/
+      # - title: "v3.7"
+      #   url: /docs/releases/release-3.7/
+      # - title: "v3.6"
+      #   url: /docs/releases/release-3.6/
+      # - title: "v3.5"
+      #   url: /docs/releases/release-3.5/
+      # - title: "v3.4"
+      #   url: /docs/releases/release-3.4/
+      # - title: "Release Support Policy"
+      #   url: /docs/releases/release-support-policy
 
 "3.6":
   - title: "⬅ ScalarDL docs home" 
@@ -315,6 +349,23 @@ versions:
         url: /docs/3.6/implementation/
       - title: "ScalarDL Benchmarks"
         url: /docs/3.6/scalardl-benchmarks/README/
+  # Release docs and notes
+  - title: "Releases"
+    children:
+      - title: "Release Notes"
+        url: /docs/releases/
+      # - title: "v3.8"
+      #   url: /docs/releases/release-3.8/
+      # - title: "v3.7"
+      #   url: /docs/releases/release-3.7/
+      # - title: "v3.6"
+      #   url: /docs/releases/release-3.6/
+      # - title: "v3.5"
+      #   url: /docs/releases/release-3.5/
+      # - title: "v3.4"
+      #   url: /docs/releases/release-3.4/
+      # - title: "Release Support Policy"
+      #   url: /docs/releases/release-support-policy
 
 "3.5":
   - title: "⬅ ScalarDL docs home" 
@@ -402,6 +453,23 @@ versions:
         url: /docs/3.5/implementation/
       - title: "ScalarDL Benchmarks"
         url: /docs/3.5/scalardl-benchmarks/README/
+  # Release docs and notes
+  - title: "Releases"
+    children:
+      - title: "Release Notes"
+        url: /docs/releases/
+      # - title: "v3.8"
+      #   url: /docs/releases/release-3.8/
+      # - title: "v3.7"
+      #   url: /docs/releases/release-3.7/
+      # - title: "v3.6"
+      #   url: /docs/releases/release-3.6/
+      # - title: "v3.5"
+      #   url: /docs/releases/release-3.5/
+      # - title: "v3.4"
+      #   url: /docs/releases/release-3.4/
+      # - title: "Release Support Policy"
+      #   url: /docs/releases/release-support-policy
 
 "3.4":
   - title: "⬅ ScalarDL docs home" 
@@ -489,3 +557,20 @@ versions:
         url: /docs/3.4/implementation/
       - title: "ScalarDL Benchmarks"
         url: /docs/3.4/scalardl-benchmarks/README/
+  # Release docs and notes
+  - title: "Releases"
+    children:
+      - title: "Release Notes"
+        url: /docs/releases/
+      # - title: "v3.8"
+      #   url: /docs/releases/release-3.8/
+      # - title: "v3.7"
+      #   url: /docs/releases/release-3.7/
+      # - title: "v3.6"
+      #   url: /docs/releases/release-3.6/
+      # - title: "v3.5"
+      #   url: /docs/releases/release-3.5/
+      # - title: "v3.4"
+      #   url: /docs/releases/release-3.4/
+      # - title: "Release Support Policy"
+      #   url: /docs/releases/release-support-policy
