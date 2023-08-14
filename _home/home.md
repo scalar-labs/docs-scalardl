@@ -51,7 +51,7 @@ recommended_row:
 
 # ScalarDL documentation
 
-ScalarDL is a scalable and practical byzantine-fault detection middleware for transactional database systems.
+ScalarDL is scalable and practical byzantine-fault detection middleware for transactional database systems.
 
 {% include product_row %}
 
