@@ -8,6 +8,7 @@ You must mount the key and certificate files to run ScalarDL Auditor.
 
 * Configuration example
     * ScalarDL Ledger
+
       ```yaml
       ledger:
         ledgerProperties: |
@@ -16,7 +17,9 @@ You must mount the key and certificate files to run ScalarDL Auditor.
           scalar.dl.ledger.auditor.enabled=true
           scalar.dl.ledger.proof.private_key_path=/keys/private-key
       ```
+
     * ScalarDL Auditor
+
       ```yaml
       auditor:
         auditorProperties: |
@@ -30,6 +33,7 @@ In this example, you need to mount a **private-key** and a **certificate** file 
 1. Set `extraVolumes` and `extraVolumeMounts` in the custom values file using the same syntax of Kubernetes manifest. You need to specify the directory name to the key `mountPath`.
    * Example
         * ScalarDL Ledger
+
           ```yaml
           ledger:
             extraVolumes:
@@ -41,7 +45,9 @@ In this example, you need to mount a **private-key** and a **certificate** file 
                 mountPath: /keys
                 readOnly: true
           ```
+
        * ScalarDL Auditor
+
          ```yaml
          auditor:
             extraVolumes:
@@ -60,11 +66,14 @@ In this example, you need to mount a **private-key** and a **certificate** file 
 
    * Example
        * ScalarDL Ledger
+
          ```console
          kubectl create secret generic ledger-keys \
            --from-file=private-key=./ledger-key.pem
          ```
+
        * ScalarDL Auditor
+
          ```console
          kubectl create secret generic auditor-keys \
            --from-file=private-key=./auditor-key.pem \
@@ -77,12 +86,15 @@ In this example, you need to mount a **private-key** and a **certificate** file 
 
    * Example
        * ScalarDL Ledger
+
          ```console
          $ ls -l /keys/
          total 0
          lrwxrwxrwx 1 root root 18 Jun 27 03:12 private-key -> ..data/private-key
          ```
+
        * ScalarDL Auditor
+
          ```console
          $ ls -l /keys/
          total 0
@@ -101,6 +113,7 @@ You can mount emptyDir to Scalar product pods by using the following keys in you
   * `auditor.extraVolumes` / `auditor.extraVolumeMounts` (ScalarDL Auditor)
 
 * Example (ScalarDB Server)
+
   ```yaml
   scalardb:
     extraVolumes:

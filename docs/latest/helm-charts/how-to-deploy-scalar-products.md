@@ -15,6 +15,7 @@ You must install the helm command to use Scalar Helm Charts. Please install the 
 ```console
 helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
 ```
+
 ```console
 helm repo update scalar-labs
 ```
