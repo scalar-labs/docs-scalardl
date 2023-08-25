@@ -1,6 +1,6 @@
 ---
 layout: parent-product-home
-permalink: /docs
+permalink: /docs/
 hidden: true
 toc: false
 product_row:
