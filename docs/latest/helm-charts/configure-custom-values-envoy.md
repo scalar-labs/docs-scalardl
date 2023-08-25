@@ -9,6 +9,7 @@ The Scalar Envoy chart is used via other charts (scalardb, scalardl, and scalard
 For example, if you want to configure the Scalar Envoy for ScalarDB Server, you can configure some Scalar Envoy configurations in the custom values file of ScalarDB as follows.
 
 * Example (scalardb-custom-values.yaml)
+
   ```yaml
   envoy:
     configurationsForScalarEnvoy: 

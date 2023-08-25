@@ -28,15 +28,19 @@ First, you need to install the following tools used in this guide.
 ## Step 2. Start minikube with docker driver (Optional / If you use minikube)
 
 1. Start minikube.
+
    ```console
    minikube start
    ```
 
 1. Check the status of the minikube and pods.
+
    ```console
    kubectl get pod -A
    ```
+
    [Command execution result]
+
    ```console
    NAMESPACE     NAME                               READY   STATUS    RESTARTS      AGE
    kube-system   coredns-64897985d-lbsfr            1/1     Running   1 (20h ago)   21h
@@ -47,9 +51,10 @@ First, you need to install the following tools used in this guide.
    kube-system   kube-scheduler-minikube            1/1     Running   1 (20h ago)   21h
    kube-system   storage-provisioner                1/1     Running   2 (19s ago)   21h
    ```
+
    If the minikube starts properly, you can see some pods are **Running** in the kube-system namespace.
 
-## Step 3. 
+## Step 3.
 
 After the Kubernetes cluster starts, you can try each Scalar Helm Charts on it. Please refer to the following documents for more details.
 
