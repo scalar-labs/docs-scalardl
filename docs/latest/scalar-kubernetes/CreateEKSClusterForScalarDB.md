@@ -1,4 +1,6 @@
-# Guidelines for creating an EKS cluster for ScalarDB Server
+# (Deprecated) Guidelines for creating an EKS cluster for ScalarDB Server
+
+**Note:** ScalarDB Server is now deprecated. Please use [ScalarDB Cluster](./ManualDeploymentGuideScalarDBClusterOnEKS.md) instead.
 
 This document explains the requirements and recommendations for creating an Amazon Elastic Kubernetes Service (EKS) cluster for ScalarDB Server deployment. For details on how to deploy ScalarDB Server on an EKS cluster, see [Deploy ScalarDB Server on Amazon EKS](./ManualDeploymentGuideScalarDBServerOnEKS.md).
 
@@ -76,6 +78,7 @@ Note that you also must allow the connections that EKS uses itself. For more det
 You can make a specific worker node dedicated to ScalarDB Server by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDB Server pods (e.g., application pods) on the worker node for ScalarDB Server. To add a label to the worker node, you can use the `kubectl` command as follows.
 
 * ScalarDB Server example
+
   ```console
   kubectl label node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardb
   ```
@@ -83,6 +86,7 @@ You can make a specific worker node dedicated to ScalarDB Server by using **node
 In addition, if you use [managed node groups](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) in EKS, you can set this label when you create a managed node group. If you add this label to make specific worker nodes dedicated to ScalarDB Server, you must configure **nodeAffinity** in your custom values file as follows.
 
 * ScalarDB Server example
+
   ```yaml
   envoy:
     affinity:
@@ -112,6 +116,7 @@ In addition, if you use [managed node groups](https://docs.aws.amazon.com/eks/la
 You can make a specific worker node dedicated to ScalarDB Server by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDB Server pods (e.g., application pods) on the worker node for ScalarDB Server. To add taint to the worker node, you can use the `kubectl` command as follows.
 
 * ScalarDB Server example
+
   ```console
   kubectl taint node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardb:NoSchedule
   ```
@@ -121,6 +126,7 @@ In addition, if you use [managed node groups](https://docs.aws.amazon.com/eks/la
 If you add this taint to make specific worker nodes dedicated to ScalarDB Server, you must configure **tolerations** in your custom values file as follows.
 
 * ScalarDB Server example
+
   ```yaml
   envoy:
     tolerations:

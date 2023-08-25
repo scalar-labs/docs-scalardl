@@ -43,14 +43,19 @@ If you use Scalar Helm Charts to deploy ScalarDB or ScalarDL, the `my-svc` and `
 
 * Example
   * ScalarDB Server
+
     ```console
     _scalardb._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
+
   * ScalarDL Ledger
+
     ```console
     _scalardl-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
+
   * ScalarDL Auditor
+
     ```console
     _scalardl-auditor-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
@@ -90,14 +95,19 @@ You can send a pause request to ScalarDB or ScalarDL pods in a Kubernetes enviro
 
 * Example
   * ScalarDB Server
+
     ```console
     kubectl run scalar-admin-pause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c pause -s _scalardb._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
+
   * ScalarDL Ledger
+
     ```console
     kubectl run scalar-admin-pause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c pause -s _scalardl-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
+
   * ScalarDL Auditor
+
     ```console
     kubectl run scalar-admin-pause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c pause -s _scalardl-auditor-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
@@ -108,14 +118,19 @@ You can send an unpause request to ScalarDB or ScalarDL pods in a Kubernetes env
 
 * Example
   * ScalarDB Server
+
     ```console
     kubectl run scalar-admin-unpause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c unpause -s _scalardb._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
+
   * ScalarDL Ledger
+
     ```console
     kubectl run scalar-admin-unpause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c unpause -s _scalardl-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
+
   * ScalarDL Auditor
+
     ```console
     kubectl run scalar-admin-unpause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c unpause -s _scalardl-auditor-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
@@ -127,6 +142,7 @@ The `scalar-admin` pods output the `pause completed` time and `unpause started` 
 ```console
 kubectl logs scalar-admin-pause
 ```
+
 ```console
 kubectl logs scalar-admin-unpause
 ```
