@@ -42,14 +42,19 @@ If you deploy your application (client) in the same Kubernetes cluster as Scalar
 The following are examples of ScalarDB and ScalarDL deployments on the `ns-scalar` namespace:
 
 * **ScalarDB Server**
+
     ```console
     scalardb-envoy.ns-scalar.svc.cluster.local
     ```
+
 * **ScalarDL Ledger**
+
     ```console
     scalardl-ledger-envoy.ns-scalar.svc.cluster.local
     ```
+
 * **ScalarDL Auditor**
+
     ```console
     scalardl-auditor-envoy.ns-scalar.svc.cluster.local
     ```
@@ -57,19 +62,24 @@ The following are examples of ScalarDB and ScalarDL deployments on the `ns-scala
 When using the Kubernetes service resource, you must set the above FQDN in the properties file for the application (client) as follows:
 
 * **Client properties file for ScalarDB Server**
+
     ```properties
     scalar.db.contact_points=<HELM_RELEASE_NAME>-envoy.<NAMESPACE>.svc.cluster.local
     scalar.db.contact_port=60051
     scalar.db.storage=grpc
     scalar.db.transaction_manager=grpc
     ```
+
 * **Client properties file for ScalarDL Ledger**
+
     ```properties
     scalar.dl.client.server.host=<HELM_RELEASE_NAME>-envoy.<NAMESPACE>.svc.cluster.local
     scalar.dl.ledger.server.port=50051
     scalar.dl.ledger.server.privileged_port=50052
     ```
+
 * **Client properties file for ScalarDL Ledger with ScalarDL Auditor mode enabled**
+
     ```properties
     # Ledger
     scalar.dl.client.server.host=<HELM_RELEASE_NAME>-envoy.<NAMESPACE>.svc.cluster.local
@@ -94,19 +104,23 @@ For more details on how to configure your custom values file, see [Service confi
 When using a load balancer, you must set the FQDN or IP address of the load balancer in the properties file for the application (client) as follows.
 
 * **Client properties file for ScalarDB Server**
+
     ```properties
     scalar.db.contact_points=<LOAD_BALANCER_FQDN_OR_IP_ADDRESS>
     scalar.db.contact_port=60051
     scalar.db.storage=grpc
     scalar.db.transaction_manager=grpc
     ```
+
 * **Client properties file for ScalarDL Ledger**
     ```properties
     scalar.dl.client.server.host=<LOAD_BALANCER_FQDN_OR_IP_ADDRESS>
     scalar.dl.ledger.server.port=50051
     scalar.dl.ledger.server.privileged_port=50052
     ```
+
 * **Client properties file for ScalarDL Ledger with ScalarDL Auditor mode enabled**
+
     ```properties
     # Ledger
     scalar.dl.client.server.host=<LOAD_BALANCER_FQDN_OR_IP_ADDRESS>
@@ -135,34 +149,45 @@ You can run client requests to ScalarDB or ScalarDL from a bastion server by run
 1. **(ScalarDL Auditor mode only)** In the bastion server for ScalarDL Ledger, configure an existing kubeconfig file or add a new kubeconfig file to access the Kubernetes cluster for ScalarDL Auditor. For details on how to configure the kubeconfig file of each managed Kubernetes cluster, see [Configure kubeconfig](./CreateBastionServer.md#configure-kubeconfig).
 2. Configure port forwarding to each service from the bastion server.
    * **ScalarDB Server**
+
      ```console
      kubectl port-forward -n <NAMESPACE> svc/<RELEASE_NAME>-envoy 60051:60051
      ```
+
    * **ScalarDL Ledger**
+
      ```console
      kubectl --context <CONTEXT_IN_KUBERNETES_FOR_SCALARDL_LEDGER> port-forward -n <NAMESPACE> svc/<RELEASE_NAME>-envoy 50051:50051
      kubectl --context <CONTEXT_IN_KUBERNETES_FOR_SCALARDL_LEDGER> port-forward -n <NAMESPACE> svc/<RELEASE_NAME>-envoy 50052:50052
      ```
+
    * **ScalarDL Auditor**
+
      ```console
      kubectl --context <CONTEXT_IN_KUBERNETES_FOR_SCALARDL_AUDITOR> port-forward -n <NAMESPACE> svc/<RELEASE_NAME>-envoy 40051:40051
      kubectl --context <CONTEXT_IN_KUBERNETES_FOR_SCALARDL_AUDITOR> port-forward -n <NAMESPACE> svc/<RELEASE_NAME>-envoy 40052:40052
      ```
+
 3. Configure the properties file to access ScalarDB or ScalarDL via `localhost`.
    * **Client properties file for ScalarDB Server**
+
      ```properties
      scalar.db.contact_points=localhost
      scalar.db.contact_port=60051
      scalar.db.storage=grpc
      scalar.db.transaction_manager=grpc
      ```
+
    * **Client properties file for ScalarDL Ledger**
+
      ```properties
      scalar.dl.client.server.host=localhost
      scalar.dl.ledger.server.port=50051
      scalar.dl.ledger.server.privileged_port=50052
      ```
+
    * **Client properties file for ScalarDL Ledger with ScalarDL Auditor mode enabled**
+
      ```properties
      # Ledger
      scalar.dl.client.server.host=localhost
@@ -175,4 +200,3 @@ You can run client requests to ScalarDB or ScalarDL from a bastion server by run
      scalar.dl.auditor.server.port=40051
      scalar.dl.auditor.server.privileged_port=40052
      ```
-

@@ -79,6 +79,7 @@ Note that you also must allow the connections that EKS uses itself. For more det
 You can make a specific worker node dedicated to ScalarDL Ledger by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDL Ledger pods (e.g., application pods) on the worker node for ScalarDL Ledger. To add a label to the worker node, you can use the `kubectl` command as follows.
 
 * ScalarDL Ledger example
+
   ```console
   kubectl label node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardl-ledger
   ```
@@ -86,6 +87,7 @@ You can make a specific worker node dedicated to ScalarDL Ledger by using **node
 In addition, if you use [managed node groups](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) in EKS, you can set this label when you create a managed node group. If you add this label to make specific worker nodes dedicated to ScalarDL Ledger, you must configure **nodeAffinity** in your custom values file as follows.
 
 * ScalarDL Ledger example
+
   ```yaml
   envoy:
     affinity:
@@ -115,6 +117,7 @@ In addition, if you use [managed node groups](https://docs.aws.amazon.com/eks/la
 You can make a specific worker node dedicated to ScalarDL Ledger by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDL Ledger pods (e.g., application pods) on the worker node for ScalarDL Ledger. To add taint to the worker node, you can use the `kubectl` command as follows.
 
 * ScalarDL Ledger example
+
   ```console
   kubectl taint node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardl-ledger:NoSchedule
   ```
@@ -124,6 +127,7 @@ In addition, if you use [managed node groups](https://docs.aws.amazon.com/eks/la
 If you add this taint to make specific worker nodes dedicated to ScalarDL Ledger, you must configure **tolerations** in your custom values file as follows.
 
 * ScalarDL Ledger example
+
   ```yaml
   envoy:
     tolerations:

@@ -7,9 +7,11 @@ Note that some Scalar products are available under commercial licenses, and the 
 ## Subscribe to Scalar products from AWS Marketplace
 
 1. Access to the AWS Marketplace.
+   * [ScalarDB Cluster Standard Edition (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-jx6qxatkxuwm4)
+   * [ScalarDB Cluster Premium Edition (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-djqw3zk6dwyk6)
    * [ScalarDL Ledger (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-wttioaezp5j6e)
    * [ScalarDL Auditor (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-ke3yiw4mhriuu)
-   * [ScalarDB (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2)
+   * [[Deprecated] ScalarDB Server (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2)
    * [ScalarDL Ledger (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-3jdwfmqonx7a2)
    * [ScalarDL Auditor (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-tj7svy75gu7m6)
 
@@ -55,8 +57,34 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
 
    You need to specify the private container registry (ECR) of the AWS Marketplace and the version (tag) as the value for `[].image.repository` and `[].image.version (tag)` in the custom values file. You also need to specify the service account name that you created in the previous step as the value for `[].serviceAccount.serviceAccountName` and set `[].serviceAccount.automountServiceAccountToken` to `true`.
 
+   * ScalarDB Cluster Examples
+     * ScalarDB Cluster Standard Edition (scalardb-cluster-standard-custom-values.yaml)
+
+        ```yaml
+        scalardbCluster:
+          image:
+            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-cluster-node-aws-payg-standard"
+            tag: "3.10.1"
+          serviceAccount:
+            serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
+            automountServiceAccountToken: true
+        ```
+
+     * ScalarDB Cluster Premium Edition (scalardb-cluster-premium-custom-values.yaml)
+
+       ```yaml
+       scalardbCluster:
+         image:
+           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-cluster-node-aws-payg-premium"
+           tag: "3.10.1"
+          serviceAccount:
+            serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
+            automountServiceAccountToken: true
+       ```
+
    * ScalarDL Examples
       * ScalarDL Ledger (scalardl-ledger-custom-values.yaml)
+
         ```yaml
         ledger:
           image:
@@ -66,7 +94,9 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
             serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
             automountServiceAccountToken: true
         ```
+
       * ScalarDL Auditor (scalardl-auditor-custom-values.yaml)
+
         ```yaml
         auditor:
           image:
@@ -83,7 +113,9 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
             repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-ledger-aws-payg"
             version: "3.8.0"
         ```
+
       * ScalarDL Schema Loader for Auditor (schema-loader-auditor-custom-values.yaml)
+
         ```yaml
         schemaLoading:
           image:
@@ -92,20 +124,40 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
         ```
 
 1. Deploy Scalar products by using Helm Charts in conjunction with the above custom values files.
+   * ScalarDB Cluster Examples
+     * ScalarDB Cluster Standard Edition
+
+       ```console
+       helm install scalardb-cluster-standard scalar-labs/scalardb-cluster -f scalardb-cluster-standard-custom-values.yaml
+       ```
+
+     * ScalarDB Cluster Premium Edition
+
+       ```console
+       helm install scalardb-cluster-premium scalar-labs/scalardb-cluster -f scalardb-cluster-premium-custom-values.yaml
+       ```
+
    * ScalarDL Examples
       * ScalarDL Ledger
+
         ```console
         helm install scalardl-ledger scalar-labs/scalardl -f ./scalardl-ledger-custom-values.yaml
         ```
+
       * ScalarDL Auditor
+
         ```console
         helm install scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
         ```
+
       * ScalarDL Schema Loader (Ledger)
+
         ```console
         helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-ledger-custom-values.yaml
         ```
+
       * ScalarDL Schema Loader (Auditor)
+
         ```console
         helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-auditor-custom-values.yaml
         ```
@@ -118,6 +170,7 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
    You need to specify the private container registry (ECR) of AWS Marketplace and the version (tag) as the value of `[].image.repository` and `[].image.version (tag)` in the custom values file.  
    * ScalarDB Examples
       * ScalarDB Server (scalardb-custom-values.yaml)
+
         ```yaml
         envoy:
           image:
@@ -131,14 +184,18 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
             repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-server"
             tag: "3.5.2"
         ```
+
       * ScalarDB GraphQL Server (scalardb-graphql-custom-values.yaml)
+
         ```yaml
         image:
           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-graphql"
           tag: "3.6.0"
         ```
+
    * ScalarDL Examples
       * ScalarDL Ledger (scalardl-ledger-custom-values.yaml)
+
         ```yaml
         envoy:
           image:
@@ -152,7 +209,9 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
             repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-ledger"
             version: "3.4.1"
         ```
+
       * ScalarDL Auditor (scalardl-auditor-custom-values.yaml)
+
         ```yaml
         envoy:
           image:
@@ -166,14 +225,18 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
             repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-auditor"
             version: "3.4.1"
         ```
+
       * ScalarDL Schema Loader for Ledger (schema-loader-ledger-custom-values.yaml)
+
         ```yaml
         schemaLoading:
           image:
             repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-ledger"
             version: "3.4.1"
         ```
+
       * ScalarDL Schema Loader for Auditor (schema-loader-auditor-custom-values.yaml)
+
         ```yaml
         schemaLoading:
           image:
@@ -184,27 +247,38 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
 1. Deploy the Scalar products using the Helm Chart with the above custom values files.
    * ScalarDB Examples
       * ScalarDB Server
+
         ```console
         helm install scalardb scalar-labs/scalardb -f ./scalardb-custom-values.yaml
         ```
+
       * ScalarDB GraphQL Server
+
         ```console
         helm install scalardb-graphql scalar-labs/scalardb-graphql -f scalardb-graphql-custom-values.yaml
         ```
+
    * ScalarDL Examples
       * ScalarDL Ledger
+
         ```console
         helm install scalardl-ledger scalar-labs/scalardl -f ./scalardl-ledger-custom-values.yaml
         ```
+
       * ScalarDL Auditor
+
         ```console
         helm install scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
         ```
+
       * ScalarDL Schema Loader (Ledger)
+
         ```console
         helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-ledger-custom-values.yaml
         ```
+
       * ScalarDL Schema Loader (Auditor)
+
         ```console
         helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-auditor-custom-values.yaml
         ```
@@ -216,6 +290,7 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
 1. Configure the AWS CLI with your credentials according to the [AWS Official Document (Configuration basics)](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html).
 
 1. Create a `reg-ecr-mp-secrets` secret resource for pulling the container images from the ECR of AWS Marketplace.
+
    ```console
    kubectl create secret docker-registry reg-ecr-mp-secrets \
      --docker-server=709825985650.dkr.ecr.us-east-1.amazonaws.com \
@@ -228,6 +303,7 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
    Also, you need to specify the `reg-ecr-mp-secrets` as the value of `[].imagePullSecrets`.
    * ScalarDB Examples
        * ScalarDB Server (scalardb-custom-values.yaml)
+
          ```yaml
          envoy:
            image:
@@ -245,7 +321,9 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
            imagePullSecrets:
              - name: "reg-ecr-mp-secrets"
          ```
+
        * ScalarDB GraphQL Server (scalardb-graphql-custom-values.yaml)
+
          ```yaml
          image:
            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-graphql"
@@ -253,8 +331,10 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
          imagePullSecrets:
            - name: "reg-ecr-mp-secrets"
          ```
+
    * ScalarDL Examples
        * ScalarDL Ledger (scalardl-ledger-custom-values.yaml)
+
          ```yaml
          envoy:
            image:
@@ -272,7 +352,9 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
            imagePullSecrets:
              - name: "reg-ecr-mp-secrets"
          ```
+
        * ScalarDL Auditor (scalardl-auditor-custom-values.yaml)
+
          ```yaml
          envoy:
            image:
@@ -290,7 +372,9 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
            imagePullSecrets:
              - name: "reg-ecr-mp-secrets"
          ```
+
        * ScalarDL Schema Loader for Ledger (schema-loader-ledger-custom-values.yaml)
+
          ```yaml
          schemaLoading:
            image:
@@ -299,7 +383,9 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
            imagePullSecrets:
              - name: "reg-ecr-mp-secrets"
          ```
+
        * ScalarDL Schema Loader for Auditor (schema-loader-auditor-custom-values.yaml)
+       
          ```yaml
          schemaLoading:
            image:

@@ -6,17 +6,23 @@ This guide explains how to restore databases that ScalarDB or ScalarDL uses in a
 
 1. Scale in ScalarDB or ScalarDL pods to **0** to stop requests to the backend databases. You can scale in the pods to **0** by using the `--set *.replicaCount=0` flag in the helm command.
    * ScalarDB Server
+
      ```console
      helm upgrade <release name> scalar-labs/scalardb -n <namespace> -f /path/to/<your custom values file for ScalarDB Server> --set scalardb.replicaCount=0
      ```
+
    * ScalarDL Ledger
+
      ```console
      helm upgrade <release name> scalar-labs/scalardl -n <namespace> -f /path/to/<your custom values file for ScalarDL Ledger> --set ledger.replicaCount=0
      ```
+
    * ScalarDL Auditor
+
      ```console
      helm upgrade <release name> scalar-labs/scalardl-audit -n <namespace> -f /path/to/<your custom values file for ScalarDL Auditor> --set auditor.replicaCount=0
      ```
+
 2. Restore the databases by using the point-in-time recovery (PITR) feature. 
 
    For details on how to restore the databases based on your managed database, please refer to the [Supplemental procedures to restore databases based on managed database](./RestoreDatabase.md#supplemental-procedures-to-restore-databases-based-on-managed-database) section in this guide.
@@ -29,14 +35,19 @@ This guide explains how to restore databases that ScalarDB or ScalarDL uses in a
    Please note that, if you are using Amazon DynamoDB, your data will be restored with another table name instead of another instance. In other words, the endpoint will not change after restoring the data. Instead, you will need to restore the data by renaming the tables in Amazon DynamoDB. For details on how to restore data with the same table name, please see the [Amazon DynamoDB](./RestoreDatabase.md#amazon-dynamodb) section in this guide.
 4. Scale out the ScalarDB or ScalarDL pods to **1** or more to start accepting requests from clients by using the `--set *.replicaCount=N` flag in the helm command.
    * ScalarDB Server
+
      ```console
      helm upgrade <release name> scalar-labs/scalardb -n <namespace> -f /path/to/<your custom values file for ScalarDB Server> --set scalardb.replicaCount=3
      ```
+
    * ScalarDL Ledger
+
      ```console
      helm upgrade <release name> scalar-labs/scalardl -n <namespace> -f /path/to/<your custom values file for ScalarDL Ledger> --set ledger.replicaCount=3
      ```
+
    * ScalarDL Auditor
+
      ```console
      helm upgrade <release name> scalar-labs/scalardl-audit -n <namespace> -f /path/to/<your custom values file for ScalarDL Auditor> --set auditor.replicaCount=3
      ```
@@ -87,21 +98,26 @@ When using the PITR feature, Azure Cosmos DB restores data by using another acco
 3. Update **database.properties** for ScalarDB Schema Loader or ScalarDL Schema Loader based on the newly restored account.
 
    ScalarDB implements the Cosmos DB adapter by using its stored procedures, which are installed when creating schemas by using ScalarDB Schema Loader or ScalarDL Schema Loader. However, the PITR feature in Cosmos DB does not restore stored procedures, so you will need to reinstall the required stored procedures for all tables after restoration. You can reinstall the required stored procedures by using the `--repair-all` option in ScalarDB Schema Loader or ScalarDL Schema Loader.
-   * **ScalarDB tables:** For details on how to configure **database.properties** for ScalarDB Schema Loader, see [Getting Started with ScalarDB on Cosmos DB for NoSQL](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb-on-cosmosdb.md).
+   * **ScalarDB tables:** For details on how to configure **database.properties** for ScalarDB Schema Loader, see [Configure ScalarDB for Cosmos DB for NoSQL](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb.md#configure-scalardb-1).
 
    * **ScalarDL tables:** For details on how to configure the custom values file for ScalarDL Schema Loader, see [Configure a custom values file for ScalarDL Schema Loader](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardl-schema-loader.md).
 
 4. Re-create the stored procedures by using the `--repair-all` flag in ScalarDB Schema Loader or ScalarDL Schema Loader as follows:
 
    * ScalarDB tables
+
      ```console
      java -jar scalardb-schema-loader-<version>.jar --config /path/to/<your database.properties> -f /path/to/<your schema.json file> [--coordinator] --repair-all 
      ```
+
    * ScalarDL Ledger tables
+
      ```console
      helm install repair-schema-ledger scalar-labs/schema-loading -n <namespace> -f /path/to/<your custom values file for ScalarDL Schema Loader for Ledger> --set "schemaLoading.commandArgs={--repair-all}"
      ```
+
    * ScalarDL Auditor tables
+   
      ```console
      helm install repair-schema-auditor scalar-labs/schema-loading -n <namespace> -f /path/to/<your custom values file for ScalarDL Schema Loader for Auditor> --set "schemaLoading.commandArgs={--repair-all}"
      ```

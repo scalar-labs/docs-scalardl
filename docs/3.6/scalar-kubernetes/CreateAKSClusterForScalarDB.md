@@ -96,6 +96,7 @@ Note that you also must allow the connections that AKS uses itself. For more det
 You can make a specific worker node dedicated to ScalarDB Server by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDB Server pods (e.g., application pods) on the worker node for ScalarDB Server. To add a label to the worker node, you can use the `kubectl` command as follows.
 
 * ScalarDB Server example
+
   ```console
   kubectl label node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardb
   ```
@@ -103,6 +104,7 @@ You can make a specific worker node dedicated to ScalarDB Server by using **node
 In addition, you can set this label in the Azure portal or use the `--labels` flag of the [az aks nodepool add](https://learn.microsoft.com/en-us/cli/azure/aks/nodepool?view=azure-cli-latest#az-aks-nodepool-add) command when you create a node pool. If you add this label to make specific worker nodes dedicated to ScalarDB Server, you must configure **nodeAffinity** in your custom values file as follows.
 
 * ScalarDB Server example
+
   ```yaml
   envoy:
     affinity:
@@ -132,6 +134,7 @@ In addition, you can set this label in the Azure portal or use the `--labels` fl
 You can make a specific worker node dedicated to ScalarDB Server by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDB Server pods (e.g., application pods) on the worker node for ScalarDB Server. To add taint to the worker node, you can use the `kubectl` command as follows.
 
 * ScalarDB Server example
+
   ```console
   kubectl taint node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardb:NoSchedule
   ```
@@ -139,6 +142,7 @@ You can make a specific worker node dedicated to ScalarDB Server by using **node
 In addition, you can set this taint in the Azure portal or use the `--node-taints` flag of the [az aks nodepool add](https://learn.microsoft.com/en-us/cli/azure/aks/nodepool?view=azure-cli-latest#az-aks-nodepool-add) command when you create a node pool. If you add this taint to make specific worker nodes dedicated to ScalarDB Server, you must configure **tolerations** in your custom values file as follows.
 
 * ScalarDB Server example
+
   ```yaml
   envoy:
     tolerations:

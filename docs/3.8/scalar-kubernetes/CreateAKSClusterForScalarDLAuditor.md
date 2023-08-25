@@ -117,10 +117,13 @@ Note that you also must allow the connections that AKS uses itself. For more det
 You can make a specific worker node dedicated to ScalarDL Ledger or ScalarDL Auditor by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDL Ledger and non-ScalarDL Auditor pods (e.g., application pods) on the worker node for ScalarDL Ledger and ScalarDL Auditor. To add a label to the worker node, you can use the `kubectl` command as follows.
 
 * ScalarDL Ledger example
+
   ```console
   kubectl label node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardl-ledger
   ```
+
 * ScalarDL Auditor example
+
   ```console
   kubectl label node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardl-auditor
   ```
@@ -128,6 +131,7 @@ You can make a specific worker node dedicated to ScalarDL Ledger or ScalarDL Aud
 In addition, you can set these labels in the Azure portal or use the `--labels` flag of the [az aks nodepool add](https://learn.microsoft.com/en-us/cli/azure/aks/nodepool?view=azure-cli-latest#az-aks-nodepool-add) command when you create a node pool. If you add these labels to make specific worker nodes dedicated to ScalarDL Ledger and ScalarDL Auditor, you must configure **nodeAffinity** in your custom values file as follows.
 
 * ScalarDL Ledger example
+
   ```yaml
   envoy:
     affinity:
@@ -151,7 +155,9 @@ In addition, you can set these labels in the Azure portal or use the `--labels` 
                   values:
                     - scalardl-ledger
   ```
+
 * ScalarDL Auditor example
+
   ```yaml
   envoy:
     affinity:
@@ -181,10 +187,13 @@ In addition, you can set these labels in the Azure portal or use the `--labels` 
 You can make a specific worker node dedicated to ScalarDL Ledger or ScalarDL Auditor by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDL Ledger and non-ScalarDL Auditor pods (e.g., application pods) on the worker node for ScalarDL Ledger and ScalarDL Auditor. To add taint to the worker node, you can use the `kubectl` command as follows.
 
 * ScalarDL Ledger example
+
   ```console
   kubectl taint node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardl-ledger:NoSchedule
   ```
+
 * ScalarDL Auditor example
+
   ```console
   kubectl taint node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardl-auditor:NoSchedule
   ```
@@ -192,6 +201,7 @@ You can make a specific worker node dedicated to ScalarDL Ledger or ScalarDL Aud
 In addition, you can set these taints in the Azure portal or use the `--node-taints` flag of the [az aks nodepool add](https://learn.microsoft.com/en-us/cli/azure/aks/nodepool?view=azure-cli-latest#az-aks-nodepool-add) command when you create a node pool. If you add these taints to make specific worker nodes dedicated to ScalarDL Ledger and ScalarDL Auditor, you must configure **tolerations** in your custom values file as follows.
 
 * ScalarDL Ledger example
+
   ```yaml
   envoy:
     tolerations:
@@ -207,7 +217,9 @@ In addition, you can set these taints in the Azure portal or use the `--node-tai
         operator: Equal
         value: scalardl-ledger
   ```
+
 * ScalarDL Auditor example
+
   ```yaml
   envoy:
     tolerations:

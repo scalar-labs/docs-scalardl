@@ -22,6 +22,7 @@ This document uses Helm for the deployment of Prometheus Operator.
 ```console
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 ```
+
 ```console
 helm repo update
 ```
@@ -41,11 +42,13 @@ Please refer to the following official document for more details on the configur
 Scalar products assume the Prometheus Operator is deployed in the `monitoring` namespace by default. So, please create the namespace `monitoring` and deploy Prometheus Operator in the `monitoring` namespace.
 
 1. Create a namespace `monitoring` on Kubernetes.
+
    ```console
    kubectl create namespace monitoring
    ```
 
 1. Deploy the kube-prometheus-stack.
+
    ```console
    helm install scalar-monitoring prometheus-community/kube-prometheus-stack -n monitoring -f scalar-prometheus-custom-values.yaml
    ```
@@ -74,17 +77,19 @@ scalar-monitoring-kube-pro-operator-865bbb8454-9ppkc     1/1     Running   0    
 
    Please refer to the following documents for more details on the custom values file of each Scalar product.
 
-   * [ScalarDB Server](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardb.md#prometheusgrafana-configurations)
-   * [ScalarDB GraphQL](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardb-graphql.md#prometheusgrafana-configurations)
-   * [ScalarDL Ledger](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardl-ledger.md#prometheusgrafana-configurations)
-   * [ScalarDL Auditor](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardl-auditor.md#prometheusgrafana-configurations)
+   * [ScalarDB Cluster](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardb-cluster.md#prometheus-and-grafana-configurations--recommended-in-production-environments)
+   * [(Deprecated) ScalarDB Server](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardb.md#prometheusgrafana-configurations--recommended-in-the-production-environment)
+   * [(Deprecated) ScalarDB GraphQL](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardb-graphql.md#prometheusgrafana-configurations-recommended-in-the-production-environment)
+   * [ScalarDL Ledger](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardl-ledger.md#prometheusgrafana-configurations-recommended-in-the-production-environment)
+   * [ScalarDL Auditor](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardl-auditor.md#prometheusgrafana-configurations-recommended-in-the-production-environment)
 
 1. Deploy (or Upgrade) Scalar products using Helm Charts with the above custom values file.
 
    Please refer to the following documents for more details on how to deploy/upgrade Scalar products.
 
-   * [ScalarDB Server](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb.md)
-   * [ScalarDB GraphQL](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-graphql.md)
+   * [ScalarDB Cluster](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-cluster.md)
+   * [(Deprecated) ScalarDB Server](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb.md)
+   * [(Deprecated) ScalarDB GraphQL](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-graphql.md)
    * [ScalarDL Ledger](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardl-ledger.md)
    * [ScalarDL Auditor](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardl-auditor.md)
 
@@ -105,38 +110,52 @@ You can access each dashboard from your local machine using the `kubectl port-fo
 
 1. Port forwarding to each service from your local machine.
    * Prometheus
+
      ```console
      kubectl port-forward -n monitoring svc/scalar-monitoring-kube-pro-prometheus 9090:9090
      ```
+
    * Alertmanager
+
      ```console
      kubectl port-forward -n monitoring svc/scalar-monitoring-kube-pro-alertmanager 9093:9093
      ```
+
    * Grafana
+
      ```console
      kubectl port-forward -n monitoring svc/scalar-monitoring-grafana 3000:3000
      ```
 
 1. Access each Dashboard.
    * Prometheus
+
      ```console
      http://localhost:9090/
      ```
+
    * Alertmanager
+
      ```console
      http://localhost:9093/
      ```
+
    * Grafana
+
      ```console
      http://localhost:3000/
      ```
+
        * Note:
            * You can see the user and password of Grafana as follows.
                * user
+
                  ```console
                  kubectl get secrets scalar-monitoring-grafana -n monitoring -o jsonpath='{.data.admin-user}' | base64 -d
                  ```
+
                * password
+               
                  ```console
                  kubectl get secrets scalar-monitoring-grafana -n monitoring -o jsonpath='{.data.admin-password}' | base64 -d
                  ```
