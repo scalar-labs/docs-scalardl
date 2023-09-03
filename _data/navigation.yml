@@ -1,34 +1,28 @@
 # Site Header
 # Make sure the `main` navigation in the `/_data/navigation.yml` file matches across all `docs-[scalar-product]` repos.
 main:
-  - title: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-    url: https://scalar-labs.com/
+  - title: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+    url: https://www.scalar-labs.com/
   - title: "Products"
     children:
       - title: "ScalarDB"
-        description: Cloud-native Universal Transaction Manager in Microservice Era
-        url: https://scalar-labs.com/products/scalardb
+        description: Database-agnostic universal transaction manager for achieving ACID transactions
+        url: https://www.scalar-labs.com/scalardb/
       - title: "ScalarDL"
-        url: https://scalar-labs.com/products/scalardl
-        description: Scalable and Practical Byzantine-fault Detection Middleware for Transactional Database Systems
-  - title: "Solution"
-    children:
-      - title: Preservation of documents
-        description: About Scalar's electronic document evidence preservation solutions.
-        url: https://scalar-labs.com/solution/doc
-      - title: "Consent management"
-        description: About Scalar's consent management solutions.
-        url: https://scalar-labs.com/solution/consent
+        url: https://www.scalar-labs.com/scalardl/
+        description: Scalable, practical Byzantine-fault detection middleware for transactional database systems
   - title: "Company"
     children:
       - title: "About us"
-        description: The company profile of Scalar Inc.
-        url: https://scalar-labs.com/company
+        description: Company profile and information
+        url: https://www.scalar-labs.com/about-us/
       - title: "News"
-        description: Scalar's announcements, product news, case studies, etc. are posted here.
-        url: https://scalar-labs.com/news
-  - title: "Support"
-    url: https://support.scalar-labs.com/
+        description: Announcements, product news, and case studies
+        url:  https://www.scalar-labs.com/news/
+  - title: "&nbsp;&nbsp;&nbsp;Pricing&nbsp;&nbsp;&nbsp;"
+    url: https://www.scalar-labs.com/pricing/
+  - title: "&nbsp;&nbsp;&nbsp;Support&nbsp;&nbsp;&nbsp;"
+    url: https://www.scalar-labs.com/support/
 
 # This navigation is for adding product versions that appear in the dropdown menu. Make sure the latest version is labeled `<VERSION> (latest)`.
 versions:
