@@ -7,4 +7,4 @@ toc: true
 
 ## Privacy policy
 
-For details about Scalar Inc.'s privacy policy, please see [Privacy Policy of Scalar Inc.](https://scalar-labs.com/privacy-policy)
+For details about Scalar Inc.'s privacy policy, please see [Privacy Policy of Scalar Inc.](https://www.scalar-labs.com/privacy-policy/)
