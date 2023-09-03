@@ -20,7 +20,7 @@
             {% endif %}
             {% if link.children %}
               <li class="dropdown {{ class }}">
-                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ link.title }}&nbsp;&nbsp;<span><svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"></path></svg></span></a>
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ link.title }}&nbsp;<span><svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"></path></svg></span></a>
                 <ul class="dropdown-content">
                   {% for children in link.children %}
                     <li>
@@ -52,7 +52,7 @@
 
         <!-- Add `Contact us` button (added by josh-wong) -->
         <div class="contact-greedy-nav">
-          <a href="https://scalar-labs.com/en/contact">
+          <a href="https://www.scalar-labs.com/contact/">
             <span class="btn btn--primary">{{ site.data.ui-text[site.locale].contact_label | default: "Contact us" }}</span>
           </a>
         </div>
