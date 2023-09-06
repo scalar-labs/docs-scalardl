@@ -9,7 +9,7 @@ figure.highlight {
   background: $base00;
   color: $base05;
   font-family: $monospace;
-  font-size: $type-size-6;
+  font-size: $type-size-5-5; /* Originally `font-size: $type-size-6;` (modified by josh-wong) */
   line-height: 1.8;
   border-radius: $border-radius;
 
@@ -17,6 +17,33 @@ figure.highlight {
   pre.highlight {
     margin: 0;
     padding: 1em;
+    /* white-space: pre-wrap; /* Added this initially to make commands in a code block wrap, but that looks a little confusing. Keeping this line but commenting it out for historical sake. (added by josh-wong) */
+  }
+
+  /* The following button style is for the copy button that allows users to copy content in a code block to a clipboard. (added by josh-wong) */
+  pre.highlight > button {
+    background-color: $scalar-primary-color;
+    border: none;
+    color: $lighter-gray;
+    display: block;
+    font-family: $sans-serif;
+    font-size: $type-size-4-5;
+    height: 100%;
+    line-height: 1.5;
+    min-width: 8.5%;
+    outline: none;
+    padding: 0.7em;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: all 0.2s ease-out;
+    
+    &:active,
+    &:focus,
+    &:hover {
+      background-color: darken($scalar-primary-color, 15%);
+      outline: none;
+    }
   }
 }
 
@@ -53,7 +80,7 @@ figure.highlight {
 }
 
 .highlight pre {
-  width: 100%;
+  width: 91.5%;
 }
 
 .highlight .hll {
