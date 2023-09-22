@@ -1,35 +1,36 @@
 ## Description
 
-**Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change.**
+> Provide a brief description about **why** this PR is necessary. Be sure to provide context.
 
+## Related issues and/or PRs
 
+> If this PR addresses or references any issues and/or other PRs, list them here. For example, "Fixes #123", "Related to #456", or "Addresses #789".
 
-### Related issue or PR
+## Changes made
 
-**If applicable, please provide a link to the issue related to this change.**
+> Outline the specific changes made in this pull request. Include relevant details, such as added features, bug fixes, code refactoring, or improvements.
 
-- [ ] **Related issue or PR:** [URL]
-- [ ] **No related issue or PR**
+## How these changes were tested
 
-### Type of change
-
-- [ ] Documentation (new or updated documentation)
-- [ ] Improvement (an improvement to the existing state)
-- [ ] New feature (nonbreaking change that adds functionality)
-- [ ] Bug fix (nonbreaking change that fixes an issue)
-
-## How has this been tested?
-
-**Please describe the tests that you ran to verify your changes and provide instructions so that we can reproduce. Please also list any relevant details for your test configuration.**
-
-- [ ] Test A
-- [ ] Test B
+> Describe the testing that you have performed to ensure the changes are working as expected. Include details about the test cases or scenarios covered.
 
 ## Checklist
 
-- [ ] I have performed a self-review of my own code.
 - [ ] I have commented my code, particularly in hard-to-understand areas.
-- [ ] I have made corresponding changes to the documentation.
+- [ ] I have updated the documentation to reflect the changes.
+- [ ] Any remaining open issues linked to this PR are documented and up-to-date (Jira, GitHub, etc.).
+- [ ] Tests (unit, integration, etc.) have been added for the changes.
 - [ ] My changes generate no new warnings.
-- [ ] I have conducted tests that prove my fix is effective or that my feature works.
-- [ ] Any dependent changes have been merged and published in downstream modules.
+- [ ] Any dependent changes in other PRs have been merged and published.
+
+## Additional notes (optional)
+
+> Provide any additional information or notes that may be relevant to the reviewers or stakeholders.
+
+## Release notes
+
+> Provide release note text for this PR based on the guidelines at [Guidelines for Writing Release Notes](https://developers.scalar-labs.com/docs/style-guide/release-notes/).
+> 
+> For example:
+> 
+> Added validation for the consensus commit mutation operation.
