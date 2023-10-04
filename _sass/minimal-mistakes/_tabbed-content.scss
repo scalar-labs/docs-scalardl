@@ -13,6 +13,7 @@
   background-color: transparent;
   float: left;
   border: none;
+  border-bottom: 4px solid transparent; /* Added because the bottom border of a tab being hovered over forces the tab title to move when tabs get stacked on narrow screens. (modified by josh-wong) */
   outline: none;
   cursor: pointer;
   padding: 14px 16px;
@@ -24,7 +25,7 @@
 /* Change background color of buttons on hover */
 .tab button:hover {
   color: $scalar-primary-color;
-  background-color: $scalar-light-gray-background-color;
+  background-color: mix(#fff, $scalar-primary-color, 90%);
   border-bottom: 4px solid $scalar-primary-color;
 }
 
