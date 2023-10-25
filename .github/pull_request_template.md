@@ -10,14 +10,11 @@
 
 > Outline the specific changes made in this pull request. Include relevant details, such as added features, bug fixes, code refactoring, or improvements.
 
-## How these changes were tested
-
-> Describe the testing that you have performed to ensure the changes are working as expected. Include details about the test cases or scenarios covered.
-
 ## Checklist
 
 > The following is a best-effort checklist. If any items in this checklist are not applicable to this PR or are dependent on other, unmerged PRs, please still mark the checkboxes after you have read and understood each item.
 
+- [ ] I have updated the side navigation (`_data/navigation.yml`) as necessary.
 - [ ] I have commented my code, particularly in hard-to-understand areas.
 - [ ] I have updated the documentation to reflect the changes.
 - [ ] Any remaining open issues linked to this PR are documented and up-to-date (Jira, GitHub, etc.).
