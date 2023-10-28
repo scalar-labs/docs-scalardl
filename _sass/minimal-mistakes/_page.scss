@@ -13,6 +13,7 @@
   max-width: 100%;
   -webkit-animation-delay: 0.15s;
   animation-delay: 0.15s;
+  padding-top: 4.85em; // Added to shift the body contents and navigation down so that the header/masthead can be fixed while still showing all page contents (added by josh-wong).
 
   @include breakpoint($x-large) {
     max-width: $max-width;

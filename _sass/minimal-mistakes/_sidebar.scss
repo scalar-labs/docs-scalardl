@@ -22,6 +22,8 @@
       /* opacity: 0.75; /* Ignoring opacity because it causes opacity to apply to the dropdown menu (modified by josh-wong) */
       -webkit-transition: opacity 0.2s ease-in-out;
       transition: opacity 0.2s ease-in-out;
+      position: sticky; // Added to shift the side navigation down so that the version navigation bar isn't hidden behind the header/masthead when scrolling the main contents of the page (added by josh-wong).
+      top: 4.85em; // Added to shift the side navigation down so that the version navigation bar isn't hidden behind the header/masthead when scrolling the main contents of the page (added by josh-wong).
   
       &:hover {
         opacity: 1;
@@ -250,7 +252,7 @@
         @include clearfix();
         position: -webkit-sticky;
         position: sticky;
-        top: 2em;
+        top: 8.5em; // Modified to shift the TOC sidebar down so that the fixed masthead doesn't cover the TOC sidebar; originally `top: 2em;` (modified by josh-wong).
         float: right;
   
         .toc {

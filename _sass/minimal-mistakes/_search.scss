@@ -33,7 +33,7 @@
 .search-content {
   display: none;
   visibility: hidden;
-  padding-top: 1em;
+  padding-top: 4.85em; // Modified to shift the body contents and navigation down so that the header/masthead can be fixed while still showing all page contents; originally `padding-top: 1em;` (added by josh-wong).
   padding-bottom: 1em;
 
   &__inner-wrap {

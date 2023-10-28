@@ -3,7 +3,9 @@
    ========================================================================== */
 
    .masthead {
-    position: relative;
+    position: fixed; // Makes the header/masthead fixed to the top of the page when scrolling; originally `position: relative` (modified by josh-wong).
+    background-color: $background-color; // Added so that there's a background (rather than being transparent) below around the header navigation (added by josh-wong).
+    width: 100%; // Added to make the header/masthead extend across the top of the screen (added by josh-wong).
     border-bottom: 1px solid $border-color;
     -webkit-animation: $intro-transition;
     animation: $intro-transition;
