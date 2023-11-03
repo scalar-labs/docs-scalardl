@@ -62,11 +62,15 @@
       font-size: $type-size-6;
       line-height: 1.5;
       margin-bottom: 12px;
+      padding-right: 7px;
   
       /* Added to give hover effect to items in navigation (added by josh-wong) */
       li {
         &:hover {
-          background-color: $scalar-light-gray-background-color;
+          background-color: mix(#fff, $scalar-primary-color, 90%);
+          margin-left: -10px;
+          padding-left: 10px;
+          padding-right: 7px;
         }
       }
     }
