@@ -349,3 +349,10 @@ figure.highlight {
     border-bottom: 0;
   }
 }
+
+/* Make Mermaid diagrams centered (added by josh-wong). */
+.language-mermaid {
+  display: block;
+  margin: auto;
+  text-align: center;
+}
