@@ -105,6 +105,7 @@ You can deploy PostgreSQL on the Kubernetes cluster as follows.
 1. Create a custom values file for ScalarDB Server (scalardb-custom-values.yaml).
    * AWS Marketplace
 
+     {% raw %}
      ```console
      cat << 'EOF' > scalardb-custom-values.yaml
      envoy:
@@ -128,9 +129,11 @@ You can deploy PostgreSQL on the Kubernetes cluster as follows.
        secretName: "scalardb-credentials-secret"
      EOF
      ```
+     {% endraw %}
 
    * Azure Marketplace
 
+     {% raw %}
      ```console
      cat << 'EOF' > scalardb-custom-values.yaml
      envoy:
@@ -154,6 +157,7 @@ You can deploy PostgreSQL on the Kubernetes cluster as follows.
        secretName: "scalardb-credentials-secret"
         EOF
      ```
+     {% endraw %}
 
 1. Create a Secret resource that includes a username and password for PostgreSQL.
 

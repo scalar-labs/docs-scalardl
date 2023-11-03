@@ -284,6 +284,7 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
 1. Create a custom values file for ScalarDL Schema Loader for Ledger (schema-loader-ledger-custom-values.yaml).
    * AWS Marketplace
 
+     {% raw %}
      ```console
      cat << 'EOF' > ~/scalardl-test/schema-loader-ledger-custom-values.yaml
      schemaLoading:
@@ -301,9 +302,11 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
        secretName: "ledger-credentials-secret"
      EOF
      ```
+     {% endraw %}
 
    * Azure Marketplace
 
+     {% raw %}
      ```console
      cat << 'EOF' > ~/scalardl-test/schema-loader-ledger-custom-values.yaml
      schemaLoading:
@@ -321,10 +324,12 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
        secretName: "ledger-credentials-secret"
      EOF
      ```
+     {% endraw %}
 
 1. Create a custom values file for ScalarDL Schema Loader for Auditor (schema-loader-auditor-custom-values.yaml).
    * AWS Marketplace
 
+     {% raw %}
      ```console
      cat << 'EOF' > ~/scalardl-test/schema-loader-auditor-custom-values.yaml
      schemaLoading:
@@ -342,9 +347,11 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
        secretName: "auditor-credentials-secret"
      EOF
      ```
+     {% endraw %}
 
    * Azure Marketplace
 
+     {% raw %}
      ```console
      cat << 'EOF' > ~/scalardl-test/schema-loader-auditor-custom-values.yaml
      schemaLoading:
@@ -362,6 +369,7 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
        secretName: "auditor-credentials-secret"
      EOF
      ```
+     {% endraw %}
 
 1. Create a secret resource that includes a username and password for PostgreSQL for Ledger.
 
@@ -414,6 +422,7 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
 1. Create a custom values file for ScalarDL Ledger (scalardl-ledger-custom-values.yaml).
    * AWS Marketplace
 
+     {% raw %}
      ```console
      cat << 'EOF' > ~/scalardl-test/scalardl-ledger-custom-values.yaml
      envoy:
@@ -448,9 +457,11 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
            readOnly: true
      EOF
      ```
+     {% endraw %}
 
    * Azure Marketplace
 
+     {% raw %}
      ```console
      cat << 'EOF' > ~/scalardl-test/scalardl-ledger-custom-values.yaml
      envoy:
@@ -484,10 +495,12 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
            readOnly: true
      EOF
      ```
+     {% endraw %}
 
 1. Create a custom values file for ScalarDL Auditor (scalardl-auditor-custom-values.yaml).
    * AWS Marketplace
 
+     {% raw %}
      ```console
      cat << 'EOF' > ~/scalardl-test/scalardl-auditor-custom-values.yaml
      envoy:
@@ -522,9 +535,11 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
            readOnly: true
      EOF
      ```
+     {% endraw %}
 
    * Azure Marketplace
 
+     {% raw %}
      ```console
      cat << 'EOF' > ~/scalardl-test/scalardl-auditor-custom-values.yaml
      envoy:
@@ -559,6 +574,7 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
            readOnly: true
      EOF
      ```
+     {% endraw %}
 
 1. Create secret resource `ledger-keys`.
 
