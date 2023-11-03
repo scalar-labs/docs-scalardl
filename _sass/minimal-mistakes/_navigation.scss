@@ -512,6 +512,7 @@
   .nav__list .nav__items {
     margin: 0 1em 0 0; /* Adjusted spacing since the default spacing is too close to the scroll bar; originally `margin: 0;` (modified by josh-wong) */
     font-size: 1.25rem;
+    padding-right: 7px;
     
     ul {
       padding-left: 0.5em;
@@ -523,15 +524,18 @@
       /* Added a hover element to make navigation items more prominent when a visitor hovers over a link (added by josh-wong) */
       &:hover {
         color: $scalar-primary-color;
+        background-color: mix(#fff, $scalar-primary-color, 90%);
       }
     }
   
     .active {
-      margin-left: -0.5em;
+      margin-left: -0.6em;
+      margin-right: -7px;
       padding-left: 0.5em;
-      font-weight: bold;
+      padding-right: 7px;
+      font-weight: 500;
       color: $scalar-primary-color;
-      background-color: $scalar-light-gray-background-color; /* Added to make the page that visitors are on more prominent in the side navigation (added by josh-wong) */
+      background-color: mix(#fff, $scalar-primary-color, 90%); /* Added to make the page that visitors are on more prominent in the side navigation (added by josh-wong) */
       display: block; /* Added to make the background color take up 100% of space in the side navigation (added by josh-wong) */
     }
   
@@ -605,7 +609,7 @@
   
     // Scrollspy marks toc items as .active when they are in focus
     .active a {
-      @include yiq-contrasted($active-color);
+      @include yiq-contrasted(mix(#fff, $scalar-primary-color, 90%));
     }
   }
   
