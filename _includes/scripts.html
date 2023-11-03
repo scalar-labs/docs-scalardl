@@ -32,7 +32,15 @@
   $(document).ready(function () {
     mermaid.initialize({
       startOnLoad:true,
-      theme: "default",
+      theme: "base", // Modified the Mermaid theme to match Scalar brand colors, as listed below; originally `theme: "default",` (modified by josh-wong).
+      themeVariables: {
+        primaryColor: "#D5EAFF",
+        primaryTextColor: "#3D4144",
+        primaryBorderColor: "#2673BB",
+        lineColor: "#3D4144",
+        secondaryColor: "#D5EAFF",
+        tertiaryColor: "#D5EAFF",
+      }
     });
     window.mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
   });
