@@ -207,7 +207,8 @@ body:hover .visually-hidden button {
   .fas,
   .fab,
   .far,
-  .fal {
+  .fal,
+  .fa-brands {
     color: $text-color;
   }
 
@@ -397,8 +398,8 @@ body:hover .visually-hidden button {
     }
   }
 
-  .fa-twitter,
-  .fa-twitter-square {
+  .fa-x-twitter,
+  .fa-x-twitter-square {
     color: $light-gray; /* Modified to match color of footer text; originally `$twitter-color;` (modified by josh-wong) */
 
     /* Makes social icons lighter when hovered over (added by josh-wong) */
