@@ -33,6 +33,7 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
        * ScalarDB Server
            * ScalarDB Server 3.7 or earlier (Go template syntax)
 
+             {% raw %}
              ```yaml
              scalardb:
                 databaseProperties: |
@@ -41,6 +42,7 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
                   scalar.db.password={{ default .Env.SCALAR_DB_PASSWORD "" }}
                   ...
              ```
+             {% endraw %}
 
            * ScalarDB Server 3.8 or later (Apache Commons Text syntax)
 
@@ -66,6 +68,7 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
 
        * ScalarDL Ledger (Go template syntax)
 
+          {% raw %}
           ```yaml
           ledger:
             ledgerProperties: |
@@ -74,9 +77,11 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
               scalar.db.password={{ default .Env.SCALAR_DB_PASSWORD "" }}
               ...
           ```
+          {% endraw %}
 
        * ScalarDL Auditor (Go template syntax)
 
+         {% raw %}
          ```yaml
          auditor:
            auditorProperties: |
@@ -85,9 +90,11 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
              scalar.db.password={{ default .Env.SCALAR_DB_PASSWORD "" }}
              ...
          ```
+         {% endraw %}
 
        * ScalarDL Schema Loader (Go template syntax)
 
+         {% raw %}
          ```yaml
          schemaLoading:
            databaseProperties: |
@@ -96,6 +103,7 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
              scalar.db.password={{ default .Env.SCALAR_DB_PASSWORD "" }}
              ...
          ```
+         {% endraw %}
 
 1. Create a `Secret` resource that includes credentials.  
    You need to specify the environment variable name as keys of the `Secret`.
@@ -157,6 +165,7 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
    * Example
        * Custom values file
 
+         {% raw %}
          ```yaml
          scalardb:
            databaseProperties: |
@@ -165,6 +174,7 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
              scalar.db.password={{ default .Env.SCALAR_DB_PASSWORD "" }}
              scalar.db.storage=jdbc
          ```
+         {% endraw %}
 
        * Properties file in containers
        
