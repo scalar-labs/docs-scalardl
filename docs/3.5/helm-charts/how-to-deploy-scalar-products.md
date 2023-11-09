@@ -15,7 +15,6 @@ You must install the helm command to use Scalar Helm Charts. Please install the 
 ```console
 helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
 ```
-
 ```console
 helm repo update scalar-labs
 ```
@@ -25,6 +24,8 @@ helm repo update scalar-labs
 You must prepare a Kubernetes cluster for the deployment of Scalar products. If you use EKS (Amazon Elastic Kubernetes Service) or AKS (Azure Kubernetes Service) in the production environment. Please refer to the following document for more details.
 
 * [scalar-labs/scalar-kubernetes](https://github.com/scalar-labs/scalar-kubernetes/blob/master/README.md)
+
+You must prepare a supported version of Kubernetes. For versions that Scalar Helm Charts supports, see [Supported Kubernetes versions](https://github.com/scalar-labs/helm-charts#supported-kubernetes-versions).
 
 ### Prepare a database (ScalarDB, ScalarDL Ledger, ScalarDL Auditor)
 
@@ -49,9 +50,9 @@ If you use a Kubernetes cluster other than EKS or AKS, you need to create a Secr
 
 Please refer to the following documents for more details on how to deploy each product.
 
-* [ScalarDB Server](./how-to-deploy-scalardb.md)
-* [ScalarDB GraphQL](./how-to-deploy-scalardb-graphql.md)
 * [ScalarDB Cluster](./how-to-deploy-scalardb-cluster.md)
 * [ScalarDL Ledger](./how-to-deploy-scalardl-ledger.md)
 * [ScalarDL Auditor](./how-to-deploy-scalardl-auditor.md)
 * [Scalar Manager](./how-to-deploy-scalar-manager.md)
+* [[Deprecated] ScalarDB Server](./how-to-deploy-scalardb.md)
+* [[Deprecated] ScalarDB GraphQL](./how-to-deploy-scalardb-graphql.md)
