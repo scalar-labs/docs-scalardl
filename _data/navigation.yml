@@ -225,6 +225,8 @@ versions:
         url: /docs/3.7/backup-restore/
       - title: "Managing ScalarDL on Managed Kubernetes Services"
         url: /docs/3.7/scalar-kubernetes/manage-kubernetes/
+      - title: "ScalarDL Alerts in Kubernetes"
+        url: /docs/3.7/scalar-kubernetes/alerts/README/
   # Migrate docs
   # - title: "Migrate"
   #   children:
@@ -329,6 +331,8 @@ versions:
         url: /docs/3.6/backup-restore/
       - title: "Managing ScalarDL on Managed Kubernetes Services"
         url: /docs/3.6/scalar-kubernetes/manage-kubernetes/
+      - title: "ScalarDL Alerts in Kubernetes"
+        url: /docs/3.6/scalar-kubernetes/alerts/README/
   # Migrate docs
   # - title: "Migrate"
   #   children:
@@ -433,6 +437,8 @@ versions:
         url: /docs/3.5/backup-restore/
       - title: "Managing ScalarDL on Managed Kubernetes Services"
         url: /docs/3.5/scalar-kubernetes/manage-kubernetes/
+      - title: "ScalarDL Alerts in Kubernetes"
+        url: /docs/3.5/scalar-kubernetes/alerts/README/
   # Migrate docs
   # - title: "Migrate"
   #   children:
@@ -537,6 +543,8 @@ versions:
         url: /docs/3.4/backup-restore/
       - title: "Managing ScalarDL on Managed Kubernetes Services"
         url: /docs/3.4/scalar-kubernetes/manage-kubernetes/
+      - title: "ScalarDL Alerts in Kubernetes"
+        url: /docs/3.4/scalar-kubernetes/alerts/README/
   # Migrate docs
   # - title: "Migrate"
   #   children:
