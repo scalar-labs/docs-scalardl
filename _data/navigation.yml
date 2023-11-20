@@ -119,6 +119,8 @@ versions:
         url: /docs/latest/backup-restore/
       - title: "Managing ScalarDL on Managed Kubernetes Services"
         url: /docs/latest/scalar-kubernetes/manage-kubernetes/
+      - title: "ScalarDL Alerts in Kubernetes"
+        url: /docs/latest/scalar-kubernetes/alerts/README/
   # Migrate docs
   # - title: "Migrate"
   #   children:
