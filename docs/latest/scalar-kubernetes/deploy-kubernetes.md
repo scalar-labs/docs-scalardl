@@ -9,6 +9,8 @@ The following documentation is to help you set up and deploy a ScalarDL environm
 
 ## Installation guides
 
+* [Production checklist for ScalarDL Ledger](ProductionChecklistForScalarDLLedger.md)
+* [Production checklist for ScalarDL Auditor](ProductionChecklistForScalarDLAuditor.md)
 * [How to install Scalar products through AWS Marketplace](AwsMarketplaceGuide.md)
 * [How to install Scalar products through Azure Marketplace](AzureMarketplaceGuide.md)
 * [Create a bastion server](CreateBastionServer.md)
