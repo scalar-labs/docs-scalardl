@@ -1,6 +1,6 @@
 # How to get a certificate
 
-This document describes how to get a certificate to enroll in DLT network.
+This document describes how to get a certificate to enroll in ScalarDL network.
 
 ## Prerequisites
 
@@ -16,6 +16,35 @@ We basically use CFSSL components for CA server and certificate handling.
 $ openssl ecparam -name prime256v1 -out prime256v1.pem
 $ openssl req -new -newkey ec:prime256v1.pem -nodes -keyout client-key.pem.pkcs8 -out client.csr
 $ openssl ec -in client-key.pem.pkcs8 -out client-key.pem
+```
+
+or
+
+```
+$ cat << EOF > client-cert.json
+{
+    "CN": "client.example",
+    "key": {
+        "algo": "ecdsa",
+        "size": 256
+    },
+    "names": [
+        {
+            "O": "Client Example",
+            "L": "Shinjuku",
+            "ST": "Tokyo",
+            "C": "JP"
+        }
+    ]
+}
+EOF
+
+$ cfssl selfsign "" ./client-cert.json | cfssljson -bare client
+$ ls -1
+client-cert.json
+client-key.pem
+client.csr
+client.pem
 ```
 
 ### Get a certificate from a CA Server
