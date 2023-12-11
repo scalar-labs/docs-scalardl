@@ -117,6 +117,8 @@ versions:
     children:
       - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/latest/backup-restore/
+      - title: "Troubleshooting Guide"
+        url: /docs/latest/troubleshooting-guide/
       - title: "Managing ScalarDL on Managed Kubernetes Services"
         url: /docs/latest/scalar-kubernetes/manage-kubernetes/
       - title: "ScalarDL Alerts in Kubernetes"
@@ -191,6 +193,8 @@ versions:
         url: /docs/3.7/how-to-write-function/
       - title: "How to get a certificate"
         url: /docs/3.7/ca/caclient-getting-started/
+      - title: "ScalarDL Authentication Guide"
+        url: /docs/3.7/authentication/
       - title: "How to Handle Errors in ScalarDL"
         url: /docs/3.7/how-to-handle-errors/
   # Deploy docs
@@ -223,6 +227,8 @@ versions:
     children:
       - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/3.7/backup-restore/
+      - title: "Troubleshooting Guide"
+        url: /docs/3.7/troubleshooting-guide/
       - title: "Managing ScalarDL on Managed Kubernetes Services"
         url: /docs/3.7/scalar-kubernetes/manage-kubernetes/
       - title: "ScalarDL Alerts in Kubernetes"
@@ -297,6 +303,8 @@ versions:
         url: /docs/3.6/how-to-write-function/
       - title: "How to get a certificate"
         url: /docs/3.6/ca/caclient-getting-started/
+      - title: "ScalarDL Authentication Guide"
+        url: /docs/3.6/authentication/
       - title: "How to Handle Errors in ScalarDL"
         url: /docs/3.6/how-to-handle-errors/
   # Deploy docs
@@ -329,6 +337,8 @@ versions:
     children:
       - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/3.6/backup-restore/
+      - title: "Troubleshooting Guide"
+        url: /docs/3.6/troubleshooting-guide/
       - title: "Managing ScalarDL on Managed Kubernetes Services"
         url: /docs/3.6/scalar-kubernetes/manage-kubernetes/
       - title: "ScalarDL Alerts in Kubernetes"
@@ -403,6 +413,8 @@ versions:
         url: /docs/3.5/how-to-write-function/
       - title: "How to get a certificate"
         url: /docs/3.5/ca/caclient-getting-started/
+      - title: "ScalarDL Authentication Guide"
+        url: /docs/3.5/authentication/
       - title: "How to Handle Errors in ScalarDL"
         url: /docs/3.5/how-to-handle-errors/
   # Deploy docs
@@ -435,6 +447,8 @@ versions:
     children:
       - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/3.5/backup-restore/
+      - title: "Troubleshooting Guide"
+        url: /docs/3.5/troubleshooting-guide/
       - title: "Managing ScalarDL on Managed Kubernetes Services"
         url: /docs/3.5/scalar-kubernetes/manage-kubernetes/
       - title: "ScalarDL Alerts in Kubernetes"
@@ -509,6 +523,8 @@ versions:
         url: /docs/3.4/how-to-write-function/
       - title: "How to get a certificate"
         url: /docs/3.4/ca/caclient-getting-started/
+      - title: "ScalarDL Authentication Guide"
+        url: /docs/3.4/authentication/
       - title: "How to Handle Errors in ScalarDL"
         url: /docs/3.4/how-to-handle-errors/
   # Deploy docs
@@ -541,6 +557,8 @@ versions:
     children:
       - title: "How to Backup and Restore Data in ScalarDL"
         url: /docs/3.4/backup-restore/
+      - title: "Troubleshooting Guide"
+        url: /docs/3.4/troubleshooting-guide/
       - title: "Managing ScalarDL on Managed Kubernetes Services"
         url: /docs/3.4/scalar-kubernetes/manage-kubernetes/
       - title: "ScalarDL Alerts in Kubernetes"
