@@ -34,5 +34,5 @@ jobs:
               owner,
               repo,
               issue_number: result.data.number,
-              labels: ['improvement', 'triage']
+              labels: ['documentation', 'scalardl', 'triage']
             });
