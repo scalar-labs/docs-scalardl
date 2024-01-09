@@ -4,7 +4,7 @@ name: ✨ Auto-create pull request - Common includes
 on:
   push:
     branches:
-      - _includes/common/**
+      - sync-common-includes
       
 jobs:
   create-pull-request:

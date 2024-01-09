@@ -4,7 +4,7 @@ name: ✨ Auto-create pull request - ScalarDL includes
 on:
   push:
     branches:
-      - _includes/scalardl/**
+      - sync-scalardl-includes
       
 jobs:
   create-pull-request:
