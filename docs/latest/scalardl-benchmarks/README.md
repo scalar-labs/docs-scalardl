@@ -1,107 +1,210 @@
-# ScalarDL Benchmarks
+# ScalarDL Benchmarking Tools
 
-This repository contains benchmark programs for ScalarDL.
+This tutorial describes how to run benchmarking tools for ScalarDL. Benchmarking is helpful for evaluating how a system performs against a set of standards.
 
-## Available workloads
+## Benchmark workloads
 
 - SmallBank
 - TPC-C (New-Order and Payment transactions only)
-- YCSB (Workload A, C and F)
+- YCSB (Workloads A, C, and F)
 
 ## Prerequisites
 
-- Java (OpenJDK 8 or higher)
+- One of the following Java Development Kits (JDKs):
+  - [Oracle JDK](https://www.oracle.com/java/technologies/downloads/) LTS version 8
+  - [OpenJDK](https://openjdk.org/install/) LTS version 8
 - Gradle
-- Kelpie
+- [Kelpie](https://github.com/scalar-labs/kelpie)
+  - Kelpie is a framework for performing end-to-end testing, such as system benchmarking and verification. Get the latest version from [Kelpie Releases](https://github.com/scalar-labs/kelpie/releases), and unzip the archive file.
 
-The benchmark uses Kelpie, which is a simple yet general framework for performing end-to-end testing such as system benchmarking and verification. Get the latest version of Kelpie from [here](https://github.com/scalar-labs/kelpie) and unzip the archive.
+{% capture notice--info %}
+**Note**
 
-## Usage
+Currently, only JDK 8 can be used when running the benchmarking tools.
+{% endcapture %}
 
-### Set up an environment
+<div class="notice--info">{{ notice--info | markdownify }}</div>
 
-This benchmark requires the followings:
-- A client to execute this benchmark
+### Set up your environment
+
+The benchmarking tools require the following:
+
+- A client to execute benchmarking
 - A target Ledger server
 - A target Auditor server (optional)
 
-Set up the above components and then properly configure Client, Ledger and Auditor properties by following the getting-started guides. Note that you do not need to download Client SDK and manually register your certificate. As described later, this benchmark suite will automatically register the required certificate and contracts.
+Set up the above components, and then configure the properties for client, Ledger, and Auditor (optional) according to the following getting started guides:
 
-- [Ledger-only configuration](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started.md)
-- [Ledger and Auditor configuration](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md)
+- [Ledger-only configuration](../getting-started.md)
+- [Ledger and Auditor configuration](../getting-started-auditor.md)
 
-### Build
+{% capture notice--info %}
+**Note**
+
+You don't need to download the client SDK and manually register your certificate. As described later in this tutorial, the benchmarking tools will automatically register the required certificate and contracts.
+{% endcapture %}
+
+<div class="notice--info">{{ notice--info | markdownify }}</div>
+
+## Set up the benchmarking tools
+
+The following sections describe how to set up the benchmarking tools.
+
+### Clone the ScalarDL benchmarks repository
+
+Open **Terminal**, then clone the ScalarDL benchmarks repository by running the following command:
 
 ```console
-./gradlew shadowJar
+$ git clone https://github.com/scalar-labs/scalardl-benchmarks
 ```
 
-### Load and run
+Then, go to the directory that contains the benchmarking files by running the following command:
 
-1. Prepare a configuration file
-   - A configuration file requires at least the locations of workload modules to run and the client configuration. The following example shows the case for running TPC-C benchmark. The client configuration should be matched with the benchmark environment set up above. You can use the `client.properties` file instead of specifying each configuration item. If the `config_file` is specified, all other configuration items will be ignored.
-     ```
-     [modules]
-     [modules.preprocessor]
-     name = "com.scalar.dl.benchmarks.tpcc.TpccLoader"
-     path = "./build/libs/scalardl-benchmarks-all.jar"
-     [modules.processor]
-     name = "com.scalar.dl.benchmarks.tpcc.TpccBench"
-     path = "./build/libs/scalardl-benchmarks-all.jar"
-     [modules.postprocessor]
-     name = "com.scalar.dl.benchmarks.tpcc.TpccReporter"
-     path = "./build/libs/scalardl-benchmarks-all.jar"
+```console
+$ cd scalardl-benchmarks
+```
 
-     [client_config]
-     ledger_host = "localhost"
-     auditor_host = "localhost"
-     auditor_enabled = "true"
-     cert_holder_id = "test_holder"
-     certificate = "/path/to/client.pem"
-     private_key = "/path/to/client-key.pem"
-     #config_file = "/path/to/client.properties"
-     ```
-   - You can define static parameters to pass to modules in the file. For details, see example configuration files such as `tpcc-benchmark-config.toml` and available parameters in [the following section](#common-parameters).
-2. Run a benchmark
-   ```
-   ${kelpie}/bin/kelpie --config your_config.toml
-   ```
-   - `${kelpie}` is a Kelpie directory, which is extracted from the archive you downloaded [above](#prerequisites).
-   - There are other options such as `--only-pre` (i.e., registering certificates and contracts and loading data) and `--only-process` (i.e., running benchmark), which run only the specified process. `--except-pre` and `--except-process` run a job without the specified process.
+### Build the tools
+
+To build the benchmarking tools, run the following command:
+
+```console
+$ ./gradlew shadowJar
+```
+
+### Prepare a benchmarking configuration file
+
+To run a benchmark, you must prepare a benchmarking configuration file. The configuration file requires at least the locations of the workload modules to run and the client configuration.
+
+The following is an example configuration for running the TPC-C benchmark. The configurations under `client_config` should match the [benchmarking environment that you previously set up](#set-up-your-environment).
+
+{% capture notice--info %}
+**Note**
+
+Alternatively, instead of specifying each client configuration item in the `.toml` file, you can use the ScalarDL client properties file. If `config_file` is specified (commented out below), all other configurations under `client_config` will be ignored.
+{% endcapture %}
+
+<div class="notice--info">{{ notice--info | markdownify }}</div>
+
+```toml
+[modules]
+[modules.preprocessor]
+name = "com.scalar.dl.benchmarks.tpcc.TpccLoader"
+path = "./build/libs/scalardl-benchmarks-all.jar"
+[modules.processor]
+name = "com.scalar.dl.benchmarks.tpcc.TpccBench"
+path = "./build/libs/scalardl-benchmarks-all.jar"
+[modules.postprocessor]
+name = "com.scalar.dl.benchmarks.tpcc.TpccReporter"
+path = "./build/libs/scalardl-benchmarks-all.jar"
+
+[client_config]
+config_file = "/<PATH_TO>/client.properties"
+#ledger_host = "localhost"
+#auditor_host = "localhost"
+#auditor_enabled = "true"
+#cert_holder_id = "test_holder"
+#certificate = "/<PATH_TO>/client.pem"
+#private_key = "/<PATH_TO>/client-key.pem"
+```
+
+You can define parameters to pass to modules in the configuration file. For details, see the sample configuration files below and available parameters in [Common parameters](#common-parameters):
+
+- **SmallBank:** [`smallbank-benchmark-config.toml`](https://github.com/scalar-labs/scalardl-benchmarks/blob/master/smallbank-benchmark-config.toml)
+- **TPC-C:** [`tpcc-benchmark-config.toml`](https://github.com/scalar-labs/scalardl-benchmarks/blob/master/tpcc-benchmark-config.toml)
+- **YCSB:** [`ycsb-benchmark-config.toml`](https://github.com/scalar-labs/scalardl-benchmarks/blob/master/ycsb-benchmark-config.toml)
+
+## Run a benchmark
+
+Select a benchmark, and follow the instructions to run the benchmark.
+
+<div id="tabset-1">
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'SmallBank_1', 'tabset-1')" id="defaultOpen-1">SmallBank</button>
+  <button class="tablinks" onclick="openTab(event, 'TPC-C_1', 'tabset-1')">TPC-C</button>
+  <button class="tablinks" onclick="openTab(event, 'YCSB_1', 'tabset-1')">YCSB</button>
+</div>
+
+<div id="SmallBank_1" class="tabcontent" markdown="1">
+
+To run the SmallBank benchmark, run the following command, replacing `<PATH_TO_KELPIE>` with the path to the Kelpie directory:
+
+```console
+$ /<PATH_TO_KELPIE>/bin/kelpie --config smallbank-benchmark-config.toml
+```
+</div>
+<div id="TPC-C_1" class="tabcontent" markdown="1">
+
+To run the TPC-C benchmark, run the following command, replacing `<PATH_TO_KELPIE>` with the path to the Kelpie directory:
+
+```console
+$ /<PATH_TO_KELPIE>/bin/kelpie --config tpcc-benchmark-config.toml
+```
+</div>
+<div id="YCSB_1" class="tabcontent" markdown="1">
+
+To run the YCSB benchmark, run the following command, replacing `<PATH_TO_KELPIE>` with the path to the Kelpie directory:
+
+```console
+$ /<PATH_TO_KELPIE>/bin/kelpie --config ycsb-benchmark-config.toml
+```
+</div>
+</div>
+
+In addition, the following options are available:
+
+- `--only-pre`. Only registers certificates and contracts and loads the data.
+- `--only-process`. Only runs the benchmark.
+- `--except-pre` Runs a job without registering certificates and contracts and loading the data.
+- `--except-process`. Runs a job without running the benchmark.
 
 ## Common parameters
 
-| name           | description                                             | default |
-|:---------------|:--------------------------------------------------------|:--------|
-| `concurrency`  | Number of threads for benchmarking.                     | 1       |
-| `run_for_sec`  | Duration of benchmark (in seconds).                     | 60      |
-| `ramp_for_sec` | Duration of ramp up time before benchmark (in seconds). | 0       |
+| Name           | Description                                             | Default   |
+|:---------------|:--------------------------------------------------------|:----------|
+| `concurrency`  | Number of threads for benchmarking.                     | `1`       |
+| `run_for_sec`  | Duration of benchmark (in seconds).                     | `60`      |
+| `ramp_for_sec` | Duration of ramp-up time before benchmark (in seconds). | `0`       |
 
 ## Workload-specific parameters
 
-### SmallBank
+Select a workload to see its available parameters.
 
-| name               | description                                         | default |
-|:-------------------|:----------------------------------------------------|:--------|
-| `num_accounts`     | Number of bank accounts for benchmarking.           | 100000  |
-| `load_concurrency` | Number of threads for loading.                      | 1       |
-| `load_batch_size`  | Number of accounts in a single loading transaction. | 1       |
+<div id="tabset-2">
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'SmallBank_2', 'tabset-2')" id="defaultOpen-2">SmallBank</button>
+  <button class="tablinks" onclick="openTab(event, 'TPC-C_2', 'tabset-2')">TPC-C</button>
+  <button class="tablinks" onclick="openTab(event, 'YCSB_2', 'tabset-2')">YCSB</button>
+</div>
 
-### TPC-C
+<div id="SmallBank_2" class="tabcontent" markdown="1">
 
-| name               | description                                           | default |
-|:-------------------|:------------------------------------------------------|:--------|
-| `num_warehouses`   | Number of warehouses (scale factor) for benchmarking. | 1       |
-| `rate_payment`     | Percentage of payment transaction.                    | 50      |
-| `load_concurrency` | Number of threads for loading.                        | 1       |
+| Name               | Description                                         | Default   |
+|:-------------------|:----------------------------------------------------|:----------|
+| `num_accounts`     | Number of bank accounts for benchmarking.           | `100000`  |
+| `load_concurrency` | Number of threads for loading.                      | `1`       |
+| `load_batch_size`  | Number of accounts in a single loading transaction. | `1`       |
 
-### YCSB
+</div>
+<div id="TPC-C_2" class="tabcontent" markdown="1">
 
-| name               | description                                        | default |
-|:-------------------|:---------------------------------------------------|:--------|
-| `record_count`     | Number of records for benchmarking.                | 1000    |
-| `payload_size`     | Payload size (in bytes) of each record.            | 1000    |
-| `ops_per_tx`       | Number of operations in a single transaction       | 2       |
-| `workload`         | Workload type (A, C or F).                         | A       |
-| `load_concurrency` | Number of threads for loading.                     | 1       |
-| `load_batch_size`  | Number of records in a single loading transaction. | 1       |
+| Name               | Description                                           | Default   |
+|:-------------------|:------------------------------------------------------|:----------|
+| `num_warehouses`   | Number of warehouses (scale factor) for benchmarking. | `1`       |
+| `rate_payment`     | Percentage of Payment transaction.                    | `50`      |
+| `load_concurrency` | Number of threads for loading.                        | `1`       |
+
+</div>
+<div id="YCSB_2" class="tabcontent" markdown="1">
+
+| Name               | Description                                        | Default   |
+|:-------------------|:---------------------------------------------------|:----------|
+| `record_count`     | Number of records for benchmarking.                | `1000`    |
+| `payload_size`     | Payload size (in bytes) of each record.            | `1000`    |
+| `ops_per_tx`       | Number of operations in a single transaction       | `2`       |
+| `workload`         | Workload type (A, C, or F).                        | `A`       |
+| `load_concurrency` | Number of threads for loading.                     | `1`       |
+| `load_batch_size`  | Number of records in a single loading transaction. | `1`       |
+
+</div>
+</div>
