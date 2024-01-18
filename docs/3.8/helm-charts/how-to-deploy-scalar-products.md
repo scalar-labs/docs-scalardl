@@ -51,8 +51,10 @@ If you use a Kubernetes cluster other than EKS or AKS, you need to create a Secr
 Please refer to the following documents for more details on how to deploy each product.
 
 * [ScalarDB Cluster](./how-to-deploy-scalardb-cluster.md)
+* [ScalarDB Analytics with PostgreSQL](./how-to-deploy-scalardb-analytics-postgresql.md)
 * [ScalarDL Ledger](./how-to-deploy-scalardl-ledger.md)
 * [ScalarDL Auditor](./how-to-deploy-scalardl-auditor.md)
+* [Scalar Admin for Kubernetes](./how-to-deploy-scalar-admin-for-kubernetes.md)
 * [Scalar Manager](./how-to-deploy-scalar-manager.md)
 * [[Deprecated] ScalarDB Server](./how-to-deploy-scalardb.md)
 * [[Deprecated] ScalarDB GraphQL](./how-to-deploy-scalardb-graphql.md)
