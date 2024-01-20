@@ -34,6 +34,9 @@
       }
     </script>
     {% endif %}
+    <!-- Adds support Font Aweosme 5 icons (added by josh-wong). -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
     
     {% include_cached skip-links.html %}
     {% include_cached masthead.html %}
