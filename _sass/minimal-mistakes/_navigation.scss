@@ -304,10 +304,18 @@
         z-index: 1;
         border: 1pt solid $border-color;
       }
+
+      .dropdown-content-description-title {
+        border-bottom: 1pt solid $border-color;
+        display: list-item;
+        padding-bottom: 3px;
+        font-weight: 500;
+      }
   
       .dropdown-content-description {
-        color: $gray;
-        font-weight: 400;
+        color: $text-color;
+        font-weight: normal;
+        padding-top: 6px;
         position: relative;
         box-shadow: none;
       }
@@ -516,6 +524,7 @@
     
     ul {
       padding-left: 0.5em;
+      padding-top: 0.5em; /* Added to add spacing above links to pages in side navigation (added by josh-wong). */
     }
   
     a {
@@ -524,7 +533,7 @@
       /* Added a hover element to make navigation items more prominent when a visitor hovers over a link (added by josh-wong) */
       &:hover {
         color: $scalar-primary-color;
-        background-color: mix(#fff, $scalar-primary-color, 90%);
+        /* background-color: mix(#fff, $scalar-primary-color, 90%); */ /* Commentted out since the color does not comply when the dark theme is used (changed by josh-wong). */
       }
     }
   
@@ -534,9 +543,13 @@
       padding-left: 0.5em;
       padding-right: 7px;
       font-weight: 500;
-      color: $scalar-primary-color;
-      background-color: mix(#fff, $scalar-primary-color, 90%); /* Added to make the page that visitors are on more prominent in the side navigation (added by josh-wong) */
+      color: $link-color-visited;
+      background-color: $scalar-light-gray-background-color; /* Added to make the page that visitors are on more prominent in the side navigation (added by josh-wong) */
       display: block; /* Added to make the background color take up 100% of space in the side navigation (added by josh-wong) */
+    
+      &:hover {
+        color: $link-color-hover;
+      }
     }
   
     @include breakpoint(max-width $large - 1px) {
@@ -576,14 +589,15 @@
   }
   
   .nav__sub-title {
-    display: block;
-    margin: 0.5rem 0;
-    padding: 0 0 0.25rem 0; /* Reduced spacing above product titles in side navigation; originally `padding: 0.25rem 0;` (modified by josh-wong) */
+    display: inline-block; /* Changed to make the top sub-title not transform/glitch when hovering over links in the side navigation (originally `display: block`). (modified by josh-wong). */
+    margin: 0 0; /* Changed to reduce spacing after the top sub-title in the side navigation (originally `margin: 0.5rem 0`). (modified by josh-wong). */
+    padding: 0 0 0.2rem 0; /* Reduced spacing above product titles in side navigation; originally `padding: 0.25rem 0;` (modified by josh-wong). */
     font-family: $sans-serif-narrow;
     font-size: $type-size-6;
     font-weight: bold;
     text-transform: uppercase;
     border-bottom: 1px solid $border-color;
+    width: 100%; /* Added to extend the line under subtitles across the side navigation while respecting the padding specified` (modified by josh-wong). */
   }
   
   /*
@@ -609,7 +623,7 @@
   
     // Scrollspy marks toc items as .active when they are in focus
     .active a {
-      @include yiq-contrasted(mix(#fff, $scalar-primary-color, 90%));
+      @include yiq-contrasted($scalar-light-gray-background-color); // Changed color to work in both light and dark mode; originally `@include yiq-contrasted(mix(#fff, $scalar-primary-color, 90%));` (added by josh-wong).
     }
   }
   
@@ -632,9 +646,10 @@
       line-height: 1.5;
       border-bottom: 1px solid $border-color;
   
-      &:hover {
-        color: $text-color;
-      }
+      /* Commented out this hover class because it causes the background of TOC items to change the background color when hovered over. Commenting out this class has no ill effects in neither light nor dark themes (modified by josh-wong). */
+      // &:hover {
+      //   color: $text-color;
+      // }
     }
   
     li ul > li a {
