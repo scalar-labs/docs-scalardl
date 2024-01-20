@@ -15,6 +15,26 @@
   </head>
 
   <body class="layout--{{ page.layout | default: layout.layout }}{% if page.classes or layout.classes %}{{ page.classes | default: layout.classes | join: ' ' | prepend: ' ' }}{% endif %}">
+    <!-- Adds a dark theme for visitors to switch to (added by josh-wong). -->
+    {% if site.minimal_mistakes_skin_dark %}
+    <link rel="stylesheet alternate" href="{{ '/assets/css/dark-theme.css' | relative_url }}" id="theme_source_2">
+    <script>
+      let theme = sessionStorage.getItem('theme');
+      if(theme === "dark")
+      {
+        sessionStorage.setItem('theme', 'dark');
+        node1 = document.getElementById('theme_source');
+        node2 = document.getElementById('theme_source_2');
+        node1.setAttribute('rel', 'stylesheet alternate'); 
+        node2.setAttribute('rel', 'stylesheet');
+      }
+      else
+      {
+        sessionStorage.setItem('theme', 'light');
+      }
+    </script>
+    {% endif %}
+    
     {% include_cached skip-links.html %}
     {% include_cached masthead.html %}
 
