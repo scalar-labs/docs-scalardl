@@ -533,7 +533,7 @@
       /* Added a hover element to make navigation items more prominent when a visitor hovers over a link (added by josh-wong) */
       &:hover {
         color: $scalar-primary-color;
-        /* background-color: mix(#fff, $scalar-primary-color, 90%); */ /* Commentted out since the color does not comply when the dark theme is used (changed by josh-wong). */
+        /* background-color: mix(#fff, $scalar-primary-color, 90%); */ /* Commented out since the color does not comply when the dark theme is used (changed by josh-wong). */
       }
     }
   
