@@ -12,6 +12,18 @@
   <head>
     {% include head.html %}
     {% include head/custom.html %}
+    
+    <!-- Added to eliminate flash of unstyled content (FOUC) when going to different pages while using the dark theme (added by josh-wong). -->
+    <style type="text/css">
+      .hidden {display:none;}
+    </style>
+    <script type="text/javascript" src="/assets/js/vendor/jquery/jquery-3.6.0.js"></script>
+    <script type="text/javascript">
+      $('html').addClass('hidden');
+      $(document).ready(function() {
+        $('html').removeClass('hidden');  // Can also use `$('html').removeClass('hidden');` 
+      });
+      </script>
   </head>
 
   <body class="layout--{{ page.layout | default: layout.layout }}{% if page.classes or layout.classes %}{{ page.classes | default: layout.classes | join: ' ' | prepend: ' ' }}{% endif %}">
