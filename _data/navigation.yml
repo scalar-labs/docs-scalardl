@@ -90,8 +90,6 @@ versions:
   # Deploy docs
   - title: "Deploy"
     children:
-      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/latest/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "Deploying ScalarDL on Managed Kubernetes Services"
         url: /docs/latest/scalar-kubernetes/deploy-kubernetes/
       - title: "How to install ScalarDL in your local environment with Docker"
@@ -200,8 +198,6 @@ versions:
   # Deploy docs
   - title: "Deploy"
     children:
-      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/3.7/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "Deploying ScalarDL on Managed Kubernetes Services"
         url: /docs/3.7/scalar-kubernetes/deploy-kubernetes/
       - title: "How to install ScalarDL in your local environment with Docker"
@@ -310,8 +306,6 @@ versions:
   # Deploy docs
   - title: "Deploy"
     children:
-      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/3.6/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "Deploying ScalarDL on Managed Kubernetes Services"
         url: /docs/3.6/scalar-kubernetes/deploy-kubernetes/
       - title: "How to install ScalarDL in your local environment with Docker"
@@ -420,8 +414,6 @@ versions:
   # Deploy docs
   - title: "Deploy"
     children:
-      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/3.5/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "Deploying ScalarDL on Managed Kubernetes Services"
         url: /docs/3.5/scalar-kubernetes/deploy-kubernetes/
       - title: "How to install ScalarDL in your local environment with Docker"
@@ -530,8 +522,6 @@ versions:
   # Deploy docs
   - title: "Deploy"
     children:
-      - title: "ScalarDL Deployment Sample on Kubernetes (Auditor mode)"
-        url: /docs/3.4/helm-charts/samples/scalardl/scalardl-auditor-mode-sample/README/
       - title: "Deploying ScalarDL on Managed Kubernetes Services"
         url: /docs/3.4/scalar-kubernetes/deploy-kubernetes/
       - title: "How to install ScalarDL in your local environment with Docker"
