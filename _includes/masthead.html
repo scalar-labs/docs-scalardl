@@ -25,7 +25,7 @@
                   {% for children in link.children %}
                     <li>
                       <a href="{{ children.url }}"> <!-- links in the header row point to Scalar home page pages, so no need to include the docs site base URL; originally `<a href="{{ site.baseurl }}{{ children.url }}"></a>` (modified by josh-wong) -->
-                        <span>{{ children.title }}</span><br />
+                      <span class="dropdown-content-description-title">{{ children.title }}</span>
                         <span class="dropdown-content-description">{{ children.description }}</span>
                       </a>
                     </li>
