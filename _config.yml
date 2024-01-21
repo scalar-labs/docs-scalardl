@@ -13,7 +13,7 @@ minimal_mistakes_skin_dark    : "dark"
 
 # Site Settings
 locale                   : "en-US"
-title                    : "ScalarDL documentation &#124; Scalar, Inc." # To change the "| Docs" site title, see `includes/masthead.html`.
+title                    : "ScalarDL Documentation &#124; Scalar, Inc." # To change the "| Docs" site title, see `includes/masthead.html`.
 title_separator          : "-"
 #subtitle                 : ""
 description              : &description "Scalable and practical Byzantine-fault detection middleware for transactional database systems" # the official description of the parent product
