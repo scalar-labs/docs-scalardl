@@ -26,19 +26,15 @@ If you use AKS (Azure Kubernetes Service), you must install the **Azure CLI** ac
 You can check if the tools are installed as follows.
 
 * kubectl
-
   ```console
   kubectl version --client
   ```
-
 * helm
-
   ```console
   helm version
   ```
 
 You can also check if your kubeconfig is properly configured as follows. If you see a URL response, kubectl is correctly configured to access your cluster.
-
 ```console
 kubectl cluster-info
 ```

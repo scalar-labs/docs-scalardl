@@ -24,7 +24,6 @@ This document uses Helm for the deployment of Prometheus Operator.
 ```console
 helm repo add grafana https://grafana.github.io/helm-charts
 ```
-
 ```console
 helm repo update
 ```
@@ -43,31 +42,24 @@ In the production environment, it is recommended to add labels to the worker nod
 Since the promtail pods deployed in this document collect only Scalar product logs, it is sufficient to deploy promtail pods only on the worker node where Scalar products are running. So, you should set nodeSelector in the custom values file (scalar-loki-stack-custom-values.yaml) as follows if you add labels to your Kubernetes worker node.
 
 * ScalarDB Cluster Example
-
   ```yaml
   promtail:
     nodeSelector:
       scalar-labs.com/dedicated-node: scalardb-cluster
   ```
-
 * (Deprecated) ScalarDB Server Example
-
   ```yaml
   promtail:
     nodeSelector:
       scalar-labs.com/dedicated-node: scalardb
   ```
-
 * ScalarDL Ledger Example
-
   ```yaml
   promtail:
     nodeSelector:
       scalar-labs.com/dedicated-node: scalardl-ledger
   ```
-
 * ScalarDL Auditor Example
-
   ```yaml
   promtail:
     nodeSelector:
@@ -84,7 +76,6 @@ In the production environment, it is recommended to add taints to the worker nod
 Since promtail pods are deployed as DaemonSet, you must set tolerations in the custom values file (scalar-loki-stack-custom-values.yaml) as follows if you add taints to your Kubernetes worker node.
 
 * ScalarDB Cluster Example
-
   ```yaml
   promtail:
     tolerations:
@@ -93,9 +84,7 @@ Since promtail pods are deployed as DaemonSet, you must set tolerations in the c
         operator: Equal
         value: scalardb-cluster
   ```
-
 * (Deprecated) ScalarDB Server Example
-
   ```yaml
   promtail:
     tolerations:
@@ -104,9 +93,7 @@ Since promtail pods are deployed as DaemonSet, you must set tolerations in the c
         operator: Equal
         value: scalardb
   ```
-
 * ScalarDL Ledger Example
-
   ```yaml
   promtail:
     tolerations:
@@ -115,9 +102,7 @@ Since promtail pods are deployed as DaemonSet, you must set tolerations in the c
         operator: Equal
         value: scalardl-ledger
   ```
-
 * ScalarDL Auditor Example
-
   ```yaml
   promtail:
     tolerations:
