@@ -37,9 +37,9 @@ $base00: #1C1C1C !default;
   $nav-toggle-height: 2rem !default;
   $navicon-width: 1.5rem !default;
   $navicon-height: 0.25rem !default;
-  $global-transition: all 0.2s ease-in-out !default;
-  $intro-transition: intro 0.3s both !default;
-   
+  $global-transition: all 0s ease-in-out !default; /* Changed the transition to `0s` because the transition causes an odd, slow color change when switching to dark mode; originally `0.2s` (modified by josh-wong). */
+  $intro-transition: intro 0s both !default; /* Changed the transition to `0s` to make the page feel like it loads quicker; originally `0.3s` (modified by josh-wong). */
+
 
 .author__urls.social-icons i,
 .author__urls.social-icons .svg-inline--fa,
