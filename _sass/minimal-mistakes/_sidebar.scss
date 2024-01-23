@@ -67,10 +67,10 @@
       /* Added to give hover effect to items in navigation (added by josh-wong) */
       li {
         &:hover {
-          background-color: mix(#fff, $scalar-primary-color, 90%);
-          margin-left: -10px;
-          padding-left: 10px;
-          padding-right: 7px;
+          background-color: $scalar-light-gray-background-color;
+          display: block;
+          margin-left: -0.5em; /* Added this property to add spacing at the beginning of the link when hovered over. (added by josh-wong) */
+          padding-left: 0.5em; /* Added this property to add spacing at the beginning of the link when hovered over. (added by josh-wong) */
         }
       }
     }
@@ -101,14 +101,14 @@
     a {
       display: block;
       padding: 0.5em 1em 0.3em 1em;
-      color: $background-color;
+      color: $text-color;
       text-decoration: none;
       -webkit-transition: none;
       transition: none;
       font-size: $type-size-5-5;
   
       &:hover {
-        color: $background-color;
+        color: $lighter-gray;
       }
     }
   }
@@ -139,6 +139,7 @@
       color: $background-color;
       cursor: pointer;
       opacity: unset;
+      color: $lighter-gray;
   
       &:before {
         content: "";
@@ -185,6 +186,7 @@
       vertical-align: middle;
       padding-top: 2px;
       float: right;
+      color: $lighter-gray;
     }
   
     .version-dropdown-content {
@@ -209,7 +211,7 @@
     .version-dropdown-content a {
       padding: 0 15px 0 15px;
       margin: 1px;
-      color: $dark-gray;
+      color: $text-color;
       line-height: 1.6em;
       margin-bottom: 0;
     }

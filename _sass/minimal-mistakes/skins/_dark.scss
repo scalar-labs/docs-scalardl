@@ -1,28 +1,51 @@
 /* ==========================================================================
-   Dark skin
+   Dark theme
    ========================================================================== */
 
 /* Colors */
-$background-color: #252a34 !default;
+$background-color: #121212 !default;
 $text-color: #eaeaea !default;
-$primary-color: #00adb5 !default;
+$primary-color: #2673BB !default;
 $border-color: mix(#fff, $background-color, 20%) !default;
 $code-background-color: mix(#000, $background-color, 15%) !default;
 $code-background-color-dark: mix(#000, $background-color, 20%) !default;
+$gray: #7a8288 !default;
+$dark-gray: #eaeaea !default; /* This color isn't really gray and should be refactored. However, doing so would take considerable time, so I'm leaving it as is for now (modified by josh-wong). */
 $form-background-color: mix(#000, $background-color, 15%) !default;
 $footer-background-color: mix(#000, $background-color, 30%) !default;
-$link-color: mix($primary-color, $text-color, 40%) !default;
-$link-color-hover: mix(#fff, $link-color, 25%) !default;
-$link-color-visited: mix(#000, $link-color, 25%) !default;
+$lighter-gray: mix(#fff, $gray, 90%) !default;
+$link-color: mix(#fff, #2673BB, 20%) !default;
+$link-color-hover: mix(#fff, $link-color, 50%) !default;
+$link-color-visited: mix(#fff, $link-color, 15%) !default;
+$link-color-visited: mix(#fff, #2673BB, 20%) !default;
 $masthead-link-color: $text-color !default;
 $masthead-link-color-hover: mix(#000, $text-color, 20%) !default;
 $navicon-link-color-hover: mix(#000, $background-color, 30%) !default;
+$scalar-primary-color: #2673BB !default;
+$scalar-light-gray-background-color: #1c1c1c !default; /* This color isn't really light gray and should be refactored. However, doing so would take considerable time, so I'm leaving it as is for now (modified by josh-wong). */
+
+/* syntax highlighting (base16) */
+$base00: #1C1C1C !default;
+
+/*
+  Other
+  ========================================================================== */
+
+  $border-radius: 0 !default;
+  $box-shadow: 0 5px 5px rgba(0, 0, 0, 0.125) !default;
+  $nav-height: 2em !default;
+  $nav-toggle-height: 2rem !default;
+  $navicon-width: 1.5rem !default;
+  $navicon-height: 0.25rem !default;
+  $global-transition: all 0s ease-in-out !default; /* Changed the transition to `0s` because the transition causes an odd, slow color change when switching to dark mode; originally `0.2s` (modified by josh-wong). */
+  $intro-transition: intro 0s both !default; /* Changed the transition to `0s` to make the page feel like it loads quicker; originally `0.3s` (modified by josh-wong). */
+
 
 .author__urls.social-icons i,
 .author__urls.social-icons .svg-inline--fa,
 .page__footer-follow .social-icons i,
 .page__footer-follow .social-icons .svg-inline--fa  {
-  color: inherit;
+  color: $lighter-gray;
 }
 
 .ais-search-box .ais-search-box--input {
