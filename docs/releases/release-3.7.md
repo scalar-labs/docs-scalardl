@@ -2,7 +2,7 @@
 
 This page includes a list of release notes for ScalarDL 3.7.
 
-## 3.7.2
+## v3.7.2
 
 **Release date:** April 18, 2023
 
@@ -19,7 +19,7 @@ This page includes a list of release notes for ScalarDL 3.7.
 - Added a fix to verify signatures when reading them from Ledger.
 - Fixed thread unsafety in Ledger validation.
 
-## 3.7.1
+## v3.7.1
 
 **Release date:** January 6, 2023
 
@@ -29,7 +29,7 @@ This page includes a list of release notes for ScalarDL 3.7.
 - Updated the version of ScalarDB.
 
 
-## 3.7.0
+## v3.7.0
 
 **Release date:** December 2, 2022
 

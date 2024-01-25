@@ -2,7 +2,7 @@
 
 This page includes a list of release notes for ScalarDL 3.4.
 
-## 3.4.5
+## v3.4.5
 
 **Release date:** April 18, 2023
 
@@ -14,7 +14,7 @@ This page includes a list of release notes for ScalarDL 3.4.
 - Updated the version of gRPC health probe to 0.4.15.
 - Used the latest version of Ubuntu.
 
-## 3.4.5
+## v3.4.5
 
 **Release date:** January 6, 2023
 
@@ -23,7 +23,7 @@ This page includes a list of release notes for ScalarDL 3.4.
 - Updated the in-house JRE Docker image.
 - Updated the version of ScalarDB.
 
-## 3.4.4
+## v3.4.4
 
 **Release date:** December 2, 2022
 
@@ -38,7 +38,7 @@ This page includes a list of release notes for ScalarDL 3.4.
 - Fixed [CVE-2022-27664](https://github.com/advisories/GHSA-69cg-p879-7622).
 - Added [@OverRide](https://github.com/OverRide) to fix a warning from ErrorProne.
 
-## 3.4.3
+## v3.4.3
 
 **Release date:** September 22, 2022
 
@@ -49,7 +49,7 @@ This page includes a list of release notes for ScalarDL 3.4.
 - Updated JRE 8 to 1.1.6.
 - Updated JRE 8 to 1.1.5.
 
-## 3.4.2
+## v3.4.2
 
 **Release date:** August 3, 2022
 
@@ -58,7 +58,7 @@ This page includes a list of release notes for ScalarDL 3.4.
 - Updated the internal JRE Docker image to 1.1.3.
 - Updated the internal JRE Docker image to 1.1.4.
 
-## 3.4.1
+## v3.4.1
 
 **Release date:** June 21, 2022
 
@@ -73,7 +73,7 @@ This page includes a list of release notes for ScalarDL 3.4.
 
 - Fixed [CVE-2022-27191](https://github.com/advisories/GHSA-8c26-wmh5-6g9v).
 
-## 3.4.0
+## v3.4.0
 
 **Release date:** February 22, 2022
 
