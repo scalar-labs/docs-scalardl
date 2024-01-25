@@ -37,3 +37,9 @@ td,
 th {
   vertical-align: middle;
 }
+
+/* Added the following style to show when a product version is no longer supported in `release-support-policy.md` (added by josh-wong) */
+.version-out-of-support {
+  background-color: $version-out-of-support-background-color;
+  opacity: 0.80;
+}

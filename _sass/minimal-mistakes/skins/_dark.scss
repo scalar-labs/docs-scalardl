@@ -13,6 +13,7 @@ $gray: #7a8288 !default;
 $dark-gray: #eaeaea !default; /* This color isn't really gray and should be refactored. However, doing so would take considerable time, so I'm leaving it as is for now (modified by josh-wong). */
 $form-background-color: mix(#000, $background-color, 15%) !default;
 $footer-background-color: mix(#000, $background-color, 30%) !default;
+$version-out-of-support-background-color: mix(#000, $background-color, 99%) !default;
 $lighter-gray: mix(#fff, $gray, 90%) !default;
 $link-color: mix(#fff, #2673BB, 20%) !default;
 $link-color-hover: mix(#fff, $link-color, 50%) !default;
