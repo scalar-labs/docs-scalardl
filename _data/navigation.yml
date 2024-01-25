@@ -152,8 +152,8 @@ versions:
       #   url: /docs/releases/release-3.5/
       # - title: "v3.4"
       #   url: /docs/releases/release-3.4/
-      # - title: "Release Support Policy"
-      #   url: /docs/releases/release-support-policy
+      - title: "Release Support Policy"
+        url: /docs/releases/release-support-policy
 
 "3.7":
   - title: "⬅ ScalarDL docs home" 
@@ -260,8 +260,8 @@ versions:
       #   url: /docs/releases/release-3.5/
       # - title: "v3.4"
       #   url: /docs/releases/release-3.4/
-      # - title: "Release Support Policy"
-      #   url: /docs/releases/release-support-policy
+      - title: "Release Support Policy"
+        url: /docs/releases/release-support-policy
 
 "3.6":
   - title: "⬅ ScalarDL docs home" 
@@ -368,8 +368,8 @@ versions:
       #   url: /docs/releases/release-3.5/
       # - title: "v3.4"
       #   url: /docs/releases/release-3.4/
-      # - title: "Release Support Policy"
-      #   url: /docs/releases/release-support-policy
+      - title: "Release Support Policy"
+        url: /docs/releases/release-support-policy
 
 "3.5":
   - title: "⬅ ScalarDL docs home" 
@@ -476,8 +476,8 @@ versions:
       #   url: /docs/releases/release-3.5/
       # - title: "v3.4"
       #   url: /docs/releases/release-3.4/
-      # - title: "Release Support Policy"
-      #   url: /docs/releases/release-support-policy
+      - title: "Release Support Policy"
+        url: /docs/releases/release-support-policy
 
 "3.4":
   - title: "⬅ ScalarDL docs home" 
@@ -584,5 +584,5 @@ versions:
       #   url: /docs/releases/release-3.5/
       # - title: "v3.4"
       #   url: /docs/releases/release-3.4/
-      # - title: "Release Support Policy"
-      #   url: /docs/releases/release-support-policy
+      - title: "Release Support Policy"
+        url: /docs/releases/release-support-policy
