@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # ScalarDL Benchmarks
 
 This repository contains benchmark programs for ScalarDL.

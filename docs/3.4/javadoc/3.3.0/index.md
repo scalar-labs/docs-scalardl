@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 * [auditor](./auditor)
 * [client](./client)
 * [common](./common)

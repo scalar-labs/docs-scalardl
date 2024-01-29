@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # [Deprecated] How to deploy ScalarDB Server
 
 {% capture notice--info %}

@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 ## Scalar DL Web Client SDK
 
 This is a library for web applications by which the applications can interact with a [Scalar DL](https://github.com/scalar-labs/scalardl) network.
