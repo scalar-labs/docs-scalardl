@@ -275,6 +275,20 @@ defaults:
       toc_sticky: true
       search: true
 
+  # Common docs in the `docs` root folder
+  - scope:
+      path: "docs" # Specifies the name of the folder where the common docs are located.
+      # type: "" # Since this scope uses `collection_dir`, we do not need to specify the type here.
+    values:
+      layout: page # Specifies the type of template used from the "_layouts" folder.
+      read_time: false # Shows the average reading time for pages.
+      share: false # Shows social media buttons to share pages.
+      sidebar: # Shows side navigation content from `_data/navigation.yml`.
+        nav: "latest" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"latest"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
+      toc: true
+      toc_sticky: true
+      search: false
+
   # Hides ScalarDB-related pages (e.g., Helm Charts docs) from search results.
   # NOTE: The following method causes a lengthy build time, which occasionally causes the build to remain "In progress" indefinitely. Because of that, it is currently commented out until we find an alternative way to hide specific pages from search results.
   # - scope:
