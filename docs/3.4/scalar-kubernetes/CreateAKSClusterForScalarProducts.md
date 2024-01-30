@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # Guidelines for creating an AKS cluster for Scalar products
 
 To create an Azure Kubernetes Service (AKS) cluster for Scalar products, refer to the following:

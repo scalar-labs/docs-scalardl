@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # Deploy ScalarDL Ledger on Amazon Elastic Kubernetes Service (EKS)
 
 This document explains how to deploy **ScalarDL Ledger** on Amazon Elastic Kubernetes Service (EKS).

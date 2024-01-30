@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # Guidelines for creating an Amazon EKS cluster for Scalar products
 
 To create an Amazon Elastic Kubernetes Service (EKS) cluster for Scalar products, refer to the following:

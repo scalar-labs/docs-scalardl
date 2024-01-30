@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # Scalar DL Node Client SDK
 
 This is a library for Node.js applications by which the applications can interact with a [Scalar DL](https://github.com/scalar-labs/scalardl) network.

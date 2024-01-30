@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # SDKs for ScalarDL
 
 The following is a list of SDKs for ScalarDL:
