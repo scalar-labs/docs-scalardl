@@ -49,8 +49,8 @@ This page describes Scalar's support policy for major and minor version releases
       <td>2024-03-20</td>
       <td><a href="https://scalar-labs.com/en/contact">Contact us</a></td>
     </tr>
-    <tr>
-      <td><a href="/docs/releases/release-3.4#v340">3.4</a></td>
+    <tr class="version-out-of-support">
+      <td><a href="/docs/releases/release-3.4#v340">3.4</a>*</td>
       <td>2022-02-22</td>
       <td>2023-08-03</td>
       <td>2024-01-30</td>
