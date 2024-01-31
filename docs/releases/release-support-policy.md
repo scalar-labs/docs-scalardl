@@ -5,7 +5,7 @@ This page describes Scalar's support policy for major and minor version releases
 ## Terms and definitions
 
 - **Maintenance Support:** Scalar will provide product updates, including code fixes and documentation, and technical support through its [support portal](https://support.scalar-labs.com/) to customers with a commercial license, until the date specified.
-- **Assistance Support:** Scalar will continue to provide technical support through its [support portal](https://support.scalar-labs.com/) to customers with a commercial license until the date specified.
+- **Assistance Support:** Scalar will provide limited technical support for non-code-related questions in the form of FAQs and inquiries through its [support portal](https://support.scalar-labs.com/) to customers with a commercial license until the date specified.
 - **Extended Support:** Extended Support is available as an add-on for customers with a commercial license who want support for a version that is no longer under Maintenance Support or Assistance Support.
 
 ## Release support timelines
