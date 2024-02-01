@@ -23,6 +23,14 @@ main:
     url: https://www.scalar-labs.com/pricing/
   - title: "&nbsp;&nbsp;&nbsp;Support&nbsp;&nbsp;&nbsp;"
     url: https://www.scalar-labs.com/support/
+  
+languages:
+  - language-title-top: ""
+    language-children:
+      - language-title: "English"
+        language-url: /docs/
+      - language-title: "日本語"
+        language-url: /docs/ja-jp/
 
 # This navigation is for adding product versions that appear in the dropdown menu. Make sure the latest version is labeled `<VERSION> (latest)`.
 versions:
