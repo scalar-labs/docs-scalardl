@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # Getting Started with ScalarDL Auditor
 
 This document explains how to get started with ScalarDL Auditor.

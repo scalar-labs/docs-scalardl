@@ -36,8 +36,9 @@ versions:
       version-url: /docs/3.6/
     - version-title: "3.5"
       version-url: /docs/3.5/
-    - version-title: "3.4"
-      version-url: /docs/3.4/
+    # The following link contains a list of versions of ScalarDB that are no longer supported.
+    - version-title: "Unsupported Versions"
+      version-url: /docs/unsupported-versions/
 
 # ----- Adding navigation for versions ----- #
 

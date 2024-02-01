@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # Getting Started with Helm Charts (Scalar Manager)
 Scalar Manager is a web-based dashboard that allows users to:
 * check the health of the Scalar products
