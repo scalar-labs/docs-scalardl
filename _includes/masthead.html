@@ -39,9 +39,9 @@
             {% endif %}
           {% endfor %}
         </ul>
-        <!-- Adds support for dark mode (added by josh-wong). -->
+        <!-- Adds toggle for light and dark modes for dark mode (added by josh-wong). -->
         {% if site.minimal_mistakes_skin_dark %}
-        <i class="fas fa-lightbulb btn-light-dark-mode" id="toggle" aria-hidden="true" onclick="dark_mode_btn_click()"></i>
+        <i class="fas fa-adjust btn-light-dark-mode" id="toggle" aria-hidden="true" onclick="dark_mode_btn_click()"></i>
         {% endif %}
         {% if site.search == true %}
         <button class="search__toggle" type="button">
