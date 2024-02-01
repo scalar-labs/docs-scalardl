@@ -31,10 +31,10 @@
     {% if site.minimal_mistakes_skin_dark %}
     <link rel="stylesheet alternate" href="{{ '/assets/css/dark-theme.css' | relative_url }}" id="theme_source_2">
     <script>
-      let theme = sessionStorage.getItem('theme');
+      let theme = localStorage.getItem('theme');
       if(theme === "dark")
       {
-        sessionStorage.setItem('theme', 'dark');
+        localStorage.setItem('theme', 'dark');
         node1 = document.getElementById('theme_source');
         node2 = document.getElementById('theme_source_2');
         node1.setAttribute('rel', 'stylesheet alternate'); 
@@ -42,7 +42,7 @@
       }
       else
       {
-        sessionStorage.setItem('theme', 'light');
+        localStorage.setItem('theme', 'light');
       }
     </script>
     {% endif %}
