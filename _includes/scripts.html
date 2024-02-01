@@ -48,3 +48,25 @@
 
 <!-- The following script allows users to press a button to copy content in a code block to a clipboard. (added by josh-wong) -->
 <script src="/assets/js/copy-code-to-clipboard.js"></script>
+
+<!-- Adds support for dark mode. Would be nice if we could have the button change from a moon to a sun when switching to dark mode (and from a sun to a moon when switching to light mode) (added by josh-wong).-->
+<script>
+  function dark_mode_btn_click() {
+    var node1 = document.getElementById('theme_source');
+    var node2 = document.getElementById('theme_source_2');
+    if(node1.getAttribute('rel')=='stylesheet'){
+      node2.setAttribute('rel', 'stylesheet');
+      setTimeout(function(){
+        node1.setAttribute('rel', 'stylesheet alternate');
+      }, 10);
+      localStorage.setItem('theme', 'dark');
+    }else{
+      node1.setAttribute('rel', 'stylesheet');
+      setTimeout(function(){
+        node2.setAttribute('rel', 'stylesheet alternate');
+      }, 10);
+      localStorage.setItem('theme', 'light');
+    }
+    return false;
+  }
+</script>
