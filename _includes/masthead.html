@@ -38,11 +38,39 @@
               </li>
             {% endif %}
           {% endfor %}
-        </ul>
+          </ul>
+
         <!-- Adds support for dark mode (added by josh-wong). -->
         {% if site.minimal_mistakes_skin_dark %}
         <i class="fas fa-fw fa-lightbulb btn-light-dark-mode" aria-hidden="true" onclick="node1=document.getElementById('theme_source');node2=document.getElementById('theme_source_2');if(node1.getAttribute('rel')=='stylesheet'){node1.setAttribute('rel', 'stylesheet alternate'); node2.setAttribute('rel', 'stylesheet');sessionStorage.setItem('theme', 'dark');}else{node2.setAttribute('rel', 'stylesheet alternate'); node1.setAttribute('rel', 'stylesheet');sessionStorage.setItem('theme', 'light');} return false;"></i>
         {% endif %}
+
+        <!-- Adds support for the language switcher icon for the languages listed in `_data/navigation.yml` (added by josh-wong). -->
+        <nav id="site-nav" class="language-greedy-nav">
+          <ul class="language-visible-links">
+          {%- for link in site.data.navigation.languages -%}
+            {% assign class = nil %}
+            {% if page.language-url contains link.language-url %}
+              {% assign class = 'active' %}
+            {% endif %}
+            {% if link.language-children %}
+            <li class="language-dropdown {{ class }}">
+              <label for="touch-language"><a class="language-dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">&nbsp;&nbsp;<i class="fas fa-language fa-2x language-toggle" aria-hidden="true"></i><span><svg class="language-dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"></path></svg></span></a></label>
+              <input type="checkbox" id="touch-language">
+              <ul class="language-dropdown-content">
+                {% for language-children in link.language-children %}
+                  <li>
+                    <a href="{{ site.baseurl }}{{ language-children.language-url }}">
+                      <span>{{ language-children.language-title }}</span>
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </li>
+            {% endif %}
+          {% endfor %}
+          </ul>
+        </nav>
 
         {% if site.search == true %}
         <button class="search__toggle" type="button">
