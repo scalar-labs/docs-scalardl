@@ -1,26 +1,27 @@
 # Site Header
 # Make sure the `main` navigation in the `/_data/navigation.yml` file matches across all `docs-[scalar-product]` repos.
 main:
-  - title: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+  - title: "&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;"
     url: https://www.scalar-labs.com/
-  - title: "Products"
-    children:
-      - title: "ScalarDB"
-        description: Database-agnostic universal transaction manager for achieving ACID transactions
-        url: https://www.scalar-labs.com/scalardb/
-      - title: "ScalarDL"
-        url: https://www.scalar-labs.com/scalardl/
-        description: Scalable, practical Byzantine-fault detection middleware for transactional database systems
-  - title: "Company"
-    children:
-      - title: "About us"
-        description: Company profile and information
-        url: https://www.scalar-labs.com/about-us/
-      - title: "News"
-        description: Announcements, product news, and case studies
-        url:  https://www.scalar-labs.com/news/
-  - title: "&nbsp;&nbsp;&nbsp;Pricing&nbsp;&nbsp;&nbsp;"
-    url: https://www.scalar-labs.com/pricing/
+  # Removed the following menu items because the heading (masthead) is getting too crowded (modified by josh-wong).
+  # - title: "Products"
+  #   children:
+  #     - title: "ScalarDB"
+  #       description: Database-agnostic universal transaction manager for achieving ACID transactions
+  #       url: https://www.scalar-labs.com/scalardb/
+  #     - title: "ScalarDL"
+  #       url: https://www.scalar-labs.com/scalardl/
+  #       description: Scalable, practical Byzantine-fault detection middleware for transactional database systems
+  # - title: "Company"
+  #   children:
+  #     - title: "About us"
+  #       description: Company profile and information
+  #       url: https://www.scalar-labs.com/about-us/
+  #     - title: "News"
+  #       description: Announcements, product news, and case studies
+  #       url:  https://www.scalar-labs.com/news/
+  # - title: "&nbsp;&nbsp;&nbsp;Pricing&nbsp;&nbsp;&nbsp;"
+  #   url: https://www.scalar-labs.com/pricing/
   - title: "&nbsp;&nbsp;&nbsp;Support&nbsp;&nbsp;&nbsp;"
     url: https://www.scalar-labs.com/support/
   
