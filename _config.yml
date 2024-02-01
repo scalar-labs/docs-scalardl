@@ -164,6 +164,21 @@ defaults:
       search: false
       classes: wide # Expands the page to take up space where the TOC would normally be.
 
+  # _home - Do not change the `_home` scope.
+  - scope:
+      path: "_home/ja-jp" # Specifies the name of the folder where the parent product docs home page, error page, and other common pages are located.
+      type: home # Specifies the collection type for the parent product home page.
+    values:
+      layout: page # Specifies the type of template used from the "_layouts" folder.
+      read_time: false # Shows the average reading time for pages.
+      share: false # Shows social media buttons to share pages.
+      sidebar: # Shows side navigation content from `_data/navigation.yml`.
+        nav: "latest-ja-jp"
+      toc: false
+      toc_sticky: false
+      search: false
+      classes: wide # Expands the page to take up space where the TOC would normally be.
+
   ############### Template for versions. When adding a new version (`scope`), copy this template and replace `<VERSION>` with the version number`,  and change `search` for the previous version to `false`. ###############
 
   # # <VERSION>
@@ -286,6 +301,101 @@ defaults:
       share: false # Shows social media buttons to share pages.
       sidebar: # Shows side navigation content from `_data/navigation.yml`.
         nav: "latest" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"latest"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
+      toc: true
+      toc_sticky: true
+      search: false
+
+  # latest - Japanese docs
+  - scope:
+      path: "docs/ja-jp/latest" # Specifies the name of the folder where this version of docs are located.
+      # type: "" # Since this scope uses `collection_dir`, we do not need to specify the type here.
+    values:
+      layout: page # Specifies the type of template used from the "_layouts" folder.
+      read_time: false # Shows the average reading time for pages.
+      share: false # Shows social media buttons to share pages.
+      sidebar: # Shows side navigation content from `_data/navigation.yml`.
+        nav: "latest-ja-jp" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"latest"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
+      toc: true
+      toc_sticky: true
+      search: true
+
+  # 3.8 - Japanese docs
+  - scope:
+      path: "docs/ja-jp/3.8" # Specifies the name of the folder where this version of docs are located.
+      # type: "" # Since this scope uses `collection_dir`, we do not need to specify the type here.
+    values:
+      layout: page # Specifies the type of template used from the "_layouts" folder.
+      read_time: false # Shows the average reading time for pages.
+      share: false # Shows social media buttons to share pages.
+      sidebar: # Shows side navigation content from `_data/navigation.yml`.
+        nav: "latest-ja-jp" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"latest"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
+      toc: true
+      toc_sticky: true
+      search: false
+  # 3.7 - Japanese docs
+  - scope:
+      path: "docs/ja-jp/3.7" # Specifies the name of the folder where this version of docs are located.
+      # type: "" # Since this scope uses `collection_dir`, we do not need to specify the type here.
+    values:
+      layout: page # Specifies the type of template used from the "_layouts" folder.
+      read_time: false # Shows the average reading time for pages.
+      share: false # Shows social media buttons to share pages.
+      sidebar: # Shows side navigation content from `_data/navigation.yml`.
+        nav: "3.7-ja-jp" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"latest"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
+      toc: true
+      toc_sticky: true
+      search: false # Excludes previous versions from search to reduce noise and search loading time. We should improve this function in the future to allow people to search for versioned docs.
+  # 3.6 - Japanese docs
+  - scope:
+      path: "docs/ja-jp/3.6" # Specifies the name of the folder where this version of docs are located.
+      # type: "" # Since this scope uses `collection_dir`, we do not need to specify the type here.
+    values:
+      layout: page # Specifies the type of template used from the "_layouts" folder.
+      read_time: false # show the average reading time for the page
+      share: false # Shows social media buttons to share pages.
+      sidebar: # Shows side navigation content from `_data/navigation.yml`.
+        nav: "3.6-ja-jp" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"latest"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
+      toc: true
+      toc_sticky: true
+      search: false # Excludes previous versions from search to reduce noise and search loading time. We should improve this function in the future to allow people to search for versioned docs.
+  # 3.5 - Japanese docs
+  - scope:
+      path: "docs/ja-jp/3.5" # Specifies the name of the folder where this version of docs are located.
+      # type: "" # Since this scope uses `collection_dir`, we do not need to specify the type here.
+    values:
+      layout: page # Specifies the type of template used from the "_layouts" folder.
+      read_time: false # Shows the average reading time for pages.
+      share: false # Shows social media buttons to share pages.
+      sidebar: # Shows side navigation content from `_data/navigation.yml`.
+        nav: "3.5-ja-jp" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"latest"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
+      toc: true
+      toc_sticky: true
+      search: false # Excludes previous versions from search to reduce noise and search loading time. We should improve this function in the future to allow people to search for versioned docs.
+  
+  # Release notes - Japanese docs
+  - scope:
+      path: "docs/ja-jp/releases" # Specifies the name of the folder where this version of docs are located.
+      # type: "" # Since this scope uses `collection_dir`, we do not need to specify the type here.
+    values:
+      layout: page # Specifies the type of template used from the "_layouts" folder.
+      read_time: false # Shows the average reading time for pages.
+      share: false # Shows social media buttons to share pages.
+      sidebar: # Shows side navigation content from `_data/navigation.yml`.
+        nav: "latest-ja-jp" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"latest"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
+      toc: true
+      toc_sticky: true
+      search: true
+
+  # Common docs in the `docs` root folder - Japanese docs
+  - scope:
+      path: "docs/ja-jp" # Specifies the name of the folder where the common docs are located.
+      # type: "" # Since this scope uses `collection_dir`, we do not need to specify the type here.
+    values:
+      layout: page # Specifies the type of template used from the "_layouts" folder.
+      read_time: false # Shows the average reading time for pages.
+      share: false # Shows social media buttons to share pages.
+      sidebar: # Shows side navigation content from `_data/navigation.yml`.
+        nav: "latest-ja-jp" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"latest"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
       toc: true
       toc_sticky: true
       search: false
