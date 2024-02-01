@@ -587,3 +587,435 @@ versions:
       #   url: /docs/releases/release-3.4/
       # - title: "Release Support Policy"
       #   url: /docs/releases/release-support-policy
+
+"latest-ja-jp":
+  - title: "⬅ ScalarDLドキュメンテーションホーム" 
+    url: /docs/ja-jp # Don't change this URL. This links back to the parent product home page.
+  - title: "ScalarDL 3.8"
+    children:
+  # Get Started docs
+  - title: "始めましょう"
+    children:
+      - title: "ScalarDLの入門"
+        url: /docs/ja-jp/latest/getting-started/
+      - title: "ScalarDL Auditor の概要"
+        url: /docs/ja-jp/latest/getting-started-auditor/
+  # Samples docs
+  - title: "サンプル" 
+    children:
+      - title: "簡単な銀行口座申請"
+        url: /docs/ja-jp/latest/applications/simple-bank-account/README/
+      # - title: "API endpoints"
+      #   url: /docs/ja-jp/latest/applications/simple-bank-account/docs/api_endpoints/
+      - title: "ScalarDLエスクロー支払い CLI"
+        url: /docs/ja-jp/latest/applications/escrow-payment/README/
+  # Develop docs
+  - title: "開発する"
+    children:
+      - title: "ScalarDL 用の SDK"
+        url: /docs/ja-jp/latest/sdks/
+      - title: "ScalarDL Schema Loader"
+        url: /docs/ja-jp/latest/schema-loader/
+      - title: "ScalarDL でアセットプルーフを使用する方法"
+        url: /docs/ja-jp/latest/how-to-use-proof/
+      - title: "ScalarDL の適切なコントラクトを作成する方法"
+        url: /docs/ja-jp/latest/how-to-write-contract/
+      - title: "ScalarDL の関数の書き方"
+        url: /docs/ja-jp/latest/how-to-write-function/
+      - title: "証明書の取得方法"
+        url: /docs/ja-jp/latest/ca/caclient-getting-started/
+      - title: "ScalarDL 認証ガイド"
+        url: /docs/ja-jp/latest/authentication/
+      - title: "ScalarDL でのエラーの処理方法"
+        url: /docs/ja-jp/latest/how-to-handle-errors/
+  # Deploy docs
+  - title: "展開する"
+    children:
+      - title: "マネージド Kubernetes サービスへの ScalarDL のデプロイ"
+        url: /docs/ja-jp/latest/scalar-kubernetes/deploy-kubernetes/
+      - title: "Docker を使用してローカル環境に ScalarDL をインストールする方法"
+        url: /docs/ja-jp/latest/installation-with-docker/
+      - title: "Scalar Helm Chartsの入門"
+        url: /docs/ja-jp/latest/helm-charts/getting-started-scalar-helm-charts/
+      - title: "Helm Chartsの入門 (ScalarDL Ledger および Auditor / Auditor モード)"
+        url: /docs/ja-jp/latest/helm-charts/getting-started-scalardl-auditor/
+      - title: "Helm Chartsの入門 (ScalarDL Ledger / Ledger のみ)"
+        url: /docs/ja-jp/latest/helm-charts/getting-started-scalardl-ledger/
+      - title: "Scalar Helm Chartsのカスタム値ファイルを構成する"
+        url: /docs/ja-jp/latest/helm-charts/configure-custom-values-file/
+      - title: "Scalar Helm Chart を使用して Scalar 製品をデプロイする"
+        url: /docs/ja-jp/latest/helm-charts/how-to-deploy-scalar-products/
+      - title: "Scalar 製品ポッドにファイルまたはボリュームをマウントします"
+        url: /docs/ja-jp/latest/helm-charts/mount-files-or-volumes-on-scalar-pods/
+      - title: "Secret リソースを使用して資格情報を環境変数としてプロパティ ファイルに渡す方法"
+        url: /docs/ja-jp/latest/helm-charts/use-secret-for-credentials/
+      - title: "CFSSL を使用して CA サーバーを起動する方法"
+        url: /docs/ja-jp/latest/ca/caserver-getting-started/
+  # Manage docs
+  - title: "管理"
+    children:
+      - title: "ScalarDL でデータをバックアップおよび復元する方法"
+        url: /docs/ja-jp/latest/backup-restore/
+      - title: "トラブルシューティングガイド"
+        url: /docs/ja-jp/latest/troubleshooting-guide/
+      - title: "マネージド Kubernetes サービスでの ScalarDL の管理"
+        url: /docs/ja-jp/latest/scalar-kubernetes/manage-kubernetes/
+      - title: "Kubernetes の ScalarDL アラート"
+        url: /docs/ja-jp/latest/scalar-kubernetes/alerts/README/
+  # Migrate docs
+  # - title: "Migrate"
+  #   children:
+  #     - title: "<DOC_TITLE>"
+  #       url: /docs/<VERSION>/<URL>/
+  # Reference docs
+  - title: "参照"
+    children:      
+      - title: "ScalarDL設計書"
+        url: /docs/ja-jp/latest/design/
+      - title: "ScalarDL 互換性マトリックス"
+        url: /docs/ja-jp/latest/compatibility/
+      - title: "ScalarDL の実装"
+        url: /docs/ja-jp/latest/implementation/
+      - title: "ScalarDL ベンチマーク"
+        url: /docs/ja-jp/latest/scalardl-benchmarks/README/
+  # Release docs and notes
+  - title: "リリース"
+    children:
+      - title: "リリースノート"
+        url: /docs/ja-jp/releases/
+      # - title: "v3.8"
+      #   url: /docs/releases/release-3.8/
+      # - title: "v3.7"
+      #   url: /docs/releases/release-3.7/
+      # - title: "v3.6"
+      #   url: /docs/releases/release-3.6/
+      # - title: "v3.5"
+      #   url: /docs/releases/release-3.5/
+      # - title: "v3.4"
+      #   url: /docs/releases/release-3.4/
+      # - title: "Release Support Policy"
+      #   url: /docs/releases/release-support-policy
+
+"3.7-ja-jp":
+  - title: "⬅ ScalarDLドキュメンテーションホーム" 
+    url: /docs/ja-jp # Don't change this URL. This links back to the parent product home page.
+  - title: "ScalarDL 3.7"
+    children:
+  # Get Started docs
+  - title: "始めましょう"
+    children:
+      - title: "ScalarDLの入門"
+        url: /docs/ja-jp/3.7/getting-started/
+      - title: "ScalarDL Auditorの概要"
+        url: /docs/ja-jp/3.7/getting-started-auditor/
+  # Samples docs
+  - title: "サンプル" 
+    children:
+      - title: "簡単な銀行口座申請"
+        url: /docs/ja-jp/3.7/applications/simple-bank-account/README/
+      # - title: "API endpoints"
+      #   url: /docs/ja-jp/3.7/applications/simple-bank-account/docs/api_endpoints/
+      - title: "ScalarDL Escrow payment CLI"
+        url: /docs/ja-jp/3.7/applications/escrow-payment/README/
+  # Develop docs
+  - title: "Develop"
+    children:
+      - title: "SDKs for ScalarDL"
+        url: /docs/ja-jp/3.7/sdks/
+      - title: "ScalarDL Schema Loader"
+        url: /docs/ja-jp/3.7/schema-loader/
+      - title: "How to Use Asset Proofs in ScalarDL"
+        url: /docs/ja-jp/3.7/how-to-use-proof/
+      - title: "How to Write a Good Contract for ScalarDL"
+        url: /docs/ja-jp/3.7/how-to-write-contract/
+      - title: "How to Write Function for ScalarDL"
+        url: /docs/ja-jp/3.7/how-to-write-function/
+      - title: "How to get a certificate"
+        url: /docs/ja-jp/3.7/ca/caclient-getting-started/
+      - title: "ScalarDL Authentication Guide"
+        url: /docs/ja-jp/3.7/authentication/
+      - title: "How to Handle Errors in ScalarDL"
+        url: /docs/ja-jp/3.7/how-to-handle-errors/
+  # Deploy docs
+  - title: "Deploy"
+    children:
+      - title: "Deploying ScalarDL on Managed Kubernetes Services"
+        url: /docs/ja-jp/3.7/scalar-kubernetes/deploy-kubernetes/
+      - title: "How to install ScalarDL in your local environment with Docker"
+        url: /docs/ja-jp/3.7/installation-with-docker/
+      - title: "Getting Started with Scalar Helm Charts"
+        url: /docs/ja-jp/3.7/helm-charts/getting-started-scalar-helm-charts/
+      - title: "Getting Started with Helm Charts (ScalarDL Ledger and Auditor / Auditor mode)"
+        url: /docs/ja-jp/3.7/helm-charts/getting-started-scalardl-auditor/
+      - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
+        url: /docs/ja-jp/3.7/helm-charts/getting-started-scalardl-ledger/
+      - title: "Configure a custom values file for Scalar Helm Charts"
+        url: /docs/ja-jp/3.7/helm-charts/configure-custom-values-file/
+      - title: "Deploy Scalar products using Scalar Helm Charts"
+        url: /docs/ja-jp/3.7/helm-charts/how-to-deploy-scalar-products/
+      - title: "Mount any files or volumes on Scalar product pods"
+        url: /docs/ja-jp/3.7/helm-charts/mount-files-or-volumes-on-scalar-pods/
+      - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
+        url: /docs/ja-jp/3.7/helm-charts/use-secret-for-credentials/
+      - title: "How to start CA server with CFSSL"
+        url: /docs/ja-jp/3.7/ca/caserver-getting-started/
+  # Manage docs
+  - title: "Manage"
+    children:
+      - title: "How to Backup and Restore Data in ScalarDL"
+        url: /docs/ja-jp/3.7/backup-restore/
+      - title: "Troubleshooting Guide"
+        url: /docs/ja-jp/3.7/troubleshooting-guide/
+      - title: "Managing ScalarDL on Managed Kubernetes Services"
+        url: /docs/ja-jp/3.7/scalar-kubernetes/manage-kubernetes/
+      - title: "ScalarDL Alerts in Kubernetes"
+        url: /docs/ja-jp/3.7/scalar-kubernetes/alerts/README/
+  # Migrate docs
+  # - title: "Migrate"
+  #   children:
+  #     - title: "<DOC_TITLE>"
+  #       url: /docs/<VERSION>/<URL>/
+  # Reference docs
+  - title: "Reference"
+    children:      
+      - title: "ScalarDL design document"
+        url: /docs/ja-jp/3.7/design/
+      - title: "ScalarDL Compatibility Matrix"
+        url: /docs/ja-jp/3.7/compatibility/
+      - title: "ScalarDL Implementation"
+        url: /docs/ja-jp/3.7/implementation/
+      - title: "ScalarDL Benchmarks"
+        url: /docs/ja-jp/3.7/scalardl-benchmarks/README/
+  # Release docs and notes
+  - title: "Releases"
+    children:
+      - title: "Release Notes"
+        url: /docs/ja-jp/releases/
+      # - title: "v3.8"
+      #   url: /docs/releases/release-3.8/
+      # - title: "v3.7"
+      #   url: /docs/releases/release-3.7/
+      # - title: "v3.6"
+      #   url: /docs/releases/release-3.6/
+      # - title: "v3.5"
+      #   url: /docs/releases/release-3.5/
+      # - title: "v3.4"
+      #   url: /docs/releases/release-3.4/
+      # - title: "Release Support Policy"
+      #   url: /docs/releases/release-support-policy
+
+"3.6-ja-jp":
+  - title: "⬅ ScalarDLドキュメンテーションホーム" 
+    url: /docs/ja-jp # Don't change this URL. This links back to the parent product home page.
+  - title: "ScalarDL 3.6"
+    children:
+  # Get Started docs
+  - title: "始めましょう"
+    children:
+      - title: "Getting Started with ScalarDL"
+        url: /docs/ja-jp/3.6/getting-started/
+      - title: "Getting Started with ScalarDL Auditor"
+        url: /docs/ja-jp/3.6/getting-started-auditor/
+  # Samples docs
+  - title: "Samples" 
+    children:
+      - title: "A simple bank account application"
+        url: /docs/ja-jp/3.6/applications/simple-bank-account/README/
+      # - title: "API endpoints"
+      #   url: /docs/ja-jp/3.6/applications/simple-bank-account/docs/api_endpoints/
+      - title: "ScalarDL Escrow payment CLI"
+        url: /docs/ja-jp/3.6/applications/escrow-payment/README/
+  # Develop docs
+  - title: "Develop"
+    children:
+      - title: "SDKs for ScalarDL"
+        url: /docs/ja-jp/3.6/sdks/
+      - title: "ScalarDL Schema Loader"
+        url: /docs/ja-jp/3.6/schema-loader/
+      - title: "How to Use Asset Proofs in ScalarDL"
+        url: /docs/ja-jp/3.6/how-to-use-proof/
+      - title: "How to Write a Good Contract for ScalarDL"
+        url: /docs/ja-jp/3.6/how-to-write-contract/
+      - title: "How to Write Function for ScalarDL"
+        url: /docs/ja-jp/3.6/how-to-write-function/
+      - title: "How to get a certificate"
+        url: /docs/ja-jp/3.6/ca/caclient-getting-started/
+      - title: "ScalarDL Authentication Guide"
+        url: /docs/ja-jp/3.6/authentication/
+      - title: "How to Handle Errors in ScalarDL"
+        url: /docs/ja-jp/3.6/how-to-handle-errors/
+  # Deploy docs
+  - title: "Deploy"
+    children:
+      - title: "Deploying ScalarDL on Managed Kubernetes Services"
+        url: /docs/ja-jp/3.6/scalar-kubernetes/deploy-kubernetes/
+      - title: "How to install ScalarDL in your local environment with Docker"
+        url: /docs/ja-jp/3.6/installation-with-docker/
+      - title: "Getting Started with Scalar Helm Charts"
+        url: /docs/ja-jp/3.6/helm-charts/getting-started-scalar-helm-charts/
+      - title: "Getting Started with Helm Charts (ScalarDL Ledger and Auditor / Auditor mode)"
+        url: /docs/ja-jp/3.6/helm-charts/getting-started-scalardl-auditor/
+      - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
+        url: /docs/ja-jp/3.6/helm-charts/getting-started-scalardl-ledger/
+      - title: "Configure a custom values file for Scalar Helm Charts"
+        url: /docs/ja-jp/3.6/helm-charts/configure-custom-values-file/
+      - title: "Deploy Scalar products using Scalar Helm Charts"
+        url: /docs/ja-jp/3.6/helm-charts/how-to-deploy-scalar-products/
+      - title: "Mount any files or volumes on Scalar product pods"
+        url: /docs/ja-jp/3.6/helm-charts/mount-files-or-volumes-on-scalar-pods/
+      - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
+        url: /docs/ja-jp/3.6/helm-charts/use-secret-for-credentials/
+      - title: "How to start CA server with CFSSL"
+        url: /docs/ja-jp/3.6/ca/caserver-getting-started/
+  # Manage docs
+  - title: "Manage"
+    children:
+      - title: "How to Backup and Restore Data in ScalarDL"
+        url: /docs/ja-jp/3.6/backup-restore/
+      - title: "Troubleshooting Guide"
+        url: /docs/ja-jp/3.6/troubleshooting-guide/
+      - title: "Managing ScalarDL on Managed Kubernetes Services"
+        url: /docs/ja-jp/3.6/scalar-kubernetes/manage-kubernetes/
+      - title: "ScalarDL Alerts in Kubernetes"
+        url: /docs/ja-jp/3.6/scalar-kubernetes/alerts/README/
+  # Migrate docs
+  # - title: "Migrate"
+  #   children:
+  #     - title: "<DOC_TITLE>"
+  #       url: /docs/<VERSION>/<URL>/
+  # Reference docs
+  - title: "Reference"
+    children:      
+      - title: "ScalarDL design document"
+        url: /docs/ja-jp/3.6/design/
+      - title: "ScalarDL Compatibility Matrix"
+        url: /docs/ja-jp/3.6/compatibility/
+      - title: "ScalarDL Implementation"
+        url: /docs/ja-jp/3.6/implementation/
+      - title: "ScalarDL Benchmarks"
+        url: /docs/ja-jp/3.6/scalardl-benchmarks/README/
+  # Release docs and notes
+  - title: "Releases"
+    children:
+      - title: "Release Notes"
+        url: /docs/ja-jp/releases/
+      # - title: "v3.8"
+      #   url: /docs/releases/release-3.8/
+      # - title: "v3.7"
+      #   url: /docs/releases/release-3.7/
+      # - title: "v3.6"
+      #   url: /docs/releases/release-3.6/
+      # - title: "v3.5"
+      #   url: /docs/releases/release-3.5/
+      # - title: "v3.4"
+      #   url: /docs/releases/release-3.4/
+      # - title: "Release Support Policy"
+      #   url: /docs/releases/release-support-policy
+
+"3.5-ja-jp":
+  - title: "⬅ ScalarDLドキュメンテーションホーム" 
+    url: /docs/ja-jp # Don't change this URL. This links back to the parent product home page.
+  - title: "ScalarDL 3.5"
+    children:
+  # Get Started docs
+  - title: "始めましょう"
+    children:
+      - title: "Getting Started with ScalarDL"
+        url: /docs/ja-jp/3.5/getting-started/
+      - title: "Getting Started with ScalarDL Auditor"
+        url: /docs/ja-jp/3.5/getting-started-auditor/
+  # Samples docs
+  - title: "Samples" 
+    children:
+      - title: "A simple bank account application"
+        url: /docs/ja-jp/3.5/applications/simple-bank-account/README
+      # - title: "API endpoints"
+      #   url: /docs/ja-jp/3.5/applications/simple-bank-account/docs/api_endpoints
+      - title: "ScalarDL Escrow payment CLI"
+        url: /docs/ja-jp/3.5/applications/escrow-payment/README
+  # Develop docs
+  - title: "Develop"
+    children:
+      - title: "SDKs for ScalarDL"
+        url: /docs/ja-jp/3.5/sdks/
+      - title: "ScalarDL Schema Loader"
+        url: /docs/ja-jp/3.5/schema-loader/
+      - title: "How to Use Asset Proofs in ScalarDL"
+        url: /docs/ja-jp/3.5/how-to-use-proof/
+      - title: "How to Write a Good Contract for ScalarDL"
+        url: /docs/ja-jp/3.5/how-to-write-contract/
+      - title: "How to Write Function for ScalarDL"
+        url: /docs/ja-jp/3.5/how-to-write-function/
+      - title: "How to get a certificate"
+        url: /docs/ja-jp/3.5/ca/caclient-getting-started/
+      - title: "ScalarDL Authentication Guide"
+        url: /docs/ja-jp/3.5/authentication/
+      - title: "How to Handle Errors in ScalarDL"
+        url: /docs/ja-jp/3.5/how-to-handle-errors/
+  # Deploy docs
+  - title: "Deploy"
+    children:
+      - title: "Deploying ScalarDL on Managed Kubernetes Services"
+        url: /docs/ja-jp/3.5/scalar-kubernetes/deploy-kubernetes/
+      - title: "How to install ScalarDL in your local environment with Docker"
+        url: /docs/ja-jp/3.5/installation-with-docker/
+      - title: "Getting Started with Scalar Helm Charts"
+        url: /docs/ja-jp/3.5/helm-charts/getting-started-scalar-helm-charts/
+      - title: "Getting Started with Helm Charts (ScalarDL Ledger and Auditor / Auditor mode)"
+        url: /docs/ja-jp/3.5/helm-charts/getting-started-scalardl-auditor/
+      - title: "Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)"
+        url: /docs/ja-jp/3.5/helm-charts/getting-started-scalardl-ledger/
+      - title: "Configure a custom values file for Scalar Helm Charts"
+        url: /docs/ja-jp/3.5/helm-charts/configure-custom-values-file/
+      - title: "Deploy Scalar products using Scalar Helm Charts"
+        url: /docs/ja-jp/3.5/helm-charts/how-to-deploy-scalar-products/
+      - title: "Mount any files or volumes on Scalar product pods"
+        url: /docs/ja-jp/3.5/helm-charts/mount-files-or-volumes-on-scalar-pods/
+      - title: "How to use Secret resources to pass the credentials as the environment variables into the properties file"
+        url: /docs/ja-jp/3.5/helm-charts/use-secret-for-credentials/
+      - title: "How to start CA server with CFSSL"
+        url: /docs/ja-jp/3.5/ca/caserver-getting-started/
+  # Manage docs
+  - title: "Manage"
+    children:
+      - title: "How to Backup and Restore Data in ScalarDL"
+        url: /docs/ja-jp/3.5/backup-restore/
+      - title: "Troubleshooting Guide"
+        url: /docs/ja-jp/3.5/troubleshooting-guide/
+      - title: "Managing ScalarDL on Managed Kubernetes Services"
+        url: /docs/ja-jp/3.5/scalar-kubernetes/manage-kubernetes/
+      - title: "ScalarDL Alerts in Kubernetes"
+        url: /docs/ja-jp/3.5/scalar-kubernetes/alerts/README/
+  # Migrate docs
+  # - title: "Migrate"
+  #   children:
+  #     - title: "<DOC_TITLE>"
+  #       url: /docs/<VERSION>/<URL>/
+  # Reference docs
+  - title: "Reference"
+    children:      
+      - title: "ScalarDL design document"
+        url: /docs/ja-jp/3.5/design/
+      - title: "ScalarDL Compatibility Matrix"
+        url: /docs/ja-jp/3.5/compatibility/
+      - title: "ScalarDL Implementation"
+        url: /docs/ja-jp/3.5/implementation/
+      - title: "ScalarDL Benchmarks"
+        url: /docs/ja-jp/3.5/scalardl-benchmarks/README/
+  # Release docs and notes
+  - title: "Releases"
+    children:
+      - title: "Release Notes"
+        url: /docs/ja-jp/releases/
+      # - title: "v3.8"
+      #   url: /docs/releases/release-3.8/
+      # - title: "v3.7"
+      #   url: /docs/releases/release-3.7/
+      # - title: "v3.6"
+      #   url: /docs/releases/release-3.6/
+      # - title: "v3.5"
+      #   url: /docs/releases/release-3.5/
+      # - title: "v3.4"
+      #   url: /docs/releases/release-3.4/
+      # - title: "Release Support Policy"
+      #   url: /docs/releases/release-support-policy
