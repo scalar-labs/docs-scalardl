@@ -29,13 +29,13 @@ versions:
   - version-top-title: "" # This title is taken from the `version_label` in `_data/ui-text.yml`.
     version-children:
     - version-title: "3.8 (latest)"
-      version-url: /docs/latest
+      version-url: /docs/latest/
     - version-title: "3.7"
-      version-url: /docs/3.7
+      version-url: /docs/3.7/
     - version-title: "3.6"
-      version-url: /docs/3.6
+      version-url: /docs/3.6/
     - version-title: "3.5"
-      version-url: /docs/3.5
+      version-url: /docs/3.5/
     # The following link contains a list of versions of ScalarDB that are no longer supported.
     - version-title: "Unsupported Versions"
       version-url: /docs/unsupported-versions/
@@ -50,7 +50,7 @@ versions:
 
 "latest":
   - title: "⬅ ScalarDL docs home" 
-    url: /docs # Don't change this URL. This links back to the parent product home page.
+    url: /docs/ # Don't change this URL. This links back to the parent product home page.
   - title: "ScalarDL 3.8"
     children:
   # Get Started docs
@@ -153,12 +153,12 @@ versions:
       #   url: /docs/releases/release-3.5/
       # - title: "v3.4"
       #   url: /docs/releases/release-3.4/
-      # - title: "Release Support Policy"
-      #   url: /docs/releases/release-support-policy
+      - title: "Release Support Policy"
+        url: /docs/releases/release-support-policy/
 
 "3.7":
   - title: "⬅ ScalarDL docs home" 
-    url: /docs # Don't change this URL. This links back to the parent product home page.
+    url: /docs/ # Don't change this URL. This links back to the parent product home page.
   - title: "ScalarDL 3.7"
     children:
   # Get Started docs
@@ -261,12 +261,12 @@ versions:
       #   url: /docs/releases/release-3.5/
       # - title: "v3.4"
       #   url: /docs/releases/release-3.4/
-      # - title: "Release Support Policy"
-      #   url: /docs/releases/release-support-policy
+      - title: "Release Support Policy"
+        url: /docs/releases/release-support-policy/
 
 "3.6":
   - title: "⬅ ScalarDL docs home" 
-    url: /docs # Don't change this URL. This links back to the parent product home page.
+    url: /docs/ # Don't change this URL. This links back to the parent product home page.
   - title: "ScalarDL 3.6"
     children:
   # Get Started docs
@@ -369,12 +369,12 @@ versions:
       #   url: /docs/releases/release-3.5/
       # - title: "v3.4"
       #   url: /docs/releases/release-3.4/
-      # - title: "Release Support Policy"
-      #   url: /docs/releases/release-support-policy
+      - title: "Release Support Policy"
+        url: /docs/releases/release-support-policy/
 
 "3.5":
   - title: "⬅ ScalarDL docs home" 
-    url: /docs # Don't change this URL. This links back to the parent product home page.
+    url: /docs/ # Don't change this URL. This links back to the parent product home page.
   - title: "ScalarDL 3.5"
     children:
   # Get Started docs
@@ -477,12 +477,12 @@ versions:
       #   url: /docs/releases/release-3.5/
       # - title: "v3.4"
       #   url: /docs/releases/release-3.4/
-      # - title: "Release Support Policy"
-      #   url: /docs/releases/release-support-policy
+      - title: "Release Support Policy"
+        url: /docs/releases/release-support-policy/
 
 "3.4":
   - title: "⬅ ScalarDL docs home" 
-    url: /docs # Don't change this URL. This links back to the parent product home page.
+    url: /docs/ # Don't change this URL. This links back to the parent product home page.
   - title: "ScalarDL 3.4"
     children:
   # Get Started docs
@@ -585,5 +585,5 @@ versions:
       #   url: /docs/releases/release-3.5/
       # - title: "v3.4"
       #   url: /docs/releases/release-3.4/
-      # - title: "Release Support Policy"
-      #   url: /docs/releases/release-support-policy
+      - title: "Release Support Policy"
+        url: /docs/releases/release-support-policy/

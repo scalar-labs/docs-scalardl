@@ -2,7 +2,7 @@
 
 This page includes a list of release notes for ScalarDL 3.5.
 
-## 3.5.7
+## v3.5.7
 
 **Release date:** April 18, 2023
 
@@ -18,7 +18,7 @@ This page includes a list of release notes for ScalarDL 3.5.
 
 - Added a fix to verify signatures when reading them from Ledger.
 
-## 3.5.6
+## v3.5.6
 
 **Release date:** January 6, 2023
 
@@ -27,7 +27,7 @@ This page includes a list of release notes for ScalarDL 3.5.
 - Updated the in-house JRE Docker image.
 - Updated the version of ScalarDB.
 
-## 3.5.5
+## v3.5.5
 
 **Release date:** December 2, 2022
 
@@ -45,7 +45,7 @@ This page includes a list of release notes for ScalarDL 3.5.
 - Added [@OverRide](https://github.com/OverRide) to fix a warning from ErrorProne.
 - Updated the version of gRPC to fix a vulnerability.
 
-## 3.5.4
+## v3.5.4
 
 **Release date:** September 22, 2022
 
@@ -58,7 +58,7 @@ This page includes a list of release notes for ScalarDL 3.5.
 
 - Fixed Ledger/Auditor/Client configuration loading.
 
-## 3.5.3
+## v3.5.3
 
 **Release date:** August 19, 2022
 
@@ -66,7 +66,7 @@ This page includes a list of release notes for ScalarDL 3.5.
 
 - Fix validation in Ledger-only mode with the V2 argument.
 
-## 3.5.2
+## v3.5.2
 
 **Release date:** August 17, 2022
 
@@ -80,7 +80,7 @@ This page includes a list of release notes for ScalarDL 3.5.
 - Fixed the camel case fields.
 - Fixed the contract argument handling in DagValidator.
 
-## 3.5.1
+## v3.5.1
 
 **Release date:** August 10, 2022
 
@@ -92,7 +92,7 @@ This page includes a list of release notes for ScalarDL 3.5.
 
 - Fixed the degradation of contract properties handling.
 
-## 3.5.0
+## v3.5.0
 
 **Release date:** August 3, 2022
 

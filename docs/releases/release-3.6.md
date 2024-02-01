@@ -2,7 +2,7 @@
 
 This page includes a list of release notes for ScalarDL 3.6.
 
-## 3.6.4
+## v3.6.4
 
 **Release date:** April 18, 2023
 
@@ -18,7 +18,7 @@ This page includes a list of release notes for ScalarDL 3.6.
 
 - Added a fix to verify signatures when reading them from Ledger.
 
-## 3.6.3
+## v3.6.3
 
 **Release date:** January 6, 2023
 
@@ -27,7 +27,7 @@ This page includes a list of release notes for ScalarDL 3.6.
 - Updated the in-house JRE Docker image.
 - Updated the version of ScalarDB.
 
-## 3.6.2
+## v3.6.2
 
 **Release date:** December 2, 2022
 
@@ -45,7 +45,7 @@ This page includes a list of release notes for ScalarDL 3.6.
 - Fixed [CVE-2022-27664](https://github.com/advisories/GHSA-69cg-p879-7622).
 - Updated the version of gRPC to fix a vulnerability.
 
-## 3.6.0
+## v3.6.0
 
 **Release date:** September 22, 2022
 

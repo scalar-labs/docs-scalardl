@@ -2,7 +2,7 @@
 
 This page includes a list of release notes for ScalarDL 3.8.
 
-## 3.8.0
+## v3.8.0
 
 **Release date:** April 19, 2023
 
