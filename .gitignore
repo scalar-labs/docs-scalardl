@@ -30,3 +30,6 @@ _site
 
 # Gradle build files
 .gradle
+
+# IntelliJ IDEA
+.idea
