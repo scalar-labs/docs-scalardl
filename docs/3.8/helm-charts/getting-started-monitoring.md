@@ -36,7 +36,7 @@ First, you need to prepare a Kubernetes cluster. If you use a **minikube** envir
 
 ## Step 2. Prepare a custom values file
 
-1. Get the sample file [scalar-prometheus-custom-values.yaml](./conf/scalar-prometheus-custom-values.yaml) for `kube-prometheus-stack`.  
+1. Save the sample file [scalar-prometheus-custom-values.yaml](./conf/scalar-prometheus-custom-values.yaml) for `kube-prometheus-stack`.
 
 1. Add custom values in the `scalar-prometheus-custom-values.yaml` as follows.
    * settings
@@ -45,51 +45,49 @@ First, you need to prepare a Kubernetes cluster. If you use a **minikube** envir
        * `grafana.service.type` to `LoadBalancer`
        * `grafana.service.port` to `3000`
    * Example
-
      ```yaml
      alertmanager:
-     
+
        service:
          type: LoadBalancer
-     
+
      ...
-     
+
      grafana:
-     
+
        service:
          type: LoadBalancer
          port: 3000
-     
+
      ...
-     
+
      prometheus:
-     
+
        service:
          type: LoadBalancer
-     
+
      ...
      ```
-
    * Note:
-       * If you want to customize the Prometheus Operator deployment using Helm Charts, you need to set the following configuration for monitoring Scalar products.
-           * The `serviceMonitorSelectorNilUsesHelmValues` and `ruleSelectorNilUsesHelmValues` must be set to `false` (`true` by default) to make Prometheus Operator detects `ServiceMonitor` and `PrometheusRule` of Scalar products.
+       * If you want to customize the Prometheus Operator deployment by using Helm Charts, you'll need to set the following configurations to monitor Scalar products:
+           * Set `serviceMonitorSelectorNilUsesHelmValues` and `ruleSelectorNilUsesHelmValues` to `false` (`true` by default) so that Prometheus Operator can detect `ServiceMonitor` and `PrometheusRule` for Scalar products.
+
+       * If you want to use Scalar Manager, you'll need to set the following configurations to enable Scalar Manager to collect CPU and memory resources:
+           * Set `kubeStateMetrics.enabled`, `nodeExporter.enabled`, and `kubelet.enabled` to `true`.
 
 ## Step 3. Deploy `kube-prometheus-stack`
 
 1. Add the `prometheus-community` helm repository.
-
    ```console
    helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
    ```
 
 1. Create a namespace `monitoring` on the Kubernetes.
-
    ```console
    kubectl create namespace monitoring
    ```
 
 1. Deploy the `kube-prometheus-stack`.
-
    ```console
    helm install scalar-monitoring prometheus-community/kube-prometheus-stack -n monitoring -f scalar-prometheus-custom-values.yaml
    ```
@@ -109,7 +107,6 @@ First, you need to prepare a Kubernetes cluster. If you use a **minikube** envir
        * `*.serviceMonitor.enabled`
    * Sample configuration files
        * ScalarDB (scalardb-custom-values.yaml)
-
          ```yaml
          envoy:
            prometheusRule:
@@ -118,7 +115,7 @@ First, you need to prepare a Kubernetes cluster. If you use a **minikube** envir
              enabled: true
            serviceMonitor:
              enabled: true
-         
+
          scalardb:
            prometheusRule:
              enabled: true
@@ -127,9 +124,7 @@ First, you need to prepare a Kubernetes cluster. If you use a **minikube** envir
            serviceMonitor:
              enabled: true
          ```
-
        * ScalarDL Ledger (scalardl-ledger-custom-values.yaml)
-
          ```yaml
          envoy:
            prometheusRule:
@@ -138,7 +133,7 @@ First, you need to prepare a Kubernetes cluster. If you use a **minikube** envir
              enabled: true
            serviceMonitor:
              enabled: true
-         
+
          ledger:
            prometheusRule:
              enabled: true
@@ -147,9 +142,7 @@ First, you need to prepare a Kubernetes cluster. If you use a **minikube** envir
            serviceMonitor:
              enabled: true
          ```
-
        * ScalarDL Auditor (scalardl-auditor-custom-values.yaml)
-
          ```yaml
          envoy:
            prometheusRule:
@@ -158,7 +151,7 @@ First, you need to prepare a Kubernetes cluster. If you use a **minikube** envir
              enabled: true
            serviceMonitor:
              enabled: true
-         
+
          auditor:
            prometheusRule:
              enabled: true
@@ -171,31 +164,23 @@ First, you need to prepare a Kubernetes cluster. If you use a **minikube** envir
 1. Deploy (or Upgrade) Scalar products using Helm Charts with the above custom values file.
    * Examples
        * ScalarDB
-
          ```console
          helm install scalardb scalar-labs/scalardb -f ./scalardb-custom-values.yaml
          ```
-
          ```console
          helm upgrade scalardb scalar-labs/scalardb -f ./scalardb-custom-values.yaml
          ```
-
        * ScalarDL Ledger
-
          ```console
          helm install scalardl-ledger scalar-labs/scalardl -f ./scalardl-ledger-custom-values.yaml
          ```
-
          ```console
          helm upgrade scalardl-ledger scalar-labs/scalardl -f ./scalardl-ledger-custom-values.yaml
          ```
-
        * ScalarDL Auditor
-
          ```console
          helm install scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
          ```
-
          ```console
          helm upgrade scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
          ```
@@ -205,19 +190,15 @@ First, you need to prepare a Kubernetes cluster. If you use a **minikube** envir
 ### If you use minikube
 
 1. To expose each service resource as your `localhost (127.0.0.1)`, open another terminal, and run the `minikube tunnel` command.
-
    ```console
    minikube tunnel
    ```
 
    After running the `minikube tunnel` command, you can see the EXTERNAL-IP of each service resource as `127.0.0.1`.
-
    ```console
    kubectl get svc -n monitoring scalar-monitoring-kube-pro-prometheus scalar-monitoring-kube-pro-alertmanager scalar-monitoring-grafana
    ```
-
    [Command execution result]
-
    ```console
    NAME                                      TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
    scalar-monitoring-kube-pro-prometheus     LoadBalancer   10.98.11.12    127.0.0.1     9090:30550/TCP   26m
@@ -227,33 +208,24 @@ First, you need to prepare a Kubernetes cluster. If you use a **minikube** envir
 
 1. Access each Dashboard.
    * Prometheus
-
      ```console
      http://localhost:9090/
      ```
-
    * Alertmanager
-
      ```console
      http://localhost:9093/
      ```
-
    * Grafana
-
      ```console
      http://localhost:3000/
      ```
-
        * Note:
            * You can see the user and password of Grafana as follows.
                * user
-
                  ```console
                  kubectl get secrets scalar-monitoring-grafana -n monitoring -o jsonpath='{.data.admin-user}' | base64 -d
                  ```
-
                * password
-
                  ```console
                  kubectl get secrets scalar-monitoring-grafana -n monitoring -o jsonpath='{.data.admin-password}' | base64 -d
                  ```
@@ -267,22 +239,18 @@ If you use a Kubernetes cluster other than minikube, you need to access the Load
 After completing the Monitoring tests on the Kubernetes cluster, remove all resources.
 
 1. Terminate the `minikube tunnel` command. (If you use minikube)
-
    ```console
    Ctrl + C
    ```
 
 1. Uninstall `kube-prometheus-stack`.
-
    ```console
    helm uninstall scalar-monitoring -n monitoring
    ```
 
 1. Delete minikube. (Optional / If you use minikube)
-
    ```console
    minikube delete --all
    ```
-
    * Note:
        * If you deploy the ScalarDB or ScalarDL, you need to remove them before deleting minikube.
