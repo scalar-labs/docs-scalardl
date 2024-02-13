@@ -1,5 +1,3 @@
-{% include scalardl/end-of-support.html %}
-
 # Getting Started with ScalarDL
 
 This document explains how to get started with ScalarDL by running your first simple contract using the Client SDK.

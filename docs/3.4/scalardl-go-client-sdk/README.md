@@ -1,5 +1,3 @@
-{% include scalardl/end-of-support.html %}
-
 # Scalar DL Go Client SDK
 This module is for developing applications that interact with [Scalar DL](https://github.com/scalar-labs/scalardl) networks.
 
