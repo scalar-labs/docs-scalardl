@@ -1,0 +1,46 @@
+{% include common/translation-ja-jp.html %}
+
+# ScalarDL Schema Loader
+
+[Schema Tool for Scalar DB](https://github.com/scalar-labs/scalardb/tree/master/schema-loader/) を使用して ScalarDL のデータベース スキーマをロードする Docker イメージ。
+
+## 走り方
+
+### Cosmos DB の場合
+
+```console
+docker run --rm [--env SCHEMA_TYPE=auditor] ghcr.io/scalar-labs/scalardl-schema-loader:<version> \
+  --cosmos -h <YOUR_ACCOUNT_URI> -p <YOUR_ACCOUNT_PASSWORD> [-r BASE_RESOURCE_UNIT]
+```
+
+### DynamoDB の場合
+
+```console
+docker run --rm [--env SCHEMA_TYPE=auditor] ghcr.io/scalar-labs/scalardl-schema-loader:<version> \
+  --dynamo --region <REGION> -u <ACCESS_KEY_ID> -p <SECRET_ACCESS_KEY> [-r BASE_RESOURCE_UNIT]
+```
+
+### カサンドラの場合
+
+```console
+docker run --rm [--env SCHEMA_TYPE=auditor] ghcr.io/scalar-labs/scalardl-schema-loader:<version> \
+  --cassandra -h <CASSANDRA_IP> -u <CASSNDRA_USER> -p <CASSANDRA_PASSWORD> [-n <NETWORK_STRATEGY> -R <REPLICATION_FACTOR>]
+```
+
+### 設定ファイルを使用する場合
+
+* Ledger 用
+  ```console
+  docker run --rm \
+    -v <PROPERTIES_FILE_PATH>:/scalardl-schema-loader/database.properties \
+    ghcr.io/scalar-labs/scalardl-schema-loader:<version> \
+    --config database.properties --coordinator [<SOME_OPTIONS> [, ...]]
+  ```
+
+* Auditor 用
+  ```console
+  docker run --rm --env SCHEMA_TYPE=auditor \
+    -v <PROPERTIES_FILE_PATH>:/scalardl-schema-loader/database.properties \
+    ghcr.io/scalar-labs/scalardl-schema-loader:<version> \
+    --config database.properties [<SOME_OPTIONS> [, ...]]
+  ```
