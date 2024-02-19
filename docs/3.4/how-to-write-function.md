@@ -1,5 +1,3 @@
-{% include scalardl/end-of-support.html %}
-
 # A Guide on How to Write Function for ScalarDL
 
 This document sets out some guidelines for writing functions for ScalarDL.

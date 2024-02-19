@@ -1,5 +1,3 @@
-{% include scalardl/end-of-support.html %}
-
 # Troubleshooting Guide
 
 # Introduction
