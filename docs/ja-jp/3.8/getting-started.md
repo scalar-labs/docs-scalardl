@@ -17,6 +17,44 @@ ScalarDL は、次の図に示すように、Ledger、Auditor、および Client
 ScalarDL (Ledger and Auditor) はデータを一連の資産として抽象化します。各資産は、`asset_id` と呼ばれるキーと `age` と呼ばれる履歴バージョン番号によって識別されるレコードの履歴で構成されます。
 このドキュメントでは、ScalarDL Client SDK を使用して資産のステータスを管理する非常に単純なアプリケーションを作成します。
 
+## JDK をインストールする
+
+ScalarDL は Java で記述されているため、Java の使用は ScalarDL アプリケーションを構築する最も簡単な方法の 1 つです。
+このような場合は、次の Java Development Kit (JDK) のいずれかを環境にインストールする必要があります。
+
+- [Oracle JDK](https://www.oracle.com/java/technologies/downloads/) LTSバージョン (8、11、または17)
+- [OpenJDK](https://openjdk.org/install/) LTSバージョン (8、11、または17)
+
+{% capture notice--warning %}
+**注意**
+
+ScalarDL は JDK 8 で構築されているため、コントラクトは JDK 8 と互換性のあるバイナリである必要があります。
+JDK 8 以外のバージョンを使用する場合は、JDK 8 と互換性のあるバイナリをビルドするようにビルド ツールを構成する必要があります。
+バイナリ互換性を指定するには、javac の `--release 8` オプションを使用する方法や、次のように JDK 8 ツールチェーンを使用するように Gradle (または Maven) 構成を設定する方法など、いくつかの方法があります。
+
+```gradle
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+}
+```
+
+Gradle および Maven 構成の詳細については、[Toolchains for JVM projects for Gradle](https://docs.gradle.org/current/userguide/toolchains.html) および [Guide to Using Toolchains for Maven](https://maven.apache.org/guides/mini/guide-using-toolchains.html) を参照してください。
+{% endcapture %}
+
+<div class="notice--warning">{{ notice--warning | markdownify }}</div>
+
+{% capture notice--info %}
+**注記**
+
+上記の LTS バージョンを使用することをお勧めしますが、他の非 LTS バージョンも動作する可能性があります。
+
+さらに、他の JDK も ScalarDL で動作するはずですが、それらはテストされていません。
+{% endcapture %}
+
+<div class="notice--info">{{ notice--info | markdownify }}</div>
+
 ## クライアント SDK をダウンロードする
 
 クライアント SDK ライブラリは、[Maven Central](https://search.maven.org/search?q=a:scalardl-java-client-sdk) で入手できます。 Gradle などのビルド ツールを使用してアプリケーションにインストールできます。
