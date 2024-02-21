@@ -1,0 +1,33 @@
+# Workflow for updating the `latest` folder to include the same content as the latest version of docs
+name: 🔄 Update latest version of docs
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "3.8" # This path *must* match the folder name of the latest product release version.
+  # The following `workflow_dispatch` lines are for scheduling this workflow to reduce GitHub actions. We might want to consider scheduling docs to sync to the docs site repos in the future if we use too many action minutes in our monthly GitHub quota.
+  # workflow_dispatch:
+  # schedule:
+  #   - cron: '0 1 * * 1,4' # Run at 1:00 AM Universal Time Coordinated (UTC) / 10:00 AM Japan Standard Time (JST) on Mondays and Thursdays.
+
+jobs:
+  update-latest-version-of-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Update the `latest` folder to include the same content as the latest version of docs
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.SYNC_DOCS_PAT }}
+        with:
+          source_file: "docs/3.8/" # This path *must* match the folder name of the latest version.
+          destination_repo: "scalar-labs/docs-scalardl" # Target repo
+          destination_folder: "docs/latest/" # Folder to sync to
+          destination_branch_create: "scalardl/update-docs-latest"
+          user_name: "josh-wong"
+          user_email: "joshua.wong@scalar-labs.com"
+          commit_message: "AUTO: Update the latest version of docs"
+          use_rsync: rsync -avh
