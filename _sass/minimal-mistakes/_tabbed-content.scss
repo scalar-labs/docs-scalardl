@@ -47,4 +47,20 @@
     margin: auto;
     display: block;
   }
+
+  h2:first-child,
+  h3:first-child,
+  h4:first-child,
+  h5:first-child,
+  h6:first-child {
+    margin: 0 0 0.5em;
+    line-height: 1.2;
+    font-family: $header-font-family;
+    font-weight: bold;
+  }
+
+  ul:first-child,
+  ol:first-child {
+    margin-top: 0;
+  }
 }
