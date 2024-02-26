@@ -63,7 +63,7 @@ We will deploy the following components on a Kubernetes cluster as follows.
 
 ## Step 1. Start a Kubernetes cluster
 
-First, you need to prepare a Kubernetes cluster. If you use a **minikube** environment, please refer to the [Getting Started with Scalar Helm Charts](./getting-started-scalar-helm-charts.md). If you have already started a Kubernetes cluster, you can skip this step.
+First, you need to prepare a Kubernetes cluster. If you use a **minikube** environment, please refer to the [Getting Started with Scalar Helm Charts](getting-started-scalar-helm-charts.md). If you have already started a Kubernetes cluster, you can skip this step.
 
 ## Step 2. Start PostgreSQL containers
 
@@ -72,13 +72,11 @@ ScalarDL Ledger and Auditor use some kind of database system as a backend databa
 You can deploy PostgreSQL on the Kubernetes cluster as follows.
 
 1. Add the Bitnami helm repository.
-
    ```console
    helm repo add bitnami https://charts.bitnami.com/bitnami
    ```
 
 1. Deploy PostgreSQL for Ledger.
-
    ```console
    helm install postgresql-ledger bitnami/postgresql \
      --set auth.postgresPassword=postgres \
@@ -86,7 +84,6 @@ You can deploy PostgreSQL on the Kubernetes cluster as follows.
    ```
 
 1. Deploy PostgreSQL for Auditor.
-
    ```console
    helm install postgresql-auditor bitnami/postgresql \
      --set auth.postgresPassword=postgres \
@@ -94,13 +91,10 @@ You can deploy PostgreSQL on the Kubernetes cluster as follows.
    ```
 
 1. Check if the PostgreSQL containers are running.
-
    ```console
    kubectl get pod
    ```
-
    [Command execution result]
-
    ```console
    NAME                   READY   STATUS    RESTARTS   AGE
    postgresql-auditor-0   1/1     Running   0          11s
@@ -112,7 +106,6 @@ You can deploy PostgreSQL on the Kubernetes cluster as follows.
 We will create some configuration files and key/certificate files locally. So, create a working directory for them.
 
 1. Create a working directory.
-
    ```console
    mkdir -p ~/scalardl-test/certs/
    ```
@@ -122,13 +115,11 @@ We will create some configuration files and key/certificate files locally. So, c
 Note: In this guide, we will use self-sign certificates for the test. However, it is strongly recommended that these certificates NOT be used in production.
 
 1. Change the working directory to `~/scalardl-test/certs/` directory.
-
    ```console
    cd ~/scalardl-test/certs/
    ```
 
 1. Create a JSON file that includes Ledger information.
-
    ```console
    cat << 'EOF' > ~/scalardl-test/certs/ledger.json
    {
@@ -152,7 +143,6 @@ Note: In this guide, we will use self-sign certificates for the test. However, i
    ```
 
 1. Create a JSON file that includes Auditor information.
-
    ```console
    cat << 'EOF' > ~/scalardl-test/certs/auditor.json
    {
@@ -176,7 +166,6 @@ Note: In this guide, we will use self-sign certificates for the test. However, i
    ```
 
 1. Create a JSON file that includes Client information.
-
    ```console
    cat << 'EOF' > ~/scalardl-test/certs/client.json
    {
@@ -200,31 +189,25 @@ Note: In this guide, we will use self-sign certificates for the test. However, i
    ```
 
 1. Create key/certificate files for the Ledger.
-
    ```console
    cfssl selfsign "" ./ledger.json | cfssljson -bare ledger
    ```
 
 1. Create key/certificate files for the Auditor.
-
    ```console
    cfssl selfsign "" ./auditor.json | cfssljson -bare auditor
    ```
 
 1. Create key/certificate files for the Client.
-
    ```console
    cfssl selfsign "" ./client.json | cfssljson -bare client
    ```
 
 1. Confirm key/certificate files are created.
-
    ```console
    ls -1
    ```
-
    [Command execution result]
-
    ```console
    auditor-key.pem
    auditor.csr
@@ -246,29 +229,24 @@ We will deploy two ScalarDL Schema Loader pods on the Kubernetes cluster using H
 The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Auditor in PostgreSQL.  
 
 1. Change the working directory to `~/scalardl-test/`.
-
    ```console
    cd ~/scalardl-test/
    ```
 
 1. Add the Scalar helm repository.
-
    ```console
    helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
    ```
 
 1. Create a secret resource to pull the ScalarDL container images from AWS/Azure Marketplace.
    * AWS Marketplace
-
      ```console
      kubectl create secret docker-registry reg-ecr-mp-secrets \
        --docker-server=709825985650.dkr.ecr.us-east-1.amazonaws.com \
        --docker-username=AWS \
        --docker-password=$(aws ecr get-login-password --region us-east-1)
      ```
-
    * Azure Marketplace
-
      ```console
      kubectl create secret docker-registry reg-acr-secrets \
        --docker-server=<your private container registry login server> \
@@ -277,7 +255,7 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
      ```
 
    Please refer to the following documents for more details.
-
+   
    * [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md)
    * [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md)
 
@@ -372,7 +350,6 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
      {% endraw %}
 
 1. Create a secret resource that includes a username and password for PostgreSQL for Ledger.
-
    ```console
    kubectl create secret generic ledger-credentials-secret \
      --from-literal=SCALAR_DL_LEDGER_POSTGRES_USERNAME=postgres \
@@ -380,7 +357,6 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
    ```
 
 1. Create a secret resource that includes a username and password for PostgreSQL for Auditor.
-
    ```console
    kubectl create secret generic auditor-credentials-secret \
      --from-literal=SCALAR_DL_AUDITOR_POSTGRES_USERNAME=postgres \
@@ -388,25 +364,20 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
    ```
 
 1. Deploy the ScalarDL Schema Loader for Ledger.
-
    ```console
    helm install schema-loader-ledger scalar-labs/schema-loading -f ./schema-loader-ledger-custom-values.yaml
    ```
 
 1. Deploy the ScalarDL Schema Loader for Auditor.
-
    ```console
    helm install schema-loader-auditor scalar-labs/schema-loading -f ./schema-loader-auditor-custom-values.yaml
    ```
 
 1. Check if the ScalarDL Schema Loader pods are deployed and completed.
-
    ```console
    kubectl get pod
    ```
-
    [Command execution result]
-
    ```console
    NAME                                         READY   STATUS      RESTARTS   AGE
    postgresql-auditor-0                         1/1     Running     0          2m56s
@@ -414,7 +385,6 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
    schema-loader-auditor-schema-loading-dvc5r   0/1     Completed   0          6s
    schema-loader-ledger-schema-loading-mtllb    0/1     Completed   0          10s
    ```
-
    If the ScalarDL Schema Loader pods are **ContainerCreating** or **Running**, wait for the process will be completed (The STATUS will be **Completed**).
 
 ## Step 6. Deploy ScalarDL Ledger and Auditor on the Kubernetes cluster using Helm Charts
@@ -577,37 +547,30 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
      {% endraw %}
 
 1. Create secret resource `ledger-keys`.
-
    ```console
    kubectl create secret generic ledger-keys --from-file=certificate=./certs/ledger.pem --from-file=private-key=./certs/ledger-key.pem
    ```
 
 1. Create secret resource `auditor-keys`.
-
    ```console
    kubectl create secret generic auditor-keys --from-file=certificate=./certs/auditor.pem --from-file=private-key=./certs/auditor-key.pem
    ```
 
 1. Deploy the ScalarDL Ledger.
-
    ```console
    helm install scalardl-ledger scalar-labs/scalardl -f ./scalardl-ledger-custom-values.yaml
    ```
 
 1. Deploy the ScalarDL Auditor.
-
    ```console
    helm install scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
    ```
 
 1. Check if the ScalarDL Ledger and Auditor pods are deployed.
-
    ```console
    kubectl get pod
    ```
-
    [Command execution result]
-
    ```console
    NAME                                         READY   STATUS      RESTARTS   AGE
    postgresql-auditor-0                         1/1     Running     0          14m
@@ -627,17 +590,13 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
    schema-loader-auditor-schema-loading-dvc5r   0/1     Completed   0          11m
    schema-loader-ledger-schema-loading-mtllb    0/1     Completed   0          11m
    ```
-
    If the ScalarDL Ledger and Auditor pods are deployed properly, you can see the STATUS are **Running**.  
 
 1. Check if the ScalarDL Ledger and Auditor services are deployed.
-
    ```console
    kubectl get svc
    ```
-
    [Command execution result]
-
    ```console
    NAME                             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                         AGE
    kubernetes                       ClusterIP   10.96.0.1        <none>        443/TCP                         47d
@@ -654,7 +613,6 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
    scalardl-ledger-headless         ClusterIP   None             <none>        50051/TCP,50053/TCP,50052/TCP   61s
    scalardl-ledger-metrics          ClusterIP   10.99.122.106    <none>        8080/TCP                        61s
    ```
-
    If the ScalarDL Ledger and Auditor services are deployed properly, you can see private IP addresses in the CLUSTER-IP column. (Note: `scalardl-ledger-headless` and `scalardl-auditor-headless` have no CLUSTER-IP.)  
 
 ## Step 7. Start a Client container
@@ -662,13 +620,11 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
 We will use certificate files in a Client container. So, we create a secret resource and mount it to a Client container.  
 
 1. Create secret resource `client-keys`.
-
-   ```console
+   ```
    kubectl create secret generic client-keys --from-file=certificate=./certs/client.pem --from-file=private-key=./certs/client-key.pem
    ```
 
 1. Start a Client container on the Kubernetes cluster.
-
    ```console
    cat << 'EOF' | kubectl apply -f -
    apiVersion: v1
@@ -706,13 +662,10 @@ We will use certificate files in a Client container. So, we create a secret reso
    ```
 
 1. Check if the Client container is running.
-
    ```console
    kubectl get pod scalardl-client
    ```
-
    [Command execution result]
-
    ```console
    NAME              READY   STATUS    RESTARTS   AGE
    scalardl-client   1/1     Running   0          4s
@@ -727,82 +680,65 @@ The following explains the minimum steps. If you want to know more details about
 When you use Auditor, you need to register the certificate for the Ledger and Auditor before starting the client application. Ledger needs to register its certificate to Auditor, and Auditor needs to register its certificate to Ledger.
 
 1. Run bash in the Client container.
-
    ```console
    kubectl exec -it scalardl-client -- bash
    ```
-
    After this step, run each command in the Client container.  
 
 1. Install the git, curl and unzip commands in the Client container.
-
    ```console
    apt update && apt install -y git curl unzip
    ```
 
 1. Clone ScalarDL Java Client SDK git repository.
-
    ```console
    git clone https://github.com/scalar-labs/scalardl-java-client-sdk.git
    ```
 
 1. Change the directory to `scalardl-java-client-sdk/`.
-
    ```console
    cd scalardl-java-client-sdk/
    ```
-
    ```console
    pwd
    ```
-
    [Command execution result]
-
    ```console
+
    /scalardl-java-client-sdk
    ```
 
 1. Change branch to arbitrary version.
-
    ```console
    git checkout -b v3.6.0 refs/tags/v3.6.0
    ```
-
    ```console
    git branch
    ```
-
    [Command execution result]
-
    ```console
      master
    * v3.6.0
    ```
-
    If you want to use another version, please specify the version (tag) you want to use. You need to use the same version of ScalarDL Ledger and ScalarDL Java Client SDK.
 
 1. Build the sample contracts.
-
    ```console
    ./gradlew assemble
    ```
 
 1. Download CLI tools of ScalarDL from [ScalarDL Java Client SDK Releases](https://github.com/scalar-labs/scalardl-java-client-sdk/releases).
-
    ```console
    curl -OL https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v3.6.0/scalardl-java-client-sdk-3.6.0.zip
    ```
-
    You need to use the same version of CLI tools and ScalarDL Ledger.
 
 1. Unzip the `scalardl-java-client-sdk-3.6.0.zip` file.
-
    ```console
    unzip ./scalardl-java-client-sdk-3.6.0.zip
    ```
 
 1. Create a configuration file (ledger.as.client.properties) to register the certificate of Ledger to Auditor.
-
    ```console
    cat << 'EOF' > ledger.as.client.properties
    # Ledger
@@ -820,7 +756,6 @@ When you use Auditor, you need to register the certificate for the Ledger and Au
    ```
 
 1. Create a configuration file (auditor.as.client.properties) to register the certificate of Auditor to Ledger.
-
    ```console
    cat << 'EOF' > auditor.as.client.properties
    # Ledger
@@ -838,7 +773,6 @@ When you use Auditor, you need to register the certificate for the Ledger and Au
    ```
 
 1. Create a configuration file (client.properties) to access ScalarDL Ledger on the Kubernetes cluster.
-
    ```console
    cat << 'EOF' > client.properties
    # Ledger
@@ -856,57 +790,46 @@ When you use Auditor, you need to register the certificate for the Ledger and Au
    ```
 
 1. Register the certificate file of Ledger.
-
    ```console
    ./scalardl-java-client-sdk-3.6.0/bin/register-cert --properties ./ledger.as.client.properties
    ```
 
 1. Register the certificate file of Auditor.
-
    ```console
    ./scalardl-java-client-sdk-3.6.0/bin/register-cert --properties ./auditor.as.client.properties
    ```
 
 1. Register the certificate file of client.
-
    ```console
    ./scalardl-java-client-sdk-3.6.0/bin/register-cert --properties ./client.properties
    ```
 
 1. Register the sample contract `StateUpdater`.
-
    ```console
    ./scalardl-java-client-sdk-3.6.0/bin/register-contract --properties ./client.properties --contract-id StateUpdater --contract-binary-name com.org1.contract.StateUpdater --contract-class-file ./build/classes/java/main/com/org1/contract/StateUpdater.class
    ```
 
 1. Register the sample contract `StateReader`.
-
    ```console
    ./scalardl-java-client-sdk-3.6.0/bin/register-contract --properties ./client.properties --contract-id StateReader --contract-binary-name com.org1.contract.StateReader --contract-class-file ./build/classes/java/main/com/org1/contract/StateReader.class
    ```
 
 1. Register the contract `ValdateLedger` to execute a validate request.
-
    ```console
    ./scalardl-java-client-sdk-3.6.0/bin/register-contract --properties ./client.properties --contract-id validate-ledger --contract-binary-name com.scalar.dl.client.contract.ValidateLedger --contract-class-file ./build/classes/java/main/com/scalar/dl/client/contract/ValidateLedger.class
    ```
 
 1. Execute the contract `StateUpdater`.
-
    ```console
    ./scalardl-java-client-sdk-3.6.0/bin/execute-contract --properties ./client.properties --contract-id StateUpdater --contract-argument '{"asset_id": "test_asset", "state": 3}'
    ```
-
    This sample contract updates the `state` (value) of the asset named `test_asset` to `3`.  
 
 1. Execute the contract `StateReader`.
-
    ```console
    ./scalardl-java-client-sdk-3.6.0/bin/execute-contract --properties ./client.properties --contract-id StateReader --contract-argument '{"asset_id": "test_asset"}'
    ```
-
    [Command execution result]
-
    ```console
    Contract result:
    {
@@ -917,29 +840,23 @@ When you use Auditor, you need to register the certificate for the Ledger and Au
      }
    }
    ```
-
    * Reference information
       * If the asset data is not tampered with, the contract execution request (execute-contract command) returns `OK` as a result.
       * If the asset data is tampered with (e.g. the `state` value in the DB is tampered with), the contract execution request (execute-contract command) returns a value other than `OK`  (e.g. `INCONSISTENT_STATES`) as a result, like the following.  
         [Command execution result (If the asset data is tampered with)]
-
         ```console
         {
           "status_code" : "INCONSISTENT_STATES",
           "error_message" : "The results from Ledger and Auditor don't match"
         }
         ```
-
           * In this way, the ScalarDL can detect data tampering.
 
 1. Execute a validation request for the asset.
-
    ```console
    ./scalardl-java-client-sdk-3.6.0/bin/validate-ledger --properties ./client.properties --asset-id "test_asset"
    ```
-
    [Command execution result]
-
    ```console
    {
      "status_code" : "OK",
@@ -959,19 +876,16 @@ When you use Auditor, you need to register the certificate for the Ledger and Au
      }
    }
    ```
-
    * Reference information
       * If the asset data is not tampered with, the validation request (validate-ledger command) returns `OK` as a result.
       * If the asset data is tampered with (e.g. the `state` value in the DB is tampered with), the validation request (validate-ledger command) returns a value other than `OK` (e.g. `INVALID_OUTPUT`) as a result, like the following.  
         [Command execution result (If the asset data is tampered with)]
-
         ```console
         {
           "status_code" : "INCONSISTENT_STATES",
           "error_message" : "The results from Ledger and Auditor don't match"
         }
         ```
-
           * In this way, the ScalarDL Ledger can detect data tampering.
 
 ## Step 9. Delete all resources
@@ -979,23 +893,19 @@ When you use Auditor, you need to register the certificate for the Ledger and Au
 After completing the ScalarDL Ledger tests on the Kubernetes cluster, remove all resources.
 
 1. Uninstall ScalarDL Ledger, ScalarDL Schema Loader, and PostgreSQL.
-
    ```console
    helm uninstall scalardl-ledger schema-loader-ledger postgresql-ledger scalardl-auditor schema-loader-auditor postgresql-auditor
    ```
 
 1. Remove the Client container.
-
    ```
    kubectl delete pod scalardl-client --force --grace-period 0
    ```
 
 1. Remove the working directory and sample files (configuration file, key, and certificate).
-
    ```console
    cd ~
    ```
-   
    ```console
    rm -rf ~/scalardl-test/
    ```
@@ -1004,6 +914,6 @@ After completing the ScalarDL Ledger tests on the Kubernetes cluster, remove all
 
 You can see how to get started with monitoring or logging for Scalar products in the following documents.
 
-* [Getting Started with Helm Charts (Monitoring using Prometheus Operator)](./getting-started-monitoring.md)
-* [Getting Started with Helm Charts (Logging using Loki Stack)](./getting-started-logging.md)
-* [Getting Started with Helm Charts (Scalar Manager)](./getting-started-scalar-manager.md)
+* [Getting Started with Helm Charts (Monitoring using Prometheus Operator)](getting-started-monitoring.md)
+* [Getting Started with Helm Charts (Logging using Loki Stack)](getting-started-logging.md)
+* [Getting Started with Helm Charts (Scalar Manager)](getting-started-scalar-manager.md)
