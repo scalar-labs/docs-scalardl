@@ -41,11 +41,11 @@ You should create the Kubernetes cluster on a private network since ScalarDL Led
 
 ### Monitoring and logging
 
-You should monitor the deployed components and collect their logs. For details, see [Monitoring Scalar products on a Kubernetes cluster](./K8sMonitorGuide.md) and [Collecting logs from Scalar products on a Kubernetes cluster](./K8sLogCollectionGuide.md).
+You should monitor the deployed components and collect their logs. For details, see [Monitoring Scalar products on a Kubernetes cluster](K8sMonitorGuide.md) and [Collecting logs from Scalar products on a Kubernetes cluster](K8sLogCollectionGuide.md).
 
 ### Backup and restore
 
-You should enable the automatic backup feature and point-in-time recovery (PITR) feature in the backend database. For details, see [Set up a database for ScalarDB/ScalarDL deployment](./SetupDatabase.md).
+You should enable the automatic backup feature and point-in-time recovery (PITR) feature in the backend database. For details, see [Set up a database for ScalarDB/ScalarDL deployment](SetupDatabase.md).
 
 ## Production checklist: Client applications that access ScalarDL Ledger
 

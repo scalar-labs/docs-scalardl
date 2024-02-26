@@ -58,7 +58,7 @@ k8s-worker3         Ready    <none>          15m   v1.25.3
 
 ## Prometheus dashboard (Alerts of Scalar products)
 
-Access to the Prometheus dashboard according to the document [Monitoring Scalar products on the Kubernetes cluster](./K8sMonitorGuide.md). In the **Alerts** tab, you can see the alert status.
+Access to the Prometheus dashboard according to the document [Monitoring Scalar products on the Kubernetes cluster](K8sMonitorGuide.md). In the **Alerts** tab, you can see the alert status.
 
 What to check:
 
@@ -68,6 +68,6 @@ If some issue is occurring, it shows you **red (Firing)** status.
 
 ## Grafana dashboard (metrics of Scalar products)
 
-Access to the Grafana dashboard according to the document [Monitoring Scalar products on the Kubernetes cluster](./K8sMonitorGuide.md). In the **Dashboards** tab, you can see the dashboard of Scalar products. In these dashboards, you can see some metrics of Scalar products.
+Access to the Grafana dashboard according to the document [Monitoring Scalar products on the Kubernetes cluster](K8sMonitorGuide.md). In the **Dashboards** tab, you can see the dashboard of Scalar products. In these dashboards, you can see some metrics of Scalar products.
 
 Those dashboards cannot address issues directly, but you can see changes from normal (e.g., increasing transaction errors) to get hints for investigating issues.
