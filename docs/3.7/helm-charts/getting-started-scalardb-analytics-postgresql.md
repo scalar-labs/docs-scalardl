@@ -33,7 +33,7 @@ You will deploy the following components in a Kubernetes cluster:
 
 ## Step 1. Start a Kubernetes cluster
 
-First, you need to prepare a Kubernetes cluster. If you're using a **minikube** environment, please refer to the [Getting Started with Scalar Helm Charts](./getting-started-scalar-helm-charts.md). If you have already started a Kubernetes cluster, you can skip this step.
+First, you need to prepare a Kubernetes cluster. If you're using a **minikube** environment, please refer to the [Getting Started with Scalar Helm Charts](getting-started-scalar-helm-charts.md). If you have already started a Kubernetes cluster, you can skip this step.
 
 ## Step 2. Start MySQL and PostgreSQL pods
 

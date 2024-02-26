@@ -2,8 +2,8 @@
 
 This document explains how to deploy ScalarDL Ledger using Scalar Helm Charts. You must prepare your custom values file. Please refer to the following document for more details on the custom values file for ScalarDL Ledger and ScalarDL Schema Loader.
 
-* [Configure a custom values file for ScalarDL Ledger](./configure-custom-values-scalardl-ledger.md)
-* [Configure a custom values file for ScalarDL Schema Loader](./configure-custom-values-scalardl-schema-loader.md)
+* [Configure a custom values file for ScalarDL Ledger](configure-custom-values-scalardl-ledger.md)
+* [Configure a custom values file for ScalarDL Schema Loader](configure-custom-values-scalardl-schema-loader.md)
 
 ## Prepare a private key file (optional / it is necessary if you use ScalarDL Auditor)
 
@@ -11,7 +11,7 @@ If you use the [asset proofs](https://github.com/scalar-labs/scalardl/blob/maste
 
 Please refer to the following document for more details on how to mount the key/certificate files on the ScalarDL pods.
 
-* [Mount key and certificate files on a pod in ScalarDL Helm Charts](./mount-files-or-volumes-on-scalar-pods.md#mount-key-and-certificate-files-on-a-pod-in-scalardl-helm-charts)
+* [Mount key and certificate files on a pod in ScalarDL Helm Charts](mount-files-or-volumes-on-scalar-pods.md#mount-key-and-certificate-files-on-a-pod-in-scalardl-helm-charts)
 
 ## Create schemas for ScalarDL Ledger (Deploy ScalarDL Schema Loader)
 
