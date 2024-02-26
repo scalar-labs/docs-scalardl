@@ -2,14 +2,14 @@
 
 This document explains how to deploy ScalarDL Auditor using Scalar Helm Charts. You must prepare your custom values file. Please refer to the following document for more details on the custom values file for ScalarDL Auditor and ScalarDL Schema Loader.
 
-* [Configure a custom values file for ScalarDL Auditor](./configure-custom-values-scalardl-auditor.md)
-* [Configure a custom values file for ScalarDL Schema Loader](./configure-custom-values-scalardl-schema-loader.md)
+* [Configure a custom values file for ScalarDL Auditor](configure-custom-values-scalardl-auditor.md)
+* [Configure a custom values file for ScalarDL Schema Loader](configure-custom-values-scalardl-schema-loader.md)
 
 ## Prepare a private key file and a certificate file
 
 When you deploy ScalarDL Auditor, you must create a Secrete resource to mount the private key file and the certificate file on the ScalarDL Auditor pods.
 
-For more details on how to mount the key and certificate files on the ScalarDL pods, refer to [Mount key and certificate files on a pod in ScalarDL Helm Charts](./mount-files-or-volumes-on-scalar-pods.md#mount-key-and-certificate-files-on-a-pod-in-scalardl-helm-charts).
+For more details on how to mount the key and certificate files on the ScalarDL pods, refer to [Mount key and certificate files on a pod in ScalarDL Helm Charts](mount-files-or-volumes-on-scalar-pods.md#mount-key-and-certificate-files-on-a-pod-in-scalardl-helm-charts).
 
 ## Create schemas for ScalarDL Auditor (Deploy ScalarDL Schema Loader)
 

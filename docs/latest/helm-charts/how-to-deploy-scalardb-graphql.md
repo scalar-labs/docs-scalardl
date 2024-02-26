@@ -3,14 +3,14 @@
 {% capture notice--info %}
 **Note**
 
-ScalarDB GraphQL Server is now deprecated. Please use [ScalarDB Cluster](./how-to-deploy-scalardb-cluster.md) instead.
+ScalarDB GraphQL Server is now deprecated. Please use [ScalarDB Cluster](how-to-deploy-scalardb-cluster.md) instead.
 {% endcapture %}
 
 <div class="notice--info">{{ notice--info | markdownify }}</div>
 
 This document explains how to deploy ScalarDB GraphQL using Scalar Helm Charts. You must prepare your custom values file. Please refer to the following document for more details on the custom values file for ScalarDB GraphQL.
 
-* [[Deprecated] Configure a custom values file for ScalarDB GraphQL](./configure-custom-values-scalardb-graphql.md)
+* [[Deprecated] Configure a custom values file for ScalarDB GraphQL](configure-custom-values-scalardb-graphql.md)
 
 ## Deploy ScalarDB Server (recommended option)
 
@@ -20,7 +20,7 @@ When you deploy ScalarDB GraphQL, it is recommended to deploy ScalarDB Server be
 [Client] ---> [ScalarDB GraphQL] ---> [ScalarDB Server] ---> [Backend databases]
 ```
 
-Please deploy ScalarDB Server before you deploy ScalarDB GraphQL according to the document [How to deploy ScalarDB Server](./how-to-deploy-scalardb.md).
+Please deploy ScalarDB Server before you deploy ScalarDB GraphQL according to the document [How to deploy ScalarDB Server](how-to-deploy-scalardb.md).
 
 ## Deploy ScalarDB GraphQL
 

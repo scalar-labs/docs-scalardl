@@ -58,7 +58,7 @@ To use environment variables to set some properties, like credentials, in `scala
 
 For example, you can set credentials for a backend database (`scalar.db.username` and `scalar.db.password`) by using environment variables, which makes your pods more secure.
 
-For more details on how to use a secret resource, see [How to use Secret resources to pass the credentials as the environment variables into the properties file](./use-secret-for-credentials.md).
+For more details on how to use a secret resource, see [How to use Secret resources to pass the credentials as the environment variables into the properties file](use-secret-for-credentials.md).
 
 ```yaml
 scalardbAnalyticsPostgreSQL:
@@ -164,7 +164,7 @@ scalardbAnalyticsPostgreSQL:
 {% capture notice--info %}
 **Note**
 
-You must create a secret resource with this name (`scalardb-analytics-postgresql-superuser-password` by default) before you deploy ScalarDB Analytics with PostgreSQL. For details, see [Prepare a secret resource](./how-to-deploy-scalardb-analytics-postgresql.md#prepare-a-secret-resource).
+You must create a secret resource with this name (`scalardb-analytics-postgresql-superuser-password` by default) before you deploy ScalarDB Analytics with PostgreSQL. For details, see [Prepare a secret resource](how-to-deploy-scalardb-analytics-postgresql.md#prepare-a-secret-resource).
 {% endcapture %}
 
 <div class="notice--info">{{ notice--info | markdownify }}</div>

@@ -43,7 +43,7 @@ We will deploy the following components on a Kubernetes cluster as follows.
 
 ## Step 1. Start a Kubernetes cluster
 
-First, you need to prepare a Kubernetes cluster. If you use a **minikube** environment, please refer to the [Getting Started with Scalar Helm Charts](./getting-started-scalar-helm-charts.md). If you have already started a Kubernetes cluster, you can skip this step.
+First, you need to prepare a Kubernetes cluster. If you use a **minikube** environment, please refer to the [Getting Started with Scalar Helm Charts](getting-started-scalar-helm-charts.md). If you have already started a Kubernetes cluster, you can skip this step.
 
 ## Step 2. Start a PostgreSQL container
 
@@ -261,7 +261,7 @@ The following explains the minimum steps. If you want to know more details about
    git branch
    ```
    [Command execution result]
-   
+
    {% raw %}
    ```console
      master
@@ -370,8 +370,7 @@ After completing the ScalarDB Server tests on the Kubernetes cluster, remove all
    ```
 
 1. Remove the Client container.
-
-   ```console
+   ```
    kubectl delete pod scalardb-client --force --grace-period 0
    ```
 
@@ -379,6 +378,6 @@ After completing the ScalarDB Server tests on the Kubernetes cluster, remove all
 
 You can see how to get started with monitoring or logging for Scalar products in the following documents.
 
-* [Getting Started with Helm Charts (Monitoring using Prometheus Operator)](./getting-started-monitoring.md)
-* [Getting Started with Helm Charts (Logging using Loki Stack)](./getting-started-logging.md)
-* [Getting Started with Helm Charts (Scalar Manager)](./getting-started-scalar-manager.md)
+* [Getting Started with Helm Charts (Monitoring using Prometheus Operator)](getting-started-monitoring.md)
+* [Getting Started with Helm Charts (Logging using Loki Stack)](getting-started-logging.md)
+* [Getting Started with Helm Charts (Scalar Manager)](getting-started-scalar-manager.md)

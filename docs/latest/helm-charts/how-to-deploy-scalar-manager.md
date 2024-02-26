@@ -2,7 +2,7 @@
 
 This document explains how to deploy Scalar Manager using Scalar Helm Charts. You must prepare your custom values file. Please refer to the following document for more details on the custom values file for Scalar Manager.
 
-* [Configure a custom values file for Scalar Manager](./configure-custom-values-scalar-manager.md)
+* [Configure a custom values file for Scalar Manager](configure-custom-values-scalar-manager.md)
 
 ## Deploy kube-prometheus-stack and loki-stack
 
