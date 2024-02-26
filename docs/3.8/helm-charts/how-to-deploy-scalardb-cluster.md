@@ -1,6 +1,6 @@
 # How to deploy ScalarDB Cluster
 
-This document explains how to deploy ScalarDB Cluster by using Scalar Helm Charts. For details on the custom values file for ScalarDB Cluster, see [Configure a custom values file for ScalarDB Cluster](./configure-custom-values-scalardb-cluster.md).
+This document explains how to deploy ScalarDB Cluster by using Scalar Helm Charts. For details on the custom values file for ScalarDB Cluster, see [Configure a custom values file for ScalarDB Cluster](configure-custom-values-scalardb-cluster.md).
 
 ## Deploy ScalarDB Cluster
 
@@ -31,7 +31,6 @@ If you use ScalarDB Cluster with `direct-kubernetes` mode, you must:
 This method is necessary because the ScalarDB Cluster client library with `direct-kubernetes` mode runs the Kubernetes API from inside of your application pods to get information about the ScalarDB Cluster pods.
 
 * Role
-
   ```yaml
   apiVersion: rbac.authorization.k8s.io/v1
   kind: Role
@@ -43,9 +42,7 @@ This method is necessary because the ScalarDB Cluster client library with `direc
       resources: ["endpoints"]
       verbs: ["get", "watch", "list"]
   ```
-
 * RoleBinding
-
   ```yaml
   apiVersion: rbac.authorization.k8s.io/v1
   kind: RoleBinding
@@ -60,9 +57,7 @@ This method is necessary because the ScalarDB Cluster client library with `direc
     name: scalardb-cluster-role
     apiGroup: rbac.authorization.k8s.io
   ```
-
 * ServiceAccount
-
   ```yaml
   apiVersion: v1
   kind: ServiceAccount

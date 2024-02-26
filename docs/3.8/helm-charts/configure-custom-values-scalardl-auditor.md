@@ -57,7 +57,7 @@ You must set a private key file to `scalar.dl.auditor.private_key_path` and a ce
 
 You must also mount the private key file and the certificate file on the ScalarDL Auditor pod.
 
-For more details on how to mount the private key file and the certificate file, refer to [Mount key and certificate files on a pod in ScalarDL Helm Charts](./mount-files-or-volumes-on-scalar-pods.md#mount-key-and-certificate-files-on-a-pod-in-scalardl-helm-charts).
+For more details on how to mount the private key file and the certificate file, refer to [Mount key and certificate files on a pod in ScalarDL Helm Charts](mount-files-or-volumes-on-scalar-pods.md#mount-key-and-certificate-files-on-a-pod-in-scalardl-helm-charts).
 
 ## Optional configurations
 
@@ -86,7 +86,7 @@ If you want to use environment variables to set some properties (e.g., credentia
 
 For example, you can set credentials for a backend database (`scalar.db.username` and `scalar.db.password`) using environment variables, which makes your pods more secure.
 
-Please refer to the document [How to use Secret resources to pass the credentials as the environment variables into the properties file](./use-secret-for-credentials.md) for more details on how to use a Secret resource.
+Please refer to the document [How to use Secret resources to pass the credentials as the environment variables into the properties file](use-secret-for-credentials.md) for more details on how to use a Secret resource.
 
 ```yaml
 auditor:

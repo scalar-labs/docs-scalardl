@@ -2,7 +2,7 @@
 
 This document explains how to deploy Scalar products using Scalar Helm Charts. If you want to test Scalar products on your local environment using a minikube cluster, please refer to the following getting started guide.
 
-* [Getting Started with Scalar Helm Charts](./getting-started-scalar-helm-charts.md)
+* [Getting Started with Scalar Helm Charts](getting-started-scalar-helm-charts.md)
 
 ## Prerequisites
 
@@ -37,7 +37,7 @@ You must prepare a database as a backend storage of ScalarDB/ScalarDL. You can s
 
 You must prepare your custom values file based on your environment. Please refer to the following documents for more details on how to create a custom values file.
 
-* [Configure a custom values file for Scalar Helm Charts](./configure-custom-values-file.md)
+* [Configure a custom values file for Scalar Helm Charts](configure-custom-values-file.md)
 
 ### Create a Secret resource for authentication of the container registry (Optional)
 
@@ -50,11 +50,11 @@ If you use a Kubernetes cluster other than EKS or AKS, you need to create a Secr
 
 Please refer to the following documents for more details on how to deploy each product.
 
-* [ScalarDB Cluster](./how-to-deploy-scalardb-cluster.md)
-* [ScalarDB Analytics with PostgreSQL](./how-to-deploy-scalardb-analytics-postgresql.md)
-* [ScalarDL Ledger](./how-to-deploy-scalardl-ledger.md)
-* [ScalarDL Auditor](./how-to-deploy-scalardl-auditor.md)
-* [Scalar Admin for Kubernetes](./how-to-deploy-scalar-admin-for-kubernetes.md)
-* [Scalar Manager](./how-to-deploy-scalar-manager.md)
-* [[Deprecated] ScalarDB Server](./how-to-deploy-scalardb.md)
-* [[Deprecated] ScalarDB GraphQL](./how-to-deploy-scalardb-graphql.md)
+* [ScalarDB Cluster](how-to-deploy-scalardb-cluster.md)
+* [ScalarDB Analytics with PostgreSQL](how-to-deploy-scalardb-analytics-postgresql.md)
+* [ScalarDL Ledger](how-to-deploy-scalardl-ledger.md)
+* [ScalarDL Auditor](how-to-deploy-scalardl-auditor.md)
+* [Scalar Admin for Kubernetes](how-to-deploy-scalar-admin-for-kubernetes.md)
+* [Scalar Manager](how-to-deploy-scalar-manager.md)
+* [[Deprecated] ScalarDB Server](how-to-deploy-scalardb.md)
+* [[Deprecated] ScalarDB GraphQL](how-to-deploy-scalardb-graphql.md)
