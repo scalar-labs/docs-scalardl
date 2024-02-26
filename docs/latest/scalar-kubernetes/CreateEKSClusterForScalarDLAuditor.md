@@ -1,6 +1,6 @@
 # Guidelines for creating an EKS cluster for ScalarDL Ledger and ScalarDL Auditor
 
-This document explains the requirements and recommendations for creating an Amazon Elastic Kubernetes Service (EKS) cluster for ScalarDL Ledger and ScalarDL Auditor deployment. For details on how to deploy ScalarDL Ledger and ScalarDL Auditor on an EKS cluster, see [Deploy ScalarDL Ledger and ScalarDL Auditor on Amazon EKS](./ManualDeploymentGuideScalarDLAuditorOnEKS.md).
+This document explains the requirements and recommendations for creating an Amazon Elastic Kubernetes Service (EKS) cluster for ScalarDL Ledger and ScalarDL Auditor deployment. For details on how to deploy ScalarDL Ledger and ScalarDL Auditor on an EKS cluster, see [Deploy ScalarDL Ledger and ScalarDL Auditor on Amazon EKS](ManualDeploymentGuideScalarDLAuditorOnEKS.md).
 
 ## Before you begin
 
@@ -17,7 +17,7 @@ When deploying ScalarDL Ledger and ScalarDL Auditor, you must:
 * Configure an Amazon Virtual Private Cloud (VPC) as follows.
     * Connect the **VPC of EKS (for Ledger)** and the **VPC of EKS (for Auditor)** by using [VPC peering](https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html). To do so, you must specify the different IP ranges for the **VPC of EKS (for Ledger)** and the **VPC of EKS (for Auditor)** when you create those VPCs.
     * Allow **connections between Ledger and Auditor** to make ScalarDL (Auditor mode) work properly.
-    * For more details about these network requirements, refer to [Configure Network Peering for ScalarDL Auditor Mode](./NetworkPeeringForScalarDLAuditor.md).
+    * For more details about these network requirements, refer to [Configure Network Peering for ScalarDL Auditor Mode](NetworkPeeringForScalarDLAuditor.md).
 
 {% capture notice--warning %}
 **Attention**
