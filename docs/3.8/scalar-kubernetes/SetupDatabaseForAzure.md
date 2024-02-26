@@ -42,7 +42,7 @@ You can configure **Backup modes** as **Continuous backup mode** for PITR. Pleas
 
 It is recommended since the continuous backup mode automatically and continuously gets backups so that we can reduce downtime (pause duration) for backup operations. Please refer to the following document for more details on how to backup/restore the Scalar product data.
 
-* [Backup restore guide for Scalar products](./BackupRestoreGuide.md)
+* [Backup restore guide for Scalar products](BackupRestoreGuide.md)
 
 #### Configure monitoring (Recommended in the production environment)
 
@@ -111,7 +111,7 @@ If you want to change some backup configurations like the backup retention perio
 
 Please refer to the following document for more details on how to backup/restore the Scalar product data.
 
-* [Backup restore guide for Scalar products](./BackupRestoreGuide.md)
+* [Backup restore guide for Scalar products](BackupRestoreGuide.md)
 
 #### Configure monitoring (Recommended in the production environment)
 
@@ -175,7 +175,7 @@ If you want to change some backup configurations like the backup retention perio
 
 Please refer to the following document for more details on how to backup/restore the Scalar product data.
 
-* [Backup restore guide for Scalar products](./BackupRestoreGuide.md)
+* [Backup restore guide for Scalar products](BackupRestoreGuide.md)
 
 #### Configure monitoring (Recommended in the production environment)
 

@@ -13,10 +13,10 @@ In this guide, we assume that you are using point-in-time recovery (PITR) or its
    * **The ScalarDB or ScalarDL pod names in the `NAME` column.** Write down the pod names so that you can compare those names with the pod names after performing the backup.
    * **The ScalarDB or ScalarDL pod status is `Running` in the `STATUS` column.** Confirm that the pods are running before proceeding with the backup. You will need to pause the pods in the next step.
    * **The restart count of each pod in the `RESTARTS` column.** Write down the restart count of each pod so that you can compare the count with the restart counts after performing the backup.
-2. Pause the ScalarDB or ScalarDL pods by using `scalar-admin`. For details on how to pause the pods, see the [Details on using `scalar-admin`](./BackupNoSQL.md#details-on-using-scalar-admin) section in this guide.
+2. Pause the ScalarDB or ScalarDL pods by using `scalar-admin`. For details on how to pause the pods, see the [Details on using `scalar-admin`](BackupNoSQL.md#details-on-using-scalar-admin) section in this guide.
 3. Write down the `pause completed` time. You will need to refer to that time when restoring the data by using the PITR feature.
 4. Back up each database by using the backup feature. If you have enabled the automatic backup and PITR features, the managed databases will perform back up automatically. Please note that you should wait for approximately 10 seconds so that you can create a sufficiently long period to avoid a clock skew issue between the client clock and the database clock. This 10-second period is the exact period in which you can restore data by using the PITR feature.
-5. Unpause ScalarDB or ScalarDL pods by using `scalar-admin`. For details on how to unpause the pods, see the [Details on using `scalar-admin`](./BackupNoSQL.md#details-on-using-scalar-admin) section in this guide.
+5. Unpause ScalarDB or ScalarDL pods by using `scalar-admin`. For details on how to unpause the pods, see the [Details on using `scalar-admin`](BackupNoSQL.md#details-on-using-scalar-admin) section in this guide.
 6. Check the `unpause started` time. You must check the `unpause started` time to confirm the exact period in which you can restore data by using the PITR feature.
 7. Check the pod status after performing the backup. You must check the following four points by using the `kubectl get pod` command after the backup operation is completed.
    * **The number of ScalarDB or ScalarDL pods.** Confirm this number matches the number of pods that you wrote down before performing the backup.
@@ -25,7 +25,7 @@ In this guide, we assume that you are using point-in-time recovery (PITR) or its
    * **The restart count of each pod in the `RESTARTS` column.** Confirm the counts match the restart counts that you wrote down before performing the backup
    
    **If any of the two values are different, you must retry the backup operation from the beginning.** The reason for the different values may be caused by some pods being added or restarted while performing the backup. In such case, those pods will run in the `unpause` state. Pods in the `unpause` state will cause the backup data to be transactionally inconsistent.
-8. **(Amazon DynamoDB only)** If you use the PITR feature of DynamoDB, you will need to perform additional steps to create a backup because the feature restores data with another name table by using PITR. For details on the additional steps after creating the exact period in which you can restore the data, please see [Restore databases in a Kubernetes environment](./RestoreDatabase.md#amazon-dynamodb).
+8. **(Amazon DynamoDB only)** If you use the PITR feature of DynamoDB, you will need to perform additional steps to create a backup because the feature restores data with another name table by using PITR. For details on the additional steps after creating the exact period in which you can restore the data, please see [Restore databases in a Kubernetes environment](RestoreDatabase.md#amazon-dynamodb).
 
 ## Back up multiple databases
 
@@ -43,19 +43,14 @@ If you use Scalar Helm Charts to deploy ScalarDB or ScalarDL, the `my-svc` and `
 
 * Example
   * ScalarDB Server
-
     ```console
     _scalardb._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
-
   * ScalarDL Ledger
-
     ```console
     _scalardl-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
-
   * ScalarDL Auditor
-
     ```console
     _scalardl-auditor-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
@@ -95,19 +90,14 @@ You can send a pause request to ScalarDB or ScalarDL pods in a Kubernetes enviro
 
 * Example
   * ScalarDB Server
-
     ```console
     kubectl run scalar-admin-pause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c pause -s _scalardb._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
-
   * ScalarDL Ledger
-
     ```console
     kubectl run scalar-admin-pause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c pause -s _scalardl-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
-
   * ScalarDL Auditor
-
     ```console
     kubectl run scalar-admin-pause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c pause -s _scalardl-auditor-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
@@ -118,19 +108,14 @@ You can send an unpause request to ScalarDB or ScalarDL pods in a Kubernetes env
 
 * Example
   * ScalarDB Server
-
     ```console
     kubectl run scalar-admin-unpause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c unpause -s _scalardb._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
-
   * ScalarDL Ledger
-
     ```console
     kubectl run scalar-admin-unpause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c unpause -s _scalardl-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
-
   * ScalarDL Auditor
-
     ```console
     kubectl run scalar-admin-unpause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c unpause -s _scalardl-auditor-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
@@ -142,7 +127,6 @@ The `scalar-admin` pods output the `pause completed` time and `unpause started` 
 ```console
 kubectl logs scalar-admin-pause
 ```
-
 ```console
 kubectl logs scalar-admin-unpause
 ```
