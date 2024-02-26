@@ -22,9 +22,15 @@
             <ul class="version-dropdown-content">
               {% for version-children in link.version-children %}
                 <li>
-                  <a href="{{ site.baseurl }}{{ version-children.version-url }}">
-                    <span>{{ version-children.version-title }}</span>
-                  </a>
+                  {% if page.url contains '/docs/ja-jp/' %}
+                    <a href="{{ site.baseurl }}{{ version-children.version-ja-jp-url }}">
+                      <span>{{ version-children.version-ja-jp-title }}</span>
+                    </a>
+                  {% else %}
+                    <a href="{{ site.baseurl }}{{ version-children.version-url }}">
+                      <span>{{ version-children.version-title }}</span>
+                    </a>
+                  {% endif %}
                 </li>
               {% endfor %}
             </ul>
