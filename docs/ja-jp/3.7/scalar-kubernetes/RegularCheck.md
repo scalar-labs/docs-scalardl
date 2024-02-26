@@ -1,0 +1,73 @@
+# Kubernetes 環境で実行するときに定期的にチェックするコンポーネント
+
+手動デプロイメント ガイドによってデプロイされたコンポーネントのほとんどは、マネージド Kubernetes サービスと Kubernetes 自己修復機能の助けを借りて自己修復されます。 予期しない動作が発生したときに発生するアラートも設定されています。 したがって、マネージド Kubernetes クラスターに Scalar 製品をデプロイするために毎日行うべきことはそれほど多くありません。 ただし、システムのステータスを定期的にチェックして、すべてが正常に動作しているかどうかを確認することをお勧めします。 ここでは、定期的に実行しておきたいことのリストを示します。
+
+## Kubernetes リソース
+
+### ポッドがすべて正常なスタチューであるかどうかを確認する
+
+Kubernetes 名前空間を確認してください。
+
+* Scalar 製品デプロイメントの `default` (または Scalar 製品をデプロイするときに指定された名前空間)
+* Prometheus Operator と Loki の `monitoring`
+
+確認すべき内容:
+
+* `STATUS` はすべて `Running` です。
+* ポッドはさまざまなノードに均等に分散されます。
+
+```console
+$ kubectl get pod -o wide -n <namespace>
+NAME                              READY   STATUS    RESTARTS   AGE     IP           NODE          NOMINATED NODE   READINESS GATES
+scalardb-7876f595bd-2jb28         1/1     Running   0          2m35s   10.244.2.6   k8s-worker2   <none>           <none>
+scalardb-7876f595bd-rfvk6         1/1     Running   0          2m35s   10.244.1.8   k8s-worker    <none>           <none>
+scalardb-7876f595bd-xfkv4         1/1     Running   0          2m35s   10.244.3.8   k8s-worker3   <none>           <none>
+scalardb-envoy-84c475f77b-cflkn   1/1     Running   0          2m35s   10.244.1.7   k8s-worker    <none>           <none>
+scalardb-envoy-84c475f77b-tzmc9   1/1     Running   0          2m35s   10.244.3.7   k8s-worker3   <none>           <none>
+scalardb-envoy-84c475f77b-vztqr   1/1     Running   0          2m35s   10.244.2.5   k8s-worker2   <none>           <none>
+```
+
+```console
+$ kubectl get pod -n monitoring -o wide
+NAME                                                     READY   STATUS    RESTARTS      AGE   IP           NODE                NOMINATED NODE   READINESS GATES
+alertmanager-scalar-monitoring-kube-pro-alertmanager-0   2/2     Running   1 (11m ago)   12m   10.244.2.4   k8s-worker2         <none>           <none>
+prometheus-scalar-monitoring-kube-pro-prometheus-0       2/2     Running   0             12m   10.244.1.5   k8s-worker          <none>           <none>
+scalar-logging-loki-0                                    1/1     Running   0             13m   10.244.2.2   k8s-worker2         <none>           <none>
+scalar-logging-loki-promtail-2c4k9                       0/1     Running   0             13m   10.244.0.5   k8s-control-plane   <none>           <none>
+scalar-logging-loki-promtail-8r48b                       1/1     Running   0             13m   10.244.3.2   k8s-worker3         <none>           <none>
+scalar-logging-loki-promtail-b26c6                       1/1     Running   0             13m   10.244.2.3   k8s-worker2         <none>           <none>
+scalar-logging-loki-promtail-sks56                       1/1     Running   0             13m   10.244.1.2   k8s-worker          <none>           <none>
+scalar-monitoring-grafana-77c4dbdd85-4mrn7               3/3     Running   0             12m   10.244.3.4   k8s-worker3         <none>           <none>
+scalar-monitoring-kube-pro-operator-7575dd8bbd-bxhrc     1/1     Running   0             12m   10.244.1.3   k8s-worker          <none>           <none>
+```
+
+### ノードがすべて正常なステータスであるかどうかを確認します
+
+確認すべき内容:
+
+* `STATUS` はすべて `Ready` です。
+
+```console
+$ kubectl get nodes
+NAME                STATUS   ROLES           AGE   VERSION
+k8s-control-plane   Ready    control-plane   16m   v1.25.3
+k8s-worker          Ready    <none>          15m   v1.25.3
+k8s-worker2         Ready    <none>          15m   v1.25.3
+k8s-worker3         Ready    <none>          15m   v1.25.3
+```
+
+## Prometheus ダッシュボード (Scalar 製品のアラート)
+
+ドキュメント [Kubernetes クラスター上の Scalar 製品のモニタリング](K8sMonitorGuide.md) に従って、Prometheus ダッシュボードにアクセスします。 [**アラート**] タブで、アラートのステータスを確認できます。
+
+確認すべき内容:
+
+* すべてのアラートは **緑色 (非アクティブ)**
+
+何らかの問題が発生している場合は、**赤色 (起動中)** のステータスが表示されます。
+
+## Grafana ダッシュボード (Scalar 製品のメトリクス)
+
+ドキュメント [Kubernetes クラスター上の Scalar 製品のモニタリング](K8sMonitorGuide.md) に従って、Grafana ダッシュボードにアクセスします。 [**ダッシュボード**] タブには、Scalar 製品のダッシュボードが表示されます。 これらのダッシュボードでは、Scalar 製品のいくつかのメトリクスを確認できます。
+
+これらのダッシュボードは問題に直接対処することはできませんが、通常からの変化 (トランザクション エラーの増加など) を確認して、問題を調査するためのヒントを得ることができます。
