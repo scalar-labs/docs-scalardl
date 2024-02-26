@@ -10,10 +10,10 @@ If you use a managed Kubernetes cluster and you want to use the cloud service fe
 ## Prerequisites
 
 * Create a Kubernetes cluster.
-    * [Create an EKS cluster for Scalar products](./CreateEKSClusterForScalarProducts.md)
-    * [Create an AKS cluster for Scalar products](./CreateAKSClusterForScalarProducts.md)
+    * [Create an EKS cluster for Scalar products](CreateEKSClusterForScalarProducts.md)
+    * [Create an AKS cluster for Scalar products](CreateAKSClusterForScalarProducts.md)
 * Create a Bastion server and set `kubeconfig`.
-    * [Create a bastion server](./CreateBastionServer.md)
+    * [Create a bastion server](CreateBastionServer.md)
 
 ## Add the prometheus-community helm repository
 
@@ -22,7 +22,6 @@ This document uses Helm for the deployment of Prometheus Operator.
 ```console
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 ```
-
 ```console
 helm repo update
 ```
@@ -42,13 +41,11 @@ Please refer to the following official document for more details on the configur
 Scalar products assume the Prometheus Operator is deployed in the `monitoring` namespace by default. So, please create the namespace `monitoring` and deploy Prometheus Operator in the `monitoring` namespace.
 
 1. Create a namespace `monitoring` on Kubernetes.
-
    ```console
    kubectl create namespace monitoring
    ```
 
 1. Deploy the kube-prometheus-stack.
-
    ```console
    helm install scalar-monitoring prometheus-community/kube-prometheus-stack -n monitoring -f scalar-prometheus-custom-values.yaml
    ```
@@ -110,52 +107,38 @@ You can access each dashboard from your local machine using the `kubectl port-fo
 
 1. Port forwarding to each service from your local machine.
    * Prometheus
-
      ```console
      kubectl port-forward -n monitoring svc/scalar-monitoring-kube-pro-prometheus 9090:9090
      ```
-
    * Alertmanager
-
      ```console
      kubectl port-forward -n monitoring svc/scalar-monitoring-kube-pro-alertmanager 9093:9093
      ```
-
    * Grafana
-
      ```console
      kubectl port-forward -n monitoring svc/scalar-monitoring-grafana 3000:3000
      ```
 
 1. Access each Dashboard.
    * Prometheus
-
      ```console
      http://localhost:9090/
      ```
-
    * Alertmanager
-
      ```console
      http://localhost:9093/
      ```
-
    * Grafana
-
      ```console
      http://localhost:3000/
      ```
-
        * Note:
            * You can see the user and password of Grafana as follows.
                * user
-
                  ```console
                  kubectl get secrets scalar-monitoring-grafana -n monitoring -o jsonpath='{.data.admin-user}' | base64 -d
                  ```
-
                * password
-               
                  ```console
                  kubectl get secrets scalar-monitoring-grafana -n monitoring -o jsonpath='{.data.admin-password}' | base64 -d
                  ```

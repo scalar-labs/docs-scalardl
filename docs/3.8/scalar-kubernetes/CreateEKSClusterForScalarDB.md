@@ -3,12 +3,12 @@
 {% capture notice--warning %}
 **Attention**
 
-ScalarDB Server is now deprecated. Please use [ScalarDB Cluster](./ManualDeploymentGuideScalarDBClusterOnEKS.md) instead.
+ScalarDB Server is now deprecated. Please use [ScalarDB Cluster](ManualDeploymentGuideScalarDBClusterOnEKS.md) instead.
 {% endcapture %}
 
 <div class="notice--warning">{{ notice--warning | markdownify }}</div>
 
-This document explains the requirements and recommendations for creating an Amazon Elastic Kubernetes Service (EKS) cluster for ScalarDB Server deployment. For details on how to deploy ScalarDB Server on an EKS cluster, see [Deploy ScalarDB Server on Amazon EKS](./ManualDeploymentGuideScalarDBServerOnEKS.md).
+This document explains the requirements and recommendations for creating an Amazon Elastic Kubernetes Service (EKS) cluster for ScalarDB Server deployment. For details on how to deploy ScalarDB Server on an EKS cluster, see [Deploy ScalarDB Server on Amazon EKS](ManualDeploymentGuideScalarDBServerOnEKS.md).
 
 ## Before you begin
 
