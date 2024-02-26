@@ -1,0 +1,383 @@
+# [非推奨] Helm Charts の入門 (ScalarDB Server)
+
+{% capture notice--info %}
+**注記**
+
+ScalarDB Server は非推奨になりました。 代わりに [ScalarDB Cluster](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/setup-scalardb-cluster-on-kubernetes-by-using-helm-chart.md) を使用してください。
+{% endcapture %}
+
+<div class="notice--info">{{ notice--info | markdownify }}</div>
+
+このドキュメントでは、Kubernetes クラスター上の Helm Chart をテスト環境として使用して、ScalarDB Server を開始する方法について説明します。 ここでは、テスト用の Mac または Linux 環境がすでにあることを前提としています。 このドキュメントでは **Minikube** を使用しますが、これから説明する手順はどの Kubernetes クラスターでも機能するはずです。
+
+## 要件
+
+※コンテナイメージ(`scalardb-server` および `scalardb-envoy`)を取得するには、[AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2) または[Azure Marketplace](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardb) で ScalarDB を購読する必要があります。 詳細については、以下のドキュメントを参照してください。
+   * [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md)
+   * [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md)
+
+## 私たちが作るもの
+
+次のように、次のコンポーネントを Kubernetes クラスターにデプロイします。
+
+```
++--------------------------------------------------------------------------------------------------------------------------------------+
+| [Kubernetes クラスター]                                                                                                                 |
+|                                                                                                                                      |
+|    [ポッド]                                [ポッド]                                                  [ポッド]                     [ポッド]       |
+|                                                                                                                                      |
+|                                       +-------+                                         +-----------------+                          |
+|                                 +---> | Envoy | ---+                              +---> | ScalarDB Server | ---+                     |
+|                                 |     +-------+    |                              |     +-----------------+    |                     |
+|                                 |                  |                              |                            |                     |
+|  +--------+      +---------+    |     +-------+    |     +-------------------+    |     +-----------------+    |     +------------+  |
+|  | クライアント | ---> | サービス | ---+---> | Envoy | ---+---> |      サービス      | ---+---> | ScalarDB Server | ---+---> | PostgreSQL |  |
+|  +--------+      | (Envoy) |    |     +-------+    |     | (ScalarDB Server) |    |     +-----------------+    |     +------------+  |
+|                  +---------+    |                  |     +-------------------+    |                            |                     |
+|                                 |     +-------+    |                              |     +-----------------+    |                     |
+|                                 +---> | Envoy | ---+                              +---> | ScalarDB Server | ---+                     |
+|                                       +-------+                                         +-----------------+                          |
+|                                                                                                                                      |
++--------------------------------------------------------------------------------------------------------------------------------------+
+```
+
+## ステップ 1. Kubernetes クラスターを開始する
+
+まず、Kubernetes クラスターを準備する必要があります。 **minikube** 環境を使用する場合は、[Scalar Helm Charts の入門](getting-started-scalar-helm-charts.md) を参照してください。 すでに Kubernetes クラスターを開始している場合は、この手順をスキップできます。
+
+## ステップ 2. PostgreSQL コンテナーを開始する
+
+ScalarDB は、バックエンド データベースとして何らかのデータベース システムを使用します。 このドキュメントでは PostgreSQL を使用します。
+
+次のようにして、Kubernetes クラスターに PostgreSQL をデプロイできます。
+
+1. Bitnami Helm リポジトリを追加します。
+   ```console
+   helm repo add bitnami https://charts.bitnami.com/bitnami
+   ```
+
+1. PostgreSQLをデプロイします。
+   ```console
+   helm install postgresql-scalardb bitnami/postgresql \
+     --set auth.postgresPassword=postgres \
+     --set primary.persistence.enabled=false
+   ```
+
+1. PostgreSQL コンテナが実行されているかどうかを確認します。
+   ```console
+   kubectl get pod
+   ```
+   【コマンド実行結果】
+   ```console
+   NAME                    READY   STATUS    RESTARTS   AGE
+   postgresql-scalardb-0   1/1     Running   0          2m42s
+   ```
+
+## ステップ 3. Helm Charts を使用して Kubernetes クラスターに ScalarDB Server をデプロイする
+
+1. Scalar helm リポジトリを追加します。
+   ```console
+   helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
+   ```
+
+1. AWS/Azure Marketplace から ScalarDB コンテナー イメージをプルするためのシークレット リソースを作成します。
+   * AWS Marketplace
+     ```console
+     kubectl create secret docker-registry reg-ecr-mp-secrets \
+       --docker-server=709825985650.dkr.ecr.us-east-1.amazonaws.com \
+       --docker-username=AWS \
+       --docker-password=$(aws ecr get-login-password --region us-east-1)
+     ```
+   * Azure Marketplace
+     ```console
+     kubectl create secret docker-registry reg-acr-secrets \
+       --docker-server=<your private container registry login server> \
+       --docker-username=<Service principal ID> \
+       --docker-password=<Service principal password>
+     ```
+
+   詳細については、以下のドキュメントを参照してください。
+   
+   * [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md)
+   * [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md)
+
+1. ScalarDB Server のカスタム値ファイル (scalardb-custom-values.yaml) を作成します。
+   * AWS Marketplace
+
+     {% raw %}
+     ```console
+     cat << 'EOF' > scalardb-custom-values.yaml
+     envoy:
+       image:
+         repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-envoy"
+         version: "1.3.0"
+       imagePullSecrets:
+         - name: "reg-ecr-mp-secrets"
+     
+     scalardb:
+       image:
+         repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-server"
+         tag: "3.7.0"
+       imagePullSecrets:
+         - name: "reg-ecr-mp-secrets"
+       databaseProperties: |
+         scalar.db.storage=jdbc
+         scalar.db.contact_points=jdbc:postgresql://postgresql-scalardb.default.svc.cluster.local:5432/postgres
+         scalar.db.username={{ default .Env.SCALAR_DB_POSTGRES_USERNAME "" }}
+         scalar.db.password={{ default .Env.SCALAR_DB_POSTGRES_PASSWORD "" }}
+       secretName: "scalardb-credentials-secret"
+     EOF
+     ```
+     {% endraw %}
+
+   * Azure Marketplace
+     
+     {% raw %}
+     ```console
+     cat << 'EOF' > scalardb-custom-values.yaml
+     envoy:
+       image:
+         repository: "<your private container registry>/scalarinc/scalardb-envoy"
+         version: "1.3.0"
+       imagePullSecrets:
+         - name: "reg-acr-secrets"
+     
+     scalardb:
+       image:
+         repository: "<your private container registry>/scalarinc/scalardb-server"
+         tag: "3.7.0"
+       imagePullSecrets:
+         - name: "reg-acr-secrets"
+       databaseProperties: |
+         scalar.db.storage=jdbc
+         scalar.db.contact_points=jdbc:postgresql://postgresql-scalardb.default.svc.cluster.local:5432/postgres
+         scalar.db.username={{ default .Env.SCALAR_DB_POSTGRES_USERNAME "" }}
+         scalar.db.password={{ default .Env.SCALAR_DB_POSTGRES_PASSWORD "" }}
+       secretName: "scalardb-credentials-secret"
+        EOF
+     ```
+     {% endraw %}
+
+1. PostgreSQL のユーザー名とパスワードを含む Secret リソースを作成します。
+   ```console
+   kubectl create secret generic scalardb-credentials-secret \
+     --from-literal=SCALAR_DB_POSTGRES_USERNAME=postgres \
+     --from-literal=SCALAR_DB_POSTGRES_PASSWORD=postgres
+   ```
+
+1. ScalarDB Server をデプロイします。
+   ```console
+   helm install scalardb scalar-labs/scalardb -f ./scalardb-custom-values.yaml
+   ```
+
+1. ScalarDB Server ポッドがデプロイされているかどうかを確認します。
+   ```console
+   kubectl get pod
+   ```
+   【コマンド実行結果】
+   ```console
+   NAME                              READY   STATUS    RESTARTS   AGE
+   postgresql-scalardb-0             1/1     Running   0          9m48s
+   scalardb-765598848b-75csp         1/1     Running   0          6s
+   scalardb-765598848b-w864f         1/1     Running   0          6s
+   scalardb-765598848b-x8rqj         1/1     Running   0          6s
+   scalardb-envoy-84c475f77b-kpz2p   1/1     Running   0          6s
+   scalardb-envoy-84c475f77b-n74tk   1/1     Running   0          6s
+   scalardb-envoy-84c475f77b-zbrwz   1/1     Running   0          6s
+   ```
+   ScalarDB Server ポッドが適切にデプロイされている場合、STATUS が **Running** であることがわかります。
+
+1. ScalarDB Server サービスがデプロイされているかどうかを確認します。
+   ```console
+   kubectl get svc
+   ```
+   【コマンド実行結果】
+   ```console
+   NAME                     TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)     AGE
+   kubernetes               ClusterIP   10.96.0.1        <none>        443/TCP     47d
+   postgresql-scalardb      ClusterIP   10.109.118.122   <none>        5432/TCP    10m
+   postgresql-scalardb-hl   ClusterIP   None             <none>        5432/TCP    10m
+   scalardb-envoy           ClusterIP   10.110.110.250   <none>        60051/TCP   41s
+   scalardb-envoy-metrics   ClusterIP   10.107.98.227    <none>        9001/TCP    41s
+   scalardb-headless        ClusterIP   None             <none>        60051/TCP   41s
+   scalardb-metrics         ClusterIP   10.108.188.10    <none>        8080/TCP    41s
+   ```
+   ScalarDB Server サービスが適切にデプロイされている場合は、CLUSTER-IP 列にプライベート IP アドレスが表示されます。 (注記： `scalardb-headless` には CLUSTER-IP がありません。)
+
+## ステップ 4. クライアントコンテナを開始する
+
+1. Kubernetes クラスター上でクライアント コンテナーを起動します。
+   ```console
+   kubectl run scalardb-client --image eclipse-temurin:8 --command sleep inf
+   ```
+
+1. クライアントコンテナが実行されているかどうかを確認します。
+   ```console
+   kubectl get pod scalardb-client
+   ```
+   【コマンド実行結果】
+   ```console
+   NAME              READY   STATUS    RESTARTS   AGE
+   scalardb-client   1/1     Running   0          23s
+   ```
+
+## ステップ 5. クライアント コンテナで ScalarDB サンプル アプリケーションを実行する
+
+以下に最低限の手順を説明します。 ScalarDB についてさらに詳しく知りたい場合は、[Getting Started with ScalarDB](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb.md) を参照してください。
+
+1. クライアントコンテナで bash を実行します。
+   ```console
+   kubectl exec -it scalardb-client -- bash
+   ```
+   この手順の後、クライアント コンテナで各コマンドを実行します。
+
+1. git およびcurl コマンドをクライアント コンテナにインストールします。
+   ```console
+   apt update && apt install -y git curl
+   ```
+
+1. ScalarDB git リポジトリのクローンを作成します。
+   ```console
+   git clone https://github.com/scalar-labs/scalardb.git
+   ```
+
+1. ディレクトリを `scalardb/` に変更します。
+   ```console
+   cd scalardb/
+   ```
+   ```console
+   pwd
+   ```
+   【コマンド実行結果】
+   ```console
+   /scalardb
+   ```
+
+1. ブランチを任意のバージョンに変更します。
+   ```console
+   git checkout -b v3.7.0 refs/tags/v3.7.0
+   ```
+   ```console
+   git branch
+   ```
+   【コマンド実行結果】
+   
+   {% raw %}
+   ```console
+     master
+   * v3.7.0
+   ```
+   {% endraw %}
+
+   別のバージョンを使用する場合は、使用するバージョン（タグ）を指定してください。
+
+1. ディレクトリを `docs/getting-started/` に変更します。
+   ```console
+   cd docs/getting-started/
+   ```
+   ```console
+   pwd
+   ```
+   【コマンド実行結果】
+   ```console
+   /scalardb/docs/getting-started
+   ```
+
+1. [ScalarDB Releases](https://github.com/scalar-labs/scalardb/releases) から Schema Loader をダウンロードします。
+   ```console
+   curl -OL https://github.com/scalar-labs/scalardb/releases/download/v3.7.0/scalardb-schema-loader-3.7.0.jar
+   ```
+   同じバージョンの ScalarDB と Schema Loader を使用する必要があります。
+
+1. Kubernetes クラスター上の ScalarDB Server にアクセスするための構成ファイル (scalardb.properties) を作成します。
+   ```console
+   cat << 'EOF' > scalardb.properties
+   scalar.db.contact_points=scalardb-envoy.default.svc.cluster.local
+   scalar.db.contact_port=60051
+   scalar.db.storage=grpc
+   scalar.db.transaction_manager=grpc
+   EOF
+   ```
+
+1. サンプル アプリケーションの DB スキーマを定義する JSON ファイル (emoney-transaction.json) を作成します。
+   ```console
+   cat << 'EOF' > emoney-transaction.json
+   {
+     "emoney.account": {
+       "transaction": true,
+       "partition-key": [
+         "id"
+       ],
+       "clustering-key": [],
+       "columns": {
+         "id": "TEXT",
+         "balance": "INT"
+       }
+     }
+   }
+   EOF
+   ```
+
+1. Schema Loader を実行します (サンプル TABLE を作成します)。
+   ```console
+   java -jar ./scalardb-schema-loader-3.7.0.jar --config ./scalardb.properties -f emoney-transaction.json --coordinator
+   ```
+
+1. サンプル アプリケーションを実行します。
+   * `1000` を `user1` に請求します。
+     ```console
+     ./gradlew run --args="-action charge -amount 1000 -to user1"
+     ```
+   * `merchant1` に `0` を請求します (`merchant1` のアカウントを作成するだけです):
+     ```console
+     ./gradlew run --args="-action charge -amount 0 -to merchant1"
+     ```
+   * `user1` から `merchant1` に `100` を支払います。
+     ```console
+     ./gradlew run --args="-action pay -amount 100 -from user1 -to merchant1"
+     ```
+   * `user1` の残高を取得します。
+     ```console
+     ./gradlew run --args="-action getBalance -id user1"
+     ```
+   * `merchant1` の残高を取得します。
+     ```console
+     ./gradlew run --args="-action getBalance -id merchant1"
+     ```
+
+1. (オプション) 次のコマンドを使用して、サンプル アプリケーションを通じて挿入および変更された (INSERT/UPDATE) データを確認できます。 (このコマンドは、クライアント コンテナではなくローカルホストで実行する必要があります。)
+   ```console
+   kubectl exec -it postgresql-scalardb-0 -- bash -c 'export PGPASSWORD=postgres && psql -U postgres -d postgres -c "SELECT * FROM emoney.account"'
+   ```
+   【コマンド実行結果】
+   ```sql
+       id     | balance |                tx_id                 | tx_state | tx_version | tx_prepared_at | tx_committed_at |             before_tx_id             | before_tx_state | before_tx_version | before_tx_prepared_at | before_tx_committed_at | before_balance
+   -----------+---------+--------------------------------------+----------+------------+----------------+-----------------+--------------------------------------+-----------------+-------------------+-----------------------+------------------------+----------------
+    merchant1 |     100 | 65a90225-0846-4e97-b729-151f76f6ca2f |        3 |          2 |  1667361909634 |1667361909679    | 3633df99-a8ed-4301-a8b9-db1344807d7b |               3 |                 1 |         1667361902466 |          1667361902485 |              0
+    user1     |     900 | 65a90225-0846-4e97-b729-151f76f6ca2f |        3 |          2 |  1667361909634 |1667361909679    | 5520cba4-625a-4886-b81f-6089bf846d18 |               3 |                 1 |         1667361897283 |          1667361897317 |           1000
+   (2 rows)
+   ```
+   * 注記：
+       * 通常はScalarDB経由でデータ(レコード)にアクセスする必要があります。 上記のコマンドはサンプルアプリケーションの動作を説明、確認するために使用します。
+
+## ステップ 6. すべてのリソースを削除する
+
+Kubernetes クラスター上で ScalarDB Server テストが完了したら、すべてのリソースを削除します。
+
+1. ScalarDB Server と PostgreSQL をアンインストールします。
+   ```console
+   helm uninstall scalardb postgresql-scalardb
+   ```
+
+1. クライアントコンテナを削除します。
+   ```
+   kubectl delete pod scalardb-client --force --grace-period 0
+   ```
+
+## 参考文献
+
+Scalar 製品の監視またはログ記録を開始する方法については、次のドキュメントで説明しています。
+
+* [Helm Charts の入門 (Prometheus Operator を使用したモニタリング)](getting-started-monitoring.md)
+* [Helm Charts の入門 (Loki スタックを使用したロギング)](getting-started-logging.md)
+* [Helm Charts の入門 (Scalar Manager)](getting-started-scalar-manager.md)
