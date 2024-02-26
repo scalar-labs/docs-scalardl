@@ -32,11 +32,11 @@ We will deploy the following components on a Kubernetes cluster as follows.
 
 ## Step 1. Start a Kubernetes cluster
 
-First, you need to prepare a Kubernetes cluster. If you use a **minikube** environment, please refer to the [Getting Started with Scalar Helm Charts](./getting-started-scalar-helm-charts.md). If you have already started a Kubernetes cluster, you can skip this step.
+First, you need to prepare a Kubernetes cluster. If you use a **minikube** environment, please refer to the [Getting Started with Scalar Helm Charts](getting-started-scalar-helm-charts.md). If you have already started a Kubernetes cluster, you can skip this step.
 
 ## Step 2. Prepare a custom values file
 
-1. Save the sample file [scalar-prometheus-custom-values.yaml](./conf/scalar-prometheus-custom-values.yaml) for `kube-prometheus-stack`.
+1. Save the sample file [scalar-prometheus-custom-values.yaml](conf/scalar-prometheus-custom-values.yaml) for `kube-prometheus-stack`.
 
 1. Add custom values in the `scalar-prometheus-custom-values.yaml` as follows.
    * settings
@@ -96,9 +96,9 @@ First, you need to prepare a Kubernetes cluster. If you use a **minikube** envir
 
 * Note:
    * The following explains the minimum steps. If you want to know more details about the deployment of ScalarDB and ScalarDL, please refer to the following documents.
-       * [Getting Started with Helm Charts (ScalarDB Server)](./getting-started-scalardb.md)
-       * [Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)](./getting-started-scalardl-ledger.md)
-       * [Getting Started with Helm Charts (ScalarDL Ledger and Auditor / Auditor mode)](./getting-started-scalardl-auditor.md)
+       * [Getting Started with Helm Charts (ScalarDB Server)](getting-started-scalardb.md)
+       * [Getting Started with Helm Charts (ScalarDL Ledger / Ledger only)](getting-started-scalardl-ledger.md)
+       * [Getting Started with Helm Charts (ScalarDL Ledger and Auditor / Auditor mode)](getting-started-scalardl-auditor.md)
 
 1. To enable Prometheus monitoring of Scalar products, set `true` to the following configurations in the custom values file.
    * Configurations

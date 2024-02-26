@@ -1,6 +1,6 @@
 # How to deploy ScalarDB Analytics with PostgreSQL
 
-This document explains how to deploy ScalarDB Analytics with PostgreSQL by using Scalar Helm Charts. For details on the custom values file for ScalarDB Analytics with PostgreSQL, see [Configure a custom values file for ScalarDB Analytics with PostgreSQL](./configure-custom-values-scalardb-analytics-postgresql.md).
+This document explains how to deploy ScalarDB Analytics with PostgreSQL by using Scalar Helm Charts. For details on the custom values file for ScalarDB Analytics with PostgreSQL, see [Configure a custom values file for ScalarDB Analytics with PostgreSQL](configure-custom-values-scalardb-analytics-postgresql.md).
 
 ## Prepare a secret resource
 
