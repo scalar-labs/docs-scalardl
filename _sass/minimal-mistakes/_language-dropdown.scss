@@ -1,0 +1,181 @@
+  /* Add styles to support the switcher for languages, which are specified in `_layouts/page.html` (added by josh-wong). */
+
+.language-greedy-nav {
+display: inline-block;
+margin: 5px;
+display: -webkit-box;
+display: -ms-flexbox;
+display: flex;
+-webkit-box-align: center;
+-ms-flex-align: center;
+align-items: center;
+min-height: 2.1em;
+/* width: 190px; */
+margin-bottom: 0;
+text-align: right;
+font-size: $type-size-5;
+min-width: 140px;
+position: fixed;
+z-index: 11;
+
+/* Added to hide the language dropdown menu on mobile and narrow screens since it makes the Scalar logo tiny (added by josh-wong). */
+// @media screen and (max-width: $small) {
+//   display: none;
+// }
+
+  a {
+    display: block;
+    padding: 0.5em;
+    color: $background-color;
+    -webkit-transition: none;
+    transition: none;
+
+    &:hover {
+      background-color: mix(#000, $background-color, 10%);
+      color: mix(#000, $text-color, 90%);
+    }
+  }
+}
+
+.language-visible-links {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: fixed;
+  top: 95px;
+  right: 25px;
+  /* justify-content: flex-end; */
+  /* min-width: auto; */
+  /* float: inline-end; */
+  /* overflow: hidden; */
+  /* max-width: fit-content; */
+
+  li {
+    -webkit-box-flex: 0;
+    -ms-flex: none;
+    flex: none;
+    /* background-color: $background-color; */
+  }
+
+  a {
+    position: relative;
+    color: $background-color;
+    cursor: pointer;
+    opacity: unset;
+    margin-bottom: -5px;
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 0px;
+      background: $primary-color;
+      width: 100%;
+      -webkit-transition: $global-transition;
+      transition: $global-transition;
+      -webkit-transform: scaleX(0) translate3d(0, 0, 0);
+      transform: scaleX(0) translate3d(0, 0, 0); // hide
+    }
+
+    &:hover:before {
+      -webkit-transform: scaleX(1);
+      -ms-transform: scaleX(1);
+      transform: scaleX(1); // reveal
+      background-color: mix(#000, $background-color, 10%);
+    }
+  }
+
+  .language-toggle {
+    color: $language-toggle;
+  }
+
+  .language-dropdown {
+    float: left;
+    /* width: 210px; */
+    min-width: 100%;
+    /* max-width: 75%; */
+    font-weight: 500;
+    vertical-align: middle;
+    cursor: default;
+    background-color: $scalar-light-gray-background-color;
+    color: $text-color;
+
+    li {
+      line-height: 1em;
+    }
+    &:hover {
+      background-color: mix($gray, $background-color, 20%);
+    }
+  }
+
+  .language-dropdown-text {
+    color: $text-color;
+    padding: 0 0 0 8px;
+  }
+
+  .language-dropdown-arrow {
+    width: 20px;
+    vertical-align: middle;
+    color: $text-color;
+  }
+
+  .language-dropdown-content {
+    display: none;
+    position: relative;
+    background-color: $background-color;
+    box-shadow: $box-shadow;
+    z-index: 21;
+    /* border: 1pt solid $border-color; */
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    li {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  .language-dropdown-content a {
+    padding: 0 15px 0 15px;
+    margin: 1px;
+    color: $dark-gray;
+    line-height: 1.6em;
+    margin-bottom: 0;
+  }
+
+  /* Adds support for a clickable language dropdown menu (added by josh-wong) */
+  #touch-language {
+    position: absolute;
+    opacity: 0;
+    height: 0px;
+  }
+
+  #touch-language:checked + .language-dropdown-content {
+    /* min-height: 100%; */
+    display: block;
+    /* margin: 0 0 0 3.5em; */
+  }
+
+  /* The following dropdown method is `hover`, which is the default behavior in Minimal Mistakes theme. Comment this out if we want the dropdown to be clicked on rather than hovered over to access (modified by josh-wong).
+  .language-dropdown:hover .language-dropdown-content {
+    display: block;
+  } */
+
+  .language-dropdown-content a:hover {
+    background-color: $scalar-light-gray-background-color;
+  }
+
+  .language-dropdown-content a:not(:last-child) {
+    border-bottom: none;
+  }
+}
+
+.hidden {
+  display: none;
+}
