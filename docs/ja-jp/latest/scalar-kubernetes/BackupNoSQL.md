@@ -1,0 +1,132 @@
+# Kubernetes 環境で NoSQL データベースをバックアップする
+
+このガイドでは、ScalarDB または ScalarDL が Kubernetes 環境で使用するマネージド データベースのトランザクション的に一貫したバックアップを作成する方法について説明します。 NoSQL データベースまたは複数のデータベースを使用する場合は、トランザクションの一貫性のあるバックアップを作成するために ScalarDB または ScalarDL を**一時停止する必要がある**ことに注意してください。
+
+ScalarDB がデータベースをバックアップする方法の詳細については、[A Guide on How to Backup and Restore Databases Used Through ScalarDB](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.md) を参照してください。
+
+このガイドでは、ポイントインタイム リカバリ (PITR) または同等の機能を使用していることを前提としています。 そのため、復旧のためには継続的な取引がない期間を設ける必要があります。 その後、PITR を使用してデータをその特定の期間に復元できます。 進行中のトランザクションがない期間を作成せずにデータをある時点に復元すると、復元されたデータはトランザクション的に不整合となり、ScalarDB または ScalarDL がデータを適切に処理できなくなる可能性があります。
+
+## データを復元する期間を作成し、バックアップを実行します
+
+1. バックアップ操作を開始する前に、`kubectl get pod` コマンドを実行して、次の 4 つの点を確認します。
+    * **ScalarDB または ScalarDL ポッドの数。** ポッドの数を書き留めて、その数をバックアップの実行後のポッドの数と比較できるようにします。
+    * **`NAME` 列の ScalarDB または ScalarDL ポッド名。** バックアップの実行後にそれらの名前とポッド名を比較できるように、ポッド名を書き留めます。
+    * **ScalarDB または ScalarDL ポッドのステータスは、`STATUS` 列で `Running` になっています。** バックアップを続行する前に、ポッドが実行中であることを確認してください。 次のステップではポッドを一時停止する必要があります。
+    * ** `RESTARTS` 列の各ポッドの再起動回数。** バックアップ実行後の再起動回数と比較できるように、各ポッドの再起動回数を書き留めます。
+2. `scalar-admin` を使用して、ScalarDB または ScalarDL ポッドを一時停止します。 ポッドを一時停止する方法の詳細については、このガイドの [`scalar-admin` の使用の詳細](BackupNoSQL.md#scalar-admin-の使用の詳細) セクションを参照してください。
+3. `pause completed` 時間を書き留めます。 PITR 機能を使用してデータを復元する場合は、その時間を参照する必要があります。
+4. バックアップ機能を使用して、各データベースをバックアップします。 自動バックアップと PITR 機能を有効にしている場合、管理されたデータベースは自動的にバックアップを実行します。 クライアント クロックとデータベース クロック間のクロック スキューの問題を回避するのに十分な長い期間を作成できるように、約 10 秒待つ必要があることに注意してください。 この 10 秒の期間は、PITR 機能を使用してデータを復元できる正確な期間です。
+5. `scalar-admin` を使用して、ScalarDB または ScalarDL ポッドの一時停止を解除します。 ポッドの一時停止を解除する方法の詳細については、このガイドの [`scalar-admin` の使用の詳細](BackupNoSQL.md#scalar-admin-の使用の詳細) の使用の詳細」セクションを参照してください。
+6. `unpause started` 時刻を確認します。 PITR 機能を使用してデータを復元できる正確な期間を確認するには、`unpause started` 時間を確認する必要があります。
+7. バックアップの実行後にポッドのステータスを確認します。 バックアップ操作完了後、`kubectl get pod` コマンドを使用して以下の4点を確認する必要があります。
+    * **ScalarDB または ScalarDL ポッドの数。** この数が、バックアップを実行する前に書き留めたポッドの数と一致することを確認します。
+    * **`NAME` 列の ScalarDB または ScalarDL ポッド名。** 名前がバックアップを実行する前に書き留めたポッド名と一致することを確認します。
+    * **ScalarDB または ScalarDL ポッドのステータスは、`STATUS` 列で `Running` になっています。**
+    * **`RESTARTS` 列の各ポッドの再起動回数。** カウントが、バックアップを実行する前に書き留めた再起動回数と一致することを確認します。
+
+   **2 つの値のいずれかが異なる場合は、バックアップ操作を最初から再試行する必要があります。** 値が異なる理由は、バックアップの実行中に追加または再起動されたポッドが原因である可能性があります。 そのような場合、それらのポッドは `unpause` 状態で実行されます。 ポッドが `unpause` 状態にあると、バックアップ データのトランザクションの不整合が発生します。
+8. **(Amazon DynamoDB のみ)** DynamoDB の PITR 機能を使用する場合、この機能は PITR を使用して別の名前テーブルでデータを復元するため、バックアップを作成するために追加の手順を実行する必要があります。 データを復元できる正確な期間を作成した後の追加手順の詳細については、[Kubernetes 環境でのデータベースの復元](RestoreDatabase.md#amazon-dynamodb) を参照してください。
+
+## 複数のデータベースをバックアップする
+
+[Multi-storage Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/multi-storage-transactions.md) または [Two-phase Commit Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.md)  機能が使用するデータベースが 2 つ以上ある場合は、ScalarDB または ScalarDL のすべてのインスタンスを一時停止し、データベース内に進行中のトランザクションが存在しない同じ期間を作成する必要があります。
+
+複数のデータベース間の整合性を確保するには、PITR 機能を使用してデータベースを同じ時点に復元する必要があります。
+
+## `scalar-admin` の使用の詳細
+
+### Kubernetes リソース名を確認する
+
+SRV サービス URL を `-s (--srv-service-url)` フラグに指定する必要があります。 Kubernetes 環境では、SRV サービス URL の形式は `_my-port-name._my-port-protocol.my-svc.my-namespace.svc.cluster.local` です。
+
+Scalar Helm Chart を使用して ScalarDB または ScalarDL をデプロイする場合、`my-svc` および `my-namespace` は環境によって異なる場合があります。 ヘッドレス サービス名を `my-svc` として指定し、名前空間を `my-namespace` として指定する必要があります。
+
+* 例
+  * ScalarDB Server
+    ```console
+    _scalardb._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
+    ```
+  * ScalarDL Ledger
+    ```console
+    _scalardl-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
+    ```
+  * ScalarDL Auditor
+    ```console
+    _scalardl-auditor-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
+    ```
+
+Helm リリース名によって、ヘッドレス サービス名 `<helm release name>-headless` が決まります。 `helm list` コマンドを実行すると、helm リリース名を確認できます。
+
+```console
+$ helm list -n ns-scalar
+NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS                                                       CHART                    APP VERSION
+scalardb                ns-scalar       1               2023-02-09 19:31:40.527130674 +0900 JST deployed                                                     scalardb-2.5.0           3.8.0
+scalardl-auditor        ns-scalar       1               2023-02-09 19:32:03.008986045 +0900 JST deployed                                                     scalardl-audit-2.5.1     3.7.1
+scalardl-ledger         ns-scalar       1               2023-02-09 19:31:53.459548418 +0900 JST deployed                                                     scalardl-4.5.1           3.7.1
+```
+
+`kubectl get service` コマンドを実行すると、ヘッドレス サービス名 `<helm release name>-headless` を確認することもできます。
+
+```console
+$ kubectl get service -n ns-scalar
+NAME                             TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                           AGE
+scalardb-envoy                   LoadBalancer   10.99.245.143    <pending>     60051:31110/TCP                   2m2s
+scalardb-envoy-metrics           ClusterIP      10.104.56.87     <none>        9001/TCP                          2m2s
+scalardb-headless                ClusterIP      None             <none>        60051/TCP                         2m2s
+scalardb-metrics                 ClusterIP      10.111.213.194   <none>        8080/TCP                          2m2s
+scalardl-auditor-envoy           LoadBalancer   10.111.141.43    <pending>     40051:31553/TCP,40052:31171/TCP   99s
+scalardl-auditor-envoy-metrics   ClusterIP      10.104.245.188   <none>        9001/TCP                          99s
+scalardl-auditor-headless        ClusterIP      None             <none>        40051/TCP,40053/TCP,40052/TCP     99s
+scalardl-auditor-metrics         ClusterIP      10.105.119.158   <none>        8080/TCP                          99s
+scalardl-ledger-envoy            LoadBalancer   10.96.239.167    <pending>     50051:32714/TCP,50052:30857/TCP   109s
+scalardl-ledger-envoy-metrics    ClusterIP      10.97.204.18     <none>        9001/TCP                          109s
+scalardl-ledger-headless         ClusterIP      None             <none>        50051/TCP,50053/TCP,50052/TCP     109s
+scalardl-ledger-metrics          ClusterIP      10.104.216.189   <none>        8080/TCP                          109s
+```
+
+### 一時停止
+
+Kubernetes 環境の ScalarDB または ScalarDL ポッドに一時停止リクエストを送信できます。
+
+* 例
+  * ScalarDB Server
+    ```console
+    kubectl run scalar-admin-pause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c pause -s _scalardb._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
+    ```
+  * ScalarDL Ledger
+    ```console
+    kubectl run scalar-admin-pause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c pause -s _scalardl-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
+    ```
+  * ScalarDL Auditor
+    ```console
+    kubectl run scalar-admin-pause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c pause -s _scalardl-auditor-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
+    ```
+
+### 一時停止を解除する
+
+Kubernetes 環境の ScalarDB または ScalarDL ポッドに一時停止解除リクエストを送信できます。
+
+* 例
+  * ScalarDB Server
+    ```console
+    kubectl run scalar-admin-unpause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c unpause -s _scalardb._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
+    ```
+  * ScalarDL Ledger
+    ```console
+    kubectl run scalar-admin-unpause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c unpause -s _scalardl-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
+    ```
+  * ScalarDL Auditor
+    ```console
+    kubectl run scalar-admin-unpause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c unpause -s _scalardl-auditor-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
+    ```
+
+###  `pause completed` 時刻と `unpause started` 時刻を確認する
+
+`scalar-admin` ポッドは、`pause completed` 時刻と `unpause started` 時刻を標準出力に出力します。 `kubectl logs` コマンドを実行すると、それらの時間を確認することもできます。
+
+```console
+kubectl logs scalar-admin-pause
+```
+```console
+kubectl logs scalar-admin-unpause
+```
