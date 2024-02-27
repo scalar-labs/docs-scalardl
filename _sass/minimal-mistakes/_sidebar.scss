@@ -244,6 +244,8 @@
   
   .sidebar__right {
     margin-bottom: 1em;
+    padding-top: 1.5em; /* Added to give some spacing below the language dropdown menu (added by josh-wong). */
+    padding-bottom: 1.5em; /* Added to give some spacing below the language dropdown menu (added by josh-wong). */
   
     @include breakpoint($large) {
       position: absolute;

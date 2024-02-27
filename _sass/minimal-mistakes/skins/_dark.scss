@@ -13,17 +13,17 @@ $gray: #7a8288 !default;
 $dark-gray: #eaeaea !default; /* This color isn't really gray and should be refactored. However, doing so would take considerable time, so I'm leaving it as is for now (modified by josh-wong). */
 $form-background-color: mix(#000, $background-color, 15%) !default;
 $footer-background-color: mix(#000, $background-color, 30%) !default;
-$version-out-of-support-background-color: mix(#000, $background-color, 99%) !default;
+$language-toggle: #E9EAEB !default;
 $lighter-gray: mix(#fff, $gray, 90%) !default;
 $link-color: mix(#fff, #2673BB, 20%) !default;
 $link-color-hover: mix(#fff, $link-color, 50%) !default;
 $link-color-visited: mix(#fff, $link-color, 15%) !default;
-$link-color-visited: mix(#fff, #2673BB, 20%) !default;
 $masthead-link-color: $text-color !default;
 $masthead-link-color-hover: mix(#000, $text-color, 20%) !default;
 $navicon-link-color-hover: mix(#000, $background-color, 30%) !default;
 $scalar-primary-color: #2673BB !default;
 $scalar-light-gray-background-color: #1c1c1c !default; /* This color isn't really light gray and should be refactored. However, doing so would take considerable time, so I'm leaving it as is for now (modified by josh-wong). */
+$version-out-of-support-background-color: mix(#000, $background-color, 99%) !default;
 
 /* syntax highlighting (base16) */
 $base00: #1C1C1C !default;

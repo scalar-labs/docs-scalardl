@@ -33,6 +33,37 @@ permalink: /:collection/:path/
       {% endunless %}
 
       <section class="page__content e-content" itemprop="text">
+        <!-- Adds support for the language dropdown menu for the languages listed in `_data/navigation.yml`. For some reason, adding this dropdown menu to `_includes.masthead.html` results in broken links, regardless of trying to use a variety of logic in the  Liquid language (added by josh-wong). -->
+        <nav id="site-nav" class="language-greedy-nav">
+          <ul class="language-visible-links">
+            {%- for link in site.data.navigation.languages -%}
+            {% assign class = nil %}
+            {% if page.language-url contains link.language-url %}
+            {% assign class = 'active' %}
+            {% endif %}
+            {% if link.language-children %}
+            <li class="language-dropdown {{ class }}">
+              <label for="touch-language"><a data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-globe fa-lg language-toggle" aria-hidden="true"></i><span class="language-dropdown-text">{% if page.url contains "docs/ja-jp" %}言語{% else %}Language{% endif %}<svg class="language-dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"></path></svg></span></a></label>
+              <input type="checkbox" id="touch-language">
+              <ul class="language-dropdown-content">
+                {% for language-children in link.language-children %}
+                <li>
+                  <a href="{{ page.url | replace: 'docs/ja-jp', 'docs' }}">
+                    <span>{{ language-children.language-title }}</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ page.url | replace: 'docs', 'docs/ja-jp' | replace: 'docs/ja-jp/ja-jp', 'docs/ja-jp' }}">
+                    <span>{{ language-children.language-ja-jp-title }}</span>
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+            </li>
+            {% endif %}
+            {% endfor %}
+          </ul>
+        </nav>
         {% if page.toc %}
           <aside class="sidebar__right {% if page.toc_sticky %}sticky{% endif %}">
             <nav class="toc">
