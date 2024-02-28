@@ -1,5 +1,3 @@
-{% include common/translation-ja-jp.html %}
-
 # ScalarDL 3.4 リリースノート
 
 このページには、ScalarDL 3.4 のリリース ノートのリストが含まれています。

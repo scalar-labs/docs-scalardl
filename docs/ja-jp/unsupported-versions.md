@@ -2,8 +2,6 @@
 toc: false
 ---
 
-{% include common/translation-ja-jp.html %}
-
 # サポートされていないバージョン
 
 ScalarDL の次のバージョンはサポートされなくなりました。

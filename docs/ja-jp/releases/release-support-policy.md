@@ -1,5 +1,3 @@
-{% include common/translation-ja-jp.html %}
-
 # リリースサポートポリシー
 
 このページでは、ScalarDL のメジャー バージョン リリースとマイナー バージョン リリースに対する Scalar のサポート ポリシーについて説明します。

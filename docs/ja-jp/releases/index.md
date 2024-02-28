@@ -2,8 +2,6 @@
 toc: false
 ---
 
-{% include common/translation-ja-jp.html %}
-
 # リリースノート
 
 バージョンを選択してリリース ノートを表示します。
