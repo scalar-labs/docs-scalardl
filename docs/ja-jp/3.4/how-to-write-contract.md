@@ -1,5 +1,4 @@
 {% include scalardl/end-of-support-ja-jp.html %}
-{% include common/translation-ja-jp.html %}
 
 # ScalarDL の適切なコントラクトを作成する方法に関するガイド
 

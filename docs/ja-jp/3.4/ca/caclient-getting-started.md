@@ -1,5 +1,4 @@
 {% include scalardl/end-of-support-ja-jp.html %}
-{% include common/translation-ja-jp.html %}
 
 # 証明書の取得方法
 

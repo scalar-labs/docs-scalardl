@@ -1,5 +1,4 @@
 {% include scalardl/end-of-support-ja-jp.html %}
-{% include common/translation-ja-jp.html %}
 
 # ScalarDL: トランザクション データベース システム用のビザンチン障害検出ミドルウェア
 
