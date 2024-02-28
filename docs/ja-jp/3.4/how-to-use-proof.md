@@ -1,5 +1,4 @@
 {% include scalardl/end-of-support-ja-jp.html %}
-{% include common/translation-ja-jp.html %}
 
 # ScalarDL でアセットプルーフを使用する方法に関するガイド
 

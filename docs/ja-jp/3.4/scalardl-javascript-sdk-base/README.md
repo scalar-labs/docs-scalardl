@@ -1,5 +1,4 @@
 {% include scalardl/end-of-support-ja-jp.html %}
-{% include common/translation-ja-jp.html %}
 
 [![CircleCI](https://circleci.com/gh/scalar-labs/scalardl-javascript-sdk-base/tree/master.svg?style=svg)](https://circleci.com/gh/scalar-labs/scalardl-javascript-sdk-base/tree/master)
 

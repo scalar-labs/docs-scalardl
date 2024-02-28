@@ -1,5 +1,4 @@
 {% include scalardl/end-of-support-ja-jp.html %}
-{% include common/translation-ja-jp.html %}
 
 # ScalarDL Auditor の使用を開始する
 
