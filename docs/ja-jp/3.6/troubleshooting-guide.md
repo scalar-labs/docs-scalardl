@@ -1,5 +1,3 @@
-{% include common/translation-ja-jp.html %}
-
 # トラブルシューティングガイド
 
 # 導入

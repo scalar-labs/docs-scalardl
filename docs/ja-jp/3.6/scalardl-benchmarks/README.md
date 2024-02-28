@@ -1,5 +1,3 @@
-{% include common/translation-ja-jp.html %}
-
 # ScalarDL ベンチマーク
 
 このリポジトリには、ScalarDL のベンチマーク プログラムが含まれています。

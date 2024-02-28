@@ -1,5 +1,3 @@
-{% include common/translation-ja-jp.html %}
-
 # CFSSL で CA サーバーを起動する方法
 
 このドキュメントでは、CFSSL を使用して CA サーバーを起動する方法について説明します。
