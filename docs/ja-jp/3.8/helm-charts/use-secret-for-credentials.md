@@ -70,44 +70,86 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
            scalar.db.password=${env:SCALAR_DB_PASSWORD}
            ...
          ```
-       * ScalarDL Ledger (Go テンプレート構文)
-         
-         {% raw %} 
-         ```yaml
-          ledger:
-            ledgerProperties: |
-              ...
-              scalar.db.username={{ default .Env.SCALAR_DB_USERNAME "" }}
-              scalar.db.password={{ default .Env.SCALAR_DB_PASSWORD "" }}
-              ...
-          ```
-         {% endraw %}
+       * ScalarDL Ledger
+           * ScalarDL Ledger 3.7 以前 (Go テンプレート構文)
 
-       * ScalarDL Auditor (Go テンプレート構文)
+             {% raw %}
+             ```yaml
+              ledger:
+                ledgerProperties: |
+                  ...
+                  scalar.db.username={{ default .Env.SCALAR_DB_USERNAME "" }}
+                  scalar.db.password={{ default .Env.SCALAR_DB_PASSWORD "" }}
+                  ...
+             ```
+             {% endraw %}
 
-         {% raw %}
-         ```yaml
-         auditor:
-           auditorProperties: |
-             ...
-             scalar.db.username={{ default .Env.SCALAR_DB_USERNAME "" }}
-             scalar.db.password={{ default .Env.SCALAR_DB_PASSWORD "" }}
-             ...
-         ```
-         {% endraw %}
+           * ScalarDL Ledger 3.8 以降 (Apache Commons Text 構文)
 
-       * ScalarDL Schema Loader (Go テンプレート構文)
+             {% raw %}
+             ```yaml
+             ledger:
+               ledgerProperties: |
+                 ...
+                 scalar.db.username=${env:SCALAR_DB_USERNAME}
+                 scalar.db.password=${env:SCALAR_DB_PASSWORD}
+                 ...
+             ```
+             {% endraw %}
 
-         {% raw %}
-         ```yaml
-         schemaLoading:
-           databaseProperties: |
-             ...
-             scalar.db.username={{ default .Env.SCALAR_DB_USERNAME "" }}
-             scalar.db.password={{ default .Env.SCALAR_DB_PASSWORD "" }}
-             ...
-         ```
-         {% endraw %}
+       * ScalarDL Auditor
+           * ScalarDL Auditor 3.7 以前 (Go テンプレート構文)
+
+             {% raw %}
+             ```yaml
+             auditor:
+               auditorProperties: |
+                 ...
+                 scalar.db.username={{ default .Env.SCALAR_DB_USERNAME "" }}
+                 scalar.db.password={{ default .Env.SCALAR_DB_PASSWORD "" }}
+                 ...
+             ```
+             {% endraw %}
+
+           * ScalarDL Auditor 3.8 以降 (Apache Commons Text 構文)
+
+             {% raw %}
+             ```yaml
+             auditor:
+               auditorProperties: |
+                 ...
+                 scalar.db.username=${env:SCALAR_DB_USERNAME}
+                 scalar.db.password=${env:SCALAR_DB_PASSWORD}
+                 ...
+             ```
+             {% endraw %}
+
+       * ScalarDL Schema Loader
+           * ScalarDL Schema Loader 3.7 以前 (Go テンプレート構文)
+
+             {% raw %}
+             ```yaml
+             schemaLoading:
+               databaseProperties: |
+                 ...
+                 scalar.db.username={{ default .Env.SCALAR_DB_USERNAME "" }}
+                 scalar.db.password={{ default .Env.SCALAR_DB_PASSWORD "" }}
+                 ...
+             ```
+             {% endraw %}
+
+           * ScalarDL Schema Loader 3.8 以降 (Apache Commons Text 構文)
+
+             {% raw %}
+             ```yaml
+             schemaLoading:
+               databaseProperties: |
+                 ...
+                 scalar.db.username=${env:SCALAR_DB_USERNAME}
+                 scalar.db.password=${env:SCALAR_DB_PASSWORD}
+                 ...
+             ```
+             {% endraw %}
 
 1. 資格情報を含む `Secret` リソースを作成します。
    `Secret` のキーとして環境変数名を指定する必要があります。
