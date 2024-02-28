@@ -1,5 +1,3 @@
-{% include common/translation-ja-jp.html %}
-
 # 簡単な銀行口座申請
 
 ## 概要

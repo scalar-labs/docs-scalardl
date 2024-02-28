@@ -1,5 +1,3 @@
-{% include common/translation-ja-jp.html %}
-
 # ScalarDL 認証ガイド
 
 このドキュメントでは、ScalarDL の認証メカニズムとその適切な使用方法について説明します。
