@@ -1,5 +1,3 @@
-{% include common/translation-ja-jp.html %}
-
 # API エンドポイントの数
 
 ## `GET v1/accounts`
