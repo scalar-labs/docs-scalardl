@@ -23,14 +23,7 @@ permalink: /:collection/:path/
     {% if page.last_modified_at %}<meta itemprop="dateModified" content="{{ page.last_modified_at | date_to_xmlschema }}">{% endif %}
 
     <div class="page__inner-wrap">
-      {% unless page.header.overlay_color or page.header.overlay_image %}
-        <header>
-          {% if page.title %}<h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="{{ page.url | absolute_url }}" class="u-url" itemprop="url">{{ page.title | markdownify | remove: "<p>" | remove: "</p>" }}</a>
-          </h1>{% endif %}
-          {% include page__meta.html %}
-        </header>
-      {% endunless %}
+
 
       <section class="page__content e-content" itemprop="text">
         <!-- Adds support for the language dropdown menu for the languages listed in `_data/navigation.yml`. For some reason, adding this dropdown menu to `_includes.masthead.html` results in broken links, regardless of trying to use a variety of logic in the  Liquid language (added by josh-wong). -->
@@ -72,6 +65,22 @@ permalink: /:collection/:path/
             </nav>
           </aside>
         {% endif %}
+
+        {% unless page.header.overlay_color or page.header.overlay_image %}
+        <header>
+          <!-- This if statement shows that the Japanese content on the page has been machine translated (added by josh-wong). -->
+          {% if page.url contains 'ja-jp' %}
+            {% include common/translation-ja-jp.html %}
+          {% endif %}
+
+          {% if page.title %}
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="{{ page.url | absolute_url }}" class="u-url" itemprop="url">{{ page.title | markdownify | remove: "<p>" | remove: "</p>" }}</a>
+          </h1>{% endif %}
+          {% include page__meta.html %}
+        </header>
+        {% endunless %}
+
         {{ content }}
         {% if page.link %}<div><a href="{{ page.link }}" class="btn btn--primary">{{ site.data.ui-text[site.locale].ext_link_label | default: "Direct Link" }}</a></div>{% endif %}
       </section>
