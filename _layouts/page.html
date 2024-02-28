@@ -68,6 +68,11 @@ permalink: /:collection/:path/
 
         {% unless page.header.overlay_color or page.header.overlay_image %}
         <header>
+          <!-- This if statement shows that the Japanese content on the page has been machine translated (added by josh-wong). -->
+          {% if page.url contains 'ja-jp' %}
+            {% include common/translation-ja-jp.html %}
+          {% endif %}
+
           {% if page.title %}
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
             <a href="{{ page.url | absolute_url }}" class="u-url" itemprop="url">{{ page.title | markdownify | remove: "<p>" | remove: "</p>" }}</a>
