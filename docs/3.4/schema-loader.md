@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # ScalarDL Schema Loader
 
 A Docker image that loads the database schemas of ScalarDL using [Schema Tool for Scalar DB](https://github.com/scalar-labs/scalardb/tree/master/schema-loader/).

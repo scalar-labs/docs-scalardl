@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # ScalarDL Compatibility Matrix
 
 This document shows ScalarDL Ledger and Auditor compatibility with the ScalarDL Java Client SDK.

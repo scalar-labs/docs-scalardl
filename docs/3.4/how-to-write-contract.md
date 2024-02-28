@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # A Guide on How to Write a Good Contract for ScalarDL
 
 This document sets out some guidelines for writing contracts for ScalarDL.
