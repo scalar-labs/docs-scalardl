@@ -1,5 +1,3 @@
-{% include common/translation-ja-jp.html %}
-
 # ScalarDL Java クライアント SDK
 
 これは、[ScalarDL](https://github.com/scalar-labs/scalardl) ネットワークと対話するためのクライアント側 Java ライブラリです。
