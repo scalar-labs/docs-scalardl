@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # API endpoints
 
 ## `GET v1/accounts`
