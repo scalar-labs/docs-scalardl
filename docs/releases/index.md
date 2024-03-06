@@ -6,6 +6,7 @@ toc: false
 
 Select a version to see the release notes:
 
+- [ScalarDL 3.9](release-3.9.md)
 - [ScalarDL 3.8](release-3.8.md)
 - [ScalarDL 3.7](release-3.7.md)
 - [ScalarDL 3.6](release-3.6.md)
