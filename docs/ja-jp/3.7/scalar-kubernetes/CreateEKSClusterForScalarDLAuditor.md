@@ -33,7 +33,7 @@ ScalarDL でのビザンチン障害検出が適切に機能するには、Scala
 
 ### EKS クラスターごとに少なくとも 3 つのワーカーノードと 3 つのポッドを作成します
 
-EKS クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 3 つの Pod をワーカーノードに分散させるための `podAntiAffinity` の [ScalarDL Ledger サンプル構成](../conf/scalardl-custom-values.yaml) と [ScalarDL Auditor サンプル構成](../conf/scalardl-audit-custom-values.yaml) を参照できます。
+EKS クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 3 つの Pod をワーカーノードに分散させるための `podAntiAffinity` の [ScalarDL Ledger サンプル構成](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardl-custom-values.yaml) と [ScalarDL Auditor サンプル構成](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardl-audit-custom-values.yaml) を参照できます。
 
 {% capture notice--info %}
 **注記**

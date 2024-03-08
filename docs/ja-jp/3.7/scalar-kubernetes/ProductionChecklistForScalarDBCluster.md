@@ -12,7 +12,7 @@
 
 ### ポッドと Kubernetes ワーカーノードの数
 
-Kubernetes クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 3 つのポッドをワーカーノードに分散させるための `podAntiAffinity` の [サンプル構成](../conf/scalardb-cluster-custom-values-indirect-mode.yaml) を参照できます。
+Kubernetes クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 3 つのポッドをワーカーノードに分散させるための `podAntiAffinity` の [サンプル構成](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardb-cluster-custom-values-indirect-mode.yaml) を参照できます。
 
 {% capture notice--info %}
 **注記**
