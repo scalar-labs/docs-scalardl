@@ -33,7 +33,7 @@ The following are some recommendations for deploying ScalarDL Ledger and ScalarD
 
 ### Create at least three worker nodes and three pods per EKS cluster
 
-To ensure that the EKS cluster has high availability, you should use at least three worker nodes and deploy at least three pods spread across the worker nodes. You can see the [ScalarDL Ledger sample configurations](../conf/scalardl-custom-values.yaml) and [ScalarDL Auditor sample configurations](../conf/scalardl-audit-custom-values.yaml) of `podAntiAffinity` for making three pods spread across the worker nodes.
+To ensure that the EKS cluster has high availability, you should use at least three worker nodes and deploy at least three pods spread across the worker nodes. You can see the [ScalarDL Ledger sample configurations](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardl-custom-values.yaml) and [ScalarDL Auditor sample configurations](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardl-audit-custom-values.yaml) of `podAntiAffinity` for making three pods spread across the worker nodes.
 
 {% capture notice--info %}
 **Note**
