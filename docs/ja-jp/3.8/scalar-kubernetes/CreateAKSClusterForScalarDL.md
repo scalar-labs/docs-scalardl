@@ -31,7 +31,7 @@ ScalarDL でのビザンチン障害検出が適切に機能するには、Scala
 
 ### 少なくとも 3 つのワーカーノードと 3 つのポッドを作成します
 
-AKS クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 3 つのポッドをワーカーノードに分散させるための `podAntiAffinity` の [サンプル構成](../conf/scalardl-custom-values.yaml) を参照できます。
+AKS クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 3 つのポッドをワーカーノードに分散させるための `podAntiAffinity` の [サンプル構成](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardl-custom-values.yaml) を参照できます。
 
 {% capture notice--info %}
 **注記**
