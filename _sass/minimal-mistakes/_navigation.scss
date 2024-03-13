@@ -520,10 +520,10 @@
   .nav__list .nav__items {
     margin: 0 1em 0 0; /* Adjusted spacing since the default spacing is too close to the scroll bar; originally `margin: 0;` (modified by josh-wong) */
     font-size: 1.25rem;
-    padding-right: 7px;
+    padding-right: 0.5em; /* Adjusted spacing since the default spacing is too close to the scroll bar; originally `padding-right: 7px;` (modified by josh-wong) */
     
     ul {
-      padding-left: 0.5em;
+      padding-left: 0.95em;
       padding-top: 0.5em; /* Added to add spacing above links to pages in side navigation (added by josh-wong). */
     }
   
@@ -594,12 +594,94 @@
     padding: 0 0 0.2rem 0; /* Reduced spacing above product titles in side navigation; originally `padding: 0.25rem 0;` (modified by josh-wong). */
     font-family: $sans-serif-narrow;
     font-size: $type-size-6;
-    font-weight: bold;
-    text-transform: uppercase;
+    /* font-weight: bold; */ /* Disabled since adding accordion menus with an arrow makes the sections obvious that they're sections (modified by josh-wong). */
+    /* text-transform: uppercase; */ /* Disabled since adding accordion menus with an arrow makes the sections obvious that they're sections (modified by josh-wong). */
     border-bottom: 1px solid $border-color;
     width: 100%; /* Added to extend the line under subtitles across the side navigation while respecting the padding specified` (modified by josh-wong). */
+    cursor: pointer;
+
+    &:hover {
+      color: $scalar-primary-color;
+    }
   }
-  
+
+  .nav__sub-subtitle {
+    display: inline-block; /* Changed to make the top sub-title not transform/glitch when hovering over links in the side navigation (originally `display: block`). (modified by josh-wong). */
+    margin: 0 0; /* Changed to reduce spacing after the top sub-title in the side navigation (originally `margin: 0.5rem 0`). (modified by josh-wong). */
+    padding: 0 0 0 0; /* Reduced spacing above product titles in side navigation; originally `padding: 0.25rem 0;` (modified by josh-wong). */
+    font-family: $sans-serif-narrow;
+    font-size: $type-size-5;
+    width: 100%; /* Added to extend the line under subtitles across the side navigation while respecting the padding specified` (modified by josh-wong). */
+    cursor: pointer;
+
+    &:hover {
+      color: $scalar-primary-color;
+    }
+
+    &:active {
+      color: $link-color-visited;
+      background-color: $scalar-light-gray-background-color; /* Added to make the page that visitors are on more prominent in the side navigation (added by josh-wong) */
+      display: block; /* Added to make the background color take up 100% of space in the side navigation (added by josh-wong) */
+    }
+  }
+
+  details > summary {
+    list-style-type: none;
+  }
+
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Alternatively, you can put the arrows at the end of the navigation accordion, as described after these two `::before` classes (added by josh-wong). */
+  details > summary::before {
+    color: $text-color;
+    font-family: "Font Awesome 5 Free";
+    content: "\f054";
+    font-size: 80%;
+    font-weight: 900;
+    padding-right: 0.56em;
+    vertical-align: middle;
+  }
+
+  details[open] > summary::before {
+    color: $text-color;
+    font-family: "Font Awesome 5 Free";
+    content: "\f078";
+    font-size: 80%;
+    font-weight: 900;
+    padding-right: 0.32em;
+    vertical-align: middle;
+  }
+
+  /* 
+  To put the arrow at the end of the navigation accordion, uncomment the following two classes:
+  • Uncomment `details > summary::after`.
+  • Uncomment `details[open] > summary::after`.
+  • Comment out `details > summary::before`.
+  • Comment out `details[open] > summary::before`.
+  (added by josh-wong) 
+  */
+  // details > summary::after { 
+  //   color: $text-color;
+  //   font-family: "Font Awesome 5 Free";
+  //   content: "\f054";
+  //   float: right;
+  //   font-size: 80%;
+  //   font-weight: 900;
+  //   vertical-align: middle;
+  // }
+
+  // details[open] > summary::after {
+  //   color: $text-color;
+  //   font-family: "Font Awesome 5 Free";
+  //   content: "\f078";
+  //   float: right;
+  //   font-size: 80%;
+  //   font-weight: 900;
+  //   vertical-align: middle;
+  // }
+
   /*
        Table of contents navigation
        ========================================================================== */
