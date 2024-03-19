@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # ScalarDL ベンチマーク
 
 このリポジトリには、ScalarDL のベンチマーク プログラムが含まれています。

@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # ScalarDB Server を Amazon Elastic Kubernetes Service (EKS) にデプロイする
 
 このガイドでは、Amazon Elastic Kubernetes Service (EKS) に ScalarDB Server をデプロイする方法について説明します。

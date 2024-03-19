@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # ScalarDL Authentication Guide
 
 This document explains the ScalarDL authentication mechanism and how to use it properly. 

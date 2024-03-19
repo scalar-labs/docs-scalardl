@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # ScalarDL Ledger と ScalarDL Auditor を Amazon Elastic Kubernetes Service (EKS) にデプロイする
 
 このガイドでは、ScalarDL Ledger と ScalarDL Auditor を Amazon Elastic Kubernetes Service (EKS) にデプロイする方法について説明します。

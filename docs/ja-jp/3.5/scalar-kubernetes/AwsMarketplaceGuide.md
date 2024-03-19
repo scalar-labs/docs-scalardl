@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # AWS Marketplace を通じて Scalar 製品をインストールする方法
 
 Scalar 製品 (ScalarDB、ScalarDL、およびそれらのツール) は、AWS Marketplace でコンテナイメージとして入手できます。 このガイドでは、AWS Marketplace を通じて Scalar 製品をインストールする方法について説明します。

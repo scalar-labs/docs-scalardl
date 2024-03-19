@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # マネージド Kubernetes サービスでの ScalarDL の管理
 
 次のドキュメントは、マネージド Kubernetes サービスで ScalarDL 環境を管理するのに役立ちます。

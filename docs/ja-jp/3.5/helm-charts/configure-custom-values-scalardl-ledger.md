@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # ScalarDL Ledger のカスタム値ファイルを構成する
 
 このドキュメントでは、ScalarDL Ledger チャートのカスタム値ファイルを作成する方法について説明します。 パラメータの詳細を知りたい場合は、ScalarDL Ledger chartの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardl/README.md) を参照してください。

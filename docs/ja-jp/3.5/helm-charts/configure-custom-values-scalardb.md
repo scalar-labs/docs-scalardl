@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # [非推奨] ScalarDB Server のカスタム値ファイルを構成する
 
 {% capture notice--info %}

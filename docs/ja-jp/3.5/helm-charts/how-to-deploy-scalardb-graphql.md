@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # [非推奨] ScalarDB GraphQL をデプロイする方法
 
 {% capture notice--info %}

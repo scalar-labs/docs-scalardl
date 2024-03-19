@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # マネージド Kubernetes サービスへの ScalarDL のデプロイ
 
 次のドキュメントは、マネージド Kubernetes サービスで ScalarDL 環境をセットアップしてデプロイするのに役立ちます。
