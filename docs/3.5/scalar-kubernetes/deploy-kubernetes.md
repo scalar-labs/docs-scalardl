@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # Deploying ScalarDL on Managed Kubernetes Services
 
 The following documentation is to help you set up and deploy a ScalarDL environment on managed Kubernetes services.

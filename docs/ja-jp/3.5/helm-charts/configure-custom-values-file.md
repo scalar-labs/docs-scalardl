@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # Scalar Helm Charts のカスタム値ファイルを構成する
 
 Scalar Helm Chart を使用して Scalar 製品をデプロイする場合は、環境に基づいてカスタム値ファイルを準備する必要があります。 各製品のカスタム値ファイルの作成方法の詳細については、次のドキュメントを参照してください。

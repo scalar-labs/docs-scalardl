@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # Scalar Manager のデプロイする方法
 
 このドキュメントでは、Scalar Helm Chart を使用して Scalar Manager をデプロイする方法について説明します。 カスタム値ファイルを準備する必要があります。 Scalar Manager のカスタム値ファイルの詳細については、次のドキュメントを参照してください。

@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # ScalarDL Ledger の EKS クラスターを作成するためのガイドライン
 
 このドキュメントでは、ScalarDL Ledger デプロイ用の Amazon Elastic Kubernetes Service (EKS) クラスターを作成するための要件と推奨事項について説明します。 ScalarDL Ledger を EKS クラスターにデプロイする方法の詳細については、[ScalarDL Ledger を Amazon EKS にデプロイする](ManualDeploymentGuideScalarDLOnEKS.md)を参照してください。

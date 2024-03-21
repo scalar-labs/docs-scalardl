@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # ScalarDL ノード クライアント SDK
 
 これは、アプリケーションが [ScalarDL](https://github.com/scalar-labs/scalardl) ネットワークと対話できるようにする Node.js アプリケーション用のライブラリです。

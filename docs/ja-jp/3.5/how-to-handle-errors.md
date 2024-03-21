@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # ScalarDL でのエラーの処理方法に関するガイド
 
 このドキュメントでは、ScalarDL でのエラーを処理するためのガイドラインをいくつか示します。

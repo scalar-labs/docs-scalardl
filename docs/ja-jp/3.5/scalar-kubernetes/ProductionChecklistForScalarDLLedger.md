@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # ScalarDL Ledgerの制作チェックリスト
 
 このチェックリストは、実稼働環境に ScalarDL Ledger を展開する際の推奨事項を提供します。

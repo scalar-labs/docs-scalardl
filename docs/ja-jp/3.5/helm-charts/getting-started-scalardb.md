@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # [非推奨] Helm Charts の入門 (ScalarDB Server)
 
 {% capture notice--info %}

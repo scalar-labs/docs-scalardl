@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # ScalarDL Auditor モード用にネットワーク ピアリングを構成する
 
 このドキュメントでは、ScalarDL Auditor モードで複数のプライベート ネットワークを接続し、ネットワーク ピアリングを実行する方法について説明します。 ScalarDL Auditor モードが正しく動作するには、ScalarDL Ledger を ScalarDL Auditor に接続する必要があります。

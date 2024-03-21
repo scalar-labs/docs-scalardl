@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # Helm Charts の入門 (Scalar Manager)
 Scalar Manager は、ユーザーに次のことを可能にする Web ベースのダッシュボードです。
 * Scalar 製品の健全性をチェックします

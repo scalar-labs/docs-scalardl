@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # Kubernetes 環境でデータベースを復元する
 
 このガイドでは、ScalarDB または ScalarDL が Kubernetes 環境で使用するデータベースを復元する方法について説明します。 このガイドは、クラウド サービス プロバイダーのマネージド データベースを ScalarDB または ScalarDL のバックエンド データベースとして使用していることを前提としていることに注意してください。

@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # Kubernetes クラスター上の Scalar 製品からのログの収集
 
 このドキュメントでは、Helm を使用して Grafana Loki と Promtail を Kubernetes にデプロイする方法について説明します。 このドキュメントに従うと、Kubernetes 環境で Scalar 製品のログを収集できます。

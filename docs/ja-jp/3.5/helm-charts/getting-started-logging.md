@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # Helm Charts の入門 (Loki スタックを使用したロギング)
 
 このドキュメントでは、Grafana Loki (Promtail を使用) を使用して、Kubernetes 上で Scalar 製品のログ集約を開始する方法について説明します。

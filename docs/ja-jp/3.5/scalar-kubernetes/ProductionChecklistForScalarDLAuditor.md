@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # ScalarDL Auditor の制作チェックリスト
 
 このチェックリストは、ScalarDL Auditor を運用環境に展開する際の推奨事項を提供します。

@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # Scalar Envoy のカスタム値ファイルを構成する
 
 このドキュメントでは、Scalar Envoy チャートのカスタム値ファイルを作成する方法について説明します。 パラメータの詳細を知りたい場合は、Scalar Envoy チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/envoy/README.md) を参照してください。

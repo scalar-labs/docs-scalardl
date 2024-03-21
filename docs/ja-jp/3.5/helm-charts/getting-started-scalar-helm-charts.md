@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # Scalar Helm Charts の入門
 
 このドキュメントでは、Kubernetes クラスター上でテスト環境として Scalar Helm Chart を開始する方法について説明します。 ここでは、テスト用の Mac または Linux 環境がすでにあることを前提としています。 このドキュメントでは **Minikube** を使用しますが、これから説明する手順はどの Kubernetes クラスターでも機能するはずです。

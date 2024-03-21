@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # 証明書の取得方法
 
 このドキュメントでは、ScalarDL ネットワークに登録するための証明書を取得する方法について説明します。

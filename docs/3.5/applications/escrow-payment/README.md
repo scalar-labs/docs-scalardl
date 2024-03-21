@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # ScalarDL Escrow payment CLI
 
 The following is a simple Java CLI application to try out and test [ScalarDL](https://github.com/scalar-labs/scalardl). PicoCLI is used as a CLI framework.

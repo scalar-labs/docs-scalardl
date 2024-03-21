@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # Scalar 製品の制作チェックリスト
 
 デプロイメントを本番環境に向けて準備するには、次を参照してください。

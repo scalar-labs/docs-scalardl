@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # Back up a NoSQL database in a Kubernetes environment
 
 This guide explains how to create a transactionally consistent backup of managed databases that ScalarDB or ScalarDL uses in a Kubernetes environment. Please note that, when using a NoSQL database or multiple databases, you **must** pause ScalarDB or ScalarDL to create a transactionally consistent backup.

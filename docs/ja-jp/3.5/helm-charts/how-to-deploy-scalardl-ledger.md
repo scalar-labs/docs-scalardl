@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # ScalarDL Ledger のデプロイ方法
 
 このドキュメントでは、Scalar Helm Chart を使用して ScalarDL Ledger をデプロイする方法について説明します。 カスタム値ファイルを準備する必要があります。 ScalarDL Ledger および ScalarDL Schema Loader のカスタム値ファイルの詳細については、次のドキュメントを参照してください。

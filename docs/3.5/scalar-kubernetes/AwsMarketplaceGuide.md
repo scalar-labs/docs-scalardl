@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # How to install Scalar products through AWS Marketplace
 
 Scalar products (ScalarDB, ScalarDL, and their tools) are available in the AWS Marketplace as container images. This guide explains how to install Scalar products through the AWS Marketplace.
