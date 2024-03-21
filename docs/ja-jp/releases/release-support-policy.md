@@ -42,7 +42,7 @@
       <td>2024-05-30</td>
       <td><a href="https://scalar-labs.com/en/contact">お問い合わせ</a></td>
     </tr>
-    <tr>
+    <tr class="version-out-of-support">
       <td><a href="/docs/releases/release-3.5#v350">3.5</a></td>
       <td>2022-08-03</td>
       <td>2023-09-22</td>
