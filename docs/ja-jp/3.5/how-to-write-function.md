@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # ScalarDL の関数の書き方に関するガイド
 
 このドキュメントでは、ScalarDL の関数を作成するためのガイドラインをいくつか示します。

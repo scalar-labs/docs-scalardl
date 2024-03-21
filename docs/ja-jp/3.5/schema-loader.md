@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # ScalarDL Schema Loader
 
 [Schema Tool for Scalar DB](https://github.com/scalar-labs/scalardb/tree/master/schema-loader/) を使用して ScalarDL のデータベース スキーマをロードする Docker イメージ。

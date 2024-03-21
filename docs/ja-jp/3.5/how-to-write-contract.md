@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # ScalarDL の適切なコントラクトを作成する方法に関するガイド
 
 このドキュメントでは、ScalarDL のコントラクトを作成するためのガイドラインをいくつか示します。

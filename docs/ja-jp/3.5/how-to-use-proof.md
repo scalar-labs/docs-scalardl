@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # ScalarDL でアセットプルーフを使用する方法に関するガイド
 
 このドキュメントでは、ScalarDL で Asset Proofs を使用するためのいくつかのガイドラインを説明します。
