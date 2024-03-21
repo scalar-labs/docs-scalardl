@@ -1,5 +1,3 @@
-{% include scalardl/end-of-support-ja-jp.html %}
-
 # ScalarDL Auditor の使用を開始する
 
 このドキュメントでは、ScalarDL Auditor の使用を開始する方法について説明します。

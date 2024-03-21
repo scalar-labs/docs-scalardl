@@ -1,5 +1,3 @@
-{% include scalardl/end-of-support-ja-jp.html %}
-
 # ScalarDL 設計ドキュメント
 
 ScalarDL の設計と実装の詳細については、VLDB 2022 カンファレンスで発表した次のドキュメントを参照してください。

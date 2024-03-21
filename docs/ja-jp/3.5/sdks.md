@@ -1,5 +1,3 @@
-{% include scalardl/end-of-support-ja-jp.html %}
-
 # ScalarDL 用の SDK
 
 以下は、ScalarDL の SDK のリストです。

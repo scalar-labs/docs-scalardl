@@ -1,5 +1,3 @@
-{% include scalardl/end-of-support-ja-jp.html %}
-
 * [client](./client)
 * [common](./common)
 * [ledger](./ledger)

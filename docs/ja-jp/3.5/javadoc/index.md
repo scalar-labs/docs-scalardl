@@ -1,5 +1,3 @@
-{% include scalardl/end-of-support-ja-jp.html %}
-
 # Scalar DL Javadoc
 
 * [latest](./latest/index.md)

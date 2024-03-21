@@ -1,5 +1,3 @@
-{% include scalardl/end-of-support-ja-jp.html %}
-
 # ScalarDL の入門
 
 このドキュメントでは、Client SDK を使用して最初の簡単なコントラクトを実行して、ScalarDL を開始する方法について説明します。
