@@ -69,17 +69,29 @@ versions:
 # After that, add a new scope in `_config.yml` to include an item that provides the proper versioned navigation to the site when someone visits the page (i.e., make sure people who visit a version 3.8 doc are shown a side navigation that includes only 3.8 docs.)
 
 "latest":
-  - title: "⬅ ScalarDL docs home" 
+  - title: "⬅ ScalarDL Docs Home"
     url: /docs/ # Don't change this URL. This links back to the parent product home page.
-  - title: "ScalarDL 3.8"
-    children:
   # Get Started docs
   - title: "Get Started"
     children:
       - title: "Getting Started with ScalarDL"
         url: /docs/latest/getting-started/
-      - title: "Getting Started with ScalarDL Auditor"
-        url: /docs/latest/getting-started-auditor/
+      - title: "ScalarDL Auditor"
+        children:
+          - title: "Getting Started with ScalarDL Auditor"
+            url: /docs/latest/getting-started-auditor/
+          - title: "Bullet level 3"
+            children:
+              - title: "Release Notes"
+                url: /docs/releases/
+              - title: "Bullet level 4"
+                children:
+                  - title: "Release Support Policy"
+                    url: /docs/releases/release-support-policy/
+                  - title: "Bullet level 5"
+                    children:
+                      - title: "ScalarDL Benchmarking Tools"
+                        url: /docs/latest/scalardl-benchmarks/README/
   # Samples docs
   - title: "Samples" 
     children:
@@ -149,20 +161,20 @@ versions:
   #       url: /docs/<VERSION>/<URL>/
   # Reference docs
   - title: "Reference"
-    children:      
+    children:
       - title: "ScalarDL design document"
         url: /docs/latest/design/
       - title: "ScalarDL Compatibility Matrix"
         url: /docs/latest/compatibility/
       - title: "ScalarDL Implementation"
         url: /docs/latest/implementation/
-      - title: "ScalarDL Benchmarking Tools"
-        url: /docs/latest/scalardl-benchmarks/README/
+      # - title: "ScalarDL Benchmarking Tools"
+      #   url: /docs/latest/scalardl-benchmarks/README/
   # Release docs and notes
   - title: "Releases"
     children:
-      - title: "Release Notes"
-        url: /docs/releases/
+      # - title: "Release Notes"
+      #   url: /docs/releases/
       # - title: "v3.8"
       #   url: /docs/releases/release-3.8/
       # - title: "v3.7"
@@ -173,8 +185,8 @@ versions:
       #   url: /docs/releases/release-3.5/
       # - title: "v3.4"
       #   url: /docs/releases/release-3.4/
-      - title: "Release Support Policy"
-        url: /docs/releases/release-support-policy/
+      # - title: "Release Support Policy"
+      #   url: /docs/releases/release-support-policy/
 
 "3.7":
   - title: "⬅ ScalarDL docs home" 
