@@ -79,7 +79,11 @@ footer:
 include:
   - .htaccess
   - docs
-# exclude:
+exclude:
+  - "docs/3.**"
+  - "docs/ja-jp/3.**"
+  - "docs/latest/javadoc"
+  - "docs/ja-jp/latest/javadoc"
 #   - '*.sublime-project'
 #   - '*.sublime-workspace'
 #   - vendor
