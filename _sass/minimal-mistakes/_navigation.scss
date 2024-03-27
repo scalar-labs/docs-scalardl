@@ -519,7 +519,7 @@
   
   .nav__list .nav__items {
     margin: 0 1em 0 0; /* Adjusted spacing since the default spacing is too close to the scroll bar; originally `margin: 0;` (modified by josh-wong) */
-    font-size: 1.25rem;
+    font-size: $type-size-5-25;
     padding-right: 7px;
     
     ul {
@@ -537,20 +537,20 @@
       }
     }
   
-    .active {
-      margin-left: -0.6em;
-      margin-right: -7px;
-      padding-left: 0.5em;
-      padding-right: 7px;
-      font-weight: 500;
-      color: $link-color-visited;
-      background-color: $scalar-light-gray-background-color; /* Added to make the page that visitors are on more prominent in the side navigation (added by josh-wong) */
-      display: block; /* Added to make the background color take up 100% of space in the side navigation (added by josh-wong) */
+    // .active {
+    //   // margin-left: -0.6em;
+    //   // margin-right: -7px;
+    //   // padding-left: 0.5em;
+    //   // padding-right: 7px;
+    //   font-weight: 500;
+    //   color: $link-color-visited;
+    //   background-color: $scalar-light-gray-background-color; /* Added to make the page that visitors are on more prominent in the side navigation (added by josh-wong) */
+    //   display: block; /* Added to make the background color take up 100% of space in the side navigation (added by josh-wong) */
     
-      &:hover {
-        color: $link-color-hover;
-      }
-    }
+    //   &:hover {
+    //     color: $link-color-hover;
+    //   }
+    // }
   
     @include breakpoint(max-width $large - 1px) {
       position: relative;
@@ -593,11 +593,20 @@
     margin: 0 0; /* Changed to reduce spacing after the top sub-title in the side navigation (originally `margin: 0.5rem 0`). (modified by josh-wong). */
     padding: 0 0 0.2rem 0; /* Reduced spacing above product titles in side navigation; originally `padding: 0.25rem 0;` (modified by josh-wong). */
     font-family: $sans-serif-narrow;
-    font-size: $type-size-6;
+    // font-size: $type-size-5-25;
     font-weight: bold;
-    text-transform: uppercase;
-    border-bottom: 1px solid $border-color;
+    /* text-transform: uppercase; */
+    /* border-bottom: 1px solid $border-color; */
     width: 100%; /* Added to extend the line under subtitles across the side navigation while respecting the padding specified` (modified by josh-wong). */
+
+    &:hover {
+      // background-color: $scalar-light-gray-background-color;
+      color: $link-color-hover;
+    }
+    .active {
+      color: $link-color-visited;
+      // background-color: $scalar-light-gray-background-color; /* Added to make the page that visitors are on more prominent in the side navigation (added by josh-wong) */
+    }
   }
   
   /*
