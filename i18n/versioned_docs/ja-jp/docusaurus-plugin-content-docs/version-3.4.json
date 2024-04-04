@@ -4,15 +4,35 @@
     "description": "The label for version 3.4"
   },
   "sidebar.docs.category.Getting Started": {
-    "message": "Getting Started",
+    "message": "入門",
     "description": "The label for category Getting Started in sidebar docs"
   },
   "sidebar.docs.category.Samples": {
-    "message": "Samples",
+    "message": "シンプル",
     "description": "The label for category Samples in sidebar docs"
   },
+  "sidebar.docs.category.Develop": {
+    "message": "開発する",
+    "description": "The label for category Develop in sidebar docs"
+  },
+  "sidebar.docs.category.Deploy": {
+    "message": "展開する",
+    "description": "The label for category Deploy in sidebar docs"
+  },
+  "sidebar.docs.category.Manage": {
+    "message": "管理",
+    "description": "The label for category Manage in sidebar docs"
+  },
+  "sidebar.docs.category.Reference": {
+    "message": "参照",
+    "description": "The label for category Reference in sidebar docs"
+  },
+  "sidebar.docs.category.Releases": {
+    "message": "リリース",
+    "description": "The label for category Releases in sidebar docs"
+  },
   "sidebar.docs.doc.Home 3.7": {
-    "message": "Home 3.7",
+    "message": "ホーム 7",
     "description": "The label for the doc item Home 3.7 in sidebar docs, linking to the doc index"
   }
 }
