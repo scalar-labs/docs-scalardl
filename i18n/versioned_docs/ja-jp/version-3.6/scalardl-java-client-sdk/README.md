@@ -1,0 +1,29 @@
+# ScalarDL Java クライアント SDK
+
+これは、[ScalarDL](https://github.com/scalar-labs/scalardl) ネットワークと対話するためのクライアント側 Java ライブラリです。
+
+## インストール
+
+ライブラリは [Maven Central](https://search.maven.org/search?q=a:scalardl-java-client-sdk) で入手できます。 Gradle などのビルド ツールを使用してアプリケーションにインストールできます。
+たとえば、Gradle では、次の依存関係を build.gradle に追加できます。
+
+```
+dependencies {
+    compile group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '<version>'
+}
+```
+
+## ドキュメンテーション
+
+* [ScalarDL ドキュメンテーション](https://scalar-labs.github.io/scalardl/)
+
+## 貢献する
+
+このライブラリは主に Scalar Engineering チームによって保守されていますが、もちろん、どんなご支援にも感謝いたします。
+
+* 質問したり、回答を見つけたり、他のユーザーを支援するには、[stackoverflow](https://stackoverflow.com/) にアクセスし、[scalardl](https://stackoverflow.com/questions/tagged/scalardl) タグを使用してください。
+* バグの報告、改善の提案、新機能のリクエストについては、問題を開いてご協力ください。
+
+## ライセンス
+
+ScalarDL クライアント SDK は、AGPL (ルート ディレクトリの LICENSE ファイルにあります) と商用ライセンスの両方に基づいてデュアル ライセンスが付与されています。 必要に応じて、上記のライセンスのいずれかを選択できます。 商用ライセンスについては、[お問い合わせ](https://www.scalar-labs.com/contact/) までお問い合わせください。

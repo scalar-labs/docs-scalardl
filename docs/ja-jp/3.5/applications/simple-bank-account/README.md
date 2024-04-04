@@ -1,4 +1,4 @@
-{% include scalardl/end-of-support-ja-jp.html %}
+include scalardl/end-of-support-ja-jp.html
 
 # 簡単な銀行口座申請
 

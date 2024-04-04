@@ -19,13 +19,11 @@ ScalarDL Ledger と ScalarDL Auditor を展開する場合は、次のことを�
   * ScalarDL (Auditor モード) が適切に動作するように **Ledger と Auditor 間の接続**を許可します。
   * これらのネットワーク要件の詳細については、[ScalarDL Auditor Mode のネットワーク ピアリングの構成](NetworkPeeringForScalarDLAuditor.md) を参照してください。
 
-{% capture notice--warning %}
-**注意**
+:::warning
 
 ScalarDL でのビザンチン障害検出が適切に機能するには、ScalarDL Ledger および ScalarDL Auditor のデプロイメントと同じ EKS クラスターにアプリケーション ポッドをデプロイしないでください。
-{% endcapture %}
 
-<div class="notice--warning">{{ notice--warning | markdownify }}</div>
+:::
 
 ## 推奨事項 (オプション)
 
@@ -35,13 +33,11 @@ ScalarDL でのビザンチン障害検出が適切に機能するには、Scala
 
 EKS クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 3 つの Pod をワーカーノードに分散させるための `podAntiAffinity` の [ScalarDL Ledger サンプル構成](../conf/scalardl-custom-values.yaml) と [ScalarDL Auditor サンプル構成](../conf/scalardl-audit-custom-values.yaml) を参照できます。
 
-{% capture notice--info %}
-**注記**
+:::note
 
 ワーカーノードを異なる [availability zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) (AZ) に配置すると、AZ の障害に耐えることができます。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 ### ScalarDL Ledger および ScalarDL Auditor ノード グループのワーカーノードには 4vCPU / 8GB メモリ ノードを使用します。
 
@@ -95,11 +91,9 @@ ScalarDL Ledger および ScalarDL Auditor がデフォルトで使用する接�
   * 40052/TCP (ScalarDL Auditor の負荷分散)
   * 9001/TCP (Scalar Envoy 自体の監視リクエストを受け入れます)
 
-{% capture notice--info %}
-**注記**
+:::note
 
 - 設定ファイル (それぞれ `ledger.properties` と `auditor.properties`) で ScalarDL Ledger と ScalarDL Auditor のデフォルトのリスニング ポートを変更する場合は、設定したポートを使用して接続を許可する必要があります。
 - EKS 自体が使用する接続も許可する必要があります。 Amazon EKS セキュリティグループの要件の詳細については、[Amazon EKS security group requirements and considerations](https://docs.aws.amazon.com/eks/latest/userguide/sec-group-reqs.html) を参照してください。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::

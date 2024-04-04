@@ -1,12 +1,10 @@
 # (非推奨) ScalarDB Server 用の EKS クラスターを作成するためのガイドライン
 
-{% capture notice--warning %}
-**注意**
+:::warning
 
 ScalarDB Server は非推奨になりました。 代わりに [ScalarDB Cluster](ManualDeploymentGuideScalarDBClusterOnEKS.md) を使用してください。
-{% endcapture %}
 
-<div class="notice--warning">{{ notice--warning | markdownify }}</div>
+:::
 
 このドキュメントでは、ScalarDB Server デプロイメント用の Amazon Elastic Kubernetes Service (EKS) クラスターを作成するための要件と推奨事項について説明します。 ScalarDB Server を EKS クラスターにデプロイする方法の詳細については、[ScalarDB Server を Amazon EKS にデプロイする](ManualDeploymentGuideScalarDBServerOnEKS.md)を参照してください。
 
@@ -29,13 +27,11 @@ ScalarDB Server を展開するときは、次のことを行う必要があり�
 
 EKS クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 3 つのポッドをワーカーノードに分散させるための `podAntiAffinity` の [サンプル構成](../conf/scalardb-custom-values.yaml) を参照できます。
 
-{% capture notice--info %}
-**注記**
+:::note
 
 ワーカーノードを異なる [availability zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) (AZ) に配置すると、AZ の障害に耐えることができます。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 ### ScalarDB Server ノード グループのワーカーノードには 4vCPU / 8GB メモリ ノードを使用します。
 
@@ -74,11 +70,9 @@ ScalarDB Server がデフォルトで使用する接続 (ポート) は次のと
   * 60051/TCP (ScalarDB Server の負荷分散)
   * 9001/TCP (Scalar Envoy 自体の監視リクエストを受け入れます)
 
-{% capture notice--info %}
-**注記**
+:::note
 
 - 構成ファイル (`database.properties`) で ScalarDB Server のデフォルトのリスニング ポートを変更する場合は、構成したポートを使用して接続を許可する必要があります。
 - EKS 自体が使用する接続も許可する必要があります。 Amazon EKS セキュリティグループの要件の詳細については、[Amazon EKS security group requirements and considerations](https://docs.aws.amazon.com/eks/latest/userguide/sec-group-reqs.html) を参照してください。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::

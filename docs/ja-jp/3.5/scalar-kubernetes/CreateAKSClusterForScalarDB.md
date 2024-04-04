@@ -1,4 +1,4 @@
-{% include scalardl/end-of-support-ja-jp.html %}
+include scalardl/end-of-support-ja-jp.html
 
 # ScalarDB Server 用の AKS クラスターを作成するためのガイドライン
 
@@ -27,13 +27,11 @@ ScalarDB Server を展開するときは、次のことを行う必要があり�
 
 AKS クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 3 つのポッドをワーカーノードに分散させるための `podAntiAffinity` の [サンプル構成](../conf/scalardb-custom-values.yaml) を参照できます。
 
-{% capture notice--info %}
-**注記**
+:::note
 
 ワーカーノードを異なる [availability zones](https://learn.microsoft.com/en-us/azure/availability-zones/az-overview) (AZ) に配置すると、AZ の障害に耐えることができます。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 ### ScalarDB Server ノード プールのワーカーノードには 4vCPU / 8GB メモリ ノードを使用します。
 
@@ -91,11 +89,9 @@ ScalarDB Server がデフォルトで使用する接続 (ポート) は次のと
   * 60051/TCP (ScalarDB Server の負荷分散)
   * 9001/TCP (Scalar Envoy 自体の監視リクエストを受け入れます)
 
-{% capture notice--info %}
-**注記**
+:::note
 
 - 構成ファイル (`database.properties`) で ScalarDB Server のデフォルトのリスニング ポートを変更する場合は、構成したポートを使用して接続を許可する必要があります。
 - AKS 自体が使用する接続も許可する必要があります。 AKS トラフィック要件の詳細については、[Control egress traffic using Azure Firewall in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/limit-egress-traffic) を参照してください。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::

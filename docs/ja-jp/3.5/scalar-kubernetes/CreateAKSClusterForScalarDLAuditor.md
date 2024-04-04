@@ -1,4 +1,4 @@
-{% include scalardl/end-of-support-ja-jp.html %}
+include scalardl/end-of-support-ja-jp.html
 
 # ScalarDL Ledger および ScalarDL Auditor 用の AKS クラスターを作成するためのガイドライン
 
@@ -25,13 +25,11 @@ ScalarDL Ledger と ScalarDL Auditor を展開する場合は、次のことを�
   * ScalarDL (Auditor モード) が適切に動作するように **Ledger と Auditor 間の接続**を許可します。
   * これらのネットワーク要件の詳細については、[ScalarDL Auditor Mode のネットワーク ピアリングの構成](NetworkPeeringForScalarDLAuditor.md) を参照してください。
 
-{% capture notice--warning %}
-**注意**
+:::warning
 
 ScalarDL でのビザンチン障害検出が適切に機能するには、ScalarDL Ledger および ScalarDL Auditor のデプロイと同じ AKS クラスターにアプリケーション ポッドをデプロイしないでください。
-{% endcapture %}
 
-<div class="notice--warning">{{ notice--warning | markdownify }}</div>
+:::
 
 ## 推奨事項 (オプション)
 
@@ -41,13 +39,11 @@ ScalarDL でのビザンチン障害検出が適切に機能するには、Scala
 
 AKS クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 ワーカーノードに3つのPodを分散させるための `podAntiAffinity` の [ScalarDL Ledgerサンプル設定](../conf/scalardl-custom-values.yaml) と [ScalarDL Auditorサンプル設定](../conf/scalardl-audit-custom-values.yaml) をご覧ください。
 
-{% capture notice--info %}
-**注記**
+:::note
 
 ワーカーノードを異なる [アベイラビリティ ゾーン](https://learn.microsoft.com/en-us/azure/availability-zones/az-overview) (AZ) に配置すると、AZ の障害に耐えることができます。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 ### ScalarDL Ledger および ScalarDL Auditor ノード プールのワーカーノードには 4vCPU / 8GB メモリ ノードを使用します。
 
@@ -120,11 +116,9 @@ ScalarDL Ledger および ScalarDL Auditor がデフォルトで使用する接�
   * 40052/TCP (ScalarDL Auditor の負荷分散)
   * 9001/TCP (Scalar Envoy 自体の監視リクエストを受け入れます)
 
-{% capture notice--info %}
-**注記**
+:::note
 
 - 設定ファイル (それぞれ `ledger.properties` と `auditor.properties`) で ScalarDL Ledger と ScalarDL Auditor のデフォルトのリスニング ポートを変更する場合は、設定したポートを使用して接続を許可する必要があります。
 - AKS 自体が使用する接続も許可する必要があります。 AKS トラフィック要件の詳細については、[Control egress traffic using Azure Firewall in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/limit-egress-traffic) を参照してください。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::

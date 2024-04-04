@@ -1,4 +1,4 @@
-{% include scalardl/end-of-support-ja-jp.html %}
+include scalardl/end-of-support-ja-jp.html
 
 # ScalarDB Cluster 用の EKS クラスターを作成するためのガイドライン
 
@@ -23,13 +23,11 @@ ScalarDB Cluster をデプロイする場合は、次のことを行う必要が
 
 EKS クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 3 つのポッドをワーカーノードに分散させるための `podAntiAffinity` の [サンプル構成](../conf/scalardb-cluster-custom-values-indirect-mode.yaml) を参照できます。
 
-{% capture notice--info %}
-**注記**
+:::note
 
 ワーカーノードを異なる [availability zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) (AZ) に配置すると、AZ の障害に耐えることができます。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 ### ScalarDB Cluster  ノード グループのワーカーノードには 4vCPU / 8GB メモリ ノードを使用します。
 
@@ -41,13 +39,11 @@ EKS クラスターの高可用性を確保するには、少なくとも 3 つ�
 * 監視コンポーネント (`kube-prometheus-stack` などの監視コンポーネントをデプロイする場合)
 * Kubernetes コンポーネント
 
-{% capture notice--info %}
-**注記**
+:::note
 
 `direct-kubernetes` モードを使用する場合は、Envoy ポッドをデプロイする必要はありません。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 これを念頭に置き、[少なくとも 3 つのワーカーノードと 3 つのポッドを作成する](#create-at-least-three-worker-nodes-and-three-pods) で説明されているように、少なくとも 4vCPU / 8 GB のメモリ リソースを持つワーカーノードを使用し、可用性のために少なくとも 3 つのワーカーノードを使用する必要があります。
 
@@ -77,11 +73,9 @@ ScalarDB Cluster がデフォルトで使用する接続 (ポート) は次の�
   * 60053/TCP (ScalarDB Cluster の負荷分散)
   * 9001/TCP (Scalar Envoy 自体の監視リクエストを受け入れます)
 
-{% capture notice--info %}
-**注記**
+:::note
 
 - 構成ファイル (`scalardb-cluster-node.properties`) で ScalarDB Clusterのデフォルトのリスニング ポートを変更する場合は、構成したポートを使用して接続を許可する必要があります。
 - EKS 自体が使用する接続も許可する必要があります。 Amazon EKS セキュリティグループの要件の詳細については、[Amazon EKS security group requirements and considerations](https://docs.aws.amazon.com/eks/latest/userguide/sec-group-reqs.html) を参照してください。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::

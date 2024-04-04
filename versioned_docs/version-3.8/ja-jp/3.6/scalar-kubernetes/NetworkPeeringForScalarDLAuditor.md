@@ -1,0 +1,51 @@
+# ScalarDL Auditor モード用にネットワーク ピアリングを構成する
+
+このドキュメントでは、ScalarDL Auditor モードで複数のプライベート ネットワークを接続し、ネットワーク ピアリングを実行する方法について説明します。 ScalarDL Auditor モードが正しく動作するには、ScalarDL Ledger を ScalarDL Auditor に接続する必要があります。
+
+## 接続する必要があるネットワーク
+
+ScalarDL Auditor モード (ビザンチン障害検出) を正しく機能させるには、3 つのプライベート ネットワークを接続する必要があります。
+
+* [ScalarDL Ledger ネットワーク] <-> [ScalarDL Auditor ネットワーク]
+* [ScalarDL Ledger ネットワーク] <-> [アプリケーション(クライアント)ネットワーク]
+* [ScalarDL Auditor ネットワーク] <-> [アプリケーション (クライアント) ネットワーク]
+
+## ネットワーク要件
+
+### IP アドレス範囲
+
+プライベート ネットワーク間で IP アドレスが競合しないようにするには、異なる IP アドレス範囲を持つプライベート ネットワークが必要です。 例えば：
+
+* **ScalarDL Ledger のプライベート ネットワーク:** 10.1.0.0/16
+* **ScalarDL Auditor のプライベート ネットワーク:** 10.2.0.0/16
+* **アプリケーション (クライアント) のプライベート ネットワーク:** 10.3.0.0/16
+
+### 接続
+
+ScalarDL Ledger、ScalarDL Auditor、およびアプリケーション（クライアント）を接続するためのデフォルトのネットワークポートは、デフォルトでは次のとおりです。 各プライベート ネットワーク間でこれらの接続を許可する必要があります。
+
+* **ScalarDL Ledger**
+  * **50051/TCP:** アプリケーション (クライアント) および Scalar Envoy 経由の ScalarDL Auditor からのリクエストを受け入れます。
+  * **50052/TCP:** アプリケーション (クライアント) および Scalar Envoy 経由の ScalarDL Auditor からの特権リクエストを受け入れます。
+* **ScalarDL Auditor**
+  * **40051/TCP:** Scalar Envoy を介してアプリケーション (クライアント) および ScalarDL Ledger からのリクエストを受け入れます。
+  * **40052/TCP:** アプリケーション (クライアント) および Scalar Envoy 経由の ScalarDL Ledger からの特権リクエストを受け入れます。
+* **Scalar Envoy** (ScalarDL Ledger および ScalarDL Auditor とともに使用)
+  * **50051/TCP:** アプリケーション (クライアント) および ScalarDL Auditor からの ScalarDL Ledger に対するリクエストを受け入れます。
+  * **50052/TCP:** アプリケーション (クライアント) および ScalarDL Auditor からの ScalarDL Ledger に対する特権リクエストを受け入れます。
+  * **40051/TCP:** アプリケーション (クライアント) および ScalarDL Ledger からの ScalarDL Auditor のリクエストを受け入れます。
+  * **40052/TCP:** アプリケーション (クライアント) および ScalarDL Ledger からの ScalarDL Auditor に対する特権リクエストを受け入れます。
+
+構成ファイル (ledger.properties または auditor.properties) で ScalarDL のリスニング ポートをデフォルトから変更する場合は、構成したポートを使用して接続を許可する必要があることに注意してください。
+
+## プライベートネットワークピアリング
+
+各クラウドのプライベートネットワークの接続方法については公式ドキュメントを参照してください。
+
+### Amazon VPC ピアリング
+
+アマゾン ウェブ サービス (AWS) 環境で Virtual Private Cloud (VPC) をピアリングする方法の詳細については、Amazon の公式ドキュメント [Create a VPC peering connection](https://docs.aws.amazon.com/vpc/latest/peering/create-vpc-peering-connection.html) を参照してください。
+
+### Azure VNet ピアリング
+
+Azure 環境で仮想ネットワークをピアリングする方法の詳細については、Microsoft の公式ドキュメント [Virtual network peering](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview) を参照してください。

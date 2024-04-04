@@ -1,4 +1,4 @@
-{% include scalardl/end-of-support-ja-jp.html %}
+include scalardl/end-of-support-ja-jp.html
 
 # ScalarDB Cluster のデプロイする方法
 

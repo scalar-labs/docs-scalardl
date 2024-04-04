@@ -1,14 +1,12 @@
-{% include scalardl/end-of-support-ja-jp.html %}
+include scalardl/end-of-support-ja-jp.html
 
 # [非推奨] ScalarDB Server のカスタム値ファイルを構成する
 
-{% capture notice--info %}
-**注記**
+:::note
 
 ScalarDB Server は非推奨になりました。 代わりに [ScalarDB Cluster](configure-custom-values-scalardb-cluster.md) を使用してください。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 このドキュメントでは、ScalarDB Server  チャートのカスタム値ファイルを作成する方法について説明します。 パラメータの詳細を知りたい場合は、ScalarDB Server チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardb/README.md) を参照してください。
 

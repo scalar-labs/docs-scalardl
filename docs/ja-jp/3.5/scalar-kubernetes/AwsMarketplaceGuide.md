@@ -1,4 +1,4 @@
-{% include scalardl/end-of-support-ja-jp.html %}
+include scalardl/end-of-support-ja-jp.html
 
 # AWS Marketplace を通じて Scalar 製品をインストールする方法
 

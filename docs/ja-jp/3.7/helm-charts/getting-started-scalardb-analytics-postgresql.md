@@ -96,13 +96,11 @@ ScalarDB Analytics with PostgreSQL を含むScalarDBは、バックエンドデ�
 
 以下の 3 つの環境変数を設定します。 別のバージョンの ScalarDB および ScalarDB Analytics with PostgreSQL を使用する場合は、必ず使用するバージョンに設定してください。
 
-{% capture notice--info %}
-**注記**
+:::note
 
 ScalarDB Analytics with PostgreSQL のマイナー バージョン (例: 3.10.x) を ScalarDB と同じにする必要がありますが、パッチのバージョンを一致させる必要はありません。 たとえば、ScalarDB 3.10.1 と ScalarDB Analytics with PostgreSQL 3.10.3 を併用できます。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 ```console
 SCALARDB_VERSION=3.10.1

@@ -32,7 +32,7 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
        * ScalarDB Server
            * ScalarDB Server 3.7 以前 (Go テンプレート構文)
            
-             {% raw %}
+             rawraw
              ```yaml
              scalardb:
                 databaseProperties: |
@@ -41,7 +41,7 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
                   scalar.db.password={{ default .Env.SCALAR_DB_PASSWORD "" }}
                   ...
              ```
-             {% endraw %}
+             endrawendraw
 
            * ScalarDB Server 3.8 以降 (Apache Commons Text 構文)
              ```yaml
@@ -73,7 +73,7 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
        * ScalarDL Ledger
            * ScalarDL Ledger 3.7 以前 (Go テンプレート構文)
 
-             {% raw %}
+             rawraw
              ```yaml
               ledger:
                 ledgerProperties: |
@@ -82,11 +82,11 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
                   scalar.db.password={{ default .Env.SCALAR_DB_PASSWORD "" }}
                   ...
              ```
-             {% endraw %}
+             endrawendraw
 
            * ScalarDL Ledger 3.8 以降 (Apache Commons Text 構文)
 
-             {% raw %}
+             rawraw
              ```yaml
              ledger:
                ledgerProperties: |
@@ -95,12 +95,12 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
                  scalar.db.password=${env:SCALAR_DB_PASSWORD}
                  ...
              ```
-             {% endraw %}
+             endrawendraw
 
        * ScalarDL Auditor
            * ScalarDL Auditor 3.7 以前 (Go テンプレート構文)
 
-             {% raw %}
+             rawraw
              ```yaml
              auditor:
                auditorProperties: |
@@ -109,11 +109,11 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
                  scalar.db.password={{ default .Env.SCALAR_DB_PASSWORD "" }}
                  ...
              ```
-             {% endraw %}
+             endrawendraw
 
            * ScalarDL Auditor 3.8 以降 (Apache Commons Text 構文)
 
-             {% raw %}
+             rawraw
              ```yaml
              auditor:
                auditorProperties: |
@@ -122,12 +122,12 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
                  scalar.db.password=${env:SCALAR_DB_PASSWORD}
                  ...
              ```
-             {% endraw %}
+             endrawendraw
 
        * ScalarDL Schema Loader
            * ScalarDL Schema Loader 3.7 以前 (Go テンプレート構文)
 
-             {% raw %}
+             rawraw
              ```yaml
              schemaLoading:
                databaseProperties: |
@@ -136,11 +136,11 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
                  scalar.db.password={{ default .Env.SCALAR_DB_PASSWORD "" }}
                  ...
              ```
-             {% endraw %}
+             endrawendraw
 
            * ScalarDL Schema Loader 3.8 以降 (Apache Commons Text 構文)
 
-             {% raw %}
+             rawraw
              ```yaml
              schemaLoading:
                databaseProperties: |
@@ -149,7 +149,7 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
                  scalar.db.password=${env:SCALAR_DB_PASSWORD}
                  ...
              ```
-             {% endraw %}
+             endrawendraw
 
 1. 資格情報を含む `Secret` リソースを作成します。
    `Secret` のキーとして環境変数名を指定する必要があります。
@@ -207,7 +207,7 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
    * 例
        * カスタム値ファイル
 
-         {% raw %}
+         rawraw
          ```yaml
          scalardb:
            databaseProperties: |
@@ -216,7 +216,7 @@ SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME
              scalar.db.password={{ default .Env.SCALAR_DB_PASSWORD "" }}
              scalar.db.storage=jdbc
          ```
-         {% endraw %}
+         endrawendraw
 
        * コンテナ内のプロパティ ファイル
          ```properties

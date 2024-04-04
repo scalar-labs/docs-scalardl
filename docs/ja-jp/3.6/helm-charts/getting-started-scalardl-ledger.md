@@ -204,7 +204,7 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger の DB スキーマ�
 1. ScalarDL Schema Loader のカスタム値ファイル (schema-loader-ledger-custom-values.yaml) を作成します。
    * AWS Marketplace
 
-     {% raw %}
+     rawraw
      ```console
      cat << 'EOF' > ~/scalardl-test/schema-loader-ledger-custom-values.yaml
      schemaLoading:
@@ -222,11 +222,11 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger の DB スキーマ�
        secretName: "ledger-credentials-secret"
      EOF
      ```
-     {% endraw %}
+     endrawendraw
 
    * Azure Marketplace
 
-     {% raw %}
+     rawraw
      ```console
      cat << 'EOF' > ~/scalardl-test/schema-loader-ledger-custom-values.yaml
      schemaLoading:
@@ -244,7 +244,7 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger の DB スキーマ�
        secretName: "ledger-credentials-secret"
      EOF
      ```
-     {% endraw %}
+     endrawendraw
 
 1. PostgreSQL のユーザー名とパスワードを含むシークレット リソースを作成します。
    ```console
@@ -275,7 +275,7 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger の DB スキーマ�
 1. ScalarDL Ledger のカスタム値ファイル (scalardl-ledger-custom-values.yaml) を作成します。
    * AWS Marketplace
 
-     {% raw %}
+     rawraw
      ```console
      cat << 'EOF' > ~/scalardl-test/scalardl-ledger-custom-values.yaml
      envoy:
@@ -309,11 +309,11 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger の DB スキーマ�
            readOnly: true
      EOF
      ```
-     {% endraw %}
+     endrawendraw
 
    * Azure Marketplace
 
-     {% raw %}
+     rawraw
      ```console
      cat << 'EOF' > ~/scalardl-test/scalardl-ledger-custom-values.yaml
      envoy:
@@ -347,7 +347,7 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger の DB スキーマ�
            readOnly: true
      EOF
      ```
-     {% endraw %}
+     endrawendraw
 
 1. 秘密リソース `ledger-keys` を作成します。
    ```console

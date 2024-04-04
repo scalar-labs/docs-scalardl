@@ -1,0 +1,147 @@
+# Ledger アラート
+
+## LedgerClusterDown
+
+これは最も重要なアラートであり、Ledger クラスターがリクエストを処理できないことを示します。 このアラートは最優先で処理する必要があります。
+
+### アラートの例
+
+#### ファイアリング
+
+```
+[FIRING:1] LedgerClusterDown - critical
+Alert: Ledger cluster is down - critical
+ Description: Ledger cluster is down, no resquest can be process.
+ Details:
+  • alertname: LedgerClusterDown
+  • deployment: prod-scalardl-ledger
+```
+
+#### 解決済み
+
+```
+[RESOLVED] LedgerClusterDown - critical
+Alert: Ledger cluster is down - critical
+ Description: Ledger cluster is down, no resquest can be process.
+ Details:
+  • alertname: LedgerClusterDown
+  • deployment: prod-scalardl-ledger
+```
+
+### 必要なアクション
+
+* `kubectl get deployments. prod-scalardl-ledger` で設定されたレプリカの数を確認します。
+* `kubectl describe deployments. prod-scalardl-ledger` はデプロイメントを説明するために設定されたレプリカの数を確認します。
+* `kubectl get node -o wide` でノードのステータスを確認します。
+* ログ サーバーをチェックして、モニター サーバー `/log/kubernetes/<year>/<month>-<day>/kube.log` 上の kubernetes ログで障害の根本原因を特定します。
+* 既知の問題があるかどうかをクラウド プロバイダーに確認してください。 たとえば、Azure の彫像は [ここ](https://status.azure.com/en-us/status) で確認できます。
+
+## LedgerClusterDegraded
+
+このアラートは、Kubernetes クラスターが Ledger ポッドを開始できないかどうかを示します。これは、クラスターにデプロイメントを実行するための十分なリソースがない、または 1 つまたは複数の Kubernetes ノードが失われたことを意味します。
+
+### アラートの例
+
+#### ファイアリング
+
+```
+[FIRING:1] LedgerClusterDegraded - warning
+Alert: Ledger cluster is running in a degraded mode - warning
+ Description: Ledger cluster is running in a degraded mode, some of the Ledger pods are not healthy.
+ Details:
+  • alertname: LedgerClusterDegraded
+  • deployment: prod-scalardl-ledger
+```
+
+#### 解決済み
+
+```
+[RESOLVED] LedgerClusterDegraded - warning
+Alert: Ledger cluster is running in a degraded mode - warning
+ Description: Ledger cluster is running in a degraded mode, some of the Ledger pods are not healthy.
+ Details:
+  • alertname: LedgerClusterDegraded
+  • deployment: prod-scalardl-ledger
+```
+
+### 必要なアクション
+
+* ログ サーバーをチェックして、モニター サーバー `/log/kubernetes/<year>/<month>-<day>/kube.log` 上の kubernetes ログに関する障害の根本原因を特定します。
+* `kubectl describe deployments prod-scalardl-ledger` で kubernetes のデプロイメントを確認します。
+* `kubectl get replicasets.apps` でレプリカ セットを確認します。
+* `kubectl get node -o wide` でノードのステータスを確認します。
+* 既知の問題があるかどうかをクラウド プロバイダーに確認してください。 たとえば、Azure の彫像は [ここ](https://status.azure.com/en-us/status) で確認できます。
+
+## LedgerPodsPending
+
+このアラートは、kubernetes クラスターが Ledger ポッドを開始できないかどうか、つまりクラスターに十分なリソースがないことを示します。
+
+### アラートの例
+
+#### ファイアリング
+
+```
+[FIRING:1] LedgerPodsPending - warning
+Alert: Pod prod-scalardl-ledger-xxxx-yyyy in namespace default in pending status - warning
+ Description: Pod prod-scalardl-ledger-xxxx-yyyy in namespace default has been in pending status for more than 1 minute.
+ Details:
+  • alertname: LedgerPodsPending
+  • deployment: prod-scalardl-ledger
+```
+
+#### 解決済み
+
+```
+[RESOLVED:1] LedgerPodsPending - warning
+Alert: Pod prod-scalardl-ledger-xxxx-yyyy in namespace default in pending status - warning
+ Description: Pod prod-scalardl-ledger-xxxx-yyyy in namespace default has been in pending status for more than 1 minute.
+ Details:
+  • alertname: LedgerPodsPending
+  • deployment: prod-scalardl-ledger
+```
+
+### 必要なアクション
+
+* ログ サーバーをチェックして、モニター サーバー `/log/kubernetes/<year>/<month>-<day>/kube.log` 上の kubernetes ログに関する障害の根本原因を特定します。
+* `kubectl describe pod prod-scalardl-ledger-xxxx-yyyy` で Kubernetes デプロイメントを確認します。
+
+## LedgerPodsError
+
+このアラートは、次のいずれかの理由で Kubernetes クラスターが Ledger ポッドを開始できないかどうかを知らせます。
+
+* CrashLoopBackOff
+* CreateContainerConfigError
+* CreateContainerError
+* ErrImagePull
+* ImagePullBackOff
+* InvalidImageName
+
+### アラートの例
+
+#### ファイアリング
+
+```
+[FIRING:1] LedgerPodsError - warning
+Alert: Pod prod-scalardl-ledger-xxxx-yyyy in namespace default has an error status - warning
+ Description: Pod prod-scalardl-ledger-xxxx-yyyy in namespace default has been in pending status for more than 1 minutes.
+ Details:
+  • alertname: LedgerPodsError
+  • deployment: prod-scalardl-ledger
+```
+
+#### 解決済み
+
+```
+[RESOLVED:1] LedgerPodsError - warning
+Alert: Pod prod-scalardl-ledger-xxxx-yyyy in namespace default has an error status - warning
+ Description: Pod prod-scalardl-ledger-xxxx-yyyy in namespace default has been in pending status for more than 1 minutes.
+ Details:
+  • alertname: LedgerPodsError
+  • deployment: prod-scalardl-ledger
+```
+
+### 必要なアクション
+
+* `kubectl describe pod prod-scalardl-ledger-xxxx-yyyy` で Kubernetes デプロイメントを確認します。
+* ログ サーバーをチェックして、モニター サーバー
+* `/log/kubernetes/<year>/<month>-<day>/kube.log` 上の kubernetes ログで障害の根本原因を特定します。

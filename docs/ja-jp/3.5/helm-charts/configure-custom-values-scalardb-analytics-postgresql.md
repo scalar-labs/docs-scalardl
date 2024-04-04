@@ -1,4 +1,4 @@
-{% include scalardl/end-of-support-ja-jp.html %}
+include scalardl/end-of-support-ja-jp.html
 
 # ScalarDB Analytics with PostgreSQL のカスタム値ファイルを構成する
 
@@ -163,13 +163,11 @@ scalardbAnalyticsPostgreSQL:
     secretName: scalardb-analytics-postgresql-superuser-password
 ```
 
-{% capture notice--info %}
-**注記**
+:::note
 
 PostgreSQL で ScalarDB Analytics をデプロイする前に、この名前 (デフォルトでは `scalardb-analytics-postgresql-superuser-password`) でシークレット リソースを作成する必要があります。 詳細については、[シークレットリソースを準備する](how-to-deploy-scalardb-analytics-postgresql.md#シークレットリソースを準備する) を参照してください。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 ### 汚染と許容の構成 (環境に応じてオプション)
 

@@ -1,0 +1,18 @@
+{
+  "version.label": {
+    "message": "3.8",
+    "description": "The label for version 3.8"
+  },
+  "sidebar.docs.category.Getting Started": {
+    "message": "Getting Started",
+    "description": "The label for category Getting Started in sidebar docs"
+  },
+  "sidebar.docs.category.Samples": {
+    "message": "Samples",
+    "description": "The label for category Samples in sidebar docs"
+  },
+  "sidebar.docs.doc.Home 3.8": {
+    "message": "Home 3.8",
+    "description": "The label for the doc item Home 3.8 in sidebar docs, linking to the doc index"
+  }
+}

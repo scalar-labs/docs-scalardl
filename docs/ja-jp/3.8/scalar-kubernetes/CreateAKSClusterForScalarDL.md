@@ -17,13 +17,11 @@ ScalarDL Ledger を展開するときは、次のことを行う必要があり�
 * Kubernetes バージョン 1.21 以降を使用して AKS クラスターを作成します。
 * Kubernetes のバージョンとプロジェクトの要件に基づいて AKS クラスターを構成します。
 
-{% capture notice--warning %}
-**注意**
+:::warning
 
 ScalarDL でのビザンチン障害検出が適切に機能するには、ScalarDL Ledger デプロイと同じ AKS クラスターにアプリケーション ポッドをデプロイしないでください。
-{% endcapture %}
 
-<div class="notice--warning">{{ notice--warning | markdownify }}</div>
+:::
 
 ## 推奨事項 (オプション)
 
@@ -33,13 +31,11 @@ ScalarDL でのビザンチン障害検出が適切に機能するには、Scala
 
 AKS クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 3 つのポッドをワーカーノードに分散させるための `podAntiAffinity` の [サンプル構成](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardl-custom-values.yaml) を参照できます。
 
-{% capture notice--info %}
-**注記**
+:::note
 
 ワーカーノードを異なる [availability zones](https://learn.microsoft.com/en-us/azure/availability-zones/az-overview) (AZ) に配置すると、AZ の障害に耐えることができます。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 ### ScalarDL Ledger ノード プールのワーカーノードには 4vCPU / 8GB メモリ ノードを使用します
 
@@ -99,11 +95,9 @@ ScalarDL Ledger がデフォルトで使用する接続 (ポート) は次のと
   * 50052/TCP (ScalarDL Ledger の負荷分散)
   * 9001/TCP (Scalar Envoy 自体の監視リクエストを受け入れます)
 
-{% capture notice--info %}
-**注記**
+:::note
 
 - 設定ファイル (`ledger.properties`) で ScalarDL Ledger のデフォルトのリスニング ポートを変更する場合は、設定したポートを使用して接続を許可する必要があります。
 - AKS 自体が使用する接続も許可する必要があります。 AKS トラフィック要件の詳細については、[Azure Kubernetes Service (AKS) の Azure Firewall を使用した下りトラフィックの制御](https://learn.microsoft.com/en-us/azure/aks/limit-egress-traffic) を参照してください。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::

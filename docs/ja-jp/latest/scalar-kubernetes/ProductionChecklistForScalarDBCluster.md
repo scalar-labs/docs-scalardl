@@ -14,13 +14,11 @@
 
 Kubernetes クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 3 つのポッドをワーカーノードに分散させるための `podAntiAffinity` の [サンプル構成](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardb-cluster-custom-values-indirect-mode.yaml) を参照できます。
 
-{% capture notice--info %}
-**注記**
+:::note
 
 ワーカーノードを異なるアベイラビリティ ゾーン (AZ) に配置すると、AZ の障害に耐えることができます。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 ### ワーカーノードの仕様
 
@@ -34,13 +32,11 @@ Kubernetes クラスターの高可用性を確保するには、少なくとも
 * 監視コンポーネント (`kube-prometheus-stack` などの監視コンポーネントをデプロイする場合)
 * Kubernetes コンポーネント
 
-{% capture notice--info %}
-**注記**
+:::note
 
 `direct-kubernetes` モードを使用する場合は、Envoy ポッドをデプロイする必要はありません。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 これを念頭に置いて、[ポッドと Kubernetes ワーカーノードの数](ProductionChecklistForScalarDBCluster.md#ポッドと-kubernetes-ワーカーノードの数) で説明されているように、少なくとも 4vCPU / 8GB のメモリ リソースを持つワーカーノードを使用し、可用性のために少なくとも 3 つのワーカーノードを使用する必要があります。
 
@@ -70,13 +66,11 @@ ScalarDB Cluster はインターネット アクセス経由でユーザーに�
 
 何らかの理由で Java アプリケーション ポッドを ScalarDB Cluster  ポッドと同じ Kubernetes クラスターにデプロイできない場合は、`indirect` モードを使用する必要があります。 この場合、Envoy ポッドをデプロイする必要があります。
 
-{% capture notice--info %}
-**注記**
+:::note
 
 クライアント モード設定は Java クライアント ライブラリ専用です。 アプリケーションに Java 以外のプログラミング言語を使用する場合 (基本的に、[gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) または [gRPC SQL API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md) をプログラミング言語から直接使用する場合)、そのような構成は存在しません。 この場合、Envoy ポッドをデプロイする必要があります。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 ### トランザクション マネージャーの構成 (Java クライアント ライブラリのみ)
 
@@ -134,13 +128,11 @@ flowchart LR
 
 トランザクションを [`begin()`](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.md#begin-or-start-a-transaction) した後、アプリケーションが常に [`commit()`](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.md#commit-a-transaction) または [`rollback()`](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.md#roll-back-or-abort-a-transaction) を実行するようにする必要があります。 アプリケーションが `commit()` または `rollback()` を実行しない場合、アプリケーションで予期しない問題が発生したり、バックエンド データベースから一貫性のないデータが読み取られる可能性があります。
 
-{% capture notice--info %}
-**注記**
+:::note
 
 [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) または [SQL gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md) を使用する場合、アプリケーションは、`Begin` サービスを呼び出してトランザクションを開始した後、`Commit` サービスまたは `Rollback` サービスを呼び出す必要があります。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 ### 例外処理 (Java クライアント ライブラリと gRPC API)
 

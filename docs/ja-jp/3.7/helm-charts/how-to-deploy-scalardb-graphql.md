@@ -1,12 +1,10 @@
 # [非推奨] ScalarDB GraphQL をデプロイする方法
 
-{% capture notice--info %}
-**注記**
+:::note
 
 ScalarDB GraphQL サーバーは非推奨になりました。 代わりに [ScalarDB Cluster](how-to-deploy-scalardb-cluster.md) を使用してください。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 このドキュメントでは、Scalar Helm Chart を使用して ScalarDB GraphQL をデプロイする方法について説明します。 カスタム値ファイルを準備する必要があります。 ScalarDB GraphQL のカスタム値ファイルの詳細については、次のドキュメントを参照してください。
 

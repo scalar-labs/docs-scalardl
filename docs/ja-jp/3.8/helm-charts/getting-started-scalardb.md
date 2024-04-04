@@ -1,12 +1,10 @@
 # [非推奨] Helm Charts の入門 (ScalarDB Server)
 
-{% capture notice--info %}
-**注記**
+:::note
 
 ScalarDB Server は非推奨になりました。 代わりに [ScalarDB Cluster](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/setup-scalardb-cluster-on-kubernetes-by-using-helm-chart.md) を使用してください。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 このドキュメントでは、Kubernetes クラスター上の Helm Chart をテスト環境として使用して、ScalarDB Server を開始する方法について説明します。 ここでは、テスト用の Mac または Linux 環境がすでにあることを前提としています。 このドキュメントでは **Minikube** を使用しますが、これから説明する手順はどの Kubernetes クラスターでも機能するはずです。
 
@@ -104,7 +102,7 @@ ScalarDB は、バックエンド データベースとして何らかのデー�
 1. ScalarDB Server のカスタム値ファイル (scalardb-custom-values.yaml) を作成します。
    * AWS Marketplace
 
-     {% raw %}
+     rawraw
      ```console
      cat << 'EOF' > scalardb-custom-values.yaml
      envoy:
@@ -128,11 +126,11 @@ ScalarDB は、バックエンド データベースとして何らかのデー�
        secretName: "scalardb-credentials-secret"
      EOF
      ```
-     {% endraw %}
+     endrawendraw
 
    * Azure Marketplace
      
-     {% raw %}
+     rawraw
      ```console
      cat << 'EOF' > scalardb-custom-values.yaml
      envoy:
@@ -156,7 +154,7 @@ ScalarDB は、バックエンド データベースとして何らかのデー�
        secretName: "scalardb-credentials-secret"
         EOF
      ```
-     {% endraw %}
+     endrawendraw
 
 1. PostgreSQL のユーザー名とパスワードを含む Secret リソースを作成します。
    ```console
@@ -262,12 +260,12 @@ ScalarDB は、バックエンド データベースとして何らかのデー�
    ```
    【コマンド実行結果】
    
-   {% raw %}
+   rawraw
    ```console
      master
    * v3.7.0
    ```
-   {% endraw %}
+   endrawendraw
 
    別のバージョンを使用する場合は、使用するバージョン（タグ）を指定してください。
 

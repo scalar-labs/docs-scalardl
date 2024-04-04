@@ -23,8 +23,7 @@ ScalarDL は Java で記述されているため、Java の使用は ScalarDL �
 - [Oracle JDK](https://www.oracle.com/java/technologies/downloads/) LTSバージョン (8、11、または17)
 - [OpenJDK](https://openjdk.org/install/) LTSバージョン (8、11、または17)
 
-{% capture notice--warning %}
-**注意**
+:::warning
 
 ScalarDL は JDK 8 で構築されているため、コントラクトは JDK 8 と互換性のあるバイナリである必要があります。
 JDK 8 以外のバージョンを使用する場合は、JDK 8 と互換性のあるバイナリをビルドするようにビルド ツールを構成する必要があります。
@@ -39,19 +38,16 @@ java {
 ```
 
 Gradle および Maven 構成の詳細については、[Toolchains for JVM projects for Gradle](https://docs.gradle.org/current/userguide/toolchains.html) および [Guide to Using Toolchains for Maven](https://maven.apache.org/guides/mini/guide-using-toolchains.html) を参照してください。
-{% endcapture %}
 
-<div class="notice--warning">{{ notice--warning | markdownify }}</div>
+:::
 
-{% capture notice--info %}
-**注記**
+:::note
 
 上記の LTS バージョンを使用することをお勧めしますが、他の非 LTS バージョンも動作する可能性があります。
 
 さらに、他の JDK も ScalarDL で動作するはずですが、それらはテストされていません。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 ## クライアント SDK をダウンロードする
 

@@ -1,4 +1,4 @@
-{% include scalardl/end-of-support-ja-jp.html %}
+include scalardl/end-of-support-ja-jp.html
 
 # Kubernetes クラスター環境にデプロイされた ScalarDB または ScalarDL をアプリケーションから利用できるようにする
 

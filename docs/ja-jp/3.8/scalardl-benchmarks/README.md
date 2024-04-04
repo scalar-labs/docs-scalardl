@@ -17,13 +17,11 @@
 - [Kelpie](https://github.com/scalar-labs/kelpie)
    - Kelpie は、システムのベンチマークや検証などのエンドツーエンドのテストを実行するためのフレームワークです。 [Kelpie Releases](https://github.com/scalar-labs/kelpie/releases) から最新バージョンを入手し、アーカイブ ファイルを解凍します。
 
-{% capture notice--info %}
-**注記**
+:::note
 
 現在、ベンチマーク ツールを実行するときに使用できるのは JDK 8 のみです。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 ### 環境をセットアップする
 
@@ -38,13 +36,11 @@
 - [Ledger のみの構成](../getting-started.md)
 - [Ledger と Auditor の構成](../getting-started-auditor.md)
 
-{% capture notice--info %}
-**注記**
+:::note
 
 クライアント SDK をダウンロードして証明書を手動で登録する必要はありません。 このチュートリアルで後ほど説明するように、ベンチマーク ツールは必要な証明書と契約を自動的に登録します。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 ## ベンチマーク ツールをセットアップする
 
@@ -78,13 +74,11 @@ $ ./gradlew shadowJar
 
 以下は、TPC-C ベンチマークを実行するための設定例です。 `client_config` の下の構成は、[以前にセットアップしたベンチマーク環境](#set-up-your-environment) と一致する必要があります。
 
-{% capture notice--info %}
-**注記**
+:::note
 
 あるいは、 `.toml` ファイルで各クライアント構成項目を指定する代わりに、ScalarDL クライアント プロパティ ファイルを使用することもできます。 `config_file` が指定されている場合 (以下でコメントアウトされています)、`client_config` の下にある他のすべての設定は無視されます。
-{% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+:::
 
 ```toml
 [modules]

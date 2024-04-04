@@ -1,4 +1,4 @@
-{% include scalardl/end-of-support-ja-jp.html %}
+include scalardl/end-of-support-ja-jp.html
 
 # Kubernetes 環境で ScalarDB または ScalarDL データをバックアップおよび復元する
 
