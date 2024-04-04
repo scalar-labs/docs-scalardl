@@ -8,9 +8,9 @@ This document explains how to connect multiple private networks for ScalarDL Aud
 
 To make ScalarDL Auditor mode (Byzantine fault detection) work properly, you must connect three private networks.
 
-* [ScalarDL Ledger network] <-> [ScalarDL Auditor network]
-* [ScalarDL Ledger network] <-> [application (client) network]
-* [ScalarDL Auditor network] <-> [application (client) network]
+* [ScalarDL Ledger network] ↔ [ScalarDL Auditor network]
+* [ScalarDL Ledger network] ↔ [application (client) network]
+* [ScalarDL Auditor network] ↔ [application (client) network]
 
 ## Network requirements
 

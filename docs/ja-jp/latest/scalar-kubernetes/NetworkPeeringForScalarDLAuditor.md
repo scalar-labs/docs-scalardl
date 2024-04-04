@@ -6,9 +6,9 @@
 
 ScalarDL Auditor モード (ビザンチン障害検出) を正しく機能させるには、3 つのプライベート ネットワークを接続する必要があります。
 
-* [ScalarDL Ledger ネットワーク] <-> [ScalarDL Auditor ネットワーク]
-* [ScalarDL Ledger ネットワーク] <-> [アプリケーション(クライアント)ネットワーク]
-* [ScalarDL Auditor ネットワーク] <-> [アプリケーション (クライアント) ネットワーク]
+* [ScalarDL Ledger ネットワーク] ↔ [ScalarDL Auditor ネットワーク]
+* [ScalarDL Ledger ネットワーク] ↔ [アプリケーション(クライアント)ネットワーク]
+* [ScalarDL Auditor ネットワーク] ↔ [アプリケーション (クライアント) ネットワーク]
 
 ## ネットワーク要件
 
