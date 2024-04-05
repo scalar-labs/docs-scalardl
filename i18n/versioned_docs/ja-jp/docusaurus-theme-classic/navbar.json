@@ -1,10 +1,6 @@
 {
-  "title": {
-    "message": "ScalarDL Documentation",
-    "description": "The title in the navbar"
-  },
   "logo.alt": {
-    "message": "Scalar, Inc. logo",
+    "message": "ScalarDL logo",
     "description": "The alt text of navbar logo"
   }
 }
