@@ -9,19 +9,19 @@ import {themes as prismThemes} from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'ScalarDL Documentation',
-  tagline: '',
+  tagline: 'Byzantine fault detection middleware',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://www.080f53.com',
+  url: 'https://scalardl.scalar-labs.com',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/sandbox-docusaurus-scalardl/',
+  baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'josh-wong', // Usually your GitHub org/user name.
-  projectName: 'sandbox-docusaurus-scalardl', // Usually your repo name.
+  organizationName: 'scalar-labs', // Usually your GitHub org/user name.
+  projectName: 'docs-scalardl', // Usually your repo name.
 
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
@@ -56,6 +56,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          breadcrumbs: false,
           sidebarPath: './sidebars.js',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
@@ -66,25 +67,38 @@ const config = {
           */
           lastVersion: 'current',
             versions: {
+              // The following is a template for adding a new version to the dropdown menu. Copy this version template when adding a new version to the dropdown menu but don't delete it.
+              /*
               current: {
+                label: '<VERSION_NUMBER>',
+                path: 'latest',
+                banner: 'none',
+              },
+              */
+              current: { // Change this to the version number when a new version is released.
                 label: '3.8',
-                path: '3.8', /* Change this number when a new version is released. */
+                path: 'latest', // Change this to the version number when a new version is released.
+                banner: 'none',
               },
               3.7: {
                 label: '3.7',
                 path: '3.7',
+                banner: 'none',
               },
               3.6: {
                 label: '3.6',
                 path: '3.6',
+                banner: 'none',
               },
               3.5: {
-                label: '3.5',
+                label: '3.5 (unsupported)',
                 path: '3.5',
+                banner: 'unmaintained',
               },
               3.4: {
-                label: '3.4',
+                label: '3.4 (unsupported)',
                 path: '3.4',
+                banner: 'unmaintained',
               },
             },
           },
@@ -95,13 +109,10 @@ const config = {
             trackingID: 'G-Q4TKS77KCP',
             anonymizeIP: true,
           },
-        /* Maybe we can use this later.
+        // Maybe we can use this later.
+        /*
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
         */
         theme: {
@@ -111,21 +122,39 @@ const config = {
     ],
   ],
 
-  plugins: [[require.resolve("docusaurus-lunr-search"), {
-      enableHighlight: true,
-      // includeRoutes: 'docs/',
-    }]],
+  plugins: [
+    [
+      require.resolve("docusaurus-lunr-search"), 
+      {
+        enableHighlight: true,
+        languages: ['en', 'ja'] // language codes
+        // includeRoutes: 'docs/',
+      },
+    ],
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          // This redirect takes the user to the latest version of the docs when they land on the docs site.
+          {
+            to: '/docs/latest',
+            from: ['/', '/docs'],
+          },
+        ],
+      },
+    ]
+  ],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
-      image: 'img/scalar-logo.png',
+      image: 'img/scalardl-logo.png',
       navbar: {
-        title: 'ScalarDL Documentation',
+        title: '',
         logo: {
-          alt: 'Scalar, Inc. logo',
-          src: 'img/scalar-logo.png',
+          alt: 'ScalarDL logo',
+          src: 'img/scalardl-logo.png',
         },
         items: [
           // {
@@ -136,11 +165,23 @@ const config = {
           // },
           {
             type: 'docsVersionDropdown',
-            position: 'right',
+            position: 'left',
             dropdownItemsAfter: [
+              // {
+              //   type: 'html',
+              //   value: '<hr class="dropdown-separator">',
+              // },
+              // {
+              //   to: '/unsupported-versions',
+              //   label: 'Unsupported Versions'
+              // },
               {
-                to: 'docs/unsupported-versions',
-                label: 'Unsupported Versions',
+                type: 'html',
+                value: '<hr class="dropdown-separator">',
+              },
+              {
+                to: '/release-support-policy',
+                label: 'Release Support Policy'
               }
             ],
             dropdownActiveClassDisabled: true,
