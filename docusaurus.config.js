@@ -9,7 +9,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'ScalarDL Documentation',
-  tagline: 'Byzantine fault detection middleware',
+  tagline: 'Scalable and practical byzantine-fault detection middleware for transactional database systems',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -76,7 +76,7 @@ const config = {
               },
               */
               current: {
-                label: '3.9',
+                label: '3.9 (latest)',
                 path: 'latest',
                 banner: 'none',
               },
@@ -140,11 +140,16 @@ const config = {
       '@docusaurus/plugin-client-redirects',
       {
         redirects: [
-          // This redirect takes the user to the latest version of the docs when they land on the docs site.
+          // This redirect takes the user to the latest version of the English docs when they land on the English versions of the docs site.
           {
             to: '/docs/latest',
             from: ['/', '/docs'],
           },
+          // This redirect takes the user to the latest version of the Japanese docs when they land on the Japanese version of the docs site.
+          // {
+          //   to: '/ja/docs/latest',
+          //   from: ['/ja', '/ja/docs'],
+          // },
         ],
       },
     ]
