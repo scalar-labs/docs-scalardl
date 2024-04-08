@@ -22,6 +22,13 @@
   </thead>
   <tbody>
     <tr>
+      <td><a href="3.9/release-notes#v390">3.9</a></td>
+      <td>2024-04-05</td>
+      <td>-</td>
+      <td>-</td>
+      <td><a href="https://scalar-labs.com/en/contact">お問い合わせ</a></td>
+    </tr>
+    <tr>
       <td><a href="/docs/releases/release-3.8#v380">3.8</a></td>
       <td>2023-04-19</td>
       <td>-</td>

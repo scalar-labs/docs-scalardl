@@ -75,9 +75,14 @@ const config = {
                 banner: 'none',
               },
               */
-              current: { // Change this to the version number when a new version is released.
+              current: {
+                label: '3.9',
+                path: 'latest',
+                banner: 'none',
+              },
+              3.8: { // Change this to the version number when a new version is released.
                 label: '3.8',
-                path: 'latest', // Change this to the version number when a new version is released.
+                path: '3.8', // Change this to the version number when a new version is released.
                 banner: 'none',
               },
               3.7: {
