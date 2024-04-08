@@ -232,7 +232,7 @@ defaults:
       read_time: false # Shows the average reading time for pages.
       share: false # Shows social media buttons to share pages.
       sidebar: # Shows side navigation content from `_data/navigation.yml`.
-        nav: "latest" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"latest"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
+        nav: "3.8" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"latest"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
       toc: true
       toc_sticky: true
       search: false
@@ -354,7 +354,7 @@ defaults:
       read_time: false # Shows the average reading time for pages.
       share: false # Shows social media buttons to share pages.
       sidebar: # Shows side navigation content from `_data/navigation.yml`.
-        nav: "latest-ja-jp" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"latest"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
+        nav: "3.8-ja-jp" # Add the version enclosed within quotation marks. If the docs in the navigation is for the latest version of the product, be sure to set `nav:` to `"latest"`. If the docs in the navigation is for a previous version of the product, be sure to set `nav:` to the product version number (e.g., `"3.8"`). That version number must match the set of docs for that product version in `_data/navigation.yml`.
       toc: true
       toc_sticky: true
       search: false
