@@ -26,35 +26,35 @@
       <td>2023-04-19</td>
       <td>-</td>
       <td>-</td>
-      <td><a href="https://scalar-labs.com/en/contact">お問い合わせ</a></td>
+      <td><a href="https://www.scalar-labs.com/ja/contact">お問い合わせ</a></td>
     </tr>
     <tr>
       <td><a href="/docs/releases/release-3.7#v370">3.7</a></td>
       <td>2022-12-02</td>
       <td>2024-04-18</td>
       <td>2024-10-15</td>
-      <td><a href="https://scalar-labs.com/en/contact">お問い合わせ</a></td>
+      <td><a href="https://www.scalar-labs.com/ja/contact">お問い合わせ</a></td>
     </tr>
     <tr>
       <td><a href="/docs/releases/release-3.6#v360">3.6</a></td>
       <td>2022-09-22</td>
       <td>2023-12-02</td>
       <td>2024-05-30</td>
-      <td><a href="https://scalar-labs.com/en/contact">お問い合わせ</a></td>
+      <td><a href="https://www.scalar-labs.com/ja/contact">お問い合わせ</a></td>
     </tr>
     <tr class="version-out-of-support">
       <td><a href="/docs/releases/release-3.5#v350">3.5</a>*</td>
       <td>2022-08-03</td>
       <td>2023-09-22</td>
       <td>2024-03-20</td>
-      <td><a href="https://scalar-labs.com/en/contact">お問い合わせ</a></td>
+      <td><a href="https://www.scalar-labs.com/ja/contact">お問い合わせ</a></td>
     </tr>
     <tr class="version-out-of-support">
       <td><a href="/docs/releases/release-3.4#v340">3.4</a>*</td>
       <td>2022-02-22</td>
       <td>2023-08-03</td>
       <td>2024-01-30</td>
-      <td><a href="https://scalar-labs.com/en/contact">お問い合わせ</a></td>
+      <td><a href="https://www.scalar-labs.com/ja/contact">お問い合わせ</a></td>
     </tr>
   </tbody>
 </table>
