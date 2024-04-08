@@ -79,7 +79,6 @@ footer:
 include:
   - .htaccess
   - docs
-  - _home
 # exclude:
 #   - '*.sublime-project'
 #   - '*.sublime-workspace'
@@ -453,6 +452,13 @@ defaults:
 
   # Remove irrelevant search results
   - scope:
+      path: "redirects.json"
+    values:
+      layout: none
+      hidden: true
+      search: false
+      sitemap: false
+  - scope:
       path: "assets"
     values:
       layout: none
@@ -466,11 +472,6 @@ defaults:
       search: false
   - scope:
       path: "sitemap.xml"
-    values:
-      layout: none
-      search: false
-  - scope:
-      path: "sitemap"
     values:
       layout: none
       search: false

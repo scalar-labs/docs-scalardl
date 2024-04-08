@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # Monitoring Scalar products on a Kubernetes cluster
 
 This document explains how to deploy Prometheus Operator on Kubernetes with Helm. After following this document, you can use Prometheus, Alertmanager, and Grafana for monitoring Scalar products on your Kubernetes environment.

@@ -1,0 +1,154 @@
+# ScalarDL Ledgerの制作チェックリスト
+
+このチェックリストは、実稼働環境に ScalarDL Ledger を展開する際の推奨事項を提供します。
+
+## あなたが始める前に
+
+このチェックリストでは、推奨される管理対象 Kubernetes クラスターに ScalarDL Ledger をデプロイしていることを前提としています。
+
+## プロダクションチェックリスト: ScalarDL Ledger
+
+以下は、運用環境で ScalarDL Ledger をセットアップする際の推奨事項のチェックリストです。
+
+### ScalarDL の可用性
+
+Kubernetes クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 3 つのポッドをワーカーノードに分散させるための `podAntiAffinity` の [サンプル構成](../conf/scalardl-custom-values.yaml) を参照できます。
+
+{% capture notice--info %}
+**注記**
+
+ワーカーノードを異なるアベイラビリティ ゾーン (AZ) に配置すると、AZ の障害に耐えることができます。
+{% endcapture %}
+
+<div class="notice--info">{{ notice--info | markdownify }}</div>
+
+### リソース
+
+商用ライセンスの観点から、ScalarDL Ledger を実行する 1 つのポッドのリソースは 2vCPU / 4GB メモリに制限されます。 ScalarDL Ledger ポッドに加えて、Kubernetes は次のコンポーネントの一部を各ワーカーノードにデプロイできます。
+
+* ScalarDL Ledger ポッド (2vCPU / 4GB)
+* Envoy プロキシ
+* 監視コンポーネント (`kube-prometheus-stack` などの監視コンポーネントをデプロイする場合)
+* Kubernetes コンポーネント
+
+これを念頭に置いて、[ScalarDL の可用性](#scalardl-availability) で説明されているように、少なくとも 4vCPU / 8GB のメモリ リソースを持つワーカーノードを使用し、可用性のために少なくとも 3 つのワーカーノードを使用する必要があります。
+
+ただし、ノードあたり少なくとも 4vCPU / 8GB のメモリ リソースを備えた 3 つのノードが運用環境の最小環境となります。 システムのワークロードに応じて、Kubernetes クラスターのリソース (ワーカーノードの数、ノードあたりの vCPU、ノードあたりのメモリ、ScalarDL Ledger ポッドなど) も考慮する必要があります。 また、[Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) などの機能を使用してポッドを自動的にスケーリングする予定の場合は、ワーカーノードのリソースを決定するときにワーカーノード上の最大ポッド数を考慮する必要があります。
+
+### 通信網
+
+ScalarDL Ledger はインターネット アクセス経由でユーザーにサービスを直接提供しないため、Kubernetes クラスターはプライベート ネットワーク上に作成する必要があります。 アプリケーションからプライベート ネットワーク経由で ScalarDL Ledger にアクセスすることをお勧めします。
+
+### 監視とログ記録
+
+デプロイされたコンポーネントを監視し、そのログを収集する必要があります。 詳細については、[Kubernetes クラスター上の Scalar 製品の監視](K8sMonitorGuide.md) および [Kubernetes クラスター上の Scalar 製品からのログの収集](K8sLogCollectionGuide.md) を参照してください。
+
+### バックアップと復元
+
+バックエンド データベースで自動バックアップ機能とポイントインタイム リカバリ (PITR) 機能を有効にする必要があります。 詳細については、[ScalarDB/ScalarDL 導入用のデータベースのセットアップ](SetupDatabase.md) を参照してください。
+
+## 運用チェックリスト: ScalarDL Ledger にアクセスするクライアントアプリケーション
+
+以下は、運用環境で ScalarDL Ledger にアクセスするクライアント アプリケーションをセットアップする際の推奨事項のチェックリストです。
+
+### クライアント アプリケーションのデプロイメント
+
+ScalarDL でのビザンチン障害検出が適切に機能するには、アプリケーション ポッドを ScalarDL Ledger デプロイメントと同じ Kubernetes クラスターにデプロイしないでください。 代わりに、ScalarDL Ledger デプロイメントの管理ドメイン以外の環境 (Kubernetes クラスター以外) にアプリケーションをデプロイする必要があります。
+
+#### 実稼働環境に必要
+
+```mermaid
+graph LR
+  subgraph "管理ドメイン 1"
+    subgraph "別の環境"
+      A-1[ユーザーアプリケーション]
+    end
+  end
+  subgraph "管理ドメイン 2"
+    subgraph "Kubernetes クラスター"
+      B-1[ScalarDL Ledger]
+    end
+  end
+  A-1 --> B-1
+```
+
+#### 運用環境では推奨されません (テスト目的のみ)
+
+```mermaid
+graph LR
+  subgraph "Kubernetes クラスター"
+    direction LR
+    A-1[ユーザーアプリケーション] --> A-2[ScalarDL Ledger]
+  end
+```
+
+### 契約と機能
+
+契約と機能がガイドラインに従っているかどうかを確認するには、次を参照してください。
+
+* [A Guide on How to Write a Good Contract for ScalarDL](https://github.com/scalar-labs/scalardl/blob/master/docs/how-to-write-contract.md)
+* [A Guide on How to Write Function for ScalarDL](https://github.com/scalar-labs/scalardl/blob/master/docs/how-to-write-function.md)
+
+### 契約のバージョン管理
+
+契約を登録した後は、既存の契約を上書きすることはできません。 したがって、契約のバージョン管理を検討する必要があります。 次の 2 つの方法のいずれかを推奨します。
+
+#### `クラス名` を使用したバージョニング
+
+```console
+Contract ID              : FooV1
+Binary Name              : com.example.contract.FooV1
+Class file (Class Name)  : src/main/java/com/example/contract/FooV1.class
+---
+Contract ID              : FooV2
+Binary Name              : com.example.contract.FooV2
+Class file (Class Name)  : src/main/java/com/example/contract/FooV2.class
+```
+
+####  `Package Name` を使用したバージョニング
+
+```console
+Contract ID             : FooV3
+Binary Name             : com.example.contract.v3.Foo
+Class file (Class Name) : src/main/java/com/example/contract/v3/Foo.class
+---
+Contract ID             : FooV4
+Binary Name             : com.example.contract.v4.Foo
+Class file (Class Name) : src/main/java/com/example/contract/v4/Foo.class
+```
+
+### 契約上の制限
+
+コントラクト登録時にバイナリ名、パッケージ名、クラス名が異なる場合、登録後にそのコントラクトを実行することはできません。
+
+#### バイナリ名とクラス名が異なります（このコントラクトは実行できません）
+
+```console
+Contract ID              : FooV5
+Binary Name              : com.example.contract.FooV5
+Class file (Class Name)  : src/main/java/com/example/contract/FooV6.class
+```
+
+#### バイナリ名とパッケージ名が異なります（本契約は実行できません）
+
+```console
+Contract ID              : FooV7
+Binary Name              : com.example.contract.v7.Foo
+Class file (Class Name)  : src/main/java/com/example/contract/v8/Foo.class
+```
+
+### 秘密鍵と証明書
+
+認証に PKI を使用する場合、ScalarDL Ledger に登録する秘密キーと証明書が次の要件を満たしていることを確認する必要があります。
+
+```console
+Algorithm       : ECDSA
+Hash function   : SHA256
+Curve parameter : P-256
+```
+
+詳しくは [How to get a certificate](https://github.com/scalar-labs/scalardl/blob/master/docs/ca/caclient-getting-started.md) をご覧ください。
+
+### 例外処理
+
+アプリケーションが例外を処理することを確認する必要があります。 詳細については、[A Guide on How to Handle Errors in ScalarDL](https://github.com/scalar-labs/scalardl/blob/master/docs/how-to-handle-errors.md) を参照してください。

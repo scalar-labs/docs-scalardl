@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # [Deprecated] Configure a custom values file for ScalarDB Server
 
 {% capture notice--info %}

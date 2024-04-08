@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support.html %}
+
 # Production checklist for ScalarDL Ledger
 
 This checklist provides recommendations when deploying ScalarDL Ledger in a production environment.

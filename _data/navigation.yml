@@ -44,8 +44,6 @@ versions:
       version-url: /docs/3.7/
     - version-title: "3.6"
       version-url: /docs/3.6/
-    - version-title: "3.5"
-      version-url: /docs/3.5/
     # The following link contains a list of versions of ScalarDL that are no longer supported.
     - version-title: "Unsupported Versions"
       version-url: /docs/unsupported-versions/
@@ -58,8 +56,6 @@ versions:
       version-ja-jp-url: /docs/ja-jp/3.7/
     - version-ja-jp-title: "3.6"
       version-ja-jp-url: /docs/ja-jp/3.6/
-    - version-ja-jp-title: "3.5"
-      version-ja-jp-url: /docs/ja-jp/3.5/
       # The following link contains a list of versions of ScalarDL that are no longer supported.
     - version-ja-jp-title: "Unsupported Versions"
       version-ja-jp-url: /docs/ja-jp/unsupported-versions/

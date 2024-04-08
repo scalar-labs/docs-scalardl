@@ -1,3 +1,5 @@
+{% include scalardl/end-of-support-ja-jp.html %}
+
 # ScalarDL の実装
 
 ScalarDL は、正確性、スケーラビリティ、およびデータベース不可知性を実現する、トランザクション データベース システム用のスケーラブルで実用的なビザンチン障害検出ミドルウェアです。
