@@ -144,11 +144,6 @@ envoy:
     repository: <SCALAR_ENVOY_CONTAINER_IMAGE>
 ```
 
-If you're using AWS or Azure, please refer to the following documents for more details:
-
-* [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md)
-* [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md)
-
 ### Replica configurations (Optional based on your environment)
 
 You can specify the number of replicas (pods) of Scalar Envoy using `envoy.replicaCount`.
