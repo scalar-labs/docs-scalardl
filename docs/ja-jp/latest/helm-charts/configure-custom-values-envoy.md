@@ -144,11 +144,6 @@ envoy:
     repository: <SCALAR_ENVOY_CONTAINER_IMAGE>
 ```
 
-AWS または Azure を使用している場合、詳細については次のドキュメントを参照してください。
-
-* [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md)
-* [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md)
-
 ### レプリカ構成 (環境に応じてオプション)
 
 Scalar Envoy のレプリカ (ポッド) の数は、`envoy.replicaCount` を使用して指定できます。
