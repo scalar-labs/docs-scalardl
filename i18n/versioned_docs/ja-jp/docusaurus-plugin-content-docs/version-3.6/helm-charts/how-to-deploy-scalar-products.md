@@ -1,16 +1,16 @@
 # Scalar Helm Chart を使用して Scalar 製品をデプロイする
 
-This document explains how to deploy Scalar products using Scalar Helm Charts. If you want to test Scalar products on your local environment using a minikube cluster, please refer to the following getting started guide.
+このドキュメントでは、Scalar Helm Chart を使用して Scalar 製品をデプロイする方法について説明します。 minikube クラスターを使用してローカル環境で Scalar 製品をテストする場合は、次のスタート ガイドを参照してください。
 
-* [Getting Started with Scalar Helm Charts](getting-started-scalar-helm-charts.md)
+* [Scalar Helm Charts の入門](getting-started-scalar-helm-charts.md)
 
-## Prerequisites
+## 前提条件
 
-### Install the helm command
+### Helm コマンドをインストールする
 
-You must install the helm command to use Scalar Helm Charts. Please install the helm command according to the [Helm document](https://helm.sh/docs/intro/install/).
+Scalar Helm Charts を使用するには、helm コマンドをインストールする必要があります。 [Helm ドキュメント](https://helm.sh/docs/intro/install/)に従って helm コマンドをインストールしてください。
 
-### Add the Scalar Helm Charts repository 
+### Scalar Helm Charts リポジトリを追加する
 
 ```console
 helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
@@ -19,36 +19,35 @@ helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
 helm repo update scalar-labs
 ```
 
-### Prepare a Kubernetes cluster
+### Kubernetes クラスターを準備する
 
-You must prepare a Kubernetes cluster for the deployment of Scalar products. If you use EKS (Amazon Elastic Kubernetes Service) or AKS (Azure Kubernetes Service) in the production environment. Please refer to the following document for more details.
+Scalar 製品を展開するには、Kubernetes クラスターを準備する必要があります。 運用環境で EKS (Amazon Elastic Kubernetes Service) または AKS (Azure Kubernetes Service) を使用している場合。 詳細については、次のドキュメントを参照してください。
 
 * [scalar-labs/scalar-kubernetes](https://github.com/scalar-labs/scalar-kubernetes/blob/master/README.md)
 
-You must prepare a supported version of Kubernetes. For versions that Scalar Helm Charts supports, see [Supported Kubernetes versions](https://github.com/scalar-labs/helm-charts#supported-kubernetes-versions).
+サポートされているバージョンの Kubernetes を準備する必要があります。 Scalar Helm Charts がサポートするバージョンについては、[サポートされる Kubernetes バージョン](https://github.com/scalar-labs/helm-charts#supported-kubernetes-versions) を参照してください。
 
-### Prepare a database (ScalarDB, ScalarDL Ledger, ScalarDL Auditor)
+### データベースの準備 (ScalarDB、ScalarDL Ledger、ScalarDL Auditor)
 
-You must prepare a database as a backend storage of ScalarDB/ScalarDL. You can see the supported databases by ScalarDB/ScalarDL in the following document.
+ScalarDB/ScalarDLのバックエンドストレージとしてデータベースを用意する必要があります。 ScalarDB/ScalarDL がサポートするデータベースは次のドキュメントで確認できます。
 
-* [ScalarDB Supported Databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md)
+* [ScalarDB がサポートするデータベース](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md)
 
-### Prepare a custom values file
+### カスタム値ファイルを準備する
 
-You must prepare your custom values file based on your environment. Please refer to the following documents for more details on how to create a custom values file.
+環境に基づいてカスタム値ファイルを準備する必要があります。 カスタム値ファイルの作成方法の詳細については、次のドキュメントを参照してください。
 
-* [Configure a custom values file for Scalar Helm Charts](configure-custom-values-file.md)
+* [Scalar Helm Charts のカスタム値ファイルを構成する](configure-custom-values-file.md)
 
-### Create a Secret resource for authentication of the container registry (Optional)
+### コンテナイメージを取得する
 
-If you use a Kubernetes cluster other than EKS or AKS, you need to create a Secret resource that includes the credentials and set the Secret name to `imagePullSecrets[].name` in your custom values file. Please refer to the following documents for more details on creating the Secret resource and setting it in your custom values file.
+特に商用ライセンス製品を使用する場合は、Scalar 製品のコンテナ イメージを取得する必要があります。 Scalar 製品のコンテナ リポジトリの詳細については、[Scalar 製品のコンテナ イメージを取得する方法](../scalar-kubernetes/HowToGetContainerImages.md) を参照してください。
 
-* [Deploy containers on Kubernetes other than EKS from AWS Marketplace using Scalar Helm Charts](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md#byol-deploy-containers-on-kubernetes-other-than-eks-from-aws-marketplace-using-scalar-helm-charts)
-* [Deploy containers on Kubernetes other than AKS (Azure Kubernetes Service) from your private container registry using Scalar Helm Charts](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md#deploy-containers-on-kubernetes-other-than-aks-azure-kubernetes-service-from-your-private-container-registry-using-scalar-helm-charts)
+PostgreSQL で ScalarDB Analytics などの OSS 製品を使用する場合は、パブリック コンテナ リポジトリからコンテナ イメージを取得できます。
 
-## Deploy Scalar products
+## Scalar 製品をデプロイする
 
-Please refer to the following documents for more details on how to deploy each product.
+各製品の導入方法の詳細については、次のドキュメントを参照してください。
 
 * [ScalarDB Cluster](how-to-deploy-scalardb-cluster.md)
 * [ScalarDB Analytics with PostgreSQL](how-to-deploy-scalardb-analytics-postgresql.md)
@@ -56,5 +55,5 @@ Please refer to the following documents for more details on how to deploy each p
 * [ScalarDL Auditor](how-to-deploy-scalardl-auditor.md)
 * [Scalar Admin for Kubernetes](how-to-deploy-scalar-admin-for-kubernetes.md)
 * [Scalar Manager](how-to-deploy-scalar-manager.md)
-* [[Deprecated] ScalarDB Server](how-to-deploy-scalardb.md)
-* [[Deprecated] ScalarDB GraphQL](how-to-deploy-scalardb-graphql.md)
+* [[非推奨] ScalarDB Server](how-to-deploy-scalardb.md)
+* [[非推奨] ScalarDB GraphQL](how-to-deploy-scalardb-graphql.md)
