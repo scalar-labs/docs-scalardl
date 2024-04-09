@@ -6,9 +6,9 @@
 
 ![image](./images/png/AKS_ScalarDL_Ledger.drawio.png)
 
-## ステップ 1. Azure Marketplace で ScalarDL Ledger を購読する
+## ステップ 1. ScalarDL Ledger コンテナー イメージを取得する
 
-[Azure Marketplace](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardl) から ScalarDL Ledger コンテナー イメージを取得し、ScalarDL にサブスクライブする必要があります。 Azure Marketplace で ScalarDL Ledger を購読する方法の詳細については、[Microsoft Azure Marketplace から Scalar 製品を入手する](AzureMarketplaceGuide.md#microsoft-azure-marketplace-から-scalar-製品を入手する) を参照してください。
+ScalarDL Ledger コンテナー イメージを取得する必要があります。 Scalar 製品のコンテナ リポジトリの詳細については、[Scalar 製品のコンテナ イメージを取得する方法](../scalar-kubernetes/HowToGetContainerImages.md) を参照してください。
 
 ## ステップ 2. AKS クラスターを作成する
 
