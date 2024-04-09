@@ -1,5 +1,8 @@
 # ScalarDL ベンチマーク ツール
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 このチュートリアルでは、ScalarDL のベンチマーク ツールを実行する方法について説明します。 ベンチマークは、一連の標準に対してシステムがどのように動作するかを評価するのに役立ちます。
 
 ## ワークロードのベンチマーク
@@ -112,38 +115,29 @@ config_file = "/<PATH_TO>/client.properties"
 
 ベンチマークを選択し、コマンドに従ってベンチマークを実行します。
 
-<div id="tabset-1">
-<div class="tab">
-  <button class="tablinks" onclick="openTab(event, 'SmallBank_1', 'tabset-1')" id="defaultOpen-1">SmallBank</button>
-  <button class="tablinks" onclick="openTab(event, 'TPC-C_1', 'tabset-1')">TPC-C</button>
-  <button class="tablinks" onclick="openTab(event, 'YCSB_1', 'tabset-1')">YCSB</button>
-</div>
+<Tabs queryString="benchmarks">
+  <TabItem value="SmallBank" label="SmallBank" default>
+    SmallBank ベンチマークを実行するには、次のコマンドを実行します。`<PATH_TO_KELPIE>` を Kelpie ディレクトリへのパスに置き換えます。
 
-<div id="SmallBank_1" class="tabcontent" markdown="1">
+    ```console
+    $ /<PATH_TO_KELPIE>/bin/kelpie --config smallbank-benchmark-config.toml
+    ```
+  </TabItem>
+  <TabItem value="TPC-C" label="TPC-C">
+    TPC-C ベンチマークを実行するには、次のコマンドを実行します。`<PATH_TO_KELPIE>` を Kelpie ディレクトリへのパスに置き換えます。
 
-SmallBank ベンチマークを実行するには、次のコマンドを実行します。`<PATH_TO_KELPIE>` を Kelpie ディレクトリへのパスに置き換えます。
+    ```console
+    $ /<PATH_TO_KELPIE>/bin/kelpie --config tpcc-benchmark-config.toml
+    ```
+  </TabItem>
+  <TabItem value="YCSB" label="YCSB">
+    YCSB ベンチマークを実行するには、次のコマンドを実行します。`<PATH_TO_KELPIE>` を Kelpie ディレクトリへのパスに置き換えます。
 
-```console
-$ /<PATH_TO_KELPIE>/bin/kelpie --config smallbank-benchmark-config.toml
-```
-</div>
-<div id="TPC-C_1" class="tabcontent" markdown="1">
-
-TPC-C ベンチマークを実行するには、次のコマンドを実行します。`<PATH_TO_KELPIE>` を Kelpie ディレクトリへのパスに置き換えます。
-
-```console
-$ /<PATH_TO_KELPIE>/bin/kelpie --config tpcc-benchmark-config.toml
-```
-</div>
-<div id="YCSB_1" class="tabcontent" markdown="1">
-
-YCSB ベンチマークを実行するには、次のコマンドを実行します。`<PATH_TO_KELPIE>` を Kelpie ディレクトリへのパスに置き換えます。
-
-```console
-$ /<PATH_TO_KELPIE>/bin/kelpie --config ycsb-benchmark-config.toml
-```
-</div>
-</div>
+    ```console
+    $ /<PATH_TO_KELPIE>/bin/kelpie --config ycsb-benchmark-config.toml
+    ```
+  </TabItem>
+</Tabs>
 
 さらに、次のオプションが利用可能です。
 
@@ -164,41 +158,29 @@ $ /<PATH_TO_KELPIE>/bin/kelpie --config ycsb-benchmark-config.toml
 
 ワークロードを選択すると、使用可能なパラメータが表示されます。
 
-<div id="tabset-2">
-<div class="tab">
-  <button class="tablinks" onclick="openTab(event, 'SmallBank_2', 'tabset-2')" id="defaultOpen-2">SmallBank</button>
-  <button class="tablinks" onclick="openTab(event, 'TPC-C_2', 'tabset-2')">TPC-C</button>
-  <button class="tablinks" onclick="openTab(event, 'YCSB_2', 'tabset-2')">YCSB</button>
-</div>
-
-<div id="SmallBank_2" class="tabcontent" markdown="1">
-
-| 名前                | 説明                                      | デフォルト |
-|:-------------------|:------------------------------------------|:----------|
-| `num_accounts`     | ベンチマークの対象となる銀行口座の数。           | `100000` |
-| `load_concurrency` | ロードするスレッドの数。                      | `1`      |
-| `load_batch_size`  | 単一の読み込みトランザクション内のアカウントの数。 | `1`      |
-
-</div>
-<div id="TPC-C_2" class="tabcontent" markdown="1">
-
-| 名前                | 説明                                    | デフォルト |
-|:-------------------|:----------------------------------------|:---------|
-| `num_warehouses`   | ベンチマーク用の倉庫の数 (スケールファクター)。 | `1`      |
-| `rate_payment`     | 支払いトランザクションの割合。               | `50`     |
-| `load_concurrency` | ロードするスレッドの数。                    | `1`      |
-
-</div>
-<div id="YCSB_2" class="tabcontent" markdown="1">
-
-| 名前                | 説明                                   | デフォルト |
-|:-------------------|:---------------------------------------|:---------|
-| `record_count`     | ベンチマークのレコード数。                 | `1000`   |
-| `payload_size`     | 各レコードのペイロード サイズ (バイト単位)。  | `1000`   |
-| `ops_per_tx`       | 単一トランザクション内の操作の数。           | `2`      |
-| `workload`         | ワークロードのタイプ (A、C、または F)。     | `A`      |
-| `load_concurrency` | ロードするスレッドの数。                   | `1`      |
-| `load_batch_size`  | 単一のロードトランザクション内のレコードの数。 | `1`      |
-
-</div>
-</div>
+<Tabs queryString="workload-specific-parameters">
+  <TabItem value="SmallBank" label="SmallBank" default>
+    | 名前                | 説明                                      | デフォルト |
+    |:-------------------|:------------------------------------------|:----------|
+    | `num_accounts`     | ベンチマークの対象となる銀行口座の数。           | `100000` |
+    | `load_concurrency` | ロードするスレッドの数。                      | `1`      |
+    | `load_batch_size`  | 単一の読み込みトランザクション内のアカウントの数。 | `1`      |
+  </TabItem>
+  <TabItem value="TPC-C" label="TPC-C">
+    | 名前                | 説明                                    | デフォルト |
+    |:-------------------|:----------------------------------------|:---------|
+    | `num_warehouses`   | ベンチマーク用の倉庫の数 (スケールファクター)。 | `1`      |
+    | `rate_payment`     | 支払いトランザクションの割合。               | `50`     |
+    | `load_concurrency` | ロードするスレッドの数。                    | `1`      |
+  </TabItem>
+  <TabItem value="YCSB" label="YCSB">
+    | 名前                | 説明                                   | デフォルト |
+    |:-------------------|:---------------------------------------|:---------|
+    | `record_count`     | ベンチマークのレコード数。                 | `1000`   |
+    | `payload_size`     | 各レコードのペイロード サイズ (バイト単位)。  | `1000`   |
+    | `ops_per_tx`       | 単一トランザクション内の操作の数。           | `2`      |
+    | `workload`         | ワークロードのタイプ (A、C、または F)。     | `A`      |
+    | `load_concurrency` | ロードするスレッドの数。                   | `1`      |
+    | `load_batch_size`  | 単一のロードトランザクション内のレコードの数。 | `1`      |
+  </TabItem>
+</Tabs>

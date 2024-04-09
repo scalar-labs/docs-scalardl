@@ -1,5 +1,8 @@
 # ScalarDL Benchmarking Tools
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 This tutorial describes how to run benchmarking tools for ScalarDL. Benchmarking is helpful for evaluating how a system performs against a set of standards.
 
 ## Benchmark workloads
@@ -112,38 +115,29 @@ You can define parameters to pass to modules in the configuration file. For deta
 
 Select a benchmark, and follow the instructions to run the benchmark.
 
-<div id="tabset-1">
-<div class="tab">
-  <button class="tablinks" onclick="openTab(event, 'SmallBank_1', 'tabset-1')" id="defaultOpen-1">SmallBank</button>
-  <button class="tablinks" onclick="openTab(event, 'TPC-C_1', 'tabset-1')">TPC-C</button>
-  <button class="tablinks" onclick="openTab(event, 'YCSB_1', 'tabset-1')">YCSB</button>
-</div>
+<Tabs queryString="benchmarks">
+  <TabItem value="SmallBank" label="SmallBank" default>
+    To run the SmallBank benchmark, run the following command, replacing `<PATH_TO_KELPIE>` with the path to the Kelpie directory:
 
-<div id="SmallBank_1" class="tabcontent" markdown="1">
+    ```console
+    $ /<PATH_TO_KELPIE>/bin/kelpie --config smallbank-benchmark-config.toml
+    ```
+  </TabItem>
+  <TabItem value="TPC-C" label="TPC-C">
+    To run the TPC-C benchmark, run the following command, replacing `<PATH_TO_KELPIE>` with the path to the Kelpie directory:
 
-To run the SmallBank benchmark, run the following command, replacing `<PATH_TO_KELPIE>` with the path to the Kelpie directory:
+    ```console
+    $ /<PATH_TO_KELPIE>/bin/kelpie --config tpcc-benchmark-config.toml
+    ```
+  </TabItem>
+  <TabItem value="YCSB" label="YCSB">
+    To run the YCSB benchmark, run the following command, replacing `<PATH_TO_KELPIE>` with the path to the Kelpie directory:
 
-```console
-$ /<PATH_TO_KELPIE>/bin/kelpie --config smallbank-benchmark-config.toml
-```
-</div>
-<div id="TPC-C_1" class="tabcontent" markdown="1">
-
-To run the TPC-C benchmark, run the following command, replacing `<PATH_TO_KELPIE>` with the path to the Kelpie directory:
-
-```console
-$ /<PATH_TO_KELPIE>/bin/kelpie --config tpcc-benchmark-config.toml
-```
-</div>
-<div id="YCSB_1" class="tabcontent" markdown="1">
-
-To run the YCSB benchmark, run the following command, replacing `<PATH_TO_KELPIE>` with the path to the Kelpie directory:
-
-```console
-$ /<PATH_TO_KELPIE>/bin/kelpie --config ycsb-benchmark-config.toml
-```
-</div>
-</div>
+    ```console
+    $ /<PATH_TO_KELPIE>/bin/kelpie --config ycsb-benchmark-config.toml
+    ```
+  </TabItem>
+</Tabs>
 
 In addition, the following options are available:
 
@@ -164,41 +158,29 @@ In addition, the following options are available:
 
 Select a workload to see its available parameters.
 
-<div id="tabset-2">
-<div class="tab">
-  <button class="tablinks" onclick="openTab(event, 'SmallBank_2', 'tabset-2')" id="defaultOpen-2">SmallBank</button>
-  <button class="tablinks" onclick="openTab(event, 'TPC-C_2', 'tabset-2')">TPC-C</button>
-  <button class="tablinks" onclick="openTab(event, 'YCSB_2', 'tabset-2')">YCSB</button>
-</div>
-
-<div id="SmallBank_2" class="tabcontent" markdown="1">
-
-| Name               | Description                                         | Default   |
-|:-------------------|:----------------------------------------------------|:----------|
-| `num_accounts`     | Number of bank accounts for benchmarking.           | `100000`  |
-| `load_concurrency` | Number of threads for loading.                      | `1`       |
-| `load_batch_size`  | Number of accounts in a single loading transaction. | `1`       |
-
-</div>
-<div id="TPC-C_2" class="tabcontent" markdown="1">
-
-| Name               | Description                                           | Default   |
-|:-------------------|:------------------------------------------------------|:----------|
-| `num_warehouses`   | Number of warehouses (scale factor) for benchmarking. | `1`       |
-| `rate_payment`     | Percentage of Payment transaction.                    | `50`      |
-| `load_concurrency` | Number of threads for loading.                        | `1`       |
-
-</div>
-<div id="YCSB_2" class="tabcontent" markdown="1">
-
-| Name               | Description                                        | Default   |
-|:-------------------|:---------------------------------------------------|:----------|
-| `record_count`     | Number of records for benchmarking.                | `1000`    |
-| `payload_size`     | Payload size (in bytes) of each record.            | `1000`    |
-| `ops_per_tx`       | Number of operations in a single transaction       | `2`       |
-| `workload`         | Workload type (A, C, or F).                        | `A`       |
-| `load_concurrency` | Number of threads for loading.                     | `1`       |
-| `load_batch_size`  | Number of records in a single loading transaction. | `1`       |
-
-</div>
-</div>
+<Tabs queryString="workload-specific-parameters">
+  <TabItem value="SmallBank" label="SmallBank" default>
+    | Name               | Description                                         | Default   |
+    |:-------------------|:----------------------------------------------------|:----------|
+    | `num_accounts`     | Number of bank accounts for benchmarking.           | `100000`  |
+    | `load_concurrency` | Number of threads for loading.                      | `1`       |
+    | `load_batch_size`  | Number of accounts in a single loading transaction. | `1`       |
+  </TabItem>
+  <TabItem value="TPC-C" label="TPC-C">
+    | Name               | Description                                           | Default   |
+    |:-------------------|:------------------------------------------------------|:----------|
+    | `num_warehouses`   | Number of warehouses (scale factor) for benchmarking. | `1`       |
+    | `rate_payment`     | Percentage of Payment transaction.                    | `50`      |
+    | `load_concurrency` | Number of threads for loading.                        | `1`       |
+  </TabItem>
+  <TabItem value="YCSB" label="YCSB">
+    | Name               | Description                                        | Default   |
+    |:-------------------|:---------------------------------------------------|:----------|
+    | `record_count`     | Number of records for benchmarking.                | `1000`    |
+    | `payload_size`     | Payload size (in bytes) of each record.            | `1000`    |
+    | `ops_per_tx`       | Number of operations in a single transaction       | `2`       |
+    | `workload`         | Workload type (A, C, or F).                        | `A`       |
+    | `load_concurrency` | Number of threads for loading.                     | `1`       |
+    | `load_batch_size`  | Number of records in a single loading transaction. | `1`       |
+  </TabItem>
+</Tabs>
