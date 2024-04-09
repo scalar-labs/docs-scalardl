@@ -33,6 +33,6 @@
   },
   "sidebar.docs.doc.Home": {
     "message": "ホーム",
-    "description": "The label for the doc item Home 3.9 in sidebar docs, linking to the doc index"
+    "description": "The label for the doc item Home in sidebar docs, linking to the doc index"
   }
 }
