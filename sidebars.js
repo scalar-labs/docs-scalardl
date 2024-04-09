@@ -47,7 +47,14 @@ const sidebars = {
       label: 'Develop',
       collapsible: true,
       items: [
-        'sdks',
+        {
+          type: 'category',
+          label: 'SDKs',
+          collapsible: true,
+          items: [
+            'scalardl-java-client-sdk/README',
+          ],
+        },
         'schema-loader',
         'how-to-use-proof',
         'how-to-write-contract',
@@ -67,10 +74,9 @@ const sidebars = {
           label: 'Scalar Kubernetes',
           collapsible: true,
           items: [
-            'scalar-kubernetes/deploy-kubernetes',
             {
               type: 'category',
-              label: 'Database setup guides',
+              label: 'Database Setup Guides',
               collapsible: true,
               items: [
                 'scalar-kubernetes/SetupDatabaseForAWS',
@@ -79,7 +85,7 @@ const sidebars = {
             },
             {
               type: 'category',
-              label: 'Installation guides',
+              label: 'Installation Guides',
               collapsible: true,
               items: [
                 'scalar-kubernetes/ProductionChecklistForScalarDLLedger',
@@ -91,7 +97,7 @@ const sidebars = {
             },
             {
               type: 'category',
-              label: 'Cluster guides',
+              label: 'Cluster Guides',
               collapsible: true,
               items: [
                 'scalar-kubernetes/CreateEKSClusterForScalarDL',
@@ -102,7 +108,16 @@ const sidebars = {
             },
             {
               type: 'category',
-              label: 'Deployment guides',
+              label: 'Container Image Guides',
+              collapsible: true,
+              items: [
+                'scalar-kubernetes/HowToGetContainerImages',
+                'scalar-kubernetes/HowToUseContainerImages',
+              ],
+            },
+            {
+              type: 'category',
+              label: 'Deployment Guides',
               collapsible: true,
               items: [
                 'scalar-kubernetes/ManualDeploymentGuideScalarDLOnEKS',
@@ -113,7 +128,7 @@ const sidebars = {
             },
             {
               type: 'category',
-              label: 'Configuration guides',
+              label: 'Configuration Guides',
               collapsible: true,
               items: [
                 'scalar-kubernetes/AccessScalarProducts',
@@ -152,8 +167,30 @@ const sidebars = {
           label: 'Scalar Kubernetes',
           collapsible: true,
           items: [
-            'scalar-kubernetes/manage-kubernetes',
+            {
+              type: 'category',
+              label: 'Monitoring Guides',
+              collapsible: true,
+              items: [
+                'scalar-kubernetes/K8sMonitorGuide',
+                'scalar-kubernetes/K8sLogCollectionGuide',
+              ],
+            },
             'scalar-kubernetes/alerts/README',
+            {
+              type: 'category',
+              label: 'Backup and Restore Guides',
+              collapsible: true,
+              items: [
+                'scalar-kubernetes/K8sMonitorGuide',
+                'scalar-kubernetes/K8sLogCollectionGuide',
+              ],
+            },
+            'scalar-kubernetes/BackupRestoreGuide',
+            'scalar-kubernetes/BackupRDB',
+            'scalar-kubernetes/BackupNoSQL',
+            'scalar-kubernetes/RestoreDatabase',
+            'scalar-kubernetes/RegularCheck',
           ],
         },
       ],
@@ -170,10 +207,14 @@ const sidebars = {
       ],
     },
     {
-      type: 'doc',
-      label: 'Releases Notes',
-      id: 'release-notes',
-    }
+      type: 'category',
+      label: 'Releases',
+      collapsible: true,
+      items: [
+        'releases/release-notes',
+        'releases/release-support-policy',
+      ],
+    },
   ],
 };
 
