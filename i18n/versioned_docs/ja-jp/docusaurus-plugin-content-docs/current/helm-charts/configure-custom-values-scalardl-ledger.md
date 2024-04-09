@@ -30,10 +30,7 @@ ledger:
     repository: <SCALARDL_LEDGER_CONTAINER_IMAGE>
 ```
 
-AWS または Azure を使用している場合、詳細については次のドキュメントを参照してください。
-
-* [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md)
-* [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md)
+Scalar 製品のコンテナリポジトリの詳細については、[Scalar 製品のコンテナ イメージを取得する方法](../scalar-kubernetes/HowToGetContainerImages.md) を参照してください。
 
 ### Ledger/データベースの構成
 

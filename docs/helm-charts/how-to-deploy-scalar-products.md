@@ -39,12 +39,16 @@ You must prepare your custom values file based on your environment. Please refer
 
 * [Configure a custom values file for Scalar Helm Charts](configure-custom-values-file.md)
 
-### Create a Secret resource for authentication of the container registry (Optional)
+### Get the container images
 
-If you use a Kubernetes cluster other than EKS or AKS, you need to create a Secret resource that includes the credentials and set the Secret name to `imagePullSecrets[].name` in your custom values file. Please refer to the following documents for more details on creating the Secret resource and setting it in your custom values file.
+If you're using commercially licensed Scalar products, you must get the container images of those products. For details, see [How to get the container images of Scalar products](../scalar-kubernetes/HowToGetContainerImages.md).
 
-* [Deploy containers on Kubernetes other than EKS from AWS Marketplace using Scalar Helm Charts](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md#byol-deploy-containers-on-kubernetes-other-than-eks-from-aws-marketplace-using-scalar-helm-charts)
-* [Deploy containers on Kubernetes other than AKS (Azure Kubernetes Service) from your private container registry using Scalar Helm Charts](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md#deploy-containers-on-kubernetes-other-than-aks-azure-kubernetes-service-from-your-private-container-registry-using-scalar-helm-charts)
+If you're using any of the following products from the public container repository, you can get the container images from the public container repository with the default configuration of Scalar Helm Chart:
+
+* Scalar Envoy (deploy with ScalarDB Cluster, ScalarDL Ledger, or ScalarDL Auditor)
+* ScalarDL Schema Loader
+* Scalar Admin for Kubernetes
+* ScalarDB Analytics with PostgreSQL
 
 ## Deploy Scalar products
 
