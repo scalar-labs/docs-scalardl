@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # Deploy ScalarDL Ledger and ScalarDL Auditor on Azure Kubernetes Service (AKS)
 
 This guide explains how to deploy ScalarDL Ledger and ScalarDL Auditor on Azure Kubernetes Service (AKS).

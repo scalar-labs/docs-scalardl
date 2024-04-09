@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # AWS で ScalarDB/ScalarDL デプロイメント用のデータベースをセットアップする
 
 このガイドでは、AWS で ScalarDB/ScalarDL をデプロイするためのデータベースをセットアップする方法について説明します。

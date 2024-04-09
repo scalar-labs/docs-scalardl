@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 [![CircleCI](https://circleci.com/gh/scalar-labs/scalardl-javascript-sdk-base/tree/master.svg?style=svg)](https://circleci.com/gh/scalar-labs/scalardl-javascript-sdk-base/tree/master)
 
 NPM package `@scalar-labs/scalardl-javascript-sdk-base` is the common part for package [@scalar-labs/scalardl-web-client-sdk](https://github.com/scalar-labs/scalardl-web-client-sdk) and [@scalar-labs/scalardl-node-client-sdk](https://github.com/scalar-labs/scalardl-node-client-sdk).

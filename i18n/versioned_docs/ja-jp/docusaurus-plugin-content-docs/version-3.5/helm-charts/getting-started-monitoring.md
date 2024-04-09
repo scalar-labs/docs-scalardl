@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # Helm Charts の入門 (Prometheus Operator を使用したモニタリング)
 
 このドキュメントでは、Prometheus Operator (kube-prometheus-stack) を使用して Kubernetes 上で Scalar 製品の監視を開始する方法について説明します。 ここでは、テスト用の Mac または Linux 環境がすでにあることを前提としています。 このドキュメントでは **Minikube** を使用しますが、これから説明する手順はどの Kubernetes クラスターでも機能するはずです。

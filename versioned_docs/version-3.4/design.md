@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # ScalarDL Design Document
 
 For details about the design and implementation of ScalarDL, please see the following documents, which we presented at the VLDB 2022 conference:

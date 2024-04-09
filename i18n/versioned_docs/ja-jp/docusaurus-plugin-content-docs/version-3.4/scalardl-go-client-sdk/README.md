@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # ScalarDL Go クライアント SDK
 
 このモジュールは、[ScalarDL](https://github.com/scalar-labs/scalardl) ネットワークと対話するアプリケーションを開発するためのものです。

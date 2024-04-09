@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # ScalarDB Cluster のデプロイする方法
 
 このドキュメントでは、Scalar Helm Chart を使用して ScalarDB Cluster をデプロイする方法について説明します。 ScalarDB Cluster のカスタム値ファイルの詳細については、[ScalarDB Cluster のカスタム値ファイルの構成](configure-custom-values-scalardb-cluster.md) を参照してください。

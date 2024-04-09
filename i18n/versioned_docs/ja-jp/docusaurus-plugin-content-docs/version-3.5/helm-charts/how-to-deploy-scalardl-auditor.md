@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # ScalarDL Auditor のデプロイする方法
 
 このドキュメントでは、Scalar Helm Chart を使用して ScalarDL Auditor をデプロイする方法について説明します。 カスタム値ファイルを準備する必要があります。 ScalarDL Auditor および ScalarDL Schema Loader のカスタム値ファイルの詳細については、次のドキュメントを参照してください。

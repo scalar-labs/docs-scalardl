@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # Configure a custom values file for ScalarDB Cluster
 
 This document explains how to create your custom values file for the ScalarDB Cluster chart. For details on the parameters, see the [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardb-cluster/README.md) of the ScalarDB Cluster chart.

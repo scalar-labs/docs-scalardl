@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # How to start CA sever with CFSSL
 
 This document describes how to start CA server with CFSSL.

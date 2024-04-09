@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 ## ScalarDL Web クライアント SDK
 
 これは、アプリケーションが [ScalarDL](https://github.com/scalar-labs/scalardl) ネットワークと対話できる Web アプリケーション用のライブラリです。

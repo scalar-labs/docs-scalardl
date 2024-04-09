@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # A Guide on How to Handle Errors in ScalarDL
 
 This document sets out some guidelines for handling errors in ScalarDL.

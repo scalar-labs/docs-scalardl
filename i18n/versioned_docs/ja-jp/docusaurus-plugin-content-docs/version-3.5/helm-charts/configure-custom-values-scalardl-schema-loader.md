@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # ScalarDL Schema Loaderのカスタム値ファイルを構成する
 
 このドキュメントでは、ScalarDL Schema Loader チャートのカスタム値ファイルを作成する方法について説明します。 パラメータの詳細を知りたい場合は、ScalarDL Schema Loader チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/schema-loading/README.md) を参照してください。

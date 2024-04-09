@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # How to deploy ScalarDL Auditor
 
 This document explains how to deploy ScalarDL Auditor using Scalar Helm Charts. You must prepare your custom values file. Please refer to the following document for more details on the custom values file for ScalarDL Auditor and ScalarDL Schema Loader.

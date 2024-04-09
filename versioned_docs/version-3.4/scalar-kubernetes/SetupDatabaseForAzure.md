@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # Set up a database for ScalarDB/ScalarDL deployment on Azure
 
 This guide explains how to set up a database for ScalarDB/ScalarDL deployment on Azure.

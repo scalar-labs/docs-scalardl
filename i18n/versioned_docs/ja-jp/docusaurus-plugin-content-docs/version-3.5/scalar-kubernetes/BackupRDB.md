@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # Kubernetes 環境で RDB をバックアップする
 
 このガイドでは、ScalarDB または ScalarDL が Kubernetes 環境で使用する単一のリレーショナル データベース (RDB) のバックアップを作成する方法について説明します。 このガイドは、クラウド サービス プロバイダーの管理されたデータベースを使用していることを前提としていることに注意してください。

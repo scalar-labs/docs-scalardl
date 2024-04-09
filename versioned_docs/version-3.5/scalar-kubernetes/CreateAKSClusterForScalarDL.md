@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # Guidelines for creating an AKS cluster for ScalarDL Ledger
 
 This document explains the requirements and recommendations for creating an Azure Kubernetes Service (AKS) cluster for ScalarDL Ledger deployment. For details on how to deploy ScalarDL Ledger on an AKS cluster, see [Deploy ScalarDL Ledger on AKS](./ManualDeploymentGuideScalarDLOnAKS.md).

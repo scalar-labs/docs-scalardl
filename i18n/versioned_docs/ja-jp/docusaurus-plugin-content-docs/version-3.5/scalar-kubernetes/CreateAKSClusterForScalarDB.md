@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # ScalarDB Server 用の AKS クラスターを作成するためのガイドライン
 
 このドキュメントでは、ScalarDB Server デプロイ用の Azure Kubernetes Service (AKS) クラスターを作成するための要件と推奨事項について説明します。 ScalarDB Server を AKS クラスターにデプロイする方法の詳細については、[AKS に ScalarDB Server をデプロイする](ManualDeploymentGuideScalarDBServerOnAKS.md) を参照してください。

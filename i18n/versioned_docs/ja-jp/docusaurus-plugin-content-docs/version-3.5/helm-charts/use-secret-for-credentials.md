@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # Secret リソースを使用して資格情報を環境変数としてプロパティ ファイルに渡す方法
 
 Kubernetes の `Secret` リソースを介して、**username** や **password** などの資格情報を環境変数として渡すことができます。 Scalar 製品の以前のバージョンの Docker イメージは、プロパティ ファイルのテンプレート化に `dockerize` コマンドを使用します。 Scalar 製品の最新バージョンの Docker イメージは、環境変数から直接値を取得します。

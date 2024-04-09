@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # Kubernetes クラスター上の Scalar 製品の監視
 
 このドキュメントでは、Helm を使用して Prometheus Operator を Kubernetes にデプロイする方法について説明します。 このドキュメントに従うと、Prometheus、Alertmanager、および Grafana を使用して、Kubernetes 環境上の Scalar 製品を監視できるようになります。

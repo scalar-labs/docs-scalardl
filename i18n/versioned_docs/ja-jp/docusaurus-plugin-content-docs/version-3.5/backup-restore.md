@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # ScalarDL でデータをバックアップおよび復元する方法に関するガイド
 
 ScalarDL は、非トランザクション (おそらくトランザクション) データベース上で非侵襲的にトランザクション機能を提供する ScalarDB を使用するため、

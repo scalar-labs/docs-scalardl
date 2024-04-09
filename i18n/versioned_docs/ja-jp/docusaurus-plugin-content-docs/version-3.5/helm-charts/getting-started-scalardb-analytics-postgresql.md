@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # Helm Charts の入門 (ScalarDB Analytics with PostgreSQL)
 
 このガイドでは、Kubernetes クラスターの Helm Chart をテスト環境として使用して、ScalarDB Analytics with PostgreSQL を開始する方法について説明します。 さらに、このガイドの内容は、テスト用に Mac または Linux 環境がすでにセットアップされていることを前提としています。 **minikube** について言及していますが、説明されている手順はどの Kubernetes クラスターでも機能するはずです。

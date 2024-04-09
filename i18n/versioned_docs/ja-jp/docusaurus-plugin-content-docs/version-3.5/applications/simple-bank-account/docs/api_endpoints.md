@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # API エンドポイントの数
 
 ## `GET v1/accounts`

@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # インデックス
 
 ## ユーザー向け

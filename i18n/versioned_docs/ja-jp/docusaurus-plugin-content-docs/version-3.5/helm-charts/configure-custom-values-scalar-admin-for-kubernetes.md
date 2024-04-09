@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # Scalar Admin for Kubernetes のカスタム値ファイルを構成する
 
 このドキュメントでは、Scalar Admin for Kubernetes チャートのカスタム値ファイルを作成する方法について説明します。 パラメーターの詳細については、Scalar Admin for Kubernetes チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalar-admin-for-kubernetes/README.md) を参照してください。

@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # (非推奨) ScalarDB Server 用の EKS クラスターを作成するためのガイドライン
 
 :::warning

@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # A simple bank account application
 
 ## Overview

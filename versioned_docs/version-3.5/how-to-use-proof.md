@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # A Guide on How to Use Asset Proofs in ScalarDL
 
 This document sets out some guidelines for using Asset Proofs in ScalarDL.

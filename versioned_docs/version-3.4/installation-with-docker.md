@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # How to install ScalarDL in your local environment with Docker
 
 This document shows how to set up a local environment that runs ScalarDL

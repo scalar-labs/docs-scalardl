@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # Production checklist for ScalarDL Auditor
 
 This checklist provides recommendations when deploying ScalarDL Auditor in a production environment.

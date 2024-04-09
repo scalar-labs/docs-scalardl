@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # Deploy ScalarDL Ledger on Azure Kubernetes Service (AKS)
 
 This document explains how to deploy **ScalarDL Ledger** on Azure Kubernetes Service (AKS).

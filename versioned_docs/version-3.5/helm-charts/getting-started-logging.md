@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # Getting Started with Helm Charts (Logging using Loki Stack)
 
 This document explains how to get started with log aggregation for Scalar products on Kubernetes using Grafana Loki (with Promtail).

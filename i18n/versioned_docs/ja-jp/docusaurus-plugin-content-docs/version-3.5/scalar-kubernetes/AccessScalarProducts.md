@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # Kubernetes クラスター環境にデプロイされた ScalarDB または ScalarDL をアプリケーションから利用できるようにする
 
 このドキュメントでは、Kubernetes クラスター環境にデプロイされた ScalarDB または ScalarDL をアプリケーションから利用できるようにする方法について説明します。 ScalarDB または ScalarDL をアプリケーションから利用できるようにするには、`<HELM_RELEASE_NAME>-envoy` という名前の Kubernetes サービス リソース経由で Scalar Envoy を使用します。 `<HELM_RELEASE_NAME>-envoy` は次のようないくつかの方法で使用できます。

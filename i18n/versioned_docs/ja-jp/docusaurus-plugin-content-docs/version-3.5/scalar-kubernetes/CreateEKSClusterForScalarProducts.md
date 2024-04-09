@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # Scalar 製品用の Amazon EKS クラスターを作成するためのガイドライン
 
 Scalar 製品用の Amazon Elastic Kubernetes Service (EKS) クラスターを作成するには、以下を参照してください。

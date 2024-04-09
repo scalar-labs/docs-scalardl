@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # Docker を使用してローカル環境に ScalarDL をインストールする方法
 
 このドキュメントでは、[Docker Compose](https://docs.docker.com/compose/) を使用して、バックエンド Cassandra サーバーとともに ScalarDL を実行するローカル環境をセットアップする方法を示します。

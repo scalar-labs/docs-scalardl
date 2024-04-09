@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # リリースフロー
 
 ## 要件

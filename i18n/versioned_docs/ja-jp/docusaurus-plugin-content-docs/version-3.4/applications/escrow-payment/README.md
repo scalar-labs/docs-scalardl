@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # ScalarDL エスクロー支払い CLI
 
 以下は、[ScalarDL](https://github.com/scalar-labs/scalardl) を試してテストするための簡単な Java CLI アプリケーションです。 CLI フレームワークとして PicoCLI が使用されます。

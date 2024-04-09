@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # How to deploy ScalarDB Cluster
 
 This document explains how to deploy ScalarDB Cluster by using Scalar Helm Charts. For details on the custom values file for ScalarDB Cluster, see [Configure a custom values file for ScalarDB Cluster](./configure-custom-values-scalardb-cluster.md).

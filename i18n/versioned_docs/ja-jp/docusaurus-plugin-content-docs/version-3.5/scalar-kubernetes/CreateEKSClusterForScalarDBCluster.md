@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # ScalarDB Cluster 用の EKS クラスターを作成するためのガイドライン
 
 このドキュメントでは、ScalarDB Cluster 展開用の Amazon Elastic Kubernetes Service (EKS) クラスターを作成するための要件と推奨事項について説明します。 ScalarDB Cluster を EKS クラスターにデプロイする方法の詳細については、[Amazon EKS に ScalarDB Cluster をデプロイする](ManualDeploymentGuideScalarDBClusterOnEKS.md) を参照してください。

@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # Scalar 製品用の AKS クラスターを作成するためのガイドライン
 
 Scalar 製品用の Azure Kubernetes Service (AKS) クラスターを作成するには、次を参照してください。

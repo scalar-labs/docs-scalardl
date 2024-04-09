@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # [Deprecated] Getting Started with Helm Charts (ScalarDB Server)
 
 :::note

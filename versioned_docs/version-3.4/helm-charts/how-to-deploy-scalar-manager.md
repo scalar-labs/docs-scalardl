@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # How to deploy Scalar Manager
 
 This document explains how to deploy Scalar Manager using Scalar Helm Charts. You must prepare your custom values file. Please refer to the following document for more details on the custom values file for Scalar Manager.

@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # Deploy Scalar products using Scalar Helm Charts
 
 This document explains how to deploy Scalar products using Scalar Helm Charts. If you want to test Scalar products on your local environment using a minikube cluster, please refer to the following getting started guide.

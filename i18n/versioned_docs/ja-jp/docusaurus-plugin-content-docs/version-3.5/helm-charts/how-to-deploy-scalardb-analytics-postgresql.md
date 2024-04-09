@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # ScalarDB Analytics with PostgreSQL の導入方法
 
 このドキュメントでは、Scalar Helm Chart を使用して ScalarDB Analytics with PostgreSQL をデプロイする方法について説明します。 ScalarDB Analytics with PostgreSQL のカスタム値ファイルの詳細については、[ScalarDB Analytics with PostgreSQL のカスタム値ファイルの構成](configure-custom-values-scalardb-analytics-postgresql.md) を参照してください。

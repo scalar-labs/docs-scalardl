@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # Index
 
 ## For users

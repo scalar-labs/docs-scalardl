@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # ScalarDL Ledger と ScalarDL Auditor を Azure Kubernetes Service (AKS) にデプロイする
 
 このガイドでは、Azure Kubernetes Service (AKS) に ScalarDL Ledger と ScalarDL Auditor をデプロイする方法について説明します。

@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # Configure a custom values file for ScalarDL Ledger
 
 This document explains how to create your custom values file for the ScalarDL Ledger chart. If you want to know the details of the parameters, please refer to the [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardl/README.md) of the ScalarDL Ledger chart.

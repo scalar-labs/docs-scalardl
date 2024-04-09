@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # Azure で ScalarDB/ScalarDL デプロイ用のデータベースをセットアップする
 
 このガイドでは、Azure 上で ScalarDB/ScalarDL デプロイ用のデータベースをセットアップする方法について説明します。

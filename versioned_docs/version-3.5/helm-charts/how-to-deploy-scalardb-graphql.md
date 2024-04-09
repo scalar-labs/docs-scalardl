@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # [Deprecated] How to deploy ScalarDB GraphQL
 
 :::note

@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # Deploy ScalarDB Server on Azure Kubernetes Service (AKS)
 
 This guide explains how to deploy ScalarDB Server on Azure Kubernetes Service (AKS).

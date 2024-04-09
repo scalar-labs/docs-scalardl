@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # Configure a custom values file for Scalar Manager
 
 This document explains how to create your custom values file for the Scalar Manager chart. If you want to know the details of the parameters, please refer to the [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalar-manager/README.md) of the Scalar Manager chart.

@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # Scalar 製品ポッドにファイルまたはボリュームをマウントします
 
 ScalarDB Server、ScalarDB Cluster、ScalarDB Analytics with PostgreSQL、または ScalarDL Helm Charts (ScalarDL Ledger および ScalarDL Auditor) を使用する場合、Scalar 製品ポッドに任意のファイルまたはボリュームをマウントできます。

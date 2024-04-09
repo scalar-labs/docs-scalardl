@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # How to install Scalar products through Azure Marketplace
 
 Scalar products (ScalarDB, ScalarDL, and their tools) are provided in Azure Marketplace as container offers. This guide explains how to install Scalar products through Azure Marketplace.

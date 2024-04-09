@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # ScalarDL Ledger の AKS クラスターを作成するためのガイドライン
 
 このドキュメントでは、ScalarDL Ledger デプロイ用の Azure Kubernetes Service (AKS) クラスターを作成するための要件と推奨事項について説明します。 ScalarDL Ledger を AKS クラスターにデプロイする方法の詳細については、[AKS に ScalarDL Ledger をデプロイする](ManualDeploymentGuideScalarDLOnAKS.md) を参照してください。

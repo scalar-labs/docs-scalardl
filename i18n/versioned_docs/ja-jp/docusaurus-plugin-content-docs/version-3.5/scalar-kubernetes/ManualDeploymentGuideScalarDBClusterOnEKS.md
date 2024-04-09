@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # Amazon Elastic Kubernetes Service (EKS) に ScalarDB Cluster をデプロイする
 
 このガイドでは、ScalarDB Cluster を Amazon Elastic Kubernetes Service (EKS) にデプロイする方法について説明します。

@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # Mount any files or volumes on Scalar product pods
 
 You can mount any files or volumes on Scalar product pods when you use ScalarDB Server, ScalarDB Cluster, or ScalarDL Helm Charts (ScalarDL Ledger and ScalarDL Auditor).

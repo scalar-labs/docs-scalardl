@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # How to use Secret resources to pass credentials as environment variables into the properties file
 
 You can pass credentials like **username** or **password** as environment variables via a `Secret` resource in Kubernetes. The docker images for previous versions of Scalar products use the `dockerize` command for templating properties files. The docker images for the latest versions of Scalar products get values directly from environment variables.

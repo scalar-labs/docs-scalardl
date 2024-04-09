@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # How to get a certificate
 
 This document describes how to get a certificate to enroll in ScalarDL network.

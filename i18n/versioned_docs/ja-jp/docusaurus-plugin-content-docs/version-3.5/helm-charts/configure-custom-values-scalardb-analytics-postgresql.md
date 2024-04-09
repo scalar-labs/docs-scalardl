@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # ScalarDB Analytics with PostgreSQL のカスタム値ファイルを構成する
 
 このドキュメントでは、PostgreSQL チャートを使用した ScalarDB Analytics のカスタム値ファイルを作成する方法について説明します。 パラメーターの詳細については、ScalarDB Analytics with PostgreSQL チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardb-analytics-postgresql/README.md) を参照してください。

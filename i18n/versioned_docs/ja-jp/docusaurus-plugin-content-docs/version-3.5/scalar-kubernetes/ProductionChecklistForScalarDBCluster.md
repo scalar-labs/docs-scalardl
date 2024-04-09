@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # ScalarDB Cluster の制作チェックリスト
 
 このチェックリストは、実稼働環境に ScalarDB Cluster をデプロイする際の推奨事項を提供します。

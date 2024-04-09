@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # ScalarDB/ScalarDL デプロイメント用のデータベースをセットアップする
 
 このガイドでは、クラウド サービス上で ScalarDB/ScalarDL を展開するためのデータベースをセットアップする方法について説明します。

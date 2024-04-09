@@ -1,5 +1,3 @@
-include scalardl/end-of-support.html
-
 # Deploy ScalarDB Server on Amazon Elastic Kubernetes Service (EKS)
 
 This guide explains how to deploy ScalarDB Server on Amazon Elastic Kubernetes Service (EKS).

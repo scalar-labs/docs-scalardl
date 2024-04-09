@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # 要塞サーバーを作成する
 
 このドキュメントでは、要塞サーバーを作成し、Scalar 製品を展開するためのいくつかのツールをインストールする方法について説明します。

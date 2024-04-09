@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # ScalarDL 互換性マトリックス
 
 このドキュメントでは、ScalarDL Ledger および Auditor と ScalarDL Java Client SDK との互換性を示します。

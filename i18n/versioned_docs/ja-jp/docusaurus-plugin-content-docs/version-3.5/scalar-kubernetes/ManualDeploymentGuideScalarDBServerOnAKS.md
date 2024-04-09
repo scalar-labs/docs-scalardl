@@ -1,5 +1,3 @@
-include scalardl/end-of-support-ja-jp.html
-
 # Azure Kubernetes Service (AKS) に ScalarDB Server をデプロイする
 
 このガイドでは、ScalarDB Server を Azure Kubernetes Service (AKS) にデプロイする方法について説明します。
