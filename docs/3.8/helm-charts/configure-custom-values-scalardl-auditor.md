@@ -30,10 +30,7 @@ auditor:
     repository: <SCALARDL_AUDITOR_CONTAINER_IMAGE>
 ```
 
-If you're using AWS or Azure, please refer to the following documents for more details:
-
-* [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md)
-* [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md)
+For more details on the container repository for Scalar products, see [How to get the container images of Scalar products](../scalar-kubernetes/HowToGetContainerImages.md).
 
 ### Auditor/Database configurations
 
