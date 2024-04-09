@@ -1,6 +1,6 @@
 include scalardl/end-of-support.html
 
-## Scalar DL Java Client SDK
+# ScalarDL Java Client SDK
 
 This is a client-side Java library to interact with [Scalar DL](https://github.com/scalar-labs/scalardl) network.
 
