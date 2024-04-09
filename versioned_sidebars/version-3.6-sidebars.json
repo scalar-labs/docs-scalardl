@@ -1,0 +1,191 @@
+{
+  "docs": [
+    {
+      "type": "doc",
+      "label": "Home",
+      "id": "index"
+    },
+    {
+      "type": "category",
+      "label": "Getting Started",
+      "collapsible": true,
+      "items": [
+        "getting-started",
+        "getting-started-auditor"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Samples",
+      "collapsible": true,
+      "items": [
+        "applications/simple-bank-account/README",
+        "applications/escrow-payment/README"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Develop",
+      "collapsible": true,
+      "items": [
+        {
+          "type": "category",
+          "label": "SDKs",
+          "collapsible": true,
+          "items": [
+            "scalardl-java-client-sdk/README"
+          ]
+        },
+        "schema-loader",
+        "how-to-use-proof",
+        "how-to-write-contract",
+        "how-to-write-function",
+        "ca/caclient-getting-started",
+        "authentication",
+        "how-to-handle-errors"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Deploy",
+      "collapsible": true,
+      "items": [
+        {
+          "type": "category",
+          "label": "Scalar Kubernetes",
+          "collapsible": true,
+          "items": [
+            {
+              "type": "category",
+              "label": "Database Setup Guides",
+              "collapsible": true,
+              "items": [
+                "scalar-kubernetes/SetupDatabaseForAWS",
+                "scalar-kubernetes/SetupDatabaseForAzure"
+              ]
+            },
+            {
+              "type": "category",
+              "label": "Installation Guides",
+              "collapsible": true,
+              "items": [
+                "scalar-kubernetes/ProductionChecklistForScalarDLLedger",
+                "scalar-kubernetes/ProductionChecklistForScalarDLAuditor",
+                "scalar-kubernetes/AwsMarketplaceGuide",
+                "scalar-kubernetes/AzureMarketplaceGuide",
+                "scalar-kubernetes/CreateBastionServer"
+              ]
+            },
+            {
+              "type": "category",
+              "label": "Cluster Guides",
+              "collapsible": true,
+              "items": [
+                "scalar-kubernetes/CreateEKSClusterForScalarDL",
+                "scalar-kubernetes/CreateEKSClusterForScalarDLAuditor",
+                "scalar-kubernetes/CreateAKSClusterForScalarDL",
+                "scalar-kubernetes/CreateAKSClusterForScalarDLAuditor"
+              ]
+            },
+            {
+              "type": "category",
+              "label": "Deployment Guides",
+              "collapsible": true,
+              "items": [
+                "scalar-kubernetes/ManualDeploymentGuideScalarDLOnEKS",
+                "scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnEKS",
+                "scalar-kubernetes/ManualDeploymentGuideScalarDLOnAKS",
+                "scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnAKS"
+              ]
+            },
+            {
+              "type": "category",
+              "label": "Configuration Guides",
+              "collapsible": true,
+              "items": [
+                "scalar-kubernetes/AccessScalarProducts",
+                "scalar-kubernetes/NetworkPeeringForScalarDLAuditor"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Scalar Helm Charts",
+          "collapsible": true,
+          "items": [
+            "helm-charts/getting-started-scalar-helm-charts",
+            "helm-charts/getting-started-scalardl-ledger",
+            "helm-charts/getting-started-scalardl-auditor",
+            "helm-charts/configure-custom-values-file",
+            "helm-charts/how-to-deploy-scalar-products",
+            "helm-charts/mount-files-or-volumes-on-scalar-pods",
+            "helm-charts/use-secret-for-credentials"
+          ]
+        },
+        "installation-with-docker",
+        "ca/caserver-getting-started"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Manage",
+      "collapsible": true,
+      "items": [
+        "backup-restore",
+        "troubleshooting-guide",
+        {
+          "type": "category",
+          "label": "Scalar Kubernetes",
+          "collapsible": true,
+          "items": [
+            {
+              "type": "category",
+              "label": "Monitoring Guides",
+              "collapsible": true,
+              "items": [
+                "scalar-kubernetes/K8sMonitorGuide",
+                "scalar-kubernetes/K8sLogCollectionGuide"
+              ]
+            },
+            "scalar-kubernetes/alerts/README",
+            {
+              "type": "category",
+              "label": "Backup and Restore Guides",
+              "collapsible": true,
+              "items": [
+                "scalar-kubernetes/K8sMonitorGuide",
+                "scalar-kubernetes/K8sLogCollectionGuide"
+              ]
+            },
+            "scalar-kubernetes/BackupRestoreGuide",
+            "scalar-kubernetes/BackupRDB",
+            "scalar-kubernetes/BackupNoSQL",
+            "scalar-kubernetes/RestoreDatabase",
+            "scalar-kubernetes/RegularCheck"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Reference",
+      "collapsible": true,
+      "items": [
+        "design",
+        "compatibility",
+        "implementation",
+        "scalardl-benchmarks/README"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Releases",
+      "collapsible": true,
+      "items": [
+        "releases/release-notes",
+        "releases/release-support-policy"
+      ]
+    }
+  ]
+}
