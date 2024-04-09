@@ -22,6 +22,11 @@ The following documentation is to help you set up and deploy a ScalarDL environm
 * [Guidelines for creating an AKS cluster for ScalarDL Ledger](CreateAKSClusterForScalarDL.md)
 * [Guidelines for creating an AKS cluster for ScalarDL Ledger and ScalarDL Auditor](CreateAKSClusterForScalarDLAuditor.md)
 
+## Container image guides
+
+* [How to get the container images of Scalar products](HowToGetContainerImages.md)
+* [How to use the container images](HowToUseContainerImages.md)
+
 ## Deployment guides
 
 * [Deploy ScalarDL Ledger on Amazon EKS (Amazon Elastic Kubernetes Service)](ManualDeploymentGuideScalarDLOnEKS.md)
