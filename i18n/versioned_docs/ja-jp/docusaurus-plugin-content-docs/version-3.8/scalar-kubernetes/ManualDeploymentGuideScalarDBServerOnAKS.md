@@ -1,4 +1,4 @@
-# Azure Kubernetes Service (AKS) に ScalarDB Server をデプロイする
+# [非推奨] Azure Kubernetes Service (AKS) に ScalarDB Server をデプロイする
 
 このガイドでは、ScalarDB Server を Azure Kubernetes Service (AKS) にデプロイする方法について説明します。
 

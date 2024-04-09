@@ -1,3 +1,9 @@
+:::note
+
+現在、Scalar 製品は Azure Marketplace では入手できません。 Scalar 製品のコンテナ イメージを取得するその他の方法については、[Scalar 製品のコンテナイメージを取得する方法](./HowToGetContainerImages.md) を参照してください。
+
+:::
+
 # Azure Marketplace を通じて Scalar 製品をインストールする方法
 
 Scalar 製品 (ScalarDB、ScalarDL、およびそれらのツール) は、コンテナー オファーとして Azure Marketplace で提供されます。 このガイドでは、Azure Marketplace を通じて Scalar 製品をインストールする方法について説明します。

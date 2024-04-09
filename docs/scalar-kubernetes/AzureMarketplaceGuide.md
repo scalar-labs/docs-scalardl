@@ -1,3 +1,9 @@
+::note
+
+Scalar products are currently not available in Azure Marketplace. For details on other ways to get the container images of Scalar products, please see [How to get the container images of Scalar products](./HowToGetContainerImages.md).
+
+:::
+
 # How to install Scalar products through Azure Marketplace
 
 Scalar products (ScalarDB, ScalarDL, and their tools) are provided in Azure Marketplace as container offers. This guide explains how to install Scalar products through Azure Marketplace.
