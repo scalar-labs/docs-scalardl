@@ -76,7 +76,7 @@ const config = {
               },
               */
               current: {
-                label: '3.9 (latest)',
+                label: '3.9',
                 path: 'latest',
                 banner: 'none',
               },
