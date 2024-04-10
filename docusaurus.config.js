@@ -58,13 +58,9 @@ const config = {
         docs: {
           breadcrumbs: false,
           sidebarPath: './sidebars.js',
-          // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-
-          /*
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-          */
+          editUrl: 'https://github.com/scalar-labs/docs-scalardl',
+          editLocalizedFiles: true, // This allows for the "Edit this page" button to direct users to edit the localized version of the page on GitHub.
           lastVersion: 'current',
             versions: {
               // The following is a template for adding a new version to the dropdown menu. Copy this version template when adding a new version to the dropdown menu but don't delete it.
