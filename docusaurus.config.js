@@ -56,7 +56,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          breadcrumbs: false,
+          breadcrumbs: true,
           sidebarPath: './sidebars.js',
           // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/scalar-labs/docs-scalardl',
