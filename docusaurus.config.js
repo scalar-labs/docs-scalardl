@@ -129,14 +129,6 @@ const config = {
 
   plugins: [
     [
-      require.resolve("docusaurus-lunr-search"), 
-      {
-        enableHighlight: true,
-        languages: ['en', 'ja'] // language codes
-        // includeRoutes: 'docs/',
-      },
-    ],
-    [
       '@docusaurus/plugin-client-redirects',
       {
         redirects: [
