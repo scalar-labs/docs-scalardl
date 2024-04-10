@@ -132,8 +132,6 @@
       "label": "Manage",
       "collapsible": true,
       "items": [
-        "backup-restore",
-        "troubleshooting-guide",
         {
           "type": "category",
           "label": "Scalar Kubernetes",
@@ -144,27 +142,27 @@
               "label": "Monitoring Guides",
               "collapsible": true,
               "items": [
+                "scalar-kubernetes/alerts/README",
                 "scalar-kubernetes/K8sMonitorGuide",
                 "scalar-kubernetes/K8sLogCollectionGuide"
               ]
             },
-            "scalar-kubernetes/alerts/README",
             {
               "type": "category",
               "label": "Backup and Restore Guides",
               "collapsible": true,
               "items": [
-                "scalar-kubernetes/K8sMonitorGuide",
-                "scalar-kubernetes/K8sLogCollectionGuide"
+                "scalar-kubernetes/BackupRestoreGuide",
+                "scalar-kubernetes/BackupRDB",
+                "scalar-kubernetes/BackupNoSQL",
+                "scalar-kubernetes/RestoreDatabase",
+                "scalar-kubernetes/RegularCheck"
               ]
-            },
-            "scalar-kubernetes/BackupRestoreGuide",
-            "scalar-kubernetes/BackupRDB",
-            "scalar-kubernetes/BackupNoSQL",
-            "scalar-kubernetes/RestoreDatabase",
-            "scalar-kubernetes/RegularCheck"
+            }
           ]
-        }
+        },
+        "backup-restore",
+        "troubleshooting-guide"
       ]
     },
     {
