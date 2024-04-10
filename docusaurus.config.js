@@ -159,24 +159,10 @@ const config = {
           src: 'img/scalardl-logo.png',
         },
         items: [
-          // {
-          //   type: 'docSidebar',
-          //   sidebarId: 'gettingStartedSidebar',
-          //   position: 'left',
-          //   label: 'Getting Started',
-          // },
           {
             type: 'docsVersionDropdown',
             position: 'left',
             dropdownItemsAfter: [
-              // {
-              //   type: 'html',
-              //   value: '<hr class="dropdown-separator">',
-              // },
-              // {
-              //   to: '/unsupported-versions',
-              //   label: 'Unsupported Versions'
-              // },
               {
                 type: 'html',
                 value: '<hr class="dropdown-separator">',
