@@ -143,6 +143,15 @@ const config = {
           //   from: ['/ja', '/ja/docs'],
           // },
         ],
+        createRedirects(existingPath) {
+          if (existingPath.includes('/docs/ja-jp')) {
+            // Redirect from /docs/ja-jp/X to /ja-jp/docs/X.
+            return [
+              existingPath.replace('/docs/ja-jp', '/ja-jp/docs'),
+            ];
+          }
+          return undefined; // Return a falsy value: no redirect created
+        },
       },
     ]
   ],
