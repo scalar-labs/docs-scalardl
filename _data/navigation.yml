@@ -111,6 +111,8 @@ versions:
   # Deploy docs
   - title: "Deploy"
     children:
+      - title: "How to Configure a Product License Key"
+        url: /docs/latest/scalar-licensing/README/
       - title: "Deploying ScalarDL on Managed Kubernetes Services"
         url: /docs/latest/scalar-kubernetes/deploy-kubernetes/
       - title: "How to install ScalarDL in your local environment with Docker"
@@ -759,6 +761,8 @@ versions:
   # Deploy docs
   - title: "展開する"
     children:
+      - title: "製品ライセンス キーの設定方法"
+        url: /docs/ja-jp/latest/scalar-licensing/README/
       - title: "マネージド Kubernetes サービスへの ScalarDL のデプロイ"
         url: /docs/ja-jp/latest/scalar-kubernetes/deploy-kubernetes/
       - title: "Docker を使用してローカル環境に ScalarDL をインストールする方法"
