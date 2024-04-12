@@ -162,16 +162,6 @@ const config = {
           {
             type: 'docsVersionDropdown',
             position: 'left',
-            dropdownItemsAfter: [
-              {
-                type: 'html',
-                value: '<hr class="dropdown-separator">',
-              },
-              {
-                to: '/release-support-policy',
-                label: 'Release Support Policy'
-              }
-            ],
             dropdownActiveClassDisabled: true,
           },
           {
