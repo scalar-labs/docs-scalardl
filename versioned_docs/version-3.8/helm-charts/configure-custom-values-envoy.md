@@ -144,6 +144,77 @@ envoy:
     repository: <SCALAR_ENVOY_CONTAINER_IMAGE>
 ```
 
+If you're using AWS or Azure, please refer to the following documents for more details:
+
+* [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md)
+* [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md)
+
+### TLS configurations (optional based on your environment)
+
+You can enable TLS in:
+
+- Downstream connections between the client and Scalar Envoy.
+- Upstream connections between Scalar Envoy and Scalar products.
+
+#### Enable TLS in downstream connections
+
+You can enable TLS in downstream connections by using the following configurations:
+
+```yaml
+envoy:
+  tls:
+    downstream:
+      enabled: true
+      certChainSecret: "envoy-tls-cert"
+      privateKeySecret: "envoy-tls-key"
+```
+
+In this case, you have to create secret resources that include private key and certificate files for Scalar Envoy as follows:
+
+```console
+kubectl create secret generic envoy-tls-cert --from-file=cert-chain=/path/to/your/certificate/file -n <NAMESPACE>
+kubectl create secret generic envoy-tls-key --from-file=private-key=/path/to/your/private/key/file -n <NAMESPACE>
+```
+
+For more details on how to prepare private key and certificate files, see [How to create private key and certificate files for Scalar products](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.md).
+
+#### Enable TLS in upstream connections
+
+You can enable TLS in upstream connections by using the following configurations:
+
+```yaml
+envoy:
+  tls:
+    upstream:
+      enabled: true
+      overrideAuthority: "cluster.scalardb.example.com"
+      caRootCertSecret: "scalardb-cluster-tls-ca"
+```
+
+In this case, you have to create secret resources that include CA certificate files as follows. You must set the root CA certificate file based on the upstream that you use (ScalarDB Cluster, ScalarDL Ledger, or ScalarDL Auditor).
+
+* ScalarDB Cluster
+
+  ```console
+  kubectl create secret generic scalardb-cluster-tls-ca --from-file=ca-root-cert=/path/to/root/ca/cert/file/for/scalardb-cluster -n <NAMESPACE>
+  ```
+
+* ScalarDL Ledger
+
+  ```console
+  kubectl create secret generic scalardl-ledger-tls-ca --from-file=ca-root-cert=/path/to/root/ca/cert/file/for/scalardl-ledger -n <NAMESPACE>
+  ```
+
+* ScalarDL Auditor
+
+  ```console
+  kubectl create secret generic scalardl-auditor-tls-ca --from-file=ca-root-cert=/path/to/root/ca/cert/file/for/scalardl-auditor -n <NAMESPACE>
+  ```
+
+For more details on how to prepare private key and certificate files, see [How to create key and certificate files for Scalar products](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.md).
+
+Also, you can set the custom authority for TLS communication by using `envoy.tls.upstream.overrideAuthority`. This value doesn't change what host is actually connected. This value is intended for testing but may safely be used outside of tests as an alternative to DNS overrides. For example, you can specify the hostname presented in the certificate chain file that you set by using `scalardbCluster.tls.certChainSecret`, `ledger.tls.certChainSecret`, or `auditor.tls.certChainSecret`, depending on which product you're using. Envoy uses this value for verifying the certificate of the TLS connection with ScalarDB Cluster or ScalarDL.
+
 ### Replica configurations (Optional based on your environment)
 
 You can specify the number of replicas (pods) of Scalar Envoy using `envoy.replicaCount`.

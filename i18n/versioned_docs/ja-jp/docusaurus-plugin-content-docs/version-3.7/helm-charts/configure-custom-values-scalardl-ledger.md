@@ -153,6 +153,36 @@ ledger:
     allowPrivilegeEscalation: false
 ```
 
+### TLS 構成 (環境に応じてオプション)
+
+次の設定により、すべての ScalarDL Ledger 接続で TLS を有効にすることができます。
+
+```yaml
+ledger:
+  ledgerProperties: |
+    scalar.dl.ledger.server.tls.enabled=true
+    scalar.dl.ledger.server.tls.cert_chain_path=/tls/certs/cert-chain.pem
+    scalar.dl.ledger.server.tls.private_key_path=/tls/certs/private-key.pem
+  tls:
+    enabled: true
+    overrideAuthority: "ledger.scalardl.example.com"
+    caRootCertSecret: "scalardl-ledger-tls-ca"
+    certChainSecret: "scalardl-ledger-tls-cert"
+    privateKeySecret: "scalardl-ledger-tls-key"
+```
+
+この場合、次のように、ScalarDL Ledger の秘密キーファイルと証明書ファイルを含むシークレットリソースを作成する必要があります。
+
+```console
+kubectl create secret generic scalardl-ledger-tls-ca --from-file=ca-root-cert=/path/to/your/ca/certificate/file -n <NAMESPACE>
+kubectl create secret generic scalardl-ledger-tls-cert --from-file=cert-chain=/path/to/your/certificate/file -n <NAMESPACE>
+kubectl create secret generic scalardl-ledger-tls-key --from-file=private-key=/path/to/your/private/key/file -n <NAMESPACE>
+```
+
+秘密キーと証明書ファイルを準備する方法の詳細については、[Scalar 製品の秘密キーと証明書ファイルを作成する方法](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.md) を参照してください。
+
+また、`ledger.tls.overrideAuthority` を使用して、TLS 通信のカスタム authority を設定することもできます。 実際に接続されているホストは変わりません。 これはテストを目的としていますが、DNS オーバーライドの代替としてテスト以外でも安全に使用できます。 たとえば、`ledger.tls.certChainSecret` を使用して設定した証明書チェーンファイルに示されているホスト名を指定できます。 このチャートでは、startupProbe と livenessProbe にこの値を使用します。
+
 ### レプリカ構成 (環境に応じてオプション)
 
 `ledger.replicaCount` を使用して ScalarDL Ledger のレプリカ(ポッド)の数を指定できます。

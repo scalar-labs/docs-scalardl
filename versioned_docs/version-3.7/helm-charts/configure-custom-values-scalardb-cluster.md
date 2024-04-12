@@ -137,6 +137,39 @@ scalardbCluster:
     allowPrivilegeEscalation: false
 ```
 
+### TLS configurations (optional based on your environment)
+
+You can enable TLS in all ScalarDB Cluster connections by using the following configurations:
+
+```yaml
+scalardbCluster:
+  scalardbClusterNodeProperties: |
+    ...(omit)...
+    scalar.db.cluster.tls.enabled=true
+    scalar.db.cluster.tls.ca_root_cert_path=/tls/certs/ca-root-cert.pem
+    scalar.db.cluster.node.tls.cert_chain_path=/tls/certs/cert-chain.pem
+    scalar.db.cluster.node.tls.private_key_path=/tls/certs/private-key.pem
+    scalar.db.cluster.tls.override_authority=cluster.scalardb.example.com
+  tls:
+    enabled: true
+    overrideAuthority: "cluster.scalardb.example.com"
+    caRootCertSecret: "scalardb-cluster-tls-ca"
+    certChainSecret: "scalardb-cluster-tls-cert"
+    privateKeySecret: "scalardb-cluster-tls-key"
+```
+
+In this case, you have to create secret resources that include private key and certificate files for ScalarDB Cluster as follows:
+
+```console
+kubectl create secret generic scalardb-cluster-tls-ca --from-file=ca-root-cert=/path/to/your/ca/certificate/file -n <NAMESPACE>
+kubectl create secret generic scalardb-cluster-tls-cert --from-file=cert-chain=/path/to/your/certificate/file -n <NAMESPACE>
+kubectl create secret generic scalardb-cluster-tls-key --from-file=private-key=/path/to/your/private/key/file -n <NAMESPACE>
+```
+
+For more details on how to prepare private key and certificate files, see [How to create private key and certificate files for Scalar products](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.md).
+
+Also, you can set the custom authority for TLS communication by using `scalardbCluster.tls.overrideAuthority`. This value doesn't change what host is actually connected. This value is intended for testing but may safely be used outside of tests as an alternative to DNS overrides. For example, you can specify the hostname presented in the certificate chain file that you set by using `scalardbCluster.tls.certChainSecret`. This chart uses this value for `startupProbe` and `livenessProbe`.
+
 ### Replica configurations (optional based on your environment)
 
 You can specify the number of ScalarDB Cluster replicas (pods) by using `scalardbCluster.replicaCount`.
