@@ -7,8 +7,8 @@
 テストには次のツールを使用します。
 
 1. minikube (他の Kubernetes ディストリビューションを使用する場合、minikube は必要ありません。)
-   1.クベクトル
-1. ヘルム
+1. kubectl
+1. Helm
 1. cfssl / cfssljson
 
 ## ステップ 1. ツールをインストールする
@@ -22,8 +22,18 @@
 1. [Helmドキュメント](https://helm.sh/docs/intro/install/) に従って helm コマンドをインストールします。
 
 1. [CFSSLドキュメント](https://github.com/cloudflare/cfssl) に従って cfssl と cfssljson をインストールします。
-   * 注記：
-        * ScalarDL を試す場合は cfssl と cfssljson が必要です。 ScalarDL 以外の Scalar Helm Charts (ScalarDB、Monitoring、Logging など) を試す場合、cfssl および cfssljson は必要ありません。
+
+{% capture notice--info %}
+**注意**
+
+以下のスタートガイドの手順を実行する場合は、`cfssl` および `cfssljson` コマンドをインストールする必要があります。
+
+* [TLS を使用した ScalarDB Cluster](getting-started-scalardb-cluster-tls.md)
+* [TLS を使用した ScalarDL Ledger および Auditor (Auditor モード)](getting-started-scalardl-auditor-tls.md)
+* [ScalarDL Ledger (Ledger のみ)](getting-started-scalardl-ledger.md)
+* [ScalarDL Ledger と Auditor (Auditor モード)](getting-started-scalardl-auditor.md)
+
+{% endcapture %}
 
 ## ステップ 2. docker ドライバーで minikube を起動する (オプション / minikube を使用する場合)
 
@@ -53,8 +63,10 @@
 
 Kubernetes クラスターが起動したら、そのクラスター上で各 Scalar Helm Charts を試すことができます。 詳細については、以下のドキュメントを参照してください。
 
+* [TLS を使用した ScalarDB Cluster](getting-started-scalardb-cluster-tls.md)
 * [ScalarDB Analytics with PostgreSQL](getting-started-scalardb-analytics-postgresql.md)
-* [ScalarDL Ledger (Ledger のみ)](getting-started-scalardl-ledger.md)
+* [TLS を使用した ScalarDL Ledger (Ledger のみ)](getting-started-scalardl-ledger-tls.md)
+* [TLS を使用した ScalarDL Ledger および Auditor (Auditor モード)](getting-started-scalardl-auditor-tls.md)
 * [ScalarDL Ledger と Auditor (Auditor モード)](getting-started-scalardl-auditor.md)
 * [Prometheus Operator を使用した監視](getting-started-monitoring.md)
   * [Loki スタックを使用したロギング](getting-started-logging.md)
