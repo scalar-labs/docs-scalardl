@@ -153,7 +153,37 @@ ledger:
     allowPrivilegeEscalation: false
 ```
 
-### Replica configurations (Optional based on your environment)
+### TLS configurations (optional based on your environment)
+
+You can enable TLS in all ScalarDL Ledger connections by using the following configurations:
+
+```yaml
+ledger:
+  ledgerProperties: |
+    scalar.dl.ledger.server.tls.enabled=true
+    scalar.dl.ledger.server.tls.cert_chain_path=/tls/certs/cert-chain.pem
+    scalar.dl.ledger.server.tls.private_key_path=/tls/certs/private-key.pem
+  tls:
+    enabled: true
+    overrideAuthority: "ledger.scalardl.example.com"
+    caRootCertSecret: "scalardl-ledger-tls-ca"
+    certChainSecret: "scalardl-ledger-tls-cert"
+    privateKeySecret: "scalardl-ledger-tls-key"
+```
+
+In this case, you have to create secret resources that include private key and certificate files for ScalarDL Ledger as follows:
+
+```console
+kubectl create secret generic scalardl-ledger-tls-ca --from-file=ca-root-cert=/path/to/your/ca/certificate/file -n <NAMESPACE>
+kubectl create secret generic scalardl-ledger-tls-cert --from-file=cert-chain=/path/to/your/certificate/file -n <NAMESPACE>
+kubectl create secret generic scalardl-ledger-tls-key --from-file=private-key=/path/to/your/private/key/file -n <NAMESPACE>
+```
+
+For more details on how to prepare private key and certificate files, see [How to create private key and certificate files for Scalar products](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.md).
+
+Also, you can set the custom authority for TLS communication by using `ledger.tls.overrideAuthority`. This value doesn't change what host is actually connected. This value is intended for testing but may safely be used outside of tests as an alternative to DNS overrides. For example, you can specify the hostname presented in the certificate chain file that you set by using `ledger.tls.certChainSecret`. This chart uses this value for `startupProbe` and `livenessProbe`.
+
+### Replica configurations (optional based on your environment)
 
 You can specify the number of replicas (pods) of ScalarDL Ledger using `ledger.replicaCount`.
 
