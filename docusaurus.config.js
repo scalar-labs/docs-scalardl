@@ -241,6 +241,10 @@ const config = {
                 label: 'News',
                 href: 'https://www.scalar-labs.com/news',
               },
+              {
+                label: 'Scalar Engineering Blog',
+                href: 'https://medium.com/scalar-engineering',
+              },
             ],
           },
           {
@@ -267,10 +271,6 @@ const config = {
           {
             title: 'More',
             items: [
-              {
-                label: 'Scalar Engineering Blog',
-                href: 'https://medium.com/scalar-engineering',
-              },
               {
                 label: 'Pricing',
                 href: 'https://medium.com/scalar-engineering',
