@@ -151,6 +151,7 @@ const sidebars = {
             'helm-charts/use-secret-for-credentials',
           ],
         },
+        'scalar-licensing/README',
         'installation-with-docker',
         'ca/caserver-getting-started',
       ],
