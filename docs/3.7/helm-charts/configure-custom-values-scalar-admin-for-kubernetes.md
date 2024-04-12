@@ -98,3 +98,32 @@ scalarAdminForKubernetes:
       operator: Equal
       value: scalardb-analytics-postgresql
 ```
+
+### TLS configurations (optional based on your environment)
+
+You can enable TLS between Scalar Admin for Kubernetes and the pause targets (ScalarDB Cluster or ScalarDL) by using the following configurations:
+
+```yaml
+scalarAdminForKubernetes:
+  commandArgs:
+    - (omit other options)
+    - --tls
+    - --ca-root-cert-path
+    - /tls/certs/ca.crt
+    - --override-authority
+    - cluster.scalardb.example.com
+```
+
+You can mount the `/tls/certs/ca.crt` file on a pod by using a secret resource. To mount the file, specify the name of the secret resource that includes the root CA certificate file to `scalarAdminForKubernetes.tls.caRootCertSecret` as follows:
+
+```yaml
+scalarAdminForKubernetes:
+  tls:
+    caRootCertSecret: "scalar-admin-tls-ca"
+```
+
+In this case, you have to create a secret resource that includes the root CA certificate file for the pause targets (ScalarDB Cluster or ScalarDL) as follows:
+
+```console
+kubectl create secret generic scalar-admin-tls-ca --from-file=ca.crt=/path/to/your/ca/certificate/file -n <NAMESPACE>
+```
