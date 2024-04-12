@@ -132,6 +132,7 @@ const sidebars = {
               collapsible: true,
               items: [
                 'scalar-kubernetes/AccessScalarProducts',
+                'scalar-kubernetes/HowToCreateKeyAndCertificateFiles',
                 'scalar-kubernetes/NetworkPeeringForScalarDLAuditor',
               ],
             },
@@ -145,6 +146,7 @@ const sidebars = {
             'helm-charts/getting-started-scalar-helm-charts',
             'helm-charts/getting-started-scalardl-ledger',
             'helm-charts/getting-started-scalardl-auditor',
+            'helm-charts/getting-started-scalardl-auditor-tls',
             'helm-charts/configure-custom-values-file',
             'helm-charts/how-to-deploy-scalar-products',
             'helm-charts/mount-files-or-volumes-on-scalar-pods',
