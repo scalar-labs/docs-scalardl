@@ -1,0 +1,363 @@
+# How to Create Private Key and Certificate Files for Scalar Products
+
+This guide explains how to create private key and certificate files for Scalar products.
+
+## Private key and certificate files for TLS connections
+
+ScalarDB Cluster and ScalarDL support TLS for each connection. When you enable the TLS feature, you must prepare private key and certificate files.
+
+### Certificate requirements
+
+* You can use only `RSA` or `ECDSA` as an algorithm for private key and certificate files.
+
+### Example steps to create sample private key and certificate files
+
+In this example, you'll create sample private key and certificate files by using `cfssl` and `cfssljson`. If you don't have those tools installed, please install `cfssl` and `cfssljson` to run this example.
+
+:::note
+
+* You can use other tools, like `openssl`, to create the private key and certificate files. Alternatively, you can ask a third-party CA or the administrator of your private CA to create the private key and certificate for your production environment.
+* This example creates a self-signed certificate. However, it is strongly recommended that these certificates **not** be used in production. Please ask trusted issuers (a public CA or your private CA) to create certificate files for your production environment based on your security requirements.
+
+:::
+
+1. Create a working directory.
+
+   ```console
+   mkdir -p ${HOME}/scalar/example/certs/
+   ```
+
+1. Change the working directory to `${HOME}/scalar/example/certs/`.
+
+   ```console
+   cd ${HOME}/scalar/example/certs/
+   ```
+
+1. Create a JSON file that includes CA information.
+
+   ```console
+   cat << 'EOF' > ${HOME}/scalar/example/certs/ca.json
+   {
+       "CN": "scalar-example-ca",
+       "key": {
+           "algo": "ecdsa",
+           "size": 256
+       },
+       "names": [
+           {
+               "C": "JP",
+               "ST": "Tokyo",
+               "L": "Shinjuku",
+               "O": "Scalar Example CA"
+           }
+       ]
+   }
+   EOF
+   ```
+
+1. Create the CA private key and certificate files.
+
+   ```console
+   cfssl gencert -initca ca.json | cfssljson -bare ca
+   ```
+
+1. Create a JSON file that includes CA configurations.
+
+   ```console
+   cat << 'EOF' > ${HOME}/scalar/example/certs/ca-config.json
+   {
+       "signing": {
+           "default": {
+               "expiry": "87600h"
+           },
+           "profiles": {
+               "scalar-example-ca": {
+                   "expiry": "87600h",
+                   "usages": [
+                       "signing",
+                       "key encipherment",
+                       "server auth"
+                   ]
+               }
+           }
+       }
+   }
+   EOF
+   ```
+
+1. Create a JSON file that includes server information.
+
+   ```console
+   cat << 'EOF' > ${HOME}/scalar/example/certs/server.json
+   {
+       "CN": "scalar-example-server",
+       "hosts": [
+           "server.scalar.example.com",
+           "localhost"
+       ],
+       "key": {
+           "algo": "ecdsa",
+           "size": 256
+       },
+       "names": [
+           {
+               "C": "JP",
+               "ST": "Tokyo",
+               "L": "Shinjuku",
+               "O": "Scalar Example Server"
+           }
+       ]
+   }
+   EOF
+   ```
+
+1. Create the private key and certificate files for the server.
+
+   ```console
+   cfssl gencert -ca ca.pem -ca-key ca-key.pem -config ca-config.json -profile scalar-example-ca server.json | cfssljson -bare server
+   ```
+
+1. Confirm that the private key and certificate files were created.
+
+   ```console
+   ls -1
+   ```
+
+   [Command execution result]
+
+   ```console
+   ca-config.json
+   ca-key.pem
+   ca.csr
+   ca.json
+   ca.pem
+   server-key.pem
+   server.csr
+   server.json
+   server.pem
+   ```
+
+   In this case:
+
+   * `server-key.pem` is the private key file.
+   * `server.pem` is the certificate file.
+   * `ca.pem` is the root CA certificate file.
+
+## Private key and certificate files for `digital-signature` authentication (ScalarDL)
+
+ScalarDL has several kinds of authentication methods. If you use `digital-signature` as an authentication method, you must prepare private key and certificate files. For more details on the authentication method, see [ScalarDL Authentication Guide](https://github.com/scalar-labs/docs-internal-scalardl/blob/main/docs/en-us/authentication.md).
+
+### Certificate requirements
+
+* You must use `ECDSA` as an algorithm of private key and certificate files.
+* You must use `P-256` as a curve parameter.
+* You must use `SHA256` as a hash function.
+
+### Example steps to create sample private key and certificate files
+
+You can create sample private key and certificate files by using [`cfssl` and `cfssljson`](https://github.com/cloudflare/cfssl). Please install `cfssl` and `cfssljson` first if you don't install them yet.
+
+:::note
+
+* You can use other tools, like `openssl`, to create the private key and certificate files. Alternatively, you can ask a third-party CA or the administrator of your private CA to create the private key and certificate for your production environment.
+* This example creates a self-signed certificate. However, it is strongly recommended that these certificates **not** be used in production. Please ask trusted issuers (a public CA or your private CA) to create certificate files for your production environment based on your security requirements.
+
+:::
+
+1. Create a working directory.
+
+   ```console
+   mkdir -p ${HOME}/scalardl/digital-signature/certs/
+   ```
+
+1. Change the working directory to `${HOME}/scalardl/digital-signature/certs/`.
+
+   ```console
+   cd ${HOME}/scalardl/digital-signature/certs/
+   ```
+
+1. Create a JSON file that includes CA information.
+
+   ```console
+   cat << 'EOF' > ${HOME}/scalardl/digital-signature/certs/ca.json
+   {
+       "CN": "scalardl-example-ca",
+       "key": {
+           "algo": "ecdsa",
+           "size": 256
+       },
+       "names": [
+           {
+               "C": "JP",
+               "ST": "Tokyo",
+               "L": "Shinjuku",
+               "O": "ScalarDL Example CA"
+           }
+       ]
+   }
+   EOF
+   ```
+
+1. Create the CA private key and certificate files.
+
+   ```console
+   cfssl gencert -initca ca.json | cfssljson -bare ca
+   ```
+
+1. Create a JSON file that includes CA configurations.
+
+   ```console
+   cat << 'EOF' > ${HOME}/scalardl/digital-signature/certs/ca-config.json
+   {
+       "signing": {
+           "default": {
+               "expiry": "87600h"
+           },
+           "profiles": {
+               "scalardl-example-ca": {
+                   "expiry": "87600h",
+                   "usages": [
+                       "signing",
+                       "key encipherment",
+                       "server auth"
+                   ]
+               }
+           }
+       }
+   }
+   EOF
+   ```
+
+1. Create a JSON file that includes client information.
+
+   ```console
+   cat << 'EOF' > ${HOME}/scalardl/digital-signature/certs/client.json
+   {
+       "CN": "scalardl-client",
+       "hosts": [
+           "client.scalardl.example.com",
+           "localhost"
+       ],
+       "key": {
+           "algo": "ecdsa",
+           "size": 256
+       },
+       "names": [
+           {
+               "C": "JP",
+               "ST": "Tokyo",
+               "L": "Shinjuku",
+               "O": "ScalarDL Client Example"
+           }
+       ]
+   }
+   EOF
+   ```
+
+1. Create a JSON file that includes ScalarDL Ledger information.
+
+   ```console
+   cat << 'EOF' > ${HOME}/scalardl/digital-signature/certs/ledger.json
+   {
+       "CN": "scalardl-ledger",
+       "hosts": [
+           "ledger.scalardl.example.com",
+           "localhost"
+       ],
+       "key": {
+           "algo": "ecdsa",
+           "size": 256
+       },
+       "names": [
+           {
+               "C": "JP",
+               "ST": "Tokyo",
+               "L": "Shinjuku",
+               "O": "ScalarDL Ledger Example"
+           }
+       ]
+   }
+   EOF
+   ```
+
+1. Create a JSON file that includes ScalarDL Auditor information.
+
+   ```console
+   cat << 'EOF' > ${HOME}/scalardl/digital-signature/certs/auditor.json
+   {
+       "CN": "scalardl-auditor",
+       "hosts": [
+           "auditor.scalardl.example.com",
+           "localhost"
+       ],
+       "key": {
+           "algo": "ecdsa",
+           "size": 256
+       },
+       "names": [
+           {
+               "C": "JP",
+               "ST": "Tokyo",
+               "L": "Shinjuku",
+               "O": "ScalarDL Auditor Example"
+           }
+       ]
+   }
+   EOF
+   ```
+
+1. Create the private key and certificate files for the client.
+
+   ```console
+   cfssl gencert -ca ca.pem -ca-key ca-key.pem -config ca-config.json -profile scalardl-example-ca client.json | cfssljson -bare client
+   ```
+
+1. Create the private key and certificate files for ScalarDL Ledger.
+
+   ```console
+   cfssl gencert -ca ca.pem -ca-key ca-key.pem -config ca-config.json -profile scalardl-example-ca ledger.json | cfssljson -bare ledger
+   ```
+
+1. Create the private key and certificate files for ScalarDL Auditor.
+
+   ```console
+   cfssl gencert -ca ca.pem -ca-key ca-key.pem -config ca-config.json -profile scalardl-example-ca auditor.json | cfssljson -bare auditor
+   ```
+
+1. Confirm that the private key and certificate files were created.
+
+   ```console
+   ls -1
+   ```
+
+   [Command execution result]
+
+   ```console
+   auditor-key.pem
+   auditor.csr
+   auditor.json
+   auditor.pem
+   ca-config.json
+   ca-key.pem
+   ca.csr
+   ca.json
+   ca.pem
+   client-key.pem
+   client.csr
+   client.json
+   client.pem
+   ledger-key.pem
+   ledger.csr
+   ledger.json
+   ledger.pem
+   ```
+
+   In this case:
+
+   * `client-key.pem` is the private key file for the client.
+   * `client.pem` is the certificate file for the client.
+   * `ledger-key.pem` is the private key file for ScalarDL Ledger.
+   * `ledger.pem` is the certificate file for ScalarDL Ledger.
+   * `auditor-key.pem` is the private key file for ScalarDL Auditor.
+   * `auditor.pem` is the certificate file for ScalarDL Auditor.
+   * `ca.pem` is the root CA certificate file.
