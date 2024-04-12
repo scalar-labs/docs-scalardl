@@ -32,3 +32,7 @@
 .dropdown-separator {
   margin: 0.3rem 0;
 }
+
+.markdown h1:first-child {
+  --ifm-h1-font-size: 2.25rem;
+}
