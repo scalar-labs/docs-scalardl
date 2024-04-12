@@ -153,6 +153,41 @@ auditor:
     allowPrivilegeEscalation: false
 ```
 
+### TLS 構成 (環境に応じてオプション)
+
+次の設定により、すべての ScalarDL Auditor 接続で TLS を有効にすることができます。
+
+```yaml
+auditor:
+  auditorProperties: |
+    scalar.dl.auditor.server.tls.enabled=true
+    scalar.dl.auditor.server.tls.cert_chain_path=/tls/certs/cert-chain.pem
+    scalar.dl.auditor.server.tls.private_key_path=/tls/certs/private-key.pem
+    scalar.dl.auditor.tls.enabled=true
+    scalar.dl.auditor.tls.ca_root_cert_path=/tls/certs/ca-root-cert-for-ledger.pem
+    scalar.dl.auditor.tls.override_authority=envoy.scalar.example.com
+  tls:
+    enabled: true
+    overrideAuthority: "auditor.scalardl.example.com"
+    caRootCertSecret: "scalardl-auditor-tls-ca"
+    certChainSecret: "scalardl-auditor-tls-cert"
+    privateKeySecret: "scalardl-auditor-tls-key"
+    caRootCertForLedgerSecret: "scalardl-auditor-tls-ca-for-ledger"
+```
+
+この場合、次のように、ScalarDL Ledger と ScalarDL Auditor の秘密キーファイルと証明書ファイルを含むシークレットリソースを作成する必要があります。
+
+```console
+kubectl create secret generic scalardl-auditor-tls-ca --from-file=ca-root-cert=/path/to/your/ca/certificate/file/for/auditor -n <NAMESPACE>
+kubectl create secret generic scalardl-auditor-tls-cert --from-file=cert-chain=/path/to/your/auditor/certificate/file -n <NAMESPACE>
+kubectl create secret generic scalardl-auditor-tls-key --from-file=private-key=/path/to/your/auditor/private/key/file -n <NAMESPACE>
+kubectl create secret generic scalardl-auditor-tls-ca-for-ledger --from-file=ca-root-cert-for-ledger=/path/to/your/ca/certificate/file/for/ledger -n <NAMESPACE>
+```
+
+秘密キーと証明書ファイルを準備する方法の詳細については、[Scalar 製品の秘密キーと証明書ファイルを作成する方法](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.md) を参照してください。
+
+また、`auditor.tls.overrideAuthority` を使用して、TLS 通信のカスタム authority を設定することもできます。 実際に接続されているホストは変わりません。 これはテストを目的としていますが、DNS オーバーライドの代替としてテスト以外でも安全に使用できます。 たとえば、`auditor.tls.certChainSecret` を使用して設定した証明書チェーンファイルに示されているホスト名を指定できます。 このチャートでは、startupProbe と livenessProbe にこの値を使用します。
+
 ### レプリカ構成 (環境に応じてオプション)
 
 ScalarDL Auditor のレプリカ (ポッド) の数は、`auditor.replicaCount` を使用して指定できます。
