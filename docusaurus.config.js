@@ -252,7 +252,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/scalar-labs/scalardl',
+                href: 'https://github.com/scalar-labs',
               },
               {
                 label: 'LinkedIn',
@@ -273,15 +273,19 @@ const config = {
             items: [
               {
                 label: 'Pricing',
-                href: 'https://medium.com/scalar-engineering',
+                href: 'https://www.scalar-labs.com/pricing',
+              },
+              {
+                label: 'Docs',
+                href: 'https://developers.scalar-labs.com/docs',
               },
               {
                 label: 'Support',
-                href: 'https://medium.com/scalar-engineering',
+                href: 'https://www.scalar-labs.com/support',
               },
               {
                 label: 'Contact us',
-                href: 'https://medium.com/scalar-engineering',
+                href: 'https://www.scalar-labs.com/contact',
               },
             ],
           },
