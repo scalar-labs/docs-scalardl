@@ -133,11 +133,6 @@ const config = {
             to: '/docs/latest',
             from: ['/', '/docs'],
           },
-          // This redirect takes the user to the latest version of the Japanese docs when they land on the Japanese version of the docs site.
-          // {
-          //   to: '/ja/docs/latest',
-          //   from: ['/ja', '/ja/docs'],
-          // },
         ],
         createRedirects(existingPath) {
           if (existingPath.includes('/docs/ja-jp')) {
