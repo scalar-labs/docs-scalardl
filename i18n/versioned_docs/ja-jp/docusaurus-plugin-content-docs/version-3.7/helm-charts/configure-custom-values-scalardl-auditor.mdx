@@ -1,6 +1,6 @@
 # ScalarDL Auditor のカスタム値ファイルを構成する
 
-このドキュメントでは、ScalarDL Auditor チャートのカスタム値ファイルを作成する方法について説明します。 パラメータの詳細を知りたい場合は、ScalarDL Auditor チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardl-audit/README.md) を参照してください。
+このドキュメントでは、ScalarDL Auditor チャートのカスタム値ファイルを作成する方法について説明します。 パラメータの詳細を知りたい場合は、ScalarDL Auditor チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardl-audit/README.mdx) を参照してください。
 
 ## 必要な構成
 
@@ -8,7 +8,7 @@
 
 ScalarDL Auditor のカスタム値ファイルで Scalar Envoy 構成を設定する必要があります。 これは、ScalarDL Auditor を Kubernetes 環境にデプロイする場合、クライアント リクエストが gRPC リクエストのロード バランサーとして Scalar Envoy 経由で ScalarDL Auditor に送信されるためです。
 
-Scalar Envoy 構成の詳細については、ドキュメント [Scalar Envoy のカスタム値ファイルの構成](configure-custom-values-envoy.md) を参照してください。
+Scalar Envoy 構成の詳細については、ドキュメント [Scalar Envoy のカスタム値ファイルの構成](configure-custom-values-envoy.mdx) を参照してください。
 
 ```yaml
 envoy:
@@ -30,7 +30,7 @@ auditor:
     repository: <SCALARDL_AUDITOR_CONTAINER_IMAGE>
 ```
 
-Scalar 製品のコンテナリポジトリの詳細については、[Scalar 製品のコンテナ イメージを取得する方法](../scalar-kubernetes/HowToGetContainerImages.md) を参照してください。
+Scalar 製品のコンテナリポジトリの詳細については、[Scalar 製品のコンテナ イメージを取得する方法](../scalar-kubernetes/HowToGetContainerImages.mdx) を参照してください。
 
 ### Auditor / データベースの構成
 
@@ -83,7 +83,7 @@ auditor:
 
 たとえば、環境変数を使用してバックエンド データベースの資格情報 (`scalar.db.username` および `scalar.db.password`) を設定でき、これによりポッドの安全性が高まります。
 
-Secret リソースの使用方法の詳細については、ドキュメント [Secret リソースを使用して資格情報を環境変数としてプロパティ ファイルに渡す方法](use-secret-for-credentials.md) を参照してください。
+Secret リソースの使用方法の詳細については、ドキュメント [Secret リソースを使用して資格情報を環境変数としてプロパティ ファイルに渡す方法](use-secret-for-credentials.mdx) を参照してください。
 
 ```yaml
 auditor:
@@ -184,7 +184,7 @@ kubectl create secret generic scalardl-auditor-tls-key --from-file=private-key=/
 kubectl create secret generic scalardl-auditor-tls-ca-for-ledger --from-file=ca-root-cert-for-ledger=/path/to/your/ca/certificate/file/for/ledger -n <NAMESPACE>
 ```
 
-秘密キーと証明書ファイルを準備する方法の詳細については、[Scalar 製品の秘密キーと証明書ファイルを作成する方法](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.md) を参照してください。
+秘密キーと証明書ファイルを準備する方法の詳細については、[Scalar 製品の秘密キーと証明書ファイルを作成する方法](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.mdx) を参照してください。
 
 また、`auditor.tls.overrideAuthority` を使用して、TLS 通信のカスタム authority を設定することもできます。 実際に接続されているホストは変わりません。 これはテストを目的としていますが、DNS オーバーライドの代替としてテスト以外でも安全に使用できます。 たとえば、`auditor.tls.certChainSecret` を使用して設定した証明書チェーンファイルに示されているホスト名を指定できます。 このチャートでは、startupProbe と livenessProbe にこの値を使用します。
 

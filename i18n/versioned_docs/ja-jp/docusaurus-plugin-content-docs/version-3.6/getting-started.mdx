@@ -1,14 +1,14 @@
 # ScalarDL の入門
 
 このドキュメントでは、Client SDK を使用して最初の簡単なコントラクトを実行して、ScalarDL を開始する方法について説明します。
-ここでは、ScalarDL がすでにインストールされており、ScalarDL Ledger が実行されており、ローカルホスト上の 50051 および 50052 ポートをリッスンしていることを前提としています。 そのような環境がない場合は、[ドキュメント](./installation-with-docker.md) に従ってください。 また、コントラクトを実行するために必要な証明書と秘密キーをすでに持っていることも前提としています。
+ここでは、ScalarDL がすでにインストールされており、ScalarDL Ledger が実行されており、ローカルホスト上の 50051 および 50052 ポートをリッスンしていることを前提としています。 そのような環境がない場合は、[ドキュメント](./installation-with-docker.mdx) に従ってください。 また、コントラクトを実行するために必要な証明書と秘密キーをすでに持っていることも前提としています。
 
 ## ScalarDL とは何ですか?
 
 ScalarDL は、正確性、スケーラビリティ、およびデータベース不可知性を実現する、トランザクション データベース システム用のスケーラブルで実用的なビザンチン障害検出ミドルウェアです。
 
 ScalarDL は、次の図に示すように、Ledger、Auditor、および Client SDK で構成されます。 ScalarDL Ledger は、ハッシュ チェーンとデジタル署名を使用した独自の方法でアプリケーション データを管理します。 ScalarDL Auditor はオプションのコンポーネントであり、Ledger に依存せずに Ledger データのコピーを管理して、Ledger データと Auditor データの不一致を特定します。
-クライアント SDK は、Ledger および Auditor と対話するためのユーザー向けプログラムのセットです。 詳細については、[設計ドキュメント](design.md) および [実装の詳細](implementation.md) を参照してください。
+クライアント SDK は、Ledger および Auditor と対話するためのユーザー向けプログラムのセットです。 詳細については、[設計ドキュメント](design.mdx) および [実装の詳細](implementation.mdx) を参照してください。
 
 ![](images/scalardl.png)
 
@@ -75,7 +75,7 @@ cp conf/client.properties .
 
 ## 証明書を登録します
 
-次に、ScalarDL Ledgerに証明書を登録しましょう。 証明書の準備方法については、[caclient-getting-started](ca/caclient-getting-started.md)をご確認ください。
+次に、ScalarDL Ledgerに証明書を登録しましょう。 証明書の準備方法については、[caclient-getting-started](ca/caclient-getting-started.mdx)をご確認ください。
 
 今回は以下のように簡単なツールを使って証明書を登録してみましょう。
 
@@ -170,11 +170,11 @@ client/bin/scalardl validate-ledger --properties client.properties --asset-id="s
 検証で行われる内容は、ScalarDL のセットアップおよび構成方法によって異なります。
 簡単に言うと、ScalarDL Ledger のみが使用されている場合、検証は資産を横断して、資産が再計算可能であり、有効なハッシュ チェーン構造を持つかどうかを確認します。
 ScalarDL Ledger および Auditor を使用すると、集中調整を行わずに、Ledger と Auditor の状態間の不一致 (つまり、ビザンチン障害) を検証でチェックします。
-Auditor による検証の詳細については、[ScalarDL Auditor 入門](getting-started-auditor.md) を参照してください。
+Auditor による検証の詳細については、[ScalarDL Auditor 入門](getting-started-auditor.mdx) を参照してください。
 
 ## 独自の契約を作成する
 
-上で説明したように、コントラクトを作成するために必要なことは、事前定義された基本コントラクト クラスを拡張し、必要に応じて `invoke` メソッドをオーバーライドすることです。 詳細については、[良い契約書の書き方ガイド](how-to-write-contract.md)をご覧ください。
+上で説明したように、コントラクトを作成するために必要なことは、事前定義された基本コントラクト クラスを拡張し、必要に応じて `invoke` メソッドをオーバーライドすることです。 詳細については、[良い契約書の書き方ガイド](how-to-write-contract.mdx)をご覧ください。
 
 ## ClientService と対話する
 
@@ -216,9 +216,9 @@ Auditor による検証の詳細については、[ScalarDL Auditor 入門](gett
 
 ## 参考文献
 
-* [良い契約書の書き方ガイド](how-to-write-contract.md)
-* [優れた関数の書き方に関するガイド](how-to-write-function.md)
-* [ScalarDL Auditor 入門](getting-started-auditor.md)
+* [良い契約書の書き方ガイド](how-to-write-contract.mdx)
+* [優れた関数の書き方に関するガイド](how-to-write-function.mdx)
+* [ScalarDL Auditor 入門](getting-started-auditor.mdx)
 * [Javadoc](https://scalar-labs.github.io/scalardl/javadoc/)
-* [ScalarDL設計ドキュメント](design.md)
-* [ScalarDL 実装](implementation.md)
+* [ScalarDL設計ドキュメント](design.mdx)
+* [ScalarDL 実装](implementation.mdx)

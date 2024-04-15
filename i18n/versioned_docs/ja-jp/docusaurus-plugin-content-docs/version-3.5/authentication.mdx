@@ -9,11 +9,11 @@ ScalarDL は、次の 3 つの状況で認証を使用します。
 * クライアント認証（Ledger と Auditor 用）
   * Ledger と Auditor は、クライアントからのリクエストに添付されたクライアント生成の署名を使用してクライアントを認証します。
 * Ledger 認証（Auditor 用）
-  * Auditor は、[資産証明](how-to-use-proof.md) に添付された Ledger 生成の署名を使用して Ledger を認証します。
+  * Auditor は、[資産証明](how-to-use-proof.mdx) に添付された Ledger 生成の署名を使用して Ledger を認証します。
 * Auditor 認証（Ledger 用）
   * Ledger は、クライアントのリクエストに添付された Auditor が生成した署名を使用して Auditor を認証します。
 
-Ledger 認証と Auditor 認証は Auditor モードでのみ使用されることに注意してください。 Auditor の詳細については、[ScalarDL Auditor 入門](getting-started-auditor.md) および [ScalarDL 実装](implementation.md) を参照してください。
+Ledger 認証と Auditor 認証は Auditor モードでのみ使用されることに注意してください。 Auditor の詳細については、[ScalarDL Auditor 入門](getting-started-auditor.mdx) および [ScalarDL 実装](implementation.mdx) を参照してください。
 
 また、ここでは認証に使用されるバイト配列を指定するために `signature` という用語を使用していることに注意してください。
 
@@ -57,11 +57,11 @@ ScalarDL は、デジタル署名と HMAC という 2 つの認証方法をサ�
       * お客様を識別するために使用します。
     * `scalar.dl.client.entity.identity.digital_signature.cert_pem` または `scalar.dl.client.entity.identity.digital_signature.cert_path` (または `scalar.dl.client.cert_pem` または `scalar.dl.client) .cert_path`、これは非推奨です。)
       * クライアントが生成した署名を検証するために、Ledger と Auditor の証明書を登録するために使用されます。
-      * 証明書の取得方法については、[こちら](https://github.com/scalar-labs/scalardl/blob/master/docs/ca/caclient-getting-started.md) を参照してください。
+      * 証明書の取得方法については、[こちら](https://github.com/scalar-labs/scalardl/blob/master/docs/ca/caclient-getting-started.mdx) を参照してください。
     * `scalar.dl.client.entity.identity.digital_signature.cert_version` (または非推奨の `scalar.dl.client.cert_version`)
     * `scalar.dl.client.entity.identity.digital_signature.private_key_pem` または `scalar.dl.client.entity.identity.digital_signature.private_key_path` (または `scalar.dl.client.private_key_pem` または `scalar.dl.client) .private_key_path`、これは非推奨です。)
       * リクエストの署名に使用されます。
-      * 秘密キーの取得方法については、[こちら](https://github.com/scalar-labs/scalardl/blob/master/docs/ca/caclient-getting-started.md) を参照してください。
+      * 秘密キーの取得方法については、[こちら](https://github.com/scalar-labs/scalardl/blob/master/docs/ca/caclient-getting-started.mdx) を参照してください。
     * `scalar.dl.client.entity.identity.digital_signature.cert_version` (または非推奨の `scalar.dl.client.cert_version`)
   * Ledger 側のプロパティ
     * `scalar.dl.ledger.authentication.method` (`digital-signature`に設定)
@@ -73,7 +73,7 @@ ScalarDL は、デジタル署名と HMAC という 2 つの認証方法をサ�
       * Ledger 認証では資産証明の署名が使用されるため必須です。
     * `scalar.dl.ledger.proof.private_key_pem` または `scalar.dl.ledger.proof.private_key_path`
       * 資産証明に署名するために使用されます。
-      * 秘密キーの取得方法については、[こちら](https://github.com/scalar-labs/scalardl/blob/master/docs/ca/caclient-getting-started.md) を参照してください。
+      * 秘密キーの取得方法については、[こちら](https://github.com/scalar-labs/scalardl/blob/master/docs/ca/caclient-getting-started.mdx) を参照してください。
 * Auditor 側のプロパティ
     * `scalar.dl.auditor.ledger.cert_holder_id`
     * `scalar.dl.auditor.ledger.cert_version`
@@ -91,7 +91,7 @@ ScalarDL は、デジタル署名と HMAC という 2 つの認証方法をサ�
       * クライアント ライブラリを使用して Ledger サービスを直接呼び出すために使用されます。
     * `scalar.dl.auditor.private_key_pem` または `scalar.dl.auditor.private_key_path`
       * クライアントのリクエストと Auditor から Ledger へのリクエストに署名するために使用されます。
-      * 秘密キーの取得方法については、[こちら](https://github.com/scalar-labs/scalardl/blob/master/docs/ca/caclient-getting-started.md) を参照してください。
+      * 秘密キーの取得方法については、[こちら](https://github.com/scalar-labs/scalardl/blob/master/docs/ca/caclient-getting-started.mdx) を参照してください。
 
 ### HMAC
 

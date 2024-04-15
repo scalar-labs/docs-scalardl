@@ -2,7 +2,7 @@
 
 このドキュメントでは、Scalar Helm Chart を使用して Scalar 製品をデプロイする方法について説明します。 minikube クラスターを使用してローカル環境で Scalar 製品をテストする場合は、次のスタート ガイドを参照してください。
 
-* [Scalar Helm Charts の入門](getting-started-scalar-helm-charts.md)
+* [Scalar Helm Charts の入門](getting-started-scalar-helm-charts.mdx)
 
 ## 前提条件
 
@@ -23,7 +23,7 @@ helm repo update scalar-labs
 
 Scalar 製品を展開するには、Kubernetes クラスターを準備する必要があります。 運用環境で EKS (Amazon Elastic Kubernetes Service) または AKS (Azure Kubernetes Service) を使用している場合。 詳細については、次のドキュメントを参照してください。
 
-* [scalar-labs/scalar-kubernetes](https://github.com/scalar-labs/scalar-kubernetes/blob/master/README.md)
+* [scalar-labs/scalar-kubernetes](https://github.com/scalar-labs/scalar-kubernetes/blob/master/README.mdx)
 
 サポートされているバージョンの Kubernetes を準備する必要があります。 Scalar Helm Charts がサポートするバージョンについては、[サポートされる Kubernetes バージョン](https://github.com/scalar-labs/helm-charts#supported-kubernetes-versions) を参照してください。
 
@@ -31,17 +31,17 @@ Scalar 製品を展開するには、Kubernetes クラスターを準備する�
 
 ScalarDB/ScalarDLのバックエンドストレージとしてデータベースを用意する必要があります。 ScalarDB/ScalarDL がサポートするデータベースは次のドキュメントで確認できます。
 
-* [ScalarDB がサポートするデータベース](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md)
+* [ScalarDB がサポートするデータベース](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.mdx)
 
 ### カスタム値ファイルを準備する
 
 環境に基づいてカスタム値ファイルを準備する必要があります。 カスタム値ファイルの作成方法の詳細については、次のドキュメントを参照してください。
 
-* [Scalar Helm Charts のカスタム値ファイルを構成する](configure-custom-values-file.md)
+* [Scalar Helm Charts のカスタム値ファイルを構成する](configure-custom-values-file.mdx)
 
 ### コンテナイメージを取得する
 
-特に商用ライセンス製品を使用する場合は、Scalar 製品のコンテナ イメージを取得する必要があります。 Scalar 製品のコンテナ リポジトリの詳細については、[Scalar 製品のコンテナ イメージを取得する方法](../scalar-kubernetes/HowToGetContainerImages.md) を参照してください。
+特に商用ライセンス製品を使用する場合は、Scalar 製品のコンテナ イメージを取得する必要があります。 Scalar 製品のコンテナ リポジトリの詳細については、[Scalar 製品のコンテナ イメージを取得する方法](../scalar-kubernetes/HowToGetContainerImages.mdx) を参照してください。
 
 PostgreSQL で ScalarDB Analytics などの OSS 製品を使用する場合は、パブリック コンテナ リポジトリからコンテナ イメージを取得できます。
 
@@ -49,11 +49,11 @@ PostgreSQL で ScalarDB Analytics などの OSS 製品を使用する場合は�
 
 各製品の導入方法の詳細については、次のドキュメントを参照してください。
 
-* [ScalarDB Cluster](how-to-deploy-scalardb-cluster.md)
-* [ScalarDB Analytics with PostgreSQL](how-to-deploy-scalardb-analytics-postgresql.md)
-* [ScalarDL Ledger](how-to-deploy-scalardl-ledger.md)
-* [ScalarDL Auditor](how-to-deploy-scalardl-auditor.md)
-* [Scalar Admin for Kubernetes](how-to-deploy-scalar-admin-for-kubernetes.md)
-* [Scalar Manager](how-to-deploy-scalar-manager.md)
-* [[非推奨] ScalarDB Server](how-to-deploy-scalardb.md)
-* [[非推奨] ScalarDB GraphQL](how-to-deploy-scalardb-graphql.md)
+* [ScalarDB Cluster](how-to-deploy-scalardb-cluster.mdx)
+* [ScalarDB Analytics with PostgreSQL](how-to-deploy-scalardb-analytics-postgresql.mdx)
+* [ScalarDL Ledger](how-to-deploy-scalardl-ledger.mdx)
+* [ScalarDL Auditor](how-to-deploy-scalardl-auditor.mdx)
+* [Scalar Admin for Kubernetes](how-to-deploy-scalar-admin-for-kubernetes.mdx)
+* [Scalar Manager](how-to-deploy-scalar-manager.mdx)
+* [[非推奨] ScalarDB Server](how-to-deploy-scalardb.mdx)
+* [[非推奨] ScalarDB GraphQL](how-to-deploy-scalardb-graphql.mdx)

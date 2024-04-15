@@ -19,8 +19,8 @@ You need to subscribe to ScalarDL Ledger and ScalarDL Auditor in the [AWS Market
       * scalardl-schema-loader
 
 Please refer to the following documents for more details.
-   * [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md)
-   * [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md)
+   * [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.mdx)
+   * [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.mdx)
 
 ## Note
 To make Byzantine fault detection with auditing work properly, Ledger and Auditor should be deployed and managed in different administrative domains. However, in this guide, we will deploy Ledger and Auditor in the same Kubernetes cluster to make the test easier.  
@@ -63,7 +63,7 @@ We will deploy the following components on a Kubernetes cluster as follows.
 
 ## Step 1. Start a Kubernetes cluster
 
-First, you need to prepare a Kubernetes cluster. If you use a **minikube** environment, please refer to the [Getting Started with Scalar Helm Charts](./getting-started-scalar-helm-charts.md). If you have already started a Kubernetes cluster, you can skip this step.
+First, you need to prepare a Kubernetes cluster. If you use a **minikube** environment, please refer to the [Getting Started with Scalar Helm Charts](./getting-started-scalar-helm-charts.mdx). If you have already started a Kubernetes cluster, you can skip this step.
 
 ## Step 2. Start PostgreSQL containers
 
@@ -278,8 +278,8 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
 
    Please refer to the following documents for more details.
 
-   * [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md)
-   * [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md)
+   * [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.mdx)
+   * [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.mdx)
 
 1. Create a custom values file for ScalarDL Schema Loader for Ledger (schema-loader-ledger-custom-values.yaml).
    * AWS Marketplace
@@ -705,8 +705,8 @@ We will use certificate files in a Client container. So, we create a secret reso
 ## Step 8. Run ScalarDL sample contracts in the Client container
 
 The following explains the minimum steps. If you want to know more details about ScalarDL Ledger and Auditor, please refer to the following documents.
-   * [Getting Started with ScalarDL](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started.md)
-   * [Getting Started with ScalarDL Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md)
+   * [Getting Started with ScalarDL](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started.mdx)
+   * [Getting Started with ScalarDL Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.mdx)
 
 When you use Auditor, you need to register the certificate for the Ledger and Auditor before starting the client application. Ledger needs to register its certificate to Auditor, and Auditor needs to register its certificate to Ledger.
 
@@ -988,6 +988,6 @@ After completing the ScalarDL Ledger tests on the Kubernetes cluster, remove all
 
 You can see how to get started with monitoring or logging for Scalar products in the following documents.
 
-* [Getting Started with Helm Charts (Monitoring using Prometheus Operator)](./getting-started-monitoring.md)
-* [Getting Started with Helm Charts (Logging using Loki Stack)](./getting-started-logging.md)
-* [Getting Started with Helm Charts (Scalar Manager)](./getting-started-scalar-manager.md)
+* [Getting Started with Helm Charts (Monitoring using Prometheus Operator)](./getting-started-monitoring.mdx)
+* [Getting Started with Helm Charts (Logging using Loki Stack)](./getting-started-logging.mdx)
+* [Getting Started with Helm Charts (Scalar Manager)](./getting-started-scalar-manager.mdx)

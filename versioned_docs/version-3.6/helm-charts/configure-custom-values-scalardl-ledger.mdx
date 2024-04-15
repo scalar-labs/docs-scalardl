@@ -1,6 +1,6 @@
 # Configure a custom values file for ScalarDL Ledger
 
-This document explains how to create your custom values file for the ScalarDL Ledger chart. If you want to know the details of the parameters, please refer to the [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardl/README.md) of the ScalarDL Ledger chart.
+This document explains how to create your custom values file for the ScalarDL Ledger chart. If you want to know the details of the parameters, please refer to the [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardl/README.mdx) of the ScalarDL Ledger chart.
 
 ## Required configurations
 
@@ -8,7 +8,7 @@ This document explains how to create your custom values file for the ScalarDL Le
 
 You must set the Scalar Envoy configurations in the custom values file for ScalarDL Ledger. This is because client requests are sent to ScalarDL Ledger via Scalar Envoy as the load balancer of gRPC requests if you deploy ScalarDL Ledger on a Kubernetes environment.
 
-Please refer to the document [Configure a custom values file for Scalar Envoy](configure-custom-values-envoy.md) for more details on the Scalar Envoy configurations.
+Please refer to the document [Configure a custom values file for Scalar Envoy](configure-custom-values-envoy.mdx) for more details on the Scalar Envoy configurations.
 
 ```yaml
 envoy:
@@ -32,8 +32,8 @@ ledger:
 
 If you're using AWS or Azure, please refer to the following documents for more details:
 
-* [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md)
-* [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md)
+* [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.mdx)
+* [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.mdx)
 
 ### Ledger/Database configurations
 
@@ -86,7 +86,7 @@ If you want to use environment variables to set some properties (e.g., credentia
 
 For example, you can set credentials for a backend database (`scalar.db.username` and `scalar.db.password`) using environment variables, which makes your pods more secure.
 
-Please refer to the document [How to use Secret resources to pass the credentials as the environment variables into the properties file](./use-secret-for-credentials.md) for more details on how to use a Secret resource.
+Please refer to the document [How to use Secret resources to pass the credentials as the environment variables into the properties file](./use-secret-for-credentials.mdx) for more details on how to use a Secret resource.
 
 ```yaml
 ledger:

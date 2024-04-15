@@ -1,14 +1,14 @@
 # Getting Started with ScalarDL
 
 This document explains how to get started with ScalarDL by running your first simple contract using the Client SDK.
-Here, we assume that you have already installed ScalarDL, and ScalarDL Ledger is running and listening to 50051 and 50052 ports on localhost. If you don't have such an environment, please follow [the document](./installation-with-docker.md). We also assume that you already have a certificate and a private key required to run contracts.
+Here, we assume that you have already installed ScalarDL, and ScalarDL Ledger is running and listening to 50051 and 50052 ports on localhost. If you don't have such an environment, please follow [the document](./installation-with-docker.mdx). We also assume that you already have a certificate and a private key required to run contracts.
 
 ## What is ScalarDL?
 
 ScalarDL is scalable and practical Byzantine fault detection middleware for transactional database systems, which achieves correctness, scalability, and database agnosticism.
 
 ScalarDL is composed of Ledger, Auditor, and Client SDK as shown in the following figure. ScalarDL Ledger manages application data in its own unique way using hash-chain and digital signature. ScalarDL Auditor is an optional component and manages a copy of Ledger data without depending on Ledger to identify the discrepancy between Ledger and Auditor data.
-The Client SDK is a set of user-facing programs to interact with Ledger and Auditor. For more details, please read the [design doc](design.md) and [implementation details](implementation.md).
+The Client SDK is a set of user-facing programs to interact with Ledger and Auditor. For more details, please read the [design doc](design.mdx) and [implementation details](implementation.mdx).
 
 ![](images/scalardl.png)
 
@@ -106,7 +106,7 @@ Please update the values of the copied `client.properties` file depending on you
 
 ## Register the certificate
 
-Next, let's register your certificate to ScalarDL Ledger. Please check [caclient-getting-started](ca/caclient-getting-started.md) for how to prepare a certificate.
+Next, let's register your certificate to ScalarDL Ledger. Please check [caclient-getting-started](ca/caclient-getting-started.mdx) for how to prepare a certificate.
 
 This time, let's use a simple tool to register your certificate as follows.
 
@@ -201,11 +201,11 @@ client/bin/validate-ledger --properties client.properties --asset-id="some_asset
 What the validation does is depending on how you set up and configure ScalarDL.
 Briefly speaking, if only ScalarDL Ledger is used, the validation traverses assets to see if the assets can be recomputed and have a valid hash-chain structure.
 With ScalarDL Ledger and Auditor, the validation checks discrepancies (i.e., Byzantine faults) between the states of Ledger and Auditor without centralized coordination.
-Please read [Getting Started with ScalarDL Auditor](getting-started-auditor.md) for more details about the validation with Auditor.
+Please read [Getting Started with ScalarDL Auditor](getting-started-auditor.mdx) for more details about the validation with Auditor.
 
 ## Create your own contracts
 
-As we explained above, what you need to do to create your contracts is to extend the predefined base contract classes and override the `invoke` method as you like. For more detail, please look at [A Guide on How to Write a Good Contract](how-to-write-contract.md).
+As we explained above, what you need to do to create your contracts is to extend the predefined base contract classes and override the `invoke` method as you like. For more detail, please look at [A Guide on How to Write a Good Contract](how-to-write-contract.mdx).
 
 ## Interact with ClientService 
 
@@ -247,9 +247,9 @@ To quickly run and test your contracts in your local environment, [ScalarDL Samp
 
 ## Further reading
 
-* [A Guide on How to Write a Good Contract](how-to-write-contract.md)
-* [A Guide on How to Write a Good Function](how-to-write-function.md)
-* [Getting Started with ScalarDL Auditor](getting-started-auditor.md)
+* [A Guide on How to Write a Good Contract](how-to-write-contract.mdx)
+* [A Guide on How to Write a Good Function](how-to-write-function.mdx)
+* [Getting Started with ScalarDL Auditor](getting-started-auditor.mdx)
 * [Javadoc](https://scalar-labs.github.io/scalardl/javadoc/)
-* [ScalarDL Design Document](design.md)
-* [ScalarDL Implementation](implementation.md)
+* [ScalarDL Design Document](design.mdx)
+* [ScalarDL Implementation](implementation.mdx)

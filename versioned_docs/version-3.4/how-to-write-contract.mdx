@@ -7,7 +7,7 @@ This document sets out some guidelines for writing contracts for ScalarDL.
 
 A contract (a.k.a Smart Contract) for ScalarDL is a Java program extending predefined base contracts (that also extend [ContractBase](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/ContractBase.html) class) written for implementing single business logic. A contract and its arguments are digitally-signed with the contract owner's private key and passed to the ScalarDL. This mechanism allows the contract only to be executed by the owner and makes it possible for the system to detect malicious activity such as data tampering.
 
-Before looking at this document, please check the [Getting Started with ScalarDL](getting-started.md) to understand what ScalarDL is and its basic terminologies.
+Before looking at this document, please check the [Getting Started with ScalarDL](getting-started.mdx) to understand what ScalarDL is and its basic terminologies.
 
 ## Write a simple contract
 
@@ -102,7 +102,7 @@ One common way of creating a non-deterministic contract is to generate the time 
 
 The assets registered through contracts are not able to be deleted to provide tamper-evidence. However, there are cases where you want to delete some assets to follow the rules and regulations of applications you develop. To provide such a data deletion, ScalarDL supports a feature called `Function`.
 
-For more details about `Function`, please check [How to Write Function for ScalarDL](./how-to-write-function.md) guide.
+For more details about `Function`, please check [How to Write Function for ScalarDL](./how-to-write-function.mdx) guide.
 
 ### Send information to Functions
 
@@ -171,6 +171,6 @@ You can find more contract samples in [caliper-benchmarks](https://github.com/sc
 
 ## References
 
-* [Getting Started with ScalarDL](getting-started.md)
-* [ScalarDL Design Document](design.md)
+* [Getting Started with ScalarDL](getting-started.mdx)
+* [ScalarDL Design Document](design.mdx)
 * [Javadoc](https://scalar-labs.github.io/scalardl/javadoc/)

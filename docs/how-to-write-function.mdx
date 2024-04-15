@@ -4,7 +4,7 @@ This document sets out some guidelines for writing functions for ScalarDL.
 
 ## What is a function for ScalarDL ?
 
-A Function (Smart Function) for ScalarDL is a Java program, which extends the predefined base functions such as [JacksonBasedFunction](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/function/JacksonBasedFunction.html) class, written for implementing single business logic. A Function mainly manages the data of a ScalarDL application whereas a Contract manages the evidence of the data. Before looking at this, please check [Getting Started with ScalarDL](getting-started.md) and [How to Write Contract For ScalarDL](how-to-write-contract.md) to understand what ScalarDL is and what ScalarDL can do with contracts.
+A Function (Smart Function) for ScalarDL is a Java program, which extends the predefined base functions such as [JacksonBasedFunction](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/function/JacksonBasedFunction.html) class, written for implementing single business logic. A Function mainly manages the data of a ScalarDL application whereas a Contract manages the evidence of the data. Before looking at this, please check [Getting Started with ScalarDL](getting-started.mdx) and [How to Write Contract For ScalarDL](how-to-write-contract.mdx) to understand what ScalarDL is and what ScalarDL can do with contracts.
 
 ## Background
 
@@ -81,7 +81,7 @@ public class Payment extends JacksonBasedFunction {
 }
 ```
 
-It is a money transfer application written with ScalarDB API, where getting specified account balances, transferring a specified amount of money between the two account balances, and updating the balances. Please also read the [ScalarDB docs](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.md) for more details about ScalarDB API.
+It is a money transfer application written with ScalarDB API, where getting specified account balances, transferring a specified amount of money between the two account balances, and updating the balances. Please also read the [ScalarDB docs](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.mdx) for more details about ScalarDB API.
 
 ### Base Functions
 
@@ -106,7 +106,7 @@ Similar to a Contract using `Ledger` object to manage assets, a Function uses `D
 
 A `functionArgument` is a runtime argument for the Function specified by the requester. The argument is not digitally signed as opposed to the contract argument so that it can be used to pass data that is stored in the database but it might be deleted at some later point for some reason.
 
-`contractArgument` and `contractProperties` are the corresponding contract's argument and properties. See [How to Write a Contract](how-to-write-contract.md) to understand what they are.
+`contractArgument` and `contractProperties` are the corresponding contract's argument and properties. See [How to Write a Contract](how-to-write-contract.mdx) to understand what they are.
 
 ### Receive information from Contracts
 
@@ -124,7 +124,7 @@ The Function feature is enabled by default; thus, nothing needs to be configured
 
 #### Add an application-specific schema
 
-Since Functions can read and write arbitrary records through the ScalarDB CRUD interface, ScalarDL can't define the database schema for the Function by itself. It is the applications' owner's responsibility to define such schema and apply it to the database by themselves or asking system admins to do it depending on who owns and manages the database. For more details about defining database schema for ScalarDB, please read [ScalarDB Schema Loader](https://github.com/scalar-labs/scalardb/blob/master/schema-loader/README.md).
+Since Functions can read and write arbitrary records through the ScalarDB CRUD interface, ScalarDL can't define the database schema for the Function by itself. It is the applications' owner's responsibility to define such schema and apply it to the database by themselves or asking system admins to do it depending on who owns and manages the database. For more details about defining database schema for ScalarDB, please read [ScalarDB Schema Loader](https://github.com/scalar-labs/scalardb/blob/master/schema-loader/README.mdx).
 
 #### Register a Function
 
@@ -157,7 +157,7 @@ Contracts and Functions should be properly used to make the scheme meaningful. A
 
 ## References
 
-* [Getting Started with ScalarDL](getting-started.md)
-* [A Guide on How to Write Contract for ScalarDL](how-to-write-contract.md)
-* [ScalarDL Design Document](design.md)
+* [Getting Started with ScalarDL](getting-started.mdx)
+* [A Guide on How to Write Contract for ScalarDL](how-to-write-contract.mdx)
+* [ScalarDL Design Document](design.mdx)
 * [Javadoc](https://scalar-labs.github.io/scalardl/javadoc/)

@@ -48,11 +48,11 @@ You should create the Kubernetes cluster on a private network since ScalarDB Clu
 
 ### Monitoring and logging
 
-You should monitor the deployed components and collect their logs. For details, see [Monitoring Scalar products on a Kubernetes cluster](K8sMonitorGuide.md) and [Collecting logs from Scalar products on a Kubernetes cluster](K8sLogCollectionGuide.md).
+You should monitor the deployed components and collect their logs. For details, see [Monitoring Scalar products on a Kubernetes cluster](K8sMonitorGuide.mdx) and [Collecting logs from Scalar products on a Kubernetes cluster](K8sLogCollectionGuide.mdx).
 
 ### Backup and restore
 
-You should enable the automatic backup feature and point-in-time recovery (PITR) feature in the backend database. For details, see [Set up a database for ScalarDB/ScalarDL deployment](SetupDatabase.md).
+You should enable the automatic backup feature and point-in-time recovery (PITR) feature in the backend database. For details, see [Set up a database for ScalarDB/ScalarDL deployment](SetupDatabase.mdx).
 
 ## Production checklist: Client applications that access ScalarDB Cluster
 
@@ -68,7 +68,7 @@ If you can't deploy your Java application pods on the same Kubernetes cluster as
 
 :::note
 
-The client mode configuration is dedicated to the Java client library. If you use a programming language other than Java for your application (essentially, if you use the [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) or [gRPC SQL API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md) directly from the programming language), no such configuration exists. In this case, you must deploy Envoy pods.
+The client mode configuration is dedicated to the Java client library. If you use a programming language other than Java for your application (essentially, if you use the [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.mdx) or [gRPC SQL API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.mdx) directly from the programming language), no such configuration exists. In this case, you must deploy Envoy pods.
 
 :::
 
@@ -130,7 +130,7 @@ You must make sure that your application always runs [`commit()`](https://github
 
 :::note
 
-If you use the [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) or [SQL gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md), your application should call a `Commit` or `Rollback` service after you call a `Begin` service to begin a transaction.
+If you use the [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.mdx) or [SQL gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.mdx), your application should call a `Commit` or `Rollback` service after you call a `Begin` service to begin a transaction.
 
 :::
 

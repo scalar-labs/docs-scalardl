@@ -27,7 +27,7 @@ Download the [ScalarDL Client SDK](https://github.com/scalar-labs/scalardl-clien
 ```
 $ SCALAR_SDK_HOME=/path/to/scalardl-client-sdk ./register
 ```
-Run the application using IntelliJ (or the IDE of your choice), or by executing `gradle bootRun` in the project home directory. It should create a server on `localhost:8080` to which you can send HTTP requests in order to interact with the app. See the [API documentation](./docs/api_endpoints.md) for more information. To create HTTP requests we have found that [Postman](https://www.getpostman.com/) is quite nice.
+Run the application using IntelliJ (or the IDE of your choice), or by executing `gradle bootRun` in the project home directory. It should create a server on `localhost:8080` to which you can send HTTP requests in order to interact with the app. See the [API documentation](./docs/api_endpoints.mdx) for more information. To create HTTP requests we have found that [Postman](https://www.getpostman.com/) is quite nice.
 
 ## A short tutorial on writing a ScalarDL application
 
@@ -179,7 +179,7 @@ Finally, transfer 25 from `a111` to `b222`:
 $ ${SCALAR_SDK_HOME}/client/bin/execute-contract --properties ./conf/client.properties --contract-id transfer --contract-argument '{"from": "a111", "to": "b222", "amount": 100}'
 ```
 
-If you were running the application itself, you could execute these commands using the [API endpoints](./docs/api_endpoints.md).
+If you were running the application itself, you could execute these commands using the [API endpoints](./docs/api_endpoints.mdx).
  
 ## ClientService
 

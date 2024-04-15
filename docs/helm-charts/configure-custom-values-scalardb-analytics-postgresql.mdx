@@ -1,6 +1,6 @@
 # Configure a custom values file for ScalarDB Analytics with PostgreSQL
 
-This document explains how to create your custom values file for the ScalarDB Analytics with PostgreSQL chart. For details on the parameters, see the [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardb-analytics-postgresql/README.md) of the ScalarDB Analytics with PostgreSQL chart.
+This document explains how to create your custom values file for the ScalarDB Analytics with PostgreSQL chart. For details on the parameters, see the [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardb-analytics-postgresql/README.mdx) of the ScalarDB Analytics with PostgreSQL chart.
 
 ## Required configurations
 
@@ -8,7 +8,7 @@ This section explains the required configurations when setting up a custom value
 
 ### Database configurations
 
-To access databases via ScalarDB Analytics with PostgreSQL, you must set the `scalardbAnalyticsPostgreSQL.databaseProperties` parameter by following the same syntax that you use to configure the `database.properties` file. For details about configurations, see [ScalarDB Configurations](https://github.com/scalar-labs/scalardb/blob/master/docs/configurations.md).
+To access databases via ScalarDB Analytics with PostgreSQL, you must set the `scalardbAnalyticsPostgreSQL.databaseProperties` parameter by following the same syntax that you use to configure the `database.properties` file. For details about configurations, see [ScalarDB Configurations](https://github.com/scalar-labs/scalardb/blob/master/docs/configurations.mdx).
 
 ```yaml
 scalardbAnalyticsPostgreSQL:
@@ -58,7 +58,7 @@ To use environment variables to set some properties, like credentials, in `scala
 
 For example, you can set credentials for a backend database (`scalar.db.username` and `scalar.db.password`) by using environment variables, which makes your pods more secure.
 
-For more details on how to use a secret resource, see [How to use Secret resources to pass the credentials as the environment variables into the properties file](use-secret-for-credentials.md).
+For more details on how to use a secret resource, see [How to use Secret resources to pass the credentials as the environment variables into the properties file](use-secret-for-credentials.mdx).
 
 ```yaml
 scalardbAnalyticsPostgreSQL:

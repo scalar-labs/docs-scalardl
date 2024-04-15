@@ -27,13 +27,13 @@ DynamoDB はデフォルトで AWS で使用できます。 使用するため�
 
 #### ポイントインタイムリカバリを有効にする (運用環境で推奨)
 
-DynamoDB のバックアップ/復元方法として PITR を有効にすることができます。 [ScalarDB Schema Loader](https://github.com/scalar-labs/scalardb/blob/master/docs/schema-loader.md) を使用してスキーマを作成すると、デフォルトでテーブルの PITR 機能が有効になります。 詳細については公式ドキュメントを参照してください。
+DynamoDB のバックアップ/復元方法として PITR を有効にすることができます。 [ScalarDB Schema Loader](https://github.com/scalar-labs/scalardb/blob/master/docs/schema-loader.mdx) を使用してスキーマを作成すると、デフォルトでテーブルの PITR 機能が有効になります。 詳細については公式ドキュメントを参照してください。
 
 * [Point-in-time recovery for DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery.html)
 
 ポイントインタイム リカバリ機能により自動的かつ継続的にバックアップが作成されるため、バックアップ操作のダウンタイム (一時停止期間) を短縮できるため、この機能をお勧めします。 Scalar 製品データのバックアップ/復元方法の詳細については、次のドキュメントを参照してください。
 
-* [Scalar 製品のバックアップ復元ガイド](BackupRestoreGuide.md)
+* [Scalar 製品のバックアップ復元ガイド](BackupRestoreGuide.mdx)
 
 #### 監視を構成する (運用環境で推奨)
 
@@ -60,7 +60,7 @@ WAN 経由ではないプライベート内部接続によりシステムの安�
 
 テーブルの作成時に、ScalarDB/DL Schema Loader を使用して読み取り/書き込み容量を構成できます。 ScalarDB/DL Schema Loader を使用して読み取り/書き込み容量 (RU) を構成する方法の詳細については、次のドキュメントを参照してください。
 
-* [ScalarDB Schema Loader](https://github.com/scalar-labs/scalardb/blob/master/docs/schema-loader.md)
+* [ScalarDB Schema Loader](https://github.com/scalar-labs/scalardb/blob/master/docs/schema-loader.mdx)
 
 ## MySQL、PostgreSQL、Oracle、SQL Server 用の Amazon RDS
 
@@ -97,7 +97,7 @@ RDS データベース インスタンスを作成する必要があります。
 
 自動バックアップ機能によりポイントインタイムリカバリ機能が有効になるため、これをお勧めします。 データを特定の時点まで復元できます。 Scalar 製品で複数のデータベースを使用する場合、バックアップ操作のダウンタイム (一時停止時間) を短縮できます。 Scalar 製品データのバックアップ/復元方法の詳細については、次のドキュメントを参照してください。
 
-* [Scalar 製品のバックアップ復元ガイド](BackupRestoreGuide.md)
+* [Scalar 製品のバックアップ復元ガイド](BackupRestoreGuide.mdx)
 
 #### 監視を構成する (運用環境で推奨)
 
@@ -154,7 +154,7 @@ Amazon Aurora はデフォルトで自動的にバックアップを取得しま
 
 Scalar 製品データのバックアップ/復元方法の詳細については、次のドキュメントを参照してください。
 
-* [Scalar 製品のバックアップ復元ガイド](BackupRestoreGuide.md)
+* [Scalar 製品のバックアップ復元ガイド](BackupRestoreGuide.mdx)
 
 #### 監視を構成する (運用環境で推奨)
 

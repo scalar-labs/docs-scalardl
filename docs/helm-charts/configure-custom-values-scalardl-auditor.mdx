@@ -1,6 +1,6 @@
 # Configure a custom values file for ScalarDL Auditor
 
-This document explains how to create your custom values file for the ScalarDL Auditor chart. If you want to know the details of the parameters, please refer to the [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardl-audit/README.md) of the ScalarDL Auditor chart.
+This document explains how to create your custom values file for the ScalarDL Auditor chart. If you want to know the details of the parameters, please refer to the [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardl-audit/README.mdx) of the ScalarDL Auditor chart.
 
 ## Required configurations
 
@@ -8,7 +8,7 @@ This document explains how to create your custom values file for the ScalarDL Au
 
 You must set the Scalar Envoy configurations in the custom values file for ScalarDL Auditor. This is because client requests are sent to ScalarDL Auditor via Scalar Envoy as the load balancer of gRPC requests if you deploy ScalarDL Auditor on a Kubernetes environment.
 
-Please refer to the document [Configure a custom values file for Scalar Envoy](configure-custom-values-envoy.md) for more details on the Scalar Envoy configurations.
+Please refer to the document [Configure a custom values file for Scalar Envoy](configure-custom-values-envoy.mdx) for more details on the Scalar Envoy configurations.
 
 ```yaml
 envoy:
@@ -30,7 +30,7 @@ auditor:
     repository: <SCALARDL_AUDITOR_CONTAINER_IMAGE>
 ```
 
-For more details on the container repository for Scalar products, see [How to get the container images of Scalar products](../scalar-kubernetes/HowToGetContainerImages.md).
+For more details on the container repository for Scalar products, see [How to get the container images of Scalar products](../scalar-kubernetes/HowToGetContainerImages.mdx).
 
 ### Auditor/Database configurations
 
@@ -83,7 +83,7 @@ If you want to use environment variables to set some properties (e.g., credentia
 
 For example, you can set credentials for a backend database (`scalar.db.username` and `scalar.db.password`) using environment variables, which makes your pods more secure.
 
-Please refer to the document [How to use Secret resources to pass the credentials as the environment variables into the properties file](use-secret-for-credentials.md) for more details on how to use a Secret resource.
+Please refer to the document [How to use Secret resources to pass the credentials as the environment variables into the properties file](use-secret-for-credentials.mdx) for more details on how to use a Secret resource.
 
 ```yaml
 auditor:
@@ -184,7 +184,7 @@ kubectl create secret generic scalardl-auditor-tls-key --from-file=private-key=/
 kubectl create secret generic scalardl-auditor-tls-ca-for-ledger --from-file=ca-root-cert-for-ledger=/path/to/your/ca/certificate/file/for/ledger -n <NAMESPACE>
 ```
 
-For more details on how to prepare private key and certificate files, see [How to create private key and certificate files for Scalar products](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.md).
+For more details on how to prepare private key and certificate files, see [How to create private key and certificate files for Scalar products](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.mdx).
 
 Also, you can set the custom authority for TLS communication by using `auditor.tls.overrideAuthority`. This value doesn't change what host is actually connected. This value is intended for testing but may safely be used outside of tests as an alternative to DNS overrides. For example, you can specify the hostname presented in the certificate chain file that you set by using `auditor.tls.certChainSecret`. This chart uses this value for `startupProbe` and `livenessProbe`.
 

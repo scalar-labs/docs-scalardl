@@ -21,10 +21,10 @@
 
    管理データベースに基づいてデータベースを復元する方法の詳細については、このガイドの [管理されたデータベースに基づいてデータを復元するための補足手順](RestoreDatabase.md#管理されたデータベースに基づいてデータを復元するための補足手順) セクションを参照してください。
 
-   NoSQL または複数のデータベースを使用している場合は、[Kubernetes 環境での NoSQL データベースのバックアップ](BackupNoSQL.md) のバックアップ手順に従うときに作成した一時停止期間の中間点を指定する必要があります。
+   NoSQL または複数のデータベースを使用している場合は、[Kubernetes 環境での NoSQL データベースのバックアップ](BackupNoSQL.mdx) のバックアップ手順に従うときに作成した一時停止期間の中間点を指定する必要があります。
 3. 新しく復元されたデータベースに基づいて **database.properties**、**ledger.properties**、または **auditor.properties** を更新します。
 
-   PITR 機能はデータベースを別のインスタンスとして復元するため、新しく復元されたデータベースにアクセスするには、ScalarDB または ScalarDL のカスタム値ファイル内のエンドポイント情報を更新する必要があります。 カスタム値ファイルの設定方法の詳細については、[Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md) を参照してください。
+   PITR 機能はデータベースを別のインスタンスとして復元するため、新しく復元されたデータベースにアクセスするには、ScalarDB または ScalarDL のカスタム値ファイル内のエンドポイント情報を更新する必要があります。 カスタム値ファイルの設定方法の詳細については、[Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.mdx) を参照してください。
 
    Amazon DynamoDB を使用している場合、データは別のインスタンスではなく別のテーブル名で復元されることに注意してください。 つまり、データの復元後にエンドポイントは変更されません。 代わりに、Amazon DynamoDB 内のテーブルの名前を変更してデータを復元する必要があります。 同じテーブル名でデータを復元する方法の詳細については、このガイドの [Amazon DynamoDB](RestoreDatabase.md#amazon-dynamodb) セクションを参照してください。
 4. Helm コマンドの `--set *.replicaCount=N` フラグを使用して、ScalarDB または ScalarDL ポッドを **1** 以上にスケールアウトし、クライアントからのリクエストの受け入れを開始します。
@@ -89,7 +89,7 @@ PITR 機能を使用する場合、Azure Cosmos DB は別のアカウントを�
    ScalarDB は、ScalarDB Schema Loader または ScalarDL Schema Loader を使用してスキーマを作成するときにインストールされるストアド プロシージャを使用して Cosmos DB アダプターを実装します。 ただし、Cosmos DB の PITR 機能はストアド プロシージャを復元しないため、復元後にすべてのテーブルに必要なストアド プロシージャを再インストールする必要があります。 ScalarDB Schema Loader または ScalarDL Schema Loader の `--repair-all` オプションを使用して、必要なストアド プロシージャを再インストールできます。
    * **ScalarDB テーブル:** ScalarDB Schema Loader の **database.properties** を構成する方法の詳細については、[Configure ScalarDB for Cosmos DB for NoSQL](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb.md#configure-scalardb-1) を参照してください。
 
-   * **ScalarDL テーブル:** ScalarDL Schema Loader のカスタム値ファイルの設定方法の詳細については、[Configure a custom values file for ScalarDL Schema Loader](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardl-schema-loader.md) を参照してください。
+   * **ScalarDL テーブル:** ScalarDL Schema Loader のカスタム値ファイルの設定方法の詳細については、[Configure a custom values file for ScalarDL Schema Loader](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardl-schema-loader.mdx) を参照してください。
 
 4. 次のように、ScalarDB Schema Loader または ScalarDL Schema Loader で `--repair-all` フラグを使用してストアド プロシージャを再作成します。
 

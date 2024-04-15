@@ -1,6 +1,6 @@
 # ScalarDL Ledger および ScalarDL Auditor 用の EKS クラスターを作成するためのガイドライン
 
-このドキュメントでは、ScalarDL Ledger および ScalarDL Auditor のデプロイ用の Amazon Elastic Kubernetes Service (EKS) クラスターを作成するための要件と推奨事項について説明します。 ScalarDL Ledger と ScalarDL Auditor を EKS クラスターにデプロイする方法の詳細については、[ScalarDL Ledger と ScalarDL Auditor を Amazon EKS にデプロイする](ManualDeploymentGuideScalarDLAuditorOnEKS.md) を参照してください。
+このドキュメントでは、ScalarDL Ledger および ScalarDL Auditor のデプロイ用の Amazon Elastic Kubernetes Service (EKS) クラスターを作成するための要件と推奨事項について説明します。 ScalarDL Ledger と ScalarDL Auditor を EKS クラスターにデプロイする方法の詳細については、[ScalarDL Ledger と ScalarDL Auditor を Amazon EKS にデプロイする](ManualDeploymentGuideScalarDLAuditorOnEKS.mdx) を参照してください。
 
 ## あなたが始める前に
 
@@ -17,7 +17,7 @@ ScalarDL Ledger と ScalarDL Auditor を展開する場合は、次のことを�
   ※ Amazon Virtual Private Cloud (VPC) は次のように設定します。
   * **EKS の VPC (Ledger 用)** と **EKS の VPC (Auditor 用)** を [VPC peering](https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) を使用して接続します。 これを行うには、VPC の作成時に **EKS の VPC (Ledger 用)** と **EKS の VPC (Auditor 用)** に異なる IP 範囲を指定する必要があります。
   * ScalarDL (Auditor モード) が適切に動作するように **Ledger と Auditor 間の接続**を許可します。
-  * これらのネットワーク要件の詳細については、[ScalarDL Auditor Mode のネットワーク ピアリングの構成](NetworkPeeringForScalarDLAuditor.md) を参照してください。
+  * これらのネットワーク要件の詳細については、[ScalarDL Auditor Mode のネットワーク ピアリングの構成](NetworkPeeringForScalarDLAuditor.mdx) を参照してください。
 
 :::warning
 

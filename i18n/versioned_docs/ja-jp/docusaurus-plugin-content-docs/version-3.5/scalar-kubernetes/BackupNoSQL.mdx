@@ -2,7 +2,7 @@
 
 このガイドでは、ScalarDB または ScalarDL が Kubernetes 環境で使用するマネージド データベースのトランザクション的に一貫したバックアップを作成する方法について説明します。 NoSQL データベースまたは複数のデータベースを使用する場合は、トランザクションの一貫性のあるバックアップを作成するために ScalarDB または ScalarDL を**一時停止する必要がある**ことに注意してください。
 
-ScalarDB がデータベースをバックアップする方法の詳細については、[A Guide on How to Backup and Restore Databases Used Through ScalarDB](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.md) を参照してください。
+ScalarDB がデータベースをバックアップする方法の詳細については、[A Guide on How to Backup and Restore Databases Used Through ScalarDB](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.mdx) を参照してください。
 
 このガイドでは、ポイントインタイム リカバリ (PITR) または同等の機能を使用していることを前提としています。 そのため、復旧のためには継続的な取引がない期間を設ける必要があります。 その後、PITR を使用してデータをその特定の期間に復元できます。 進行中のトランザクションがない期間を作成せずにデータをある時点に復元すると、復元されたデータはトランザクション的に不整合となり、ScalarDB または ScalarDL がデータを適切に処理できなくなる可能性があります。
 
@@ -29,7 +29,7 @@ ScalarDB がデータベースをバックアップする方法の詳細につ�
 
 ## 複数のデータベースをバックアップする
 
-[Multi-storage Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/multi-storage-transactions.md) または [Two-phase Commit Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.md)  機能が使用するデータベースが 2 つ以上ある場合は、ScalarDB または ScalarDL のすべてのインスタンスを一時停止し、データベース内に進行中のトランザクションが存在しない同じ期間を作成する必要があります。
+[Multi-storage Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/multi-storage-transactions.mdx) または [Two-phase Commit Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.mdx)  機能が使用するデータベースが 2 つ以上ある場合は、ScalarDB または ScalarDL のすべてのインスタンスを一時停止し、データベース内に進行中のトランザクションが存在しない同じ期間を作成する必要があります。
 
 複数のデータベース間の整合性を確保するには、PITR 機能を使用してデータベースを同じ時点に復元する必要があります。
 

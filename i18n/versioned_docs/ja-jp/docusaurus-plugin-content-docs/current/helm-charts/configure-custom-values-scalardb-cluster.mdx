@@ -1,6 +1,6 @@
 # ScalarDB Cluster のカスタム値ファイルを構成する
 
-このドキュメントでは、ScalarDB Cluster チャートのカスタム値ファイルを作成する方法について説明します。 パラメータの詳細については、ScalarDB Cluster チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardb-cluster/README.md) を参照してください。
+このドキュメントでは、ScalarDB Cluster チャートのカスタム値ファイルを作成する方法について説明します。 パラメータの詳細については、ScalarDB Cluster チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardb-cluster/README.mdx) を参照してください。
 
 ## 必要な構成
 
@@ -16,7 +16,7 @@ scalardbCluster:
 
 ### データベース構成
 
-`scalardbCluster.scalardbClusterNodeProperties` を設定する必要があります。 このパラメータには `scalardb-cluster-node.properties` を設定してください。 ScalarDB Cluster の構成の詳細については、[ScalarDB Cluster Configurations](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-configurations.md) を参照してください。
+`scalardbCluster.scalardbClusterNodeProperties` を設定する必要があります。 このパラメータには `scalardb-cluster-node.properties` を設定してください。 ScalarDB Cluster の構成の詳細については、[ScalarDB Cluster Configurations](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-configurations.mdx) を参照してください。
 
 ```yaml
 scalardbCluster:
@@ -67,7 +67,7 @@ scalardbCluster:
 
 たとえば、環境変数を使用してバックエンド データベースの資格情報 (`scalar.db.username` および `scalar.db.password`) を設定できるため、ポッドの安全性が高まります。
 
-Secret リソースの使用方法の詳細については、[Secret リソースを使用して資格情報を環境変数としてプロパティ ファイルに渡す方法](use-secret-for-credentials.md) を参照してください。
+Secret リソースの使用方法の詳細については、[Secret リソースを使用して資格情報を環境変数としてプロパティ ファイルに渡す方法](use-secret-for-credentials.mdx) を参照してください。
 
 ```yaml
 scalardbCluster:
@@ -166,7 +166,7 @@ kubectl create secret generic scalardb-cluster-tls-cert --from-file=cert-chain=/
 kubectl create secret generic scalardb-cluster-tls-key --from-file=private-key=/path/to/your/private/key/file -n <NAMESPACE>
 ```
 
-秘密キーと証明書ファイルを準備する方法の詳細については、[Scalar 製品の秘密キーと証明書ファイルを作成する方法](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.md) を参照してください。
+秘密キーと証明書ファイルを準備する方法の詳細については、[Scalar 製品の秘密キーと証明書ファイルを作成する方法](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.mdx) を参照してください。
 
 また、`scalardbCluster.tls.overrideAuthority` を使用して、TLS 通信のカスタム authority を設定することもできます。 実際に接続されているホストは変わりません。 これはテストを目的としていますが、DNS オーバーライドの代替としてテスト以外でも安全に使用できます。 たとえば、`scalardbCluster.tls.certChainSecret` を使用して設定した証明書チェーンファイルに示されているホスト名を指定できます。 このチャートでは、startupProbe と livenessProbe にこの値を使用します。
 
@@ -228,7 +228,7 @@ envoy:
 
 また、ScalarDB Cluster のカスタム値ファイルに Scalar Envoy 構成を設定する必要があります。 これは、`indirect` モードで Kubernetes 環境に ScalarDB Cluster をデプロイする場合、クライアントは gRPC リクエストのロード バランサーとして Scalar Envoy を介して ScalarDB Cluster にリクエストを送信する必要があるためです。
 
-Scalar Envoy 構成の詳細については、[Scalar Envoy のカスタム値ファイルの構成](configure-custom-values-envoy.md) を参照してください。
+Scalar Envoy 構成の詳細については、[Scalar Envoy のカスタム値ファイルの構成](configure-custom-values-envoy.mdx) を参照してください。
 
 ```yaml
 envoy:

@@ -1,6 +1,6 @@
 # ScalarDL Ledger および ScalarDL Auditor 用の AKS クラスターを作成するためのガイドライン
 
-このドキュメントでは、ScalarDL Ledger および ScalarDL Auditor のデプロイ用の Azure Kubernetes Service (AKS) クラスターを作成するための要件と推奨事項について説明します。 AKS クラスターに ScalarDL Ledger と ScalarDL Auditor をデプロイする方法の詳細については、[AKS に ScalarDL Ledger と ScalarDL Auditor をデプロイする](ManualDeploymentGuideScalarDLAuditorOnAKS.md) を参照してください。
+このドキュメントでは、ScalarDL Ledger および ScalarDL Auditor のデプロイ用の Azure Kubernetes Service (AKS) クラスターを作成するための要件と推奨事項について説明します。 AKS クラスターに ScalarDL Ledger と ScalarDL Auditor をデプロイする方法の詳細については、[AKS に ScalarDL Ledger と ScalarDL Auditor をデプロイする](ManualDeploymentGuideScalarDLAuditorOnAKS.mdx) を参照してください。
 
 ## あなたが始める前に
 
@@ -21,7 +21,7 @@ ScalarDL Ledger と ScalarDL Auditor を展開する場合は、次のことを�
   * 仮想ネットワーク(VNet) は以下のように設定します。
   * [Virtual network peering](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering) を使用して、**AKS の VNet (Ledger 用)** と **AKS の VNet (Auditor 用)** を接続します。 これを行うには、VNet の作成時に **AKS の VNet (Ledger 用)** と **AKS の VNet (Auditor 用)** に異なる IP 範囲を指定する必要があります。
   * ScalarDL (Auditor モード) が適切に動作するように **Ledger と Auditor 間の接続**を許可します。
-  * これらのネットワーク要件の詳細については、[ScalarDL Auditor Mode のネットワーク ピアリングの構成](NetworkPeeringForScalarDLAuditor.md) を参照してください。
+  * これらのネットワーク要件の詳細については、[ScalarDL Auditor Mode のネットワーク ピアリングの構成](NetworkPeeringForScalarDLAuditor.mdx) を参照してください。
 
 :::warning
 

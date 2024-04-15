@@ -2,11 +2,11 @@
 
 :::note
 
-ScalarDB Server は非推奨になりました。 代わりに [ScalarDB Cluster](configure-custom-values-scalardb-cluster.md) を使用してください。
+ScalarDB Server は非推奨になりました。 代わりに [ScalarDB Cluster](configure-custom-values-scalardb-cluster.mdx) を使用してください。
 
 :::
 
-このドキュメントでは、ScalarDB Server  チャートのカスタム値ファイルを作成する方法について説明します。 パラメータの詳細を知りたい場合は、ScalarDB Server チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardb/README.md) を参照してください。
+このドキュメントでは、ScalarDB Server  チャートのカスタム値ファイルを作成する方法について説明します。 パラメータの詳細を知りたい場合は、ScalarDB Server チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardb/README.mdx) を参照してください。
 
 ## 必要な構成
 
@@ -14,7 +14,7 @@ ScalarDB Server は非推奨になりました。 代わりに [ScalarDB Cluster
 
 ScalarDB Server のカスタム値ファイルに Scalar Envoy 構成を設定する必要があります。 これは、ScalarDB Server を Kubernetes 環境にデプロイする場合、クライアント リクエストが gRPC リクエストのロード バランサーとして Scalar Envoy 経由で ScalarDB Server に送信されるためです。
 
-Scalar Envoy 構成の詳細については、ドキュメント [Scalar Envoy のカスタム値ファイルの構成](configure-custom-values-envoy.md) を参照してください。
+Scalar Envoy 構成の詳細については、ドキュメント [Scalar Envoy のカスタム値ファイルの構成](configure-custom-values-envoy.mdx) を参照してください。
 
 ```yaml
 envoy:
@@ -38,8 +38,8 @@ scalardb:
 
 AWS または Azure を使用している場合、詳細については次のドキュメントを参照してください。
 
-* [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md)
-* [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md)
+* [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.mdx)
+* [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.mdx)
 
 ### データベース構成
 
@@ -89,7 +89,7 @@ scalardb:
 
 たとえば、環境変数を使用してバックエンド データベースの資格情報 (`scalar.db.username` および `scalar.db.password`) を設定でき、これによりポッドの安全性が高まります。
 
-Secret リソースの使用方法の詳細については、ドキュメント [Secret リソースを使用して資格情報を環境変数としてプロパティ ファイルに渡す方法](use-secret-for-credentials.md) を参照してください。
+Secret リソースの使用方法の詳細については、ドキュメント [Secret リソースを使用して資格情報を環境変数としてプロパティ ファイルに渡す方法](use-secret-for-credentials.mdx) を参照してください。
 
 ```yaml
 scalardb:

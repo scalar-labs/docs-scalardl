@@ -1,6 +1,6 @@
 # Configure a custom values file for ScalarDB Cluster
 
-This document explains how to create your custom values file for the ScalarDB Cluster chart. For details on the parameters, see the [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardb-cluster/README.md) of the ScalarDB Cluster chart.
+This document explains how to create your custom values file for the ScalarDB Cluster chart. For details on the parameters, see the [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardb-cluster/README.mdx) of the ScalarDB Cluster chart.
 
 ## Required configurations
 
@@ -16,7 +16,7 @@ scalardbCluster:
 
 ### Database configurations
 
-You must set `scalardbCluster.scalardbClusterNodeProperties`. Please set `scalardb-cluster-node.properties` to this parameter. For more details on the configurations of ScalarDB Cluster, see [ScalarDB Cluster Configurations](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-configurations.md).
+You must set `scalardbCluster.scalardbClusterNodeProperties`. Please set `scalardb-cluster-node.properties` to this parameter. For more details on the configurations of ScalarDB Cluster, see [ScalarDB Cluster Configurations](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-configurations.mdx).
 
 ```yaml
 scalardbCluster:
@@ -67,7 +67,7 @@ To use environment variables to set some properties (e.g., credentials) in `scal
 
 For example, you can set credentials for a backend database (`scalar.db.username` and `scalar.db.password`) by using environment variables, which makes your pods more secure.
 
-For more details on how to use a Secret resource, see [How to use Secret resources to pass the credentials as the environment variables into the properties file](use-secret-for-credentials.md).
+For more details on how to use a Secret resource, see [How to use Secret resources to pass the credentials as the environment variables into the properties file](use-secret-for-credentials.mdx).
 
 ```yaml
 scalardbCluster:
@@ -166,7 +166,7 @@ kubectl create secret generic scalardb-cluster-tls-cert --from-file=cert-chain=/
 kubectl create secret generic scalardb-cluster-tls-key --from-file=private-key=/path/to/your/private/key/file -n <NAMESPACE>
 ```
 
-For more details on how to prepare private key and certificate files, see [How to create private key and certificate files for Scalar products](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.md).
+For more details on how to prepare private key and certificate files, see [How to create private key and certificate files for Scalar products](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.mdx).
 
 Also, you can set the custom authority for TLS communication by using `scalardbCluster.tls.overrideAuthority`. This value doesn't change what host is actually connected. This value is intended for testing but may safely be used outside of tests as an alternative to DNS overrides. For example, you can specify the hostname presented in the certificate chain file that you set by using `scalardbCluster.tls.certChainSecret`. This chart uses this value for `startupProbe` and `livenessProbe`.
 
@@ -228,7 +228,7 @@ envoy:
 
 Also, you must set the Scalar Envoy configurations in the custom values file for ScalarDB Cluster. This is because clients need to send requests to ScalarDB Cluster via Scalar Envoy as the load balancer of gRPC requests if you deploy ScalarDB Cluster in a Kubernetes environment with `indirect` mode.
 
-For more details on Scalar Envoy configurations, see [Configure a custom values file for Scalar Envoy](configure-custom-values-envoy.md).
+For more details on Scalar Envoy configurations, see [Configure a custom values file for Scalar Envoy](configure-custom-values-envoy.mdx).
 
 ```yaml
 envoy:
