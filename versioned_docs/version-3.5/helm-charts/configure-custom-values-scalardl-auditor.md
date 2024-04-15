@@ -30,10 +30,7 @@ auditor:
     repository: <SCALARDL_AUDITOR_CONTAINER_IMAGE>
 ```
 
-If you're using AWS or Azure, please refer to the following documents for more details:
-
-* [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md)
-* [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md)
+For more details on the container repository for Scalar products, see [How to get the container images of Scalar products](../scalar-kubernetes/HowToGetContainerImages.md).
 
 ### Auditor/Database configurations
 
@@ -155,6 +152,41 @@ auditor:
     runAsNonRoot: true
     allowPrivilegeEscalation: false
 ```
+
+### TLS configurations (optional based on your environment)
+
+You can enable TLS in all ScalarDL Auditor connections by using the following configurations:
+
+```yaml
+auditor:
+  auditorProperties: |
+    scalar.dl.auditor.server.tls.enabled=true
+    scalar.dl.auditor.server.tls.cert_chain_path=/tls/certs/cert-chain.pem
+    scalar.dl.auditor.server.tls.private_key_path=/tls/certs/private-key.pem
+    scalar.dl.auditor.tls.enabled=true
+    scalar.dl.auditor.tls.ca_root_cert_path=/tls/certs/ca-root-cert-for-ledger.pem
+    scalar.dl.auditor.tls.override_authority=envoy.scalar.example.com
+  tls:
+    enabled: true
+    overrideAuthority: "auditor.scalardl.example.com"
+    caRootCertSecret: "scalardl-auditor-tls-ca"
+    certChainSecret: "scalardl-auditor-tls-cert"
+    privateKeySecret: "scalardl-auditor-tls-key"
+    caRootCertForLedgerSecret: "scalardl-auditor-tls-ca-for-ledger"
+```
+
+In this case, you have to create secret resources that include private key and certificate files for ScalarDL Ledger and ScalarDL Auditor as follows:
+
+```console
+kubectl create secret generic scalardl-auditor-tls-ca --from-file=ca-root-cert=/path/to/your/ca/certificate/file/for/auditor -n <NAMESPACE>
+kubectl create secret generic scalardl-auditor-tls-cert --from-file=cert-chain=/path/to/your/auditor/certificate/file -n <NAMESPACE>
+kubectl create secret generic scalardl-auditor-tls-key --from-file=private-key=/path/to/your/auditor/private/key/file -n <NAMESPACE>
+kubectl create secret generic scalardl-auditor-tls-ca-for-ledger --from-file=ca-root-cert-for-ledger=/path/to/your/ca/certificate/file/for/ledger -n <NAMESPACE>
+```
+
+For more details on how to prepare private key and certificate files, see [How to create private key and certificate files for Scalar products](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.md).
+
+Also, you can set the custom authority for TLS communication by using `auditor.tls.overrideAuthority`. This value doesn't change what host is actually connected. This value is intended for testing but may safely be used outside of tests as an alternative to DNS overrides. For example, you can specify the hostname presented in the certificate chain file that you set by using `auditor.tls.certChainSecret`. This chart uses this value for `startupProbe` and `livenessProbe`.
 
 ### Replica configurations (Optional based on your environment)
 

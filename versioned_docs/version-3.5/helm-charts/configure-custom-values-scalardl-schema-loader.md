@@ -4,21 +4,6 @@ This document explains how to create your custom values file for the ScalarDL Sc
 
 ## Required configurations
 
-### Image configurations
-
-You must set `schemaLoading.image.repository`. Be sure to specify the ScalarDL Schema Loader container image so that you can pull the image from the container repository.
-
-```yaml
-schemaLoading:
-  image:
-    repository: <SCALARDL_SCHEMA_LOADER_CONTAINER_IMAGE>
-```
-
-If you're using AWS or Azure, please refer to the following documents for more details:
-
-* [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md)
-* [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md)
-
 ### Database configurations
 
 You must set `schemaLoading.databaseProperties`. Please set your `database.properties` to access the backend database to this parameter. Please refer to the [Getting Started with ScalarDB](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb.md) for more details on the database configuration of ScalarDB.
@@ -64,6 +49,16 @@ Please refer to the document [How to use Secret resources to pass the credential
 ```yaml
 schemaLoading:
   secretName: "schema-loader-credentials-secret"
+```
+
+### Image configurations (Default value is recommended)
+
+If you want to change the image repository, you can use `schemaLoading.image.repository` to specify which repository you want to use to pull the ScalarDL Schema Loader container image from.
+
+```yaml
+schemaLoading:
+  image:
+    repository: <SCALARDL_SCHEMA_LOADER_CONTAINER_IMAGE>
 ```
 
 ### Flags configurations (Optional based on your environment)

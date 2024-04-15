@@ -149,6 +149,72 @@ AWS または Azure を使用している場合、詳細については次のド
 * [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md)
 * [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md)
 
+### TLS 構成 (環境に応じてオプション)
+
+以下の通信で TLS を有効にできます。
+
+- クライアントと Scalar Envoy 間のダウンストリーム接続。
+- Scalar Envoy と Scalar 製品間のアップストリーム接続。
+
+#### ダウンストリーム接続で TLS を有効にする
+
+次の設定により、ダウンストリーム接続で TLS を有効にできます。
+
+```yaml
+envoy:
+  tls:
+    downstream:
+      enabled: true
+      certChainSecret: "envoy-tls-cert"
+      privateKeySecret: "envoy-tls-key"
+```
+
+この場合、次のように、Scalar Envoy の秘密キーと証明書ファイルを含むシークレットリソースを作成する必要があります。
+
+```console
+kubectl create secret generic envoy-tls-cert --from-file=cert-chain=/path/to/your/certificate/file -n <NAMESPACE>
+kubectl create secret generic envoy-tls-key --from-file=private-key=/path/to/your/private/key/file -n <NAMESPACE>
+```
+
+秘密キーと証明書ファイルを準備する方法の詳細については、[Scalar 製品の秘密キーと証明書ファイルを作成する方法](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.md) を参照してください。
+
+#### アップストリーム接続で TLS を有効にする
+
+次の設定により、アップストリーム接続で TLS を有効にできます。
+
+```yaml
+envoy:
+  tls:
+    upstream:
+      enabled: true
+      overrideAuthority: "cluster.scalardb.example.com"
+      caRootCertSecret: "scalardb-cluster-tls-ca"
+```
+
+この場合、次のように CA の証明書ファイルを含むシークレットリソースを作成する必要があります。 使用するアップストリーム (ScalarDB Cluster、ScalarDL Ledger、または ScalarDL Auditor) に応じて、対応するルート CA 証明書ファイルを設定する必要があります。
+
+* ScalarDB Cluster
+
+  ```console
+  kubectl create secret generic scalardb-cluster-tls-ca --from-file=ca-root-cert=/path/to/root/ca/cert/file/for/scalardb-cluster -n <NAMESPACE>
+  ```
+
+* ScalarDL Ledger
+
+  ```console
+  kubectl create secret generic scalardl-ledger-tls-ca --from-file=ca-root-cert=/path/to/root/ca/cert/file/for/scalardl-ledger -n <NAMESPACE>
+  ```
+
+* ScalarDL Auditor
+
+  ```console
+  kubectl create secret generic scalardl-auditor-tls-ca --from-file=ca-root-cert=/path/to/root/ca/cert/file/for/scalardl-auditor -n <NAMESPACE>
+  ```
+
+秘密キーと証明書ファイルを準備する方法の詳細については、[Scalar 製品の秘密キーと証明書ファイルを作成する方法](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.md) を参照してください。
+
+また、`envoy.tls.upstream.overrideAuthority` を使用して、TLS 通信のカスタム authority を設定することもできます。 実際に接続されているホストは変わりません。 これはテストを目的としていますが、DNS オーバーライドの代替としてテスト以外でも安全に使用できます。 たとえば、`scalardbCluster.tls.certChainSecret`、`ledger.tls.certChainSecret`、または `auditor.tls.certChainSecret` を使用して設定した証明書チェーンファイルに示されているホスト名を指定できます。 Envoy は、ScalarDB Cluster または ScalarDL との TLS 接続の証明書検証にこの値を使用します。
+
 ### レプリカ構成 (環境に応じてオプション)
 
 Scalar Envoy のレプリカ (ポッド) の数は、`envoy.replicaCount` を使用して指定できます。
