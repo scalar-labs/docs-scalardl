@@ -23,8 +23,7 @@
 
 1. [CFSSLドキュメント](https://github.com/cloudflare/cfssl) に従って cfssl と cfssljson をインストールします。
 
-{% capture notice--info %}
-**注意**
+:::note
 
 以下のスタートガイドの手順を実行する場合は、`cfssl` および `cfssljson` コマンドをインストールする必要があります。
 
@@ -33,7 +32,7 @@
 * [ScalarDL Ledger (Ledger のみ)](getting-started-scalardl-ledger.md)
 * [ScalarDL Ledger と Auditor (Auditor モード)](getting-started-scalardl-auditor.md)
 
-{% endcapture %}
+:::
 
 ## ステップ 2. docker ドライバーで minikube を起動する (オプション / minikube を使用する場合)
 

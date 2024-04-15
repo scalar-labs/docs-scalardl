@@ -1,10 +1,8 @@
-{% capture notice-2 %}
-**Note**
+:::note
 
 Scalar products are currently not available in Azure Marketplace. For details on other ways to get the container images of Scalar products, please see [How to get the container images of Scalar products](./HowToGetContainerImages.md).
-{% endcapture %}
 
-<div class="notice--info">{{ notice-2 | markdownify }}</div>
+:::
 
 # How to install Scalar products through Azure Marketplace
 

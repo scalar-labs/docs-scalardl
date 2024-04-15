@@ -1,10 +1,8 @@
-{% capture notice-2 %}
-**Note**
+:::note
 
 現在、Scalar 製品は Azure Marketplace では入手できません。 Scalar 製品のコンテナ イメージを取得するその他の方法については、[Scalar 製品のコンテナイメージを取得する方法](./HowToGetContainerImages.md) を参照してください。
-{% endcapture %}
 
-<div class="notice--info">{{ notice-2 | markdownify }}</div>
+:::
 
 # Azure Marketplace を通じて Scalar 製品をインストールする方法
 
