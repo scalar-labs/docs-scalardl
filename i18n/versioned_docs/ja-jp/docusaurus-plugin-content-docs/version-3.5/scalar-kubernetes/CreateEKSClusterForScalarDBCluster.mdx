@@ -1,5 +1,9 @@
 # ScalarDB Cluster 用の EKS クラスターを作成するためのガイドライン
 
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
 このドキュメントでは、ScalarDB Cluster 展開用の Amazon Elastic Kubernetes Service (EKS) クラスターを作成するための要件と推奨事項について説明します。 ScalarDB Cluster を EKS クラスターにデプロイする方法の詳細については、[Amazon EKS に ScalarDB Cluster をデプロイする](ManualDeploymentGuideScalarDBClusterOnEKS.mdx) を参照してください。
 
 ## あなたが始める前に
@@ -19,7 +23,7 @@ ScalarDB Cluster をデプロイする場合は、次のことを行う必要が
 
 ### 少なくとも 3 つのワーカーノードと 3 つのポッドを作成します
 
-EKS クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 3 つのポッドをワーカーノードに分散させるための `podAntiAffinity` の [サンプル構成](../conf/scalardb-cluster-custom-values-indirect-mode.yaml) を参照できます。
+EKS クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 3 つのポッドをワーカーノードに分散させるための `podAntiAffinity` の [サンプル構成](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardb-cluster-custom-values-indirect-mode.yaml) を参照できます。
 
 :::note
 

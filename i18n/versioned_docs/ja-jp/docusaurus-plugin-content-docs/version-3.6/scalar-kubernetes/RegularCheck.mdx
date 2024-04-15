@@ -1,5 +1,9 @@
 # Kubernetes 環境で実行するときに定期的にチェックするコンポーネント
 
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
 手動デプロイメント ガイドによってデプロイされたコンポーネントのほとんどは、マネージド Kubernetes サービスと Kubernetes 自己修復機能の助けを借りて自己修復されます。 予期しない動作が発生したときに発生するアラートも設定されています。 したがって、マネージド Kubernetes クラスターに Scalar 製品をデプロイするために毎日行うべきことはそれほど多くありません。 ただし、システムのステータスを定期的にチェックして、すべてが正常に動作しているかどうかを確認することをお勧めします。 ここでは、定期的に実行しておきたいことのリストを示します。
 
 ## Kubernetes リソース

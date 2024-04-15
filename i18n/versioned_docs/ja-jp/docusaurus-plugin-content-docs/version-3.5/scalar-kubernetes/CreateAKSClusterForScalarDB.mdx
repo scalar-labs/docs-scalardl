@@ -1,5 +1,9 @@
 # ScalarDB Server 用の AKS クラスターを作成するためのガイドライン
 
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
 このドキュメントでは、ScalarDB Server デプロイ用の Azure Kubernetes Service (AKS) クラスターを作成するための要件と推奨事項について説明します。 ScalarDB Server を AKS クラスターにデプロイする方法の詳細については、[AKS に ScalarDB Server をデプロイする](ManualDeploymentGuideScalarDBServerOnAKS.mdx) を参照してください。
 
 ## あなたが始める前に
@@ -23,7 +27,7 @@ ScalarDB Server を展開するときは、次のことを行う必要があり�
 
 ### 少なくとも 3 つのワーカーノードと 3 つのポッドを作成します
 
-AKS クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 3 つのポッドをワーカーノードに分散させるための `podAntiAffinity` の [サンプル構成](../conf/scalardb-custom-values.yaml) を参照できます。
+AKS クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 3 つのポッドをワーカーノードに分散させるための `podAntiAffinity` の [サンプル構成](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardb-custom-values.yaml) を参照できます。
 
 :::note
 
