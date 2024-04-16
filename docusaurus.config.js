@@ -144,7 +144,15 @@ const config = {
           return undefined; // Return a falsy value: no redirect created
         },
       },
-    ]
+    ],
+    [
+      require.resolve("docusaurus-lunr-search"),
+      {
+        enableHighlight: true,
+        languages: ['en', 'ja'], // language codes
+        includeRoutes: ['/docs/latest/**', '/ja-jp/docs/latest/**'],
+      },
+    ],
   ],
 
   themeConfig:
