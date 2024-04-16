@@ -1,0 +1,82 @@
+{
+  "version.label": {
+    "message": "3.9",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.Getting Started": {
+    "message": "始めましょう",
+    "description": "The label for category Getting Started in sidebar docs"
+  },
+  "sidebar.docs.category.Samples": {
+    "message": "シンプル",
+    "description": "The label for category Samples in sidebar docs"
+  },
+  "sidebar.docs.category.Develop": {
+    "message": "開発する",
+    "description": "The label for category Develop in sidebar docs"
+  },
+  "sidebar.docs.category.SDKs": {
+    "message": "SDKs",
+    "description": "The label for category Deploy in sidebar docs"
+  },
+  "sidebar.docs.category.Deploy": {
+    "message": "展開する",
+    "description": "The label for category Deploy in sidebar docs"
+  },
+  "sidebar.docs.category.Scalar Kubernetes": {
+    "message": "Scalar Kubernetes",
+    "description": "The label for category Scalar Kubernetes in sidebar docs"
+  },
+  "sidebar.docs.category.Database Setup Guides": {
+    "message": "データベースセットアップガイド",
+    "description": "The label for category Database Setup Guides in sidebar docs"
+  },
+  "sidebar.docs.category.Installation Guides": {
+    "message": "インストールガイド",
+    "description": "The label for category Installation Guides in sidebar docs"
+  },
+  "sidebar.docs.category.Cluster Guides": {
+    "message": "クラスターガイド",
+    "description": "The label for category Cluster Guides in sidebar docs"
+  },
+  "sidebar.docs.category.Container Image Guides": {
+    "message": "コンテナイメージガイド",
+    "description": "The label for category Container Image Guides in sidebar docs"
+  },
+  "sidebar.docs.category.Deployment Guides": {
+    "message": "導入ガイド",
+    "description": "The label for category Deployment Guides in sidebar docs"
+  },
+  "sidebar.docs.category.Configuration Guides": {
+    "message": "構成ガイド",
+    "description": "The label for category Configuration Guides in sidebar docs"
+  },
+  "sidebar.docs.category.Scalar Helm Charts": {
+    "message": "Scalar Helm Charts",
+    "description": "The label for category Scalar Helm Charts in sidebar docs"
+  },
+  "sidebar.docs.category.Manage": {
+    "message": "管理",
+    "description": "The label for category Manage in sidebar docs"
+  },
+  "sidebar.docs.category.Monitoring Guides": {
+    "message": "モニタリングガイド",
+    "description": "The label for category Monitoring Guides in sidebar docs"
+  },
+  "sidebar.docs.category.Backup and Restore Guides": {
+    "message": "バックアップと復元のガイド",
+    "description": "The label for category Backup and Restore Guides in sidebar docs"
+  },
+  "sidebar.docs.category.Reference": {
+    "message": "参照",
+    "description": "The label for category Reference in sidebar docs"
+  },
+  "sidebar.docs.category.Releases": {
+    "message": "リリース",
+    "description": "The label for category Releases in sidebar docs"
+  },
+  "sidebar.docs.doc.Home": {
+    "message": "ホーム",
+    "description": "The label for the doc item Home 3.8 in sidebar docs, linking to the doc index"
+  }
+}

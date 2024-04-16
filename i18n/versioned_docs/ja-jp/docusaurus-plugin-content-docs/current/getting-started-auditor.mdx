@@ -1,0 +1,171 @@
+# ScalarDL Auditor の使用を開始する
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このドキュメントでは、ScalarDL Auditor の使用を開始する方法について説明します。
+ここでは、読者がすでに以下のガイドを読み終えており、ScalarDL 全体についてある程度の経験を積んでいることを前提としています。
+
+* [ScalarDL 入門](getting-started.mdx)
+* [ScalarDL の適切な契約書の書き方に関するガイド](how-to-write-contract.mdx)
+* [ScalarDL 関数の書き方ガイド](how-to-write-function.mdx)
+* [ScalarDL でアセット プルーフを使用する方法に関するガイド](how-to-use-proof.mdx)
+
+## ScalarDL Auditor とは何ですか?
+
+ScalarDL Auditor は、Ledger の同一の状態を管理し、クライアントによるビザンチン障害の検出を支援するコンポーネントです。
+Auditor を使用すると、セキュリティの観点からは大きなメリットがありますが、追加の処理コストがかかるため、本当に必要な場合は慎重に検討してください。
+
+Auditor によるビザンチン障害検出を適切に機能させるには、Ledger と Auditor を異なる管理ドメインに展開して管理する必要があります。
+ただし、この入門ガイドでは、それらが同じネットワークに配置され、同じ管理ドメインで管理されることを前提としています。
+
+## 前提条件
+
+このガイドでは、Ledger と Auditor の両方が ScalarDB 経由で Cassandra を使用し、両方の Cassandra インスタンスが管理者権限としてデフォルトのユーザー名とパスワードを使用すると仮定します。
+また、Ledger、Auditor、および Cassandra はすべて同じネットワーク内に配置されているため、相互にアクセスできます。
+
+## プロパティを構成する
+
+検出が適切に機能するように、Ledger と Auditor を構成する必要があります。
+
+Ledger のプロパティについては、次のエントリを構成する必要があります。
+
+```
+[ledger.properties]
+scalar.dl.ledger.proof.enabled=true
+scalar.dl.ledger.proof.private_key_path=/path/to/private_key.pem
+scalar.dl.ledger.nonce_txid.enabled=true
+scalar.dl.ledger.auditor.enabled=true
+#scalar.dl.ledger.auditor.cert_holder_id=auditor
+#scalar.dl.ledger.auditor.cert_version=1
+```
+
+まず、`scalar.dl.ledger.auditor.enabled` を true に設定して、ScalarDL システムが Auditor を使用しているかどうかを Ledger に知らせる必要があります。
+Auditor は [AssetProof](how-to-use-proof.mdx) を使用して機能するため、`scalar.dl.ledger.proof.enabled` を有効にし、適切な秘密鍵を `scalar.dl.ledger.proof.private_key_path` に設定する必要もあることに注意してください。
+これらが適切かつ一貫して構成されていない場合、Ledger は例外をスローします。
+
+また、Ledger は Auditor の証明書を管理し (つまり、 Auditor はその証明書を Ledger に登録する必要があります)、その証明書を使用して Auditor の秘密鍵で署名されたリクエストを検証し、リクエストの送信元を識別します。 したがって、証明書所有者 ID (`scalar.dl.ledger.auditor.cert_holder_id`) とバージョン (`scalar.dl.ledger.auditor.cert_version`) も設定する必要があります。
+デフォルトでは、Ledger は、Auditor がその証明書を名前 `auditor` 、バージョン `1` で登録すると想定します。
+
+Auditor のプロパティについては、次のエントリを構成する必要があります。
+
+```
+[auditor.properties]
+#scalar.dl.auditor.ledger.cert_holder_id=ledger
+#scalar.dl.auditor.ledger.cert_version=1
+#scalar.dl.auditor.cert_holder_id=auditor
+#scalar.dl.auditor.cert_version=1
+scalar.dl.auditor.cert_path=/path/to/auditor.pem
+scalar.dl.auditor.private_key_path=/path/to/auditor-key.pem
+```
+
+Auditor は、Ledger にリクエストを送信する前にリクエストに署名するキーペアを管理し、Ledger から与えられたリクエストを検証するため、`scalar.dl.auditor.cert_path` と `scalar.dl.auditor.private_key_path` を適切に設定する必要があります。
+
+Ledgerと同様に、AuditorはLedgerの証明書を管理し(つまり、Ledgerがその証明書をAuditorに登録し)、その証明書を使用してLedgerの秘密鍵によって署名されたリクエストを検証します。 したがって、証明書所有者 ID (`scalar.dl.auditor.ledger.cert_holder_id=ledger`) とバージョン (`scalar.dl.auditor.ledger.cert_version`) が必要です。
+デフォルトでは、Auditor は Ledger がその証明書を名前 `ledger` 、バージョン `1` で登録していると想定します。
+
+その他の値はここではオプションですが、環境に応じて更新する必要があります。
+たとえば、Ledger と Auditor を異なるホストに配置する場合、Auditor が Ledger にアクセスできるように、`scalar.dl.auditor.ledger.host` を更新する必要があります。
+詳細については、[設定ファイル](https://github.com/scalar-labs/scalar/blob/master/auditor/conf/auditor.properties) を確認してください。
+
+## Ledger と Auditor を開始する
+
+独自の方法で Ledger と Auditor を起動してください。
+たとえば、組み込みのコマンド ライン ツールを使用する場合は、次のように実行します。
+
+Ledger：
+
+```shell
+bin/scalar-ledger --properties ledger.properties
+```
+
+Auditor:
+
+```shell
+bin/scalar-auditor --properties auditor.properties
+```
+
+[GitHub Container Registry](https://github.com/orgs/scalar-labs/packages) で入手可能なコンテナを使用することもできます。
+コンテナーの使用方法の詳細については、[saclardl-samples](https://github.com/scalar-labs/scalardl-samples) リポジトリを参照してください。
+
+## Ledger と Auditor の各証明書を登録します
+
+説明したように、Ledger はその証明書を Auditor に登録する必要があり、Auditor はその証明書を Ledger に登録する必要があります。 これは、次のようにクライアントとして登録することで実行できます。
+
+Ledger がその証明書を Auditor に登録します。
+
+```shell
+client/bin/scalardl register-cert --properties client.properties.ledger
+```
+
+Auditor は証明書を Ledger に登録します。
+
+```shell
+client/bin/scalardl register-cert --properties client.properties.auditor
+```
+
+`client.properties.ledger` と `client.properties.auditor` を正しく設定してください。
+(このドキュメントは、client.properties を適切に構成する方法を理解していることを前提としています。)
+`scalar.dl.client.cert_holder_id` は、Ledger と Auditor でそれぞれ設定されたものと一致するように適切に設定する必要があることに注意してください。
+
+## 証明書を登録します
+
+また、Auditor で ScalarDL と対話する前に、クライアントのプロパティ ファイルを更新する必要があります。
+次のエントリを更新してください。
+
+```
+[client.properties]
+scalar.dl.client.auditor.enabled=true
+scalar.dl.client.auditor.host=localhost
+```
+
+その後、通常と同じように (Auditor なしで) 証明書を登録できます。
+
+```shell
+client/bin/scalardl register-cert --properties client.properties
+```
+
+これにより、Ledger と Auditor の両方に証明書が登録されることに注意してください。
+
+## 契約を登録する
+
+契約書の登録も通常通り行うことができます。
+
+```shell
+client/bin/scalardl register-contract --properties client.properties --contract-id StateUpdater --contract-binary-name com.org1.contract.StateUpdater --contract-class-file build/classes/java/main/com/org1/contract/StateUpdater.class
+```
+
+これにより、Ledger と Auditor の両方に契約が登録されることに注意してください。
+
+## 契約を実行する
+
+これで、通常どおり次のコマンドを使用してコントラクトを実行する準備が整いました。
+
+```shell
+client/bin/scalardl execute-contract --properties client.properties --contract-id StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}'
+```
+
+これにより、Ledger と Auditor の間で少し複雑なプロトコルがトリガーされ、お互いを信頼せずに同じ状態になることに注意してください。
+コンポーネントの 1 つに改ざんがある場合、実行中にコンポーネント間の不一致が検出される可能性があります。
+
+## Ledger と Auditor の状態を検証する
+
+Ledger と Auditor の状態を常に検証して、それらが一貫しているかどうかを確認することもできます。
+ただし、Auditor モードでの状態の検証にはコントラクトの実行が使用されます。 したがって、最初に次のように [ValidateLedger](https://github.com/scalar-labs/scalardl-java-client-sdk/blob/master/src/main/java/com/scalar/dl/client/contract/ValidateLedger.java) コントラクトを登録する必要があります。 `validate-ledger` は、クライアントが検証を行うときに指定するデフォルトのコントラクト ID であることに注意してください。
+
+```shell
+client/bin/scalardl register-contract --properties client.properties --contract-id validate-ledger --contract-binary-name com.scalar.dl.client.contract.ValidateLedger --contract-class-file /path/to/ValdateLedger.class
+```
+
+その後、通常と同じように `validate-ledger` コマンドを発行できます。
+
+```shell
+client/bin/scalardl validate-ledger --properties client.properties --asset-id="some_asset"
+```
+
+`ValidateLedger` のコントラクトIDを変更したい場合は、クライアントにそれを知らせるために以下の設定を変更する必要があります。
+
+```
+scalar.dl.client.auditor.linearizable_validation.contract_id=your-validate-ledger-id
+```
