@@ -166,6 +166,7 @@ const config = {
           alt: 'ScalarDL logo',
           src: 'img/scalardl-logo.png',
           href: 'https://scalardl.scalar-labs.com/docs/',
+          target: '_self',
         },
         items: [
           {
