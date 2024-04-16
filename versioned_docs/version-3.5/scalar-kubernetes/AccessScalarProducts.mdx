@@ -99,7 +99,7 @@ If you deploy your application (client) in an environment outside the Kubernetes
 
 You can create a load balancer by setting `envoy.service.type` to `LoadBalancer` in your custom values file. After configuring the custom values file, you can use Scalar Envoy through a Kubernetes service resource by using the load balancer. You can also set the load balancer configurations by using annotations.
 
-For more details on how to configure your custom values file, see [Service configurations](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-envoy.md#service-configurations).
+For more details on how to configure your custom values file, see [Service configurations](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-envoy.mdx#service-configurations).
 
 When using a load balancer, you must set the FQDN or IP address of the load balancer in the properties file for the application (client) as follows.
 
@@ -146,7 +146,7 @@ The concrete implementation of the load balancer and access method depend on the
 
 You can run client requests to ScalarDB or ScalarDL from a bastion server by running the `kubectl port-forward` command. If you create a ScalarDL Auditor mode environment, however, you must run two `kubectl port-forward` commands with different kubeconfig files from one bastion server to access two Kubernetes clusters.
 
-1. **(ScalarDL Auditor mode only)** In the bastion server for ScalarDL Ledger, configure an existing kubeconfig file or add a new kubeconfig file to access the Kubernetes cluster for ScalarDL Auditor. For details on how to configure the kubeconfig file of each managed Kubernetes cluster, see [Configure kubeconfig](./CreateBastionServer.md#configure-kubeconfig).
+1. **(ScalarDL Auditor mode only)** In the bastion server for ScalarDL Ledger, configure an existing kubeconfig file or add a new kubeconfig file to access the Kubernetes cluster for ScalarDL Auditor. For details on how to configure the kubeconfig file of each managed Kubernetes cluster, see [Configure kubeconfig](./CreateBastionServer.mdx#configure-kubeconfig).
 2. Configure port forwarding to each service from the bastion server.
    * **ScalarDB Server**
 

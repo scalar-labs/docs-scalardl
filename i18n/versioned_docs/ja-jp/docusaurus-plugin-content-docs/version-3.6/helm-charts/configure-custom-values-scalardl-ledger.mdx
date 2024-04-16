@@ -34,7 +34,10 @@ ledger:
     repository: <SCALARDL_LEDGER_CONTAINER_IMAGE>
 ```
 
-Scalar 製品のコンテナリポジトリの詳細については、[Scalar 製品のコンテナ イメージを取得する方法](../scalar-kubernetes/HowToGetContainerImages.mdx) を参照してください。
+AWS または Azure を使用している場合、詳細については次のドキュメントを参照してください。
+
+* [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.mdx)
+* [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.mdx)
 
 ### Ledger/データベースの構成
 
@@ -58,7 +61,7 @@ ledger:
 
 この場合、秘密キー ファイルを ScalarDL Ledger ポッドにマウントする必要があります。
 
-秘密キー ファイルをマウントする方法の詳細については、[ScalarDL Helm Charts のポッドにキーファイルと証明書ファイルをマウントする](mount-files-or-volumes-on-scalar-pods.md#scalardl-helm-charts-のポッドにキーファイルと証明書ファイルをマウントする) を参照してください。
+秘密キー ファイルをマウントする方法の詳細については、[ScalarDL Helm Charts のポッドにキーファイルと証明書ファイルをマウントする](mount-files-or-volumes-on-scalar-pods.mdx#scalardl-helm-charts-のポッドにキーファイルと証明書ファイルをマウントする) を参照してください。
 
 ## オプションの構成
 
@@ -156,36 +159,6 @@ ledger:
     runAsNonRoot: true
     allowPrivilegeEscalation: false
 ```
-
-### TLS 構成 (環境に応じてオプション)
-
-次の設定により、すべての ScalarDL Ledger 接続で TLS を有効にすることができます。
-
-```yaml
-ledger:
-  ledgerProperties: |
-    scalar.dl.ledger.server.tls.enabled=true
-    scalar.dl.ledger.server.tls.cert_chain_path=/tls/certs/cert-chain.pem
-    scalar.dl.ledger.server.tls.private_key_path=/tls/certs/private-key.pem
-  tls:
-    enabled: true
-    overrideAuthority: "ledger.scalardl.example.com"
-    caRootCertSecret: "scalardl-ledger-tls-ca"
-    certChainSecret: "scalardl-ledger-tls-cert"
-    privateKeySecret: "scalardl-ledger-tls-key"
-```
-
-この場合、次のように、ScalarDL Ledger の秘密キーファイルと証明書ファイルを含むシークレットリソースを作成する必要があります。
-
-```console
-kubectl create secret generic scalardl-ledger-tls-ca --from-file=ca-root-cert=/path/to/your/ca/certificate/file -n <NAMESPACE>
-kubectl create secret generic scalardl-ledger-tls-cert --from-file=cert-chain=/path/to/your/certificate/file -n <NAMESPACE>
-kubectl create secret generic scalardl-ledger-tls-key --from-file=private-key=/path/to/your/private/key/file -n <NAMESPACE>
-```
-
-秘密キーと証明書ファイルを準備する方法の詳細については、[Scalar 製品の秘密キーと証明書ファイルを作成する方法](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.mdx) を参照してください。
-
-また、`ledger.tls.overrideAuthority` を使用して、TLS 通信のカスタム authority を設定することもできます。 実際に接続されているホストは変わりません。 これはテストを目的としていますが、DNS オーバーライドの代替としてテスト以外でも安全に使用できます。 たとえば、`ledger.tls.certChainSecret` を使用して設定した証明書チェーンファイルに示されているホスト名を指定できます。 このチャートでは、startupProbe と livenessProbe にこの値を使用します。
 
 ### レプリカ構成 (環境に応じてオプション)
 

@@ -102,7 +102,7 @@ The old [Function](https://scalar-labs.github.io/scalardl/javadoc/ledger/com/sca
 
 ### About the `invoke` arguments
 
-Similar to a Contract using `Ledger` object to manage assets, a Function uses `Database` object to manage records of the underlying database. Note that `Database` implements [ScalarDB](https://github.com/scalar-labs/scalardb) interface so that you can do the CRUD operations base on [the data model](https://github.com/scalar-labs/scalardb/blob/master/docs/design.md#data-model) of ScalarDB. 
+Similar to a Contract using `Ledger` object to manage assets, a Function uses `Database` object to manage records of the underlying database. Note that `Database` implements [ScalarDB](https://github.com/scalar-labs/scalardb) interface so that you can do the CRUD operations base on [the data model](https://github.com/scalar-labs/scalardb/blob/master/docs/design.mdx#data-model) of ScalarDB. 
 
 A `functionArgument` is a runtime argument for the Function specified by the requester. The argument is not digitally signed as opposed to the contract argument so that it can be used to pass data that is stored in the database but it might be deleted at some later point for some reason.
 
@@ -112,7 +112,7 @@ A `functionArgument` is a runtime argument for the Function specified by the req
 
 In non-deprecated Functions like `JacksonBasedFunction`, you can receive some information from Contracts by calling `T getContractContext()`.
 Note that the return value can be null if Contracts has nothing set and the base Function class that you use will decide the return value type `T`.
-For details on how to send information to Functions from Contracts, see [Send information to Functions](./how-to-write-contract.md#send-information-to-functions).
+For details on how to send information to Functions from Contracts, see [Send information to Functions](./how-to-write-contract.mdx#send-information-to-functions).
 
 ```Java
 JsonNode context = getContractContext();

@@ -2,19 +2,19 @@
 
 This guide explains how to deploy ScalarDB Cluster on Amazon Elastic Kubernetes Service (EKS).
 
-In this guide, you will create one of the following two environments in your AWS environment. The environments differ depending on which [client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#client-modes) you use:
+In this guide, you will create one of the following two environments in your AWS environment. The environments differ depending on which [client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.mdx#client-modes) you use:
 
-* **[`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode).** In this mode, you deploy your application in the same EKS cluster as your ScalarDB Cluster deployment.
+* **[`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.mdx#direct-kubernetes-client-mode).** In this mode, you deploy your application in the same EKS cluster as your ScalarDB Cluster deployment.
 
   ![image](images/png/EKS_ScalarDB_Cluster_Direct_Kubernetes_Mode.drawio.png)  
 
-* **[`indirect` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#indirect-client-mode).** In this mode, you deploy your application in an environment that is different from the EKS cluster that contains your ScalarDB Cluster deployment.
+* **[`indirect` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.mdx#indirect-client-mode).** In this mode, you deploy your application in an environment that is different from the EKS cluster that contains your ScalarDB Cluster deployment.
 
   ![image](images/png/EKS_ScalarDB_Cluster_Indirect_Mode.drawio.png)
 
 ## Step 1. Subscribe to ScalarDB Cluster in AWS Marketplace
 
-You must get the ScalarDB Cluster container image by visiting AWS Marketplace and subscribing to [ScalarDB Cluster Standard Edition (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-jx6qxatkxuwm4) or [ScalarDB Cluster Premium Edition (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-djqw3zk6dwyk6). For details on how to subscribe to ScalarDB Cluster in AWS Marketplace, see [Subscribe to Scalar products from AWS Marketplace](AwsMarketplaceGuide.md#subscribe-to-scalar-products-from-aws-marketplace).
+You must get the ScalarDB Cluster container image by visiting AWS Marketplace and subscribing to [ScalarDB Cluster Standard Edition (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-jx6qxatkxuwm4) or [ScalarDB Cluster Premium Edition (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-djqw3zk6dwyk6). For details on how to subscribe to ScalarDB Cluster in AWS Marketplace, see [Subscribe to Scalar products from AWS Marketplace](AwsMarketplaceGuide.mdx#subscribe-to-scalar-products-from-aws-marketplace).
 
 ## Step 2. Create an EKS cluster
 
@@ -52,7 +52,7 @@ After deploying ScalarDB Cluster in your EKS cluster, we recommend monitoring th
 
 ## Step 9. Deploy your application
 
-If you use [`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode), you must deploy additional Kubernetes resources. For details, see [Deploy your client application on Kubernetes with `direct-kubernetes` mode](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-cluster.md#deploy-your-client-application-on-kubernetes-with-direct-kubernetes-mode).
+If you use [`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.mdx#direct-kubernetes-client-mode), you must deploy additional Kubernetes resources. For details, see [Deploy your client application on Kubernetes with `direct-kubernetes` mode](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-cluster.mdx#deploy-your-client-application-on-kubernetes-with-direct-kubernetes-mode).
 
 ## Remove ScalarDB Cluster from EKS
 
