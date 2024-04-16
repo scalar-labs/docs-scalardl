@@ -102,32 +102,3 @@ scalarAdminForKubernetes:
       operator: Equal
       value: scalardb-analytics-postgresql
 ```
-
-### TLS 構成 (環境に応じてオプション)
-
-次のような設定を実施することで、Scalar Admin for Kubernetes と一時停止ターゲット (ScalarDB Cluster または ScalarDL) の間での TLS 通信を有効にすることができます。
-
-```yaml
-scalarAdminForKubernetes:
-  commandArgs:
-    - (omit other options)
-    - --tls
-    - --ca-root-cert-path
-    - /tls/certs/ca.crt
-    - --override-authority
-    - cluster.scalardb.example.com
-```
-
-シークレットリソースを使用して、`/tls/certs/ca.crt` ファイルをポッドにマウントできます。 `scalarAdminForKubernetes.tls.caRootCertSecret` にルート CA 証明書ファイルを含むシークレットリソースの名前を指定してください。
-
-```yaml
-scalarAdminForKubernetes:
-  tls:
-    caRootCertSecret: "scalar-admin-tls-ca"
-```
-
-この場合、次のように、一時停止ターゲット (ScalarDB Cluster または ScalarDL) のルート CA 証明書ファイルを含むシークレットリソースを作成する必要があります。
-
-```console
-kubectl create secret generic scalar-admin-tls-ca --from-file=ca.crt=/path/to/your/ca/certificate/file -n <NAMESPACE>
-```
