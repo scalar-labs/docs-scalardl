@@ -1,22 +1,12 @@
-# Node.js and NPM
-node_modules
-npm-debug.log*
-package-lock.json
-codekit-config.json
+# Dependencies
+/node_modules
 
-# macOS
-.DS_Store
+# Production
+/build
 
-# Gradle build files
-.gradle
-
-# IntelliJ IDEA
-.idea
-
-# Docusaurus-generated files
+# Generated files
 .docusaurus
 .cache-loader
-/build
 
 # Misc
 .DS_Store
