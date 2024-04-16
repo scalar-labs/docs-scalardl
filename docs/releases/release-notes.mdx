@@ -1,0 +1,125 @@
+# ScalarDL 3.9 Release Notes
+
+This page includes a list of release notes for ScalarDL 3.9.
+
+## v3.9.0
+
+**Release date:** April 5, 2024
+
+### Summary
+
+This release includes several enhancements, such as introducing a single top-level command, “scalardl”, which integrates all ScalarDL management commands for better usability and a gateway functionality to let developers write ScalarDL applications using any programming language. This release also has a lot of improvements and bug fixes. See the following for detailed changes.
+
+### Enhancements
+
+- Added "scalardl" command for better usability.
+- Added ScalarDL Gateway.
+- Added license-checking mechanism.
+- Added TLS support for the Prometheus exporter.
+
+### Improvements
+
+- Improved gRPC configurations in clients and servers.
+- Improved the GateKeeper behavior.
+- Improved CI release workflow.
+- Improved CI tests and maintenance.
+- Made the servers transition to decommissioning state before shutting down.
+- Made contracts and functions loadable in registration time.
+- Supported OpenShift.
+- Migrated schema-loader back.
+- Upgraded depending libraries.
+- Bump actions/checkout from 2 to 4.
+- Bump aws-actions/configure-aws-credentials from 1 to 4.
+- Bump spotbugsVersion from 4.7.1 to 4.7.3.
+- Bump slackapi/slack-github-action from 1.23.0 to 1.24.0.
+- Bump junit:junit from 4.12 to 4.13.2.
+- Bump log4jVersion from 2.17.1 to 2.20.0.
+- Bump actions/cache from 1.1.2 to 3.3.2.
+- Bump actions/upload-artifact from 1 to 3.
+- Bump docker/login-action from 1 to 3.
+- Bump mockitoVersion from 4.6.0 to 4.11.0.
+- Bump aws-actions/amazon-ecr-login from 1 to 2.
+- Bump dropwizardMetricsVersion from 4.2.2 to 4.2.20.
+- Bump info.picocli:picocli from 4.1.4 to 4.7.5.
+- Bump com.fasterxml.jackson.core:jackson-databind from 2.13.4.2 to 2.15.3.
+- Bump org.apache.cassandra:cassandra-all from 3.11.11 to 3.11.16.
+- Bump prometheusVersion from 0.12.0 to 0.16.0.
+- Bump com.google.inject:guice from 5.0.1 to 5.1.0.
+- Bump dropwizardMetricsVersion from 4.2.20 to 4.2.21.
+- Bump com.github.spotbugs from 5.0.9 to 5.2.1.
+- Bump org.slf4j:slf4j-api from 1.7.32 to 1.7.36.
+- Bump junitVersion from 5.10.0 to 5.10.1.
+- Bump log4jVersion from 2.20.0 to 2.21.1.
+- Bump com.github.everit-org.json-schema:org.everit.json.schema from 1.14.2 to 1.14.3.
+- Bump dropwizardMetricsVersion from 4.2.21 to 4.2.22.
+- Bump org.apache.commons:commons-text from 1.10.0 to 1.11.0.
+- Bump org.eclipse.jetty:jetty-servlet from 9.4.43.v20210629 to 9.4.53.v20231009.
+- Bump com.google.protobuf from 0.8.17 to 0.9.4.
+- Bump com.github.spotbugs from 5.2.1 to 5.2.3.
+- Bump org.assertj:assertj-core from 3.9.1 to 3.24.2.
+- Bump org.junit.platform:junit-platform-console from 1.10.0 to 1.10.1.
+- Bump com.google.guava:guava from 32.1.2-jre to 32.1.3-jre.
+- Bump spotbugsVersion from 4.7.3 to 4.8.1.
+- Bump log4jVersion from 2.21.1 to 2.22.0.
+- Bump com.fasterxml.jackson.core:jackson-databind from 2.15.3 to 2.16.0.
+- Bump com.google.protobuf:protoc from 3.24.4 to 3.25.1.
+- Bump com.github.spotbugs from 5.2.3 to 5.2.4.
+- Bump spotbugsVersion from 4.8.1 to 4.8.2.
+- Bump actions/setup-java from 3 to 4.
+- Bump com.github.spotbugs from 5.2.4 to 5.2.5.
+- Bump dropwizardMetricsVersion from 4.2.22 to 4.2.23.
+- Bump actions/upload-artifact from 3 to 4.
+- Bump spotbugsVersion from 4.8.2 to 4.8.3.
+- Bump com.github.everit-org.json-schema:org.everit.json.schema from 1.14.3 to 1.14.4.
+- Bump com.fasterxml.jackson.core:jackson-databind from 2.16.0 to 2.16.1.
+- Bump scalarDbVersion from 3.10.1 to 3.10.2.
+- Bump scalarDbVersion from 3.10.2 to 3.11.0.
+- Bump log4jVersion from 2.22.0 to 2.22.1.
+- Bump org.assertj:assertj-core from 3.24.2 to 3.25.1.
+- Bump com.google.protobuf:protoc from 3.25.1 to 3.25.2.
+- Bump dropwizardMetricsVersion from 4.2.23 to 4.2.24.
+- Bump actions/cache from 3 to 4.
+- Bump gradle/gradle-build-action from 2 to 3.
+- Bump slackapi/slack-github-action from 1.24.0 to 1.25.0.
+- Bump dropwizardMetricsVersion from 4.2.24 to 4.2.25.
+- Bump org.assertj:assertj-core from 3.25.1 to 3.25.2.
+- Bump org.junit.platform:junit-platform-console from 1.10.1 to 1.10.2.
+- Bump org.assertj:assertj-core from 3.25.2 to 3.25.3.
+- Bump junitVersion from 5.10.1 to 5.10.2.
+- Bump scalarDbVersion from 3.11.0 to 3.12.0.
+- Bump com.google.protobuf:protoc from 3.25.2 to 3.25.3.
+- Bump org.eclipse.jetty:jetty-servlet from 9.4.53.v20231009 to 9.4.54.v20240208.
+- Bump scalarDbVersion from 3.12.0 to 3.12.1.
+- Bump log4jVersion from 2.22.1 to 2.23.0.
+- Bump log4jVersion from 2.23.0 to 2.23.1.
+- Bump com.fasterxml.jackson.core:jackson-databind from 2.16.1 to 2.16.2.
+- Bump com.fasterxml.jackson.core:jackson-databind from 2.16.2 to 2.17.0.
+
+### Bug fixes
+
+- Fixed dimension names for AWS meters.
+- Fixed registry name of AWS Marketplace.
+- Fixed to avoid outputting credential information as a log.
+- Fixed to use getTargetHost() to properly get LEDGER_HOST.
+- Fixed busybox version in Dockerfile.
+- Fixed a bug to use the intermediary mode.
+- Fixed the bound argument of FunctionalInterface for gRPC stub method in ThrowableConsumer and ThrowableFunction.
+- Fixed AuthenticationMethod to accept "digital-signature".
+- Fixed a spotbugs issue and formatted code for consistency.
+- Fixed Function execution to return its results to clients.
+- Fixed an unnecessary warning when the specified secret has already been registered.
+- Fixed TLS-related code and configurations to work properly.
+- Fixed gRPC-related configurations.
+- Fixed several configuration issues, especially Gateway with TLS.
+- Fixed to use grpc_health_probe in the Gateway docker image to support TLS gRPC health check.
+- Upgraded org.everit.json.schema to 1.14.2. [CVE-2023-5072](https://github.com/advisories/GHSA-4jq9-2xhw-jpx7 "CVE-2023-5072")
+- Upgraded grpc-health-probe to fix security issues. [CVE-2023-39325](https://github.com/advisories/GHSA-4374-p667-p6c8 "CVE-2023-39325") [GHSA-m425-mq94-257g](https://github.com/advisories/GHSA-m425-mq94-257g "GHSA-m425-mq94-257g")
+- Upgraded the base image to fix security issues. [CVE-2022-29458](https://github.com/advisories/GHSA-jh4f-5j2m-4v9c "CVE-2022-29458") [CVE-2022-29458](https://github.com/advisories/GHSA-jh4f-5j2m-4v9c "CVE-2022-29458") [CVE-2023-4911](https://github.com/advisories/GHSA-m77w-6vjw-wh2f "CVE-2023-4911") [CVE-2023-29491](https://github.com/advisories/GHSA-vh2x-5rx6-qqhv "CVE-2023-29491") [CVE-2023-47038](https://github.com/advisories/GHSA-96fh-9q43-rmjh "CVE-2023-47038")
+- Upgraded org.bouncycastle:bcprov-jdk15on from 1.59 to 1.70. [CVE-2018-1000180](https://github.com/advisories/GHSA-xqj7-j8j5-f2xr "CVE-2018-1000180") [CVE-2018-1000613](https://github.com/advisories/GHSA-4446-656p-f54g "CVE-2018-1000613") [CVE-2020-28052](https://github.com/advisories/GHSA-73xv-w5gp-frxh "CVE-2020-28052")
+
+### Miscellaneous
+
+- Improved code format for google-java-format v1.7.
+- Fixed typo of function names in E2E bash files.
+- Removed ScalarDB deprecated code.
+- Reverted incompatible changes on master (v4.x).

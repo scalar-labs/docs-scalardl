@@ -1,0 +1,110 @@
+# ScalarDL 3.4 リリースノート
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このページには、ScalarDL 3.4 のリリース ノートのリストが含まれています。
+
+## v3.4.5
+
+**発売日：** 2023 年 4 月 18 日
+
+### 改善点
+
+- 社内の JRE 8 Docker イメージを 1.1.11 に更新しました。
+- 社内の JRE Docker イメージを 1.1.12 に更新しました。
+- 社内 JRE イメージを 1.1.10 に更新しました。
+- gRPC health probe のバージョンを 0.4.15 に更新しました。
+  -最新バージョンのUbuntuを使用しました。
+
+## v3.4.5
+
+**発売日：** 2023 年 1 月 6 日
+
+### 改善点
+
+- 社内の JRE Docker イメージを更新しました。
+- ScalarDBのバージョンを更新しました。
+
+## v3.4.4
+
+**発売日：** 2022 年 12 月 2 日
+
+### Improvements
+
+- `Function` をモック可能にするための `FunctionManager` を追加しました。
+
+### バグの修正
+
+- [CVE-2022-32149](https://github.com/advisories/GHSA-69ch-w2m2-3vjp "CVE-2022-32149") を修正しました。
+- [CVE-2022-42003](https://github.com/advisories/GHSA-jjjh-jjxp-wpff) と [CVE-2022-42004](https://github.com/advisories/GHSA-rgv9-q543-rqg4) を修正しました。
+- [CVE-2022-27664](https://github.com/advisories/GHSA-69cg-p879-7622) を修正しました。
+- ErrorProne からの警告を修正するために [@OverRide](https://github.com/OverRide) を追加しました。
+
+## v3.4.3
+
+**発売日：** 2022 年 9 月 22 日
+
+### 改善点
+
+- 社内の JRE 8 Docker イメージを 1.1.8 に更新しました。
+- 社内の JRE 8 Docker イメージを 1.1.7 に更新しました。
+- JRE 8 を 1.1.6 に更新しました。
+- JRE 8 を 1.1.5 に更新しました。
+
+## v3.4.2
+
+**発売日：** 2022 年 8 月 3 日
+
+### 改善点
+
+- 内部 JRE Docker イメージを 1.1.3 に更新しました。
+- 内部 JRE Docker イメージを 1.1.4 に更新しました。
+
+## v3.4.1
+
+**発売日：** 2022 年 6 月 21 日
+
+### 改善点
+
+- 非 root ユーザーとして実行するための `USER 201` 設定を Dockerfile に追加しました。
+- ScalarDB のバージョンを 3.5.2 に更新しました。
+- 内部 JRE Docker ベース イメージを 1.1.2 に更新しました。
+- 基本イメージ JRE 8 を 1.1.0 に更新しました。
+
+### バグの修正
+
+- [CVE-2022-27191](https://github.com/advisories/GHSA-8c26-wmh5-6g9v) を修正しました。
+
+## v3.4.0
+
+**発売日：** 2022 年 2 月 22 日
+
+### 改善点
+
+- Dockerfile でのパッチ適用を回避するために内部 JRE 8 イメージを使用しました。
+- GitHub Action にクラッシュする SmallBank アプリケーションを追加しました。
+- 状態不整合エラーが発生した場合に Cassandra コンテナが削除されないように指定しました。
+- Ledger と Auditor のログをファイルにリダイレクトしました。
+- 入力データの保存を設定可能にしました。
+- コメントの追加、範囲の修正、軽微な問題の修正により、構成関連の側面が改善されました。
+- `ValidateLedger` コントラクトと線形化可能な台帳検証の BFD テストを更新しました。
+- ScalarDB をバージョンアップしました。
+- JRE コンテナをプルできるようにする前にログインが必須になりました。
+
+### バグの修正
+
+- Log4j をアドレスにアップグレードしました。[CVE-2021-44228](https://github.com/advisories/GHSA-jfh8-c2jp-5v3q)
+- Log4j のバージョンを 2.17.0 に更新しました。
+- マルチバイト処理を修正しました。
+- 脆弱性の問題を修正するために gRPC と protoc のバージョンを更新しました。
+- Cosmos DB ドライバーの権限構成を追加しました。
+- 脆弱性の問題を修正するために `grpc_health_probe` のバージョンを更新しました。
+- 誤検知の不一致バグを修正しました。
+- Log4j のバージョンを 2.17.1 に更新しました。
+- コントラクト内のスキャンが Auditor でも機能するようにしました。
+- Auditor との契約であっても、コントラクトをスキャンしたり書き込んだりすることは避けました。
+- `LedgerSimulator` 周りのバグと不完全なテストを修正しました。
+- Auditor でスキャンをリファクタリングしました。
+- `validateLedger` を修正しました。

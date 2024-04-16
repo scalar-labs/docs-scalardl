@@ -1,0 +1,124 @@
+# コンテナイメージの使用方法
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+パブリックコンテナリポジトリからコンテナイメージをプルできます。 コンテナイメージを使用する場合は、`.properties` ファイルにライセンスキーと証明書を設定する必要があります。
+
+## 前提条件
+
+パブリックコンテナイメージは、次の製品とバージョンで利用できます。
+
+* ScalarDB Cluster v3.12 以降
+* ScalarDL v3.9 以降
+
+## パブリックコンテナリポジトリからコンテナイメージをプルします。
+
+各製品のコンテナイメージをパブリックコンテナリポジトリからプルできます。
+
+* ScalarDB Cluster
+  * Standard Edition
+
+    https://github.com/orgs/scalar-labs/packages/container/package/scalardb-cluster-node-byol-standard
+
+  * Premium Edition
+
+    https://github.com/orgs/scalar-labs/packages/container/package/scalardb-cluster-node-byol-premium
+
+* ScalarDL Ledger
+
+  https://github.com/orgs/scalar-labs/packages/container/package/scalardl-ledger-byol
+
+* ScalarDL Auditor
+
+  https://github.com/orgs/scalar-labs/packages/container/package/scalardl-auditor-byol
+
+Scalar Helm Chart を使用する場合は、カスタム値ファイルに `*.image.repository` を次のように設定してください。
+
+* ScalarDB Cluster
+  * Standard Edition
+
+    ```yaml
+    scalardbCluster:
+      image:
+        repository: "ghcr.io/scalar-labs/scalardb-cluster-node-byol-standard"
+    ```
+
+  * Premium Edition
+
+    ```yaml
+    scalardbCluster:
+      image:
+        repository: "ghcr.io/scalar-labs/scalardb-cluster-node-byol-premium"
+    ```
+
+* ScalarDL Ledger
+
+  ```yaml
+  ledger:
+    image:
+      repository: "ghcr.io/scalar-labs/scalardl-ledger-byol"
+  ```
+
+* ScalarDL Auditor
+
+  ```yaml
+  auditor:
+    image:
+      repository: "ghcr.io/scalar-labs/scalardl-auditor-byol"
+  ```
+
+## `.properties` ファイルにライセンスキーを設定します
+
+コンテナイメージを実行するには、`.properties` ファイルに `ライセンスキー` と `証明書` を設定する必要があります。 ライセンスキーをお持ちでない場合は、[お問い合わせ](https://www.scalar-labs.com/contact) までご連絡ください。
+
+* ScalarDB Clsuter
+
+  ```properties
+  scalar.db.cluster.node.licensing.license_key=<YOUR_LICENSE_KEY>
+  scalar.db.cluster.node.licensing.license_check_cert_pem=<CERT_PEM_FOR_LICENSE_KEY>
+  ```
+
+* ScalarDL Ledger
+
+  ```properties
+  scalar.dl.licensing.license_key=<YOUR_LICENSE_KEY>
+  scalar.dl.licensing.license_check_cert_pem=<CERT_PEM_FOR_LICENSE_KEY>
+  ```
+
+* ScalarDL Auditor
+
+  ```properties
+  scalar.dl.licensing.license_key=<YOUR_LICENSE_KEY>
+  scalar.dl.licensing.license_check_cert_pem=<CERT_PEM_FOR_LICENSE_KEY>
+  ```
+
+Scalar Helm Chart を使用する場合は、カスタム値ファイルのプロパティを次のように設定してください。
+
+* ScalarDB Cluster
+
+  ```yaml
+  scalardbCluster:
+    scalardbClusterNodeProperties: |
+      scalar.db.cluster.node.licensing.license_key=<YOUR_LICENSE_KEY>
+      scalar.db.cluster.node.licensing.license_check_cert_pem=<CERT_PEM_FOR_LICENSE_KEY>
+  ```
+
+* ScalarDL Ledger
+
+  ```yaml
+  ledger:
+    ledgerProperties: |
+      scalar.dl.licensing.license_key=<YOUR_LICENSE_KEY>
+      scalar.dl.licensing.license_check_cert_pem=<CERT_PEM_FOR_LICENSE_KEY>
+  ```
+
+* ScalarDL Auditor
+
+  ```yaml
+  auditor:
+    auditorProperties: |
+      scalar.dl.licensing.license_key=<YOUR_LICENSE_KEY>
+      scalar.dl.licensing.license_check_cert_pem=<CERT_PEM_FOR_LICENSE_KEY>
+  ```
