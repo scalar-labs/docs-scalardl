@@ -6,19 +6,19 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 このガイドでは、ScalarDB Cluster を Amazon Elastic Kubernetes Service (EKS) にデプロイする方法について説明します。
 
-このガイドでは、AWS 環境に次の 2 つの環境のいずれかを作成します。 環境は、使用する [client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#client-modes) によって異なります。
+このガイドでは、AWS 環境に次の 2 つの環境のいずれかを作成します。 環境は、使用する [client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.mdx#client-modes) によって異なります。
 
-* **[`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode).** このモードでは、ScalarDB Cluster のデプロイメントと同じ EKS クラスターにアプリケーションをデプロイします。
+* **[`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.mdx#direct-kubernetes-client-mode).** このモードでは、ScalarDB Cluster のデプロイメントと同じ EKS クラスターにアプリケーションをデプロイします。
 
   ![image](./images/png/EKS_ScalarDB_Cluster_Direct_Kubernetes_Mode.drawio.png)  
 
-* **[`indirect` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#indirect-client-mode).** このモードでは、ScalarDB Cluster のデプロイメントを含む EKS クラスターとは異なる環境にアプリケーションをデプロイします。
+* **[`indirect` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.mdx#indirect-client-mode).** このモードでは、ScalarDB Cluster のデプロイメントを含む EKS クラスターとは異なる環境にアプリケーションをデプロイします。
 
   ![image](./images/png/EKS_ScalarDB_Cluster_Indirect_Mode.drawio.png)
 
 ## ステップ 1. AWS Marketplace で ScalarDB Cluster にサブスクライブする
 
-ScalarDB Cluster コンテナ イメージを取得するには、AWS Marketplace にアクセスし、[ScalarDB Cluster Standard Edition (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-jx6qxatkxuwm4) または [ScalarDB Cluster Premium Edition (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-djqw3zk6dwyk6) をサブスクライブする必要があります。 AWS Marketplace で ScalarDB Cluster をサブスクライブする方法の詳細については、[AWS Marketplace から Scalar 製品を購読する](AwsMarketplaceGuide.md#aws-marketplace-から-scalar-製品を購読する) を参照してください。
+ScalarDB Cluster コンテナ イメージを取得するには、AWS Marketplace にアクセスし、[ScalarDB Cluster Standard Edition (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-jx6qxatkxuwm4) または [ScalarDB Cluster Premium Edition (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-djqw3zk6dwyk6) をサブスクライブする必要があります。 AWS Marketplace で ScalarDB Cluster をサブスクライブする方法の詳細については、[AWS Marketplace から Scalar 製品を購読する](AwsMarketplaceGuide.mdx#aws-marketplace-から-scalar-製品を購読する) を参照してください。
 
 ## ステップ 2. EKS クラスターを作成する
 
@@ -56,7 +56,7 @@ EKS クラスターに ScalarDB Cluster をデプロイした後、特に本番�
 
 ## ステップ 9. アプリケーションをデプロイする
 
-[`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode) を使用する場合は、追加の Kubernetes リソースをデプロイする必要があります。 詳細については、[Deploy your client application on Kubernetes with `direct-kubernetes` mode](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-cluster.md#deploy-your-client-application-on-kubernetes-with-direct-kubernetes-mode) を参照してください。
+[`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.mdx#direct-kubernetes-client-mode) を使用する場合は、追加の Kubernetes リソースをデプロイする必要があります。 詳細については、[Deploy your client application on Kubernetes with `direct-kubernetes` mode](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-cluster.mdx#deploy-your-client-application-on-kubernetes-with-direct-kubernetes-mode) を参照してください。
 
 ## EKS から ScalarDB Cluster を削除
 

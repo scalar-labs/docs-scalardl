@@ -23,14 +23,14 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
      ```
 2. ポイントインタイムリカバリ (PITR) 機能を使用してデータベースを復元します。
 
-   管理データベースに基づいてデータベースを復元する方法の詳細については、このガイドの [管理されたデータベースに基づいてデータを復元するための補足手順](RestoreDatabase.md#管理されたデータベースに基づいてデータを復元するための補足手順) セクションを参照してください。
+   管理データベースに基づいてデータベースを復元する方法の詳細については、このガイドの [管理されたデータベースに基づいてデータを復元するための補足手順](RestoreDatabase.mdx#管理されたデータベースに基づいてデータを復元するための補足手順) セクションを参照してください。
 
    NoSQL または複数のデータベースを使用している場合は、[Kubernetes 環境での NoSQL データベースのバックアップ](BackupNoSQL.mdx) のバックアップ手順に従うときに作成した一時停止期間の中間点を指定する必要があります。
 3. 新しく復元されたデータベースに基づいて **database.properties**、**ledger.properties**、または **auditor.properties** を更新します。
 
    PITR 機能はデータベースを別のインスタンスとして復元するため、新しく復元されたデータベースにアクセスするには、ScalarDB または ScalarDL のカスタム値ファイル内のエンドポイント情報を更新する必要があります。 カスタム値ファイルの設定方法の詳細については、[Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.mdx) を参照してください。
 
-   Amazon DynamoDB を使用している場合、データは別のインスタンスではなく別のテーブル名で復元されることに注意してください。 つまり、データの復元後にエンドポイントは変更されません。 代わりに、Amazon DynamoDB 内のテーブルの名前を変更してデータを復元する必要があります。 同じテーブル名でデータを復元する方法の詳細については、このガイドの [Amazon DynamoDB](RestoreDatabase.md#amazon-dynamodb) セクションを参照してください。
+   Amazon DynamoDB を使用している場合、データは別のインスタンスではなく別のテーブル名で復元されることに注意してください。 つまり、データの復元後にエンドポイントは変更されません。 代わりに、Amazon DynamoDB 内のテーブルの名前を変更してデータを復元する必要があります。 同じテーブル名でデータを復元する方法の詳細については、このガイドの [Amazon DynamoDB](RestoreDatabase.mdx#amazon-dynamodb) セクションを参照してください。
 4. Helm コマンドの `--set *.replicaCount=N` フラグを使用して、ScalarDB または ScalarDL ポッドを **1** 以上にスケールアウトし、クライアントからのリクエストの受け入れを開始します。
    * ScalarDB Server
      ```console
@@ -64,7 +64,7 @@ PITR 機能を使用すると、Amazon DynamoDB は別のテーブル名でデ�
    * [Restoring a DynamoDB table to a point in time](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery.Tutorial.html)
    * [Backing up a DynamoDB table](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Backup.Tutorial.html)
 
-   この **バックアップの作成** ステップは、[Kubernetes 環境で NoSQL データベースをバックアップする](BackupNoSQL.md#データを復元する期間を作成しバックアップを実行します) のバックアップ操作の一部として実行できます。
+   この **バックアップの作成** ステップは、[Kubernetes 環境で NoSQL データベースをバックアップする](BackupNoSQL.mdx#データを復元する期間を作成しバックアップを実行します) のバックアップ操作の一部として実行できます。
 
 2. バックアップから復元します。
    1. テーブル A を取り外します。
@@ -76,7 +76,7 @@ PITR 機能を使用すると、Amazon DynamoDB は別のテーブル名でデ�
 
    たとえば、ScalarDB Schema Loader または ScalarDL Schema Loader を使用してテーブルを作成している場合、自動スケーリングはデフォルトで有効になります。 したがって、DynamoDB で復元されたテーブルの自動スケーリングを手動で有効にする必要があります。 DynamoDB で自動スケーリングを有効にする方法の詳細については、Amazon の公式ドキュメント [Enabling DynamoDB auto scaling on existing tables](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AutoScaling.Console.html#AutoScaling.Console.ExistingTable) を参照してください。
 
-   さらに、データベースを復元した後は、PITR 機能が無効になり、読み取り/書き込み容量モードがデフォルト値にリセットされます。 環境に応じて、必要に応じてこれらの構成を手動で設定する必要があります。 復元されたテーブルの一部の構成については、[AWS (Amazon DynamoDB) での ScalarDB/ScalarDL デプロイメント用のデータベースのセットアップ](SetupDatabaseForAWS.md#amazon-dynamodb) を参照してください。
+   さらに、データベースを復元した後は、PITR 機能が無効になり、読み取り/書き込み容量モードがデフォルト値にリセットされます。 環境に応じて、必要に応じてこれらの構成を手動で設定する必要があります。 復元されたテーブルの一部の構成については、[AWS (Amazon DynamoDB) での ScalarDB/ScalarDL デプロイメント用のデータベースのセットアップ](SetupDatabaseForAWS.mdx#amazon-dynamodb) を参照してください。
 
 ### NoSQL 用 Azure Cosmos DB
 
@@ -91,7 +91,7 @@ PITR 機能を使用する場合、Azure Cosmos DB は別のアカウントを�
 3. 新しく復元されたアカウントに基づいて、ScalarDB Schema Loader または ScalarDL Schema Loader の **database.properties** を更新します。
 
    ScalarDB は、ScalarDB Schema Loader または ScalarDL Schema Loader を使用してスキーマを作成するときにインストールされるストアド プロシージャを使用して Cosmos DB アダプターを実装します。 ただし、Cosmos DB の PITR 機能はストアド プロシージャを復元しないため、復元後にすべてのテーブルに必要なストアド プロシージャを再インストールする必要があります。 ScalarDB Schema Loader または ScalarDL Schema Loader の `--repair-all` オプションを使用して、必要なストアド プロシージャを再インストールできます。
-   * **ScalarDB テーブル:** ScalarDB Schema Loader の **database.properties** を構成する方法の詳細については、[Configure ScalarDB for Cosmos DB for NoSQL](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb.md#configure-scalardb-1) を参照してください。
+   * **ScalarDB テーブル:** ScalarDB Schema Loader の **database.properties** を構成する方法の詳細については、[Configure ScalarDB for Cosmos DB for NoSQL](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb.mdx#configure-scalardb-1) を参照してください。
 
    * **ScalarDL テーブル:** ScalarDL Schema Loader のカスタム値ファイルの設定方法の詳細については、[Configure a custom values file for ScalarDL Schema Loader](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardl-schema-loader.mdx) を参照してください。
 
@@ -110,9 +110,9 @@ PITR 機能を使用する場合、Azure Cosmos DB は別のアカウントを�
      helm install repair-schema-auditor scalar-labs/schema-loading -n <namespace> -f /path/to/<your custom values file for ScalarDL Schema Loader for Auditor> --set "schemaLoading.commandArgs={--repair-all}"
      ```
 
-   ScalarDB Schema Loader でのテーブルの修復の詳細については、[Repair tables](https://github.com/scalar-labs/scalardb/blob/master/docs/schema-loader.md#repair-tables) を参照してください。
+   ScalarDB Schema Loader でのテーブルの修復の詳細については、[Repair tables](https://github.com/scalar-labs/scalardb/blob/master/docs/schema-loader.mdx#repair-tables) を参照してください。
 
-5. 環境に応じて、必要に応じてテーブル構成を更新します。 復元されたアカウントの構成については、[Azure での ScalarDB/ScalarDL デプロイ用のデータベースのセットアップ (Azure Cosmos DB for NoSQL)](SetupDatabaseForAzure.md#azure-cosmos-db-for-nosql) を参照してください。
+5. 環境に応じて、必要に応じてテーブル構成を更新します。 復元されたアカウントの構成については、[Azure での ScalarDB/ScalarDL デプロイ用のデータベースのセットアップ (Azure Cosmos DB for NoSQL)](SetupDatabaseForAzure.mdx#azure-cosmos-db-for-nosql) を参照してください。
 
 ### Amazon RDS
 
@@ -124,7 +124,7 @@ PITR 機能を使用する場合、Amazon RDS は別のデータベース イン
    * [Restoring a DB instance to a specified time](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIT.html)
    * [Restoring a Multi-AZ DB cluster to a specified time](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIT.MultiAZDBCluster.html)
 
-2. 環境に応じて、必要に応じてテーブル構成を更新します。 復元されたデータベース インスタンスの構成については、[AWS での ScalarDB/ScalarDL デプロイメント用のデータベースのセットアップ (Amazon RDS for MySQL、PostgreSQL、Oracle、および SQL Server)](SetupDatabaseForAWS.md#mysqlpostgresqloraclesql-server-用の-amazon-rds) を参照してください。
+2. 環境に応じて、必要に応じてテーブル構成を更新します。 復元されたデータベース インスタンスの構成については、[AWS での ScalarDB/ScalarDL デプロイメント用のデータベースのセットアップ (Amazon RDS for MySQL、PostgreSQL、Oracle、および SQL Server)](SetupDatabaseForAWS.mdx#mysqlpostgresqloraclesql-server-用の-amazon-rds) を参照してください。
 
 ### Amazon Aurora
 
@@ -138,7 +138,7 @@ PITR 機能を使用する場合、Amazon Aurora は別のデータベースク�
 
    Amazon Aurora の PITR 機能は、マルチ AZ 構成を使用してデータベースクラスターを復元できません。 データベース クラスターをマルチ AZ クラスターとして復元する場合は、データベース クラスターの復元後にリーダーを追加する必要があります。 リーダーの追加方法の詳細については、Amazon の公式ドキュメント [Adding Aurora Replicas to a DB cluster](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-replicas-adding.html) を参照してください。
 
-3. 環境に応じて、必要に応じてテーブル構成を更新します。 復元されたデータベースクラスターの構成については、[AWS での ScalarDB/ScalarDL デプロイメント用のデータベースのセットアップ (Amazon Aurora MySQL および Amazon Aurora PostgreSQL)](SetupDatabaseForAWS.md#amazon-aurora-mysql-と-amazon-aurora-postgresql) を参照してください。
+3. 環境に応じて、必要に応じてテーブル構成を更新します。 復元されたデータベースクラスターの構成については、[AWS での ScalarDB/ScalarDL デプロイメント用のデータベースのセットアップ (Amazon Aurora MySQL および Amazon Aurora PostgreSQL)](SetupDatabaseForAWS.mdx#amazon-aurora-mysql-と-amazon-aurora-postgresql) を参照してください。
 
 ### Azure Database for MySQL/PostgreSQL
 
@@ -153,5 +153,5 @@ PITR 機能を使用する場合、Azure Database for MySQL/PostgreSQL は別の
 
 2. 環境に応じて、必要に応じてテーブル構成を更新します。 復元されたデータベース サーバーの構成については、次を参照してください。
 
-   * [Azure 上で ScalarDB/ScalarDL デプロイ用のデータベースをセットアップする (Azure Database for MySQL)](SetupDatabaseForAzure.md#azure-database-for-mysql)
-   * [Azure 上で ScalarDB/ScalarDL デプロイ用のデータベースをセットアップする (Azure Database for PostgreSQL)](SetupDatabaseForAzure.md#azure-database-for-postgresql)
+   * [Azure 上で ScalarDB/ScalarDL デプロイ用のデータベースをセットアップする (Azure Database for MySQL)](SetupDatabaseForAzure.mdx#azure-database-for-mysql)
+   * [Azure 上で ScalarDB/ScalarDL デプロイ用のデータベースをセットアップする (Azure Database for PostgreSQL)](SetupDatabaseForAzure.mdx#azure-database-for-postgresql)

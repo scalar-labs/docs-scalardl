@@ -106,7 +106,7 @@ The old [Function](https://scalar-labs.github.io/scalardl/javadoc/ledger/com/sca
 
 ### `invoke` 引数について
 
-契約が `Ledger` オブジェクトを使用して資産を管理するのと同様に、関数は `Database` オブジェクトを使用して基礎となるデータベースのレコードを管理します。 `Database` は [ScalarDB](https://github.com/scalar-labs/scalardb) インターフェイスを実装しているため、[データ モデル](https://github.com/scalar) に基づいて CRUD 操作を実行できることに注意してください。 -labs/scalardb/blob/master/docs/design.md#data-model) の ScalarDB 。
+契約が `Ledger` オブジェクトを使用して資産を管理するのと同様に、関数は `Database` オブジェクトを使用して基礎となるデータベースのレコードを管理します。 `Database` は [ScalarDB](https://github.com/scalar-labs/scalardb) インターフェイスを実装しているため、[データ モデル](https://github.com/scalar) に基づいて CRUD 操作を実行できることに注意してください。 -labs/scalardb/blob/master/docs/design.mdx#data-model) の ScalarDB 。
 
 `functionArgument` は、リクエスタによって指定された Function の実行時引数です。 この引数は、コントラクト引数とは異なりデジタル署名されていないため、データベースに格納されているデータを渡すために使用できますが、後で何らかの理由で削除される可能性があります。
 
@@ -116,7 +116,7 @@ The old [Function](https://scalar-labs.github.io/scalardl/javadoc/ledger/com/sca
 
 `JacksonBasedFunction` のような非推奨ではない関数では、 `T getContractContext()` を呼び出すことでコントラクトから情報を受け取ることができます。
 Contracts に何も設定されていない場合、戻り値は null になる可能性があり、使用する基本 Function クラスによって戻り値の型 `T` が決定されることに注意してください。
-コントラクトから関数に情報を送信する方法の詳細については、[関数に情報を送信する](./how-to-write-contract.md#send-information-to-functions) を参照してください。
+コントラクトから関数に情報を送信する方法の詳細については、[関数に情報を送信する](./how-to-write-contract.mdx#send-information-to-functions) を参照してください。
 
 ```Java
 JsonNode context = getContractContext();

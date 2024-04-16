@@ -93,7 +93,7 @@ ScalarDB または ScalarDL の Kubernetes クラスターの外部の環境に�
 
 カスタム値ファイルで `envoy.service.type` を `LoadBalancer` に設定することで、ロード バランサーを作成できます。 カスタム値ファイルを構成した後、ロード バランサーを使用して、Kubernetes サービス リソースを通じて Scalar Envoy を使用できるようになります。 注釈を使用してロード バランサーの構成を設定することもできます。
 
-カスタム値ファイルの設定方法の詳細については、[サービス設定](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-envoy.md#service-configurations)を参照してください。
+カスタム値ファイルの設定方法の詳細については、[サービス設定](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-envoy.mdx#service-configurations)を参照してください。
 
 ロードバランサを使用する場合、アプリケーション(クライアント)のプロパティファイルにロードバランサのFQDNまたはIPアドレスを以下のように設定する必要があります。
 
@@ -136,7 +136,7 @@ ScalarDB または ScalarDL の Kubernetes クラスターの外部の環境に�
 
 `kubectl port-forward` コマンドを実行すると、要塞サーバーから ScalarDB または ScalarDL へのクライアント リクエストを実行できます。 ただし、ScalarDL Auditor モード環境を作成する場合、2 つの Kubernetes クラスターにアクセスするには、1 つの要塞サーバーから異なる kubeconfig ファイルを使用して 2 つの `kubectl port-forward` コマンドを実行する必要があります。
 
-1. **(ScalarDL Auditor モードのみ)** ScalarDL Ledger の要塞サーバーで、ScalarDL Auditor の Kubernetes クラスターにアクセスするために既存の kubeconfig ファイルを構成するか、新しい kubeconfig ファイルを追加します。 管理対象の各 Kubernetes クラスターの kubeconfig ファイルを構成する方法の詳細については、[kubeconfig の構成](CreateBastionServer.md#kubeconfig-の構成)を参照してください。
+1. **(ScalarDL Auditor モードのみ)** ScalarDL Ledger の要塞サーバーで、ScalarDL Auditor の Kubernetes クラスターにアクセスするために既存の kubeconfig ファイルを構成するか、新しい kubeconfig ファイルを追加します。 管理対象の各 Kubernetes クラスターの kubeconfig ファイルを構成する方法の詳細については、[kubeconfig の構成](CreateBastionServer.mdx#kubeconfig-の構成)を参照してください。
 2. 要塞サーバーから各サービスへのポート転送を構成します。
    * **ScalarDB Server**
      ```console
