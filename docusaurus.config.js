@@ -59,7 +59,7 @@ const config = {
           breadcrumbs: true,
           sidebarPath: './sidebars.js',
           // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/scalar-labs/docs-scalardl',
+          editUrl: 'https://github.com/scalar-labs/docs-scalardl/edit/main',
           editLocalizedFiles: true, // This allows for the "Edit this page" button to direct users to edit the localized version of the page on GitHub.
           lastVersion: 'current',
             versions: {
