@@ -173,7 +173,15 @@ const sidebars = {
               label: 'Monitoring Guides',
               collapsible: true,
               items: [
-                'scalar-kubernetes/alerts/README',
+                {
+                  type: 'category',
+                  label: 'Alerts',
+                  collapsible: true,
+                  items: [
+                    'scalar-kubernetes/alerts/Envoy',
+                    'scalar-kubernetes/alerts/Ledger',
+                  ],
+                },
                 'scalar-kubernetes/K8sMonitorGuide',
                 'scalar-kubernetes/K8sLogCollectionGuide',
               ],
