@@ -1,5 +1,5 @@
-# Scalar DL Go Client SDK
-This module is for developing applications that interact with [Scalar DL](https://github.com/scalar-labs/scalardl) networks.
+# ScalarDL Go Client SDK
+This module is for developing applications that interact with [ScalarDL](https://github.com/scalar-labs/scalardl) networks.
 
 ## Install
 
@@ -13,9 +13,9 @@ to add this SDK to your module.
 
 ### Compitablity
 
-The SDK is compitable with Scalar DL by the aligned minor versions.
+The SDK is compitable with ScalarDL by the aligned minor versions.
 
-For instance, the users can use this SDK version 3.4.* to connect to Scalar DL 3.4.* networks.
+For instance, the users can use this SDK version 3.4.* to connect to ScalarDL 3.4.* networks.
 
 ## HOWTO
 
@@ -27,9 +27,9 @@ This section explains the following main structures:
 
 ### ClientConfig
 
-ClientConfig represents the Scalar DL Client configuration.
+ClientConfig represents the ScalarDL Client configuration.
 
-The users need to prepare it before connect to a Scalar DL network.
+The users need to prepare it before connect to a ScalarDL network.
 
 ClientConfig can be created by loading either the `Java Properties`-format strings or the `JSON`-format strings.
 
@@ -75,7 +75,7 @@ The ClientConfig variable then can be used to construct the ClientService struct
 
 ### ClientService
 
-ClientService is the main interface to send requests to and receive responses from the Scalar DL networks.
+ClientService is the main interface to send requests to and receive responses from the ScalarDL networks.
 
 Use a ClientConfig variable to construct ClientService.
 
@@ -100,7 +100,7 @@ The souce code in the [example](./example) sub-folder demonstrate the details re
 
 ### ClientError
 
-ClientError implements error interface and one more `StatusCode` function to contains Scalar DL status code returned by the Scalar DL networks.
+ClientError implements error interface and one more `StatusCode` function to contains ScalarDL status code returned by the ScalarDL networks.
 
 Note that errors returned from ClientService are not always albe to be asserted to ClientError.
 
@@ -125,7 +125,7 @@ if clientError, ok := err.(client_error.ClientError); ok {
 
 ## Re-generate gRPC protobuf files
 
-Scalar DL uses gRPC as the communication protocol.
+ScalarDL uses gRPC as the communication protocol.
 
 The generated gRPC go files are placed in the `rpc` sub-folder.
 
