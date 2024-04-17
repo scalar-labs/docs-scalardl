@@ -126,7 +126,7 @@ scalar.dl.client.private_key_path=conf/client-key.pem
 すべてが正しく設定されていれば、次のように証明書を ScalarDL ネットワークに登録できるはずです。
 
 ```bash
-$ ${SCALAR_SDK_HOME}/client/bin/scalardl register-cert --properties ./conf/client.properties
+$ ${SCALAR_SDK_HOME}/client/bin/register-cert --properties ./conf/client.properties
 ```
 
 成功すると、ステータス コード 200 が返されます。
@@ -155,7 +155,7 @@ contract-class-file = "build/classes/java/main/com/scalar/application/bankaccoun
 toml ファイルを作成したら、次のように指定したすべてのコントラクトを登録できます。
 
 ```bash
-$ ${SCALAR_SDK_HOME}/client/bin/scalardl register-contracts --properties ./conf/client.properties --contracts-file ./conf/contracts.toml
+$ ${SCALAR_SDK_HOME}/client/bin/register-contracts --properties ./conf/client.properties --contracts-file ./conf/contracts.toml
 ```
 
 正常に登録された各契約はステータス コード 200 を返す必要があります。
@@ -167,20 +167,20 @@ $ ${SCALAR_SDK_HOME}/client/bin/scalardl register-contracts --properties ./conf/
 ID が `a111` と `b222` の 2 つのアカウントを作成します。 (契約 ID には任意の文字列を指定できます。)
 
 ```bash
-$ ${SCALAR_SDK_HOME}/client/bin/scalardl execute-contract --properties ./conf/client.properties --contract-id create-account --contract-argument '{"id": "a111"}'
-$ ${SCALAR_SDK_HOME}/client/bin/scalardl execute-contract --properties ./conf/client.properties --contract-id create-account --contract-argument '{"id": "b222"}'
+$ ${SCALAR_SDK_HOME}/client/bin/execute-contract --properties ./conf/client.properties --contract-id create-account --contract-argument '{"id": "a111"}'
+$ ${SCALAR_SDK_HOME}/client/bin/execute-contract --properties ./conf/client.properties --contract-id create-account --contract-argument '{"id": "b222"}'
 ```
 
 ここで、アカウント `a111` に 100 を入金します。
 
 ```bash
-$ ${SCALAR_SDK_HOME}/client/bin/scalardl execute-contract --properties ./conf/client.properties --contract-id deposit --contract-argument '{"id": "a111", "amount": 100}'
+$ ${SCALAR_SDK_HOME}/client/bin/execute-contract --properties ./conf/client.properties --contract-id deposit --contract-argument '{"id": "a111", "amount": 100}'
 ```
 
 最後に、25 を `a111` から `b222` に転送します。
 
 ```bash
-$ ${SCALAR_SDK_HOME}/client/bin/scalardl execute-contract --properties ./conf/client.properties --contract-id transfer --contract-argument '{"from": "a111", "to": "b222", "amount": 100}'
+$ ${SCALAR_SDK_HOME}/client/bin/execute-contract --properties ./conf/client.properties --contract-id transfer --contract-argument '{"from": "a111", "to": "b222", "amount": 100}'
 ```
 
 アプリケーション自体を実行している場合は、[API エンドポイント](./docs/api_endpoints.mdx) を使用してこれらのコマンドを実行できます。
