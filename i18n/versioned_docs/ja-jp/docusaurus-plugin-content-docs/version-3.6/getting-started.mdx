@@ -84,7 +84,7 @@ cp conf/client.properties .
 今回は以下のように簡単なツールを使って証明書を登録してみましょう。
 
 ```shell
-client/bin/scalardl register-cert --properties client.properties
+client/bin/register-cert --properties client.properties
 ```
 
 登録された証明書を使用すると、契約の登録と実行が可能になるほか、データベース内のビザンチン障害の検出にも使用されます。
@@ -145,7 +145,7 @@ public class StateUpdater extends JacksonBasedContract {
 契約書を登録しましょう。 ここでも簡単なツールを使用します。
 
 ```shell
-client/bin/scalardl register-contract --properties client.properties --contract-id StateUpdater --contract-binary-name com.org1.contract.StateUpdater --contract-class-file build/classes/java/main/com/org1/contract/StateUpdater.class
+client/bin/register-contract --properties client.properties --contract-id StateUpdater --contract-binary-name com.org1.contract.StateUpdater --contract-class-file build/classes/java/main/com/org1/contract/StateUpdater.class
 ```
 
 コントラクト ID にはグローバルに一意な ID を設定してください (例: 上記コマンドの `StateUpdater`)。
@@ -158,7 +158,7 @@ client/bin/scalardl register-contract --properties client.properties --contract-
 これで、次のコマンドを使用してコントラクトを実行する準備が整いました。
 
 ```shell
-client/bin/scalardl execute-contract --properties client.properties --contract-id StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}'
+client/bin/execute-contract --properties client.properties --contract-id StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}'
 ```
 
 コントラクト引数では、キー `asset_id` で指定された値は、各アセットに対してグローバルに一意である必要があります。
@@ -168,7 +168,7 @@ client/bin/scalardl execute-contract --properties client.properties --contract-i
 次のコマンドを実行すると、Ledger の状態を検証できます。
 
 ```shell
-client/bin/scalardl validate-ledger --properties client.properties --asset-id="some_asset"
+client/bin/validate-ledger --properties client.properties --asset-id="some_asset"
 ```
 
 検証で行われる内容は、ScalarDL のセットアップおよび構成方法によって異なります。
