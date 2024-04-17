@@ -96,13 +96,13 @@ bin/scalar-auditor --properties auditor.properties
 Ledger がその証明書を Auditor に登録します。
 
 ```shell
-client/bin/scalardl register-cert --properties client.properties.ledger
+client/bin/register-cert --properties client.properties.ledger
 ```
 
 Auditor は証明書を Ledger に登録します。
 
 ```shell
-client/bin/scalardl register-cert --properties client.properties.auditor
+client/bin/register-cert --properties client.properties.auditor
 ```
 
 `client.properties.ledger` と `client.properties.auditor` を正しく設定してください。
@@ -123,7 +123,7 @@ scalar.dl.client.auditor.host=localhost
 その後、通常と同じように (Auditor なしで) 証明書を登録できます。
 
 ```shell
-client/bin/scalardl register-cert --properties client.properties
+client/bin/register-cert --properties client.properties
 ```
 
 これにより、Ledger と Auditor の両方に証明書が登録されることに注意してください。
@@ -133,7 +133,7 @@ client/bin/scalardl register-cert --properties client.properties
 契約書の登録も通常通り行うことができます。
 
 ```shell
-client/bin/scalardl register-contract --properties client.properties --contract-id StateUpdater --contract-binary-name com.org1.contract.StateUpdater --contract-class-file build/classes/java/main/com/org1/contract/StateUpdater.class
+client/bin/register-contract --properties client.properties --contract-id StateUpdater --contract-binary-name com.org1.contract.StateUpdater --contract-class-file build/classes/java/main/com/org1/contract/StateUpdater.class
 ```
 
 これにより、Ledger と Auditor の両方に契約が登録されることに注意してください。
@@ -143,7 +143,7 @@ client/bin/scalardl register-contract --properties client.properties --contract-
 これで、通常どおり次のコマンドを使用してコントラクトを実行する準備が整いました。
 
 ```shell
-client/bin/scalardl execute-contract --properties client.properties --contract-id StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}'
+client/bin/execute-contract --properties client.properties --contract-id StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}'
 ```
 
 これにより、Ledger と Auditor の間で少し複雑なプロトコルがトリガーされ、お互いを信頼せずに同じ状態になることに注意してください。
@@ -155,13 +155,13 @@ Ledger と Auditor の状態を常に検証して、それらが一貫してい�
 ただし、Auditor モードでの状態の検証にはコントラクトの実行が使用されます。 したがって、最初に次のように [ValidateLedger](https://github.com/scalar-labs/scalardl-java-client-sdk/blob/master/src/main/java/com/scalar/dl/client/contract/ValidateLedger.java) コントラクトを登録する必要があります。 `validate-ledger` は、クライアントが検証を行うときに指定するデフォルトのコントラクト ID であることに注意してください。
 
 ```shell
-client/bin/scalardl register-contract --properties client.properties --contract-id validate-ledger --contract-binary-name com.scalar.dl.client.contract.ValidateLedger --contract-class-file /path/to/ValdateLedger.class
+client/bin/register-contract --properties client.properties --contract-id validate-ledger --contract-binary-name com.scalar.dl.client.contract.ValidateLedger --contract-class-file /path/to/ValdateLedger.class
 ```
 
 その後、通常と同じように `validate-ledger` コマンドを発行できます。
 
 ```shell
-client/bin/scalardl validate-ledger --properties client.properties --asset-id="some_asset"
+client/bin/validate-ledger --properties client.properties --asset-id="some_asset"
 ```
 
 `ValidateLedger` のコントラクトIDを変更したい場合は、クライアントにそれを知らせるために以下の設定を変更する必要があります。

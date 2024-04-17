@@ -135,7 +135,7 @@ Functions は ScalarDB CRUD インターフェイスを介して任意のレコ�
 次に、契約を登録する場合と同様に、使用する前に関数を Ledger に登録する必要があります。
 
 ```
-client/bin/scalardl register-function --properties client.properties --function-id test-function --function-binary-name com.example.function.TestFunction --function-class-file /path/to/TestFunction.class
+client/bin/register-function --properties client.properties --function-id test-function --function-binary-name com.example.function.TestFunction --function-class-file /path/to/TestFunction.class
 ```
 
 #### 関数を実行する
@@ -144,7 +144,7 @@ client/bin/scalardl register-function --properties client.properties --function-
 たとえば、コマンドライン ツールを使用して次のように関数を実行できます。
 
 ```
-client/bin/scalardl execute-contract --properties client.properties --contract-id test-contract --contract-argument '{...}' --function-id test-function --function-argument '{...}'
+client/bin/execute-contract --properties client.properties --contract-id test-contract --contract-argument '{...}' --function-id test-function --function-argument '{...}'
 ```
 
 次のように [ClientService](https://scalar-labs.github.io/scalardl/javadoc/latest/client/com/scalar/dl/client/service/ClientService.html) を使用して行うこともできます。
