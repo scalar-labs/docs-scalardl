@@ -25,6 +25,14 @@ const sidebars = {
       id: 'index',
     },
     {
+      'type': 'category',
+      'label': 'About ScalarDL',
+      'collapsible': true,
+      'items': [
+        'overview',
+      ]
+    },
+    {
       type: 'category',
       label: 'Getting Started',
       collapsible: true,

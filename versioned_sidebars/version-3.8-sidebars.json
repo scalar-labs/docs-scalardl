@@ -7,6 +7,14 @@
     },
     {
       "type": "category",
+      "label": "About ScalarDL",
+      "collapsible": true,
+      "items": [
+        "overview",
+      ]
+    },
+    {
+      "type": "category",
       "label": "Getting Started",
       "collapsible": true,
       "items": [
