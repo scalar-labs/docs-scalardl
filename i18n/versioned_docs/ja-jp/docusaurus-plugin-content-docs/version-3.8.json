@@ -3,6 +3,10 @@
     "message": "3.8",
     "description": "The label for version 3.8"
   },
+  "sidebar.docs.category.About ScalarDL": {
+    "message": "ScalarDL について",
+    "description": "The label for category About ScalarDL in sidebar docs"
+  },
   "sidebar.docs.category.Getting Started": {
     "message": "始めましょう",
     "description": "The label for category Getting Started in sidebar docs"

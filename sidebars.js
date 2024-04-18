@@ -25,6 +25,16 @@ const sidebars = {
       id: 'index',
     },
     {
+      'type': 'category',
+      'label': 'About ScalarDL',
+      'collapsible': true,
+      'items': [
+        'overview',
+        'implementation',
+        'design',
+      ]
+    },
+    {
       type: 'category',
       label: 'Getting Started',
       collapsible: true,
@@ -209,9 +219,7 @@ const sidebars = {
       label: 'Reference',
       collapsible: true,
       items: [
-        'design',
         'compatibility',
-        'implementation',
         'scalardl-benchmarks/README',
       ],
     },
