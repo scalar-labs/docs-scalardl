@@ -30,6 +30,8 @@ const sidebars = {
       'collapsible': true,
       'items': [
         'overview',
+        'implementation',
+        'design',
       ]
     },
     {
@@ -217,9 +219,7 @@ const sidebars = {
       label: 'Reference',
       collapsible: true,
       items: [
-        'design',
         'compatibility',
-        'implementation',
         'scalardl-benchmarks/README',
       ],
     },

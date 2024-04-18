@@ -11,6 +11,8 @@
       "collapsible": true,
       "items": [
         "overview",
+        "implementation",
+        "design"
       ]
     },
     {
@@ -196,9 +198,7 @@
       "label": "Reference",
       "collapsible": true,
       "items": [
-        "design",
         "compatibility",
-        "implementation",
         "scalardl-benchmarks/README"
       ]
     },
