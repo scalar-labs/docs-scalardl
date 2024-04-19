@@ -6,6 +6,27 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 このページには、ScalarDL 3.7 のリリース ノートのリストが含まれています。
 
+## v3.7.3
+
+**発売日：** 2024 年 4 月 17 日
+
+### バグの修正
+
+- AWS Marketplace のレジストリ名を修正しました。
+- 認証情報をログとして出力しないように修正しました。
+- LEDGER_HOST を正しく取得するために getTargetHost() を使用するように修正されました。
+- Dockerfile の busybox バージョンを修正しました。
+- 中間モードを使用する際のバグを修正しました。
+- ThrowableConsumer および ThrowableFunction の gRPC スタブ メソッドの FunctionalInterface のバインドされた引数を修正しました。
+- 結果をクライアントに返す関数の実行を修正しました。
+- TLS 関連のコードと構成が正しく動作するように修正されました。
+- いくつかの構成の問題を修正しました。
+- org.everit.json.schema を 1.14.2 にアップグレードしました。 [CVE-2023-5072](https://github.com/advisories/GHSA-4jq9-2xhw-jpx7 "CVE-2023-5072")
+- セキュリティ問題を修正するために grpc-health-probe をアップグレードしました。 [CVE-2023-39325](https://github.com/advisories/GHSA-4374-p667-p6c8 "CVE-2023-39325") [GHSA-m425-mq94-257g](https://github.com/advisories/GHSA-m425-mq94-257g "GHSA-m425-mq94-257g")
+- セキュリティ問題を修正するために基本イメージをアップグレードしました。 [CVE-2022-29458](https://github.com/advisories/GHSA-jh4f-5j2m-4v9c "CVE-2022-29458") [CVE-2022-29458](https://github.com/advisories/GHSA-jh4f-5j2m-4v9c "CVE-2022-29458") [CVE-2023-4911](https://github.com/advisories/GHSA-m77w-6vjw-wh2f "CVE-2023-4911") [CVE-2023-29491](https://github.com/advisories/GHSA-vh2x-5rx6-qqhv "CVE-2023-29491") [CVE-2023-47038](https://github.com/advisories/GHSA-96fh-9q43-rmjh "CVE-2023-47038")
+- org.bouncycastle:bcprov-jdk15on を 1.59 から 1.70 にアップグレードしました。 [CVE-2023-33201](https://github.com/advisories/GHSA-hr8g-6v94-x4m9 "CVE-2023-33201") [CVE-2023-33202](https://github.com/advisories/GHSA-wjxj-5m7g-mg7q "CVE-2023-33202")
+
+
 ## v3.7.2
 
 **発売日：** 2023 年 4 月 18 日

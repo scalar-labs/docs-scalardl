@@ -1,0 +1,31 @@
+# ScalarDL Overview
+
+This page describes what ScalarDL is and its primary use cases.
+
+## What is ScalarDL?
+
+ScalarDL is middleware for detecting Byzantine faults (for example, data tampering and malicious attacks) in transactional database systems. It achieves such detection in a scalable and practical way with its novel consensus algorithm. Therefore, it can be a better alternative to private blockchains or verifiable ledger databases such as Amazon QLDB and Oracle Blockchain Table.
+
+Since ScalarDL uses ScalarDB for database interactions, it inherits the database-agnostic property of ScalarDB, allowing it to work on a wide range of databases, such as relational databases and NoSQL.
+
+For details on which databases ScalarDB supports, refer to [Supported Databases](https://scalardb.scalar-labs.com/docs/latest/scalardb-supported-databases/).
+## ScalarDL use cases
+
+ScalarDL can be used in various ways. Here are the primary use cases of ScalarDL.
+
+### Guaranteeing the authenticity of data
+
+There are several regulations and laws that require the authenticity of data. For example, regulations on data protection and privacy (for example, GDPR and CCPA/CPRA), laws for digital documents around finance and tax affairs, prior user rights for intellectual property, and vehicle regulations around over-the-air (OTA) software updates in WP.29.
+
+ScalarDL guarantees the authenticity of data with its real-time Byzantine fault detection capability.
+
+### Managing the traceability of data
+
+Data traceability is essential for enterprises. For example, many industries are subject to strict regulations that require manufacturers to maintain accurate records of their products' origins and destinations. Data traceability systems allow manufacturers to demonstrate compliance with these regulations.
+
+ScalarDL preserves data by using its tamper-evident, append-only ledger; thus, it correctly manages the traceability of data.
+
+## Further reading
+
+* [ScalarDL Technical Overview](https://speakerdeck.com/scalar/scalar-dl-technical-overview)
+* [ScalarDL Research Paper](https://dl.acm.org/doi/abs/10.14778/3523210.3523212) [VLDB'22]

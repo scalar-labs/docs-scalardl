@@ -7,6 +7,16 @@
     },
     {
       "type": "category",
+      "label": "About ScalarDL",
+      "collapsible": true,
+      "items": [
+        "overview",
+        "implementation",
+        "design"
+      ]
+    },
+    {
+      "type": "category",
       "label": "Getting Started",
       "collapsible": true,
       "items": [
@@ -189,9 +199,7 @@
       "label": "Reference",
       "collapsible": true,
       "items": [
-        "design",
         "compatibility",
-        "implementation",
         "scalardl-benchmarks/README"
       ]
     },
