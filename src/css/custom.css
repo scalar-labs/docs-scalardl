@@ -36,3 +36,9 @@
 .markdown h1:first-child {
   --ifm-h1-font-size: 2.25rem;
 }
+
+/* Announcement Bar */
+div[class^='announcementBar'] {
+  font-size: 1.1rem;
+  padding: 20px 0;
+}

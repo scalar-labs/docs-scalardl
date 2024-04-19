@@ -291,6 +291,14 @@ const config = {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
       },
+      // announcementBar: {
+      //   id: 'new_version',
+      //   content:
+      //     '<b>ScalarDL X.X is now available!🥳 For details on what\'s included in this new version, see the <a target="_self" rel="noopener noreferrer" href="/docs/latest/releases/release-notes">release notes</a>.<b>',
+      //   backgroundColor: '#2673BB',
+      //   textColor: '#FFFFFF',
+      //   isCloseable: false,
+      // },
     }),
 };
 
