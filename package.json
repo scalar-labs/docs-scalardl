@@ -46,10 +46,5 @@
   },
   "engines": {
     "node": ">=18.0"
-  },
-  "overrides": {
-    "docusaurus-plugin-image-zoom": {
-      "@docusaurus/theme-classic": "^3.0.0"
-    }
   }
 }
