@@ -149,6 +149,7 @@ const config = {
         },
       },
     ],
+    require.resolve('docusaurus-plugin-image-zoom'),
     // [
     //   require.resolve("docusaurus-lunr-search"),
     //   {
@@ -303,6 +304,16 @@ const config = {
       //   textColor: '#FFFFFF',
       //   isCloseable: false,
       // },
+      zoom: {
+        selector: '.markdown :not(em) > img',
+        background: {
+          light: 'rgb(255, 255, 255)',
+          dark: 'rgb(50, 50, 50)'
+        },
+        config: {
+          // options you can specify via https://github.com/francoischalifour/medium-zoom#usage
+        }
+      },
     }),
 };
 
