@@ -37,12 +37,12 @@
           ]
         },
         "schema-loader",
-        "how-to-use-proof",
-        "how-to-write-contract",
-        "how-to-write-function",
         "ca/caclient-getting-started",
         "authentication",
-        "how-to-handle-errors"
+        "how-to-handle-errors",
+        "how-to-write-contract",
+        "how-to-write-function",
+        "how-to-use-proof"
       ]
     },
     {
