@@ -37,6 +37,12 @@
   --ifm-h1-font-size: 2.25rem;
 }
 
+.version-out-of-support, .version-out-of-support a {
+  background-color: #9CA3AF;
+  color: #1c1e21;
+  opacity: 85%;
+}
+
 /* Announcement Bar */
 div[class^='announcementBar'] {
   font-size: 1.1rem;
