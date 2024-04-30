@@ -65,38 +65,38 @@ const config = {
             versions: {
               // The following is a template for adding a new version to the dropdown menu. Copy this version template when adding a new version to the dropdown menu but don't delete it.
               /*
-              current: {
+              current: { // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
                 label: '<VERSION_NUMBER>',
-                path: 'latest',
+                path: 'latest', // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
                 banner: 'none',
               },
               */
-              current: {
+              current: { // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
                 label: '3.9',
-                path: 'latest',
+                path: 'latest', // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
                 banner: 'none',
               },
-              3.8: { // Change this to the version number when a new version is released.
+              "3.8": {
                 label: '3.8',
-                path: '3.8', // Change this to the version number when a new version is released.
+                path: '3.8',
                 banner: 'none',
               },
-              3.7: {
+              "3.7": {
                 label: '3.7',
                 path: '3.7',
                 banner: 'none',
               },
-              3.6: {
+              "3.6": {
                 label: '3.6',
                 path: '3.6',
                 banner: 'none',
               },
-              3.5: {
+              "3.5": {
                 label: '3.5 (unsupported)',
                 path: '3.5',
                 banner: 'unmaintained',
               },
-              3.4: {
+              "3.4": {
                 label: '3.4 (unsupported)',
                 path: '3.4',
                 banner: 'unmaintained',
