@@ -26,7 +26,7 @@ ScalarDB Server デプロイメント用の EKS クラスターを作成する�
 
 ## ステップ 3. ScalarDB Server のデータベースをセットアップする
 
-ScalarDB Server を展開する前にデータベースを準備する必要があります。 ScalarDB がサポートするデータベースのタイプを確認するには、[ScalarDB Supported Databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.mdx) を参照してください。
+ScalarDB Server を展開する前にデータベースを準備する必要があります。 ScalarDB がサポートするデータベースのタイプを確認するには、[ScalarDB Supported Databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md) を参照してください。
 
 データベースのセットアップの詳細については、[AWS での ScalarDB/ScalarDL デプロイ用のデータベースのセットアップ](SetupDatabaseForAWS.mdx) を参照してください。
 
@@ -36,13 +36,13 @@ EKS 上で ScalarDB Server をデプロイおよび管理するためのいく�
 
 ## ステップ 5. Scalar Helm Chartのカスタム値ファイルを準備する
 
-**ステップ 3** で作成したデータベース内の情報へのアクセスなどのタスクを実行するには、環境に基づいて ScalarDB Server の Scalar Helm Chartのカスタム値ファイルを構成する必要があります。 詳細については、[Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.mdx) を参照してください。
+**ステップ 3** で作成したデータベース内の情報へのアクセスなどのタスクを実行するには、環境に基づいて ScalarDB Server の Scalar Helm Chartのカスタム値ファイルを構成する必要があります。 詳細については、[Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md) を参照してください。
 
 **注意:** ScalarDB Server がデプロイされている EKS クラスターとは異なる環境にアプリケーションをデプロイする場合は、`envoy.service.type` パラメーターを `LoadBalancer` に設定して、ユーザーから Scalar Envoy にアクセスする必要があります。 応用。
 
 ## ステップ 6. Scalar Helm Chart を使用して ScalarDB Server をデプロイする
 
-ScalarDB Server の Helm Chart を使用して、ScalarDB Server を EKS クラスターにデプロイします。 詳細については、[Deploy Scalar products using Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.mdx) を参照してください。
+ScalarDB Server の Helm Chart を使用して、ScalarDB Server を EKS クラスターにデプロイします。 詳細については、[Deploy Scalar products using Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md) を参照してください。
 
 **注意:** `kubectl create ns scalardb` コマンドを使用して専用の名前空間を作成し、`helm install` コマンドで `-n scalardb` オプションを使用して名前空間に ScalarDB Server をデプロイすることをお勧めします。
 

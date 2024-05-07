@@ -36,8 +36,8 @@ Please get the sample file [scalar-loki-stack-custom-values.yaml](https://github
 
 In the production environment, it is recommended to add labels to the worker node for Scalar products as follows.
 
-* [EKS - Add a label to the worker node that is used for nodeAffinity](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateEKSClusterForScalarProducts.mdx#add-a-label-to-the-worker-node-that-is-used-for-nodeaffinity)
-* [AKS - Add a label to the worker node that is used for nodeAffinity](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateAKSClusterForScalarProducts.mdx#add-a-label-to-the-worker-node-that-is-used-for-nodeaffinity)
+* [EKS - Add a label to the worker node that is used for nodeAffinity](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateEKSClusterForScalarProducts.md#add-a-label-to-the-worker-node-that-is-used-for-nodeaffinity)
+* [AKS - Add a label to the worker node that is used for nodeAffinity](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateAKSClusterForScalarProducts.md#add-a-label-to-the-worker-node-that-is-used-for-nodeaffinity)
 
 Since the promtail pods deployed in this document collect only Scalar product logs, it is sufficient to deploy promtail pods only on the worker node where Scalar products are running. So, you should set nodeSelector in the custom values file (scalar-loki-stack-custom-values.yaml) as follows if you add labels to your Kubernetes worker node.
 
@@ -70,8 +70,8 @@ Since the promtail pods deployed in this document collect only Scalar product lo
 
 In the production environment, it is recommended to add taints to the worker node for Scalar products as follows.
 
-* [EKS - Add taint to the worker node that is used for toleration](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateEKSClusterForScalarProducts.mdx#add-taint-to-the-worker-node-that-is-used-for-toleration)
-* [AKS - Add taint to the worker node that is used for toleration](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateAKSClusterForScalarProducts.mdx#add-taint-to-the-worker-node-that-is-used-for-toleration)
+* [EKS - Add taint to the worker node that is used for toleration](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateEKSClusterForScalarProducts.md#add-taint-to-the-worker-node-that-is-used-for-toleration)
+* [AKS - Add taint to the worker node that is used for toleration](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateAKSClusterForScalarProducts.md#add-taint-to-the-worker-node-that-is-used-for-toleration)
 
 Since promtail pods are deployed as DaemonSet, you must set tolerations in the custom values file (scalar-loki-stack-custom-values.yaml) as follows if you add taints to your Kubernetes worker node.
 

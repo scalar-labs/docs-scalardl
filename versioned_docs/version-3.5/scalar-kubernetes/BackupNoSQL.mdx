@@ -2,7 +2,7 @@
 
 This guide explains how to create a transactionally consistent backup of managed databases that ScalarDB or ScalarDL uses in a Kubernetes environment. Please note that, when using a NoSQL database or multiple databases, you **must** pause ScalarDB or ScalarDL to create a transactionally consistent backup.
 
-For details on how ScalarDB backs up databases, see [A Guide on How to Backup and Restore Databases Used Through ScalarDB](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.mdx).
+For details on how ScalarDB backs up databases, see [A Guide on How to Backup and Restore Databases Used Through ScalarDB](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.md).
 
 In this guide, we assume that you are using point-in-time recovery (PITR) or its equivalent features. Therefore, we must create a period where there are no ongoing transactions for restoration. You can then restore data to that specific period by using PITR. If you restore data to a time without creating a period where there are no ongoing transactions, the restored data could be transactionally inconsistent, causing ScalarDB or ScalarDL to not work properly with the data.
 
@@ -29,7 +29,7 @@ In this guide, we assume that you are using point-in-time recovery (PITR) or its
 
 ## Back up multiple databases
 
-If you have two or more databases that the [Multi-storage Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/multi-storage-transactions.mdx) or [Two-phase Commit Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.mdx) feature uses, you must pause all instances of ScalarDB or ScalarDL and create the same period where no ongoing transactions exist in the databases.
+If you have two or more databases that the [Multi-storage Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/multi-storage-transactions.md) or [Two-phase Commit Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.md) feature uses, you must pause all instances of ScalarDB or ScalarDL and create the same period where no ongoing transactions exist in the databases.
 
 To ensure consistency between multiple databases, you must restore the databases to the same point in time by using the PITR feature.
 

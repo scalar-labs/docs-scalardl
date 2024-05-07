@@ -23,7 +23,7 @@ helm repo update scalar-labs
 
 You must prepare a Kubernetes cluster for the deployment of Scalar products. If you use EKS (Amazon Elastic Kubernetes Service) or AKS (Azure Kubernetes Service) in the production environment. Please refer to the following document for more details.
 
-* [scalar-labs/scalar-kubernetes](https://github.com/scalar-labs/scalar-kubernetes/blob/master/README.mdx)
+* [scalar-labs/scalar-kubernetes](https://github.com/scalar-labs/scalar-kubernetes/blob/master/README.md)
 
 You must prepare a supported version of Kubernetes. For versions that Scalar Helm Charts supports, see [Supported Kubernetes versions](https://github.com/scalar-labs/helm-charts#supported-kubernetes-versions).
 
@@ -31,7 +31,7 @@ You must prepare a supported version of Kubernetes. For versions that Scalar Hel
 
 You must prepare a database as a backend storage of ScalarDB/ScalarDL. You can see the supported databases by ScalarDB/ScalarDL in the following document.
 
-* [ScalarDB Supported Databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.mdx)
+* [ScalarDB Supported Databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md)
 
 ### Prepare a custom values file
 
@@ -43,8 +43,8 @@ You must prepare your custom values file based on your environment. Please refer
 
 If you use a Kubernetes cluster other than EKS or AKS, you need to create a Secret resource that includes the credentials and set the Secret name to `imagePullSecrets[].name` in your custom values file. Please refer to the following documents for more details on creating the Secret resource and setting it in your custom values file.
 
-* [Deploy containers on Kubernetes other than EKS from AWS Marketplace using Scalar Helm Charts](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.mdx#byol-deploy-containers-on-kubernetes-other-than-eks-from-aws-marketplace-using-scalar-helm-charts)
-* [Deploy containers on Kubernetes other than AKS (Azure Kubernetes Service) from your private container registry using Scalar Helm Charts](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.mdx#deploy-containers-on-kubernetes-other-than-aks-azure-kubernetes-service-from-your-private-container-registry-using-scalar-helm-charts)
+* [Deploy containers on Kubernetes other than EKS from AWS Marketplace using Scalar Helm Charts](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md#byol-deploy-containers-on-kubernetes-other-than-eks-from-aws-marketplace-using-scalar-helm-charts)
+* [Deploy containers on Kubernetes other than AKS (Azure Kubernetes Service) from your private container registry using Scalar Helm Charts](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md#deploy-containers-on-kubernetes-other-than-aks-azure-kubernetes-service-from-your-private-container-registry-using-scalar-helm-charts)
 
 ## Deploy Scalar products
 

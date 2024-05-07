@@ -24,7 +24,7 @@ This guide explains how to restore databases that ScalarDB or ScalarDL uses in a
    If you are using NoSQL or multiple databases, you should specify the middle point of the pause duration period that you created when following the backup procedure in [Back up a NoSQL database in a Kubernetes environment](BackupNoSQL.mdx).
 3. Update **database.properties**, **ledger.properties**, or **auditor.properties** based on the newly restored database. 
    
-   Because the PITR feature restores databases as another instance, you must update the endpoint information in the custom values file of ScalarDB or ScalarDL to access the newly restored databases. For details on how to configure the custom values file, see [Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.mdx).
+   Because the PITR feature restores databases as another instance, you must update the endpoint information in the custom values file of ScalarDB or ScalarDL to access the newly restored databases. For details on how to configure the custom values file, see [Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md).
 
    Please note that, if you are using Amazon DynamoDB, your data will be restored with another table name instead of another instance. In other words, the endpoint will not change after restoring the data. Instead, you will need to restore the data by renaming the tables in Amazon DynamoDB. For details on how to restore data with the same table name, please see the [Amazon DynamoDB](RestoreDatabase.mdx#amazon-dynamodb) section in this guide.
 4. Scale out the ScalarDB or ScalarDL pods to **1** or more to start accepting requests from clients by using the `--set *.replicaCount=N` flag in the helm command.
@@ -87,9 +87,9 @@ When using the PITR feature, Azure Cosmos DB restores data by using another acco
 3. Update **database.properties** for ScalarDB Schema Loader or ScalarDL Schema Loader based on the newly restored account.
 
    ScalarDB implements the Cosmos DB adapter by using its stored procedures, which are installed when creating schemas by using ScalarDB Schema Loader or ScalarDL Schema Loader. However, the PITR feature in Cosmos DB does not restore stored procedures, so you will need to reinstall the required stored procedures for all tables after restoration. You can reinstall the required stored procedures by using the `--repair-all` option in ScalarDB Schema Loader or ScalarDL Schema Loader.
-   * **ScalarDB tables:** For details on how to configure **database.properties** for ScalarDB Schema Loader, see [Configure ScalarDB for Cosmos DB for NoSQL](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb.mdx#configure-scalardb-1).
+   * **ScalarDB tables:** For details on how to configure **database.properties** for ScalarDB Schema Loader, see [Configure ScalarDB for Cosmos DB for NoSQL](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb.md#configure-scalardb-1).
 
-   * **ScalarDL tables:** For details on how to configure the custom values file for ScalarDL Schema Loader, see [Configure a custom values file for ScalarDL Schema Loader](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardl-schema-loader.mdx).
+   * **ScalarDL tables:** For details on how to configure the custom values file for ScalarDL Schema Loader, see [Configure a custom values file for ScalarDL Schema Loader](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardl-schema-loader.md).
 
 4. Re-create the stored procedures by using the `--repair-all` flag in ScalarDB Schema Loader or ScalarDL Schema Loader as follows:
 
@@ -106,7 +106,7 @@ When using the PITR feature, Azure Cosmos DB restores data by using another acco
      helm install repair-schema-auditor scalar-labs/schema-loading -n <namespace> -f /path/to/<your custom values file for ScalarDL Schema Loader for Auditor> --set "schemaLoading.commandArgs={--repair-all}"
      ```
 
-   For more details on repairing tables in ScalarDB Schema Loader, see [Repair tables](https://github.com/scalar-labs/scalardb/blob/master/docs/schema-loader.mdx#repair-tables).
+   For more details on repairing tables in ScalarDB Schema Loader, see [Repair tables](https://github.com/scalar-labs/scalardb/blob/master/docs/schema-loader.md#repair-tables).
 
 5. Update the table configuration if necessary, depending on your environment. For some configurations for restored accounts, see [Set up a database for ScalarDB/ScalarDL deployment on Azure (Azure Cosmos DB for NoSQL)](SetupDatabaseForAzure.mdx#azure-cosmos-db-for-nosql).
 

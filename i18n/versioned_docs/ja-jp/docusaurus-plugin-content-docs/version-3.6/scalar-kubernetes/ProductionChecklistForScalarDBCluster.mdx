@@ -64,7 +64,7 @@ ScalarDB Cluster はインターネット アクセス経由でユーザーに�
 
 ### クライアント モード (Java クライアント ライブラリのみ)
 
-アプリケーションに Java を使用する場合、公式の Java クライアント ライブラリを使用できます。 この場合、[`direct-kubernetes mode`](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.mdx#direct-kubernetes-client-mode) または [`indirect mode`](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.mdx#indirect-client-mode) の 2 つのクライアント モードのいずれかを選択できます。
+アプリケーションに Java を使用する場合、公式の Java クライアント ライブラリを使用できます。 この場合、[`direct-kubernetes mode`](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode) または [`indirect mode`](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#indirect-client-mode) の 2 つのクライアント モードのいずれかを選択できます。
 
 パフォーマンスの観点から、`direct-kubernetes` モードの使用をお勧めします。 `direct-kubernetes` モードを使用するには、アプリケーション ポッドを ScalarDB Cluster  ポッドと同じ Kubernetes クラスターにデプロイする必要があります。 この場合、Envoy ポッドをデプロイする必要はありません。
 
@@ -72,7 +72,7 @@ ScalarDB Cluster はインターネット アクセス経由でユーザーに�
 
 :::note
 
-クライアント モード設定は Java クライアント ライブラリ専用です。 アプリケーションに Java 以外のプログラミング言語を使用する場合 (基本的に、[gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.mdx) または [gRPC SQL API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.mdx) をプログラミング言語から直接使用する場合)、そのような構成は存在しません。 この場合、Envoy ポッドをデプロイする必要があります。
+クライアント モード設定は Java クライアント ライブラリ専用です。 アプリケーションに Java 以外のプログラミング言語を使用する場合 (基本的に、[gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) または [gRPC SQL API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md) をプログラミング言語から直接使用する場合)、そのような構成は存在しません。 この場合、Envoy ポッドをデプロイする必要があります。
 
 :::
 
@@ -124,17 +124,17 @@ flowchart LR
 
 ### `direct-kubernetes` クライアント モードを使用する場合のクライアント アプリケーションのデプロイメント (Java クライアント ライブラリのみ)
 
-[`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.mdx#direct-kubernetes-client-mode) を使用する場合は、クライアント アプリケーションを ScalarDB Cluster  デプロイメントと同じ Kubernetes クラスターにデプロイする必要があります。
+[`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode) を使用する場合は、クライアント アプリケーションを ScalarDB Cluster  デプロイメントと同じ Kubernetes クラスターにデプロイする必要があります。
 
-また、`direct-kubernetes` クライアント モードを使用する場合は、クライアント アプリケーションが適切に動作するように追加の Kubernetes リソースをデプロイする必要があります。 詳細については、[Deploy your client application on Kubernetes with `direct-kubernetes` mode](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-cluster.mdx#deploy-your-client-application-on-kubernetes-with-direct-kubernetes-mode) を参照してください。
+また、`direct-kubernetes` クライアント モードを使用する場合は、クライアント アプリケーションが適切に動作するように追加の Kubernetes リソースをデプロイする必要があります。 詳細については、[Deploy your client application on Kubernetes with `direct-kubernetes` mode](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-cluster.md#deploy-your-client-application-on-kubernetes-with-direct-kubernetes-mode) を参照してください。
 
 ### トランザクション処理 (Java クライアント ライブラリと gRPC API)
 
-トランザクションを [`begin()`](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.mdx#begin-or-start-a-transaction) した後、アプリケーションが常に [`commit()`](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.mdx#commit-a-transaction) または [`rollback()`](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.mdx#roll-back-or-abort-a-transaction) を実行するようにする必要があります。 アプリケーションが `commit()` または `rollback()` を実行しない場合、アプリケーションで予期しない問題が発生したり、バックエンド データベースから一貫性のないデータが読み取られる可能性があります。
+トランザクションを [`begin()`](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.md#begin-or-start-a-transaction) した後、アプリケーションが常に [`commit()`](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.md#commit-a-transaction) または [`rollback()`](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.md#roll-back-or-abort-a-transaction) を実行するようにする必要があります。 アプリケーションが `commit()` または `rollback()` を実行しない場合、アプリケーションで予期しない問題が発生したり、バックエンド データベースから一貫性のないデータが読み取られる可能性があります。
 
 :::note
 
-[gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.mdx) または [SQL gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.mdx) を使用する場合、アプリケーションは、`Begin` サービスを呼び出してトランザクションを開始した後、`Commit` サービスまたは `Rollback` サービスを呼び出す必要があります。
+[gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) または [SQL gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md) を使用する場合、アプリケーションは、`Begin` サービスを呼び出してトランザクションを開始した後、`Commit` サービスまたは `Rollback` サービスを呼び出す必要があります。
 
 :::
 
@@ -142,9 +142,9 @@ flowchart LR
 
 アプリケーションがトランザクション例外を処理することを確認する必要があります。 詳細については、使用している API のドキュメントを参照してください。
 
-* [Handle exceptions (Transactional API)](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.mdx#handle-exceptions).
-* [Handle exceptions (two-phase commit transactions API)](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.mdx#handle-exceptions)
-* [Execute transactions (ScalarDB SQL API)](https://github.com/scalar-labs/scalardb-sql/blob/main/docs/sql-api-guide.mdx#execute-transactions)
-* [Handle SQLException (ScalarDB JDBC)](https://github.com/scalar-labs/scalardb-sql/blob/main/docs/jdbc-guide.mdx#handle-sqlexception)
-* [Error handling (ScalarDB Cluster gRPC API)](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.mdx#error-handling-1)
-* [Error handling (ScalarDB Cluster SQL gRPC API)](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.mdx#error-handling-1)
+* [Handle exceptions (Transactional API)](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.md#handle-exceptions).
+* [Handle exceptions (two-phase commit transactions API)](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.md#handle-exceptions)
+* [Execute transactions (ScalarDB SQL API)](https://github.com/scalar-labs/scalardb-sql/blob/main/docs/sql-api-guide.md#execute-transactions)
+* [Handle SQLException (ScalarDB JDBC)](https://github.com/scalar-labs/scalardb-sql/blob/main/docs/jdbc-guide.md#handle-sqlexception)
+* [Error handling (ScalarDB Cluster gRPC API)](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md#error-handling-1)
+* [Error handling (ScalarDB Cluster SQL gRPC API)](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md#error-handling-1)

@@ -81,7 +81,7 @@ public class Payment extends JacksonBasedFunction {
 }
 ```
 
-It is a money transfer application written with ScalarDB API, where getting specified account balances, transferring a specified amount of money between the two account balances, and updating the balances. Please also read the [ScalarDB docs](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.mdx) for more details about ScalarDB API.
+It is a money transfer application written with ScalarDB API, where getting specified account balances, transferring a specified amount of money between the two account balances, and updating the balances. Please also read the [ScalarDB docs](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.md) for more details about ScalarDB API.
 
 ### Base Functions
 
@@ -102,7 +102,7 @@ The old [Function](https://scalar-labs.github.io/scalardl/javadoc/ledger/com/sca
 
 ### About the `invoke` arguments
 
-Similar to a Contract using `Ledger` object to manage assets, a Function uses `Database` object to manage records of the underlying database. Note that `Database` implements [ScalarDB](https://github.com/scalar-labs/scalardb) interface so that you can do the CRUD operations base on [the data model](https://github.com/scalar-labs/scalardb/blob/master/docs/design.mdx#data-model) of ScalarDB. 
+Similar to a Contract using `Ledger` object to manage assets, a Function uses `Database` object to manage records of the underlying database. Note that `Database` implements [ScalarDB](https://github.com/scalar-labs/scalardb) interface so that you can do the CRUD operations base on [the data model](https://github.com/scalar-labs/scalardb/blob/master/docs/design.md#data-model) of ScalarDB. 
 
 A `functionArgument` is a runtime argument for the Function specified by the requester. The argument is not digitally signed as opposed to the contract argument so that it can be used to pass data that is stored in the database but it might be deleted at some later point for some reason.
 
@@ -124,7 +124,7 @@ The Function feature is enabled by default; thus, nothing needs to be configured
 
 #### Add an application-specific schema
 
-Since Functions can read and write arbitrary records through the ScalarDB CRUD interface, ScalarDL can't define the database schema for the Function by itself. It is the applications' owner's responsibility to define such schema and apply it to the database by themselves or asking system admins to do it depending on who owns and manages the database. For more details about defining database schema for ScalarDB, please read [ScalarDB Schema Loader](https://github.com/scalar-labs/scalardb/blob/master/schema-loader/README.mdx).
+Since Functions can read and write arbitrary records through the ScalarDB CRUD interface, ScalarDL can't define the database schema for the Function by itself. It is the applications' owner's responsibility to define such schema and apply it to the database by themselves or asking system admins to do it depending on who owns and manages the database. For more details about defining database schema for ScalarDB, please read [ScalarDB Schema Loader](https://github.com/scalar-labs/scalardb/blob/master/schema-loader/README.md).
 
 #### Register a Function
 

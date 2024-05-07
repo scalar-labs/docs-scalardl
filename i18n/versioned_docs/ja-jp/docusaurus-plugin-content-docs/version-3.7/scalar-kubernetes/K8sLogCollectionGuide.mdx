@@ -40,8 +40,8 @@ loki-stack のサンプルファイル [scalar-loki-stack-custom-values.yaml](ht
 
 本番環境では、次のように Scalar 製品のワーカーノードにラベルを追加することをお勧めします。
 
-* [EKS - Add a label to the worker node that is used for nodeAffinity](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateEKSClusterForScalarProducts.mdx#add-a-label-to-the-worker-node-that-is-used-for-nodeaffinity)
-* [AKS - Add a label to the worker node that is used for nodeAffinity](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateAKSClusterForScalarProducts.mdx#add-a-label-to-the-worker-node-that-is-used-for-nodeaffinity)
+* [EKS - Add a label to the worker node that is used for nodeAffinity](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateEKSClusterForScalarProducts.md#add-a-label-to-the-worker-node-that-is-used-for-nodeaffinity)
+* [AKS - Add a label to the worker node that is used for nodeAffinity](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateAKSClusterForScalarProducts.md#add-a-label-to-the-worker-node-that-is-used-for-nodeaffinity)
 
 このドキュメントでデプロイされた promtail ポッドは Scalar 製品ログのみを収集するため、Scalar 製品が実行されているワーカーノードにのみ promtail ポッドをデプロイするだけで十分です。 したがって、Kubernetes ワーカーノードにラベルを追加する場合は、カスタム値ファイル (scalar-loki-stack-custom-values.yaml) で次のように nodeSelector を設定する必要があります。
 
@@ -74,8 +74,8 @@ loki-stack のサンプルファイル [scalar-loki-stack-custom-values.yaml](ht
 
 運用環境では、次のように Scalar 製品のワーカーノードにテイントを追加することをお勧めします。
 
-* [EKS - Add taint to the worker node that is used for toleration](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateEKSClusterForScalarProducts.mdx#add-taint-to-the-worker-node-that-is-used-for-toleration)
-* [AKS - Add taint to the worker node that is used for toleration](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateAKSClusterForScalarProducts.mdx#add-taint-to-the-worker-node-that-is-used-for-toleration)
+* [EKS - Add taint to the worker node that is used for toleration](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateEKSClusterForScalarProducts.md#add-taint-to-the-worker-node-that-is-used-for-toleration)
+* [AKS - Add taint to the worker node that is used for toleration](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateAKSClusterForScalarProducts.md#add-taint-to-the-worker-node-that-is-used-for-toleration)
 
 promtail ポッドは DaemonSet としてデプロイされるため、Kubernetes ワーカーノードにテイントを追加する場合は、次のようにカスタム値ファイル (scalar-loki-stack-custom-values.yaml) で許容範囲を設定する必要があります。
 

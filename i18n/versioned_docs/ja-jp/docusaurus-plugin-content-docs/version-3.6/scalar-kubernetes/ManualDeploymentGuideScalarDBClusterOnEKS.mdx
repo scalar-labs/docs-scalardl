@@ -6,13 +6,13 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 このガイドでは、ScalarDB Cluster を Amazon Elastic Kubernetes Service (EKS) にデプロイする方法について説明します。
 
-このガイドでは、AWS 環境に次の 2 つの環境のいずれかを作成します。 環境は、使用する [client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.mdx#client-modes) によって異なります。
+このガイドでは、AWS 環境に次の 2 つの環境のいずれかを作成します。 環境は、使用する [client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#client-modes) によって異なります。
 
-* **[`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.mdx#direct-kubernetes-client-mode).** このモードでは、ScalarDB Cluster のデプロイメントと同じ EKS クラスターにアプリケーションをデプロイします。
+* **[`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode).** このモードでは、ScalarDB Cluster のデプロイメントと同じ EKS クラスターにアプリケーションをデプロイします。
 
   ![image](./images/png/EKS_ScalarDB_Cluster_Direct_Kubernetes_Mode.drawio.png)  
 
-* **[`indirect` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.mdx#indirect-client-mode).** このモードでは、ScalarDB Cluster のデプロイメントを含む EKS クラスターとは異なる環境にアプリケーションをデプロイします。
+* **[`indirect` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#indirect-client-mode).** このモードでは、ScalarDB Cluster のデプロイメントを含む EKS クラスターとは異なる環境にアプリケーションをデプロイします。
 
   ![image](./images/png/EKS_ScalarDB_Cluster_Indirect_Mode.drawio.png)
 
@@ -26,7 +26,7 @@ ScalarDB Cluster のデプロイメント用の EKS クラスターを作成す�
 
 ## ステップ 3. ScalarDB Cluster のデータベースをセットアップする
 
-ScalarDB Cluster をデプロイする前にデータベースを準備する必要があります。 ScalarDB がサポートするデータベースのタイプを確認するには、[ScalarDB Supported Databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.mdx) を参照してください。
+ScalarDB Cluster をデプロイする前にデータベースを準備する必要があります。 ScalarDB がサポートするデータベースのタイプを確認するには、[ScalarDB Supported Databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md) を参照してください。
 
 データベースのセットアップの詳細については、[AWS での ScalarDB/ScalarDL デプロイ用のデータベースのセットアップ](SetupDatabaseForAWS.mdx) を参照してください。
 
@@ -36,13 +36,13 @@ EKS 上で ScalarDB Cluster をデプロイおよび管理するためのいく�
 
 ## ステップ 5. Scalar Helm Chart のカスタム値ファイルを準備する
 
-**ステップ 3** で作成したデータベース内の情報へのアクセスなどのタスクを実行するには、環境に基づいて ScalarDB Cluster の Scalar Helm Chart のカスタム値ファイルを構成する必要があります。 詳細については、[Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.mdx) を参照してください。
+**ステップ 3** で作成したデータベース内の情報へのアクセスなどのタスクを実行するには、環境に基づいて ScalarDB Cluster の Scalar Helm Chart のカスタム値ファイルを構成する必要があります。 詳細については、[Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md) を参照してください。
 
 **注意:** ScalarDB Cluster がデプロイされている EKS クラスターとは異なる環境にアプリケーションをデプロイする場合 (つまり、`indirect` クライアント モードを使用する場合)、`envoy.enabled` パラメーターを次のように設定する必要があります。 アプリケーションから Scalar Envoy にアクセスするには、`true` と `envoy.service.type` パラメータを `LoadBalancer` に設定します。
 
 ## ステップ 6. Scalar Helm Chart を使用して ScalarDB Cluster をデプロイする
 
-ScalarDB Cluster の Helm Chart を使用して、EKS クラスターに ScalarDB Cluster をデプロイします。 詳細については、[Deploy Scalar products using Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.mdx) を参照してください。
+ScalarDB Cluster の Helm Chart を使用して、EKS クラスターに ScalarDB Cluster をデプロイします。 詳細については、[Deploy Scalar products using Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md) を参照してください。
 
 **注意:** `kubectl create ns scalardb-cluster` コマンドを使用して専用の名前空間を作成し、`helm install` コマンドで `-n scalardb-cluster` オプションを使用して名前空間に ScalarDB Cluster をデプロイすることをお勧めします。
 
@@ -56,7 +56,7 @@ EKS クラスターに ScalarDB Cluster をデプロイした後、特に本番�
 
 ## ステップ 9. アプリケーションをデプロイする
 
-[`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.mdx#direct-kubernetes-client-mode) を使用する場合は、追加の Kubernetes リソースをデプロイする必要があります。 詳細については、[Deploy your client application on Kubernetes with `direct-kubernetes` mode](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-cluster.mdx#deploy-your-client-application-on-kubernetes-with-direct-kubernetes-mode) を参照してください。
+[`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode) を使用する場合は、追加の Kubernetes リソースをデプロイする必要があります。 詳細については、[Deploy your client application on Kubernetes with `direct-kubernetes` mode](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-cluster.md#deploy-your-client-application-on-kubernetes-with-direct-kubernetes-mode) を参照してください。
 
 ## EKS から ScalarDB Cluster を削除
 

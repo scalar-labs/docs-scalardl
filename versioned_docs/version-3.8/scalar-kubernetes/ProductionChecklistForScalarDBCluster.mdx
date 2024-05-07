@@ -60,7 +60,7 @@ The following is a checklist of recommendations when setting up a client applica
 
 ### Client mode (Java client library only)
 
-When using Java for your application, you can use an official Java client library. In this case, you can choose one of the two client modes: [`direct-kubernetes mode`](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.mdx#direct-kubernetes-client-mode) or [`indirect mode`](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.mdx#indirect-client-mode).
+When using Java for your application, you can use an official Java client library. In this case, you can choose one of the two client modes: [`direct-kubernetes mode`](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode) or [`indirect mode`](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#indirect-client-mode).
 
 From the perspective of performance, we recommend using `direct-kubernetes` mode. To use `direct-kubernetes` mode, you must deploy your application pods on the same Kubernetes cluster as ScalarDB Cluster pods. In this case, you don't need to deploy Envoy pods.
 
@@ -68,7 +68,7 @@ If you can't deploy your Java application pods on the same Kubernetes cluster as
 
 :::note
 
-The client mode configuration is dedicated to the Java client library. If you use a programming language other than Java for your application (essentially, if you use the [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.mdx) or [gRPC SQL API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.mdx) directly from the programming language), no such configuration exists. In this case, you must deploy Envoy pods.
+The client mode configuration is dedicated to the Java client library. If you use a programming language other than Java for your application (essentially, if you use the [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) or [gRPC SQL API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md) directly from the programming language), no such configuration exists. In this case, you must deploy Envoy pods.
 
 :::
 
@@ -120,17 +120,17 @@ flowchart LR
 
 ### Deployment of the client application when using `direct-kubernetes` client mode (Java client library only)
 
-If you use [`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.mdx#direct-kubernetes-client-mode), you must deploy your client application on the same Kubernetes cluster as the ScalarDB Cluster deployment.
+If you use [`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode), you must deploy your client application on the same Kubernetes cluster as the ScalarDB Cluster deployment.
 
-Also, when using `direct-kubernetes` client mode, you must deploy additional Kubernetes resources to make your client application work properly. For details, see [Deploy your client application on Kubernetes with `direct-kubernetes` mode](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-cluster.mdx#deploy-your-client-application-on-kubernetes-with-direct-kubernetes-mode).
+Also, when using `direct-kubernetes` client mode, you must deploy additional Kubernetes resources to make your client application work properly. For details, see [Deploy your client application on Kubernetes with `direct-kubernetes` mode](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-cluster.md#deploy-your-client-application-on-kubernetes-with-direct-kubernetes-mode).
 
 ### Transaction handling (Java client library and gRPC API)
 
-You must make sure that your application always runs [`commit()`](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.mdx#commit-a-transaction) or [`rollback()`](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.mdx#roll-back-or-abort-a-transaction) after you [`begin()`](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.mdx#begin-or-start-a-transaction) a transaction. If the application does not run `commit()` or `rollback()`, your application might experience unexpected issues or read inconsistent data from the backend database.
+You must make sure that your application always runs [`commit()`](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.md#commit-a-transaction) or [`rollback()`](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.md#roll-back-or-abort-a-transaction) after you [`begin()`](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.md#begin-or-start-a-transaction) a transaction. If the application does not run `commit()` or `rollback()`, your application might experience unexpected issues or read inconsistent data from the backend database.
 
 :::note
 
-If you use the [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.mdx) or [SQL gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.mdx), your application should call a `Commit` or `Rollback` service after you call a `Begin` service to begin a transaction.
+If you use the [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) or [SQL gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md), your application should call a `Commit` or `Rollback` service after you call a `Begin` service to begin a transaction.
 
 :::
 
@@ -138,9 +138,9 @@ If you use the [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/m
 
 You must make sure that your application handles transaction exceptions. For details, see the document for the API that you are using:
 
-* [Handle exceptions (Transactional API)](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.mdx#handle-exceptions).
-* [Handle exceptions (two-phase commit transactions API)](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.mdx#handle-exceptions)
-* [Execute transactions (ScalarDB SQL API)](https://github.com/scalar-labs/scalardb-sql/blob/main/docs/sql-api-guide.mdx#execute-transactions)
-* [Handle SQLException (ScalarDB JDBC)](https://github.com/scalar-labs/scalardb-sql/blob/main/docs/jdbc-guide.mdx#handle-sqlexception)
-* [Error handling (ScalarDB Cluster gRPC API)](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.mdx#error-handling-1)
-* [Error handling (ScalarDB Cluster SQL gRPC API)](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.mdx#error-handling-1)
+* [Handle exceptions (Transactional API)](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.md#handle-exceptions).
+* [Handle exceptions (two-phase commit transactions API)](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.md#handle-exceptions)
+* [Execute transactions (ScalarDB SQL API)](https://github.com/scalar-labs/scalardb-sql/blob/main/docs/sql-api-guide.md#execute-transactions)
+* [Handle SQLException (ScalarDB JDBC)](https://github.com/scalar-labs/scalardb-sql/blob/main/docs/jdbc-guide.md#handle-sqlexception)
+* [Error handling (ScalarDB Cluster gRPC API)](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md#error-handling-1)
+* [Error handling (ScalarDB Cluster SQL gRPC API)](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md#error-handling-1)

@@ -18,7 +18,7 @@ This guide explains how to backup and restore ScalarDB or ScalarDL data in a Kub
       * MySQL
       * PostgreSQL
 
-For details on how to back up and restore databases used with ScalarDB in a transactionally consistent way, see [A Guide on How to Backup and Restore Databases Used Through ScalarDB](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.mdx).
+For details on how to back up and restore databases used with ScalarDB in a transactionally consistent way, see [A Guide on How to Backup and Restore Databases Used Through ScalarDB](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.md).
 
 ## Perform a backup
 
@@ -28,13 +28,13 @@ How you perform backup and restore depends on the type of database (NoSQL or RDB
 
 #### NoSQL or multiple databases
 
-If you are using a NoSQL database, or if you have two or more databases that the [Multi-storage Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/multi-storage-transactions.mdx) or [Two-phase Commit Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.mdx) feature uses, please see [Back up a NoSQL database in a Kubernetes environment](BackupNoSQL.mdx) for details on how to perform a backup.
+If you are using a NoSQL database, or if you have two or more databases that the [Multi-storage Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/multi-storage-transactions.md) or [Two-phase Commit Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.md) feature uses, please see [Back up a NoSQL database in a Kubernetes environment](BackupNoSQL.mdx) for details on how to perform a backup.
 
 #### Single RDB
 
 If you are using a single RDB, please see [Back up an RDB in a Kubernetes environment](BackupRDB.mdx) for details on how to perform a backup.
 
-If you have two or more RDBs that the [Multi-storage Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/multi-storage-transactions.mdx) or [Two-phase Commit Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.mdx) feature uses, you must follow the instructions in [Back up a NoSQL database in a Kubernetes environment](BackupNoSQL.mdx) instead.
+If you have two or more RDBs that the [Multi-storage Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/multi-storage-transactions.md) or [Two-phase Commit Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.md) feature uses, you must follow the instructions in [Back up a NoSQL database in a Kubernetes environment](BackupNoSQL.mdx) instead.
 
 ## Restore a database
 
