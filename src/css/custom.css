@@ -45,11 +45,37 @@ div[class^='announcementBar'] {
 
 div[class='card'] a {
   color: var(--ifm-color-content);
-  height: 8rem;
 }
 
 div[class='card'] a:hover {
   background-color: #2673BB;
   color: white;
   text-decoration: none;
+}
+
+/* GitHub icon */
+
+.header-github-link::before {
+  display: block;
+  background-image: url("/img/github-mark.svg");
+  background-size: contain;
+  content: "";
+  width: 24px;
+  height: 24px;
+}
+
+.header-github-link svg {
+  display: none;
+}
+
+.header-github-link:hover {
+  opacity: 0.7;
+}
+
+html[data-theme="dark"] .header-github-link::before {
+  filter: invert(100%);
+}
+
+html[data-theme="dark"] .navbar-sidebar .header-github-link {
+  filter: invert(0%);
 }
