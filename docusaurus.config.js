@@ -174,7 +174,7 @@ const config = {
         logo: {
           alt: 'ScalarDL logo',
           src: 'img/scalardl-logo.png',
-          href: 'https://scalardl.scalar-labs.com/docs/',
+          href: '/',
           target: '_self',
         },
         items: [
@@ -184,8 +184,19 @@ const config = {
             dropdownActiveClassDisabled: true,
           },
           {
+            href: 'https://developers.scalar-labs.com/docs/',
+            position: 'right',
+            label: 'Scalar Docs Home',
+          },
+          {
             type: 'localeDropdown',
             position: 'right',
+          },
+          {
+            href: 'https://github.com/scalar-labs/scalardl',
+            position: 'right',
+            className: 'header-github-link',
+            'aria-label': 'GitHub repository',
           },
         ],
       },

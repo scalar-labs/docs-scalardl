@@ -21,7 +21,7 @@ const sidebars = {
   docs: [
     {
       type: 'doc',
-      label: 'Home',
+      label: 'ScalarDL Docs Home',
       id: 'index',
     },
     {

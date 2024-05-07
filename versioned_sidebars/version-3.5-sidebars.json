@@ -1,9 +1,9 @@
 {
   "docs": [
     {
-      "type": "doc",
-      "label": "Home",
-      "id": "index"
+      "type": "link",
+      "label": "ScalarDL Docs Home",
+      "href": "/docs/latest/"
     },
     {
       "type": "category",
