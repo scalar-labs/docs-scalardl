@@ -174,7 +174,7 @@ const config = {
         logo: {
           alt: 'ScalarDL logo',
           src: 'img/scalardl-logo.png',
-          href: '/',
+          href: '/docs/latest/',
           target: '_self',
         },
         items: [
