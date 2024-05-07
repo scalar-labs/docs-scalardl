@@ -12,59 +12,197 @@ import clsx from 'clsx';
 import Translate from '@docusaurus/Translate';
 import Link from '@docusaurus/Link';
 
-const Cards = [
+const CardsAbout = [
   {
-    name: 'For self-starters',
+    // name: '',
     // image: '<LINK_TO>.png',
     url: {
       page: 'overview',
     },
     description: (
-      <Translate id="engineers.selfStarters.description">
-        Learn about what ScalarDL is and its use cases
+      <Translate id="home.about.description">
+        Overview
       </Translate>
     ),
   },
   {
-    name: 'For developers',
+    // name: '',
+    // image: '<LINK_TO>.png',
+    url: {
+      page: 'implementation',
+    },
+    description: (
+      <Translate id="home.about.description">
+        Implementation
+      </Translate>
+    ),
+  },
+]
+
+const CardsGettingStarted = [
+  {
+    // name: '',
     // image: '<LINK_TO>.png',
     url: {
       page: 'getting-started',
     },
     description: (
-      <Translate id="engineers.developers.description">
-        Check out the ScalarDL getting started guide
+      <Translate id="home.gettingStarted.description">
+        Getting started with ScalarDL
       </Translate>
     ),
   },
   {
-    name: 'For infrastructure engineers',
+    // name: '',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'scalar-kubernetes/ProductionChecklistForScalarDLLedger',
+      page: 'getting-started-auditor',
     },
     description: (
-      <Translate id="engineers.infrastructure.description">
-        See the production checklist for ScalarDL Ledger
+      <Translate id="home.gettingStarted.description">
+        Getting started with ScalarDL Auditor
+      </Translate>
+    ),
+  },
+]
+
+const CardsSamples = [
+  {
+    // name: '',
+    // image: '<LINK_TO>.png',
+    url: {
+      page: 'applications/simple-bank-account/README',
+    },
+    description: (
+      <Translate id="home.samples.description">
+        Bank account application
       </Translate>
     ),
   },
   {
-    name: 'For database engineers',
+    // name: '',
+    // image: '<LINK_TO>.png',
+    url: {
+      page: 'applications/escrow-payment/README',
+    },
+    description: (
+      <Translate id="home.samples.description">
+        Escrow payment CLI
+      </Translate>
+    ),
+  },
+]
+
+const CardsDevelop = [
+  {
+    // name: 'For database engineers',
+    // image: '<LINK_TO>.png',
+    url: {
+      page: 'schema-loader',
+    },
+    description: (
+      <Translate id="home.develop.description">
+        Load a database schema
+      </Translate>
+    ),
+  },
+  {
+    // name: 'For infrastructure engineers',
+    // image: '<LINK_TO>.png',
+    url: {
+      page: 'ca/caclient-getting-started/README',
+    },
+    description: (
+      <Translate id="home.develop.description">
+        Get a certificate for the network
+      </Translate>
+    ),
+  },
+]
+
+const CardsDeploy = [
+  {
+    // name: '',
     // image: '<LINK_TO>.png',
     url: {
       page: 'scalar-kubernetes/SetupDatabaseForAWS',
     },
     description: (
-      <Translate id="engineers.database.description">
-        Read the guide for how to set up databases for AWS
+      <Translate id="home.deploy.description">
+        Set up a database for ScalarDL on AWS
+      </Translate>
+    ),
+  },
+  {
+    // name: '',
+    // image: '<LINK_TO>.png',
+    url: {
+      page: 'scalar-kubernetes/ProductionChecklistForScalarDLLedger',
+    },
+    description: (
+      <Translate id="home.deploy.description">
+        See the ScalarDL Ledger production checklist
+      </Translate>
+    ),
+  },
+]
+
+const CardsManage = [
+  {
+    // name: '',
+    // image: '<LINK_TO>.png',
+    url: {
+      page: 'scalar-kubernetes/K8sMonitorGuide',
+    },
+    description: (
+      <Translate id="home.manage.description">
+        Monitor ScalarDL in a Kubernetes cluster
+      </Translate>
+    ),
+  },
+  {
+    // name: '',
+    // image: '<LINK_TO>.png',
+    url: {
+      page: 'scalar-kubernetes/BackupRestoreGuide',
+    },
+    description: (
+      <Translate id="home.manage.description">
+        Back up and restore in a Kubernetes environment
+      </Translate>
+    ),
+  },
+]
+
+const CardsReference = [
+  {
+    // name: '',
+    // image: '<LINK_TO>.png',
+    url: {
+      page: 'compatibility',
+    },
+    description: (
+      <Translate id="home.reference.description">
+        Compatibility matrix
+      </Translate>
+    ),
+  },
+  {
+    // name: '',
+    // image: '<LINK_TO>.png',
+    url: {
+      page: 'scalardl-benchmarks/README',
+    },
+    description: (
+      <Translate id="home.reference.description">
+        Benchmarking tools
       </Translate>
     ),
   },
 ];
 
 interface Props {
-  name: string;
+  // name: string;
   // image: string;
   url: {
     page?: string;
@@ -72,7 +210,7 @@ interface Props {
   description: JSX.Element;
 }
 
-function Card({ name, /* image,*/ url, description }: Props) {
+function Card({ /* name, image,*/ url, description }: Props) {
   return (
     <div className="col col--6 margin-bottom--lg">
       <div className={clsx('card')}>
@@ -83,7 +221,7 @@ function Card({ name, /* image,*/ url, description }: Props) {
         </div>
         <Link to={url.page}>
           <div className="card__body">
-            <h3>{name}</h3>
+            {/* <h3>{name}</h3> */}
             <p>{description}</p>
           </div>
         </Link>
@@ -99,10 +237,69 @@ function Card({ name, /* image,*/ url, description }: Props) {
   );
 }
 
-export function CardRow(): JSX.Element {
+export function CardRowAbout(): JSX.Element {
   return (
     <div className="row">
-      {Cards.map((special) => (
+      {CardsAbout.map((special) => (
+        <Card key={special.name} {...special} />
+      ))}
+    </div>
+  );
+}
+
+export function CardRowGettingStarted(): JSX.Element {
+  return (
+    <div className="row">
+      {CardsGettingStarted.map((special) => (
+        <Card key={special.name} {...special} />
+      ))}
+    </div>
+  );
+}
+
+export function CardRowSamples(): JSX.Element {
+  return (
+    <div className="row">
+      {CardsSamples.map((special) => (
+        <Card key={special.name} {...special} />
+      ))}
+    </div>
+  );
+}
+
+export function CardRowDevelop(): JSX.Element {
+  return (
+    <div className="row">
+      {CardsDevelop.map((special) => (
+        <Card key={special.name} {...special} />
+      ))}
+    </div>
+  );
+}
+
+export function CardRowDeploy(): JSX.Element {
+  return (
+    <div className="row">
+      {CardsDeploy.map((special) => (
+        <Card key={special.name} {...special} />
+      ))}
+    </div>
+  );
+}
+
+export function CardRowManage(): JSX.Element {
+  return (
+    <div className="row">
+      {CardsManage.map((special) => (
+        <Card key={special.name} {...special} />
+      ))}
+    </div>
+  );
+}
+export function CardRowReference(): JSX.Element {
+  return (
+    <div className="row">
+      {CardsReference.map((special) => (
         <Card key={special.name} {...special} />
       ))}
     </div>
