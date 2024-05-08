@@ -8,7 +8,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ## ScalarDL の関数とは何ですか?
 
-ScalarDL の関数 (スマート関数) は、[JacksonBasedFunction](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl など) のような事前定義された基本関数を拡張する Java プログラムです。 /ledger/function/JacksonBasedFunction.html) クラス。単一のビジネス ロジックを実装するために作成されます。 Function は主に ScalarDL アプリケーションのデータを管理し、Contract はデータの証拠を管理します。 これを見る前に、[ScalarDL 入門](getting-started.mdx) と [ScalarDL のコントラクトの書き方](how-to-write-contract.mdx) を参照して、ScalarDL とは何か、ScalarDL で何ができるかを理解してください。 契約書付き。
+ScalarDL の関数（スマート関数）は、単一のビジネスロジックを実装するために記述された [JacksonBasedFunction](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/function/JacksonBasedFunction.html) クラスのような定義済みのベースファンクションを拡張する Java プログラムです。単一のビジネス ロジックを実装するために作成されます。 Function は主に ScalarDL アプリケーションのデータを管理し、Contract はデータの証拠を管理します。 これを見る前に、[ScalarDL 入門](getting-started.mdx) と [ScalarDL のコントラクトの書き方](how-to-write-contract.mdx) を参照して、ScalarDL とは何か、ScalarDL で何ができるかを理解してください。 契約書付き。
 
 ## 背景
 
@@ -85,7 +85,7 @@ public class Payment extends JacksonBasedFunction {
 }
 ```
 
-これは、ScalarDB API で記述された送金アプリケーションであり、指定された口座残高を取得し、2 つの口座残高間で指定された金額を送金し、残高を更新します。 ScalarDB API の詳細については、[ScalarDB ドキュメント](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.md) もお読みください。
+これは、ScalarDB API で記述された送金アプリケーションであり、指定された口座残高を取得し、2 つの口座残高間で指定された金額を送金し、残高を更新します。 ScalarDB API の詳細については、[ScalarDB ドキュメント](https://scalardb.scalar-labs.com/docs/latest/api-guide) もお読みください。
 
 ### 基本関数
 
@@ -106,7 +106,7 @@ The old [Function](https://scalar-labs.github.io/scalardl/javadoc/ledger/com/sca
 
 ### `invoke` 引数について
 
-契約が `Ledger` オブジェクトを使用して資産を管理するのと同様に、関数は `Database` オブジェクトを使用して基礎となるデータベースのレコードを管理します。 `Database` は [ScalarDB](https://github.com/scalar-labs/scalardb) インターフェイスを実装しているため、[データ モデル](https://github.com/scalar) に基づいて CRUD 操作を実行できることに注意してください。 -labs/scalardb/blob/master/docs/design.mdx#data-model) の ScalarDB 。
+契約が `Ledger` オブジェクトを使用して資産を管理するのと同様に、関数は `Database` オブジェクトを使用して基礎となるデータベースのレコードを管理します。 `Database` は、[ScalarDB](https://github.com/scalar-labs/scalardb) の [データモデル](https://scalardb.scalar-labs.com/docs/latest/design) に基づいてCRUD操作を行うことができるように、ScalarDB インターフェースを実装していることに注意してください。
 
 `functionArgument` は、リクエスタによって指定された Function の実行時引数です。 この引数は、コントラクト引数とは異なりデジタル署名されていないため、データベースに格納されているデータを渡すために使用できますが、後で何らかの理由で削除される可能性があります。
 
@@ -128,7 +128,7 @@ Function 機能はデフォルトで有効になっています。 したがっ�
 
 #### アプリケーション固有のスキーマを追加する
 
-Functions は ScalarDB CRUD インターフェイスを介して任意のレコードを読み書きできるため、ScalarDL はそれ自体で Function のデータベース スキーマを定義できません。 このようなスキーマを定義してデータベースに適用するのは、アプリケーションの所有者の責任です。データベースの所有者と管理者に応じて、自分で行うか、システム管理者に依頼する必要があります。 ScalarDB のデータベース スキーマの定義の詳細については、[ScalarDB Schema Loader](https://github.com/scalar-labs/scalardb/blob/master/schema-loader/README.md) を参照してください。
+Functions は ScalarDB CRUD インターフェイスを介して任意のレコードを読み書きできるため、ScalarDL はそれ自体で Function のデータベース スキーマを定義できません。 このようなスキーマを定義してデータベースに適用するのは、アプリケーションの所有者の責任です。データベースの所有者と管理者に応じて、自分で行うか、システム管理者に依頼する必要があります。 ScalarDB のデータベース スキーマの定義の詳細については、[ScalarDB Schema Loader](https://scalardb.scalar-labs.com/docs/latest/schema-loader) を参照してください。
 
 #### 関数を登録する
 
