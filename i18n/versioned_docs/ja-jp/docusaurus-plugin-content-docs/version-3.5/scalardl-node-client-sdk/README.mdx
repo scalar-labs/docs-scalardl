@@ -145,7 +145,7 @@ const proof = response.getProof();
 
 #### Auditor を使用する場合の Ledger 検証
 
-[こちら](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md#validate-the-states-of-ledger-and-auditor)を参照し、上記の Node SDK インターフェイス (`registerContract` および `validateLedger`) を同じ方法で使用して、Ledger と Auditor の状態を検証します。 [ValidateLedger](https://github.com/scalar-labs/scalardl-java-client-sdk/blob/master/src/main/java/com/scalar/dl/client/contract/ValidateLedger.java) のコントラクト ID を `scalar.dl.client.auditor.linearizable_validation.contract_id` プロパティに設定できます。それ以外の場合は、デフォルト ID `validate-ledger` が使用されます。
+[こちら](../getting-started-auditor.mdx#ledger-と-auditor-の状態を検証する)を参照し、上記の Node SDK インターフェイス (`registerContract` および `validateLedger`) を同じ方法で使用して、Ledger と Auditor の状態を検証します。 [ValidateLedger](https://github.com/scalar-labs/scalardl-java-client-sdk/blob/master/src/main/java/com/scalar/dl/client/contract/ValidateLedger.java) のコントラクト ID を `scalar.dl.client.auditor.linearizable_validation.contract_id` プロパティに設定できます。それ以外の場合は、デフォルト ID `validate-ledger` が使用されます。
 
 ```javascript
 {
