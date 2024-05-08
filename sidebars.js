@@ -153,10 +153,20 @@ const sidebars = {
           label: 'Scalar Helm Charts',
           collapsible: true,
           items: [
-            'helm-charts/getting-started-scalar-helm-charts',
-            'helm-charts/getting-started-scalardl-ledger',
-            'helm-charts/getting-started-scalardl-auditor',
-            'helm-charts/getting-started-scalardl-auditor-tls',
+            {
+              type: 'category',
+              label: 'Getting Started',
+              collapsible: true,
+              items: [
+                'helm-charts/getting-started-scalar-helm-charts',
+                'helm-charts/getting-started-scalardl-ledger',
+                'helm-charts/getting-started-scalardl-auditor',
+                'helm-charts/getting-started-scalardl-auditor-tls',
+                'helm-charts/getting-started-monitoring',
+                'helm-charts/getting-started-logging',
+                'helm-charts/getting-started-scalar-manager',
+              ]
+            },
             {
               type: 'category',
               label: 'Configure custom values',
@@ -171,6 +181,10 @@ const sidebars = {
               ],
             },
             'helm-charts/how-to-deploy-scalar-products',
+            'helm-charts/how-to-deploy-scalardl-ledger',
+            'helm-charts/how-to-deploy-scalardl-auditor',
+            'helm-charts/how-to-deploy-scalar-manager',
+            'helm-charts/how-to-deploy-scalar-admin-for-kubernetes',
             'helm-charts/mount-files-or-volumes-on-scalar-pods',
             'helm-charts/use-secret-for-credentials',
           ],
