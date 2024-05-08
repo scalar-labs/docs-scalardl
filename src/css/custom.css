@@ -49,11 +49,17 @@ div[class^='announcementBar'] {
   padding: 20px 0;
 }
 
-div[class='card'] a {
+/* Home page cards */
+
+.card {
+  border: 1px solid #ebedf0;
+}
+
+.card a {
   color: var(--ifm-color-content);
 }
 
-div[class='card'] a:hover {
+.card a:hover {
   background-color: #2673BB;
   color: white;
   text-decoration: none;
