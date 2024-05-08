@@ -4,7 +4,7 @@ This document sets out some guidelines for handling errors in ScalarDL.
 
 ## Basics
 
-ScalarDL expects users to use [Client SDKs](https://github.com/scalar-labs/scalardl/blob/master/docs/index.md#client-sdks) to properly interact with ScalarDL system.
+ScalarDL expects users to use [Client SDKs](implementation.mdx#client-sdk) to properly interact with ScalarDL system.
 When an error occurs, the Client SDKs return an Exception (or an Error in Javascript-based SDKs) with a status code to users.
 Users are expected to check the status code to identify the cause of errors.
 
