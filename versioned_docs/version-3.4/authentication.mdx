@@ -57,11 +57,11 @@ This section explains what variables you need to configure to use ScalarDL authe
             * Used for identifying a client.
         * `scalar.dl.client.entity.identity.digital_signature.cert_pem` or `scalar.dl.client.entity.identity.digital_signature.cert_path` (or `scalar.dl.client.cert_pem` or `scalar.dl.client.cert_path`, which are deprecated.)
             * Used for registering a certificate for Ledger and Auditor to verify a client-generated signature.
-            * See [this](https://github.com/scalar-labs/scalardl/blob/master/docs/ca/caclient-getting-started.md) for how to get a certificate.
+            * See [this](ca/caclient-getting-started.mdx#get-a-certificate-from-a-ca-server) for how to get a certificate.
         * `scalar.dl.client.entity.identity.digital_signature.cert_version` (or `scalar.dl.client.cert_version`, which is deprecated.)
         * `scalar.dl.client.entity.identity.digital_signature.private_key_pem` or `scalar.dl.client.entity.identity.digital_signature.private_key_path` (or `scalar.dl.client.private_key_pem` or `scalar.dl.client.private_key_path`, which are deprecated.)
             * Used for signing a request.
-            * See [this](https://github.com/scalar-labs/scalardl/blob/master/docs/ca/caclient-getting-started.md) for how to get a private key.
+            * See [this](ca/caclient-getting-started.mdx#generate-a-private-key-and-a-csr) for how to get a private key.
         * `scalar.dl.client.entity.identity.digital_signature.cert_version` (or `scalar.dl.client.cert_version`, which is deprecated.)
     * Ledger-side properties
       * `scalar.dl.ledger.authentication.method` (set to `digital-signature`)
@@ -73,7 +73,7 @@ This section explains what variables you need to configure to use ScalarDL authe
             * Required because Ledger authentication uses the signatures of asset proofs.
         * `scalar.dl.ledger.proof.private_key_pem` or `scalar.dl.ledger.proof.private_key_path`  
             * Used for signing asset proofs.
-            * See [this](https://github.com/scalar-labs/scalardl/blob/master/docs/ca/caclient-getting-started.md) for how to get a private key.
+            * See [this](ca/caclient-getting-started.mdx#generate-a-private-key-and-a-csr) for how to get a private key.
     * Auditor-side properties
         * `scalar.dl.auditor.ledger.cert_holder_id`
         * `scalar.dl.auditor.ledger.cert_version`
@@ -91,7 +91,7 @@ This section explains what variables you need to configure to use ScalarDL authe
           * Used for calling Ledger services directly by using the client library.
         * `scalar.dl.auditor.private_key_pem` or `scalar.dl.auditor.private_key_path`
           * Used for signing a client request and a request from Auditor to Ledger.
-          * See [this](https://github.com/scalar-labs/scalardl/blob/master/docs/ca/caclient-getting-started.md) for how to get a private key.
+          * See [this](ca/caclient-getting-started.mdx#generate-a-private-key-and-a-csr) for how to get a private key.
 
 ### HMAC
 
