@@ -2,7 +2,7 @@
 
 :::note
 
-ScalarDB Server is now deprecated. Please use [ScalarDB Cluster](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/setup-scalardb-cluster-on-kubernetes-by-using-helm-chart.md) instead.
+ScalarDB Server is now deprecated. Please use [ScalarDB Cluster](https://scalardb.scalar-labs.com/docs/latest/scalardb-cluster/setup-scalardb-cluster-on-kubernetes-by-using-helm-chart) instead.
 
 :::
 
@@ -11,8 +11,8 @@ This document explains how to get started with ScalarDB Server using Helm Chart 
 ## Requirement
 
 * You need to subscribe to ScalarDB in the [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2) or [Azure Marketplace](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardb) to get container images (`scalardb-server` and `scalardb-envoy`). Please refer to the following documents for more details.
-   * [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md)
-   * [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md)
+   * [How to install Scalar products through AWS Marketplace](../scalar-kubernetes/AwsMarketplaceGuide.mdx)
+   * [How to install Scalar products through Azure Marketplace](../scalar-kubernetes/AzureMarketplaceGuide.mdx)
 
 ## What we create
 
@@ -96,8 +96,8 @@ You can deploy PostgreSQL on the Kubernetes cluster as follows.
 
    Please refer to the following documents for more details.
    
-   * [How to install Scalar products through AWS Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AwsMarketplaceGuide.md)
-   * [How to install Scalar products through Azure Marketplace](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/AzureMarketplaceGuide.md)
+   * [How to install Scalar products through AWS Marketplace](../scalar-kubernetes/AwsMarketplaceGuide.mdx)
+   * [How to install Scalar products through Azure Marketplace](../scalar-kubernetes/AzureMarketplaceGuide.mdx)
 
 1. Create a custom values file for ScalarDB Server (scalardb-custom-values.yaml).
    * AWS Marketplace
@@ -217,7 +217,7 @@ You can deploy PostgreSQL on the Kubernetes cluster as follows.
 
 ## Step 5. Run ScalarDB sample applications in the Client container
 
-The following explains the minimum steps. If you want to know more details about ScalarDB, please refer to the [Getting Started with ScalarDB](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb.md).
+The following explains the minimum steps. If you want to know more details about ScalarDB, please refer to the [Getting Started with ScalarDB](https://scalardb.scalar-labs.com/docs/latest/getting-started-with-scalardb).
 
 1. Run bash in the Client container.
    ```console
