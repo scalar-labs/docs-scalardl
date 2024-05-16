@@ -12,7 +12,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ## ステップ 1. ScalarDL Ledger コンテナー イメージを取得する
 
-ScalarDL Ledger コンテナー イメージを取得する必要があります。 Scalar 製品のコンテナ リポジトリの詳細については、[Scalar 製品のコンテナ イメージを取得する方法](../scalar-kubernetes/HowToGetContainerImages.mdx) を参照してください。
+ScalarDL Ledger コンテナー イメージを取得する必要があります。 Scalar 製品のコンテナ リポジトリの詳細については、[Scalar 製品のコンテナ イメージを取得する方法](HowToGetContainerImages.mdx) を参照してください。
 
 ## ステップ 2. AKS クラスターを作成する
 
@@ -20,7 +20,7 @@ ScalarDL Ledger デプロイ用の AKS クラスターを作成する必要が�
 
 ## ステップ 3. ScalarDL Ledger のデータベースをセットアップする
 
-ScalarDL Ledger を展開する前にデータベースを準備する必要があります。 ScalarDL Ledger は内部で ScalarDB を使用してデータベースにアクセスするため、ScalarDB がサポートするデータベースの種類を確認するには、[ScalarDB Supported Databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md) を参照してください。
+ScalarDL Ledger を展開する前にデータベースを準備する必要があります。 ScalarDL Ledger は内部で ScalarDB を使用してデータベースにアクセスするため、ScalarDB がサポートするデータベースの種類を確認するには、[ScalarDB Supported Databases](https://scalardb.scalar-labs.com/docs/latest/scalardb-supported-databases) を参照してください。
 
 データベースのセットアップの詳細については、[Azure での ScalarDB/ScalarDL デプロイ用のデータベースのセットアップ](SetupDatabaseForAzure.mdx) を参照してください。
 
@@ -30,11 +30,11 @@ AKS で ScalarDL Ledger をデプロイおよび管理するためのいくつ�
 
 ## ステップ 5. ScalarDL Ledger と ScalarDL Schema Loader の両方の Scalar Helm Chart のカスタム値ファイルを準備する
 
-**ステップ 3** で作成したデータベース内の情報へのアクセスなどのタスクを実行するには、環境に基づいて ScalarDL Ledger と ScalarDL Schema Loader (Ledger 用) の両方の Scalar Helm Chart のカスタム値ファイルを構成する必要があります。 詳細については、[Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md) を参照してください。
+**ステップ 3** で作成したデータベース内の情報へのアクセスなどのタスクを実行するには、環境に基づいて ScalarDL Ledger と ScalarDL Schema Loader (Ledger 用) の両方の Scalar Helm Chart のカスタム値ファイルを構成する必要があります。 詳細については、[Configure a custom values file for Scalar Helm Charts](../helm-charts/configure-custom-values-file.mdx) を参照してください。
 
 ## ステップ 6. Scalar Helm Chart を使用して ScalarDL Ledger をデプロイする
 
-ScalarDL Ledger の Helm Chart を使用して、AKS クラスターに ScalarDL Ledger をデプロイします。 詳細については、[Deploy Scalar products using Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md) を参照してください。
+ScalarDL Ledger の Helm Chart を使用して、AKS クラスターに ScalarDL Ledger をデプロイします。 詳細については、[Deploy Scalar products using Scalar Helm Charts](../helm-charts/how-to-deploy-scalar-products.mdx) を参照してください。
 
 **注記：** `kubectl create ns scalardl-ledger` コマンドを使用して専用の名前空間を作成し、`helm install` コマンドで `-n scalardl-ledger` オプションを使用して名前空間に ScalarDL Ledger をデプロイすることをお勧めします。
 
