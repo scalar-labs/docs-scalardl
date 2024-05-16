@@ -26,7 +26,7 @@ ScalarDB Server デプロイ用の AKS クラスターを作成する必要が�
 
 ## ステップ 3. ScalarDB Server のデータベースをセットアップする
 
-ScalarDB Server を展開する前にデータベースを準備する必要があります。 ScalarDB がサポートするデータベースのタイプを確認するには、[ScalarDB Supported Databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md) を参照してください。
+ScalarDB Server を展開する前にデータベースを準備する必要があります。 ScalarDB がサポートするデータベースのタイプを確認するには、[ScalarDB Supported Databases](https://scalardb.scalar-labs.com/docs/latest/scalardb-supported-databases) を参照してください。
 
 データベースのセットアップの詳細については、[Azure での ScalarDB/ScalarDL デプロイ用のデータベースのセットアップ](SetupDatabaseForAzure.mdx) を参照してください。
 
@@ -36,13 +36,13 @@ AKS 上で ScalarDB Server をデプロイおよび管理するためのいく�
 
 ## ステップ 5. Scalar Helm Chart のカスタム値ファイルを準備する
 
-**ステップ 3** で作成したデータベース内の情報へのアクセスなどのタスクを実行するには、環境に基づいて ScalarDB Server の Scalar Helm Chart のカスタム値ファイルを構成する必要があります。 詳細については、[Configure a custom values file of Scalar Helm Chart](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md) を参照してください。
+**ステップ 3** で作成したデータベース内の情報へのアクセスなどのタスクを実行するには、環境に基づいて ScalarDB Server の Scalar Helm Chart のカスタム値ファイルを構成する必要があります。 詳細については、[Configure a custom values file of Scalar Helm Chart](../helm-charts/configure-custom-values-file.mdx) を参照してください。
 
 **注:** ScalarDB Server がデプロイされている AKS クラスターとは異なる環境にアプリケーションをデプロイする場合、Scalar Envoy にアクセスするには、`envoy.service.type` パラメーターを `LoadBalancer` に設定する必要があります。 応用。
 
 ## ステップ 6. Scalar Helm Chart を使用して ScalarDB Server をデプロイする
 
-ScalarDB Server の Helm Chart を使用して、AKS クラスターに ScalarDB Server をデプロイします。 詳細については、[Deploy Scalar Products using Scalar Helm Chart](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md) を参照してください。
+ScalarDB Server の Helm Chart を使用して、AKS クラスターに ScalarDB Server をデプロイします。 詳細については、[Deploy Scalar Products using Scalar Helm Chart](../helm-charts/how-to-deploy-scalar-products.mdx) を参照してください。
 
 **注意:** `kubectl create ns scalardb` コマンドを使用して専用の名前空間を作成し、`helm install` コマンドで `-n scalardb` オプションを使用して名前空間に ScalarDB Server をデプロイすることをお勧めします。
 
