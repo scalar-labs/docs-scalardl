@@ -6,19 +6,19 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ## 概要
 
-シンプルな銀行口座申請です。 ユーザーが実行できるアクションは、アカウントの作成、アカウント履歴の表示、アカウントへの資金の入金、アカウントからの資金の引き出し、アカウント間の資金の転送です。 アカウントで実行されたすべてのアクションは ScalarDL に記録されます。これは、ブロックチェーンがブロックを記録する方法と同様に、アカウント履歴が改ざん明示的な方法で記録されることを意味します。 これは、アカウント履歴が (意図的かどうかに関わらず) 変更された場合、これを検出することが可能であることを意味します。
+これは単純な銀行口座アプリケーションであり、[`scalardl` リポジトリ](https://github.com/scalar-labs/scalardl/tree/master/docs/applications/simple-bank-account/) にあります。ユーザーが実行できるアクションは、アカウントの作成、アカウント履歴の表示、アカウントへの資金の入金、アカウントからの資金の引き出し、アカウント間の資金の転送です。 アカウントで実行されたすべてのアクションは ScalarDL に記録されます。これは、ブロックチェーンがブロックを記録する方法と同様に、アカウント履歴が改ざん明示的な方法で記録されることを意味します。 これは、アカウント履歴が (意図的かどうかに関わらず) 変更された場合、これを検出することが可能であることを意味します。
  
 ここでは物事を簡単にするために、銀行がすべての契約を実行するための秘密鍵を保持していると仮定します (これがどのように機能するかについては、以下を参照してください)。 おそらくこれは、この銀行アプリケーションを実際に使用する方法ではありません。 この場合、悪意のあるアカウント マネージャーがユーザーのアカウント履歴を実際に変更する可能性があります。たとえば、単にアカウントを再作成し、偽のデータを入力するだけです。 より意味のある設定は、銀行が口座に入金するための秘密鍵を所有し、各ユーザーが自分の秘密鍵を使用して引き出しと送金の契約を登録することです。 その場合、銀行のみが口座に資金を移動でき、ユーザーのみが口座から資金を移動できます。
 
 このアプリケーションでは、次の 5 つのコントラクトを使用します。
 
-- `AccountHistory.java`
-- `CreateAccount.java`
-- `Deposit.java`
-- `Transfer.java`
-- `Withdraw.java`
+- [`AccountHistory.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/src/main/java/com/scalar/application/bankaccount/contract/AccountHistory.java)
+- [`CreateAccount.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/src/main/java/com/scalar/application/bankaccount/contract/CreateAccount.java)
+- [`Deposit.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/src/main/java/com/scalar/application/bankaccount/contract/Deposit.java)
+- [`Transfer.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/src/main/java/com/scalar/application/bankaccount/contract/Transfer.java)
+- [`Withdraw.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/src/main/java/com/scalar/application/bankaccount/contract/Withdraw.java)
 
-(これらの契約は [`src/main/java/com/scalar/application/bankaccount/contract`](./src/main/java/com/scalar/application/bankaccount/contract) にあります)。 これらの契約は銀行によって登録され、銀行はそれぞれ、口座履歴の表示、口座の作成、口座への入金、口座間の資金移動、口座からの資金の引き出しを行うことができます。
+これらの契約は銀行によって登録され、銀行はそれぞれ、口座履歴の表示、口座の作成、口座への入金、口座間の資金移動、口座からの資金の引き出しを行うことができます。
 
 このアプリケーションの全体的なアーキテクチャは次のようになります。 (この使用例は簡素化のためのものであり、実際には少し異なる可能性があることに再度注意してください。)
 
@@ -101,7 +101,7 @@ public class Deposit extends Contract {
 
 最後に `JsonObject` を返す必要があります。 `JsonObject` に何が含まれるかは、コントラクトの設計者次第です。 ここでは、`status` メッセージ、`old_balance`、および `new_balance` を含めることにしました。
 
-必要に応じて、このアプリケーションが使用する他のコントラクトを [`scr/main/java/com/scalar/application/bankaccount/contract`](./src/main/java/com/scalar/application/bankaccount/contract) で表示できます。
+必要に応じて、このアプリケーションが使用する他のコントラクトを [`scalardl` リポジトリ内のこのサンプルの `contract` フォルダー](https://github.com/scalar-labs/scalardl/tree/master/docs/applications/simple-bank-account/src/main/java/com/scalar/application/bankaccount/contract) で表示できます。
  
 契約書を作成したら、それを編集する必要があります。 これは次のようにして実行できます。
 
