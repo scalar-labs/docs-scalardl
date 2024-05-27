@@ -2,19 +2,19 @@
 
 ## Overview
 
-This is a simple bank account application. The actions that a user can performed are: create an account, view an account history, deposit funds to an account, withdraw funds from an account, and transfer funds between accounts. All actions performed on an account are recorded in ScalarDL, which means that the account history is recorded in a tamper-evident way, similar to how blockchains record blocks. This means that if an account history was altered (either intentionally or not), it is possible to detect this.  
+This is a simple bank account application, which can be found in the [`scalardl` repository](https://github.com/scalar-labs/scalardl/tree/master/docs/applications/simple-bank-account/). The actions that a user can perform are: create an account, view an account history, deposit funds to an account, withdraw funds from an account, and transfer funds between accounts. All actions performed on an account are recorded in ScalarDL, which means that the account history is recorded in a tamper-evident way, similar to how blockchains record blocks. This means that if an account history was altered (either intentionally or not), it is possible to detect this.  
  
 To keep things simple here we are assuming that the bank holds the private key to execute all the contracts (see below for more explanation of how this works). This is probably not how you would want to use this bank application in practice. In this case a malicious account manager could actually change a user's account history, e.g., by simply recreating it and filling it with false data. A more meaningful setup is that the bank owns the private key to deposit to an account, and each user registers a withdrawal and transfer contract using their own private key. Then only the bank can move funds into an account, and only users can move funds out of their accounts.
 
 This application uses five contracts:
 
-- `AccountHistory.java`
-- `CreateAccount.java`
-- `Deposit.java`
-- `Transfer.java`
-- `Withdraw.java`
+- [`AccountHistory.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/src/main/java/com/scalar/application/bankaccount/contract/AccountHistory.java)
+- [`CreateAccount.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/src/main/java/com/scalar/application/bankaccount/contract/CreateAccount.java)
+- [`Deposit.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/src/main/java/com/scalar/application/bankaccount/contract/Deposit.java)
+- [`Transfer.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/src/main/java/com/scalar/application/bankaccount/contract/Transfer.java)
+- [`Withdraw.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/src/main/java/com/scalar/application/bankaccount/contract/Withdraw.java)
 
-(which can be found in [`src/main/java/com/scalar/application/bankaccount/contract`](./src/main/java/com/scalar/application/bankaccount/contract)). These contracts will be registered by the bank and will allow the bank to, respectively, view account histories, create accounts, deposit funds to an account, transfer funds between accounts, and withdraw funds from accounts.
+These contracts will be registered by the bank and will allow the bank to, respectively, view account histories, create accounts, deposit funds to an account, transfer funds between accounts, and withdraw funds from accounts.
 
 The overall architecture of this application can be viewed as follows. (Note again that this use case is for simplicity, and in practice may look a bit different.)
 
@@ -97,7 +97,7 @@ The rest of the contract proceeds in a straightforward manner. We first `get` th
 
 At the end we must return a `JsonObject`. What the `JsonObject` contains is up to the designer of the contract. Here we have decided to include a `status` message, the `old_balance`, and the `new_balance`.
 
-If you wish, you can view the other contracts that this application uses in [`scr/main/java/com/scalar/application/bankaccount/contract`](./src/main/java/com/scalar/application/bankaccount/contract).
+If you wish, you can view the other contracts that this application uses in the [`contract` folder for this sample on GitHub](https://github.com/scalar-labs/scalardl/tree/master/docs/applications/simple-bank-account/src/main/java/com/scalar/application/bankaccount/contract).
  
 Once you have written your contracts you will need to compile them, and this can be done as
 
