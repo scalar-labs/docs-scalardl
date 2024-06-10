@@ -18,6 +18,7 @@ Scalar 製品 (ScalarDB、ScalarDL、およびそれらのツール) は、AWS M
    * [ScalarDL Auditor (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-ke3yiw4mhriuu)
    * [ScalarDL Ledger (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-3jdwfmqonx7a2)
    * [ScalarDL Auditor (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-tj7svy75gu7m6)
+   * [Scalar Manager (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-gfyn6ipmxf2hq)
    * [[Deprecated] ScalarDB Server (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2)
 
 1. [**購読を続ける**] を選択します。
@@ -58,7 +59,6 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
    ```
 
 1. インストールする Scalar 製品の Helm Chart のカスタム値ファイルを更新します。
-
    カスタム値ファイルの `[].image.repository` の値として、AWS Marketplace のプライベート コンテナ レジストリ (ECR) を指定する必要があります。 また、前の手順で作成したサービス アカウント名を `[].serviceAccount.serviceAccountName` の値として指定し、 `[].serviceAccount.automountServiceAccountToken` を `true` に設定する必要があります。
 
    * ScalarDB Cluster の例
@@ -111,6 +111,20 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
           image:
             repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-auditor-aws-payg"
         ```
+   * Scalar Manager の例
+      * Scalar Manager (scalar-manager-custom-values.yaml)
+
+        ```yaml
+        api:
+          image:
+            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-manager-api-aws-payg"
+        web:
+          image:
+            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-manager-web-aws-payg"
+        serviceAccount:
+          serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
+          automountServiceAccountToken: true
+        ```
 
 1. Helm Charts を上記のカスタム値ファイルと組み合わせて使用して、Scalar 製品をデプロイします。
    * ScalarDB Cluster の例
@@ -138,6 +152,12 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
       * ScalarDL Schema Loader (Auditor)
         ```console
         helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-auditor-custom-values.yaml
+        ```
+   * Scalar Manager の例
+      * Scalar Manager
+
+        ```console
+        helm install scalar-manager scalar-labs/scalar-manager -f ./scalar-manager-custom-values.yaml
         ```
 
 ## **[BYOL]** Scalar Helm Chart を使用して AWS Marketplace から EKS (Amazon Elastic Kubernetes Service) にコンテナをデプロイする
@@ -262,5 +282,5 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
          ```
 
 1. 上記のカスタム値ファイルを含む Helm Chart を使用して、Scalar 製品をデプロイします。
-   * 例  
+   * 例
      このドキュメントの **[BYOL] Scalar Helm Chart を使用して AWS Marketplace から EKS (Amazon Elastic Kubernetes Service) にコンテナをデプロイする** セクションを参照してください。
