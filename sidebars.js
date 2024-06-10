@@ -162,6 +162,7 @@ const sidebars = {
                 'helm-charts/getting-started-scalardl-ledger',
                 'helm-charts/getting-started-scalardl-auditor',
                 'helm-charts/getting-started-scalardl-auditor-tls',
+                'helm-charts/getting-started-scalardl-auditor-tls-cert-manager',
                 'helm-charts/getting-started-monitoring',
                 'helm-charts/getting-started-logging',
                 'helm-charts/getting-started-scalar-manager',
