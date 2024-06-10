@@ -1,9 +1,5 @@
 # Scalar 製品ポッドにファイルまたはボリュームをマウントします
 
-import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
-
-<TranslationBanner />
-
 ScalarDB Server、ScalarDB Cluster、ScalarDB Analytics with PostgreSQL、または ScalarDL Helm Charts (ScalarDL Ledger および ScalarDL Auditor) を使用する場合、Scalar 製品ポッドに任意のファイルまたはボリュームをマウントできます。
 
 ## ScalarDL Helm Charts のポッドにキーファイルと証明書ファイルをマウントする
@@ -66,12 +62,12 @@ ScalarDL Auditor を実行するには、キー ファイルと証明書ファ�
        * ScalarDL Ledger
          ```console
          kubectl create secret generic ledger-keys \
-           --from-file=private-key=./ledger-key.pem
+           --from-file=tls.key=./ledger-key.pem
          ```
        * ScalarDL Auditor
          ```console
          kubectl create secret generic auditor-keys \
-           --from-file=private-key=./auditor-key.pem \
+           --from-file=tls.key=./auditor-key.pem \
            --from-file=certificate=./auditor-cert.pem
          ```
 
