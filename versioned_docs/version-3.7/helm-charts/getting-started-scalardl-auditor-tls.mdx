@@ -60,7 +60,7 @@ You'll also create the following private key and certificate files for TLS conne
                                                   |     +----------------------+
                                                   |     
 +----------------------+                          |     +----------------------+
-| Self-managed CA      | ---(Sign certificates)---+---> | For ScalarDL Ledger  |
+| Self-signed CA       | ---(Sign certificates)---+---> | For ScalarDL Ledger  |
 +----------------------+                          |     +----------------------+
 | ca-key.pem           |                          |     | ledger-key.pem       |
 | ca.pem               |                          |     | ledger.pem           |
@@ -167,11 +167,7 @@ You'll create some configuration files and private key and certificate files loc
 
 ## Step 4. Create private key and certificate files
 
-:::warning
-
-In this tutorial, a self-managed CA is used for testing. However, it is strongly recommended that these certificates **not** be used in production. Please prepare your certificate files based on the security requirements of your system.
-
-:::
+You'll create private key and a certificate files.
 
 1. Change the working directory to `${HOME}/scalardl-test/certs/`.
 
@@ -458,6 +454,15 @@ You'll deploy two ScalarDL Schema Loader pods on the Kubernetes cluster by using
 
 ## Step 6. Deploy ScalarDL Ledger and ScalarDL Auditor on the Kubernetes cluster by using Helm Charts
 
+1. Set your license key and certificate as environment variables. If you don't have a license key, please [contact us](https://www.scalar-labs.com/contact). Also, you can see the value of `<CERT_PEM_FOR_YOUR_SCALAR_DL_LEDGER_LICENSE_KEY>` and `<CERT_PEM_FOR_YOUR_SCALAR_DL_AUDITOR_LICENSE_KEY>` in [our document](https://scalardb.scalar-labs.com/docs/latest/scalar-licensing/README/).
+
+   ```console
+   SCALAR_DL_LEDGER_LICENSE_KEY='<YOUR_SCALAR_DL_LEDGER_LICENSE_KEY>'
+   SCALAR_DL_LEDGER_LICENSE_CHECK_CERT_PEM='<CERT_PEM_FOR_YOUR_SCALAR_DL_LEDGER_LICENSE_KEY>'
+   SCALAR_DL_AUDITOR_LICENSE_KEY='<YOUR_SCALAR_DL_AUDITOR_LICENSE_KEY>'
+   SCALAR_DL_AUDITOR_LICENSE_CHECK_CERT_PEM='<CERT_PEM_FOR_YOUR_SCALAR_DL_AUDITOR_LICENSE_KEY>'
+   ```
+
 1. Create a custom values file for ScalarDL Ledger (`scalardl-ledger-custom-values.yaml`).
 
      ```console
@@ -495,12 +500,12 @@ You'll deploy two ScalarDL Schema Loader pods on the Kubernetes cluster by using
 
          ### TLS configurations
          scalar.dl.ledger.server.tls.enabled=true
-         scalar.dl.ledger.server.tls.cert_chain_path=/tls/certs/cert-chain.pem
-         scalar.dl.ledger.server.tls.private_key_path=/tls/certs/private-key.pem
+         scalar.dl.ledger.server.tls.cert_chain_path=/tls/scalardl-ledger/certs/tls.crt
+         scalar.dl.ledger.server.tls.private_key_path=/tls/scalardl-ledger/certs/tls.key
 
          ### License key configurations
-         scalar.dl.licensing.license_key=${env:SCALAR_DL_LICENSE_KEY}
-         scalar.dl.licensing.license_check_cert_pem=${env:SCALAR_DL_LICENSE_CHECK_CERT_PEM}
+         scalar.dl.licensing.license_key=${env:SCALAR_DL_LEDGER_LICENSE_KEY}
+         scalar.dl.licensing.license_check_cert_pem=${env:SCALAR_DL_LEDGER_LICENSE_CHECK_CERT_PEM}
 
        tls:
          enabled: true
@@ -548,15 +553,15 @@ You'll deploy two ScalarDL Schema Loader pods on the Kubernetes cluster by using
 
          ### TLS configurations
          scalar.dl.auditor.server.tls.enabled=true
-         scalar.dl.auditor.server.tls.cert_chain_path=/tls/certs/cert-chain.pem
-         scalar.dl.auditor.server.tls.private_key_path=/tls/certs/private-key.pem
+         scalar.dl.auditor.server.tls.cert_chain_path=/tls/scalardl-auditor/certs/tls.crt
+         scalar.dl.auditor.server.tls.private_key_path=/tls/scalardl-auditor/certs/tls.key
          scalar.dl.auditor.tls.enabled=true
-         scalar.dl.auditor.tls.ca_root_cert_path=/tls/certs/ca-root-cert-for-ledger.pem
+         scalar.dl.auditor.tls.ca_root_cert_path=/tls/scalardl-ledger/certs/ca.crt
          scalar.dl.auditor.tls.override_authority=envoy.scalar.example.com
 
          ### License key configurations
-         scalar.dl.licensing.license_key=${env:SCALAR_DL_LICENSE_KEY}
-         scalar.dl.licensing.license_check_cert_pem=${env:SCALAR_DL_LICENSE_CHECK_CERT_PEM}
+         scalar.dl.licensing.license_key=${env:SCALAR_DL_AUDITOR_LICENSE_KEY}
+         scalar.dl.licensing.license_check_cert_pem=${env:SCALAR_DL_AUDITOR_LICENSE_CHECK_CERT_PEM}
 
        tls:
          enabled: true
@@ -570,68 +575,63 @@ You'll deploy two ScalarDL Schema Loader pods on the Kubernetes cluster by using
      EOF
      ```
 
-1. Set your license key and certificate as environment variables. If you don't have a license key, please [contact us](https://www.scalar-labs.com/contact).
-
-   ```console
-   SCALAR_DL_LICENSE_KEY=<YOUR_LICENSE_KEY>
-   SCALAR_DL_LICENSE_CHECK_CERT_PEM=<CERT_PEM_FOR_YOUR_LICENSE_KEY>
-   ```
-
 1. Create a secret resource named `ledger-credentials-secret` that includes credentials and a license key.
 
    ```console
    kubectl create secret generic ledger-credentials-secret \
-     --from-literal=SCALAR_DL_LEDGER_POSTGRES_USERNAME=postgres \
-     --from-literal=SCALAR_DL_LEDGER_POSTGRES_PASSWORD=postgres \
-     --from-literal=SCALAR_DL_LEDGER_HMAC_CIPHER_KEY=ledger-hmac-cipher-key \
-     --from-literal=SCALAR_DL_LEDGER_HMAC_SECRET_KEY=scalardl-hmac-secret-key \
-     --from-literal=SCALAR_DL_LICENSE_KEY=${SCALAR_DL_LICENSE_KEY} \
-     --from-literal=SCALAR_DL_LICENSE_CHECK_CERT_PEM=${SCALAR_DL_LICENSE_CHECK_CERT_PEM} \
-     -n default
+   --from-literal=SCALAR_DL_LEDGER_POSTGRES_USERNAME=postgres \
+   --from-literal=SCALAR_DL_LEDGER_POSTGRES_PASSWORD=postgres \
+   --from-literal=SCALAR_DL_LEDGER_HMAC_CIPHER_KEY=ledger-hmac-cipher-key \
+   --from-literal=SCALAR_DL_LEDGER_HMAC_SECRET_KEY=scalardl-hmac-secret-key \
+   --from-literal=SCALAR_DL_LEDGER_LICENSE_KEY="${SCALAR_DL_LEDGER_LICENSE_KEY}" \
+   --from-file=SCALAR_DL_LEDGER_LICENSE_CHECK_CERT_PEM=<(echo ${SCALAR_DL_LEDGER_LICENSE_CHECK_CERT_PEM} | sed 's/\\n/\
+   /g') \
+   -n default
    ```
 
 1. Create a secret resource named `auditor-credentials-secret` that includes credentials and a license key.
 
    ```console
    kubectl create secret generic auditor-credentials-secret \
-     --from-literal=SCALAR_DL_AUDITOR_POSTGRES_USERNAME=postgres \
-     --from-literal=SCALAR_DL_AUDITOR_POSTGRES_PASSWORD=postgres \
-     --from-literal=SCALAR_DL_AUDITOR_HMAC_CIPHER_KEY=auditor-hmac-cipher-key \
-     --from-literal=SCALAR_DL_AUDITOR_HMAC_SECRET_KEY=scalardl-hmac-secret-key \
-     --from-literal=SCALAR_DL_LICENSE_KEY=${SCALAR_DL_LICENSE_KEY} \
-     --from-literal=SCALAR_DL_LICENSE_CHECK_CERT_PEM=${SCALAR_DL_LICENSE_CHECK_CERT_PEM} \
-     -n default
+   --from-literal=SCALAR_DL_AUDITOR_POSTGRES_USERNAME=postgres \
+   --from-literal=SCALAR_DL_AUDITOR_POSTGRES_PASSWORD=postgres \
+   --from-literal=SCALAR_DL_AUDITOR_HMAC_CIPHER_KEY=auditor-hmac-cipher-key \
+   --from-literal=SCALAR_DL_AUDITOR_HMAC_SECRET_KEY=scalardl-hmac-secret-key \
+   --from-literal=SCALAR_DL_AUDITOR_LICENSE_KEY="${SCALAR_DL_AUDITOR_LICENSE_KEY}" \
+   --from-file=SCALAR_DL_AUDITOR_LICENSE_CHECK_CERT_PEM=<(echo ${SCALAR_DL_AUDITOR_LICENSE_CHECK_CERT_PEM} | sed 's/\\n/\
+   /g') \
+   -n default
    ```
 
 1. Create secret resources that include the private key and certificate files for Envoy.
 
    ```console
-   kubectl create secret generic envoy-tls-cert --from-file=cert-chain=${HOME}/scalardl-test/certs/envoy.pem -n default
-   kubectl create secret generic envoy-tls-key --from-file=private-key=${HOME}/scalardl-test/certs/envoy-key.pem -n default
+   kubectl create secret generic envoy-tls-cert --from-file=tls.crt=${HOME}/scalardl-test/certs/envoy.pem -n default
+   kubectl create secret generic envoy-tls-key --from-file=tls.key=${HOME}/scalardl-test/certs/envoy-key.pem -n default
    ```
 
 1. Create secret resources that include the private key, certificate, and CA certificate files for ScalarDL Ledger.
 
    ```console
-   kubectl create secret generic scalardl-ledger-tls-ca --from-file=ca-root-cert=${HOME}/scalardl-test/certs/ca.pem -n default
-   kubectl create secret generic scalardl-ledger-tls-cert --from-file=cert-chain=${HOME}/scalardl-test/certs/ledger.pem -n default
-   kubectl create secret generic scalardl-ledger-tls-key --from-file=private-key=${HOME}/scalardl-test/certs/ledger-key.pem -n default
+   kubectl create secret generic scalardl-ledger-tls-ca --from-file=ca.crt=${HOME}/scalardl-test/certs/ca.pem -n default
+   kubectl create secret generic scalardl-ledger-tls-cert --from-file=tls.crt=${HOME}/scalardl-test/certs/ledger.pem -n default
+   kubectl create secret generic scalardl-ledger-tls-key --from-file=tls.key=${HOME}/scalardl-test/certs/ledger-key.pem -n default
    ```
 
 1. Create secret resources that include the private key, certificate, and CA certificate files for ScalarDL Auditor.
 
    ```console
-   kubectl create secret generic scalardl-auditor-tls-ca --from-file=ca-root-cert=${HOME}/scalardl-test/certs/ca.pem -n default
-   kubectl create secret generic scalardl-auditor-tls-cert --from-file=cert-chain=${HOME}/scalardl-test/certs/auditor.pem -n default
-   kubectl create secret generic scalardl-auditor-tls-key --from-file=private-key=${HOME}/scalardl-test/certs/auditor-key.pem -n default
-   kubectl create secret generic scalardl-auditor-tls-ca-for-ledger --from-file=ca-root-cert-for-ledger=${HOME}/scalardl-test/certs/ca.pem -n default
+   kubectl create secret generic scalardl-auditor-tls-ca --from-file=ca.crt=${HOME}/scalardl-test/certs/ca.pem -n default
+   kubectl create secret generic scalardl-auditor-tls-cert --from-file=tls.crt=${HOME}/scalardl-test/certs/auditor.pem -n default
+   kubectl create secret generic scalardl-auditor-tls-key --from-file=tls.key=${HOME}/scalardl-test/certs/auditor-key.pem -n default
+   kubectl create secret generic scalardl-auditor-tls-ca-for-ledger --from-file=ca.crt=${HOME}/scalardl-test/certs/ca.pem -n default
    ```
 
 1. Create a secret resource named `auditor-keys` to disable the `digital-signature` authentication method. In this tutorial, you'll use the `hmac` authentication method instead of `digital-signature`.
 
    ```console
    kubectl create secret generic auditor-keys \
-     --from-literal=private-key=dummy-data-to-disable-digital-signature-method \
+     --from-literal=tls.key=dummy-data-to-disable-digital-signature-method \
      --from-literal=certificate=dummy-data-to-disable-digital-signature-method \
      -n default
    ```
@@ -723,11 +723,10 @@ The `CLUSTER-IP` values for `scalardl-ledger-headless`, `scalardl-auditor-headle
 
 You'll use the CA certificate file in a client container. Therefore, you'll need to create a secret resource and mount it to the client container.  
 
-
 1. Create a secret resource named `client-ca-cert`.
 
    ```console
-   kubectl create secret generic client-ca-cert --from-file=certificate=${HOME}/scalardl-test/certs/ca.pem -n default
+   kubectl create secret generic client-ca-cert --from-file=ca.crt=${HOME}/scalardl-test/certs/ca.pem -n default
    ```
 
 1. Create a manifest file for a client pod (`scalardl-client-pod.yaml`).
@@ -749,8 +748,7 @@ You'll use the CA certificate file in a client container. Therefore, you'll need
              value: SCALAR_DL_CLIENT_POD_SCALAR_DL_VERSION
          volumeMounts:
            - name: "client-ca-cert"
-             mountPath: "/certs/ca/ca.pem"
-             subPath: certificate
+             mountPath: "/certs/"
              readOnly: true
      volumes:
        - name: "client-ca-cert"
@@ -789,8 +787,8 @@ You'll use the CA certificate file in a client container. Therefore, you'll need
 
 The following explains the minimum steps needed to run sample contracts. For more details about ScalarDL Ledger and ScalarDL Auditor, see the following:
 
-* [Getting Started with ScalarDL](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started.md)
-* [Getting Started with ScalarDL Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md)
+* [Getting Started with ScalarDL](https://scalardl.scalar-labs.com/docs/latest/getting-started/)
+* [Getting Started with ScalarDL Auditor](https://scalardl.scalar-labs.com/docs/latest/getting-started-auditor/)
 
 1. Run bash in the client container.
 
@@ -859,14 +857,14 @@ The following explains the minimum steps needed to run sample contracts. For mor
    # Ledger configuration
    scalar.dl.client.server.host=scalardl-ledger-envoy.default.svc.cluster.local
    scalar.dl.client.tls.enabled=true
-   scalar.dl.client.tls.ca_root_cert_path=/certs/ca/ca.pem
+   scalar.dl.client.tls.ca_root_cert_path=/certs/ca.crt
    scalar.dl.client.tls.override_authority=envoy.scalar.example.com
 
    # Auditor configuration
    scalar.dl.client.auditor.enabled=true
    scalar.dl.client.auditor.host=scalardl-auditor-envoy.default.svc.cluster.local
    scalar.dl.client.auditor.tls.enabled=true
-   scalar.dl.client.auditor.tls.ca_root_cert_path=/certs/ca/ca.pem
+   scalar.dl.client.auditor.tls.ca_root_cert_path=/certs/ca.crt
    scalar.dl.client.auditor.tls.override_authority=envoy.scalar.example.com
 
    # Client configuration
@@ -981,6 +979,12 @@ The following explains the minimum steps needed to run sample contracts. For mor
        "error_message" : "The results from Ledger and Auditor don't match"
      }
      ```
+
+1. Exit from the client container.
+
+   ```console
+   exit
+   ```
 
 ## Step 9. Delete all resources
 

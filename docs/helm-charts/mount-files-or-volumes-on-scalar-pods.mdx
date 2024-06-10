@@ -62,12 +62,12 @@ In this example, you need to mount a **private-key** and a **certificate** file 
        * ScalarDL Ledger
          ```console
          kubectl create secret generic ledger-keys \
-           --from-file=private-key=./ledger-key.pem
+           --from-file=tls.key=./ledger-key.pem
          ```
        * ScalarDL Auditor
          ```console
          kubectl create secret generic auditor-keys \
-           --from-file=private-key=./auditor-key.pem \
+           --from-file=tls.key=./auditor-key.pem \
            --from-file=certificate=./auditor-cert.pem
          ```
 

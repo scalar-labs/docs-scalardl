@@ -40,7 +40,7 @@ You'll also create the following private key and certificate files for TLS conne
                                                   |     | envoy-key.pem                 |
                                                   |     | envoy.pem                     |
 +----------------------+                          |     +-------------------------------+
-| Self-managed CA      | ---(Sign certificates)---+
+| Self-signed CA       | ---(Sign certificates)---+
 +----------------------+                          |     +-------------------------------+
 | ca-key.pem           |                          +---> | For ScalarDB Cluster          |
 | ca.pem               |                                +-------------------------------+
@@ -117,11 +117,7 @@ You'll create some configuration files and private key and certificate files loc
 
 ## Step 4. Create private key and certificate files
 
-:::warning
-
-In this tutorial, a self-managed CA is used for testing. However, it is strongly recommended that these certificates **not** be used in production. Please prepare your certificate files based on the security requirements of your system.
-
-:::
+You'll create private key and a certificate files.
 
 1. Change the working directory to `${HOME}/scalardb-cluster-test/certs/`.
 
@@ -277,6 +273,13 @@ In this tutorial, a self-managed CA is used for testing. However, it is strongly
    helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
    ```
 
+1. Set your license key and certificate as environment variables. If you don't have a license key, please [contact us](https://www.scalar-labs.com/contact). For details about the value of `<CERT_PEM_FOR_YOUR_LICENSE_KEY>`, see [How to Configure a Product License Key](https://scalardb.scalar-labs.com/docs/latest/scalar-licensing/).
+
+   ```console
+   SCALAR_DB_CLUSTER_LICENSE_KEY='<YOUR_LICENSE_KEY>'
+   SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM='<CERT_PEM_FOR_YOUR_LICENSE_KEY>'
+   ```
+
 1. Create a custom values file for ScalarDB Cluster (`scalardb-cluster-custom-values.yaml`).
 
      ```console
@@ -321,14 +324,14 @@ In this tutorial, a self-managed CA is used for testing. However, it is strongly
 
          ### TLS configurations
          scalar.db.cluster.tls.enabled=true
-         scalar.db.cluster.tls.ca_root_cert_path=/tls/certs/ca-root-cert.pem
-         scalar.db.cluster.node.tls.cert_chain_path=/tls/certs/cert-chain.pem
-         scalar.db.cluster.node.tls.private_key_path=/tls/certs/private-key.pem
+         scalar.db.cluster.tls.ca_root_cert_path=/tls/scalardb-cluster/certs/ca.crt
+         scalar.db.cluster.node.tls.cert_chain_path=/tls/scalardb-cluster/certs/tls.crt
+         scalar.db.cluster.node.tls.private_key_path=/tls/scalardb-cluster/certs/tls.key
          scalar.db.cluster.tls.override_authority=cluster.scalardb.example.com
 
          ### License key configurations
-         scalar.dl.licensing.license_key=${env:SCALAR_DB_CLUSTER_LICENSE_KEY}
-         scalar.dl.licensing.license_check_cert_pem=${env:SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM}
+         scalar.db.cluster.node.licensing.license_key=${env:SCALAR_DB_CLUSTER_LICENSE_KEY}
+         scalar.db.cluster.node.licensing.license_check_cert_pem=${env:SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM}
 
        tls:
          enabled: true
@@ -341,37 +344,31 @@ In this tutorial, a self-managed CA is used for testing. However, it is strongly
      EOF
      ```
 
-1. Set your license key and certificate as environment variables. If you don't have a license key, please [contact us](https://www.scalar-labs.com/contact).
-
-   ```console
-   SCALAR_DB_CLUSTER_LICENSE_KEY=<YOUR_LICENSE_KEY>
-   SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM=<CERT_PEM_FOR_YOUR_LICENSE_KEY>
-   ```
-
 1. Create a secret resource named `scalardb-credentials-secret` that includes credentials and license keys.
 
    ```console
    kubectl create secret generic scalardb-credentials-secret \
-     --from-literal=SCALAR_DB_CLUSTER_POSTGRES_USERNAME=postgres \
-     --from-literal=SCALAR_DB_CLUSTER_POSTGRES_PASSWORD=postgres \
-     --from-literal=SCALAR_DB_CLUSTER_LICENSE_KEY=${SCALAR_DB_CLUSTER_LICENSE_KEY} \
-     --from-literal=SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM=${SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM} \
-     -n default
+   --from-literal=SCALAR_DB_CLUSTER_POSTGRES_USERNAME=postgres \
+   --from-literal=SCALAR_DB_CLUSTER_POSTGRES_PASSWORD=postgres \
+   --from-literal=SCALAR_DB_CLUSTER_LICENSE_KEY="${SCALAR_DB_CLUSTER_LICENSE_KEY}" \
+   --from-file=SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM=<(echo ${SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM} | sed 's/\\n/\
+   /g') \
+   -n default
    ```
 
 1. Create secret resources that include the private key and certificate files for Envoy.
 
    ```console
-   kubectl create secret generic envoy-tls-cert --from-file=cert-chain=${HOME}/scalardb-cluster-test/certs/envoy.pem -n default
-   kubectl create secret generic envoy-tls-key --from-file=private-key=${HOME}/scalardb-cluster-test/certs/envoy-key.pem -n default
+   kubectl create secret generic envoy-tls-cert --from-file=tls.crt=${HOME}/scalardb-cluster-test/certs/envoy.pem -n default
+   kubectl create secret generic envoy-tls-key --from-file=tls.key=${HOME}/scalardb-cluster-test/certs/envoy-key.pem -n default
    ```
 
 1. Create secret resources that include the key, certificate, and CA certificate files for ScalarDB Cluster.
 
    ```console
-   kubectl create secret generic scalardb-cluster-tls-ca --from-file=ca-root-cert=${HOME}/scalardb-cluster-test/certs/ca.pem -n default
-   kubectl create secret generic scalardb-cluster-tls-cert --from-file=cert-chain=${HOME}/scalardb-cluster-test/certs/scalardb-cluster.pem -n default
-   kubectl create secret generic scalardb-cluster-tls-key --from-file=private-key=${HOME}/scalardb-cluster-test/certs/scalardb-cluster-key.pem -n default
+   kubectl create secret generic scalardb-cluster-tls-ca --from-file=ca.crt=${HOME}/scalardb-cluster-test/certs/ca.pem -n default
+   kubectl create secret generic scalardb-cluster-tls-cert --from-file=tls.crt=${HOME}/scalardb-cluster-test/certs/scalardb-cluster.pem -n default
+   kubectl create secret generic scalardb-cluster-tls-key --from-file=tls.key=${HOME}/scalardb-cluster-test/certs/scalardb-cluster-key.pem -n default
    ```
 
 1. Set the chart version of ScalarDB Cluster.
@@ -441,7 +438,7 @@ You'll use the CA certificate file in a client container. Therefore, you'll need
 1. Create a secret resource named `client-ca-cert`.
 
    ```console
-   kubectl create secret generic client-ca-cert --from-file=certificate=${HOME}/scalardb-cluster-test/certs/ca.pem -n default
+   kubectl create secret generic client-ca-cert --from-file=ca.crt=${HOME}/scalardb-cluster-test/certs/ca.pem -n default
    ```
 
 1. Create a manifest file for a client pod (`scalardb-cluster-client-pod.yaml`).
@@ -463,8 +460,7 @@ You'll use the CA certificate file in a client container. Therefore, you'll need
              value: SCALAR_DB_CLUSTER_CLIENT_POD_SCALAR_DB_CLUSTER_VERSION
          volumeMounts:
            - name: "client-ca-cert"
-             mountPath: "/certs/ca/ca.pem"
-             subPath: certificate
+             mountPath: "/certs/"
              readOnly: true
      volumes:
        - name: "client-ca-cert"
@@ -499,17 +495,7 @@ You'll use the CA certificate file in a client container. Therefore, you'll need
    scalardb-cluster-client   1/1     Running   0          26s
    ```
 
-## Step 7. Download and copy the ScalarDB Cluster SQL CLI to the client container
-
-1. Download the ScalarDB Cluster SQL CLI from [Releases](https://github.com/scalar-labs/scalardb/releases) into the directory `${HOME}/scalardb-cluster-test/`.
-
-1. Copy the ScalarDB Cluster SQL CLI to the client container.
-
-   ```console
-   kubectl cp ${HOME}/scalardb-cluster-test/scalardb-cluster-sql-cli-${SCALAR_DB_CLUSTER_VERSION}-all.jar scalardb-cluster-client:/
-   ```
-
-## Step 8. Run the ScalarDB Cluster SQL CLI in the client container
+## Step 7. Run the ScalarDB Cluster SQL CLI in the client container
 
 1. Run bash in the client container.
 
@@ -517,6 +503,12 @@ You'll use the CA certificate file in a client container. Therefore, you'll need
    kubectl exec -it scalardb-cluster-client -n default -- bash
    ```
    The commands in the following steps must be run in the client container.
+
+1. Download the ScalarDB Cluster SQL CLI from [Releases](https://github.com/scalar-labs/scalardb/releases).
+
+   ```console
+   curl -OL https://github.com/scalar-labs/scalardb/releases/download/v${SCALAR_DB_CLUSTER_VERSION}/scalardb-cluster-sql-cli-${SCALAR_DB_CLUSTER_VERSION}-all.jar
+   ```
 
 1. Create a `database.properties` file and add configurations.
 
@@ -533,7 +525,7 @@ You'll use the CA certificate file in a client container. Therefore, you'll need
 
    # TLS configurations
    scalar.db.cluster.tls.enabled=true
-   scalar.db.cluster.tls.ca_root_cert_path=/certs/ca/ca.pem
+   scalar.db.cluster.tls.ca_root_cert_path=/certs/ca.crt
    scalar.db.cluster.tls.override_authority=envoy.scalar.example.com
    EOF
    ```
@@ -582,7 +574,19 @@ You'll use the CA certificate file in a client container. Therefore, you'll need
    3 rows selected (0.059 seconds)
    ```
 
-## Step 9. Delete all resources
+1. Press `Ctrl + D` to exit from ScalarDB Cluster SQL CLI.
+
+   ```console
+   ^D
+   ```
+
+1. Exit from the client container.
+
+   ```console
+   exit
+   ```
+
+## Step 8. Delete all resources
 
 After completing the ScalarDB Cluster tests on the Kubernetes cluster, remove all resources.
 
