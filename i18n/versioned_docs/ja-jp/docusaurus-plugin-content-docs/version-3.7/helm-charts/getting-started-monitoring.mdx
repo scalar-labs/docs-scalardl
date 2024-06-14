@@ -80,7 +80,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
            * `kubeStateMetrics.enabled`、`nodeExporter.enabled`、および `kubelet.enabled` を `true` に設定します。
 
        * Scalar Manager を使用する場合は、Scalar Manager が Grafana を組み込みきるように次の構成を設定する必要があります。
-           * `grafana.ini.allow_embedding` および `grafana.ini.auth.anonymous.enabled` を `true` に設定します。
+           * `grafana.ini.security.allow_embedding` および `grafana.ini.auth.anonymous.enabled` を `true` に設定します。
            * `grafana.ini.auth.anonymous.org_name` を使用中の組織に設定します。Scalar のサンプルを使う場合では、`Main Org.` に設定します。
            * `grafana.ini.auth.anonymous.org_role` を `Editor` に設定します。
 
