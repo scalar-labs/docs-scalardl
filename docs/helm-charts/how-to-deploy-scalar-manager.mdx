@@ -14,11 +14,22 @@ When you use Scalar Manager, you must deploy kube-prometheus-stack and loki-stac
 When you deploy kube-prometheus-stack, you must set the following configuration in the custom values file for kube-prometheus-stack.
 
 ```yaml
+kubeStateMetrics:
+  enabled: true
+nodeExporter:
+  enabled: true
+kubelet:
+  enabled: true
 grafana:
-  grafana-ini:
+  grafana.ini:
+    users:
+      default_theme: light
     security:
       allow_embedding: true
-      cookie_samesite: disabled
+    auth.anonymous:
+      enabled: true
+      org_name: "Main Org."
+      org_role: Editor
 ```
 
 If you already have a deployment of kube-prometheus-stack, please upgrade the configuration using the following command.
