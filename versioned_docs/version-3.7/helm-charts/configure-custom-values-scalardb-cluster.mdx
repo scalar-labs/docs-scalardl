@@ -266,6 +266,23 @@ scalardbCluster:
     overrideAuthority: "cluster.scalardb.example.com"
 ```
 
+##### Set a root CA certificate for Prometheus Operator
+
+If you set `scalardbCluster.serviceMonitor.enabled=true` and `scalardbCluster.tls.enabled=true` (in other words, if you monitor ScalarDB Cluster with TLS configuration by using Prometheus Operator), you must set the secret name to `scalardbCluster.tls.caRootCertSecretForServiceMonitor`.
+
+```yaml
+scalardbCluster:
+  tls:
+    enabled: true
+    caRootCertSecretForServiceMonitor: "scalardb-cluster-tls-ca-for-prometheus"
+```
+
+In this case, you have to create secret resources that include a root CA certificate for ScalarDB Cluster in the same namespace as Prometheus as follows:
+
+```console
+kubectl create secret generic scalardb-cluster-tls-ca-for-prometheus --from-file=ca.crt=/path/to/your/ca/certificate/file -n <NAMESPACE_SAME_AS_PROMETHEUS>
+```
+
 ### Replica configurations (optional based on your environment)
 
 You can specify the number of ScalarDB Cluster replicas (pods) by using `scalardbCluster.replicaCount`.

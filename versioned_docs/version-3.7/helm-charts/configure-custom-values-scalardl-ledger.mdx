@@ -280,6 +280,23 @@ ledger:
     overrideAuthority: "ledger.scalardl.example.com"
 ```
 
+##### Set a root CA certificate for Prometheus Operator
+
+If you set `ledger.serviceMonitor.enabled=true` and `ledger.tls.enabled=true` (in other words, if you monitor ScalarDL Ledger with TLS configuration by using Prometheus Operator), you must set the secret name to `ledger.tls.caRootCertSecretForServiceMonitor`.
+
+```yaml
+ledger:
+  tls:
+    enabled: true
+    caRootCertSecretForServiceMonitor: "scalardl-ledger-tls-ca-for-prometheus"
+```
+
+In this case, you have to create secret resources that include a root CA certificate for ScalarDL Ledger in the same namespace as Prometheus as follows:
+
+```console
+kubectl create secret generic scalardl-ledger-tls-ca-for-prometheus --from-file=ca.crt=/path/to/your/ca/certificate/file -n <NAMESPACE_SAME_AS_PROMETHEUS>
+```
+
 ### Replica configurations (optional based on your environment)
 
 You can specify the number of replicas (pods) of ScalarDL Ledger using `ledger.replicaCount`.

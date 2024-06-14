@@ -15,52 +15,13 @@ service:
 
 ### Image configurations
 
-You must set `image.repository`. Be sure to specify the Scalar Manager container image so that you can pull the image from the container repository.
+You must set `api.image.repository` and `web.image.repository`. Be sure to specify the Scalar Manager container image so that you can pull the image from the container repository.
 
 ```yaml
-image:
-  repository: <SCALAR_MANAGER_IMAGE>
-```
-
-### Targets configurations
-
-You must set `scalarManager.targets`. Please set the DNS Service URL that returns the SRV record of pods. Kubernetes creates this URL for the named port of the headless service of the Scalar product. The format is `_{port name}._{protocol}.{service name}.{namespace}.svc.{cluster domain name}`.
-
-```yaml
-scalarManager:
-  targets: 
-    - name: Ledger
-      adminSrv: _scalardl-admin._tcp.scalardl-headless.default.svc.cluster.local
-      databaseType: cassandra
-    - name: Auditor
-      adminSrv: _scalardl-auditor-admin._tcp.scalardl-auditor-headless.default.svc.cluster.local
-      databaseType: cassandra
-```
-
-### Grafana configurations
-
-You must set the `scalarManager.grafanaUrl`. Please specify your Grafana URL.
-
-```yaml
-scalarManager:
-  grafanaUrl: "http://localhost:3000"
-```
-
-## Optional configurations
-
-### Replica configurations (Optional based on your environment)
-
-You can specify the number of replicas (pods) of Scalar Manager using `replicaCount`.
-
-```yaml
-replicaCount: 3
-```
-
-### Refresh interval configurations (Optional based on your environment)
-
-You can specify the refresh interval that Scalar Manager checks the status of the products using `scalarManager.refreshInterval`.
-
-```yaml
-scalarManager:
-  refreshInterval: 30
+api:
+  image:
+    repository: <SCALAR_MANAGER_API_IMAGE>
+web:
+  image:
+    repository: <SCALAR_MANAGER_WEB_IMAGE>
 ```
