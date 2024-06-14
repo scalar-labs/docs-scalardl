@@ -76,7 +76,7 @@ First, you need to prepare a Kubernetes cluster. If you use a **minikube** envir
            * Set `kubeStateMetrics.enabled`, `nodeExporter.enabled`, and `kubelet.enabled` to `true`.
 
        * If you want to use Scalar Manager, you'll need to set the following configurations to enable Scalar Manager to embed Grafana:
-           * Set `grafana.ini.allow_embedding` and `grafana.ini.auth.anonymous.enabled` to `true`.
+           * Set `grafana.ini.security.allow_embedding` and `grafana.ini.auth.anonymous.enabled` to `true`.
            * Set `grafana.ini.auth.anonymous.org_name` to the organization you are using. If you're using the sample custom values, the value is `Main Org.`.
            * Set `grafana.ini.auth.anonymous.org_role` to `Editor`.
 
