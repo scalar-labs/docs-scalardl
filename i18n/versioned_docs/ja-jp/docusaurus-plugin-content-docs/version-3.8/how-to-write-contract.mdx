@@ -8,11 +8,11 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ## ScalarDL のコントラクトとは何ですか?
 
-ScalarDL のコントラクト (別名スマート コントラクト) は、事前定義された基本コントラクトを拡張する Java プログラムです ([ContractBase](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/ContractBase.html) クラス) は、単一のビジネス ロジックを実装するために記述されています。 コントラクトとその引数は、コントラクト所有者の秘密キーでデジタル署名され、ScalarDL に渡されます。 この仕組みにより、契約は所有者のみが実行できるようになり、データ改ざんなどの悪意のある行為をシステムが検出できるようになります。
+ScalarDL のコントラクト (別名スマート コントラクト) は、事前定義された基本コントラクトを拡張する Java プログラムです ([ContractBase](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/ContractBase.html) クラス) は、単一のビジネス ロジックを実装するために記述されています。 コントラクトとその引数は、コントラクト所有者の秘密キーでデジタル署名され、ScalarDL に渡されます。 この仕組みにより、コントラクトは所有者のみが実行できるようになり、データ改ざんなどの悪意のある行為をシステムが検出できるようになります。
 
 このドキュメントを参照する前に、[ScalarDL 入門](getting-started.mdx) を参照して、ScalarDL とは何か、およびその基本用語を理解してください。
 
-## 簡単な契約書を書く
+## 簡単なコントラクトを書く
 
 コントラクトの書き方をよりよく理解するために、`StateUpdater` コントラクトの例を詳しく見てみましょう。
 
@@ -42,15 +42,15 @@ public class StateUpdater extends JacksonBasedContract {
 }
 ```
 
-### 基本契約
+### 基本コントラクト
 
-Ledger データと Contract 引数の内部表現は String です。 ただし、String を使用した構造化データの処理はエラーが発生しやすく、必ずしも簡単であるとは限りません。 基本契約では、Ledger データと Contract 引数の他の扱いやすいデータ型を定義します。 また、データ型と文字列間のシリアル化と逆シリアル化も管理します。
+Ledger データと Contract 引数の内部表現は String です。 ただし、String を使用した構造化データの処理はエラーが発生しやすく、必ずしも簡単であるとは限りません。 基本コントラクトでは、Ledger データと Contract 引数の他の扱いやすいデータ型を定義します。 また、データ型と文字列間のシリアル化と逆シリアル化も管理します。
 
 たとえば、上記の `StateUpdater` コントラクトは、`JacksonBasedContract` と呼ばれる基本コントラクトの 1 つに基づいています。 これにより、[Jackson](https://github.com/FasterXML/jackson) の [JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html)形式で Ledger データと Contract 引数を処理できるようになります。
 
-これを書いている時点では、以下に示す 4 つの基本契約を提供しています。 ただし、開発の生産性とパフォーマンスのバランスを適切に保つには、 `JacksonBasedContract` を使用することをお勧めします。
+これを書いている時点では、以下に示す 4 つの基本コントラクトを提供しています。 ただし、開発の生産性とパフォーマンスのバランスを適切に保つには、 `JacksonBasedContract` を使用することをお勧めします。
 
-| 基本契約クラス                                                                                                                                                | 契約引数のタイプ、契約プロパティ、契約出力、およびLedger データ                                                                  | ライブラリ                                        |
+| 基本コントラクトクラス                                                                                                                                                | コントラクト引数のタイプ、コントラクトプロパティ、コントラクト出力、およびLedger データ                                                                  | ライブラリ                                        |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
 | [JacksonBasedContract](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/JacksonBasedContract.html) (おすすめ)      | [JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html) | [Jackson](https://github.com/FasterXML/jackson) |
 | [JsonpBasedContract](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/JsonpBasedContract.html)                   | [JsonObject](https://javadoc.io/static/javax.json/javax.json-api/1.1.4/javax/json/JsonObject.html)                  | [JSONP](https://javaee.github.io/jsonp/)        |
@@ -63,11 +63,11 @@ Ledger データと Contract 引数の内部表現は String です。 ただし
 
 上に示したように、オーバーライドされた `invoke` メソッドは [Ledger](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/statemachine/Ledger.html) を受け入れます。 基礎となるデータベース、コントラクト引数の [JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html)、およびオプションの [ JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html) コントラクトプロパティ。
 
- `Ledger` は一連の資産を管理するデータベース抽象化であり、各資産は `asset_id` と呼ばれるキーと `age` と呼ばれる履歴バージョン番号によって識別されるレコードの履歴で構成されます。 `get`、`put`、および `scan` API を使用して `Ledger` と対話できます。 `get` API は、指定されたアセットの最新のアセットレコードを取得するために使用されます。 `put` API は、指定されたアセットに新しいアセットレコードを追加するために使用されます。 `scan` API は、指定されたアセットを走査するために使用されます。 この抽象化を使用して Ledger に資産レコードを追加できるだけであることに注意してください。 したがって、ScalarDL のコントラクトを作成する前に、抽象化を使用してデータを設計することを常に推奨します。
+ `Ledger` は一連のアセットを管理するデータベース抽象化であり、各アセットは `asset_id` と呼ばれるキーと `age` と呼ばれる履歴バージョン番号によって識別されるレコードの履歴で構成されます。 `get`、`put`、および `scan` API を使用して `Ledger` と対話できます。 `get` API は、指定されたアセットの最新のアセットレコードを取得するために使用されます。 `put` API は、指定されたアセットに新しいアセットレコードを追加するために使用されます。 `scan` API は、指定されたアセットを走査するために使用されます。 この抽象化を使用して Ledger にアセットレコードを追加できるだけであることに注意してください。 したがって、ScalarDL のコントラクトを作成する前に、抽象化を使用してデータを設計することを常に推奨します。
 
 コントラクト引数は、リクエスタによって指定されたコントラクトの実行時引数です。 コントラクト引数は通常、ランタイム変数を定義するために使用されます。 たとえば、銀行アプリケーションでは、支払いコントラクトが実行されるたびに、支払者と受取人が引数としてコントラクトに渡される場合があります。
 
-コントラクトのプロパティは、コントラクトの静的変数です。 これは、コントラクトのインスタンスごとの静的変数を定義するために使用できます。 たとえば、契約アプリケーションでは、契約のビジネス ロジックは一般的な契約として定義できますが、契約条件は実際のアプリケーションによって異なる場合があります。 オプションのプロパティ フィールドを使用すると、契約内でハードコーディングせずに、各契約インスタンスのクォーラムなどの契約条件を定義できます。
+コントラクトのプロパティは、コントラクトの静的変数です。 これは、コントラクトのインスタンスごとの静的変数を定義するために使用できます。 たとえば、同意管理アプリケーションでは、同意のためのビジネス ロジックは一般的なコントラクトとして定義できますが、同意条件は実際のアプリケーションによって異なる場合があります。 オプションのプロパティ フィールドを使用すると、コントラクト内でハードコーディングせずに、各コントラクトインスタンスのクォーラムなどのコントラクト条件を定義できます。
 
 ### `StateUpdater` ロジックについて
 
@@ -86,25 +86,25 @@ Ledger と対話するときにコントラクトは `RuntimeException` に直�
 ### 例外処理
 
 上で述べたように `ContractContextException` をスローする場合を除いて、コントラクト内で例外処理を行うべきではないことに注意してください。
-したがって、 `Ledger` は、何らかの理由で続行できない場合に実行時 (チェックされていない) 例外をスローする可能性がありますが、例外はキャッチされるべきではありません。 例外は契約外で適切に処理されます。
+したがって、 `Ledger` は、何らかの理由で続行できない場合に実行時 (チェックされていない) 例外をスローする可能性がありますが、例外はキャッチされるべきではありません。 例外はコントラクト外で適切に処理されます。
 
 ### 決定論
 
 ScalarDL のコントラクトを作成するときに注意すべき非常に重要なことの 1 つは、コントラクトを決定論的にする必要があるということです。 言い換えれば、コントラクトは、特定の入力に対して常に同じ出力を生成する必要があります。 これは、ScalarDL が決定論を利用して改ざんを検出するためです。
 
-たとえば、ScalarDL は資産を遅延的に走査し、契約を再実行して、期待される結果と Ledger に保存されている実際のデータとの間に矛盾がないかどうかを確認します。 また、決定論を利用して、複数の独立した ScalarDL コンポーネント (つまり、Ledger と Auditor) の状態を同じにします。
+たとえば、ScalarDL はアセットを遅延的に走査し、コントラクトを再実行して、期待される結果と Ledger に保存されている実際のデータとの間に矛盾がないかどうかを確認します。 また、決定論を利用して、複数の独立した ScalarDL コンポーネント (つまり、Ledger と Auditor) の状態を同じにします。
 
-非決定的なコントラクトを作成する一般的な方法の 1 つは、コントラクト内で時間を生成し、Ledger の状態を含む出力が何らかの形でこの時間に依存するようにすることです。 このようなコントラクトは実行されるたびに異なる出力を生成するため、システムは改ざんを検出できなくなります。 契約で時間を使用する必要がある場合は、それを引数として契約に渡す必要があります。
+非決定的なコントラクトを作成する一般的な方法の 1 つは、コントラクト内で時間を生成し、Ledger の状態を含む出力が何らかの形でこの時間に依存するようにすることです。 このようなコントラクトは実行されるたびに異なる出力を生成するため、システムは改ざんを検出できなくなります。 コントラクトで時間を使用する必要がある場合は、それを引数としてコントラクトに渡す必要があります。
 
 ### アセットの削除
 
-契約を通じて登録された資産は、改ざんの証拠を提供するために削除することができません。 ただし、開発するアプリケーションのルールや規制に従うために、一部のアセットを削除したい場合があります。 このようなデータ削除を提供するために、ScalarDL は `Function` と呼ばれる機能をサポートしています。
+コントラクトを通じて登録されたアセットは、改ざんの証拠を提供するために削除することができません。 ただし、開発するアプリケーションのルールや規制に従うために、一部のアセットを削除したい場合があります。 このようなデータ削除を提供するために、ScalarDL は `Function` と呼ばれる機能をサポートしています。
 
-Function の詳細については、[ScalarDL 関数の書き方](./how-to-write-function.mdx) ガイドを参照してください。
+Function の詳細については、[ScalarDL ファンクションの書き方](./how-to-write-function.mdx) ガイドを参照してください。
 
-### 関数に情報を送信する
+### ファンクションに情報を送信する
 
-`JacksonBasedContract` のような非推奨ではないコントラクトでは、`void setContext(T context)` を呼び出すことで関数に情報を送信できます。
+`JacksonBasedContract` のような非推奨ではないコントラクトでは、`void setContext(T context)` を呼び出すことでファンクションに情報を送信できます。
 使用する基本 Contract クラスによって引数の型 `T` が決定されることに注意してください。
 Functions でコントラクトから情報を受け取る方法の詳細については、[コントラクトから情報を受け取る](./how-to-write-function.mdx#receive-information-from-contracts) を参照してください。
 
@@ -113,12 +113,12 @@ JsonNode context = getObjectMapper().createObjectNode().put(...);
 setContext(context);
 ```
 
-## 複雑な契約書を作成する
+## 複雑なコントラクトを作成する
 
 コントラクトのコードが 100 行を超える場合は、コントラクトで複数のことを実行している可能性があることを示す良い兆候です。
 各コントラクトが 1 つのことだけを実行するモジュール化されたコントラクトを作成し、コントラクトを結合してより複雑なビジネス ロジックを表現することは良い習慣です。
 
-以下は、そのようなネストされた呼び出しを実行するコード例です。 指定された資産の状態を読み取る `StateReader` がコントラクトIDとして `state-reader` で登録されているものとする。
+以下は、そのようなネストされた呼び出しを実行するコード例です。 指定されたアセットの状態を読み取る `StateReader` がコントラクトIDとして `state-reader` で登録されているものとする。
 
 ```java
 public class StateUpdaterReader extends JacksonBasedContract {
@@ -155,11 +155,11 @@ public class StateUpdaterReader extends JacksonBasedContract {
 
 ScalarDL の適切なコントラクトを作成するためのベスト プラクティスを次に示します。
 
-* 契約書を作成する前に、Ledger の抽象化に適合するようにデータを適切に設計します
+* コントラクトを作成する前に、Ledger の抽象化に適合するようにデータを適切に設計します
 * コントラクトで回復不可能なエラーが発生した場合は `ContractContextException` をスローします
 * `ContractContextException` をスローする以外の例外処理は行わないでください。
 * コントラクトをモジュール化してそれぞれが 1 つのことだけを実行し、ネストされた呼び出しを使用する
-* 契約を確定的にする
+* コントラクトを確定的にする
 * アセットをグループ化する場合は、いくつかのルールを指定して `asset_id` を定義します
 
 ## さらなるサンプル
