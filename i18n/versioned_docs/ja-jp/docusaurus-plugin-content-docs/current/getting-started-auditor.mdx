@@ -8,8 +8,8 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 ここでは、読者がすでに以下のガイドを読み終えており、ScalarDL 全体についてある程度の経験を積んでいることを前提としています。
 
 * [ScalarDL 入門](getting-started.mdx)
-* [ScalarDL の適切な契約書の書き方に関するガイド](how-to-write-contract.mdx)
-* [ScalarDL 関数の書き方ガイド](how-to-write-function.mdx)
+* [ScalarDL の適切なコントラクトの書き方に関するガイド](how-to-write-contract.mdx)
+* [ScalarDL ファンクションの書き方ガイド](how-to-write-function.mdx)
 * [ScalarDL でアセット プルーフを使用する方法に関するガイド](how-to-use-proof.mdx)
 
 ## ScalarDL Auditor とは何ですか?
@@ -128,17 +128,18 @@ client/bin/scalardl register-cert --properties client.properties
 
 これにより、Ledger と Auditor の両方に証明書が登録されることに注意してください。
 
-## 契約を登録する
+## コントラクトを登録する
 
-契約書の登録も通常通り行うことができます。
+コントラクトの登録も通常通り行うことができます。
+コントラクトの登録も通常通り行うことができます。
 
 ```shell
 client/bin/scalardl register-contract --properties client.properties --contract-id StateUpdater --contract-binary-name com.org1.contract.StateUpdater --contract-class-file build/classes/java/main/com/org1/contract/StateUpdater.class
 ```
 
-これにより、Ledger と Auditor の両方に契約が登録されることに注意してください。
+これにより、Ledger と Auditor の両方にコントラクトが登録されることに注意してください。
 
-## 契約を実行する
+## コントラクトを実行する
 
 これで、通常どおり次のコマンドを使用してコントラクトを実行する準備が整いました。
 
