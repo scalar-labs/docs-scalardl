@@ -110,11 +110,6 @@ Scalar Manager の詳細については、[Scalar Manager 概要](../scalar-mana
 
 ## ステップ 3. `scalar-manager` をデプロイする
 
-1. GitHub パッケージから Scalar Manager コンテナ イメージをプルするためのシークレット リソース `reg-docker-secrets` を作成します。
-   ```console
-   kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
-   ```
-
 1. `scalar-manager` Helm Chart をデプロイします。
    ```console
    helm install scalar-manager scalar-labs/scalar-manager -f scalar-manager-custom-values.yaml
