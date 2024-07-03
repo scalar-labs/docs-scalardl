@@ -373,7 +373,7 @@ ScalarDB Cluster は、バックエンドデータベースとして何らかの
 1. ScalarDB Cluster のチャートのバージョンを設定します。
 
    ```console
-   SCALAR_DB_CLUSTER_VERSION=3.12.1
+   SCALAR_DB_CLUSTER_VERSION=3.12.2
    SCALAR_DB_CLUSTER_CHART_VERSION=$(helm search repo scalar-labs/scalardb-cluster -l | grep -F "${SCALAR_DB_CLUSTER_VERSION}" | awk '{print $2}' | sort --version-sort -r | head -n 1)
    ```
 
@@ -591,6 +591,12 @@ Kubernetes クラスターで ScalarDB Cluster のテストが完了したら、
 
    ```
    kubectl delete pod scalardb-cluster-client --grace-period 0 -n default
+   ```
+
+1. シークレットリソースを削除します。
+
+   ```
+   kubectl delete secrets scalardb-credentials-secret scalardb-cluster-tls-key scalardb-cluster-tls-cert scalardb-cluster-tls-ca envoy-tls-key envoy-tls-cert client-ca-cert
    ```
 
 1. 作業ディレクトリとサンプル ファイル (構成ファイル、秘密キー、および証明書) を削除します。
