@@ -239,6 +239,7 @@ const sidebars = {
         },
         'backup-restore',
         'troubleshooting-guide',
+        'scalar-manager/overview',
       ],
     },
     {
