@@ -327,7 +327,7 @@ Helm Charts を使用して、Kubernetes クラスターに 2 つの ScalarDL Sc
 1. ScalarDL スキーマローダーのチャートバージョンを設定します。
 
    ```console
-   SCALAR_DL_VERSION=3.9.0
+   SCALAR_DL_VERSION=3.9.1
    SCALAR_DL_SCHEMA_LOADER_CHART_VERSION=$(helm search repo scalar-labs/schema-loading -l | grep -F "${SCALAR_DL_VERSION}" | awk '{print $2}' | sort --version-sort -r | head -n 1)
    ```
 
@@ -896,6 +896,12 @@ Kubernetes クラスターで ScalarDL Ledger および ScalarDL Auditor テス�
    helm uninstall -n default scalardl-ledger schema-loader-ledger postgresql-ledger scalardl-auditor schema-loader-auditor postgresql-auditor
    ```
 
+1. 自己署名 CA を削除します。
+
+   ```
+   kubectl delete -f ./private-ca-custom-values.yaml
+   ```
+
 1. cert-manager をアンインストールします。
 
    ```console
@@ -906,6 +912,18 @@ Kubernetes クラスターで ScalarDL Ledger および ScalarDL Auditor テス�
 
    ```
    kubectl delete pod scalardl-client --grace-period 0 -n default
+   ```
+
+1. シークレットリソースを削除します。
+
+   ```
+   kubectl delete secrets self-signed-ca-cert-secret schema-ledger-credentials-secret schema-auditor-credentials-secret scalardl-ledger-tls-cert scalardl-ledger-envoy-tls-cert scalardl-auditor-tls-cert scalardl-auditor-envoy-tls-cert ledger-credentials-secret auditor-credentials-secret client-ca-cert auditor-keys
+   ```
+
+1. ネームスペース `cert-manager` を削除します。
+
+   ```
+   kubectl delete ns cert-manager
    ```
 
 1. 作業ディレクトリとサンプルファイル (構成ファイル) を削除します。
