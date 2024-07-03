@@ -541,6 +541,12 @@ After completing the ScalarDB Cluster tests on the Kubernetes cluster, remove al
    helm uninstall -n default scalardb-cluster postgresql-scalardb-cluster
    ```
 
+1. Remove the self-signed CA.
+
+   ```
+   kubectl delete -f ./private-ca-custom-values.yaml
+   ```
+
 1. Uninstall cert-manager.
 
    ```console
@@ -551,6 +557,18 @@ After completing the ScalarDB Cluster tests on the Kubernetes cluster, remove al
 
    ```
    kubectl delete pod scalardb-cluster-client --grace-period 0 -n default
+   ```
+
+1. Remove the secret resources.
+
+   ```
+   kubectl delete secrets scalardb-credentials-secret self-signed-ca-cert-secret scalardb-cluster-envoy-tls-cert scalardb-cluster-tls-cert client-ca-cert
+   ```
+
+1. Remove the namespace `cert-manager`.
+
+   ```
+   kubectl delete ns cert-manager
    ```
 
 1. Remove the working directory and the sample configuration files.
