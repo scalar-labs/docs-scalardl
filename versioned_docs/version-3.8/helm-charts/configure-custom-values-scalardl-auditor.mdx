@@ -307,6 +307,23 @@ kubectl create secret generic scalardl-auditor-tls-ca-for-ledger --from-file=ca.
 
 You can set the custom authority for TLS communications by using `auditor.tls.overrideAuthority`. This value doesn't change what host is actually connected. This value is intended for testing but may safely be used outside of tests as an alternative to DNS overrides. For example, you can specify the hostname presented in the certificate chain file that you set by using `auditor.tls.certChainSecret`. This chart uses this value for `startupProbe` and `livenessProbe`.
 
+##### Set a root CA certificate for Prometheus Operator
+
+If you set `auditor.serviceMonitor.enabled=true` and `auditor.tls.enabled=true` (in other words, if you monitor ScalarDL Auditor with TLS configuration by using Prometheus Operator), you must set the secret name to `auditor.tls.caRootCertSecretForServiceMonitor`.
+
+```yaml
+auditor:
+  tls:
+    enabled: true
+    caRootCertSecretForServiceMonitor: "scalardl-auditor-tls-ca-for-prometheus"
+```
+
+In this case, you have to create secret resources that include a root CA certificate for ScalarDL Auditor in the same namespace as Prometheus as follows:
+
+```console
+kubectl create secret generic scalardl-auditor-tls-ca-for-prometheus --from-file=ca.crt=/path/to/your/ca/certificate/file -n <NAMESPACE_SAME_AS_PROMETHEUS>
+```
+
 ### Replica configurations (Optional based on your environment)
 
 You can specify the number of replicas (pods) of ScalarDL Auditor using `auditor.replicaCount`.
