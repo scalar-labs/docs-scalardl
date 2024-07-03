@@ -216,7 +216,8 @@
           ]
         },
         "backup-restore",
-        "troubleshooting-guide"
+        "troubleshooting-guide",
+        "scalar-manager/overview"
       ]
     },
     {
