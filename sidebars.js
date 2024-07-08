@@ -32,6 +32,7 @@ const sidebars = {
         'overview',
         'implementation',
         'design',
+        'roadmap',
       ]
     },
     {
