@@ -1,6 +1,34 @@
 # ScalarDL Design Document
 
-For details about the design and implementation of ScalarDL, please see the following documents, which we presented at the VLDB 2022 conference:
+This design document briefly explains the design and implementation of ScalarDL. For the background and objectives of ScalarDL, see [ScalarDL Overview](overview.mdx).
+
+## Design goals
+
+The primary design goals of ScalarDL are to achieve both high tamper evidence of data and high performance scalability. ScalarDL provides ACID compliance, exact finality, linearizable consistency, and high availability. The performance of ScalarDL is highly dependent on the underlying database performance, but it can be modified with minimal effort by replacing the underlying database with one that is suitable for your needs because of its loosely coupled architecture. Ease of use and simplicity are also part of the primary design goals since they are the keys to making ScalarDL scalable.
+
+## Fault model
+
+ScalarDL inherits the standard assumptions of prior work that deals with Byzantine faults.[^1] As such, ScalarDL assumes that Byzantine-faulty nodes (for example, the ledger component) behave arbitrarily. In other words, there are no assumptions about the behavior of a fault.
+
+## Data model
+
+ScalarDL abstracts data as a set of assets. An asset can be arbitrary data but is more compatible to being viewed as a historical series of data. For example, assets can range from the tangible (real estate and hardware) to the intangible (contracts and intellectual property).
+
+An asset is composed of one or more asset records where each asset record is identified by an asset ID and an age. An asset record with age `M` has a cryptographic hash of the previous asset record with age `M-1`, forming a hash-chain, so that removing or updating an intermediate asset record may be detected by traversing the chain.
+
+In addition, a chain structure exists between multiple assets. This chain is a relationship constructed by business or application logic, which is referred to as a "contract" in ScalarDL. For example, in a banking application, a payment sent from one account to another account would update both accounts, which would create such a relationship between assets.
+
+## Contract
+
+ScalarDL manages contracts (also known as a smart contracts) as digitally signed business logic. A contract and its arguments are digitally signed with the contract owner's private key and passed to ScalarDL. This mechanism allows the contract to be executed only by the owner and makes it possible for the system to detect malicious activity, such as data tampering.
+
+Users can define arbitrary business logic in a contract by using interfaces, such as for reading and writing assets to and from the ledger. For example, in a bank application, creating accounts, depositing, withdrawing, and making payments can be written as a contract. For more details, see the [simple bank account application sample](applications/simple-bank-account/README.mdx).
+
+## Learn more
+
+For details about the design and implementation of ScalarDL, please see the following materials, which Scalar presented at the VLDB 2022 conference:
 
 - **Speakerdeck presentation:** [ScalarDL: Scalable and Practical Byzantine Fault Detection for Transactional Database Systems](https://speakerdeck.com/scalar/scalar-dl-scalable-and-practical-byzantine-fault-detection-for-transactional-database-systems-vldb22)
 - **Detailed paper:** [ScalarDL: Scalable and Practical Byzantine Fault Detection for Transactional Database Systems](https://www.vldb.org/pvldb/vol15/p1324-yamada.pdf)
+
+[^1]: Leslie Lamport, Robert Shostak, Marshall Pease, The Byzantine Generals Problem, ACM Transactions on Programming Languages and Systems (TOPLAS), v.4 n.3, p.382-401, July 1982.
