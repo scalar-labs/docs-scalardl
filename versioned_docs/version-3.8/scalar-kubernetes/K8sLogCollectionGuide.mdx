@@ -124,8 +124,13 @@ helm install scalar-logging-loki grafana/loki-stack -n monitoring -f scalar-loki
 
 If the Loki and Promtail pods are deployed properly, you can see the `STATUS` is `Running` using the `kubectl get pod -n monitoring` command. Since promtail pods are deployed as DaemonSet, the number of promtail pods depends on the number of Kubernetes nodes. In the following example, there are three worker nodes for Scalar products in the Kubernetes cluster.
 
+```console
+kubectl get pod -n monitoring
 ```
-$ kubectl get pod -n monitoring
+
+You should see the following output:
+
+```console
 NAME                                 READY   STATUS    RESTARTS   AGE
 scalar-logging-loki-0                1/1     Running   0          35m
 scalar-logging-loki-promtail-2fnzn   1/1     Running   0          32m

@@ -52,10 +52,15 @@ Scalar products assume the Prometheus Operator is deployed in the `monitoring` n
 
 ## Check if the Prometheus Operator is deployed
 
-If the Prometheus Operator (includes Prometheus, Alertmanager, and Grafana) pods are deployed properly, you can see the `STATUS` is `Running` using the `kubectl get pod -n monitoring` command.
+If the Prometheus Operator (includes Prometheus, Alertmanager, and Grafana) pods are deployed properly, you can see the `STATUS` is `Running` using the following command:
 
+```console
+kubectl get pod -n monitoring
 ```
-$ kubectl get pod -n monitoring
+
+You should see the following output:
+
+```console
 NAME                                                     READY   STATUS    RESTARTS   AGE
 alertmanager-scalar-monitoring-kube-pro-alertmanager-0   2/2     Running   0          55s
 prometheus-scalar-monitoring-kube-pro-prometheus-0       2/2     Running   0          55s
