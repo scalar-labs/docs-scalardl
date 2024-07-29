@@ -57,13 +57,13 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 **ターミナル**を開き、次のコマンドを実行して ScalarDL ベンチマーク リポジトリのクローンを作成します。
 
 ```console
-$ git clone https://github.com/scalar-labs/scalardl-benchmarks
+git clone https://github.com/scalar-labs/scalardl-benchmarks
 ```
 
 次に、次のコマンドを実行して、ベンチマーク ファイルが含まれるディレクトリに移動します。
 
 ```console
-$ cd scalardl-benchmarks
+cd scalardl-benchmarks
 ```
 
 ### ツールを構築する
@@ -71,7 +71,7 @@ $ cd scalardl-benchmarks
 ベンチマーク ツールを構築するには、次のコマンドを実行します。
 
 ```console
-$ ./gradlew shadowJar
+./gradlew shadowJar
 ```
 
 ### ベンチマーク構成ファイルを準備する
@@ -123,21 +123,21 @@ config_file = "/<PATH_TO>/client.properties"
     SmallBank ベンチマークを実行するには、次のコマンドを実行します。`<PATH_TO_KELPIE>` を Kelpie ディレクトリへのパスに置き換えます。
 
     ```console
-    $ /<PATH_TO_KELPIE>/bin/kelpie --config smallbank-benchmark-config.toml
+    /<PATH_TO_KELPIE>/bin/kelpie --config smallbank-benchmark-config.toml
     ```
   </TabItem>
   <TabItem value="TPC-C" label="TPC-C">
     TPC-C ベンチマークを実行するには、次のコマンドを実行します。`<PATH_TO_KELPIE>` を Kelpie ディレクトリへのパスに置き換えます。
 
     ```console
-    $ /<PATH_TO_KELPIE>/bin/kelpie --config tpcc-benchmark-config.toml
+    /<PATH_TO_KELPIE>/bin/kelpie --config tpcc-benchmark-config.toml
     ```
   </TabItem>
   <TabItem value="YCSB" label="YCSB">
     YCSB ベンチマークを実行するには、次のコマンドを実行します。`<PATH_TO_KELPIE>` を Kelpie ディレクトリへのパスに置き換えます。
 
     ```console
-    $ /<PATH_TO_KELPIE>/bin/kelpie --config ycsb-benchmark-config.toml
+    /<PATH_TO_KELPIE>/bin/kelpie --config ycsb-benchmark-config.toml
     ```
   </TabItem>
 </Tabs>
