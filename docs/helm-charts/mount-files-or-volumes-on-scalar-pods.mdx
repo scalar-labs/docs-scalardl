@@ -78,13 +78,24 @@ In this example, you need to mount a **private-key** and a **certificate** file 
    * Example
        * ScalarDL Ledger
          ```console
-         $ ls -l /keys/
+         ls -l /keys/
+         ```
+
+         You should see the following output:
+
+         ```console
          total 0
          lrwxrwxrwx 1 root root 18 Jun 27 03:12 private-key -> ..data/private-key
          ```
+
        * ScalarDL Auditor
          ```console
-         $ ls -l /keys/
+         ls -l /keys/
+         ```
+
+         You should see the following output:
+
+         ```console
          total 0
          lrwxrwxrwx 1 root root 18 Jun 27 03:16 certificate -> ..data/certificate
          lrwxrwxrwx 1 root root 18 Jun 27 03:16 private-key -> ..data/private-key
@@ -115,6 +126,11 @@ You can mount emptyDir to Scalar product pods by using the following keys in you
 In this example, you can see the mounted volume in the ScalarDB Server pod as follows.
 
 ```console
-$ ls -ld /dump
+ls -ld /dump
+```
+
+You should see the following output:
+
+```console
 drwxrwxrwx 2 root root 4096 Feb  6 07:43 /dump
 ```
