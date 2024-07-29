@@ -55,10 +55,15 @@ If you use Scalar Helm Charts to deploy ScalarDB or ScalarDL, the `my-svc` and `
     _scalardl-auditor-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
 
-The helm release name decides the headless service name `<helm release name>-headless`. You can see the helm release name by running the `helm list` command.
+The helm release name decides the headless service name `<helm release name>-headless`. You can see the helm release name by running the following command:
 
 ```console
-$ helm list -n ns-scalar
+helm list -n ns-scalar
+```
+
+You should see the following output:
+
+```console
 NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS                                                       CHART                    APP VERSION
 scalardb                ns-scalar       1               2023-02-09 19:31:40.527130674 +0900 JST deployed                                                     scalardb-2.5.0           3.8.0
 scalardl-auditor        ns-scalar       1               2023-02-09 19:32:03.008986045 +0900 JST deployed                                                     scalardl-audit-2.5.1     3.7.1
@@ -68,7 +73,12 @@ scalardl-ledger         ns-scalar       1               2023-02-09 19:31:53.4595
 You can also see the headless service name `<helm release name>-headless` by running the `kubectl get service` command.
 
 ```console
-$ kubectl get service -n ns-scalar
+kubectl get service -n ns-scalar
+```
+
+You should see the following output:
+
+```console
 NAME                             TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                           AGE
 scalardb-envoy                   LoadBalancer   10.99.245.143    <pending>     60051:31110/TCP                   2m2s
 scalardb-envoy-metrics           ClusterIP      10.104.56.87     <none>        9001/TCP                          2m2s

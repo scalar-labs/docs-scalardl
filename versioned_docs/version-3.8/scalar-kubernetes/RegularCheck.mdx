@@ -17,7 +17,12 @@ What to check:
 * Pods are evenly distributed on the different nodes
 
 ```console
-$ kubectl get pod -o wide -n <namespace>
+kubectl get pod -o wide -n <namespace>
+```
+
+You should see the following output:
+
+```console
 NAME                              READY   STATUS    RESTARTS   AGE     IP           NODE          NOMINATED NODE   READINESS GATES
 scalardb-7876f595bd-2jb28         1/1     Running   0          2m35s   10.244.2.6   k8s-worker2   <none>           <none>
 scalardb-7876f595bd-rfvk6         1/1     Running   0          2m35s   10.244.1.8   k8s-worker    <none>           <none>
@@ -28,7 +33,12 @@ scalardb-envoy-84c475f77b-vztqr   1/1     Running   0          2m35s   10.244.2.
 ```
 
 ```console
-$ kubectl get pod -n monitoring -o wide
+kubectl get pod -n monitoring -o wide
+```
+
+You should see the following output:
+
+```console
 NAME                                                     READY   STATUS    RESTARTS      AGE   IP           NODE                NOMINATED NODE   READINESS GATES
 alertmanager-scalar-monitoring-kube-pro-alertmanager-0   2/2     Running   1 (11m ago)   12m   10.244.2.4   k8s-worker2         <none>           <none>
 prometheus-scalar-monitoring-kube-pro-prometheus-0       2/2     Running   0             12m   10.244.1.5   k8s-worker          <none>           <none>
@@ -48,7 +58,12 @@ What to check:
 * `STATUS` is all `Ready`
 
 ```console
-$ kubectl get nodes
+kubectl get nodes
+```
+
+You should see the following output:
+
+```console
 NAME                STATUS   ROLES           AGE   VERSION
 k8s-control-plane   Ready    control-plane   16m   v1.25.3
 k8s-worker          Ready    <none>          15m   v1.25.3
