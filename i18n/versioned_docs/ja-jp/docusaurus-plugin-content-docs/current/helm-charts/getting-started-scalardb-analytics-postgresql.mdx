@@ -82,7 +82,12 @@ ScalarDB Analytics with PostgreSQL を含むScalarDBは、バックエンドデ�
    次の出力が表示されるはずです。
 
    ```console
-   $ kubectl get pod
+   kubectl get pod
+   ```
+
+   次のような結果が表示されます：
+
+   ```console
    NAME                    READY   STATUS    RESTARTS   AGE
    mysql-scalardb-0        1/1     Running   0          3m17s
    postgresql-scalardb-0   1/1     Running   0          3m12s
@@ -137,7 +142,12 @@ ScalarDB Analytics with PostgreSQL を導入する前に、OLTPトランザク�
    次の出力が表示されるはずです。
 
    ```console
-   $ kubectl get pod oltp-client
+   kubectl get pod oltp-client
+   ```
+
+   次のような結果が表示されます：
+
+   ```console
    NAME          READY   STATUS    RESTARTS   AGE
    oltp-client   1/1     Running   0          17s
    ```
@@ -327,7 +337,12 @@ ScalarDB Analytics with PostgreSQL を介して一部のクエリを実行する
    次の出力が表示されるはずです。
 
    ```console
-   $ kubectl get pod olap-client
+   kubectl get pod olap-client
+   ```
+
+   次のような結果が表示されます：
+
+   ```console
    NAME          READY   STATUS    RESTARTS   AGE
    olap-client   1/1     Running   0          10s
    ```
