@@ -10,20 +10,30 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 * Kubernetes クラスターの外部からのロード バランサー経由。
 * `kubectl port-forward` コマンドを使用して要塞サーバーから実行します (テスト目的のみ)。
 
-リソース名 `<HELM_RELEASE_NAME>-envoy` は Helm リリース名に基づいて決定されます。 `helm list` コマンドを実行すると、helm リリース名を確認できます。
+リソース名 `<HELM_RELEASE_NAME>-envoy` は Helm リリース名に基づいて決定されます。 次のコマンドを実行すると、helm リリース名を確認できます。
 
 ```console
-$ helm list -n ns-scalar
+helm list -n ns-scalar
+```
+
+次のような結果が表示されます：
+
+```console
 NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS                                                       CHART                    APP VERSION
 scalardb                ns-scalar       1               2023-02-09 19:31:40.527130674 +0900 JST deployed                                                     scalardb-2.5.0           3.8.0
 scalardl-auditor        ns-scalar       1               2023-02-09 19:32:03.008986045 +0900 JST deployed                                                     scalardl-audit-2.5.1     3.7.1
 scalardl-ledger         ns-scalar       1               2023-02-09 19:31:53.459548418 +0900 JST deployed                                                     scalardl-4.5.1           3.7.1
 ```
 
-`kubectl get service` コマンドを実行すると、envoy サービス名 `<HELM_RELEASE_NAME>-envoy` を確認することもできます。
+次のコマンドを実行すると、envoy サービス名 `<HELM_RELEASE_NAME>-envoy` を確認することもできます。
 
 ```console
-$ kubectl get service -n ns-scalar
+kubectl get service -n ns-scalar
+```
+
+次のような結果が表示されます：
+
+```console
 NAME                             TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                           AGE
 scalardb-envoy                   LoadBalancer   10.99.245.143    <pending>     60051:31110/TCP                   2m2s
 scalardb-envoy-metrics           ClusterIP      10.104.56.87     <none>        9001/TCP                          2m2s

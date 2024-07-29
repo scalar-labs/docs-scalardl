@@ -126,10 +126,15 @@ helm install scalar-logging-loki grafana/loki-stack -n monitoring -f scalar-loki
 
 ## Loki と Promtail がデプロイされているかどうかを確認する
 
-Loki および Promtail ポッドが適切にデプロイされている場合は、`kubectl get pod -n monitoring` コマンドを使用して、`STATUS` が `Running` であることが確認できます。 promtail ポッドは DaemonSet としてデプロイされるため、promtail ポッドの数は Kubernetes ノードの数によって異なります。 次の例では、Kubernetes クラスター内に Scalar 製品のワーカーノードが 3 つあります。
+Loki および Promtail ポッドが適切にデプロイされている場合は、次のコマンドを使用して、`STATUS` が `Running` であることが確認できます。 promtail ポッドは DaemonSet としてデプロイされるため、promtail ポッドの数は Kubernetes ノードの数によって異なります。 次の例では、Kubernetes クラスター内に Scalar 製品のワーカーノードが 3 つあります。
 
+```console
+kubectl get pod -n monitoring
 ```
-$ kubectl get pod -n monitoring
+
+次のような結果が表示されます：
+
+```console
 NAME                                 READY   STATUS    RESTARTS   AGE
 scalar-logging-loki-0                1/1     Running   0          35m
 scalar-logging-loki-promtail-2fnzn   1/1     Running   0          32m
