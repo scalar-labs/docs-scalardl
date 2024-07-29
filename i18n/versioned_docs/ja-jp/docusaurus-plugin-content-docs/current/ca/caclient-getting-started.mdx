@@ -16,16 +16,16 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ### 秘密キーと CSR を生成する
 
-```
-$ openssl ecparam -name prime256v1 -out prime256v1.pem
-$ openssl req -new -newkey ec:prime256v1.pem -nodes -keyout client-key.pem.pkcs8 -out client.csr
-$ openssl ec -in client-key.pem.pkcs8 -out client-key.pem
+```console
+openssl ecparam -name prime256v1 -out prime256v1.pem
+openssl req -new -newkey ec:prime256v1.pem -nodes -keyout client-key.pem.pkcs8 -out client.csr
+openssl ec -in client-key.pem.pkcs8 -out client-key.pem
 ```
 
 または
 
-```
-$ cat << EOF > client-cert.json
+```console
+cat << EOF > client-cert.json
 {
     "CN": "client.example",
     "key": {
@@ -43,8 +43,13 @@ $ cat << EOF > client-cert.json
 }
 EOF
 
-$ cfssl selfsign "" ./client-cert.json | cfssljson -bare client
-$ ls -1
+cfssl selfsign "" ./client-cert.json | cfssljson -bare client
+ls -1
+```
+
+次のような結果が表示されます：
+
+```console
 client-cert.json
 client-key.pem
 client.csr
