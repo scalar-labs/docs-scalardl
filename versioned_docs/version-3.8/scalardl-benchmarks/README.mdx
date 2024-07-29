@@ -54,13 +54,13 @@ The following sections describe how to set up the benchmarking tools.
 Open **Terminal**, then clone the ScalarDL benchmarks repository by running the following command:
 
 ```console
-$ git clone https://github.com/scalar-labs/scalardl-benchmarks
+git clone https://github.com/scalar-labs/scalardl-benchmarks
 ```
 
 Then, go to the directory that contains the benchmarking files by running the following command:
 
 ```console
-$ cd scalardl-benchmarks
+cd scalardl-benchmarks
 ```
 
 ### Build the tools
@@ -68,7 +68,7 @@ $ cd scalardl-benchmarks
 To build the benchmarking tools, run the following command:
 
 ```console
-$ ./gradlew shadowJar
+./gradlew shadowJar
 ```
 
 ### Prepare a benchmarking configuration file
@@ -120,21 +120,21 @@ Select a benchmark, and follow the instructions to run the benchmark.
     To run the SmallBank benchmark, run the following command, replacing `<PATH_TO_KELPIE>` with the path to the Kelpie directory:
 
     ```console
-    $ /<PATH_TO_KELPIE>/bin/kelpie --config smallbank-benchmark-config.toml
+    /<PATH_TO_KELPIE>/bin/kelpie --config smallbank-benchmark-config.toml
     ```
   </TabItem>
   <TabItem value="TPC-C" label="TPC-C">
     To run the TPC-C benchmark, run the following command, replacing `<PATH_TO_KELPIE>` with the path to the Kelpie directory:
 
     ```console
-    $ /<PATH_TO_KELPIE>/bin/kelpie --config tpcc-benchmark-config.toml
+    /<PATH_TO_KELPIE>/bin/kelpie --config tpcc-benchmark-config.toml
     ```
   </TabItem>
   <TabItem value="YCSB" label="YCSB">
     To run the YCSB benchmark, run the following command, replacing `<PATH_TO_KELPIE>` with the path to the Kelpie directory:
 
     ```console
-    $ /<PATH_TO_KELPIE>/bin/kelpie --config ycsb-benchmark-config.toml
+    /<PATH_TO_KELPIE>/bin/kelpie --config ycsb-benchmark-config.toml
     ```
   </TabItem>
 </Tabs>
