@@ -17,7 +17,7 @@ const CardsAbout = [
     // name: '',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'overview/',
+      page: 'overview',
     },
     description: (
       <Translate id="home.about.description">
@@ -29,7 +29,7 @@ const CardsAbout = [
     // name: '',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'implementation/',
+      page: 'implementation',
     },
     description: (
       <Translate id="home.about.description">
@@ -44,7 +44,7 @@ const CardsGettingStarted = [
     // name: '',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'getting-started/',
+      page: 'getting-started',
     },
     description: (
       <Translate id="home.gettingStarted.description">
@@ -56,7 +56,7 @@ const CardsGettingStarted = [
     // name: '',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'getting-started-auditor/',
+      page: 'getting-started-auditor',
     },
     description: (
       <Translate id="home.gettingStarted.description">
@@ -71,7 +71,7 @@ const CardsSamples = [
     // name: '',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'applications/simple-bank-account/',
+      page: 'applications/simple-bank-account',
     },
     description: (
       <Translate id="home.samples.description">
@@ -83,7 +83,7 @@ const CardsSamples = [
     // name: '',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'applications/escrow-payment/',
+      page: 'applications/escrow-payment',
     },
     description: (
       <Translate id="home.samples.description">
@@ -98,7 +98,7 @@ const CardsDevelop = [
     // name: 'For database engineers',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'schema-loader/',
+      page: 'schema-loader',
     },
     description: (
       <Translate id="home.develop.description">
@@ -110,7 +110,7 @@ const CardsDevelop = [
     // name: 'For infrastructure engineers',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'ca/caclient-getting-started/',
+      page: 'ca/caclient-getting-started',
     },
     description: (
       <Translate id="home.develop.description">
@@ -125,7 +125,7 @@ const CardsDeploy = [
     // name: '',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'scalar-kubernetes/SetupDatabaseForAWS/',
+      page: 'scalar-kubernetes/SetupDatabaseForAWS',
     },
     description: (
       <Translate id="home.deploy.description">
@@ -137,7 +137,7 @@ const CardsDeploy = [
     // name: '',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'scalar-kubernetes/ProductionChecklistForScalarDLLedger/',
+      page: 'scalar-kubernetes/ProductionChecklistForScalarDLLedger',
     },
     description: (
       <Translate id="home.deploy.description">
@@ -152,7 +152,7 @@ const CardsManage = [
     // name: '',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'scalar-kubernetes/K8sMonitorGuide/',
+      page: 'scalar-kubernetes/K8sMonitorGuide',
     },
     description: (
       <Translate id="home.manage.description">
@@ -164,7 +164,7 @@ const CardsManage = [
     // name: '',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'scalar-kubernetes/BackupRestoreGuide/',
+      page: 'scalar-kubernetes/BackupRestoreGuide',
     },
     description: (
       <Translate id="home.manage.description">
@@ -179,7 +179,7 @@ const CardsReference = [
     // name: '',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'compatibility/',
+      page: 'compatibility',
     },
     description: (
       <Translate id="home.reference.description">
@@ -191,7 +191,7 @@ const CardsReference = [
     // name: '',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'scalardl-benchmarks/',
+      page: 'scalardl-benchmarks',
     },
     description: (
       <Translate id="home.reference.description">
