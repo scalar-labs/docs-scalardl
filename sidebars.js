@@ -32,6 +32,7 @@ const sidebars = {
         'overview',
         'implementation',
         'design',
+        'roadmap',
       ]
     },
     {
@@ -239,6 +240,7 @@ const sidebars = {
         },
         'backup-restore',
         'troubleshooting-guide',
+        'scalar-manager/overview',
       ],
     },
     {
@@ -247,6 +249,7 @@ const sidebars = {
       collapsible: true,
       items: [
         'compatibility',
+        'scalardl-command-reference',
         'scalardl-benchmarks/README',
       ],
     },

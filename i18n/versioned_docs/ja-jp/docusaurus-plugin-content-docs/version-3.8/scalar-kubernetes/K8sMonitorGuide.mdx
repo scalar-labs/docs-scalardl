@@ -56,10 +56,15 @@ Scalar 製品は、Prometheus Operator がデフォルトで `monitoring` 名前
 
 ## Prometheus Operator がデプロイされているかどうかを確認する
 
-Prometheus Operator (Prometheus、Alertmanager、Grafana を含む) ポッドが適切にデプロイされている場合は、`kubectl get pod -n monitoring` コマンドを使用して `STATUS` が `Running` であることを確認できます。
+Prometheus Operator (Prometheus、Alertmanager、Grafana を含む) ポッドが適切にデプロイされている場合は、次のコマンドを使用して `STATUS` が `Running` であることを確認できます。
 
+```console
+kubectl get pod -n monitoring
 ```
-$ kubectl get pod -n monitoring
+
+次のような結果が表示されます：
+
+```console
 NAME                                                     READY   STATUS    RESTARTS   AGE
 alertmanager-scalar-monitoring-kube-pro-alertmanager-0   2/2     Running   0          55s
 prometheus-scalar-monitoring-kube-pro-prometheus-0       2/2     Running   0          55s

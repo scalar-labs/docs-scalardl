@@ -16,8 +16,8 @@ ScalarDL は、次の図に示すように、Ledger、Auditor、および Client
 
 ![](images/scalardl.png)
 
-ScalarDL (Ledger and Auditor) はデータを一連の資産として抽象化します。各資産は、`asset_id` と呼ばれるキーと `age` と呼ばれる履歴バージョン番号によって識別されるレコードの履歴で構成されます。
-このドキュメントでは、ScalarDL Client SDK を使用して資産のステータスを管理する非常に単純なアプリケーションを作成します。
+ScalarDL (Ledger and Auditor) はデータを一連のアセットとして抽象化します。各アセットは、`asset_id` と呼ばれるキーと `age` と呼ばれる履歴バージョン番号によって識別されるレコードの履歴で構成されます。
+このドキュメントでは、ScalarDL Client SDK を使用してアセットのステータスを管理する非常に単純なアプリケーションを作成します。
 
 ## JDK をインストールする
 
@@ -121,10 +121,10 @@ cp conf/client.properties .
 client/bin/scalardl register-cert --properties client.properties
 ```
 
-登録された証明書を使用すると、契約の登録と実行が可能になるほか、データベース内のビザンチン障害の検出にも使用されます。
+登録された証明書を使用すると、コントラクトの登録と実行が可能になるほか、データベース内のビザンチン障害の検出にも使用されます。
 セキュリティ上の理由から、追加できるのは新しい証明書のみであり、既存の証明書を更新することはできないことに注意してください。 新しい証明書を追加する場合は、登録ツールを実行する前に `scalar.dl.client.cert_version` をインクリメントします。
 
-## 契約を作成する
+## コントラクトを作成する
 
 ScalarDL のコントラクトは、事前定義された基本コントラクト クラス ([JacksonBasedContract](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/JacksonBasedContract.html) クラスなど) を拡張し、`invoke` メソッドをオーバーライドする単純な Java クラスです。 アセットを作成し、それにいくつかの状態を関連付ける [StateUpdater.java](https://github.com/scalar-labs/scalardl-java-client-sdk/blob/master/src/main/java/com/org1/contract/StateUpdater.java) コントラクトを詳しく見てみましょう。
 
@@ -164,9 +164,10 @@ public class StateUpdater extends JacksonBasedContract {
 }
 ```
 
-このコントラクトは、引数からクライアント定義の資産 ID (`asset_id`) と状態 (`state`) を抽出し、指定された状態が資産の現在の状態と異なる場合、その資産 ID を Ledger 内の状態に関連付けます。
+このコントラクトは、引数からクライアント定義のアセット ID (`asset_id`) と状態 (`state`) を抽出し、指定された状態がアセットの現在の状態と異なる場合、そのアセット ID を Ledger 内の状態に関連付けます。
 
-次に、以下のように契約書を作成します。
+次に、以下のようにコントラクトを作成します。
+次に、以下のようにコントラクトを作成します。
 
 ```shell
 ./gradlew assemble
@@ -174,20 +175,22 @@ public class StateUpdater extends JacksonBasedContract {
 
 これにより、`build/classes/java/main/com/org1/contract/StateUpdater.class` が生成されます。
 
-## 契約を登録する
+## コントラクトを登録する
 
-契約書を登録しましょう。 ここでも簡単なツールを使用します。
+コントラクトを登録しましょう。 ここでも簡単なツールを使用します。
+コントラクトを登録しましょう。 ここでも簡単なツールを使用します。
 
 ```shell
 client/bin/scalardl register-contract --properties client.properties --contract-id StateUpdater --contract-binary-name com.org1.contract.StateUpdater --contract-class-file build/classes/java/main/com/org1/contract/StateUpdater.class
 ```
 
 コントラクト ID にはグローバルに一意な ID を設定してください (例: 上記コマンドの `StateUpdater`)。
-同じ契約書に異なる契約書 ID を設定して、改ざん防止の方法で「誰が何をしたか」を明確にすることができます。
+同じコントラクトに異なるコントラクト ID を設定して、改ざん防止の方法で「誰が何をしたか」を明確にすることができます。
+同じコントラクトに異なるコントラクト ID を設定して、改ざん防止の方法で「誰が何をしたか」を明確にすることができます。
 
-たとえば、投票アプリケーションについて考えてみましょう。 アプリケーションでは、誰でも同じ投票ロジックで投票できるため、同じ契約を使用できますが、A の投票と B の投票は適切かつ安全に区別される必要があります。 A は B に投票できませんし、その逆も同様です。 同じ契約に異なる契約 ID があることを利用して、このようなことを実現できます。
+たとえば、投票アプリケーションについて考えてみましょう。 アプリケーションでは、誰でも同じ投票ロジックで投票できるため、同じコントラクトを使用できますが、A の投票と B の投票は適切かつ安全に区別される必要があります。 A は B に投票できませんし、その逆も同様です。 同じコントラクトに異なるコントラクト ID があることを利用して、このようなことを実現できます。
 
-## 契約を実行する
+## コントラクトを実行する
 
 これで、次のコマンドを使用してコントラクトを実行する準備が整いました。
 
@@ -206,17 +209,18 @@ client/bin/scalardl validate-ledger --properties client.properties --asset-id="s
 ```
 
 検証で行われる内容は、ScalarDL のセットアップおよび構成方法によって異なります。
-簡単に言うと、ScalarDL Ledger のみが使用されている場合、検証は資産を横断して、資産が再計算可能であり、有効なハッシュ チェーン構造を持つかどうかを確認します。
+簡単に言うと、ScalarDL Ledger のみが使用されている場合、検証はアセットを横断して、アセットが再計算可能であり、有効なハッシュ チェーン構造を持つかどうかを確認します。
 ScalarDL Ledger および Auditor を使用すると、集中調整を行わずに、Ledger と Auditor の状態間の不一致 (つまり、ビザンチン障害) を検証でチェックします。
 Auditor による検証の詳細については、[ScalarDL Auditor 入門](getting-started-auditor.mdx) を参照してください。
 
-## 独自の契約を作成する
+## 独自のコントラクトを作成する
 
-上で説明したように、コントラクトを作成するために必要なことは、事前定義された基本コントラクト クラスを拡張し、必要に応じて `invoke` メソッドをオーバーライドすることです。 詳細については、[良い契約書の書き方ガイド](how-to-write-contract.mdx)をご覧ください。
+上で説明したように、コントラクトを作成するために必要なことは、事前定義された基本コントラクト クラスを拡張し、必要に応じて `invoke` メソッドをオーバーライドすることです。 詳細については、[良いコントラクトの書き方ガイド](how-to-write-contract.mdx)をご覧ください。
+上で説明したように、コントラクトを作成するために必要なことは、事前定義された基本コントラクト クラスを拡張し、必要に応じて `invoke` メソッドをオーバーライドすることです。 詳細については、[良いコントラクトの書き方ガイド](how-to-write-contract.mdx)をご覧ください。
 
 ## ClientService と対話する
 
-上記で使用したツールは、単純なテスト目的には役立ちますが、運用アプリケーションには使用しないでください。 Client SDK は、[`ClientService`](https://scalar-labs.github.io/scalardl/javadoc/client/com/scalar/dl/client/service/ClientService.html) と呼ばれるサービス層も提供します。 本番アプリケーションに使用されます。
+アプリケーション内で ScalarDL のコンポーネントとやりとりしたい場合は、Client SDK の API を利用することができます。API は [`ClientService`](https://scalar-labs.github.io/scalardl/javadoc/latest/client/com/scalar/dl/client/service/ClientService.html) と呼ばれるサービス層で提供されます。
 
 以下は、`ClientService` を使用してコントラクトを実行する方法を示すコード スニペットです。
 
@@ -243,7 +247,7 @@ Auditor による検証の詳細については、[ScalarDL Auditor 入門](gett
 まず、`ClientService` オブジェクトを作成するには、常に `ClientServiceFactory` を使用する必要があります。
 `ClientServiceFactory` は、`ClientService` の作成に必要なオブジェクトをキャッシュし、指定された設定に基づいて可能な限り再利用するため、`ClientServiceFactory` オブジェクトは常に再利用する必要があります。
 
-`ClientService` は、ScalarDL コンポーネント (Ledger や Auditor など) と対話して、証明書の登録、契約の登録、契約の実行、データの検証を行うスレッドセーフなクライアントです。
+`ClientService` は、ScalarDL コンポーネント (Ledger や Auditor など) と対話して、証明書の登録、コントラクトの登録、コントラクトの実行、データの検証を行うスレッドセーフなクライアントです。
 コントラクトを実行するときは、コントラクトの対応する引数の型を指定する必要があります。 たとえば、コントラクトが JacksonBasedContract を拡張する場合、コントラクトを実行するときに JsonNode 引数を渡す必要があります。
 
 詳細については、[Javadoc](https://scalar-labs.github.io/scalardl/javadoc/) をご覧ください。
@@ -254,8 +258,8 @@ Auditor による検証の詳細については、[ScalarDL Auditor 入門](gett
 
 ## 参考文献
 
-* [良い契約書の書き方ガイド](how-to-write-contract.mdx)
-* [優れた関数の書き方に関するガイド](how-to-write-function.mdx)
+* [良いコントラクトの書き方ガイド](how-to-write-contract.mdx)
+* [優れたファンクションの書き方に関するガイド](how-to-write-function.mdx)
 * [ScalarDL Auditor 入門](getting-started-auditor.mdx)
 * [Javadoc](https://scalar-labs.github.io/scalardl/javadoc/)
 * [ScalarDL設計ドキュメント](design.mdx)

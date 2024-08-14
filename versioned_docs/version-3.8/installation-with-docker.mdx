@@ -20,9 +20,9 @@ Determine the location on your local machine where you want to run the
 scalardl-samples app. Then open the terminal and `cd` to the directory and run the
 following commands:
 
-```
-$ git clone https://github.com/scalar-labs/scalardl-samples.git
-$ cd scalardl-samples
+```console
+git clone https://github.com/scalar-labs/scalardl-samples.git
+cd scalardl-samples
 ```
 
 ## Docker login
@@ -32,29 +32,30 @@ $ cd scalardl-samples
 on GitHub Container Registry is currently private, your GitHub account needs to be set with permissions to access the container images.
 Ask a person in charge to get your account ready. Note also that you need to use a personal access token (PAT) as a password to login `ghcr.io`. Please read [the official document](https://docs.github.com/en/packages/guides/migrating-to-github-container-registry-for-docker-images#authenticating-with-the-container-registry) for more detail.
 
-```
+```console
 # read:packages scope needs to be selected in a personal access token to login
-$ export CR_PAT=YOUR_PERSONAL_ACCESS_TOKEN
-$ echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
+export CR_PAT=YOUR_PERSONAL_ACCESS_TOKEN
+echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
 ```
 
 ## Start up ScalarDL Ledger
 
 The following command starts up ScalarDL Ledger along with the back-end Cassandra server in the Docker containers. At the first time you run the command, the required Docker images will be downloaded from GitHub Container Registry.
 
-```
-$ docker-compose up
+```console
+docker-compose up
 ```
 
 You may want to run the containers in the background. Add the `-d` (`--detach`) option:
 
-```
-$ docker-compose up -d
+```console
+docker-compose up -d
 ```
 
 When you want to use Auditor component, run the following command.
-```
-$ docker-compose -f docker-compose.yml -f docker-compose-auditor.yml up -d
+
+```console
+docker-compose -f docker-compose.yml -f docker-compose-auditor.yml up -d
 
 ```
 
@@ -66,9 +67,9 @@ To shut down the containers:
   where `docker-compose` is running.
 - If you started the containers in the background, run the following command.
 
-```
-$ docker-compose down
+```console
+docker-compose down
 
 # When Auditor is running
-$ docker-compose -f docker-compose.yml -f docker-compose-auditor.yml down
+docker-compose -f docker-compose.yml -f docker-compose-auditor.yml down
 ```

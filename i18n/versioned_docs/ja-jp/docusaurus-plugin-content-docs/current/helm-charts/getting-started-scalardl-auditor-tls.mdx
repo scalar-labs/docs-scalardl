@@ -418,7 +418,7 @@ Helm Chart を使用して、Kubernetes クラスターに 2 つの ScalarDL Sch
 1. ScalarDL Schema Loaderのチャートバージョンを設定します。
 
    ```console
-   SCALAR_DL_VERSION=3.9.0
+   SCALAR_DL_VERSION=3.9.1
    SCALAR_DL_SCHEMA_LOADER_CHART_VERSION=$(helm search repo scalar-labs/schema-loading -l | grep -F "${SCALAR_DL_VERSION}" | awk '{print $2}' | sort --version-sort -r | head -n 1)
    ```
 
@@ -990,6 +990,12 @@ Kubernetes クラスターで ScalarDL Ledger テストと ScalarDL Auditor テ�
 
    ```
    kubectl delete pod scalardl-client --grace-period 0 -n default
+   ```
+
+1. シークレットリソースを削除します。
+
+   ```
+   kubectl delete secrets envoy-tls-key envoy-tls-cert schema-ledger-credentials-secret schema-auditor-credentials-secret ledger-credentials-secret scalardl-ledger-tls-ca scalardl-ledger-tls-cert scalardl-ledger-tls-key auditor-credentials-secret auditor-keys scalardl-auditor-tls-ca scalardl-auditor-tls-cert scalardl-auditor-tls-key scalardl-auditor-tls-ca-for-ledger client-ca-cert
    ```
 
 1. 作業ディレクトリとサンプル ファイル (構成ファイル、秘密キー、および証明書) を削除します。

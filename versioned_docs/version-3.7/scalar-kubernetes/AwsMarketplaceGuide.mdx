@@ -14,14 +14,15 @@ Note that some Scalar products are available under commercial licenses, and the 
    * [ScalarDL Auditor (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-ke3yiw4mhriuu)
    * [ScalarDL Ledger (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-3jdwfmqonx7a2)
    * [ScalarDL Auditor (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-tj7svy75gu7m6)
+   * [Scalar Manager (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-gfyn6ipmxf2hq)
    * [[Deprecated] ScalarDB Server (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2)
 
 1. Select **Continue to Subscribe**.
 
-1. Sign in to AWS Marketplace using your IAM user.  
+1. Sign in to AWS Marketplace using your IAM user.
    If you have already signed in, this step will be skipped automatically.
 
-1. Read the **Terms and Conditions** and select **Accept Terms**.  
+1. Read the **Terms and Conditions** and select **Accept Terms**.
    It takes some time. When it's done, you can see the current date in the **Effective date** column.
    Also, you can see our products on the [Manage subscriptions](https://us-east-1.console.aws.amazon.com/marketplace/home#/subscriptions) page of AWS Console.
 
@@ -54,8 +55,7 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
        --override-existing-serviceaccounts
    ```
 
-1. Update the custom values file of the Helm Chart of a Scalar product you want to install.
-
+1. Update the custom values file of the Helm Chart for the Scalar product that you want to install.
    You need to specify the private container registry (ECR) of the AWS Marketplace as the value for `[].image.repository` in the custom values file. You also need to specify the service account name that you created in the previous step as the value for `[].serviceAccount.serviceAccountName` and set `[].serviceAccount.automountServiceAccountToken` to `true`.
 
    * ScalarDB Cluster Examples
@@ -108,6 +108,20 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
           image:
             repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-auditor-aws-payg"
         ```
+   * Scalar Manager Example
+      * Scalar Manager (scalar-manager-custom-values.yaml)
+
+        ```yaml
+        api:
+          image:
+            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-manager-api-aws-payg"
+        web:
+          image:
+            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-manager-web-aws-payg"
+        serviceAccount:
+          serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
+          automountServiceAccountToken: true
+        ```
 
 1. Deploy Scalar products by using Helm Charts in conjunction with the above custom values files.
    * ScalarDB Cluster Examples
@@ -136,13 +150,19 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
         ```console
         helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-auditor-custom-values.yaml
         ```
+   * Scalar Manager Example
+      * Scalar Manager
+
+        ```console
+        helm install scalar-manager scalar-labs/scalar-manager -f ./scalar-manager-custom-values.yaml
+        ```
 
 ## **[BYOL]** Deploy containers on EKS (Amazon Elastic Kubernetes Service) from AWS Marketplace using Scalar Helm Charts
 
 By subscribing to Scalar products in the AWS Marketplace, you can pull the container images of Scalar products from the private container registry ([ECR](https://aws.amazon.com/ecr/)) of the AWS Marketplace. This section explains how to deploy Scalar products with the BYOL option in your [EKS](https://aws.amazon.com/eks/) cluster from the private container registry.
 
-1. Update the custom values file of the Helm Chart of a Scalar product you want to install.  
-   You need to specify the private container registry (ECR) of AWS Marketplace as the value of `[].image.repository` in the custom values file.  
+1. Update the custom values file of the Helm Chart for the Scalar product that you want to install.
+   You need to specify the private container registry (ECR) of AWS Marketplace as the value of `[].image.repository` in the custom values file.
    * ScalarDB Cluster Examples
      ```yaml
      scalardbCluster:
@@ -212,8 +232,8 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
      --docker-password=$(aws ecr get-login-password --region us-east-1)
    ```
 
-1. Update the custom values file of the Helm Chart of a Scalar product you want to install.  
-   You need to specify the private container registry (ECR) of AWS Marketplace as the value of `[].image.repository` in the custom values file.  
+1. Update the custom values file of the Helm Chart for the Scalar product that you want to install.
+   You need to specify the private container registry (ECR) of AWS Marketplace as the value of `[].image.repository` in the custom values file.
    Also, you need to specify the `reg-ecr-mp-secrets` as the value of `[].imagePullSecrets`.
    * ScalarDB Cluster Examples
      ```yaml
@@ -258,5 +278,5 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
          ```
 
 1. Deploy the Scalar products using the Helm Chart with the above custom values files.
-   * Examples  
+   * Examples
      Please refer to the **[BYOL] Deploy containers on EKS (Amazon Elastic Kubernetes Service) from AWS Marketplace using Scalar Helm Charts** section of this document.

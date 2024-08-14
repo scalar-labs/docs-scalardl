@@ -4,22 +4,26 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-Scalar Manager は、ユーザーに次のことを可能にする Web ベースのダッシュボードです。
-* Scalar 製品の健全性をチェックします
-* Scalar 製品を一時停止および一時停止解除して、基礎となるデータベースをバックアップまたは復元します
-* Grafana ダッシュボードを通じて Scalar 製品のメトリクスとログを確認します
+Scalar Manager は、Kubernetes クラスタ環境内の ScalarDB および ScalarDL の集中管理および監視ソリューションであり、次のことができます：
 
-ユーザーは、Scalar Manager を通じて Scalar 製品を一時停止または一時停止解除して、基礎となるデータベースをバックアップまたは復元できます。
-Scalar Manager には、ユーザーが Scalar 製品のメトリクスやログを確認できる Grafana エクスプローラーも組み込まれています。
+* ScalarDB または ScalarDL の可用性を確認します。
+* ScalarDB または ScalarDL が使用するデータベースにおいて、トランザクションが一貫した期間を作成するジョブのスケジュールや実行を行います。
+* Grafana ダッシュボードを通じて、ScalarDB または ScalarDL の時系列メトリクスやログを確認します。
+
+Scalar Manager の詳細については、[Scalar Manager 概要](../scalar-manager/overview.mdx)ページを参照してください。
+
+このガイドでは、Kubernetes クラスターに Scalar Manager を展開し、アクセスする方法を説明します。
 
 ## 予測
-このガイドは、ユーザーがモニタリングおよびロギング ツールを備えた Scalar 製品を Kubernetes クラスターにデプロイする方法を理解していることを前提としています。
-まだの場合は、このガイドの前に [Scalar Helm Charts の入門](getting-started-scalar-helm-charts.mdx) から始めてください。
+
+このガイドでは、[モニタリング](getting-started-monitoring.mdx)および[ロギング](getting-started-logging.mdx)ツールを使用して ScalarDB または ScalarDL を Kubernetes クラスターにデプロイする方法を理解していることを前提としています。
 
 ## 要件
 
 * [GitHub Packages][GitHub Packages](https://github.com/orgs/scalar-labs/packages) から Scalar Manager コンテナ (`scalar-manager`) をプルするには権限が必要です。
 * 上記のコンテナをプルするには、[GitHub ドキュメント](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token) に従って `read:packages` スコープの Github Personal Access Token (PAT) を作成する必要があります。
+* [Helm Charts の入門 (Prometheus Operator を使用したモニタリング)](getting-started-monitoring.mdx)の指示に従って `kube-prometheus-stack` をデプロイする必要があります。
+* [Helm Charts の入門 (Loki スタックを使用したロギング)](getting-started-logging.mdx)の指示に従って `loki-stack` をデプロイする必要があります。
 
 ## 私たちが作るもの
 
@@ -70,11 +74,22 @@ Scalar Manager には、ユーザーが Scalar 製品のメトリクスやログ
 
 1. この値を `kube-prometheus-stack` のカスタム値ファイル (scalar-prometheus-custom-values.yaml など) に追加または修正します。
    ```yaml
+   kubeStateMetrics:
+     enabled: true
+   nodeExporter:
+     enabled: true
+   kubelet:
+     enabled: true
    grafana:
      grafana.ini:
+       users:
+         default_theme: light
        security:
          allow_embedding: true
-         cookie_samesite: disabled
+       auth.anonymous:
+         enabled: true
+         org_name: "Main Org."
+         org_role: Editor
    ```
 
 1. Helm インストールをアップグレードします。
@@ -84,42 +99,16 @@ Scalar Manager には、ユーザーが Scalar 製品のメトリクスやログ
 
 ## ステップ 2. Scalar Manager のカスタム値ファイルを準備する
 
-1. `scalar-manager` のサンプル ファイル [scalar-manager-custom-values.yaml](./conf/scalar-manager-custom-values.yaml) を取得します。
+1. `scalar-manager` 用に `scalar-manager-custom-values.yaml` という名前の空の .yaml ファイルを作成します。
 
-1. 管理するターゲットを追加します。 たとえば、台帳クラスターを管理する場合は、次のように値を追加できます。
-   ```yaml
-   scalarManager:
-     targets:
-       - name: my-ledgers-cluster
-         adminSrv: _scalardl-admin._tcp.scalardl-headless.default.svc.cluster.local
-         databaseType: cassandra
-   ```
-   注記： `adminSrv` は、ポッドの SRV レコードを返す DNS サービス URL です。 Kubernetes は、Scalar 製品のヘッドレス サービスの名前付きポートに対してこの URL を作成します。 形式は `_{port name}._{protocol}.{service name}.{namespace}.svc.{cluster domain name}` です。
-
-1. Grafana URL を設定します。 たとえば、`kube-prometheus-stack` の Grafana が `localhost:3000` で公開されている場合、次のように設定できます。
-   ```yaml
-   scalarManager:
-     grafanaUrl: "http://localhost:3000"
-   ```
-
-1. Scalar Manager が製品のステータスをチェックする更新間隔を設定します。 デフォルト値は `30` 秒ですが、次のように変更できます。
-   ```yaml
-   scalarManager:
-     refreshInterval: 60 # one minute
-   ```
-
-1. Scalar Manager にアクセスするためのサービス タイプを設定します。 デフォルト値は `ClusterIP` ですが、`minikubetunnel` コマンドや何らかのロードバランサを使ってアクセスする場合は、`LoadBalancer` として設定することができます。
+1. Scalar Manager にアクセスするためのサービス タイプを設定します。 デフォルト値は `ClusterIP` ですが、`minikube tunnel` コマンドや何らかのロードバランサを使ってアクセスする場合は、`LoadBalancer` として設定することができます。
    ```yaml
    service:
      type: LoadBalancer
+     port: 8000
    ```
 
 ## ステップ 3. `scalar-manager` をデプロイする
-
-1. GitHub パッケージから Scalar Manager コンテナ イメージをプルするためのシークレット リソース `reg-docker-secrets` を作成します。
-   ```console
-   kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
-   ```
 
 1. `scalar-manager` Helm Chart をデプロイします。
    ```console
@@ -139,7 +128,15 @@ Scalar Manager には、ユーザーが Scalar 製品のメトリクスやログ
 
 ### minikube 以外の Kubernetes を使用する場合
 
-minikube 以外の Kubernetes クラスターを使用する場合は、各 Kubernetes クラスターの方式に従って LoadBalancer サービスにアクセスする必要があります。 たとえば、クラウド サービスによって提供されるロード バランサーや `kubectl port-forward` コマンドを使用します。
+Minikube 以外の Kubernetes クラスターを使用している場合は、各 Kubernetes クラスターの方法に従って `LoadBalancer` サービスにアクセスする必要があります。
+例えば、クラウドサービスプロバイダーが提供するロードバランサーを使用するか、`kubectl port-forward` コマンドを使用する必要があります。
+
+:::note
+
+Scalar Manager は Grafana の外部IPを検出して、そのIPに基づいて Grafana を埋め込もうとします。
+そのため、Grafana のサービスタイプを `LoadBalancer` に設定し、外部 IP がブラウザからアクセス可能でなければなりません。
+
+:::
 
 ## ステップ 5. Scalar Manager を削除する
 1. `scalar-manager` をアンインストールします。

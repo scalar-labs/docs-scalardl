@@ -1,0 +1,39 @@
+# This workflow auto-creates PRs for Scalar Manager docs that come from the centralized private docs repository where we update our docs.
+name: ✨ Auto-create pull request - Scalar Manager docs
+
+on:
+  push:
+    branches:
+      - scalar-manager/**
+
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create pull request
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { repo, owner } = context.repo;
+            const result = await github.rest.pulls.create({
+              title: 'AUTO: Docs repo sync - Scalar Manager',
+              owner,
+              repo,
+              head: '${{ github.ref_name }}',
+              base: 'main',
+              body: [
+                'This is an automated pull request (PR) to sync changes to Scalar Manager docs in the centralized private docs repo to this public docs site repo.',
+                '',
+                'Before merging this PR, confirm the following:',
+                '',
+                '- [ ] I have updated the side navigation to include new docs or remove deleted docs (if necessary).',
+                '- [ ] I have confirmed that this PR can be merged without waiting (if necessary).',
+                '  - An example of when a PR must wait to be merged is when the docs are part of a pending release of a new product version.'
+              ].join('\n')
+            });
+            github.rest.issues.addLabels({
+              owner,
+              repo,
+              issue_number: result.data.number,
+              labels: ['documentation', 'scalar-manager', 'triage']
+            });

@@ -78,7 +78,6 @@ You can deploy MySQL and PostgreSQL on the Kubernetes cluster as follows:
    You should see the following output:
 
    ```console
-   $ kubectl get pod
    NAME                    READY   STATUS    RESTARTS   AGE
    mysql-scalardb-0        1/1     Running   0          3m17s
    postgresql-scalardb-0   1/1     Running   0          3m12s
@@ -133,7 +132,6 @@ Before deploying ScalarDB Analytics with PostgreSQL, run the OLTP transactions t
    You should see the following output:
 
    ```console
-   $ kubectl get pod oltp-client
    NAME          READY   STATUS    RESTARTS   AGE
    oltp-client   1/1     Running   0          17s
    ```
@@ -323,7 +321,6 @@ To run some queries via ScalarDB Analytics with PostgreSQL, run an OLAP client p
    You should see the following output:
 
    ```console
-   $ kubectl get pod olap-client
    NAME          READY   STATUS    RESTARTS   AGE
    olap-client   1/1     Running   0          10s
    ```

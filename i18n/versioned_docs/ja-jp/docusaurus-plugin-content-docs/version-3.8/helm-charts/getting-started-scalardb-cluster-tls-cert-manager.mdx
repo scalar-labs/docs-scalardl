@@ -540,6 +540,12 @@ Kubernetes クラスターで ScalarDB Cluster テストを完了したら、す
    helm uninstall -n default scalardb-cluster postgresql-scalardb-cluster
    ```
 
+1. 自己署名 CA を削除します。
+
+   ```
+   kubectl delete -f ./private-ca-custom-values.yaml
+   ```
+
 1. cert-manager をアンインストールします。
 
    ```console
@@ -550,6 +556,18 @@ Kubernetes クラスターで ScalarDB Cluster テストを完了したら、す
 
    ```
    kubectl delete pod scalardb-cluster-client --grace-period 0 -n default
+   ```
+
+1. シークレットリソースを削除します。
+
+   ```
+   kubectl delete secrets scalardb-credentials-secret self-signed-ca-cert-secret scalardb-cluster-envoy-tls-cert scalardb-cluster-tls-cert client-ca-cert
+   ```
+
+1. ネームスペース `cert-manager` を削除します。
+
+   ```
+   kubectl delete ns cert-manager
    ```
 
 1. 作業ディレクトリとサンプル構成ファイルを削除します。

@@ -37,6 +37,15 @@
   --ifm-h1-font-size: 2.25rem;
 }
 
+/* Make the sidebar navigation text smaller (default font size is 12pt). */
+.menu {
+  font-size: 11pt;
+}
+/* Make the arrow in the sidebar navigation smaller (default font size is 12pt). */
+.menu__link--sublist-caret:after {
+  background: var(--ifm-menu-link-sublist-icon) 50% / 1.25rem 1.25rem;
+}
+
 .version-out-of-support, .version-out-of-support a {
   background-color: #9CA3AF;
   color: #1c1e21;

@@ -38,10 +38,10 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 CSR に基づいて自己署名証明書と秘密キーを生成します。
 
-```
-$ cfssl gencert -initca ca-csr.json | cfssljson -bare ca
+```console
+cfssl gencert -initca ca-csr.json | cfssljson -bare ca
 
-$ ls
+ls
 ca-csr.json ca-key.pem  ca.csr      ca.pem
 ```
 
@@ -51,9 +51,9 @@ ca-csr.json ca-key.pem  ca.csr      ca.pem
 CFSSL は現在、MySQL、PostgreSQL、SQLite をサポートしています。
 今回は簡単にするために SQLite を使用します。
 
-```
-$ go get bitbucket.org/liamstask/goose/cmd/goose   
-$ goose -path $GOPATH/src/github.com/cloudflare/cfssl/certdb/sqlite up
+```console
+go get bitbucket.org/liamstask/goose/cmd/goose   
+goose -path $GOPATH/src/github.com/cloudflare/cfssl/certdb/sqlite up
 ``` 
 
 これにより、現在の場所に certstore_development.db が作成されます。
@@ -137,8 +137,8 @@ TODO: 設定について詳しく調べる
 
 主な違いは、 `-initca` オプションの代わりにルート CA (`-ca -ca-key`) と cfssl config (`-cfssl-config`) を指定することです。
 
-```
-$ cfssl gencert -ca ca.pem -ca-key ca-key.pem -config cfssl-config.json -profile "intermediate" server-ca.csr.json | cfssljson -bare ca-server
+```console
+cfssl gencert -ca ca.pem -ca-key ca-key.pem -config cfssl-config.json -profile "intermediate" server-ca.csr.json | cfssljson -bare ca-server
 ```
 
 ### OCSP サーバー証明書を生成する
@@ -164,8 +164,8 @@ $ cfssl gencert -ca ca.pem -ca-key ca-key.pem -config cfssl-config.json -profile
 }
 ```
 
-```
-$ cfssl gencert -ca ca-server.pem -ca-key ca-server-key.pem -config cfssl-config.json -profile "ocsp" ocsp.csr.json | cfssljson -bare server-ocsp
+```console
+cfssl gencert -ca ca-server.pem -ca-key ca-server-key.pem -config cfssl-config.json -profile "ocsp" ocsp.csr.json | cfssljson -bare server-ocsp
 ```
 
 ## サーバーを起動する
@@ -174,20 +174,20 @@ $ cfssl gencert -ca ca-server.pem -ca-key ca-server-key.pem -config cfssl-config
 
 ### CA サーバー
 
-```
-$ cfssl serve -db-config db-config.json -ca-key ca-server-key.pem -ca ca-server.pem -config cfssl-config.json -responder server-ocsp.pem -responder-key server-ocsp-key.pem
+```console
+cfssl serve -db-config db-config.json -ca-key ca-server-key.pem -ca ca-server.pem -config cfssl-config.json -responder server-ocsp.pem -responder-key server-ocsp-key.pem
 ```
 
 ### OCSP サーバー
 
-```
-$ cfssl ocsprefresh -db-config db-config.json -responder server-ocsp.pem -responder-key server-ocsp-key.pem -ca ca-server.pem
+```console
+cfssl ocsprefresh -db-config db-config.json -responder server-ocsp.pem -responder-key server-ocsp-key.pem -ca ca-server.pem
 
 // Bundle the Root CA and Intermediate CA
-$ cat ca.pem ca-server.pem | tee bundle.pem
+cat ca.pem ca-server.pem | tee bundle.pem
 
 // Pre-generate the OCSP response
-$ cfssl ocspdump -db-config db-config.json > ocspdump.txt
+cfssl ocspdump -db-config db-config.json > ocspdump.txt
 
 // Start the server
 cfssl ocspserve -port=8889 -responses=ocspdump.txt

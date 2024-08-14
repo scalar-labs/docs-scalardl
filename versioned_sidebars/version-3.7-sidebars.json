@@ -1,9 +1,9 @@
 {
   "docs": [
     {
-      "type": "link",
+      "type": "doc",
       "label": "ScalarDL Docs Home",
-      "href": "/docs/latest/"
+      "id": "index"
     },
     {
       "type": "category",
@@ -216,7 +216,8 @@
           ]
         },
         "backup-restore",
-        "troubleshooting-guide"
+        "troubleshooting-guide",
+        "scalar-manager/overview"
       ]
     },
     {

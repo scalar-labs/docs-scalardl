@@ -374,7 +374,7 @@ You'll create private key and a certificate files.
 1. Set the chart version of ScalarDB Cluster.
 
    ```console
-   SCALAR_DB_CLUSTER_VERSION=3.12.1
+   SCALAR_DB_CLUSTER_VERSION=3.12.2
    SCALAR_DB_CLUSTER_CHART_VERSION=$(helm search repo scalar-labs/scalardb-cluster -l | grep -F "${SCALAR_DB_CLUSTER_VERSION}" | awk '{print $2}' | sort --version-sort -r | head -n 1)
    ```
 
@@ -600,6 +600,12 @@ After completing the ScalarDB Cluster tests on the Kubernetes cluster, remove al
 
    ```
    kubectl delete pod scalardb-cluster-client --grace-period 0 -n default
+   ```
+
+1. Remove the secret resources.
+
+   ```
+   kubectl delete secrets scalardb-credentials-secret scalardb-cluster-tls-key scalardb-cluster-tls-cert scalardb-cluster-tls-ca envoy-tls-key envoy-tls-cert client-ca-cert
    ```
 
 1. Remove the working directory and sample files (configuration file, private key, and certificate).

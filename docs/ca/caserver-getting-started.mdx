@@ -34,10 +34,10 @@ Create a CSR file in json format as follows.
 
 Generate a self-signed certificate and a private key based on the CSR.
 
-```
-$ cfssl gencert -initca ca-csr.json | cfssljson -bare ca
+```console
+cfssl gencert -initca ca-csr.json | cfssljson -bare ca
 
-$ ls
+ls
 ca-csr.json ca-key.pem  ca.csr      ca.pem
 ```
 
@@ -47,9 +47,9 @@ it needs a database for storing keys/certificate information.
 CFSSL currently supports MySQL, PostgreSQL and SQLite.
 We use SQLite this time for simplicity.
 
-```
-$ go get bitbucket.org/liamstask/goose/cmd/goose   
-$ goose -path $GOPATH/src/github.com/cloudflare/cfssl/certdb/sqlite up
+```console
+go get bitbucket.org/liamstask/goose/cmd/goose   
+goose -path $GOPATH/src/github.com/cloudflare/cfssl/certdb/sqlite up
 ``` 
 
 This will create a certstore_development.db in the current location.
@@ -130,8 +130,9 @@ This step is similar to generating root ca cert.
 ```
 
 The main differences are specifying the Root CA (`-ca -ca-key`) and the cfssl config (`-cfssl-config`) instead of `-initca` option.
-```
-$ cfssl gencert -ca ca.pem -ca-key ca-key.pem -config cfssl-config.json -profile "intermediate" server-ca.csr.json | cfssljson -bare ca-server
+
+```console
+cfssl gencert -ca ca.pem -ca-key ca-key.pem -config cfssl-config.json -profile "intermediate" server-ca.csr.json | cfssljson -bare ca-server
 ```
 
 ### Generate a OCSP server certificate
@@ -157,8 +158,8 @@ NOTE: OCSP is an internet protocol used for obtaining the revocation status of a
 }
 ```
 
-```
-$ cfssl gencert -ca ca-server.pem -ca-key ca-server-key.pem -config cfssl-config.json -profile "ocsp" ocsp.csr.json | cfssljson -bare server-ocsp
+```console
+cfssl gencert -ca ca-server.pem -ca-key ca-server-key.pem -config cfssl-config.json -profile "ocsp" ocsp.csr.json | cfssljson -bare server-ocsp
 ```
 
 ## Start servers
@@ -166,19 +167,21 @@ $ cfssl gencert -ca ca-server.pem -ca-key ca-server-key.pem -config cfssl-config
 It's all ready now. Let's start the servers.
 
 ### CA server
-```
-$ cfssl serve -db-config db-config.json -ca-key ca-server-key.pem -ca ca-server.pem -config cfssl-config.json -responder server-ocsp.pem -responder-key server-ocsp-key.pem
+
+```console
+cfssl serve -db-config db-config.json -ca-key ca-server-key.pem -ca ca-server.pem -config cfssl-config.json -responder server-ocsp.pem -responder-key server-ocsp-key.pem
 ```
 
 ### OCSP server
-```
-$ cfssl ocsprefresh -db-config db-config.json -responder server-ocsp.pem -responder-key server-ocsp-key.pem -ca ca-server.pem
+
+```console
+cfssl ocsprefresh -db-config db-config.json -responder server-ocsp.pem -responder-key server-ocsp-key.pem -ca ca-server.pem
 
 // Bundle the Root CA and Intermediate CA
-$ cat ca.pem ca-server.pem | tee bundle.pem
+cat ca.pem ca-server.pem | tee bundle.pem
 
 // Pre-generate the OCSP response
-$ cfssl ocspdump -db-config db-config.json > ocspdump.txt
+cfssl ocspdump -db-config db-config.json > ocspdump.txt
 
 // Start the server
 cfssl ocspserve -port=8889 -responses=ocspdump.txt

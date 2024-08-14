@@ -12,16 +12,16 @@ We basically use CFSSL components for CA server and certificate handling.
 
 ### Generate a private key and a CSR
 
-```
-$ openssl ecparam -name prime256v1 -out prime256v1.pem
-$ openssl req -new -newkey ec:prime256v1.pem -nodes -keyout client-key.pem.pkcs8 -out client.csr
-$ openssl ec -in client-key.pem.pkcs8 -out client-key.pem
+```console
+openssl ecparam -name prime256v1 -out prime256v1.pem
+openssl req -new -newkey ec:prime256v1.pem -nodes -keyout client-key.pem.pkcs8 -out client.csr
+openssl ec -in client-key.pem.pkcs8 -out client-key.pem
 ```
 
 or
 
-```
-$ cat << EOF > client-cert.json
+```console
+cat << EOF > client-cert.json
 {
     "CN": "client.example",
     "key": {
@@ -39,8 +39,13 @@ $ cat << EOF > client-cert.json
 }
 EOF
 
-$ cfssl selfsign "" ./client-cert.json | cfssljson -bare client
-$ ls -1
+cfssl selfsign "" ./client-cert.json | cfssljson -bare client
+ls -1
+```
+
+You should see the following output:
+
+```console
 client-cert.json
 client-key.pem
 client.csr

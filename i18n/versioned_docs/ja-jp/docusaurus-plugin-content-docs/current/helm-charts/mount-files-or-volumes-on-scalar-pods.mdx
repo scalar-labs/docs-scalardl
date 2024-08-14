@@ -78,13 +78,23 @@ ScalarDL Auditor を実行するには、キー ファイルと証明書ファ�
    * 例
        * ScalarDL Ledger
          ```console
-         $ ls -l /keys/
+         ls -l /keys/
+         ```
+         
+         次のような結果が表示されます：
+         
+         ```console
          total 0
          lrwxrwxrwx 1 root root 18 Jun 27 03:12 private-key -> ..data/private-key
          ```
        * ScalarDL Auditor
          ```console
-         $ ls -l /keys/
+         ls -l /keys/
+         ```
+
+         次のような結果が表示されます：
+         
+         ```console
          total 0
          lrwxrwxrwx 1 root root 18 Jun 27 03:16 certificate -> ..data/certificate
          lrwxrwxrwx 1 root root 18 Jun 27 03:16 private-key -> ..data/private-key
@@ -115,6 +125,11 @@ ScalarDL Auditor を実行するには、キー ファイルと証明書ファ�
 この例では、次のように ScalarDB Server ポッドにマウントされたボリュームを確認できます。
 
 ```console
-$ ls -ld /dump
+ls -ld /dump
+```
+
+次のような結果が表示されます：
+
+```console
 drwxrwxrwx 2 root root 4096 Feb  6 07:43 /dump
 ```
