@@ -165,7 +165,7 @@ const config = {
           {
             tagName: 'link',
             rel: 'icon',
-            href: '/img/scalardl-app-icon.png',
+            href: '/img/favicon.png',
           },
           {
             tagName: 'link',
@@ -190,18 +190,18 @@ const config = {
           {
             tagName: 'link',
             rel: 'apple-touch-icon',
-            href: '/img/scalardl-app-icon.png',
+            href: '/img/favicon.png',
           },
           {
             tagName: 'link',
             rel: 'mask-icon',
-            href: '/img/scalardl-app-icon.png',
+            href: '/img/favicon.svg',
             color: '#2673BB',
           },
           {
             tagName: 'meta',
             name: 'msapplication-TileImage',
-            content: '/img/scalardl-app-icon.png',
+            content: '/img/favicon.png',
           },
           {
             tagName: 'meta',
