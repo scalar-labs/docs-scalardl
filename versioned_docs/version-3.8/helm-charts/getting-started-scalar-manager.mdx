@@ -135,3 +135,42 @@ Scalar Manager will try to detect the external IP of Grafana and then embed Graf
    ```console
    helm uninstall scalar-manager
    ```
+
+## Additional details
+
+This section provides additional details related to configurations and resource discovery.
+
+### Configurations
+
+You can see configurations for Scalar Manager in [Configure a custom values file for Scalar Manager](./configure-custom-values-scalar-manager.mdx)
+
+### Resource discovery
+
+Scalar Manager discovers the following Kubernetes resources in a cluster by using specific label selectors:
+
+- Dependencies
+  - Prometheus service
+  - Loki service
+  - Grafana service
+- Targets
+  - ScalarDB Cluster deployments
+  - ScalarDL Ledger deployments
+  - ScalarDL Auditor deployments
+
+The following sections explain how Scalar Manager discovers these resources.
+
+#### Dependencies
+
+Scalar Manager searches for the default labels and values set in the [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) and [loki-stack](https://github.com/grafana/helm-charts/tree/main/charts/loki-stack) Helm Charts. For more information on the default labels and values that Scalar Manager uses to discover dependencies, see [Properties that you can set in `api.applicationProperties`](./configure-custom-values-scalar-manager.mdx#properties-that-you-can-set-in-apiapplicationProperties).
+
+Also, if you customized any values when installing `kube-prometheus-stack` or `loki-stack`, you will need to update the label selectors in the Scalar Manager custom value `api.applicationProperties`.
+
+#### Targets
+
+Scalar Manager searches for ScalarDB Cluster, ScalarDL Ledger, and ScalarDL Auditor deployments by using the following labels and values:
+
+- **ScalarDB Cluster:** `app.kubernetes.io/app=scalardb-cluster`
+- **ScalarDL Ledger:** `app.kubernetes.io/app=ledger`
+- **ScalarDL Auditor:** `app.kubernetes.io/app=auditor`
+
+Scalar Helm Charts use fixed labels and values for ScalarDB Cluster, ScalarDL Ledger, and ScalarDL Auditor deployments so that if you install ScalarDB and ScalarDL by using [Scalar Helm Charts](https://github.com/scalar-labs/helm-charts), Scalar Manager will automatically discover these deployments.
