@@ -141,3 +141,42 @@ Scalar Manager は Grafana の外部IPを検出して、そのIPに基づいて 
    ```console
    helm uninstall scalar-manager
    ```
+
+## 追加詳細
+
+このセクションでは、設定とリソース検出に関する追加詳細を提供します。
+
+### 設定
+
+Scalar Managerの設定については、[Scalar Manager用のカスタム値ファイルの設定](./configure-custom-values-scalar-manager.mdx)をご覧ください。
+
+### リソース検出
+
+Scalar Managerは、特定のラベルセレクターを使用して、クラスター内の以下のKubernetesリソースを検出します：
+
+- 依存関係
+  - Prometheusサービス
+  - Lokiサービス
+  - Grafanaサービス
+- ターゲット
+  - ScalarDB Clusterデプロイメント
+  - ScalarDL Ledgerデプロイメント
+  - ScalarDL Auditorデプロイメント
+
+以下のセクションでは、Scalar Managerがこれらのリソースをどのように検出するかを説明します。
+
+#### 依存関係
+
+Scalar Managerは、[kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack)と[loki-stack](https://github.com/grafana/helm-charts/tree/main/charts/loki-stack) Helm Chartsで設定されたデフォルトのラベルと値を検索します。Scalar Managerが依存関係の検出に使用するデフォルトのラベルと値の詳細については、[`api.applicationProperties`で設定できるプロパティ](./configure-custom-values-scalar-manager.mdx#properties-that-you-can-set-in-apiapplicationProperties)をご覧ください。
+
+また、`kube-prometheus-stack`または`loki-stack`のインストール時に値をカスタマイズした場合は、Scalar Managerのカスタム値`api.applicationProperties`でラベルセレクターを更新する必要があります。
+
+#### ターゲット
+
+Scalar Managerは、以下のラベルと値を使用してScalarDB Cluster、ScalarDL Ledger、ScalarDL Auditorのデプロイメントを検索します：
+
+- **ScalarDB Cluster:** `app.kubernetes.io/app=scalardb-cluster`
+- **ScalarDL Ledger:** `app.kubernetes.io/app=ledger`
+- **ScalarDL Auditor:** `app.kubernetes.io/app=auditor`
+
+Scalar Helm ChartsはScalarDB Cluster、ScalarDL Ledger、ScalarDL Auditorのデプロイメントに固定のラベルと値を使用しているため、[Scalar Helm Charts](https://github.com/scalar-labs/helm-charts)を使用してScalarDBとScalarDLをインストールした場合、Scalar Managerはこれらのデプロイメントを自動的に検出します。
