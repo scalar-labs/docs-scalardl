@@ -11,8 +11,8 @@
       "collapsible": true,
       "items": [
         "overview",
-        "implementation",
-        "design"
+        "design",
+        "implementation"
       ]
     },
     {
