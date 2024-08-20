@@ -30,8 +30,8 @@ const sidebars = {
       'collapsible': true,
       'items': [
         'overview',
-        'implementation',
         'design',
+        'implementation',
         'roadmap',
       ]
     },
