@@ -1,5 +1,7 @@
 # Kubernetes クラスター上の Scalar 製品からのログの収集
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
@@ -43,32 +45,48 @@ loki-stack のサンプルファイル [scalar-loki-stack-custom-values.yaml](ht
 * [EKS - Add a label to the worker node that is used for nodeAffinity](CreateEKSClusterForScalarProducts.mdx#add-a-label-to-the-worker-node-that-is-used-for-nodeaffinity)
 * [AKS - Add a label to the worker node that is used for nodeAffinity](CreateAKSClusterForScalarProducts.mdx#add-a-label-to-the-worker-node-that-is-used-for-nodeaffinity)
 
-このドキュメントでデプロイされた promtail ポッドは Scalar 製品ログのみを収集するため、Scalar 製品が実行されているワーカーノードにのみ promtail ポッドをデプロイするだけで十分です。 したがって、Kubernetes ワーカーノードにラベルを追加する場合は、カスタム値ファイル (scalar-loki-stack-custom-values.yaml) で次のように nodeSelector を設定する必要があります。
+このドキュメントでデプロイされた promtail ポッドは Scalar 製品ログのみを収集するため、Scalar 製品が実行されているワーカーノードにのみ promtail ポッドをデプロイするだけで十分です。 したがって、Kubernetes ワーカーノードにラベルを追加する場合は、カスタム値ファイル (scalar-loki-stack-custom-values.yaml) で次のように nodeSelector を設定する必要があります。使用している製品に応じて、次の例を参照してください。
 
-* ScalarDB Cluster の例
-  ```yaml
-  promtail:
-    nodeSelector:
-      scalar-labs.com/dedicated-node: scalardb-cluster
-  ```
-* (非推奨)) ScalarDB Server の例
-  ```yaml
-  promtail:
-    nodeSelector:
-      scalar-labs.com/dedicated-node: scalardb
-  ```
-* ScalarDL Ledger の例
-  ```yaml
-  promtail:
-    nodeSelector:
-      scalar-labs.com/dedicated-node: scalardl-ledger
-  ```
-* ScalarDL Auditor の例
-  ```yaml
-  promtail:
-    nodeSelector:
-      scalar-labs.com/dedicated-node: scalardl-auditor
-  ```
+<Tabs groupId="products" queryString>
+  <TabItem value="scalardb" label="ScalarDB" default>
+    使用している ScalarDB 製品を選択します。
+    <Tabs groupId="products" queryString>
+      <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+        ```yaml
+        promtail:
+          nodeSelector:
+            scalar-labs.com/dedicated-node: scalardb-cluster
+        ```
+      </TabItem>
+      <TabItem value="scalardb-server" label="ScalarDB Server (非推奨)">
+        ```yaml
+        promtail:
+          nodeSelector:
+            scalar-labs.com/dedicated-node: scalardb
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+  <TabItem value="scalardl" label="ScalarDL">
+    使用している ScalarDL 製品を選択します。
+    <Tabs groupId="products" queryString>
+      <TabItem value="scalardl-ledger" label="ScalarDL Ledger" default>
+        ```yaml
+        promtail:
+          nodeSelector:
+            scalar-labs.com/dedicated-node: scalardl-ledger
+        ```
+      </TabItem>
+      <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+        ```yaml
+        promtail:
+          nodeSelector:
+            scalar-labs.com/dedicated-node: scalardl-auditor
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+</Tabs>
 
 ### カスタム値ファイルで許容値を設定する (運用環境で推奨)
 
@@ -77,44 +95,60 @@ loki-stack のサンプルファイル [scalar-loki-stack-custom-values.yaml](ht
 * [EKS - Add taint to the worker node that is used for toleration](CreateEKSClusterForScalarProducts.mdx#add-taint-to-the-worker-node-that-is-used-for-toleration)
 * [AKS - Add taint to the worker node that is used for toleration](CreateAKSClusterForScalarProducts.mdx#add-taint-to-the-worker-node-that-is-used-for-toleration)
 
-promtail ポッドは DaemonSet としてデプロイされるため、Kubernetes ワーカーノードにテイントを追加する場合は、次のようにカスタム値ファイル (scalar-loki-stack-custom-values.yaml) で許容範囲を設定する必要があります。
+promtail ポッドは DaemonSet としてデプロイされるため、Kubernetes ワーカーノードにテイントを追加する場合は、次のようにカスタム値ファイル (scalar-loki-stack-custom-values.yaml) で許容範囲を設定する必要があります。使用している製品に応じて、次の例を参照してください。
 
-* ScalarDB Cluster の例
-  ```yaml
-  promtail:
-    tolerations:
-      - effect: NoSchedule
-        key: scalar-labs.com/dedicated-node
-        operator: Equal
-        value: scalardb-cluster
-  ```
-* (非推奨)) ScalarDB Server の例
-  ```yaml
-  promtail:
-    tolerations:
-      - effect: NoSchedule
-        key: scalar-labs.com/dedicated-node
-        operator: Equal
-        value: scalardb
-  ```
-* ScalarDL Ledger の例
-  ```yaml
-  promtail:
-    tolerations:
-      - effect: NoSchedule
-        key: scalar-labs.com/dedicated-node
-        operator: Equal
-        value: scalardl-ledger
-  ```
-* ScalarDL Auditor の例
-  ```yaml
-  promtail:
-    tolerations:
-      - effect: NoSchedule
-        key: scalar-labs.com/dedicated-node
-        operator: Equal
-        value: scalardl-auditor
-  ```
+<Tabs groupId="products" queryString>
+  <TabItem value="scalardb" label="ScalarDB" default>
+    使用している ScalarDB 製品を選択します。
+    <Tabs groupId="products" queryString>
+      <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+        ```yaml
+        promtail:
+          tolerations:
+            - effect: NoSchedule
+              key: scalar-labs.com/dedicated-node
+              operator: Equal
+              value: scalardb-cluster
+        ```
+      </TabItem>
+      <TabItem value="scalardb-server" label="ScalarDB Server (deprecated)">
+        ```yaml
+        promtail:
+          tolerations:
+            - effect: NoSchedule
+              key: scalar-labs.com/dedicated-node
+              operator: Equal
+              value: scalardb
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+  <TabItem value="scalardl" label="ScalarDL">
+    使用している ScalarDL 製品を選択します。
+    <Tabs groupId="products" queryString>
+      <TabItem value="scalardl-ledger" label="ScalarDL Ledger" default>
+        ```yaml
+        promtail:
+          tolerations:
+            - effect: NoSchedule
+              key: scalar-labs.com/dedicated-node
+              operator: Equal
+              value: scalardl-ledger
+        ```
+      </TabItem>
+      <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+        ```yaml
+        promtail:
+          tolerations:
+            - effect: NoSchedule
+              key: scalar-labs.com/dedicated-node
+              operator: Equal
+              value: scalardl-auditor
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+</Tabs>
 
 ## Loki と Promtail をデプロイする
 
