@@ -1,5 +1,8 @@
 # Collecting logs from Scalar products on a Kubernetes cluster
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 This document explains how to deploy Grafana Loki and Promtail on Kubernetes with Helm. After following this document, you can collect logs of Scalar products on your Kubernetes environment.
 
 If you use a managed Kubernetes cluster and you want to use the cloud service features for monitoring and logging, please refer to the following document.
@@ -39,32 +42,48 @@ In the production environment, it is recommended to add labels to the worker nod
 * [EKS - Add a label to the worker node that is used for nodeAffinity](CreateEKSClusterForScalarProducts.mdx#add-a-label-to-the-worker-node-that-is-used-for-nodeaffinity)
 * [AKS - Add a label to the worker node that is used for nodeAffinity](CreateAKSClusterForScalarProducts.mdx#add-a-label-to-the-worker-node-that-is-used-for-nodeaffinity)
 
-Since the promtail pods deployed in this document collect only Scalar product logs, it is sufficient to deploy promtail pods only on the worker node where Scalar products are running. So, you should set nodeSelector in the custom values file (scalar-loki-stack-custom-values.yaml) as follows if you add labels to your Kubernetes worker node.
+Since the promtail pods deployed in this document collect only Scalar product logs, it is sufficient to deploy promtail pods only on the worker node where Scalar products are running. So, you should set nodeSelector in the custom values file (scalar-loki-stack-custom-values.yaml) as follows if you add labels to your Kubernetes worker node. See the following examples based on the product you're using.
 
-* ScalarDB Cluster Example
-  ```yaml
-  promtail:
-    nodeSelector:
-      scalar-labs.com/dedicated-node: scalardb-cluster
-  ```
-* (Deprecated) ScalarDB Server Example
-  ```yaml
-  promtail:
-    nodeSelector:
-      scalar-labs.com/dedicated-node: scalardb
-  ```
-* ScalarDL Ledger Example
-  ```yaml
-  promtail:
-    nodeSelector:
-      scalar-labs.com/dedicated-node: scalardl-ledger
-  ```
-* ScalarDL Auditor Example
-  ```yaml
-  promtail:
-    nodeSelector:
-      scalar-labs.com/dedicated-node: scalardl-auditor
-  ```
+<Tabs groupId="products" queryString>
+  <TabItem value="scalardb" label="ScalarDB" default>
+    Select the ScalarDB product you're using.
+    <Tabs groupId="products" queryString>
+      <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+        ```yaml
+        promtail:
+          nodeSelector:
+            scalar-labs.com/dedicated-node: scalardb-cluster
+        ```
+      </TabItem>
+      <TabItem value="scalardb-server" label="ScalarDB Server (deprecated)">
+        ```yaml
+        promtail:
+          nodeSelector:
+            scalar-labs.com/dedicated-node: scalardb
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+  <TabItem value="scalardl" label="ScalarDL">
+    Select the ScalarDL product you're using.
+    <Tabs groupId="products" queryString>
+      <TabItem value="scalardl-ledger" label="ScalarDL Ledger" default>
+        ```yaml
+        promtail:
+          nodeSelector:
+            scalar-labs.com/dedicated-node: scalardl-ledger
+        ```
+      </TabItem>
+      <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+        ```yaml
+        promtail:
+          nodeSelector:
+            scalar-labs.com/dedicated-node: scalardl-auditor
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+</Tabs>
 
 ### Set tolerations in the custom values file (Recommended in the production environment)
 
@@ -73,44 +92,60 @@ In the production environment, it is recommended to add taints to the worker nod
 * [EKS - Add taint to the worker node that is used for toleration](CreateEKSClusterForScalarProducts.mdx#add-taint-to-the-worker-node-that-is-used-for-toleration)
 * [AKS - Add taint to the worker node that is used for toleration](CreateAKSClusterForScalarProducts.mdx#add-taint-to-the-worker-node-that-is-used-for-toleration)
 
-Since promtail pods are deployed as DaemonSet, you must set tolerations in the custom values file (scalar-loki-stack-custom-values.yaml) as follows if you add taints to your Kubernetes worker node.
+Since promtail pods are deployed as DaemonSet, you must set tolerations in the custom values file (scalar-loki-stack-custom-values.yaml) as follows if you add taints to your Kubernetes worker node. See the following examples based on the product you're using.
 
-* ScalarDB Cluster Example
-  ```yaml
-  promtail:
-    tolerations:
-      - effect: NoSchedule
-        key: scalar-labs.com/dedicated-node
-        operator: Equal
-        value: scalardb-cluster
-  ```
-* (Deprecated) ScalarDB Server Example
-  ```yaml
-  promtail:
-    tolerations:
-      - effect: NoSchedule
-        key: scalar-labs.com/dedicated-node
-        operator: Equal
-        value: scalardb
-  ```
-* ScalarDL Ledger Example
-  ```yaml
-  promtail:
-    tolerations:
-      - effect: NoSchedule
-        key: scalar-labs.com/dedicated-node
-        operator: Equal
-        value: scalardl-ledger
-  ```
-* ScalarDL Auditor Example
-  ```yaml
-  promtail:
-    tolerations:
-      - effect: NoSchedule
-        key: scalar-labs.com/dedicated-node
-        operator: Equal
-        value: scalardl-auditor
-  ```
+<Tabs groupId="products" queryString>
+  <TabItem value="scalardb" label="ScalarDB" default>
+    Select the ScalarDB product you're using.
+    <Tabs groupId="products" queryString>
+      <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+        ```yaml
+        promtail:
+          tolerations:
+            - effect: NoSchedule
+              key: scalar-labs.com/dedicated-node
+              operator: Equal
+              value: scalardb-cluster
+        ```
+      </TabItem>
+      <TabItem value="scalardb-server" label="ScalarDB Server (deprecated)">
+        ```yaml
+        promtail:
+          tolerations:
+            - effect: NoSchedule
+              key: scalar-labs.com/dedicated-node
+              operator: Equal
+              value: scalardb
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+  <TabItem value="scalardl" label="ScalarDL">
+    Select the ScalarDL product you're using.
+    <Tabs groupId="products" queryString>
+      <TabItem value="scalardl-ledger" label="ScalarDL Ledger" default>
+        ```yaml
+        promtail:
+          tolerations:
+            - effect: NoSchedule
+              key: scalar-labs.com/dedicated-node
+              operator: Equal
+              value: scalardl-ledger
+        ```
+      </TabItem>
+      <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+        ```yaml
+        promtail:
+          tolerations:
+            - effect: NoSchedule
+              key: scalar-labs.com/dedicated-node
+              operator: Equal
+              value: scalardl-auditor
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+</Tabs>
 
 ## Deploy Loki and Promtail
 
