@@ -12,11 +12,11 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 このアプリケーションでは、次の 5 つのコントラクトを使用します。
 
-- [`AccountHistory.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/src/main/java/com/scalar/application/bankaccount/contract/AccountHistory.java)
-- [`CreateAccount.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/src/main/java/com/scalar/application/bankaccount/contract/CreateAccount.java)
-- [`Deposit.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/src/main/java/com/scalar/application/bankaccount/contract/Deposit.java)
-- [`Transfer.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/src/main/java/com/scalar/application/bankaccount/contract/Transfer.java)
-- [`Withdraw.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/src/main/java/com/scalar/application/bankaccount/contract/Withdraw.java)
+- [`AccountHistory.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/contract/src/main/java/com/scalar/application/bankaccount/contract/AccountHistory.java)
+- [`CreateAccount.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/contract/src/main/java/com/scalar/application/bankaccount/contract/CreateAccount.java)
+- [`Deposit.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/contract/src/main/java/com/scalar/application/bankaccount/contract/Deposit.java)
+- [`Transfer.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/contract/src/main/java/com/scalar/application/bankaccount/contract/Transfer.java)
+- [`Withdraw.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/contract/src/main/java/com/scalar/application/bankaccount/contract/Withdraw.java)
 
 これらのコントラクトは銀行によって登録され、銀行はそれぞれ、口座履歴の表示、口座の作成、口座への入金、口座間の資金移動、口座からの資金の引き出しを行うことができます。
 
@@ -29,6 +29,8 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 [ScalarDL Client SDK](https://github.com/scalar-labs/scalardl-client-sdk)をダウンロードします。 ScalarDL が実行されていることを確認し、必要なコントラクトをすべて実行して登録します。
 
 ```console
+./gradlew build
+cd contract
 SCALAR_SDK_HOME=/path/to/scalardl-client-sdk ./register
 ```
 
@@ -42,48 +44,49 @@ Spring Boot を使用して、コントラクトと対話する Web サービス
 
 ### コントラクト
 
-コントラクトは、 `Contract` クラスを拡張し、 `invoke` メソッドをオーバーライドする Java クラスです。 `Deposit.java` コントラクトを詳しく見てみましょう。
+コントラクトは、 `JacksonBasedContract` クラスを拡張し、 `invoke` メソッドをオーバーライドする Java クラスです。 `Deposit.java` コントラクトを詳しく見てみましょう。
 
 ```java
 package com.scalar.application.bankaccount.contract;
 
-import com.scalar.dl.ledger.asset.Asset;
-import com.scalar.dl.ledger.contract.Contract;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.scalar.dl.ledger.statemachine.Asset;
+import com.scalar.dl.ledger.contract.JacksonBasedContract;
 import com.scalar.dl.ledger.exception.ContractContextException;
-import com.scalar.dl.ledger.database.Ledger;
+import com.scalar.dl.ledger.statemachine.Ledger;
 import java.util.Optional;
-import javax.json.Json;
-import javax.json.JsonObject;
+import javax.annotation.Nullable;
 
-public class Deposit extends Contract {
+public class Deposit extends JacksonBasedContract {
   @Override
-  public JsonObject invoke(Ledger ledger, JsonObject argument, Optional<JsonObject> property) {
-    if (!(argument.containsKey("id") && argument.containsKey("amount"))) {
+  public JsonNode invoke(
+      Ledger<JsonNode> ledger, JsonNode argument, @Nullable JsonNode properties) {
+    if (!argument.has("id") || !argument.has("amount")) {
       throw new ContractContextException("a required key is missing: id and/or amount");
     }
 
-    String id = argument.getString("id");
-    long amount = argument.getJsonNumber("amount").longValue();
+    String id = argument.get("id").asText();
+    long amount = argument.get("amount").asLong();
 
     if (amount < 0) {
       throw new ContractContextException("amount is negative");
     }
 
-    Optional<Asset> response = ledger.get(id);
+    Optional<Asset<JsonNode>> asset = ledger.get(id);
 
-    if (!response.isPresent()) {
+    if (!asset.isPresent()) {
       throw new ContractContextException("account does not exist");
     }
 
-    long oldBalance = response.get().data().getInt("balance");
+    long oldBalance = asset.get().data().get("balance").asLong();
     long newBalance = oldBalance + amount;
 
-    ledger.put(id, Json.createObjectBuilder().add("balance", newBalance).build());
-    return Json.createObjectBuilder()
-        .add("status", "succeeded")
-        .add("old_balance", oldBalance)
-        .add("new_balance", newBalance)
-        .build();
+    ledger.put(id, getObjectMapper().createObjectNode().put("balance", newBalance));
+    return getObjectMapper()
+        .createObjectNode()
+        .put("status", "succeeded")
+        .put("old_balance", oldBalance)
+        .put("new_balance", newBalance);
   }
 }
 ```
@@ -93,15 +96,15 @@ public class Deposit extends Contract {
  
 したがって、`id` と `amount` があると仮定して、`amount` に対して簡単な非負のチェックを行い、負の場合は再度 `ContractContextException` をスローします。 これで、`ledger` を操作する準備が整いました。
  
-`ledger` で呼び出すことができるメソッドは 3 つあります: `get(String s)`、 `put(String s, JsonObject jsonObject)`、および `scan(AssetFilterassetFilter)` です。 `get(String s)` は Ledger からアセット `s` を取得します。 `put(String s, JsonObject argument)` は、アセット `s` をデータ `jsonObject` に関連付け、アセットの年齢を増やします。 `scan(AssetFilterassetFilter)` は、`AssetFilter` で指定されたアセットの履歴のバージョンを返します。
+`ledger` で呼び出すことができるメソッドは 3 つあります: `get(String s)`、 `put(String s, JsonNode jsonNode)`、および `scan(AssetFilterassetFilter)` です。 `get(String s)` は Ledger からアセット `s` を取得します。 `put(String s, JsonNode jsonNode)` は、アセット `s` をデータ `jsonNode` に関連付け、アセットの年齢を増やします。 `scan(AssetFilterassetFilter)` は、`AssetFilter` で指定されたアセットの履歴のバージョンを返します。
  
 **注記:** Ledger ではブラインド書き込みは許可されていません。つまり、特定のアセットに対して `put` を実行する前に、まずそのアセットを `get` する必要があります。 さらに、 `scan` は読み取り専用コントラクトでのみ許可されます。つまり、1 つのコントラクトで `scan` と `put` の両方を行うことはできません。
  
 コントラクトの残りの部分は単純な方法で進められます。 まず Ledger からアセットを `get` し、現在の残高を取得し、それに預金額を追加し、最後に新しい残高でアセットを Ledger に `put`。
 
-最後に `JsonObject` を返す必要があります。 `JsonObject` に何が含まれるかは、コントラクトの設計者次第です。 ここでは、`status` メッセージ、`old_balance`、および `new_balance` を含めることにしました。
+最後に `JsonNode` を返す必要があります。 `JsonNode` に何が含まれるかは、コントラクトの設計者次第です。 ここでは、`status` メッセージ、`old_balance`、および `new_balance` を含めることにしました。
 
-必要に応じて、このアプリケーションが使用する他のコントラクトを [`scalardl` リポジトリ内のこのサンプルの `contract` フォルダー](https://github.com/scalar-labs/scalardl/tree/master/docs/applications/simple-bank-account/src/main/java/com/scalar/application/bankaccount/contract) で表示できます。
+必要に応じて、このアプリケーションが使用する他のコントラクトを [`scalardl` リポジトリ内のこのサンプルの `contract` フォルダー](https://github.com/scalar-labs/scalardl/tree/master/docs/applications/simple-bank-account/contract/src/main/java/com/scalar/application/bankaccount/contract) で表示できます。
  
 コントラクトを作成したら、それを編集する必要があります。 これは次のようにして実行できます。
 
@@ -126,7 +129,8 @@ scalar.dl.client.private_key_path=conf/client-key.pem
 すべてが正しく設定されていれば、次のように証明書を ScalarDL ネットワークに登録できるはずです。
 
 ```console
-${SCALAR_SDK_HOME}/client/bin/scalardl register-cert --properties ./conf/client.properties
+cd contract
+${SCALAR_SDK_HOME}/client/bin/scalardl register-cert --properties ../conf/client.properties
 ```
 
 成功すると、ステータス コード 200 が返されます。
@@ -147,7 +151,7 @@ contract-class-file = "build/classes/java/main/com/scalar/application/bankaccoun
 [[contracts]]
 contract-id = "transfer"
 contract-binary-name = "com.scalar.application.bankaccount.contract.Transfer"
-contract-class-file = "build/classes/java/main/com/scalar/application/bankaccount/contract/Transfer.class"  
+contract-class-file = "build/classes/java/main/com/scalar/application/bankaccount/contract/Transfer.class"
 ```
 
 この例では、 `CreateAccount.java`、`Deposit.java`、`Transfer.java` の 3 つのコントラクトを登録します。 `contract-binary-name` と `contract-class-file` は決まっていますが、 `contract-id` は自由に選択できます。 以下で説明するように、`contract-id` は、 `ClientService` を使用して特定のコントラクトを参照する方法です。
@@ -155,32 +159,32 @@ contract-class-file = "build/classes/java/main/com/scalar/application/bankaccoun
 toml ファイルを作成したら、次のように指定したすべてのコントラクトを登録できます。
 
 ```console
-${SCALAR_SDK_HOME}/client/bin/scalardl register-contracts --properties ./conf/client.properties --contracts-file ./conf/contracts.toml
+${SCALAR_SDK_HOME}/client/bin/scalardl register-contracts --properties ../conf/client.properties --contracts-file ../conf/contracts.toml
 ```
 
 正常に登録された各コントラクトはステータス コード 200 を返す必要があります。
 
-### コントラクトの締結
+### コントラクトの実行
 
 必要に応じて、登録されているコントラクトを実行できるようになります。 たとえば、登録コントラクトを使用していくつかの口座を作成し、そのうちの 1 つの口座に資金を入金し、これらの資金の一部をもう一方の口座に転送します。
 
 ID が `a111` と `b222` の 2 つのアカウントを作成します。 (コントラクト ID には任意の文字列を指定できます。)
 
 ```console
-${SCALAR_SDK_HOME}/client/bin/scalardl execute-contract --properties ./conf/client.properties --contract-id create-account --contract-argument '{"id": "a111"}'
-${SCALAR_SDK_HOME}/client/bin/scalardl execute-contract --properties ./conf/client.properties --contract-id create-account --contract-argument '{"id": "b222"}'
+${SCALAR_SDK_HOME}/client/bin/scalardl execute-contract --properties ../conf/client.properties --contract-id create-account --contract-argument '{"id": "a111"}'
+${SCALAR_SDK_HOME}/client/bin/scalardl execute-contract --properties ../conf/client.properties --contract-id create-account --contract-argument '{"id": "b222"}'
 ```
 
 ここで、アカウント `a111` に 100 を入金します。
 
 ```console
-${SCALAR_SDK_HOME}/client/bin/scalardl execute-contract --properties ./conf/client.properties --contract-id deposit --contract-argument '{"id": "a111", "amount": 100}'
+${SCALAR_SDK_HOME}/client/bin/scalardl execute-contract --properties ../conf/client.properties --contract-id deposit --contract-argument '{"id": "a111", "amount": 100}'
 ```
 
 最後に、25 を `a111` から `b222` に転送します。
 
 ```console
-${SCALAR_SDK_HOME}/client/bin/scalardl execute-contract --properties ./conf/client.properties --contract-id transfer --contract-argument '{"from": "a111", "to": "b222", "amount": 100}'
+${SCALAR_SDK_HOME}/client/bin/scalardl execute-contract --properties ../conf/client.properties --contract-id transfer --contract-argument '{"from": "a111", "to": "b222", "amount": 100}'
 ```
 
 アプリケーション自体を実行している場合は、[API エンドポイント](./docs/api_endpoints.mdx) を使用してこれらのコマンドを実行できます。
@@ -193,24 +197,22 @@ ${SCALAR_SDK_HOME}/client/bin/scalardl execute-contract --properties ./conf/clie
 
 ```groovy
 dependencies {
-    compile group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '2.0.4'
+    compile group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '3.9.2'
 }
 ```
 
 次のスニペットは、`ClientService` オブジェクトをインスタンス化する方法を示しています。ここで、`properties` は `client.properties` ファイルへのパスにする必要があります。
 
 ```java
-Injector injector =
-        Guice.createInjector(new ClientModule(new ClientConfig(new File(properties))));
-try (ClientService clientService = injector.getInstance(ClientService.class)) {
-  ...
-}
+ClientServiceFactory factory = new ClientServiceFactory();
+ClientService service = factory.create(new ClientConfig(new File(properties)));
 ```
 
-`ClientService` には、もちろんコントラクトを実行するために使用できるメソッド `executeContract(String id, JsonObject argument)` が含まれています。 例えば：
+`ClientService` には、もちろんコントラクトを実行するために使用できるメソッド `executeContract(String contractId, JsonNode contractArgument)` が含まれています。 例えば：
 
 ```java
-JsonObject argument = Json.createObjectBuilder().add("id", "010-123456789").build();
+ObjectMapper mapper = new ObjectMapper();
+JsonNode argument = mapper.createObjectNode().put("id", "010-123456789");
 ContractExecutionResult result = clientService.executeContract("create-account", argument);
 ```
 
@@ -219,7 +221,7 @@ ContractExecutionResult result = clientService.executeContract("create-account",
 コントラクトの実行結果は `ContractExecutionResult` です。 これには結果と証明が含まれており、それぞれは次のようにして取得できます。
 
 ```java
-result.getProofs()
+result.getProofs();
 result.getResult();
 ```
 
