@@ -24,6 +24,16 @@ ScalarDL manages contracts (also known as a smart contracts) as digitally signed
 
 Users can define arbitrary business logic in a contract by using interfaces, such as for reading and writing assets to and from the ledger. For example, in a bank application, creating accounts, depositing, withdrawing, and making payments can be written as a contract. For more details, see the [simple bank account application sample](applications/simple-bank-account/README.mdx).
 
+## How and when ScalarDL detects Byzantine faults
+
+The key to the Byzantine fault detection protocol of ScalarDL is that Ledger (primary servers) and Auditor (secondary servers) make an agreement on the partial ordering of transactions in a decentralized and concurrent way. The protocol comprises three phases: the ordering phase, the commit phase, and the validation phase. 
+
+1. In the ordering phase, Auditor first pre-orders a transaction given by a client partially on the basis of conflicts. 
+2. Next, in the commit phase, Ledger executes and commits the transaction that is ordered by Auditor.
+3. Then, in the validation phase, Auditor validates the ordering result given by Ledger and executes the transaction.
+
+The three-phase protocol makes both databases derive the same correct (strict serializable) states and results as long as both Ledger and Auditor are honest. If either is Byzantine faulty, for example, the records have been tampered, their states or results would diverge. When the divergence is observable outside of the database system, correct ScalarDL clients can detect it. In other words, ScalarDL detects a Byzantine fault only when the clients observe the divergence in the response from the database system. Therefore, ScalarDL does not detect the fault instantly, but it does guarantee that the clients will detect the fault when the diverged states are about to be used, minimizing the validation overheads.
+
 ## Learn more
 
 For details about the design and implementation of ScalarDL, please see the following materials, which Scalar presented at the VLDB 2022 conference:
