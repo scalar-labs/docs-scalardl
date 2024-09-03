@@ -249,6 +249,7 @@ const sidebars = {
       collapsible: true,
       items: [
         'compatibility',
+        'scalardb-versions',
         'scalardl-command-reference',
         'scalardl-benchmarks/README',
       ],
