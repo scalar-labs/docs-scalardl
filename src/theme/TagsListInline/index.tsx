@@ -9,7 +9,7 @@ import styles from './styles.module.css';
 export default function TagsListInline({tags}: Props): JSX.Element {
   return (
     <>
-      <b>
+      {/* <b>
         <Translate
           id="theme.tags.tagsListLabel"
           description="The label alongside a tag list">
@@ -22,7 +22,7 @@ export default function TagsListInline({tags}: Props): JSX.Element {
             <Tag {...tag} />
           </li>
         ))}
-      </ul>
+      </ul> */}
     </>
   );
 }
