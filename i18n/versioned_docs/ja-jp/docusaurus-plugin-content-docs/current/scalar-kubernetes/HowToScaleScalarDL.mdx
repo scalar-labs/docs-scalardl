@@ -1,0 +1,86 @@
+# ScalarDL をスケーリングする方法
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+このガイドでは、ScalarDL をスケーリングする方法について説明します。
+
+:::note
+
+ScalarDL 側にボトルネックがある場合は、ScalarDL をスケーリングすることでパフォーマンスの問題を解決できる場合があります。ただし、パフォーマンスの問題はバックエンドデータベースのボトルネックによって発生することがあります。このような場合、ScalarDL をスケーリングしてもパフォーマンスの問題は解決されません。
+
+代わりに、ボトルネックが存在する場所を確認してください。ボトルネックがバックエンドデータベースに存在する場合は、バックエンドデータベースのスケーリングを検討してください。
+
+:::
+
+<Tabs groupId="components" queryString>
+  <TabItem value="ScalarDL_Ledger" label="ScalarDL Ledger" default>
+    ScalarDL Ledger をスケーリングするための好みのツールを選択します。
+
+    <Tabs groupId="tools" queryString>
+      <TabItem value="Helm_Chart" label="Scalar Helm Chart の使用 (推奨)" default>
+
+        [Scalar Helm Chart](https://github.com/scalar-labs/helm-charts) を使用して ScalarDL Ledger をデプロイする場合、次のように ScalarDL Ledger のデプロイをスケーリングできます。
+
+        1. カスタム値ファイルに以下を追加します。`<NUMBER_OF_PODS>` を、スケーリングするポッドの数に置き換えます。
+
+           ```yaml
+           ledger:
+             replicaCount: <NUMBER_OF_PODS>
+           ```
+
+        1. 更新されたカスタム値ファイルを使用する次の `helm upgrade` コマンドを実行して、ScalarDL Ledger のデプロイメントをアップグレードします。説明に従って、山括弧内の内容を必ず置き換えてください。
+
+           ```console
+           helm upgrade <RELEASE_NAME> scalar-labs/scalardl -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDL_LEDGER> --version <CHART_VERSION>
+           ```
+
+      </TabItem>
+      <TabItem value="kubectl" label="kubectl の使用">
+
+        ScalarDL Ledger を Kubernetes 環境にデプロイする場合は、`kubectl scale` コマンドを使用して ScalarDL Ledger のデプロイを一時的にスケールできます。
+
+        1. 次の `kubectl scale` コマンドを実行し、山括弧内の内容を説明に従って置き換えます。
+
+        ```console
+        kubectl scale --replicas=<NUMBER_OF_PODS> deployment/<DEPLOYMENT_RESOURCE_NAME_OF_SCALARDL_LEDGER>
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+  <TabItem value="ScalarDL_Auditor" label="ScalarDL Auditor" default>
+    ScalarDL Auditor をスケーリングするための好みのツールを選択します。
+
+    <Tabs groupId="tools" queryString>
+      <TabItem value="Helm_Chart" label="Scalar Helm Chart の使用 (推奨)" default>
+
+        [Scalar Helm Chart](https://github.com/scalar-labs/helm-charts) を使用して ScalarDL Auditor をデプロイする場合、次のように ScalarDL Auditor のデプロイをスケーリングできます。
+
+        1. カスタム値ファイルに以下を追加します。`<NUMBER_OF_PODS>` を、スケーリングするポッドの数に置き換えます。
+
+           ```yaml
+           auditor:
+             replicaCount: <NUMBER_OF_PODS>
+           ```
+
+        1. 更新されたカスタム値ファイルを使用する次の `helm upgrade` コマンドを実行して、ScalarDL Auditor のデプロイメントをアップグレードします。説明に従って、山括弧内の内容を必ず置き換えてください。
+
+           ```console
+           helm upgrade <RELEASE_NAME> scalar-labs/scalardl-audit -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDL_AUDITOR> --version <CHART_VERSION>
+           ```
+
+      </TabItem>
+      <TabItem value="kubectl" label="kubectl の使用">
+
+        ScalarDL Auditor を Kubernetes 環境にデプロイする場合は、`kubectl scale` コマンドを使用して ScalarDL Auditor のデプロイを一時的にスケールできます。
+
+        1. 次の `kubectl scale` コマンドを実行し、山括弧内の内容を説明に従って置き換えます。
+
+        ```console
+        kubectl scale --replicas=<NUMBER_OF_PODS> deployment/<DEPLOYMENT_RESOURCE_NAME_OF_SCALARDL_AUDITOR>
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+</Tabs>
+
