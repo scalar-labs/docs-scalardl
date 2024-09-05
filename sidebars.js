@@ -239,6 +239,7 @@ const sidebars = {
           ],
         },
         'backup-restore',
+        'scalar-kubernetes/HowToScaleScalarDL',
         'troubleshooting-guide',
         'scalar-manager/overview',
       ],
