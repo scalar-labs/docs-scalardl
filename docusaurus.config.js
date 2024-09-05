@@ -130,8 +130,8 @@ const config = {
         redirects: [
           // This redirect takes the user to the latest version of the English docs when they land on the English versions of the docs site.
           {
-            to: '/docs/latest',
-            from: ['/', '/docs'],
+            to: '/docs/latest/',
+            from: ['/', '/docs', '/docs/latest'],
           },
           {
             to: '/docs/latest/releases/release-support-policy',
