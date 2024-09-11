@@ -117,7 +117,7 @@ ScalarDL Ledger と Auditor は、バックエンド データベースとして
    mkdir -p ~/scalardl-test/certs/
    ```
 
-## Step 4. Create key/certificate files
+## ステップ 4. 秘密鍵/証明書ファイルを作成する
 
 注記：このガイドでは、テストに自己署名証明書を使用します。 ただし、これらの証明書を運用環境では使用しないことを強くお勧めします。
 
@@ -230,7 +230,7 @@ ScalarDL Ledger と Auditor は、バックエンド データベースとして
    ledger.pem
    ```
 
-# ステップ 5. Helm Charts を使用して ScalarDL Ledger の DB スキーマを作成する
+## ステップ 5. Helm Charts を使用して ScalarDL Ledger と ScalarDL Auditor の DB スキーマを作成する
 
 Helm Chart を使用して、Kubernetes クラスターに 2 つの ScalarDL Schema Loader ポッドをデプロイします。
 ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB スキーマを作成します。
