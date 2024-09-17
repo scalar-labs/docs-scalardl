@@ -240,6 +240,7 @@ const sidebars = {
         },
         'backup-restore',
         'scalar-kubernetes/HowToScaleScalarDL',
+        "scalar-kubernetes/HowToUpgradeScalarDL",
         'troubleshooting-guide',
         'scalar-manager/overview',
       ],
