@@ -3,7 +3,7 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-This guide explains how to scale ScalarDB.
+This guide explains how to scale ScalarDB. The contents of this guide assume that you used [Scalar Helm Chart](https://github.com/scalar-labs/helm-charts) to deploy ScalarDB Cluster, which is the recommended way.
 
 :::note
 
@@ -14,45 +14,25 @@ Instead, please check where the bottleneck exists. If the bottleneck exists in t
 :::
 
 <Tabs groupId="editions" queryString>
-  <TabItem value="ScalarDB_Cluster" label="ScalarDB Cluster (Enterprise edition)" default>
-    Select your preferred tool for scaling ScalarDB Cluster.
+  <TabItem value="scalardb-cluster" label="ScalarDB Cluster (Enterprise edition)" default>
 
-    <Tabs groupId="tools" queryString>
-      <TabItem value="Helm_Chart" label="Using Scalar Helm Chart (recommended)" default>
+  1. Add the following to your custom values file, replacing `<NUMBER_OF_PODS>` with the number of pods you want to scale:
 
-        If you use [Scalar Helm Chart](https://github.com/scalar-labs/helm-charts) to deploy ScalarDB Cluster, you can scale your ScalarDB Cluster deployment as follows:
+     ```yaml
+     scalardbCluster:
+       replicaCount: <NUMBER_OF_PODS>
+     ```
 
-        1. Add the following to your custom values file, replacing `<NUMBER_OF_PODS>` with the number of pods you want to scale:
+  1. Upgrade your ScalarDB Cluster deployment by running the following `helm upgrade` command, which uses the updated custom values file. Be sure to replace the contents in the angle brackets as described:
 
-           ```yaml
-           scalardbCluster:
-             replicaCount: <NUMBER_OF_PODS>
-           ```
+     ```console
+     helm upgrade <RELEASE_NAME> scalar-labs/scalardb-cluster -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDB_CLUSTER> --version <CHART_VERSION>
+     ```
 
-        1. Upgrade your ScalarDB Cluster deployment by running the following `helm upgrade` command, which uses the updated custom values file. Be sure to replace the contents in the angle brackets as described:
-
-           ```console
-           helm upgrade <RELEASE_NAME> scalar-labs/scalardb-cluster -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDB_CLUSTER> --version <CHART_VERSION>
-           ```
-
-      </TabItem>
-      <TabItem value="kubectl" label="Using kubectl">
-
-        If you deploy ScalarDB Cluster in a Kubernetes environment, you can temporarily scale your ScalarDB Cluster deployment by using the `kubectl scale` command.
-
-        1. Run the following `kubectl scale` command, replacing the contents in the angle brackets as described:
-
-        ```console
-        kubectl scale --replicas=<NUMBER_OF_PODS> deployment/<DEPLOYMENT_RESOURCE_NAME_OF_SCALARDB_CLUSTER>
-        ```
-      </TabItem>
-    </Tabs>
   </TabItem>
-  <TabItem value="ScalarDB_Core" label="ScalarDB Core library (Community edition)">
-    <h2>Scale ScalarDB Core</h2>
+  <TabItem value="scalardb-core" label="ScalarDB Core library (Community edition)">
 
     ScalarDB Core is provided as a Java library. So, when you scale your application, ScalarDB scales with your application.
 
   </TabItem>
 </Tabs>
-
