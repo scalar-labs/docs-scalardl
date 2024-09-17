@@ -6,7 +6,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このガイドでは、ScalarDB をスケーリングする方法について説明します。
+このガイドでは、ScalarDB をスケーリングする方法について説明します。ここでは、[Scalar Helm Chart](https://github.com/scalar-labs/helm-charts) (推奨されているデプロイ方法) を使用して ScalarDB Cluster をデプロイしていることを前提としています。
 
 :::note
 
@@ -17,45 +17,25 @@ ScalarDB Cluster 側にボトルネックがある場合は、ScalarDB Cluster �
 :::
 
 <Tabs groupId="editions" queryString>
-  <TabItem value="ScalarDB_Cluster" label="ScalarDB Cluster (Enterprise edition)" default>
-    ScalarDB Cluster をスケーリングするための好みのツールを選択します。
+  <TabItem value="scalardb-cluster" label="ScalarDB Cluster (Enterprise edition)" default>
 
-    <Tabs groupId="tools" queryString>
-      <TabItem value="Helm_Chart" label="Scalar Helm Chart の使用 (推奨)" default>
+  1. カスタム値ファイルに以下を追加します。`<NUMBER_OF_PODS>` を、スケーリングするポッドの数に置き換えます。
 
-        [Scalar Helm Chart](https://github.com/scalar-labs/helm-charts) を使用して ScalarDB Cluster をデプロイする場合、次のように ScalarDB Cluster のデプロイをスケーリングできます。
+     ```yaml
+     scalardbCluster:
+       replicaCount: <NUMBER_OF_PODS>
+     ```
 
-        1. カスタム値ファイルに以下を追加します。`<NUMBER_OF_PODS>` を、スケーリングするポッドの数に置き換えます。
+  1. 更新されたカスタム値ファイルを使用する次の `helm upgrade` コマンドを実行して、ScalarDB Cluster のデプロイメントをアップグレードします。説明に従って、山括弧内の内容を必ず置き換えてください。
 
-           ```yaml
-           scalardbCluster:
-             replicaCount: <NUMBER_OF_PODS>
-           ```
+     ```console
+     helm upgrade <RELEASE_NAME> scalar-labs/scalardb-cluster -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDB_CLUSTER> --version <CHART_VERSION>
+     ```
 
-        1. 更新されたカスタム値ファイルを使用する次の `helm upgrade` コマンドを実行して、ScalarDB Cluster のデプロイメントをアップグレードします。説明に従って、山括弧内の内容を必ず置き換えてください。
-
-           ```console
-           helm upgrade <RELEASE_NAME> scalar-labs/scalardb-cluster -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDB_CLUSTER> --version <CHART_VERSION>
-           ```
-
-      </TabItem>
-      <TabItem value="kubectl" label="kubectl の使用">
-
-        ScalarDB Cluster を Kubernetes 環境にデプロイする場合は、`kubectl scale` コマンドを使用して ScalarDB Cluster のデプロイを一時的にスケールできます。
-
-        1. 次の `kubectl scale` コマンドを実行し、山括弧内の内容を説明に従って置き換えます。
-
-        ```console
-        kubectl scale --replicas=<NUMBER_OF_PODS> deployment/<DEPLOYMENT_RESOURCE_NAME_OF_SCALARDB_CLUSTER>
-        ```
-      </TabItem>
-    </Tabs>
   </TabItem>
-  <TabItem value="ScalarDB_Core" label="ScalarDB Core ライブラリ (Community edition)">
-    <h2>ScalarDB Core をスケールします</h2>
+  <TabItem value="scalardb-core" label="ScalarDB Core ライブラリ (Community edition)">
 
     ScalarDB Core は Java ライブラリとして提供されます。そのため、アプリケーションをスケールさせると、ScalarDB もアプリケーションに合わせてスケールされます。
 
   </TabItem>
 </Tabs>
-
