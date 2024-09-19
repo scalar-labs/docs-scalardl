@@ -14,7 +14,17 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 Scalar 製品 (ScalarDB、ScalarDL、およびそれらのツール) は、AWS Marketplace でコンテナイメージとして入手できます。 このガイドでは、AWS Marketplace を通じて Scalar 製品をインストールする方法について説明します。
 
-一部の Scalar 製品は商用ライセンスで利用可能であり、AWS Marketplace ではそれらの製品を従量課金制価格 (PAYG) または Bring Your Own License (BYOL) オプションとして提供していることに注意してください。 従量課金制の価格設定を選択した場合、AWS は使用量に基づいて製品ライセンス料金を請求します。 BYOL を選択する場合は、製品に適切なライセンスを持っていることを確認してください。
+:::note
+
+- 一部の Scalar 製品は商用ライセンスで利用可能であり、AWS Marketplace ではそれらの製品を従量課金制 (PAYG) 料金で提供しています。従量課金制料金を使用する場合、AWS は使用量に基づいて Scalar 製品のライセンス料を請求します。
+- 以前は、AWS Marketplace でライセンス持ち込み (BYOL) オプションが提供されていました。ただし、このオプションは廃止され、削除されたため、AWS Marketplace ではサポートされなくなりました。
+- BYOL オプションは、AWS Marketplace ではなく、次のパブリックコンテナリポジトリで提供されています。ライセンスキーをお持ちでない場合は、[お問い合わせ](https://www.scalar-labs.com/contact-jp) ください。
+  - [ScalarDB Cluster Enterprise Standard](https://github.com/orgs/scalar-labs/packages/container/package/scalardb-cluster-node-byol-standard)
+  - [ScalarDB Cluster Enterprise Premium](https://github.com/orgs/scalar-labs/packages/container/package/scalardb-cluster-node-byol-premium)
+  - [ScalarDL Ledger](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-ledger-byol)
+  - [ScalarDL Auditor](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-auditor-byol)
+
+:::
 
 ## AWS Marketplace から Scalar 製品を購読する
 
@@ -25,24 +35,24 @@ Scalar 製品 (ScalarDB、ScalarDL、およびそれらのツール) は、AWS M
     ScalarDB Enterprise のエディションを選択します。
     <Tabs groupId="editions" queryString>
       <TabItem value="scalardb-enterprise-standard" label="ScalarDB Enterprise Edition (Standard)" default>
-        | PAYG                                                                             | BYOL                                                                             |
+        | PAYG                                                                             | BYOL (非推奨)                                                                    |
         |:---------------------------------------------------------------------------------|:---------------------------------------------------------------------------------|
         | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-jx6qxatkxuwm4) | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-alcwrmw6v4cfy) |
       </TabItem>
       <TabItem value="scalardb-enterprise-premium" label="ScalarDB Enterprise Edition (Premium)">
-        | PAYG                                                                             | BYOL                                                                                         |
+        | PAYG                                                                             | BYOL (非推奨)                                                                                |
         |:---------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------|
-        | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-djqw3zk6dwyk6) | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-alcwrmw6v4cfy) |
+        | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-djqw3zk6dwyk6) | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-alcwrmw6v4cfy)             |
       </TabItem>
     </Tabs>
   </TabItem>
   <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
-    | PAYG                                                                             | BYOL                                                                             |
+    | PAYG                                                                             | BYOL (非推奨)                                                                    |
     |:---------------------------------------------------------------------------------|:---------------------------------------------------------------------------------|
     | [ScalarDL Ledger](https://aws.amazon.com/marketplace/pp/prodview-wttioaezp5j6e)  | [ScalarDL Ledger](https://aws.amazon.com/marketplace/pp/prodview-3jdwfmqonx7a2)  |
   </TabItem>
   <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
-    | PAYG                                                                             | BYOL                                                                             |
+    | PAYG                                                                             | BYOL (非推奨)                                                                    |
     |:---------------------------------------------------------------------------------|:---------------------------------------------------------------------------------|
     | [ScalarDL Auditor](https://aws.amazon.com/marketplace/pp/prodview-ke3yiw4mhriuu) | [ScalarDL Auditor](https://aws.amazon.com/marketplace/pp/prodview-tj7svy75gu7m6) |
   </TabItem>
@@ -239,7 +249,7 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
   </TabItem>
 </Tabs>
 
-## **[BYOL]** Scalar Helm Chart を使用して AWS Marketplace から EKS (Amazon Elastic Kubernetes Service) にコンテナをデプロイする
+## **[非推奨] [BYOL]** Scalar Helm Chart を使用して AWS Marketplace から EKS (Amazon Elastic Kubernetes Service) にコンテナをデプロイする
 
 AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketplace のプライベート コンテナ レジストリ ([ECR](https://aws.amazon.com/ecr/)) から Scalar 製品のコンテナ イメージをプルできます。 このセクションでは、プライベート コンテナー レジストリから [EKS](https://aws.amazon.com/eks/)  クラスターに BYOL オプションを使用して Scalar 製品をデプロイする方法について説明します。
 
@@ -334,7 +344,7 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
   </TabItem>
 </Tabs>
 
-## **[BYOL]** Scalar Helm Chart を使用して、AWS Marketplace から EKS 以外の Kubernetes にコンテナをデプロイする
+## **[非推奨] [BYOL]** Scalar Helm Chart を使用して、AWS Marketplace から EKS 以外の Kubernetes にコンテナをデプロイする
 
 1. [AWS Official Document (Installing or updating the latest version of the AWS CLI)](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) に従って `aws` コマンドをインストールします。
 
@@ -417,4 +427,4 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
 
 1. 上記のカスタム値ファイルを含む Helm Chart を使用して、Scalar 製品をデプロイします。
    * 例
-     このドキュメントの **[BYOL] Scalar Helm Chart を使用して AWS Marketplace から EKS (Amazon Elastic Kubernetes Service) にコンテナをデプロイする** セクションを参照してください。
+     このドキュメントの **[非推奨] [BYOL] Scalar Helm Chart を使用して AWS Marketplace から EKS (Amazon Elastic Kubernetes Service) にコンテナをデプロイする** セクションを参照してください。
