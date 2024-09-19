@@ -48,7 +48,7 @@ const CardsGettingStarted = [
     },
     description: (
       <Translate id="home.gettingStarted.description">
-        Getting started with ScalarDL
+        Getting started with ScalarDL Ledger
       </Translate>
     ),
   },
@@ -71,11 +71,11 @@ const CardsSamples = [
     // name: '',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'applications/simple-bank-account',
+      page: 'installation-with-docker',
     },
     description: (
       <Translate id="home.samples.description">
-        Bank account application
+        Set up ScalarDL locally in Docker
       </Translate>
     ),
   },
@@ -83,11 +83,11 @@ const CardsSamples = [
     // name: '',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'applications/escrow-payment',
+      page: 'applications/simple-bank-account',
     },
     description: (
       <Translate id="home.samples.description">
-        Escrow payment CLI
+        Create a bank account application
       </Translate>
     ),
   },

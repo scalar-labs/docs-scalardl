@@ -29,8 +29,7 @@
       "label": "Samples",
       "collapsible": true,
       "items": [
-        "applications/simple-bank-account/README",
-        "applications/escrow-payment/README"
+        "applications/simple-bank-account/README"
       ]
     },
     {
