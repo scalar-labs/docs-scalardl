@@ -24,6 +24,17 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ![architecture](./docs/img/architecture.jpg)
 
+## このサンプルアプリケーションの前提条件
+
+- [Eclipse Temurin](https://adoptium.net/temurin/releases/) の OpenJDK LTS バージョン (8, 11, 17, or 21)
+
+:::note
+
+- 上記の LTS バージョンの使用をお勧めしますが、他の非 LTS バージョンでも動作する可能性があります。
+- また、他の JDK もこのサンプル アプリケーションで動作するはずですが、テストは行っていません。
+
+:::
+
 ## アプリケーションを試してみる
 
 [ScalarDL Client SDK](https://github.com/scalar-labs/scalardl-client-sdk)をダウンロードします。 ScalarDL が実行されていることを確認し、必要なコントラクトをすべて実行して登録します。
@@ -166,7 +177,7 @@ ${SCALAR_SDK_HOME}/client/bin/register-contracts --properties ../conf/client.pro
 
 ### コントラクトの実行
 
-必要に応じて、登録されているコントラクトを実行できるようになります。 たとえば、登録コントラクトを使用していくつかの口座を作成し、そのうちの 1 つの口座に資金を入金し、これらの資金の一部をもう一方の口座に転送します。
+必要に応じて、登録されているコントラクトを実行できるようになります。 たとえば、登録コントラクトを使用していくつかの口座を作成し、そのうちの 1 つの口座に資金を入金し、これらの資金の一部をもう一方の口座に転送して、口座履歴を確認します。
 
 ID が `a111` と `b222` の 2 つのアカウントを作成します。 (コントラクト ID には任意の文字列を指定できます。)
 
@@ -185,6 +196,40 @@ ${SCALAR_SDK_HOME}/client/bin/execute-contract --properties ../conf/client.prope
 
 ```bash
 ${SCALAR_SDK_HOME}/client/bin/execute-contract --properties ../conf/client.properties --contract-id transfer --contract-argument '{"from": "a111", "to": "b222", "amount": 100}'
+```
+
+`a111` の残高履歴は次のようにして確認できます。
+
+```console
+${SCALAR_SDK_HOME}/client/bin/scalardl execute-contract --properties ../conf/client.properties --contract-id account-history --contract-argument '{"id": "a111"}'
+```
+
+次のような結果が表示されます:
+
+```console
+Contract result:
+{
+  "status" : "succeeded",
+  "history" : [ {
+    "id" : "a111",
+    "age" : 2,
+    "data" : {
+      "balance" : 0
+    }
+  }, {
+    "id" : "a111",
+    "age" : 1,
+    "data" : {
+      "balance" : 100
+    }
+  }, {
+    "id" : "a111",
+    "age" : 0,
+    "data" : {
+      "balance" : 0
+    }
+  } ]
+}
 ```
 
 アプリケーション自体を実行している場合は、[API エンドポイント](./docs/api_endpoints.mdx) を使用してこれらのコマンドを実行できます。
