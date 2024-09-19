@@ -48,7 +48,7 @@ const CardsGettingStarted = [
     },
     description: (
       <Translate id="home.gettingStarted.description">
-        Getting started with ScalarDL
+        Getting started with ScalarDL Ledger
       </Translate>
     ),
   },
