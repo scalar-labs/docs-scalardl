@@ -50,7 +50,6 @@ const sidebars = {
       collapsible: true,
       items: [
         'applications/simple-bank-account/README',
-        'applications/escrow-payment/README',
       ],
     },
     {
