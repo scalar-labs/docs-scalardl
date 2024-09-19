@@ -11,7 +11,17 @@ import TabItem from '@theme/TabItem';
 
 Scalar products (ScalarDB, ScalarDL, and their tools) are available in the AWS Marketplace as container images. This guide explains how to install Scalar products through the AWS Marketplace.
 
-Note that some Scalar products are available under commercial licenses, and the AWS Marketplace provides those products as pay-as-you-go (PAYG) pricing or a Bring Your Own License (BYOL) option. If you select pay-as-you-go pricing, AWS will charge you our product license fee based on your usage. If you select BYOL, please make sure you have the appropriate license for the product.
+:::note
+
+- Some Scalar products are available under commercial licenses, and the AWS Marketplace provides those products as pay-as-you-go (PAYG) pricing. When you use pay-as-you-go pricing, AWS will charge you the Scalar product license fee based on your usage.
+- Previously, a bring-your-own-license (BYOL) option was offered in the AWS Marketplace. However, that option has been deprecated and removed, so it is no longer supported in the AWS Marketplace.
+- A BYOL option is provided in the following public container repositories outside of the AWS Marketplace. If you don't have a license key, please [contact us](https://www.scalar-labs.com/contact-us).
+  - [ScalarDB Cluster Enterprise Standard](https://github.com/orgs/scalar-labs/packages/container/package/scalardb-cluster-node-byol-standard)
+  - [ScalarDB Cluster Enterprise Premium](https://github.com/orgs/scalar-labs/packages/container/package/scalardb-cluster-node-byol-premium)
+  - [ScalarDL Ledger](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-ledger-byol)
+  - [ScalarDL Auditor](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-auditor-byol)
+
+:::
 
 ## Subscribe to Scalar products from AWS Marketplace
 
@@ -22,24 +32,24 @@ Note that some Scalar products are available under commercial licenses, and the 
     Select your edition of ScalarDB Enterprise.
     <Tabs groupId="editions" queryString>
       <TabItem value="scalardb-enterprise-standard" label="ScalarDB Enterprise Edition (Standard)" default>
-        | PAYG                                                                             | BYOL                                                                             |
+        | PAYG                                                                             | BYOL (Deprecated)                                                                |
         |:---------------------------------------------------------------------------------|:---------------------------------------------------------------------------------|
         | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-jx6qxatkxuwm4) | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-alcwrmw6v4cfy) |
       </TabItem>
       <TabItem value="scalardb-enterprise-premium" label="ScalarDB Enterprise Edition (Premium)">
-        | PAYG                                                                             | BYOL                                                                                         |
+        | PAYG                                                                             | BYOL (Deprecated)                                                                            |
         |:---------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------|
-        | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-djqw3zk6dwyk6) | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-alcwrmw6v4cfy) |
+        | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-djqw3zk6dwyk6) | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-alcwrmw6v4cfy)             |
       </TabItem>
     </Tabs>
   </TabItem>
   <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
-    | PAYG                                                                             | BYOL                                                                             |
+    | PAYG                                                                             | BYOL (Deprecated)                                                                |
     |:---------------------------------------------------------------------------------|:---------------------------------------------------------------------------------|
     | [ScalarDL Ledger](https://aws.amazon.com/marketplace/pp/prodview-wttioaezp5j6e)  | [ScalarDL Ledger](https://aws.amazon.com/marketplace/pp/prodview-3jdwfmqonx7a2)  |
   </TabItem>
   <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
-    | PAYG                                                                             | BYOL                                                                             |
+    | PAYG                                                                             | BYOL (Deprecated)                                                                |
     |:---------------------------------------------------------------------------------|:---------------------------------------------------------------------------------|
     | [ScalarDL Auditor](https://aws.amazon.com/marketplace/pp/prodview-ke3yiw4mhriuu) | [ScalarDL Auditor](https://aws.amazon.com/marketplace/pp/prodview-tj7svy75gu7m6) |
   </TabItem>
@@ -237,7 +247,7 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
   </TabItem>
 </Tabs>
 
-## **[BYOL]** Deploy containers on EKS (Amazon Elastic Kubernetes Service) from AWS Marketplace using Scalar Helm Charts
+## **[Deprecated] [BYOL]** Deploy containers on EKS (Amazon Elastic Kubernetes Service) from AWS Marketplace using Scalar Helm Charts
 
 By subscribing to Scalar products in the AWS Marketplace, you can pull the container images of Scalar products from the private container registry ([ECR](https://aws.amazon.com/ecr/)) of the AWS Marketplace. This section explains how to deploy Scalar products with the BYOL option in your [EKS](https://aws.amazon.com/eks/) cluster from the private container registry.
 
@@ -332,7 +342,7 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
   </TabItem>
 </Tabs>
 
-## **[BYOL]** Deploy containers on Kubernetes other than EKS from AWS Marketplace using Scalar Helm Charts
+## **[Deprecated] [BYOL]** Deploy containers on Kubernetes other than EKS from AWS Marketplace using Scalar Helm Charts
 
 1. Install the `aws` command according to the [AWS Official Document (Installing or updating the latest version of the AWS CLI)](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
 
@@ -414,4 +424,4 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
 
 1. Deploy the Scalar products using the Helm Chart with the above custom values files.
    * Examples
-     Please refer to the **[BYOL] Deploy containers on EKS (Amazon Elastic Kubernetes Service) from AWS Marketplace using Scalar Helm Charts** section of this document.
+     Please refer to the **[Deprecated] [BYOL] Deploy containers on EKS (Amazon Elastic Kubernetes Service) from AWS Marketplace using Scalar Helm Charts** section of this document.
