@@ -149,13 +149,7 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
 
     <h3>ScalarDL Schema Loader for Ledger</h3>
 
-    `schema-loader-ledger-custom-values.yaml` ファイル内:
-
-    ```yaml
-    schemaLoading:
-      image:
-        repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-ledger-aws-payg"
-    ```
+    `schema-loader-ledger-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader)で提供されています。
   </TabItem>
   <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
     <h3>ScalarDL Auditor</h3>
@@ -173,13 +167,7 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
 
     <h3>ScalarDL Schema Loader for Auditor</h3>
 
-    `schema-loader-auditor-custom-values.yaml` ファイル内:
-
-    ```yaml
-    schemaLoading:
-      image:
-        repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-auditor-aws-payg"
-    ```
+    `schema-loader-auditor-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader)で提供されています。
   </TabItem>
   <TabItem value="scalar-manager" label="Scalar Manager">
     `scalar-manager-custom-values.yaml` ファイル内:
@@ -277,13 +265,7 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
 
     <h3>ScalarDL Schema Loader for Ledger</h3>
 
-    `schema-loader-ledger-custom-values.yaml` ファイル内:
-
-    ```yaml
-    schemaLoading:
-      image:
-        repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-ledger"
-    ```
+    `schema-loader-ledger-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader)で提供されています。
   </TabItem>
   <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
     <h3>ScalarDL Auditor</h3>
@@ -298,13 +280,7 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
 
     <h3>ScalarDL Schema Loader for Auditor</h3>
 
-    `schema-loader-auditor-custom-values.yaml` ファイル内:
-
-    ```yaml
-    schemaLoading:
-      image:
-        repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-auditor"
-    ```
+    `schema-loader-auditor-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader)で提供されています。
   </TabItem>
 </Tabs>
 
@@ -388,15 +364,7 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
 
     <h3>ScalarDL Schema Loader for Ledger</h3>
 
-    `schema-loader-ledger-custom-values.yaml` ファイル内:
-
-    ```yaml
-    schemaLoading:
-      image:
-        repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-ledger"
-      imagePullSecrets:
-        - name: "reg-ecr-mp-secrets"
-    ```
+    `schema-loader-ledger-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader)で提供されています。
   </TabItem>
   <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
     <h3>ScalarDL Auditor</h3>
@@ -413,15 +381,7 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
 
     <h3>ScalarDL Schema Loader for Auditor</h3>
 
-    `schema-loader-auditor-custom-values.yaml` ファイル内:
-
-    ```yaml
-    schemaLoading:
-      image:
-        repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-auditor"
-      imagePullSecrets:
-        - name: "reg-ecr-mp-secrets"
-    ```
+    `schema-loader-auditor-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader)で提供されています。
   </TabItem>
 </Tabs>
 
