@@ -30,38 +30,38 @@ Scalar 製品 (ScalarDB、ScalarDL、およびそれらのツール) は、AWS M
 
 1. Scalar 製品を選択すると、AWS Marketplace へのリンクが表示されます。
 
-<Tabs groupId="products" queryString>
-  <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
-    ScalarDB Enterprise のエディションを選択します。
-    <Tabs groupId="editions" queryString>
-      <TabItem value="scalardb-enterprise-standard" label="ScalarDB Enterprise Edition (Standard)" default>
-        | PAYG                                                                             | BYOL (非推奨)                                                                    |
-        |:---------------------------------------------------------------------------------|:---------------------------------------------------------------------------------|
-        | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-jx6qxatkxuwm4) | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-alcwrmw6v4cfy) |
-      </TabItem>
-      <TabItem value="scalardb-enterprise-premium" label="ScalarDB Enterprise Edition (Premium)">
-        | PAYG                                                                             | BYOL (非推奨)                                                                                |
-        |:---------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------|
-        | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-djqw3zk6dwyk6) | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-alcwrmw6v4cfy)             |
-      </TabItem>
-    </Tabs>
-  </TabItem>
-  <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
-    | PAYG                                                                             | BYOL (非推奨)                                                                    |
-    |:---------------------------------------------------------------------------------|:---------------------------------------------------------------------------------|
-    | [ScalarDL Ledger](https://aws.amazon.com/marketplace/pp/prodview-wttioaezp5j6e)  | [ScalarDL Ledger](https://aws.amazon.com/marketplace/pp/prodview-3jdwfmqonx7a2)  |
-  </TabItem>
-  <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
-    | PAYG                                                                             | BYOL (非推奨)                                                                    |
-    |:---------------------------------------------------------------------------------|:---------------------------------------------------------------------------------|
-    | [ScalarDL Auditor](https://aws.amazon.com/marketplace/pp/prodview-ke3yiw4mhriuu) | [ScalarDL Auditor](https://aws.amazon.com/marketplace/pp/prodview-tj7svy75gu7m6) |
-  </TabItem>
-  <TabItem value="scalar-manager" label="Scalar Manager">
-    | PAYG                                                                           | BYOL                                         |
-    |:-------------------------------------------------------------------------------|:---------------------------------------------|
-    | [Scalar Manager](https://aws.amazon.com/marketplace/pp/prodview-gfyn6ipmxf2hq) | Scalar Manager には BYOL オプションがありません。 |
-  </TabItem>
-</Tabs>
+   <Tabs groupId="products" queryString>
+     <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+       ScalarDB Enterprise のエディションを選択します。
+       <Tabs groupId="editions" queryString>
+         <TabItem value="scalardb-enterprise-standard" label="ScalarDB Enterprise Edition (Standard)" default>
+           | PAYG                                                                             | BYOL (非推奨)                                                                    |
+           |:---------------------------------------------------------------------------------|:---------------------------------------------------------------------------------|
+           | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-jx6qxatkxuwm4) | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-alcwrmw6v4cfy) |
+         </TabItem>
+         <TabItem value="scalardb-enterprise-premium" label="ScalarDB Enterprise Edition (Premium)">
+           | PAYG                                                                             | BYOL (非推奨)                                                                                |
+           |:---------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------|
+           | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-djqw3zk6dwyk6) | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-alcwrmw6v4cfy)             |
+         </TabItem>
+       </Tabs>
+     </TabItem>
+     <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
+       | PAYG                                                                             | BYOL (非推奨)                                                                    |
+       |:---------------------------------------------------------------------------------|:---------------------------------------------------------------------------------|
+       | [ScalarDL Ledger](https://aws.amazon.com/marketplace/pp/prodview-wttioaezp5j6e)  | [ScalarDL Ledger](https://aws.amazon.com/marketplace/pp/prodview-3jdwfmqonx7a2)  |
+     </TabItem>
+     <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+       | PAYG                                                                             | BYOL (非推奨)                                                                    |
+       |:---------------------------------------------------------------------------------|:---------------------------------------------------------------------------------|
+       | [ScalarDL Auditor](https://aws.amazon.com/marketplace/pp/prodview-ke3yiw4mhriuu) | [ScalarDL Auditor](https://aws.amazon.com/marketplace/pp/prodview-tj7svy75gu7m6) |
+     </TabItem>
+     <TabItem value="scalar-manager" label="Scalar Manager">
+       | PAYG                                                                           | BYOL                                         |
+       |:-------------------------------------------------------------------------------|:---------------------------------------------|
+       | [Scalar Manager](https://aws.amazon.com/marketplace/pp/prodview-gfyn6ipmxf2hq) | Scalar Manager には BYOL オプションがありません。 |
+     </TabItem>
+   </Tabs>
 
 1. [**購読を続ける**] を選択します。
 
@@ -83,7 +83,7 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
    eksctl utils associate-iam-oidc-provider --region <REGION> --cluster <EKS_CLUSTER_NAME> --approve
    ```
 
-詳細については、[Creating an IAM OIDC provider for your cluster](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html) を参照してください。
+   詳細については、[Creating an IAM OIDC provider for your cluster](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html) を参照してください。
 
 1. サービスアカウントを作成します。
 
@@ -103,139 +103,139 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
 1. インストールする Scalar 製品の Helm Chart のカスタム値ファイルを更新します。
    カスタム値ファイルの `[].image.repository` の値として、AWS Marketplace のプライベート コンテナ レジストリ (ECR) を指定する必要があります。 また、前の手順で作成したサービス アカウント名を `[].serviceAccount.serviceAccountName` の値として指定し、 `[].serviceAccount.automountServiceAccountToken` を `true` に設定する必要があります。使用している製品に応じて、次の例を参照してください。
 
-<Tabs groupId="products" queryString>
-  <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
-    ScalarDB Enterprise のエディションを選択します。
-    <Tabs groupId="editions" queryString>
-      <TabItem value="scalardb-enterprise-standard" label="ScalarDB Enterprise Edition (Standard)" default>
-        `scalardb-cluster-standard-custom-values.yaml` ファイル内:
+   <Tabs groupId="products" queryString>
+     <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+       ScalarDB Enterprise のエディションを選択します。
+       <Tabs groupId="editions" queryString>
+         <TabItem value="scalardb-enterprise-standard" label="ScalarDB Enterprise Edition (Standard)" default>
+           `scalardb-cluster-standard-custom-values.yaml` ファイル内:
 
-        ```yaml
-        scalardbCluster:
-          image:
-            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-cluster-node-aws-payg-standard"
-          serviceAccount:
-            serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
-            automountServiceAccountToken: true
-        ```
-      </TabItem>
-      <TabItem value="scalardb-enterprise-premium" label="ScalarDB Enterprise Edition (Premium)">
-        `scalardb-cluster-premium-custom-values.yaml` ファイル内:
+           ```yaml
+           scalardbCluster:
+             image:
+               repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-cluster-node-aws-payg-standard"
+             serviceAccount:
+               serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
+               automountServiceAccountToken: true
+           ```
+         </TabItem>
+         <TabItem value="scalardb-enterprise-premium" label="ScalarDB Enterprise Edition (Premium)">
+           `scalardb-cluster-premium-custom-values.yaml` ファイル内:
 
-        ```yaml
-        scalardbCluster:
-          image:
-            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-cluster-node-aws-payg-premium"
-          serviceAccount:
-            serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
-            automountServiceAccountToken: true
-        ```
-      </TabItem>
-    </Tabs>
-  </TabItem>
-  <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
-    <h3>ScalarDL Ledger</h3>
+           ```yaml
+           scalardbCluster:
+             image:
+               repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-cluster-node-aws-payg-premium"
+             serviceAccount:
+               serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
+               automountServiceAccountToken: true
+           ```
+         </TabItem>
+       </Tabs>
+     </TabItem>
+     <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
+       <h3>ScalarDL Ledger</h3>
 
-    `scalardl-ledger-custom-values.yaml` ファイル内:
+       `scalardl-ledger-custom-values.yaml` ファイル内:
 
-    ```yaml
-    ledger:
-      image:
-        repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-ledger-aws-payg"
-      serviceAccount:
-        serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
-        automountServiceAccountToken: true
-    ```
+       ```yaml
+       ledger:
+         image:
+           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-ledger-aws-payg"
+         serviceAccount:
+           serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
+           automountServiceAccountToken: true
+       ```
+   
+       <h3>ScalarDL Schema Loader for Ledger</h3>
 
-    <h3>ScalarDL Schema Loader for Ledger</h3>
+       `schema-loader-ledger-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader) で提供されています。
+     </TabItem>
+     <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+       <h3>ScalarDL Auditor</h3>
 
-    `schema-loader-ledger-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader)で提供されています。
-  </TabItem>
-  <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
-    <h3>ScalarDL Auditor</h3>
+       `scalardl-auditor-custom-values.yaml` ファイル内:
 
-    `scalardl-auditor-custom-values.yaml` ファイル内:
+       ```yaml
+       auditor:
+         image:
+           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-auditor-aws-payg"
+         serviceAccount:
+           serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
+           automountServiceAccountToken: true
+       ```
 
-    ```yaml
-    auditor:
-      image:
-        repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-auditor-aws-payg"
-      serviceAccount:
-        serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
-        automountServiceAccountToken: true
-    ```
+       <h3>ScalarDL Schema Loader for Auditor</h3>
 
-    <h3>ScalarDL Schema Loader for Auditor</h3>
+       `schema-loader-auditor-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader) で提供されています。
+     </TabItem>
+     <TabItem value="scalar-manager" label="Scalar Manager">
+       `scalar-manager-custom-values.yaml` ファイル内:
 
-    `schema-loader-auditor-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader)で提供されています。
-  </TabItem>
-  <TabItem value="scalar-manager" label="Scalar Manager">
-    `scalar-manager-custom-values.yaml` ファイル内:
-
-    ```yaml
-    api:
-      image:
-        repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-manager-api-aws-payg"
-    web:
-      image:
-        repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-manager-web-aws-payg"
-    serviceAccount:
-      serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
-      automountServiceAccountToken: true
-    ```
-  </TabItem>
-</Tabs>
+       ```yaml
+       api:
+         image:
+           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-manager-api-aws-payg"
+       web:
+         image:
+           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-manager-web-aws-payg"
+       serviceAccount:
+         serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
+         automountServiceAccountToken: true
+       ```
+     </TabItem>
+   </Tabs>
 
 1. Helm Charts を上記のカスタム値ファイルと組み合わせて使用して、Scalar 製品をデプロイします。使用している製品に応じて、次の例を参照してください。
 
-<Tabs groupId="products" queryString>
-  <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
-    ScalarDB Enterprise のエディションを選択します。
-    <Tabs groupId="editions" queryString>
-      <TabItem value="scalardb-enterprise-standard" label="ScalarDB Enterprise Edition (Standard)" default>
-        ```console
-        helm install scalardb-cluster-standard scalar-labs/scalardb-cluster -f scalardb-cluster-standard-custom-values.yaml
-        ```
-      </TabItem>
-      <TabItem value="scalardb-enterprise-premium" label="ScalarDB Enterprise Edition (Premium)">
-        ```console
-        helm install scalardb-cluster-premium scalar-labs/scalardb-cluster -f scalardb-cluster-premium-custom-values.yaml
-        ```
-      </TabItem>
-    </Tabs>
-  </TabItem>
-  <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
-    <h3>ScalarDL Ledger</h3>
+   <Tabs groupId="products" queryString>
+     <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+       ScalarDB Enterprise のエディションを選択します。
+       <Tabs groupId="editions" queryString>
+         <TabItem value="scalardb-enterprise-standard" label="ScalarDB Enterprise Edition (Standard)" default>
+           ```console
+           helm install scalardb-cluster-standard scalar-labs/scalardb-cluster -f scalardb-cluster-standard-custom-values.yaml
+           ```
+         </TabItem>
+         <TabItem value="scalardb-enterprise-premium" label="ScalarDB Enterprise Edition (Premium)">
+           ```console
+           helm install scalardb-cluster-premium scalar-labs/scalardb-cluster -f scalardb-cluster-premium-custom-values.yaml
+           ```
+         </TabItem>
+       </Tabs>
+     </TabItem>
+     <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
+       <h3>ScalarDL Ledger</h3>
 
-    ```console
-    helm install scalardl-ledger scalar-labs/scalardl -f ./scalardl-ledger-custom-values.yaml
-    ```
+       ```console
+       helm install scalardl-ledger scalar-labs/scalardl -f ./scalardl-ledger-custom-values.yaml
+       ```
 
-    <h3>ScalarDL Schema Loader for Ledger</h3>
+       <h3>ScalarDL Schema Loader for Ledger</h3>
 
-    ```console
-    helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-ledger-custom-values.yaml
-    ```
-  </TabItem>
-  <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
-    <h3>ScalarDL Auditor</h3>
+       ```console
+       helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-ledger-custom-values.yaml
+       ```
+     </TabItem>
+     <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+       <h3>ScalarDL Auditor</h3>
 
-    ```console
-    helm install scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
-    ```
+       ```console
+       helm install scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
+       ```
 
-    <h3>ScalarDL Schema Loader for Auditor</h3>
+       <h3>ScalarDL Schema Loader for Auditor</h3>
 
-    ```console
-    helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-auditor-custom-values.yaml
-    ```
-  </TabItem>
-  <TabItem value="scalar-manager" label="Scalar Manager">
-    ```console
-    helm install scalar-manager scalar-labs/scalar-manager -f ./scalar-manager-custom-values.yaml
-    ```
-  </TabItem>
-</Tabs>
+       ```console
+       helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-auditor-custom-values.yaml
+       ```
+     </TabItem>
+     <TabItem value="scalar-manager" label="Scalar Manager">
+       ```console
+       helm install scalar-manager scalar-labs/scalar-manager -f ./scalar-manager-custom-values.yaml
+       ```
+     </TabItem>
+   </Tabs>
 
 ## **[非推奨] [BYOL]** Scalar Helm Chart を使用して AWS Marketplace から EKS (Amazon Elastic Kubernetes Service) にコンテナをデプロイする
 
@@ -244,81 +244,81 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
 1. インストールする Scalar 製品の Helm Chart のカスタム値ファイルを更新します。
    AWS Marketplace のプライベート コンテナ レジストリ (ECR) をカスタム値ファイルの `[].image.repository` の値として指定する必要があります。使用している製品に応じて、次の例を参照してください。
 
-<Tabs groupId="products" queryString>
-  <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
-    ```yaml
-    scalardbCluster:
-      image:
-        repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-cluster-node-aws-byol"
-    ```
-  </TabItem>
-  <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
-    <h3>ScalarDL Ledger</h3>
+   <Tabs groupId="products" queryString>
+     <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+       ```yaml
+       scalardbCluster:
+         image:
+           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-cluster-node-aws-byol"
+       ```
+     </TabItem>
+     <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
+       <h3>ScalarDL Ledger</h3>
 
-    `scalardl-ledger-custom-values.yaml` ファイル内:
+       `scalardl-ledger-custom-values.yaml` ファイル内:
 
-    ```yaml
-    ledger:
-      image:
-        repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-ledger"
-    ```
+       ```yaml
+       ledger:
+         image:
+           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-ledger"
+       ```
 
-    <h3>ScalarDL Schema Loader for Ledger</h3>
+       <h3>ScalarDL Schema Loader for Ledger</h3>
 
-    `schema-loader-ledger-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader)で提供されています。
-  </TabItem>
-  <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
-    <h3>ScalarDL Auditor</h3>
+       `schema-loader-ledger-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader) で提供されています。
+     </TabItem>
+     <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+       <h3>ScalarDL Auditor</h3>
 
-    `scalardl-auditor-custom-values.yaml` ファイル内:
+       `scalardl-auditor-custom-values.yaml` ファイル内:
 
-    ```yaml
-    auditor:
-      image:
-        repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-auditor"
-    ```
+       ```yaml
+       auditor:
+         image:
+           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-auditor"
+       ```
 
-    <h3>ScalarDL Schema Loader for Auditor</h3>
+       <h3>ScalarDL Schema Loader for Auditor</h3>
 
-    `schema-loader-auditor-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader)で提供されています。
-  </TabItem>
-</Tabs>
+       `schema-loader-auditor-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader) で提供されています。
+     </TabItem>
+   </Tabs>
 
 1. 上記のカスタム値ファイルを含む Helm Chart を使用して、Scalar 製品をデプロイします。使用している製品に応じて、次の例を参照してください。
 
-<Tabs groupId="products" queryString>
-  <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
-    ```console
-    helm install scalardb-cluster scalar-labs/scalardb-cluster -f scalardb-cluster-custom-values.yaml
-    ```
-  </TabItem>
-  <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
-    <h3>ScalarDL Ledger</h3>
+   <Tabs groupId="products" queryString>
+     <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+       ```console
+       helm install scalardb-cluster scalar-labs/scalardb-cluster -f scalardb-cluster-custom-values.yaml
+       ```
+     </TabItem>
+     <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
+       <h3>ScalarDL Ledger</h3>
 
-    ```console
-    helm install scalardl-ledger scalar-labs/scalardl -f ./scalardl-ledger-custom-values.yaml
-    ```
+       ```console
+       helm install scalardl-ledger scalar-labs/scalardl -f ./scalardl-ledger-custom-values.yaml
+       ```
 
-    <h3>ScalarDL Schema Loader for Ledger</h3>
+       <h3>ScalarDL Schema Loader for Ledger</h3>
 
-    ```console
-    helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-ledger-custom-values.yaml
-    ```
-  </TabItem>
-  <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
-    <h3>ScalarDL Auditor</h3>
+       ```console
+       helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-ledger-custom-values.yaml
+       ```
+     </TabItem>
+     <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+       <h3>ScalarDL Auditor</h3>
 
-    ```console
-    helm install scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
-    ```
+       ```console
+       helm install scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
+       ```
 
-    <h3>ScalarDL Schema Loader for Auditor</h3>
+       <h3>ScalarDL Schema Loader for Auditor</h3>
 
-    ```console
-    helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-auditor-custom-values.yaml
-    ```
-  </TabItem>
-</Tabs>
+       ```console
+       helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-auditor-custom-values.yaml
+       ```
+     </TabItem>
+   </Tabs>
 
 ## **[非推奨] [BYOL]** Scalar Helm Chart を使用して、AWS Marketplace から EKS 以外の Kubernetes にコンテナをデプロイする
 
@@ -339,51 +339,51 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
    AWS Marketplace のプライベート コンテナ レジストリ (ECR) をカスタム値ファイルの `[].image.repository` の値として指定する必要があります。
    また、`[].imagePullSecrets` の値として `reg-ecr-mp-secrets` を指定する必要があります。使用している製品に応じて、次の例を参照してください。
 
-<Tabs groupId="products" queryString>
-  <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
-    ```yaml
-    scalardbCluster:
-      image:
-        repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-cluster-node-aws-byol"
-      imagePullSecrets:
-        - name: "reg-ecr-mp-secrets"
-    ```
-  </TabItem>
-  <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
-    <h3>ScalarDL Ledger</h3>
+   <Tabs groupId="products" queryString>
+     <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+       ```yaml
+       scalardbCluster:
+         image:
+           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-cluster-node-aws-byol"
+         imagePullSecrets:
+           - name: "reg-ecr-mp-secrets"
+       ```
+     </TabItem>
+     <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
+       <h3>ScalarDL Ledger</h3>
 
-    `scalardl-ledger-custom-values.yaml` ファイル内:
+       `scalardl-ledger-custom-values.yaml` ファイル内:
 
-    ```yaml
-    ledger:
-      image:
-        repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-ledger"
-      imagePullSecrets:
-        - name: "reg-ecr-mp-secrets"
-    ```
+       ```yaml
+       ledger:
+         image:
+           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-ledger"
+         imagePullSecrets:
+           - name: "reg-ecr-mp-secrets"
+       ```
 
-    <h3>ScalarDL Schema Loader for Ledger</h3>
+       <h3>ScalarDL Schema Loader for Ledger</h3>
 
-    `schema-loader-ledger-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader)で提供されています。
-  </TabItem>
-  <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
-    <h3>ScalarDL Auditor</h3>
+       `schema-loader-ledger-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader) で提供されています。
+     </TabItem>
+     <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+       <h3>ScalarDL Auditor</h3>
 
-    `scalardl-auditor-custom-values.yaml` ファイル内:
+       `scalardl-auditor-custom-values.yaml` ファイル内:
 
-    ```yaml
-    auditor:
-      image:
-        repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-auditor"
-      imagePullSecrets:
-        - name: "reg-ecr-mp-secrets"
-    ```
+       ```yaml
+       auditor:
+         image:
+           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-auditor"
+         imagePullSecrets:
+           - name: "reg-ecr-mp-secrets"
+       ```
 
-    <h3>ScalarDL Schema Loader for Auditor</h3>
+       <h3>ScalarDL Schema Loader for Auditor</h3>
 
-    `schema-loader-auditor-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader)で提供されています。
-  </TabItem>
-</Tabs>
+       `schema-loader-auditor-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader) で提供されています。
+     </TabItem>
+   </Tabs>
 
 1. 上記のカスタム値ファイルを含む Helm Chart を使用して、Scalar 製品をデプロイします。
    * 例
