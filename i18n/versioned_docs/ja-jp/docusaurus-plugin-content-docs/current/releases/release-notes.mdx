@@ -4,7 +4,24 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このページには、ScalarDL 3.9 のリリース ノートのリストが含まれています。
+このページには、ScalarDL 3.9 のリリースノートのリストが含まれています。
+
+## v3.9.2
+
+**発売日：** 2024 年 8 月 28 日
+
+### バグの修正
+
+- PKCS#8 形式のシークレット鍵の処理に関するバグを修正しました。
+- HMAC 設定のコメントを修正しました。
+- 成果物のソースと Javadoc を修正しました。
+- [CVE-2024-24790](https://github.com/advisories/GHSA-49gw-vxvf-fc2g "CVE-2024-24790")、[CVE-2023-45283](https://github.com/advisories/GHSA-vvjp-q62m-2vph "CVE-2023-45283")、[CVE-2023-45288](https://github.com/advisories/GHSA-4v7x-pqxf-cx7m "CVE-2023-45288") を修正しました。
+- JUnit5 との統合テストが実行されない問題を修正しました。
+- e2e テストが正しく実行されるように修正しました。
+- 予期しない検証実行を修正しました。
+- nonce 以外のトランザクション ID に関するバグを修正しました。
+- JDBC トランザクションマネージャーを使用したトランザクションによってアセットが誤って上書きされるバグを修正しました。
+- Ledger サービスが DynamoDB でコントラクトを実行できなくなるバグを修正しました。
 
 ## v3.9.1
 
