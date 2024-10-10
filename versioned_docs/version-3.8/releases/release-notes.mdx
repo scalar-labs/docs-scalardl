@@ -2,6 +2,27 @@
 
 This page includes a list of release notes for ScalarDL 3.8.
 
+## v3.8.2
+
+**Release date:** August 28, 2024
+
+### Summary
+
+This release includes several bug fixes and vulnerability fixes.
+
+### Bug fixes
+
+- Fixed a bug when handling PKCS#8 format private key.
+- Fixed a comment for HMAC settings.
+- Fixed sources and Javadoc for artifacts.
+- Fixed [CVE-2024-24790](https://github.com/advisories/GHSA-49gw-vxvf-fc2g "CVE-2024-24790"), [CVE-2023-45283](https://github.com/advisories/GHSA-vvjp-q62m-2vph "CVE-2023-45283"), and [CVE-2023-45288](https://github.com/advisories/GHSA-4v7x-pqxf-cx7m "CVE-2023-45288").
+- Fixed an issue that does not run integration tests with JUnit5.
+- Fixed e2e tests to run correctly.
+- Fixed unexpected validation execution.
+- Fixed a bug with non-nonce transaction ID.
+- Fixed a bug where a transaction with the JDBC transaction manager wrongly overwrites an asset.
+- Fixed a bug that makes the Ledger service unable to execute contracts on DynamoDB.
+
 ## v3.8.1
 
 **Release date:** April 17, 2024
