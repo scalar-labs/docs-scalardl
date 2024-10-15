@@ -82,9 +82,9 @@ const config = {
                 banner: 'none',
               },
               "3.7": {
-                label: '3.7',
+                label: '3.7 (unsupported)',
                 path: '3.7',
-                banner: 'none',
+                banner: 'unmaintained',
               },
               "3.6": {
                 label: '3.6 (unsupported)',
