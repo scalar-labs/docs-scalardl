@@ -100,3 +100,23 @@ html[data-theme="dark"] .header-github-link::before {
 html[data-theme="dark"] .navbar-sidebar .header-github-link {
   filter: invert(0%);
 }
+
+/* Glossary tooltip styles */
+.glossary-term {
+  text-decoration: underline dotted; /* Dotted underline */
+  cursor: help; /* Change cursor to indicate help */
+}
+
+.tooltip-glossary {
+  position: absolute; /* Position relative to the nearest positioned ancestor */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 5px;
+  z-index: 10;
+  visibility: visible;
+  opacity: 0.9;
+  transform: translateY(5px); /* Move tooltip slightly down */
+  white-space: nowrap; /* Prevent text wrapping */
+  border-radius: 4px; /* Optional: round the corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional: add a shadow */
+}
