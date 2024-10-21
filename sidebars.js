@@ -65,6 +65,7 @@ const sidebars = {
             'scalardl-java-client-sdk/README',
           ],
         },
+        'configurations',
         'schema-loader',
         'ca/caclient-getting-started',
         'authentication',
