@@ -17,21 +17,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ## 始める前に
 
-ScalarDB Cluster を新しいバージョンにアップグレードする前に、ScalarDB Cluster とクライアント SDK 間の互換性を確保するために次のルールを確認してください。
-
-:::note
-
-バージョンは `x.y.z` として表されます。`x` はメジャーバージョン、`y` はマイナーバージョン、`z` はパッチバージョンを表します。この形式は [セマンティックバージョニング](https://semver.org/) に従います。
-
-:::
-
-- ScalarDB Cluster とクライアント SDK の **メジャー** バージョンが異なる場合、それらは互換性がないため、**サポートされていません**。
-- ScalarDB Cluster とクライアント SDK の **メジャー** バージョンが同じで、**マイナー** バージョンが異なる場合、ScalarDB Cluster のバージョンはクライアント SDK バージョン以上である必要があります。例:
-  - **サポート対象:** ScalarDB Cluster 3.13 とクライアント SDK 3.11 の組み合わせ
-  - **サポート対象外:** ScalarDB Cluster 3.11 とクライアント SDK 3.13 の組み合わせ
-- **メジャー** バージョンと **マイナー** バージョンが同じ場合、ScalarDB Cluster とクライアント SDK 間で異なる **パッチ** バージョンを使用できます。例:
-  - **サポート対象:** ScalarDB Cluster 3.13.2 とクライアント SDK 3.13.0 の組み合わせ
-  - **サポート対象:** ScalarDB Cluster 3.13.0 とクライアント SDK 3.13.2 の組み合わせ
+新しいバージョンにアップグレードする前に、[ScalarDB Cluster 互換性マトリックス](https://scalardb.scalar-labs.com/docs/latest/scalardb-cluster/compatibility/)をチェックして、ScalarDB Cluster とクライアント SDK 間の互換性を確認してください。
 
 ## アップグレード
 
