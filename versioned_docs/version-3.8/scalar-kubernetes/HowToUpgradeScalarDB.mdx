@@ -14,21 +14,7 @@ This guide explains how to upgrade to a newer version of ScalarDB.
 
 ## Before you begin
 
-Before you upgrade ScalarDB Cluster to a newer version, check the following rules to ensure compatibility between ScalarDB Cluster and the client SDKs.
-
-:::note
-
-Versions are expressed as `x.y.z`, where `x` represents the major version, `y` represents the minor version, and `z` represents the patch version. This format follows [Semantic Versioning](https://semver.org/).
-
-:::
-
-- If the **major** versions are different between ScalarDB Cluster and a client SDK, they are **not** compatible and are **not** supported.
-- If the **major** versions are the same and the **minor** versions are different between ScalarDB Cluster and a client SDK, the version of ScalarDB Cluster must be greater than or equal to the client SDK version. For example:
-  - **Supported:** Combination of ScalarDB Cluster 3.13 and client SDK 3.11
-  - **Not supported:** Combination of ScalarDB Cluster 3.11 and client SDK 3.13
-- If the **major** versions and the **minor** versions are the same, you can use different **patch** versions between ScalarDB Cluster and a client SDK. For example:
-  - **Supported:** Combination of ScalarDB Cluster 3.13.2 and client SDK 3.13.0
-  - **Supported:** Combination of ScalarDB Cluster 3.13.0 and client SDK 3.13.2
+Before you upgrade to a new version, please check the [ScalarDB Cluster Compatibility Matrix](https://scalardb.scalar-labs.com/docs/latest/scalardb-cluster/compatibility/) to ensure compatibility between ScalarDB Cluster and the client SDKs.
 
 ## Upgrade versions
 
