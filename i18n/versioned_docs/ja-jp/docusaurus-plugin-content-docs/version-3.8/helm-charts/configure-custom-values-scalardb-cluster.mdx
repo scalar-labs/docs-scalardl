@@ -355,3 +355,46 @@ scalardbCluster:
       operator: Equal
       value: scalardb-cluster
 ```
+
+### 暗号化設定 (環境に応じてオプション)
+
+[保存時の暗号化](https://scalardb.scalar-labs.com/docs/latest/scalardb-cluster/encrypt-data-at-rest/)を有効にして、バックエンドデータベース内のデータを保護できます。暗号化機能を使用する場合、次の 2つのデプロイメントオプションがあります。
+
+1. HashiCorp Vault (HashiCorp Cloud Platform (HCP) Vault Dedicated) を使用して、DEK を管理および保存します。
+1. ScalarDB Cluster を使用して DEK を管理し、Kubernetes Secrets に保存します。
+
+#### HashiCorp Vaultを使用する
+
+HashiCorp Vault (HCP Vault Dedicated) を使用してデータを暗号化できます。山括弧内の内容は説明に応じて置き換えます。
+
+```yaml
+scalardbCluster:
+  scalardbClusterNodeProperties: |
+    ...(omit)...
+    scalar.db.cluster.encryption.enabled=true
+    scalar.db.cluster.encryption.type=vault
+    scalar.db.cluster.encryption.vault.address=https://<FQDN_OR_IP_OF_VAULT_SERVER>:<PORT_OF_VAULT_SERVER>
+    scalar.db.cluster.encryption.vault.token=<TOKEN_OF_VAULT>
+    scalar.db.cluster.encryption.vault.transit_secrets_engine_path=<PATH_TO_TRANSIT_OF_VAULT>
+  encryption:
+    enabled: true
+    type: "vault"
+```
+
+#### ScalarDB Cluster と Kubernetes Secrets を使用する
+
+ScalarDB Cluster と Kubernetes Secrets を使用して、次のようにデータを暗号化できます。山括弧内の内容は説明に応じて置き換えます。
+
+```yaml
+scalardbCluster:
+  scalardbClusterNodeProperties: |
+    ...(omit)...
+    scalar.db.cluster.encryption.enabled=true
+    scalar.db.cluster.encryption.type=self
+    scalar.db.cluster.encryption.self.kubernetes.secret.namespace_name=${env:SCALAR_DB_CLUSTER_ENCRYPTION_SELF_KUBERNETES_SECRET_NAMESPACE_NAME}
+  encryption:
+    enabled: true
+    type: "self"
+```
+
+この場合、ScalarDB Cluster の Helm Chart は名前空間情報を環境変数として自動的に設定するため、`${env:SCALAR_DB_CLUSTER_ENCRYPTION_SELF_KUBERNETES_SECRET_NAMESPACE_NAME}` を置き換える必要はありません。このため、`${env:SCALAR_DB_CLUSTER_ENCRYPTION_SELF_KUBERNETES_SECRET_NAMESPACE_NAME}` の値はそのままにしておいてかまいません。
