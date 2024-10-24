@@ -373,3 +373,46 @@ scalardbCluster:
       operator: Equal
       value: scalardb-cluster
 ```
+
+### Encryption configurations (optional based on your environment)
+
+You can enable [encryption at rest](https://scalardb.scalar-labs.com/docs/latest/scalardb-cluster/encrypt-data-at-rest/) to protect the data in the backend databases. When you use the encryption feature, you have the following two deployment options:
+
+1. Use HashiCorp Vault (HashiCorp Cloud Platform (HCP) Vault Dedicated) to manage and store the DEKs.
+1. Use ScalarDB Cluster to manage the DEK, and store it in Kubernetes Secrets.
+
+#### Use HashiCorp Vault
+
+You can use HashiCorp Vault (HCP Vault Dedicated) to encrypt data as follows, replacing the contents in the angle brackets as described:
+
+```yaml
+scalardbCluster:
+  scalardbClusterNodeProperties: |
+    ...(omit)...
+    scalar.db.cluster.encryption.enabled=true
+    scalar.db.cluster.encryption.type=vault
+    scalar.db.cluster.encryption.vault.address=https://<FQDN_OR_IP_OF_VAULT_SERVER>:<PORT_OF_VAULT_SERVER>
+    scalar.db.cluster.encryption.vault.token=<TOKEN_OF_VAULT>
+    scalar.db.cluster.encryption.vault.transit_secrets_engine_path=<PATH_TO_TRANSIT_OF_VAULT>
+  encryption:
+    enabled: true
+    type: "vault"
+```
+
+#### Use ScalarDB Cluster and Kubernetes Secrets
+
+You can use ScalarDB Cluster and Kubernetes Secrets to encrypt data as follows, replacing the contents in the angle brackets as described:
+
+```yaml
+scalardbCluster:
+  scalardbClusterNodeProperties: |
+    ...(omit)...
+    scalar.db.cluster.encryption.enabled=true
+    scalar.db.cluster.encryption.type=self
+    scalar.db.cluster.encryption.self.kubernetes.secret.namespace_name=${env:SCALAR_DB_CLUSTER_ENCRYPTION_SELF_KUBERNETES_SECRET_NAMESPACE_NAME}
+  encryption:
+    enabled: true
+    type: "self"
+```
+
+In this case, you don't need to replace `${env:SCALAR_DB_CLUSTER_ENCRYPTION_SELF_KUBERNETES_SECRET_NAMESPACE_NAME}` since the Helm Chart for ScalarDB Cluster automatically sets the namespace information as an environment variable. Because of this, you can keep the value `${env:SCALAR_DB_CLUSTER_ENCRYPTION_SELF_KUBERNETES_SECRET_NAMESPACE_NAME}` as is.
