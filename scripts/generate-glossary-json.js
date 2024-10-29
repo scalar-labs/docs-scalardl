@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 const glossaries = [
-  { src: '../src/pages/en-us/glossary.mdx', output: '../build/docs/glossary.json' },
-  { src: '../src/pages/ja-jp/glossary.mdx', output: '../build/ja-jp/glossary.json' }
+  { src: '../docs/glossary.mdx', output: '../build/docs/glossary.json' },
+  { src: '../i18n/versioned_docs/ja-jp/docusaurus-plugin-content-docs/current/glossary.mdx', output: '../build/ja-jp/glossary.json' }
 ];
 
 const generateGlossaryJson = (glossaryFilePath, outputJsonPath) => {
