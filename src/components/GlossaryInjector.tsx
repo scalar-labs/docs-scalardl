@@ -11,7 +11,7 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
 
   useEffect(() => {
     const url = window.location.pathname;
-    let glossaryPath = '/docs/glossary.json'; // Default glossary
+    let glossaryPath = '/docs/glossary.json'; // Use the English version as the default glossary.
 
     if (process.env.NODE_ENV === 'production') {
       glossaryPath = url.startsWith('/ja-jp/docs') ? '/ja-jp/glossary.json' : '/docs/glossary.json';
@@ -33,9 +33,9 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
   useEffect(() => {
     if (Object.keys(glossary).length === 0) return;
 
-    // Sort terms in descending order by length to prioritize multi-word terms
+    // Sort terms in descending order by length to prioritize multi-word terms.
     const terms = Object.keys(glossary).sort((a, b) => b.length - a.length);
-    const processedTerms = new Set<string>(); // Set to track processed terms
+    const processedTerms = new Set<string>(); // Set to track processed terms.
 
     const wrapTermsInTooltips = (node: HTMLElement) => {
       const textNodes = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null, false);
@@ -46,33 +46,33 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
       while ((currentNode = textNodes.nextNode())) {
         const parentElement = currentNode.parentElement;
 
-        // Check if the parent element is a tab title
-        const isTabTitle = parentElement && parentElement.closest('.tabs__item'); // Adjust the selector as necessary
+        // Check if the parent element is a tab title.
+        const isTabTitle = parentElement && parentElement.closest('.tabs__item'); // Adjust the selector as necessary.
 
-        // Check if the parent element is a code block
-        const isCodeBlock = parentElement && parentElement.closest('.prism-code'); // Adjust the selector as necessary
+        // Check if the parent element is a code block.
+        const isCodeBlock = parentElement && parentElement.closest('.prism-code'); // Adjust the selector as necessary.
 
-        // Check if the parent element is a Card
-        const isCard = parentElement && parentElement.closest('.card__body'); // Adjust the selector as necessary
+        // Check if the parent element is a Card.
+        const isCard = parentElement && parentElement.closest('.card__body'); // Adjust the selector as necessary.
 
-        // Check if the parent element is a Mermaid diagram
-        const isMermaidDiagram = parentElement && parentElement.closest('.docusaurus-mermaid-container'); // Adjust the selector as necessary
+        // Check if the parent element is a Mermaid diagram.
+        const isMermaidDiagram = parentElement && parentElement.closest('.docusaurus-mermaid-container'); // Adjust the selector as necessary.
 
-        // Only wrap terms in tooltips if the parent is within the target div and not in headings or tab titles
+        // Only wrap terms in tooltips if the parent is within the target div and not in headings or tab titles.
         if (
           parentElement &&
           parentElement.closest('.theme-doc-markdown.markdown') &&
-          !/^H[1-6]$/.test(parentElement.tagName) && // Skip headings (H1 to H6)
-          !isTabTitle && // Skip tab titles
-          !isCodeBlock && // Skip code blocks
-          !isCard && // Skip Cards
-          !isMermaidDiagram // Skip Mermaid diagrams
+          !/^H[1-6]$/.test(parentElement.tagName) && // Skip headings (H1 to H6).
+          !isTabTitle && // Skip tab titles.
+          !isCodeBlock && // Skip code blocks.
+          !isCard && // Skip Cards.
+          !isMermaidDiagram // Skip Mermaid diagrams.
         ) {
           let currentText = currentNode.textContent!;
           const newNodes: Node[] = [];
           let hasReplacements = false;
 
-          // Create a regex pattern to match all terms (case-sensitive)
+          // Create a regex pattern to match all terms (case-sensitive).
           const regexPattern = terms.map(term => `(${term})`).join('|');
           const regex = new RegExp(regexPattern, 'g');
 
@@ -87,15 +87,15 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
             }
 
             const isFirstMention = !processedTerms.has(matchedTerm);
-            const isLink = parentElement && parentElement.tagName === 'A'; // Check if the parent is a link
+            const isLink = parentElement && parentElement.tagName === 'A'; // Check if the parent is a link.
 
             if (isFirstMention && !isLink) {
-              // Create a tooltip only if it's the first mention and not a link
+              // Create a tooltip only if it's the first mention and not a link.
               const tooltipWrapper = document.createElement('span');
               tooltipWrapper.setAttribute('data-term', matchedTerm);
               tooltipWrapper.className = 'glossary-term';
 
-              const definition = glossary[matchedTerm]; // Exact match from glossary
+              const definition = glossary[matchedTerm]; // Exact match from glossary.
 
               ReactDOM.render(
                 <GlossaryTooltip term={matchedTerm} definition={definition}>
@@ -105,12 +105,12 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
               );
 
               newNodes.push(tooltipWrapper);
-              processedTerms.add(matchedTerm); // Mark this term as processed
+              processedTerms.add(matchedTerm); // Mark this term as processed.
             } else if (isLink) {
-              // If it's a link, we skip this mention but do not mark it as processed
+              // If it's a link, we skip this mention but do not mark it as processed.
               newNodes.push(document.createTextNode(matchedTerm));
             } else {
-              // If it's not the first mention, just add the plain text
+              // If it's not the first mention, just add the plain text.
               newNodes.push(document.createTextNode(matchedTerm));
             }
 
@@ -128,7 +128,7 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
         }
       }
 
-      // Replace the original nodes with new nodes
+      // Replace the original nodes with new nodes.
       modifications.forEach(({ originalNode, newNodes }) => {
         const parentElement = originalNode.parentElement;
         if (parentElement) {
@@ -140,7 +140,7 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
       });
     };
 
-    // Target the specific div with the class "theme-doc-markdown markdown"
+    // Target the specific div with the class "theme-doc-markdown markdown".
     const targetDiv = document.querySelector('.theme-doc-markdown.markdown');
     if (targetDiv) {
       wrapTermsInTooltips(targetDiv);
