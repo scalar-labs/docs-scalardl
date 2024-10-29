@@ -118,6 +118,13 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
                serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
                automountServiceAccountToken: true
            ```
+
+     :::note
+
+     設定の詳細については、[ScalarDB Cluster のカスタム値ファイルを構成する](../helm-charts/configure-custom-values-scalardb-cluster.mdx)を参照してください。
+
+     :::
+
          </TabItem>
          <TabItem value="scalardb-enterprise-premium" label="ScalarDB Enterprise Edition (Premium)">
            `scalardb-cluster-premium-custom-values.yaml` ファイル内:
@@ -130,6 +137,13 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
                serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
                automountServiceAccountToken: true
            ```
+
+     :::note
+
+     設定の詳細については、[ScalarDB Cluster のカスタム値ファイルを構成する](../helm-charts/configure-custom-values-scalardb-cluster.mdx)を参照してください。
+
+     :::
+
          </TabItem>
        </Tabs>
      </TabItem>
@@ -146,10 +160,23 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
            serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
            automountServiceAccountToken: true
        ```
-   
+
+     :::note
+
+     設定の詳細については、[ScalarDL Ledger のカスタム値ファイルを構成する](../helm-charts/configure-custom-values-scalardl-ledger.mdx)を参照してください。
+
+     :::
+
        <h3>ScalarDL Schema Loader for Ledger</h3>
 
        `schema-loader-ledger-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader) で提供されています。
+
+     :::note
+
+     設定の詳細については、[ScalarDL Schema Loader のカスタム値ファイルを構成する](../helm-charts/configure-custom-values-scalardl-schema-loader.mdx)を参照してください。
+
+     :::
+
      </TabItem>
      <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
        <h3>ScalarDL Auditor</h3>
@@ -165,9 +192,22 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
            automountServiceAccountToken: true
        ```
 
+     :::note
+
+     設定の詳細については、[ScalarDL Auditor のカスタム値ファイルを構成する](../helm-charts/configure-custom-values-scalardl-auditor.mdx)を参照してください。
+
+     :::
+
        <h3>ScalarDL Schema Loader for Auditor</h3>
 
        `schema-loader-auditor-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader) で提供されています。
+
+     :::note
+
+     設定の詳細については、[ScalarDL Schema Loader のカスタム値ファイルを構成する](../helm-charts/configure-custom-values-scalardl-schema-loader.mdx)を参照してください。
+
+     :::
+
      </TabItem>
      <TabItem value="scalar-manager" label="Scalar Manager">
        `scalar-manager-custom-values.yaml` ファイル内:
@@ -183,6 +223,13 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
          serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
          automountServiceAccountToken: true
        ```
+
+     :::note
+
+     設定の詳細については、[Scalar Manager のカスタム値ファイルを構成する](../helm-charts/configure-custom-values-scalar-manager.mdx)を参照してください。
+
+     :::
+
      </TabItem>
    </Tabs>
 
@@ -251,6 +298,13 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
          image:
            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-cluster-node-aws-byol"
        ```
+
+     :::note
+
+     設定の詳細については、[ScalarDB Cluster のカスタム値ファイルを構成する](../helm-charts/configure-custom-values-scalardb-cluster.mdx)を参照してください。
+
+     :::
+
      </TabItem>
      <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
        <h3>ScalarDL Ledger</h3>
@@ -263,9 +317,22 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-ledger"
        ```
 
+     :::note
+
+     設定の詳細については、[ScalarDL Ledger のカスタム値ファイルを構成する](../helm-charts/configure-custom-values-scalardl-ledger.mdx)を参照してください。
+
+     :::
+
        <h3>ScalarDL Schema Loader for Ledger</h3>
 
        `schema-loader-ledger-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader) で提供されています。
+
+     :::note
+
+     設定の詳細については、[ScalarDL Schema Loader のカスタム値ファイルを構成する](../helm-charts/configure-custom-values-scalardl-schema-loader.mdx)を参照してください。
+
+     :::
+
      </TabItem>
      <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
        <h3>ScalarDL Auditor</h3>
@@ -278,9 +345,22 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-auditor"
        ```
 
+     :::note
+
+     設定の詳細については、[ScalarDL Auditor のカスタム値ファイルを構成する](../helm-charts/configure-custom-values-scalardl-auditor.mdx)を参照してください。
+
+     :::
+
        <h3>ScalarDL Schema Loader for Auditor</h3>
 
        `schema-loader-auditor-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader) で提供されています。
+
+     :::note
+
+     設定の詳細については、[ScalarDL Schema Loader のカスタム値ファイルを構成する](../helm-charts/configure-custom-values-scalardl-schema-loader.mdx)を参照してください。
+
+     :::
+
      </TabItem>
    </Tabs>
 
@@ -348,6 +428,13 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
          imagePullSecrets:
            - name: "reg-ecr-mp-secrets"
        ```
+
+     :::note
+
+     設定の詳細については、[ScalarDB Cluster のカスタム値ファイルを構成する](../helm-charts/configure-custom-values-scalardb-cluster.mdx)を参照してください。
+
+     :::
+
      </TabItem>
      <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
        <h3>ScalarDL Ledger</h3>
@@ -362,9 +449,22 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
            - name: "reg-ecr-mp-secrets"
        ```
 
+     :::note
+
+     設定の詳細については、[ScalarDL Ledger のカスタム値ファイルを構成する](../helm-charts/configure-custom-values-scalardl-ledger.mdx)を参照してください。
+
+     :::
+
        <h3>ScalarDL Schema Loader for Ledger</h3>
 
        `schema-loader-ledger-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader) で提供されています。
+
+     :::note
+
+     設定の詳細については、[ScalarDL Schema Loader のカスタム値ファイルを構成する](../helm-charts/configure-custom-values-scalardl-schema-loader.mdx)を参照してください。
+
+     :::
+
      </TabItem>
      <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
        <h3>ScalarDL Auditor</h3>
@@ -379,9 +479,22 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
            - name: "reg-ecr-mp-secrets"
        ```
 
+     :::note
+
+     設定の詳細については、[ScalarDL Auditor のカスタム値ファイルを構成する](../helm-charts/configure-custom-values-scalardl-auditor.mdx)を参照してください。
+
+     :::
+
        <h3>ScalarDL Schema Loader for Auditor</h3>
 
        `schema-loader-auditor-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader) で提供されています。
+
+     :::note
+
+     設定の詳細については、[ScalarDL Schema Loader のカスタム値ファイルを構成する](../helm-charts/configure-custom-values-scalardl-schema-loader.mdx)を参照してください。
+
+     :::
+
      </TabItem>
    </Tabs>
 
