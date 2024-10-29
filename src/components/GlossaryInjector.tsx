@@ -13,7 +13,7 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
     const url = window.location.pathname;
     let glossaryPath = '/docs/glossary.json'; // Use the English version as the default glossary.
 
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production') { // The glossary tooltip works only in production environments.
       glossaryPath = url.startsWith('/ja-jp/docs') ? '/ja-jp/glossary.json' : '/docs/glossary.json';
     } else {
       glossaryPath = url.startsWith('/ja-jp/docs') ? '/ja-jp/glossary.json' : '/docs/glossary.json';
