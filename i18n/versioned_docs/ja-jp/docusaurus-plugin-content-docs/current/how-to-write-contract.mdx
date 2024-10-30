@@ -115,6 +115,10 @@ setContext(context);
 
 ## 複雑なコントラクトを作成する
 
+このセクションでは、複雑なコントラクトの書き方について説明します。
+
+### ネストされた方法でコントラクトを呼び出す
+
 コントラクトのコードが 100 行を超える場合は、コントラクトで複数のことを実行している可能性があることを示す良い兆候です。
 各コントラクトが 1 つのことだけを実行するモジュール化されたコントラクトを作成し、コントラクトを結合してより複雑なビジネス ロジックを表現することは良い習慣です。
 
@@ -150,6 +154,38 @@ public class StateUpdaterReader extends JacksonBasedContract {
 `StateUpdaterReader` は、`StateUpdater` と同じように Ledger を更新し、さらに `state-reader` を使用して別の呼び出しを呼び出して、書き込まれた内容を読み取ります。 この例はあまり説得力がないかもしれませんが、コントラクトをモジュール化する (たとえば、`StateUpdater` を個別に定義する) と、コントラクトを再利用可能にすることができます。
 
 ネストされた呼び出し内のすべてのコントラクトは、ScalarDL でトランザクション的に (ACID 方式で) 実行されるため、完全に成功するか完全に失敗するかに注意してください。
+
+### 誰がアセットにアクセスできるかを管理する
+
+`getClientIdentityKey()` を呼び出すと、コントラクト内でコントラクトを実行しているユーザーを示す ID 情報を取得できます。この機能は、特定のアセットにアクセスできるユーザーを制御するのに役立ちます。次の例は、state-xxx (xxx は証明書またはシークレットのホルダーのエンティティ ID) という名前の制限付きアセットのみを更新できるように変更された `StateUpdater` を示しています。
+
+詳細については、使用している ScalarDL バージョンの [Javadoc](https://javadoc.io/doc/com.scalar-labs/scalardl-java-client-sdk/latest/index.html) のベースコントラクトのページと `ClientIdentityKey ` ページを参照してください。
+
+```java
+public class StateUpdater extends JacksonBasedContract {
+
+  @Nullable
+  @Override
+  public JsonNode invoke(Ledger<JsonNode> ledger, JsonNode argument, @Nullable JsonNode properties) {
+    if (!argument.has("state")) {
+      throw new ContractContextException("please set state in the argument");
+    }
+
+    ClientIdentityKey clientIdentityKey = getClientIdentityKey();
+    String entityId = clientIdentityKey.getEntityId();
+    String assetId = "state-" + entityId;
+    int state = argument.get("state").asInt();
+
+    Optional<Asset<JsonNode>> asset = ledger.get(assetId);
+
+    if (!asset.isPresent() || asset.get().data().get("state").asInt() != state) {
+      ledger.put(assetId, getObjectMapper().createObjectNode().put("state", state));
+    }
+
+    return null;
+  }
+}
+```
 
 ## まとめ
 
