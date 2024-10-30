@@ -117,6 +117,10 @@ setContext(context);
 
 ## Write a complex contract
 
+This section describes how to write a complex contract.
+
+### Call contracts in a nested way
+
 If your contract is more than 100 lines of code, it is a good sign that you are probably doing more than one thing with your contract.
 It is a good practice to write modularized contracts, where each contract is doing only one thing, and to combine contracts to express more complex business logic.
 
@@ -152,6 +156,38 @@ public class StateUpdaterReader extends JacksonBasedContract {
 The `StateUpdaterReader` updates the Ledger just like `StateUpdater` and additionally calls another invoke with the `state-reader` to read what was written. Although this example might not be very convincing, but modularizing contracts (e.g., defining `StateUpdater` separately) can make the contracts reusable.
 
 It's to be noted that all the contracts in the nested invocation are executed transactionally (in an ACID manner) in ScalarDL so that they are executed entirely successfully or they are entirely failed.
+
+### Manage who can access assets
+
+You can get identity information, which indicates who is executing the contract, by calling `getClientIdentityKey()` in a contract. This functionality helps to control who can access a certain asset. The following example shows `StateUpdater`, which has been modified so that it can only update a restricted asset with the name `state-xxx`, where `xxx` is an entity ID of the certificate or secret holder.
+
+For details, see the base contract page and the `ClientIdentityKey` page in the [Javadoc](https://javadoc.io/doc/com.scalar-labs/scalardl-java-client-sdk/latest/index.html) of the version of ScalarDL that you are using.
+
+```java
+public class StateUpdater extends JacksonBasedContract {
+
+  @Nullable
+  @Override
+  public JsonNode invoke(Ledger<JsonNode> ledger, JsonNode argument, @Nullable JsonNode properties) {
+    if (!argument.has("state")) {
+      throw new ContractContextException("please set state in the argument");
+    }
+
+    ClientIdentityKey clientIdentityKey = getClientIdentityKey();
+    String entityId = clientIdentityKey.getEntityId();
+    String assetId = "state-" + entityId;
+    int state = argument.get("state").asInt();
+
+    Optional<Asset<JsonNode>> asset = ledger.get(assetId);
+
+    if (!asset.isPresent() || asset.get().data().get("state").asInt() != state) {
+      ledger.put(assetId, getObjectMapper().createObjectNode().put("state", state));
+    }
+
+    return null;
+  }
+}
+```
 
 ## Summary
 
