@@ -145,14 +145,6 @@ const config = {
             to: '/docs/3.8/helm-charts/getting-started-scalar-manager',
             from: '/docs/3.8/helm-charts/how-to-deploy-scalar-manager',
           },
-          {
-            to: '/ja-jp/docs/latest/helm-charts/getting-started-scalar-manager',
-            from: '/ja-jp/docs/latest/helm-charts/how-to-deploy-scalar-manager',
-          },
-          {
-            to: '/ja-jp/docs/3.8/helm-charts/getting-started-scalar-manager',
-            from: '/ja-jp/docs/3.8/helm-charts/how-to-deploy-scalar-manager',
-          },
         ],
         createRedirects(existingPath) {
           if (existingPath.includes('/ja-jp/docs')) {
