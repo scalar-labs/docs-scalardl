@@ -1,0 +1,21 @@
+# Monitor ScalarDL by Using Scalar Manager
+
+Scalar Manager is a centralized management and monitoring solution for ScalarDL within Kubernetes cluster environments that allows you to:
+
+- Check the availability of ScalarDL.
+- Schedule or execute pausing jobs that create transactionally consistent periods in the databases used by ScalarDL.
+- Check the time-series metrics and logs of ScalarDL through Grafana dashboards.
+
+For more details about Scalar Manager, see [Scalar Manager Overview](scalar-manager/overview.mdx).
+
+:::note
+
+ScalarDL uses ScalarDB for its data management and the Function feature, so you may experience a case where you're using both ScalarDL and ScalarDB in your deployment. In such a case, you may also want to monitor ScalarDB in addition to ScalarDL.
+
+:::
+
+## Deploy Scalar Manager
+
+You can deploy Scalar Manager by using a Helm Chart.
+
+For details on how to deploy Scalar Manager, see [How to Deploy Scalar Manager](helm-charts/how-to-deploy-scalar-manager.mdx).
