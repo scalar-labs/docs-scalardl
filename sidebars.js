@@ -185,7 +185,6 @@ const sidebars = {
             'helm-charts/how-to-deploy-scalar-products',
             'helm-charts/how-to-deploy-scalardl-ledger',
             'helm-charts/how-to-deploy-scalardl-auditor',
-            'helm-charts/how-to-deploy-scalar-manager',
             'helm-charts/how-to-deploy-scalar-admin-for-kubernetes',
             'helm-charts/mount-files-or-volumes-on-scalar-pods',
             'helm-charts/use-secret-for-credentials',
