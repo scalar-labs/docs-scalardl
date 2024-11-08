@@ -3,30 +3,30 @@ tags:
   - Enterprise Option
 ---
 
-# Getting Started with Helm Charts (Scalar Manager)
+# Deploy Scalar Manager
 
-Scalar Manager is a centralized management and monitoring solution for ScalarDB and ScalarDL within Kubernetes cluster environments that allows you to:
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-* Check the availability of ScalarDB or ScalarDL.
-* Schedule or execute pausing jobs that create transactionally consistent periods in the databases used by ScalarDB or ScalarDL.
-* Check the time-series metrics and logs of ScalarDB or ScalarDL through Grafana dashboards.
+[Scalar Manager](../scalar-manager/overview.mdx) is a centralized management and monitoring solution for ScalarDB and ScalarDL within Kubernetes cluster environments that allows you to:
 
-For more details, refer to [Scalar Manager Overview](../scalar-manager/overview.mdx).
+- Check the availability of ScalarDB or ScalarDL.
+- Schedule or execute pausing jobs that create transactionally consistent periods in the databases used by ScalarDB or ScalarDL.
+- Check the time-series metrics and logs of ScalarDB or ScalarDL through Grafana dashboards.
 
-This guide will show you how to deploy and access Scalar Manager on a Kubernetes cluster.
+This guide explains how to deploy and access Scalar Manager on a Kubernetes cluster by using Scalar Helm Charts.
 
-## Assumption
+## Prerequisites
 
-This guide assumes that you are aware of how to deploy ScalarDB or ScalarDL with the [monitoring](getting-started-monitoring.mdx) and [logging](getting-started-logging.mdx) tools to a Kubernetes cluster.
+Before you deploy Scalar Manager, you must do the following:
 
-## Requirement
+- Install the tools mentioned in [Getting Started with Scalar Helm Charts](getting-started-scalar-helm-charts.mdx).
+- Deploy `kube-prometheus-stack` according to the instructions in [Getting Started with Helm Charts (Monitoring using Prometheus Operator)](getting-started-monitoring.mdx).
+- Deploy `loki-stack` according to the instructions in [Getting Started with Helm Charts (Logging using Loki Stack)](getting-started-logging.mdx).
 
-* You must deploy `kube-prometheus-stack` according to the instructions in [Getting Started with Helm Charts (Monitoring using Prometheus Operator)](getting-started-monitoring.mdx).
-* You must deploy `loki-stack` according to the instructions in [Getting Started with Helm Charts (Logging using Loki Stack)](getting-started-logging.mdx).
+## Deployment architecture diagram
 
-## What we create
-
-We will deploy the following components on a Kubernetes cluster as follows.
+The following is an architecture diagram for the components deployed in a Kubernetes cluster.
 
 ```
 +--------------------------------------------------------------------------------------------------+
@@ -60,94 +60,129 @@ We will deploy the following components on a Kubernetes cluster as follows.
 |    |                       |         Kubernetes                                                  |
 +----+-----------------------+---------------------------------------------------------------------+
      |                       |
-  expose to localhost (127.0.0.1) or use load balancer etc to access
+  Expose the environment to localhost (127.0.0.1) or use a load balancer to access it
      |                       |
-  (Access Dashboard through HTTP)
+  (Access the dashboard through HTTP)
      |                       |
 +----+----+             +----+----+
 | Browser | <-(Embed)-- + Browser |
 +---------+             +---------+
 ```
 
-## Step 1. Upgrade the `kube-prometheus-stack` to allow Grafana to be embedded
+## Step 1. Start minikube
 
-1. Add or revise this value to the custom values file (e.g. scalar-prometheus-custom-values.yaml) of the `kube-prometheus-stack`
-   ```yaml
-   kubeStateMetrics:
-     enabled: true
-   nodeExporter:
-     enabled: true
-   kubelet:
-     enabled: true
-   grafana:
-     grafana.ini:
-       users:
-         default_theme: light
-       security:
-         allow_embedding: true
-       auth.anonymous:
-         enabled: true
-         org_name: "Main Org."
-         org_role: Editor
-   ```
+Open **Terminal**, and start minikube by running the following command:
 
-1. Upgrade the Helm installation
-   ```console
-   helm upgrade scalar-monitoring prometheus-community/kube-prometheus-stack -n monitoring -f scalar-prometheus-custom-values.yaml
-   ```
+```console
+minikube start
+```
 
-## Step 2. Prepare a custom values file for Scalar Manager
+## Step 2. Upgrade the `kube-prometheus-stack` to allow Grafana to be embedded
 
-1. Create an empty .yaml file named `scalar-manager-custom-values.yaml` for `scalar-manager`.
+In your custom values file for `kube-prometheus-stack` (for example, `scalar-prometheus-custom-values.yaml`), add the following configurations or revise them if they already exist:
 
-1. Set the service type to access Scalar Manager. The default value is `ClusterIP`, but if we access using the `minikube tunnel` command or some load balancer, we can set it as `LoadBalancer`.
-   ```yaml
-   service:
-     type: LoadBalancer
-     port: 8000
-   ```
+```yaml
+kubeStateMetrics:
+  enabled: true
 
-## Step 3. Deploy `scalar-manager`
+nodeExporter:
+  enabled: true
 
-1. Deploy the `scalar-manager` Helm Chart.
-   ```console
-   helm install scalar-manager scalar-labs/scalar-manager -f scalar-manager-custom-values.yaml
-   ```
+kubelet:
+  enabled: true
 
-## Step 4. Access Scalar Manager
+grafana:
+  grafana.ini:
+    users:
+      default_theme: light
+    security:
+      allow_embedding: true
+    auth.anonymous:
+      enabled: true
+      org_name: "Main Org."
+      org_role: Editor
+```
 
-### If you use minikube
+Then, upgrade the Helm installation by running the following command:
 
-1. To expose Scalar Manager's service resource as your `localhost (127.0.0.1)`, open another terminal, and run the `minikube tunnel` command.
-   ```console
-   minikube tunnel
-   ```
+```console
+helm upgrade scalar-monitoring prometheus-community/kube-prometheus-stack -n monitoring -f scalar-prometheus-custom-values.yaml
+```
 
-1. Open the browser with URL `http://localhost:8000`
+## Step 3. Set environment variables
 
-### If you use other Kubernetes than minikube
+Set environment variables for Scalar Manager by running the following commands, replacing the contents in angle brackets as described:
 
-If you're using a Kubernetes cluster other than minikube, you'll need to access the `LoadBalancer` service according to the manner of each Kubernetes cluster. For example, you'll need to use a load balancer provided by your cloud services provider or use the `kubectl port-forward` command.
+```console
+SCALAR_MANAGER_RELEASE_NAME=<ADD_RELEASE_NAME>
+SCALAR_MANAGER_NAMESPACE=<ADD_NAMESPACE>
+SCALAR_MANAGER_CUSTOM_VALUES_FILE=<ADD_PATH_TO_CUSTOM_VALUES_FILE>
+SCALAR_MANAGER_CHART_VERSION=<ADD_CHART_VERSION>
+```
+
+## Step 4. Prepare a custom values file for Scalar Manager
+
+Prepare a custom values file for Scalar Manager by doing the following:
+
+1. Create an empty file named `scalar-manager-custom-values.yaml`.
+1. Follow the instructions in [Configure a custom values file for Scalar Manager](configure-custom-values-scalar-manager.mdx).
+
+## Step 5. Install and deploy `scalar-manager`
+
+Install and deploy the `scalar-manager` Helm Chart by running the following command:
+
+```console
+helm install ${SCALAR_MANAGER_RELEASE_NAME} scalar-labs/scalar-manager -n ${SCALAR_MANAGER_NAMESPACE} -f ${SCALAR_MANAGER_CUSTOM_VALUES_FILE} --version ${SCALAR_MANAGER_CHART_VERSION}
+```
+
+## Step 6. Access Scalar Manager
+
+How you access Scalar Manager depends on the tool that you're using for Kubernetes clusters.
+
+<Tabs groupId="kubernetes-tools" queryString>
+  <TabItem value="minikube" label="minikube" default>
+    To expose Scalar Manager's service resource as your localhost (127.0.0.1), open another terminal, and run the `minikube tunnel` command.
+
+    ```console
+    minikube tunnel
+    ```
+
+    Then, access Scalar Manager by going to http://localhost:8000.
+  </TabItem>
+  <TabItem value="other-kubernetes-clustering-tools" label="Other Kubernetes clustering tools">
+    If you're using a Kubernetes cluster other than minikube, you'll need to access the `LoadBalancer` service according to the manner of each Kubernetes cluster. For example, you'll need to use a load balancer provided by your cloud services provider or use the `kubectl port-forward` command.
 
 :::note
 
-Scalar Manager will try to detect the external IP of Grafana and then embed Grafana based on the IP. Therefore, you must configure the Grafana service type as `LoadBalancer`, and the external IP must be accessible from your browser.
+Scalar Manager will try to detect the external IP address for Grafana and then embed Grafana based on that IP address. Therefore, you must configure the Grafana service type as `LoadBalancer`, and the external IP address must be accessible from your browser.
 
 :::
-
-## Step 5. Delete Scalar Manager
-1. Uninstall `scalar-manager`
-   ```console
-   helm uninstall scalar-manager
-   ```
+  </TabItem>
+</Tabs>
 
 ## Additional details
 
 This section provides additional details related to configurations and resource discovery.
 
-### Configurations
+### Upgrade the Scalar Manager deployment
 
-You can see configurations for Scalar Manager in [Configure a custom values file for Scalar Manager](./configure-custom-values-scalar-manager.mdx)
+To upgrade the deployment of Scalar Manager, run the following command:
+
+```console
+helm upgrade ${SCALAR_MANAGER_RELEASE_NAME} scalar-labs/scalar-manager -n ${SCALAR_MANAGER_NAMESPACE} -f ${SCALAR_MANAGER_CUSTOM_VALUES_FILE} --version ${SCALAR_MANAGER_CHART_VERSION}
+```
+
+### Uninstall Scalar Manager
+
+To uninstall Scalar Manager, run the following command:
+
+```console
+helm uninstall ${SCALAR_MANAGER_RELEASE_NAME} -n ${SCALAR_MANAGER_NAMESPACE}
+```
+
+### Optional Scalar Manager configurations
+
+For optional configurations that you can set for Scalar Manager, see [Optional configurations](./configure-custom-values-scalar-manager.mdx#optional-configurations)
 
 ### Resource discovery
 
