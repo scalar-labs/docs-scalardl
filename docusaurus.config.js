@@ -137,6 +137,22 @@ const config = {
             to: '/docs/latest/releases/release-support-policy',
             from: '/docs/releases/release-support-policy',
           },
+          {
+            to: '/docs/latest/helm-charts/getting-started-scalar-manager',
+            from: '/docs/latest/helm-charts/how-to-deploy-scalar-manager',
+          },
+          {
+            to: '/docs/3.8/helm-charts/getting-started-scalar-manager',
+            from: '/docs/3.8/helm-charts/how-to-deploy-scalar-manager',
+          },
+          {
+            to: '/docs/ja-jp/latest/helm-charts/getting-started-scalar-manager',
+            from: '/docs/ja-jp/latest/helm-charts/how-to-deploy-scalar-manager',
+          },
+          {
+            to: '/docs/ja-jp/3.8/helm-charts/getting-started-scalar-manager',
+            from: '/docs/ja-jp/3.8/helm-charts/how-to-deploy-scalar-manager',
+          },
         ],
         createRedirects(existingPath) {
           if (existingPath.includes('/ja-jp/docs')) {
