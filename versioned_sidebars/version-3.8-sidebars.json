@@ -12,7 +12,8 @@
       "items": [
         "overview",
         "design",
-        "implementation"
+        "implementation",
+        "requirements"
       ]
     },
     {
