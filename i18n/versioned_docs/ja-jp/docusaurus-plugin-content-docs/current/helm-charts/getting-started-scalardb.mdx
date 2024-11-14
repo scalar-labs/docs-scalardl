@@ -213,7 +213,7 @@ ScalarDB は、バックエンド データベースとして何らかのデー�
 
 1. Kubernetes クラスター上でクライアント コンテナーを起動します。
    ```console
-   kubectl run scalardb-client --image eclipse-temurin:8 --command sleep inf
+   kubectl run scalardb-client --image eclipse-temurin:8-jdk --command sleep inf
    ```
 
 1. クライアントコンテナが実行されているかどうかを確認します。
