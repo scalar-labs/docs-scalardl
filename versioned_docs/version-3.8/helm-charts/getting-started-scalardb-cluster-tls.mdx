@@ -458,7 +458,7 @@ You'll use the CA certificate file in a client container. Therefore, you'll need
    spec:
      containers:
        - name: scalardb-cluster-client
-         image: eclipse-temurin:8
+         image: eclipse-temurin:8-jre-jammy
          command: ['sleep']
          args: ['inf']
          env:
