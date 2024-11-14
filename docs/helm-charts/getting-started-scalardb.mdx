@@ -209,7 +209,7 @@ You can deploy PostgreSQL on the Kubernetes cluster as follows.
 
 1. Start a Client container on the Kubernetes cluster.
    ```console
-   kubectl run scalardb-client --image eclipse-temurin:8 --command sleep inf
+   kubectl run scalardb-client --image eclipse-temurin:8-jdk --command sleep inf
    ```
 
 1. Check if the Client container is running.
