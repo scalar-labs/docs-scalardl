@@ -642,7 +642,7 @@ You'll use the CA certificate file in a client container. Therefore, you'll need
    spec:
      containers:
        - name: scalardl-client
-         image: eclipse-temurin:8
+         image: eclipse-temurin:8-jdk
          command: ['sleep']
          args: ['inf']
          env:

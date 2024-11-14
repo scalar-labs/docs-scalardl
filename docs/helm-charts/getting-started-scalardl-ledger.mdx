@@ -408,7 +408,7 @@ We will use certificate files in a Client container. So, we create a secret reso
    spec:
      containers:
        - name: scalardl-client
-         image: eclipse-temurin:8
+         image: eclipse-temurin:8-jdk
          command: ['sleep']
          args: ['inf']
          volumeMounts:
