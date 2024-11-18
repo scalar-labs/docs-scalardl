@@ -228,7 +228,6 @@
       "collapsible": true,
       "items": [
         "compatibility",
-        "scalardb-versions",
         "scalardl-benchmarks/README"
       ]
     },
