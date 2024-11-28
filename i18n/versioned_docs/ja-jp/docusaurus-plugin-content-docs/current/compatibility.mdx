@@ -19,6 +19,15 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 | 3.9                                | 3.0 - 3.9                           |
 | 3.8                                | 3.0 - 3.8                           |
 
+:::note
+
+- クライアントツール ([ScalarDL Client Command](./scalardl-command-reference.mdx) および [ScalarDL Schema Loader](./schema-loader.mdx)) は、ScalarDL Java Client SDK と同じものとみなすことができます。つまり、クライアントツールには ScalarDL Java Client SDK と同じ互換性ルールを適用できます。
+- ScalarDL の新しいデプロイメントを作成する場合は、ScalarDL のバージョンと同じバージョンの ScalarDL Schema Loader を使用することをお勧めします。
+- ScalarDL のマイナーバージョンまたはパッチバージョンをアップグレードする場合、基本的に既存のスキーマを更新する必要はありません。つまり、基本的に、ScalarDL のマイナーバージョンまたはパッチバージョンをアップグレードするときに、ScalarDL Schema Loader を再実行する必要はありません。
+- ScalarDL が新しいマイナーバージョンで提供する新しい機能を使用する場合は、同じバージョンまたはそれ以降のバージョンのクライアントツールの利用、もしくは既存のスキーマの再作成 (または更新) が必要となる場合があります。詳細については、各機能の関連ドキュメントを参照してください。
+
+:::
+
 ### バージョンスキューポリシー
 
 - ScalarDL とクライアント SDK の **メジャー** バージョンが異なる場合、互換性がなく、**サポートされません**。
