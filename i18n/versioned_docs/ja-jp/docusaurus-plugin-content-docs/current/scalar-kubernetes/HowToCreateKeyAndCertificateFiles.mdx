@@ -1,0 +1,150 @@
+---
+tags:
+  - Enterprise Standard
+  - Enterprise Premium
+---
+
+# Scalar 製品で TLS 接続に利用する秘密鍵と証明書ファイルを作成する方法
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このガイドでは、ScalarDB Cluster および ScalarDL で TLS 接続に利用する秘密鍵と証明書ファイルを作成する方法について説明します。TLS 機能を有効にする場合は、秘密鍵と証明書ファイルを準備する必要があります。
+
+## 証明書の要件
+
+* 秘密鍵と証明書ファイルのアルゴリズムとしては `RSA` または `ECDSA` のみ使用可能です。
+
+## サンプルの秘密キーと証明書ファイルを作成する手順の例
+
+[`cfssl` および `cfssljson`](https://github.com/cloudflare/cfssl) を使用して、サンプルの秘密キーと証明書ファイルを作成できます。 `cfssl` と `cfssljson` をまだインストールしていない場合は、まずインストールしてください。
+
+:::note
+
+* `openssl` などの他のツールを使用して、秘密鍵と証明書ファイルを作成することもできます。 あるいは、サードパーティ CA またはプライベート CA の管理者に本番環境用の秘密キーと証明書の作成を依頼することもできます。
+* この例では自己署名証明書を作成します。 ただし、これらの証明書を運用環境では使用しないことを強くお勧めします。 セキュリティ要件に基づいて実稼働環境用の証明書ファイルを作成するように、信頼できる発行者 (パブリック CA またはプライベート CA) に依頼してください。
+
+:::
+
+1. 作業ディレクトリを作成します。
+
+   ```console
+   mkdir -p ${HOME}/scalar/example/certs/
+   ```
+
+1. 作業ディレクトリを `${HOME}/scalar/example/certs/` ディレクトリに変更します。
+
+   ```console
+   cd ${HOME}/scalar/example/certs/
+   ```
+
+1. CA の情報を含む JSON ファイルを作成します。
+
+   ```console
+   cat << 'EOF' > ${HOME}/scalar/example/certs/ca.json
+   {
+       "CN": "scalar-example-ca",
+       "key": {
+           "algo": "ecdsa",
+           "size": 256
+       },
+       "names": [
+           {
+               "C": "JP",
+               "ST": "Tokyo",
+               "L": "Shinjuku",
+               "O": "Scalar Example CA"
+           }
+       ]
+   }
+   EOF
+   ```
+
+1. CA の秘密鍵と証明書ファイルを作成します。
+
+   ```console
+   cfssl gencert -initca ca.json | cfssljson -bare ca
+   ```
+
+1. CA の設定情報を含む JSON ファイルを作成します。
+
+   ```console
+   cat << 'EOF' > ${HOME}/scalar/example/certs/ca-config.json
+   {
+       "signing": {
+           "default": {
+               "expiry": "87600h"
+           },
+           "profiles": {
+               "scalar-example-ca": {
+                   "expiry": "87600h",
+                   "usages": [
+                       "signing",
+                       "key encipherment",
+                       "server auth"
+                   ]
+               }
+           }
+       }
+   }
+   EOF
+   ```
+
+1. サーバーの情報を含む JSON ファイルを作成します。
+
+   ```console
+   cat << 'EOF' > ${HOME}/scalar/example/certs/server.json
+   {
+       "CN": "scalar-example-server",
+       "hosts": [
+           "server.scalar.example.com",
+           "localhost"
+       ],
+       "key": {
+           "algo": "ecdsa",
+           "size": 256
+       },
+       "names": [
+           {
+               "C": "JP",
+               "ST": "Tokyo",
+               "L": "Shinjuku",
+               "O": "Scalar Example Server"
+           }
+       ]
+   }
+   EOF
+   ```
+
+1. サーバーの秘密キーと証明書ファイルを作成します。
+
+   ```console
+   cfssl gencert -ca ca.pem -ca-key ca-key.pem -config ca-config.json -profile scalar-example-ca server.json | cfssljson -bare server
+   ```
+
+1. 秘密キーと証明書ファイルが作成されたことを確認します。
+
+   ```console
+   ls -1
+   ```
+
+   [コマンド実行結果]
+
+   ```console
+   ca-config.json
+   ca-key.pem
+   ca.csr
+   ca.json
+   ca.pem
+   server-key.pem
+   server.csr
+   server.json
+   server.pem
+   ```
+
+   この場合：
+
+    * `server-key.pem` は秘密鍵ファイルです。
+    * `server.pem` は証明書ファイルです。
+    * `ca.pem` はルート CA 証明書ファイルです。

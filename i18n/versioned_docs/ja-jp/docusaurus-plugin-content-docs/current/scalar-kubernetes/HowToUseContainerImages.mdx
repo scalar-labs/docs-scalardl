@@ -1,0 +1,138 @@
+---
+tags:
+  - Enterprise Standard
+  - Enterprise Premium
+---
+
+# コンテナイメージの使用方法
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+パブリックコンテナリポジトリからコンテナイメージをプルできます。 コンテナイメージを使用する場合は、`.properties` ファイルにライセンスキーと証明書を設定する必要があります。
+
+## 前提条件
+
+パブリックコンテナイメージは、次の製品とバージョンで利用できます。
+
+* ScalarDB Cluster v3.12 以降
+* ScalarDL v3.9 以降
+
+## パブリックコンテナリポジトリからコンテナイメージをプルします。
+
+各製品のコンテナイメージをパブリックコンテナリポジトリからプルできます。コンテナイメージをプルするには、Scalar 製品を選択して、コンテナイメージへのリンクを表示します。
+
+<Tabs groupId="products" queryString>
+  <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+    ScalarDB Enterprise のエディションを選択します。
+    <Tabs groupId="editions" queryString>
+      <TabItem value="scalardb-enterprise-standard" label="ScalarDB Enterprise Edition (Standard)" default>
+        https://github.com/orgs/scalar-labs/packages/container/package/scalardb-cluster-node-byol-standard
+      </TabItem>
+      <TabItem value="scalardb-enterprise-premium" label="ScalarDB Enterprise Edition (Premium)">
+        https://github.com/orgs/scalar-labs/packages/container/package/scalardb-cluster-node-byol-premium
+      </TabItem>
+    </Tabs>
+  </TabItem>
+  <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
+    https://github.com/orgs/scalar-labs/packages/container/package/scalardl-ledger-byol
+  </TabItem>
+  <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+    https://github.com/orgs/scalar-labs/packages/container/package/scalardl-auditor-byol
+  </TabItem>
+</Tabs>
+
+Scalar Helm Chart を使用する場合は、カスタム値ファイルに `*.image.repository` を次のように設定してください。Scalar 製品を選択して、`*.image.repository` を設定する方法を確認してください。
+
+<Tabs groupId="products" queryString>
+  <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+    ScalarDB Enterprise のエディションを選択します。
+    <Tabs groupId="editions" queryString>
+      <TabItem value="scalardb-enterprise-standard" label="ScalarDB Enterprise Edition (Standard)" default>
+        ```yaml
+        scalardbCluster:
+          image:
+            repository: "ghcr.io/scalar-labs/scalardb-cluster-node-byol-standard"
+        ```
+      </TabItem>
+      <TabItem value="scalardb-enterprise-premium" label="ScalarDB Enterprise Edition (Premium)">
+        ```yaml
+        scalardbCluster:
+          image:
+            repository: "ghcr.io/scalar-labs/scalardb-cluster-node-byol-premium"
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+  <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
+    ```yaml
+    ledger:
+      image:
+        repository: "ghcr.io/scalar-labs/scalardl-ledger-byol"
+    ```
+  </TabItem>
+  <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+    ```yaml
+    auditor:
+      image:
+        repository: "ghcr.io/scalar-labs/scalardl-auditor-byol"
+    ```
+  </TabItem>
+</Tabs>
+
+## `.properties` ファイルにライセンスキーを設定します
+
+コンテナイメージを実行するには、`.properties` ファイルに `ライセンスキー` と `証明書` を設定する必要があります。Scalar 製品を選択して、`license key` と `certificate` を設定する方法を確認してください。ライセンスキーをお持ちでない場合は、[お問い合わせ](https://www.scalar-labs.com/contact) までご連絡ください。
+
+<Tabs groupId="products" queryString>
+  <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+    ```properties
+    scalar.db.cluster.node.licensing.license_key=<YOUR_LICENSE_KEY>
+    scalar.db.cluster.node.licensing.license_check_cert_pem=<CERT_PEM_FOR_LICENSE_KEY>
+    ```
+  </TabItem>
+  <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
+    ```properties
+    scalar.dl.licensing.license_key=<YOUR_LICENSE_KEY>
+    scalar.dl.licensing.license_check_cert_pem=<CERT_PEM_FOR_LICENSE_KEY>
+    ```
+  </TabItem>
+  <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+    ```properties
+    scalar.dl.licensing.license_key=<YOUR_LICENSE_KEY>
+    scalar.dl.licensing.license_check_cert_pem=<CERT_PEM_FOR_LICENSE_KEY>
+    ```
+  </TabItem>
+</Tabs>
+
+Scalar Helm Chart を使用する場合は、カスタム値ファイルのプロパティを次のように設定してください。Scalar 製品を選択して、カスタム値ファイルでプロパティを設定する方法を確認します。
+
+<Tabs groupId="products" queryString>
+  <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+    ```yaml
+    scalardbCluster:
+      scalardbClusterNodeProperties: |
+        scalar.db.cluster.node.licensing.license_key=<YOUR_LICENSE_KEY>
+        scalar.db.cluster.node.licensing.license_check_cert_pem=<CERT_PEM_FOR_LICENSE_KEY>
+    ```
+  </TabItem>
+  <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
+    ```yaml
+    ledger:
+      ledgerProperties: |
+        scalar.dl.licensing.license_key=<YOUR_LICENSE_KEY>
+        scalar.dl.licensing.license_check_cert_pem=<CERT_PEM_FOR_LICENSE_KEY>
+    ```
+  </TabItem>
+  <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+    ```yaml
+    auditor:
+      auditorProperties: |
+        scalar.dl.licensing.license_key=<YOUR_LICENSE_KEY>
+        scalar.dl.licensing.license_check_cert_pem=<CERT_PEM_FOR_LICENSE_KEY>
+    ```
+  </TabItem>
+</Tabs>

@@ -1,0 +1,156 @@
+---
+tags:
+  - Enterprise Standard
+  - Enterprise Premium
+---
+
+# Envoy アラート
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+## EnvoyClusterDown
+
+これは最も重要なアラートであり、Envoy クラスターがリクエストを処理できないことを示します。 このアラートは最優先で処理する必要があります。
+
+### アラートの例
+
+#### ファイアリング
+
+```
+[FIRING:1] EnvoyClusterDown - critical
+Alert: Envoy cluster is down - critical
+ Description: Envoy cluster is down, no resquest can be process
+ Details:
+  • alertname: EnvoyClusterDown
+  • deployment: prod-scalardl-envoy
+```
+
+#### 解決済み
+
+```
+[RESOLVED] EnvoyClusterDown - critical
+Alert: Envoy cluster is down - critical
+ Description: Envoy cluster is down, no resquest can be process
+ Details:
+  • alertname: EnvoyClusterDown
+  • deployment: prod-scalardl-envoy
+```
+
+### 必要なアクション
+
+* `kubectl get deployments. prod-scalardl-envoy` で設定されたレプリカの数を確認します。
+* `kubectl describe deployments. prod-scalardl-envoy` はデプロイメントを説明するために設定されたレプリカの数を確認します。
+* `kubectl get node -o wide` でノードのステータスを確認します。
+* ログ サーバーをチェックして、モニター サーバー `/log/kubernetes/<year>/<month>-<day>/kube.log` 上の kubernetes ログで障害の根本原因を特定します。
+* 既知の問題があるかどうかをクラウド プロバイダーに確認してください。 たとえば、Azure の彫像は [ここ](https://status.azure.com/en-us/status) で確認できます。
+
+## EnvoyClusterDegraded
+
+このアラートは、Kubernetes クラスターが Envoy ポッドを開始できないかどうかを示します。これは、クラスターにデプロイメントを実行するための十分なリソースがない、または 1 つまたは複数の Kubernetes ノードが失われたことを意味します。
+
+### アラートの例
+
+#### ファイアリング
+
+```
+[FIRING:1] EnvoyClusterDegraded - warning
+Alert: Envoy cluster is running in a degraded mode - warning
+ Description: Envoy cluster is running in a degraded mode, some of the Envoy pods are not healthy
+ Details:
+  • alertname: EnvoyClusterDegraded
+  • deployment: prod-scalardl-envoy
+```
+
+#### 解決済み
+
+```
+[RESOLVED] EnvoyClusterDegraded - warning
+Alert: Envoy cluster is running in a degraded mode - warning
+ Description: Envoy cluster is running in a degraded mode, some of the Envoy pods are not healthy
+ Details:
+  • alertname: EnvoyClusterDegraded
+  • deployment: prod-scalardl-envoy
+```
+
+### 必要なアクション
+
+* ログ サーバーをチェックして、モニター サーバー `/log/kubernetes/<year>/<month>-<day>/kube.log` または  `kubectl logs prod-scalardl-envoy-xxxx-yyyy`  上の kubernetes ログに関する障害の根本原因を特定します。
+* `kubectl describe deployments prod-scalardl-envoy` で kubernetes のデプロイメントを確認します。
+* `kubectl get replicasets.apps` でレプリカ セットを確認します。
+* `kubectl get node -o wide` でノードのステータスを確認します。
+* 既知の問題があるかどうかをクラウド プロバイダーに確認してください。 たとえば、Azure の彫像は [ここ](https://status.azure.com/en-us/status) で確認できます。
+
+## EnvoyPodsPending
+
+このアラートは、kubernetes クラスターが Envoy ポッドを開始できないかどうか、つまりクラスターに十分なリソースがないことを示します。
+
+### アラートの例
+
+#### ファイアリング
+
+```
+[FIRING:1] EnvoyPodsPending - warning
+Alert: Pod prod-scalardl-envoy-xxxx-yyyy in namespace default in pending status - warning
+ Description: Pod prod-scalardl-envoy-xxxx-yyyy in namespace default has been in pending status for more than 1 minute.
+ Details:
+  • alertname: EnvoyPodsPending
+  • deployment: prod-scalardl-envoy
+```
+
+#### 解決済み
+
+```
+[RESOLVED:1] EnvoyPodsPending - warning
+Alert: Pod prod-scalardl-envoy-xxxx-yyyy in namespace default in pending status - warning
+ Description: Pod prod-scalardl-envoy-xxxx-yyyy in namespace default has been in pending status for more than 1 minute.
+ Details:
+  • alertname: EnvoyPodsPending
+  • deployment: prod-scalardl-envoy
+```
+
+### 必要なアクション
+
+* ログ サーバーをチェックして、モニター サーバー `/log/kube/<date>/*.log` 上の kubernetes ログに関する障害の根本原因を特定します。
+* `kubectl describe pod prod-scalardl-envoy-xxxx-yyyy` で Kubernetes デプロイメントを確認します。
+
+## EnvoyPodsError
+
+このアラートは、次のいずれかの理由で Kubernetes クラスターが Envoy ポッドを開始できないかどうかを知らせます。
+
+* CrashLoopBackOff
+* CreateContainerConfigError
+* CreateContainerError
+* ErrImagePull
+* ImagePullBackOff
+* InvalidImageName
+
+### アラートの例
+
+#### ファイアリング
+
+```
+[FIRING:1] EnvoyPodsError - warning
+Alert: Pod prod-scalardl-envoy-xxxx-yyyy in namespace default has an error status - warning
+ Description: Pod prod-scalardl-envoy-xxxx-yyyy in namespace default has been in pending status for more than 1 minutes.
+ Details:
+  • alertname: EnvoyPodsError
+  • deployment: prod-scalardl-envoy
+```
+
+#### 解決済み
+
+```
+[RESOLVED:1] EnvoyPodsError - warning
+Alert: Pod prod-scalardl-envoy-xxxx-yyyy in namespace default has an error status - warning
+ Description: Pod prod-scalardl-envoy-xxxx-yyyy in namespace default has been in pending status for more than 1 minutes.
+ Details:
+  • alertname: EnvoyPodsError
+  • deployment: prod-scalardl-envoy
+```
+
+### 必要なアクション
+
+* `kubectl describe pod prod-scalardl-envoy-xxxx-yyyy` で Kubernetes デプロイメントを確認します。
+* ログ サーバーをチェックして、モニター サーバー `/log/kubernetes/<year>/<month>-<day>/kube.log` 上の kubernetes ログで障害の根本原因を特定します。

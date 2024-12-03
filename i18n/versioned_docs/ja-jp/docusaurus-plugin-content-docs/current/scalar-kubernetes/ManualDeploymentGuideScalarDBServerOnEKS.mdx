@@ -1,0 +1,66 @@
+---
+tags:
+  - Enterprise Standard
+  - Enterprise Premium
+  - Deprecated
+---
+
+# ScalarDB Server を Amazon Elastic Kubernetes Service (EKS) にデプロイする
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このガイドでは、Amazon Elastic Kubernetes Service (EKS) に ScalarDB Server をデプロイする方法について説明します。
+
+このガイドでは、AWS 環境に次の 2 つの環境のいずれかを作成します。 2 つの環境の違いは、アプリケーションのデプロイをどのように計画するかです。
+
+* アプリケーションを ScalarDB Server デプロイメントと同じ EKS クラスターにデプロイします。 この場合、アプリケーションから Scalar Envoy にアクセスするために AWS が提供するロードバランサーを使用する必要はありません。
+
+  ![image](./images/png/EKS_ScalarDB_Server_App_In_Cluster.drawio.png)  
+
+* ScalarDB Server デプロイメントを含む EKS クラスターとは異なる環境にアプリケーションをデプロイします。 この場合、アプリケーションから Scalar Envoy にアクセスするには、AWS が提供するロードバランサーを使用する必要があります。
+
+  ![image](./images/png/EKS_ScalarDB_Server_App_Out_Cluster.drawio.png)  
+
+## ステップ 1. AWS Marketplace で ScalarDB Server にサブスクライブする
+
+[AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2) にアクセスし、ScalarDB Server をサブスクライブして、ScalarDB Server コンテナ イメージを取得する必要があります。 AWS Marketplace で ScalarDB Server をサブスクライブする方法の詳細については、[AWS Marketplace から Scalar 製品を購読する](AwsMarketplaceGuide.mdx#aws-marketplace-から-scalar-製品を購読する) を参照してください。
+
+## ステップ 2. EKS クラスターを作成する
+
+ScalarDB Server デプロイメント用の EKS クラスターを作成する必要があります。 詳細については、[Scalar 製品用の Amazon EKS クラスターを作成するためのガイドライン](CreateEKSClusterForScalarProducts.mdx) を参照してください。
+
+## ステップ 3. ScalarDB Server のデータベースをセットアップする
+
+ScalarDB Server を展開する前にデータベースを準備する必要があります。 ScalarDB がサポートするデータベースのタイプを確認するには、[ScalarDB Supported Databases](https://scalardb.scalar-labs.com/docs/latest/requirements#databases) を参照してください。
+
+データベースのセットアップの詳細については、[AWS での ScalarDB/ScalarDL デプロイ用のデータベースのセットアップ](SetupDatabaseForAWS.mdx) を参照してください。
+
+## ステップ 4. 要塞サーバーを作成する
+
+EKS 上で ScalarDB Server をデプロイおよび管理するためのいくつかのツールを実行するには、**ステップ 2** で作成した EKS クラスターの同じ Amazon Virtual Private Cloud (VPC) 内に要塞サーバーを準備する必要があります。 詳細については、[要塞サーバーの作成](CreateBastionServer.mdx) を参照してください。
+
+## ステップ 5. Scalar Helm Chartのカスタム値ファイルを準備する
+
+**ステップ 3** で作成したデータベース内の情報へのアクセスなどのタスクを実行するには、環境に基づいて ScalarDB Server の Scalar Helm Chartのカスタム値ファイルを構成する必要があります。 詳細については、[Configure a custom values file for Scalar Helm Charts](../helm-charts/configure-custom-values-file.mdx) を参照してください。
+
+**注意:** ScalarDB Server がデプロイされている EKS クラスターとは異なる環境にアプリケーションをデプロイする場合は、`envoy.service.type` パラメーターを `LoadBalancer` に設定して、ユーザーから Scalar Envoy にアクセスする必要があります。 応用。
+
+## ステップ 6. Scalar Helm Chart を使用して ScalarDB Server をデプロイする
+
+ScalarDB Server の Helm Chart を使用して、ScalarDB Server を EKS クラスターにデプロイします。 詳細については、[Deploy Scalar products using Scalar Helm Charts](../helm-charts/how-to-deploy-scalar-products.mdx) を参照してください。
+
+**注意:** `kubectl create ns scalardb` コマンドを使用して専用の名前空間を作成し、`helm install` コマンドで `-n scalardb` オプションを使用して名前空間に ScalarDB Server をデプロイすることをお勧めします。
+
+## ステップ 7. ScalarDB Server デプロイメントのステータスを確認する
+
+EKS クラスターに ScalarDB Server をデプロイした後、各コンポーネントのステータスを確認する必要があります。 詳細については、[Kubernetes環境で実行する場合に定期的に確認するコンポーネント](RegularCheck.mdx) を参照してください。
+
+## ステップ 8. ScalarDB Server の展開を監視する
+
+EKS クラスターに ScalarDB Server をデプロイした後、特に本番環境では、デプロイされたコンポーネントを監視し、そのログを収集することをお勧めします。 詳細については、[Kubernetes クラスター上の Scalar 製品の監視](K8sMonitorGuide.mdx) および [Kubernetes クラスター上の Scalar 製品からのログの収集](K8sLogCollectionGuide.mdx) を参照してください。
+
+## ScalarDB Server を EKS から削除する
+
+作成した環境を削除する場合は、作成時とは逆の順序ですべてのリソースを削除してください。

@@ -1,0 +1,129 @@
+---
+---
+
+# ScalarDL Ledger および ScalarDL Auditor 用の AKS クラスターを作成するためのガイドライン
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このドキュメントでは、ScalarDL Ledger および ScalarDL Auditor のデプロイ用の Azure Kubernetes Service (AKS) クラスターを作成するための要件と推奨事項について説明します。 AKS クラスターに ScalarDL Ledger と ScalarDL Auditor をデプロイする方法の詳細については、[AKS に ScalarDL Ledger と ScalarDL Auditor をデプロイする](ManualDeploymentGuideScalarDLAuditorOnAKS.mdx) を参照してください。
+
+## あなたが始める前に
+
+次の要件、推奨事項、およびプロジェクトの要件に基づいて AKS クラスターを作成する必要があります。 AKS クラスターの作成方法の詳細については、環境で使用しているツールに基づいて、次の Microsoft 公式ドキュメントを参照してください。
+
+* [Azure CLI](https://learn.microsoft.com/ja-jp/azure/aks/learn/quick-kubernetes-deploy-cli)
+* [PowerShell](https://learn.microsoft.com/ja-jp/azure/aks/learn/quick-kubernetes-deploy-powershell)
+* [Azure portal](https://learn.microsoft.com/ja-jp/azure/aks/learn/quick-kubernetes-deploy-portal)
+
+## 要件
+
+ScalarDL Ledger と ScalarDL Auditor を展開する場合は、次のことを行う必要があります。
+
+* [サポートされている Kubernetes バージョン](https://scalardb.scalar-labs.com/docs/latest/requirements/#kubernetes) を使用して 2 つの AKS クラスターを作成します。
+  * ScalarDL Ledger 用の 1 つの AKS クラスター
+  * ScalarDL Auditor 用の 1 つの AKS クラスター
+* Kubernetes のバージョンとプロジェクトの要件に基づいて AKS クラスターを構成します。
+  * 仮想ネットワーク(VNet) は以下のように設定します。
+  * [Virtual network peering](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering) を使用して、**AKS の VNet (Ledger 用)** と **AKS の VNet (Auditor 用)** を接続します。 これを行うには、VNet の作成時に **AKS の VNet (Ledger 用)** と **AKS の VNet (Auditor 用)** に異なる IP 範囲を指定する必要があります。
+  * ScalarDL (Auditor モード) が適切に動作するように **Ledger と Auditor 間の接続**を許可します。
+  * これらのネットワーク要件の詳細については、[ScalarDL Auditor Mode のネットワーク ピアリングの構成](NetworkPeeringForScalarDLAuditor.mdx) を参照してください。
+
+:::warning
+
+ScalarDL でのビザンチン障害検出が適切に機能するには、ScalarDL Ledger および ScalarDL Auditor のデプロイと同じ AKS クラスターにアプリケーション ポッドをデプロイしないでください。
+
+:::
+
+## 推奨事項 (オプション)
+
+以下は、ScalarDL Ledger および ScalarDL Auditor を展開するための推奨事項の一部です。 これらの推奨事項は必須ではないため、ニーズに基づいてこれらの推奨事項を適用するかどうかを選択できます。
+
+### AKS クラスターごとに少なくとも 3 つのワーカーノードと 3 つのポッドを作成します。
+
+AKS クラスターの高可用性を確保するには、少なくとも 3 つのワーカーノードを使用し、ワーカーノード全体に少なくとも 3 つのポッドをデプロイする必要があります。 ワーカーノードに3つのPodを分散させるための `podAntiAffinity` の [ScalarDL Ledgerサンプル設定](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardl-custom-values.yaml) と [ScalarDL Auditorサンプル設定](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardl-audit-custom-values.yaml) をご覧ください。
+
+:::note
+
+ワーカーノードを異なる [アベイラビリティ ゾーン](https://learn.microsoft.com/en-us/azure/availability-zones/az-overview) (AZ) に配置すると、AZ の障害に耐えることができます。
+
+:::
+
+### ScalarDL Ledger および ScalarDL Auditor ノード プールのワーカーノードには 4vCPU / 8GB メモリ ノードを使用します。
+
+商用ライセンスの観点から、ScalarDL Ledger または ScalarDL Auditor を実行する各ポッドのリソースは 2vCPU / 4GB メモリに制限されます。 ScalarDL Ledger および ScalarDL Auditor ポッドに加えて、Kubernetes は次のコンポーネントの一部を各ワーカーノードにデプロイできます。
+
+* ScalarDL Ledger の AKS クラスター
+  * ScalarDL Ledger ポッド (2vCPU / 4GB)
+  * Envoy プロキシ
+  * 監視コンポーネント (`kube-prometheus-stack` などの監視コンポーネントをデプロイする場合)
+  * Kubernetes コンポーネント
+* ScalarDL Auditor 用の AKS クラスター
+  * ScalarDL Auditor ポッド (2vCPU / 4GB)
+  * Envoy プロキシ
+  * 監視コンポーネント (`kube-prometheus-stack` などの監視コンポーネントをデプロイする場合)
+  * Kubernetes コンポーネント
+
+これを念頭に置き、[少なくとも 3 つのワーカーノードと 3 つのポッドを作成する](#create-at-least-three-worker-nodes-and-three-pods-per-aks-cluster) で説明されているように、少なくとも 4vCPU / 8 GB のメモリ リソースを持つワーカーノードを使用し、可用性のために少なくとも 3 つのワーカーノードを使用する必要があります。 また、ビザンチン障害検出が適切に機能するには、ScalarDL Ledger および ScalarDL Auditor のデプロイと同じ AKS クラスターにアプリケーション ポッドをデプロイできないことに注意してください。
+
+ただし、ノードあたり少なくとも 4vCPU / 8GB のメモリ リソースを備えた 3 つのノードが運用環境の最小環境となります。 また、システムのワークロードに応じて、AKS クラスターのリソース (ワーカーノードの数、ノードあたりの vCPU、ノードあたりのメモリ、ScalarDL Ledger ポッド、ScalarDL Auditor ポッドなど) も考慮する必要があります。 また、[Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) などの機能を使用してポッドを自動的にスケーリングする予定の場合は、ワーカーノードのリソースを決定するときにワーカーノード上の最大ポッド数を考慮する必要があります。
+
+### ScalarDL Ledger および ScalarDL Auditor ポッドのノード プールを作成する
+
+AKS は、既定でシステム ポッド (AKS を実行し続けるために使用される) に優先される **agentpool** という名前のシステム ノード プールを 1 つ作成します。 ScalarDL Ledger および ScalarDL Auditor ポッド用に **user** モードで追加のノード プールを作成し、それらの追加のノード プールに ScalarDL Ledger および ScalarDL Auditor ポッドをデプロイすることをお勧めします。
+
+### AKS でクラスター オートスケーラーを構成する
+
+[Horizontal Pod Autoscaler)](https://learn.microsoft.com/en-us/azure/aks/concepts-scale#horizontal-pod-autoscaler) を使用して ScalarDL Ledger および ScalarDL Auditor ポッドを自動的にスケーリングする場合は、AKS でもクラスター オートスケーラーを構成する必要があります。 詳細については、Microsoft の公式ドキュメント [Cluster autoscaler](https://learn.microsoft.com/en-us/azure/aks/concepts-scale#cluster-autoscaler) を参照してください。
+
+さらに、クラスター オートスケーラーを構成する場合は、AKS がスケーリング後にネットワークの問題なく動作できるように、十分な数の IP が存在することを確認するために AKS 用の VNet にサブネットを作成する必要があります。 必要な IP の数は、ネットワーク プラグインによって異なります。 必要な IP 数の詳細については、以下を参照してください。
+
+* [Use kubenet networking with your own IP address ranges in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/configure-kubenet)
+* [Configure Azure CNI networking in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/configure-azure-cni)
+
+### プライベート ネットワーク上に AKS クラスターを作成する
+
+ScalarDL Ledger と ScalarDL Auditor はインターネット アクセス経由でユーザーに直接サービスを提供しないため、プライベート ネットワーク (VNet のプライベート サブネット) 上に AKS クラスターを作成する必要があります。 アプリケーションからプライベート ネットワーク経由で ScalarDL Ledger および ScalarDL Auditor にアクセスすることをお勧めします。
+
+### 必要に応じて、Azure CNI を使用して AKS クラスターを作成します。
+
+AKS の既定のネットワーク プラグインは [kubenet](https://learn.microsoft.com/en-us/azure/aks/configure-kubenet) です。 要件が kubenet と一致しない場合は、[Azure Container Networking Interface (CNI)](https://learn.microsoft.com/en-us/azure/aks/configure-azure-cni) を使用する必要があります。
+
+たとえば、複数の ScalarDL Ledger 環境と ScalarDL Auditor 環境を 2 つの AKS クラスターではなく 1 つの AKS クラスターのみにデプロイし (マルチテナントの ScalarDL をデプロイするなど)、[Kubernetes NetworkPolicies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) を使用して各テナント間の接続を制御する場合、kubenet は Calico ネットワーク ポリシーのみ。[Azure サポート チームはサポートしていません](https://learn.microsoft.com/en-us/azure/aks/use-network-policies#differences-between-azure-network-policy-manager-and-calico-network-policy-and-their-capabilities)。 Calico ネットワーク ポリシーは、Calico コミュニティまたは追加の有料サポートを通じてのみサポートされることに注意してください。
+
+ただし、Azure サポート チームとエンジニアリング チームは Azure CNI をサポートします。 したがって、Kubernetes NetworkPolicies を使用して Azure サポート チームからサポートを受けたい場合は、Azure CNI を使用する必要があります。 kubenet と Azure CNI の違いの詳細については、次の Microsoft 公式ドキュメントを参照してください。
+
+* [Network concepts for applications in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/concepts-network)
+* [Use kubenet networking with your own IP address ranges in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/configure-kubenet)
+* [Configure Azure CNI networking in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/configure-azure-cni)
+
+### 要件に基づいていくつかのセキュリティ機能を使用して接続を制限する
+
+ScalarDL および ScalarDL Auditor では、未使用の接続を制限する必要があります。 未使用の接続を制限するには、[network security groups](https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview) などの Azure のセキュリティ機能を使用できます。
+
+ScalarDL Ledger および ScalarDL Auditor がデフォルトで使用する接続 (ポート) は次のとおりです。
+
+* ScalarDL Ledger
+  * 50051/TCP (クライアントおよび ScalarDL Auditor からのリクエストを受け入れる)
+  * 50052/TCP (クライアントおよび ScalarDL Auditor からの特権リクエストを受け入れます)
+  * 50053/TCP (scalar-admin クライアント ツールからの一時停止/一時停止解除リクエストを受け入れます)
+  * 8080/TCP (監視リクエストを受け付ける)
+* ScalarDL Auditor
+  * 40051/TCP (クライアントからのリクエストを受け付ける)
+  * 40052/TCP (クライアントからの特権リクエストを受け入れます)
+  * 40053/TCP (scalar-admin クライアント ツールからの一時停止および一時停止解除リクエストを受け入れます)
+  * 8080/TCP (監視リクエストを受け付ける)
+* Scalar Envoy (ScalarDL Ledger および ScalarDL Auditor とともに使用)
+  * 50051/TCP (ScalarDL Ledger の負荷分散)
+  * 50052/TCP (ScalarDL Ledger の負荷分散)
+  * 40051/TCP (ScalarDL Auditor の負荷分散)
+  * 40052/TCP (ScalarDL Auditor の負荷分散)
+  * 9001/TCP (Scalar Envoy 自体の監視リクエストを受け入れます)
+
+:::note
+
+- 設定ファイル (それぞれ `ledger.properties` と `auditor.properties`) で ScalarDL Ledger と ScalarDL Auditor のデフォルトのリスニング ポートを変更する場合は、設定したポートを使用して接続を許可する必要があります。
+- AKS 自体が使用する接続も許可する必要があります。 AKS トラフィック要件の詳細については、[Control egress traffic using Azure Firewall in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/limit-egress-traffic) を参照してください。
+
+:::

@@ -1,0 +1,231 @@
+# Docker を使用してローカル環境に ScalarDL をインストールする方法
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import WarningLicenseKeyContact from '/src/components/ja-jp/_warning-license-key-contact.mdx';
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このドキュメントでは、[Docker Compose](https://docs.docker.com/compose/) を使用して、バックエンドの Cassandra サーバーとともに ScalarDL を実行するローカル環境を設定する方法を説明します。
+
+<WarningLicenseKeyContact product="ScalarDL" />
+
+## 前提条件
+
+- [Docker](https://www.docker.com/get-started/) 20.10 以降と [Docker Compose](https://docs.docker.com/compose/install/) V2 以降
+
+    お使いのプラットフォームに応じて、Docker Web サイトの指示に従ってください。
+
+## scalardl-samples リポジトリをクローンする
+
+[scalar-labs/scalardl-samples](https://github.com/scalar-labs/scalardl-samples) リポジトリは、ユーザーがすぐに ScalarDL の作業を開始するためのプロジェクトです。
+
+1. ターミナルで、`scalardl-samples` アプリを実行するローカルマシン上の場所を決定します。次に、`scalardl-samples` リポジトリをクローンします。
+
+   ```console
+   git clone https://github.com/scalar-labs/scalardl-samples.git
+   ```
+
+1. `scalardl-samples` ディレクトリに移動します。
+
+   ```console
+   cd scalardl-samples
+   ```
+
+## ライセンスキーを設定する
+
+<Tabs groupId="modes" queryString>
+  <TabItem value="ledger-only" label="ScalarDL Ledger のみ" default>
+  <h3>ScalarDL Ledger のライセンスキーを設定する</h3>
+  
+     ScalarDL Ledger のライセンスキーを設定する必要があります。`docker-compose.yml` ファイルで、`<SET_YOUR_LICENSE_KEY>` をライセンスキーに置き換えてください。例:
+
+     ```yaml
+     services:
+       scalar-ledger:
+         environment:
+           - SCALAR_DL_LICENSING_LICENSE_KEY={"organization_name":"XXXXXXXX","expiration_date_time":"YYYY-MM-DDTHH:mm:SS+TIMEZONE","product_name":"ScalarDL Ledger","product_version":N,"license_type":"trial","signature":"XXXXXXXX"}
+     ```
+  </TabItem>
+  <TabItem value="auditor-mode" label="ScalarDL Auditor モード">
+  <h3>ScalarDL Ledger のライセンスキーを設定する</h3>
+  
+     ScalarDL Ledger のライセンス キーを設定する必要があります。`docker-compose.yml` ファイルで、`<SET_YOUR_LICENSE_KEY>` をライセンス キーに置き換えてください。例:
+
+     ```yaml
+     services:
+       scalar-ledger:
+         environment:
+           - SCALAR_DL_LICENSING_LICENSE_KEY={"organization_name":"XXXXXXXX","expiration_date_time":"YYYY-MM-DDTHH:mm:SS+TIMEZONE","product_name":"ScalarDL Ledger","product_version":N,"license_type":"trial","signature":"XXXXXXXX"}
+     ```
+
+  <h3>ScalarDL Auditor のライセンスキーを設定する</h3>
+
+     ScalarDL Auditor のライセンスキーを設定する必要があります。`docker-compose-auditor.yml` ファイルで、`<SET_YOUR_LICENSE_KEY>` をライセンスキーに置き換えてください。例:
+
+     ```yaml
+     services:
+       scalar-auditor:
+         environment:
+           - SCALAR_DL_LICENSING_LICENSE_KEY={"organization_name":"XXXXXXXX","expiration_date_time":"YYYY-MM-DDTHH:mm:SS+TIMEZONE","product_name":"ScalarDL Auditor","product_version":N,"license_type":"trial","signature":"XXXXXXXX"}
+     ```
+  </TabItem>
+</Tabs>
+
+## ライセンスキーを確認するための証明書ファイルを設定する
+
+:::note
+
+試用ライセンスをお持ちの場合は、この手順をスキップして [ScalarDL を起動](#start-up-scalardl) することができます。
+
+:::
+
+<Tabs groupId="modes" queryString>
+  <TabItem value="ledger-only" label="ScalarDL Ledger のみ" default>
+  この手順では、ScalarDL Ledger の証明書ファイルを設定する必要があります。
+
+  <h3>ScalarDL Ledger の証明書ファイルを設定する</h3>
+  
+  商用ライセンスを使用する場合は、`docker-compose.yml` ファイルを次のように更新する必要があります。
+
+     - 証明書ファイルのパスを変更する前（デフォルト構成）:
+
+       ```yaml
+       services:
+         scalar-ledger:
+           volumes:
+             - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
+             - ./fixture/ledger.properties.tmpl:/scalar/ledger/ledger.properties.tmpl
+             - ./fixture/trial-license-cert.pem:/scalar/license-cert.pem
+             # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+             # - ./fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+       ```
+
+     - 証明書ファイルのパスを変更した後:
+
+       ```yaml
+       services:
+         scalar-ledger:
+           volumes:
+             - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
+             - ./fixture/ledger.properties.tmpl:/scalar/ledger/ledger.properties.tmpl
+             # - ./fixture/trial-license-cert.pem:/scalar/license-cert.pem
+             # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+             - ./fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+       ```
+  </TabItem>
+  <TabItem value="auditor-mode" label="ScalarDL Auditor モード">
+  この手順では、ScalarDL Ledger および ScalarDL Auditor の証明書ファイルを設定する必要があります。
+
+  <h3>ScalarDL Ledger の証明書ファイルを設定する</h3>
+
+  商用ライセンスを使用する場合は、`docker-compose.yml` ファイルを次のように更新する必要があります。
+
+     - 証明書ファイルのパスを変更する前（デフォルト構成）:
+
+       ```yaml
+       services:
+         scalar-ledger:
+           volumes:
+             - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
+             - ./fixture/ledger.properties.tmpl:/scalar/ledger/ledger.properties.tmpl
+             - ./fixture/trial-license-cert.pem:/scalar/license-cert.pem
+             # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+             # - ./fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+       ```
+
+     - 証明書ファイルのパスを変更した後:
+
+       ```yaml
+       services:
+         scalar-ledger:
+           volumes:
+             - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
+             - ./fixture/ledger.properties.tmpl:/scalar/ledger/ledger.properties.tmpl
+             # - ./fixture/trial-license-cert.pem:/scalar/license-cert.pem
+             # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+             - ./fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+       ```
+
+  <h3>ScalarDL Auditor の証明書ファイルを設定する</h3>
+
+  商用ライセンスを使用する場合は、`docker-compose-auditor.yml` ファイルを次のように更新する必要があります。
+
+     - 証明書ファイルのパスを変更する前（デフォルト構成）:
+
+       ```yaml
+       services:
+         scalar-auditor:
+           volumes:
+             - ./fixture/auditor.pem:/scalar/auditor.pem
+             - ./fixture/auditor-key.pem:/scalar/auditor-key.pem
+             - ./fixture/auditor.properties.tmpl:/scalar/auditor/auditor.properties.tmpl
+             - ./fixture/trial-license-cert.pem:/scalar/license-cert.pem
+             # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+             # - ./fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+       ```
+
+     - 証明書ファイルのパスを変更した後:
+
+       ```yaml
+       services:
+         scalar-auditor:
+           volumes:
+             - ./fixture/auditor.pem:/scalar/auditor.pem
+             - ./fixture/auditor-key.pem:/scalar/auditor-key.pem
+             - ./fixture/auditor.properties.tmpl:/scalar/auditor/auditor.properties.tmpl
+             # - ./fixture/trial-license-cert.pem:/scalar/license-cert.pem
+             # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+             - ./fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+       ```
+  </TabItem>
+</Tabs>
+
+## ScalarDLを起動する
+
+<Tabs groupId="modes" queryString>
+  <TabItem value="ledger-only" label="ScalarDL Ledger のみ" default>
+  次のコマンドは、Docker コンテナ内のバックエンド Cassandra サーバーとともに ScalarDL Ledger を起動します。
+
+:::note
+
+このコマンドを初めて実行すると、必要な Docker イメージが GitHub Container Registry からダウンロードされます。
+
+:::
+
+  ```console
+  docker compose up -d
+  ```
+  </TabItem>
+  <TabItem value="auditor-mode" label="ScalarDL Auditor モード">
+  次のコマンドは、Docker コンテナ内のバックエンド Cassandra サーバーとともに、ScalarDL Ledger と ScalarDL Auditor を起動します。
+
+:::note
+
+このコマンドを初めて実行すると、必要な Docker イメージが GitHub Container Registry からダウンロードされます。
+
+:::
+
+  ```console
+  docker compose -f docker-compose.yml -f docker-compose-auditor.yml up -d
+  ```
+  </TabItem>
+</Tabs>
+
+## ScalarDL をシャットダウンする
+
+コンテナをシャットダウンするには、次のコマンドを実行します。
+
+<Tabs groupId="modes" queryString>
+  <TabItem value="ledger-only" label="ScalarDL Ledger のみ" default>
+  ```console
+  docker compose down -v
+  ```
+  </TabItem>
+  <TabItem value="auditor-mode" label="ScalarDL Auditor モード">
+  ```console
+  docker compose -f docker-compose.yml -f docker-compose-auditor.yml down -v
+  ```
+  </TabItem>
+</Tabs>

@@ -1,0 +1,41 @@
+# ScalarDL 3.10 Release Notes
+
+This page includes a list of release notes for ScalarDL 3.10.
+
+## v3.10.0
+
+**Release date:** December 4, 2024
+
+### Summary
+
+This release introduces enhancements, such as generic contracts and functions, as well as various improvements, including the addition of error codes. It also includes several bug fixes. For detailed changes, see the following.
+
+### Enhancements
+
+- Added generic contracts and functions.
+
+### Improvements
+
+- Added error codes for error messages.
+- Enabled implicit pre-read in mutable databases.
+- Improved ScalarDB exception handling in function execution.
+- Upgraded the ScalarDB version to 3.14.0.
+- Made executeContract with nonce deprecated.
+
+### Bug fixes
+
+- Disabled SNI host check in the Prometheus exporter.
+- Fixed a bug when handling PKCS#8-formatted private keys.
+- Fixed unexpected validation execution.
+- Fixed a bug with non-nonce transaction IDs.
+- Fixed a bug where a transaction with the JDBC transaction manager incorrectly overwrites an asset.
+- Fixed a bug that makes the Ledger service unable to execute contracts on DynamoDB.
+- Added validation that disables the group commit feature in ScalarDB from being used.
+- Fixed to run with Cosmos DB.
+- Fixed the following vulnerabilities.
+  - [CVE-2023-1428](https://github.com/advisories/GHSA-6628-q6j9-w8vg "CVE-2023-1428")
+  - [CVE-2023-32731](https://github.com/advisories/GHSA-cfgp-2977-2fmm "CVE-2023-32731")
+  - [CVE-2023-45283](https://github.com/advisories/GHSA-vvjp-q62m-2vph "CVE-2023-45283")
+  - [CVE-2023-45288](https://github.com/advisories/GHSA-4v7x-pqxf-cx7m "CVE-2023-45288")
+  - [CVE-2024-24790](https://github.com/advisories/GHSA-49gw-vxvf-fc2g "CVE-2024-24790")
+  - [CVE-2024-34156](https://github.com/advisories/GHSA-crqm-pwhx-j97f "CVE-2024-34156")
