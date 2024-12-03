@@ -1,0 +1,219 @@
+# ScalarDL Auditor エラーコード
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このページでは、ScalarDL Auditor のエラーコードの一覧を示します。
+
+## エラーコードのクラスと説明
+
+| クラス              | 説明                       |
+|:-------------------|:--------------------------|
+| `DL-AUDITOR-3xxxx` | 検証エラーカテゴリのエラー    |
+| `DL-AUDITOR-4xxxx` | ユーザーエラーカテゴリのエラー |
+| `DL-AUDITOR-5xxxx` | 内部エラーカテゴリのエラー    |
+
+## `DL-AUDITOR-3xxxx` ステータスコード
+
+以下は、検証エラーカテゴリのステータスコードとメッセージです。
+
+### `DL-AUDITOR-304001`
+
+**メッセージ**
+
+```markdown
+The nonce has already been used.
+```
+
+### `DL-AUDITOR-305001`
+
+**メッセージ**
+
+```markdown
+The request is tampered.
+```
+
+### `DL-AUDITOR-305002`
+
+**メッセージ**
+
+```markdown
+The specified asset proof doesn't exist in Ledger.
+```
+
+### `DL-AUDITOR-305003`
+
+**メッセージ**
+
+```markdown
+The specified request proof doesn't exist.
+```
+
+### `DL-AUDITOR-305004`
+
+**メッセージ**
+
+```markdown
+Hash validation failed.
+```
+
+### `DL-AUDITOR-305005`
+
+**メッセージ**
+
+```markdown
+The specified lock entry doesn't exist. A bug might exist, or tampering might have occurred.
+```
+
+### `DL-AUDITOR-305006`
+
+**メッセージ**
+
+```markdown
+An invalid asset proof is given for %s.
+```
+
+### `DL-AUDITOR-305007`
+
+**メッセージ**
+
+```markdown
+The expected asset record doesn't exist.
+```
+
+### `DL-AUDITOR-305008`
+
+**メッセージ**
+
+```markdown
+The specified asset and the asset lock are inconsistent.
+```
+
+## `DL-AUDITOR-4xxxx` ステータスコード
+
+以下は、ユーザーエラーカテゴリのステータスコードとメッセージです。
+
+### `DL-AUDITOR-407001`
+
+**メッセージ**
+
+```markdown
+The lock must be validated before it can be released.
+```
+
+### `DL-AUDITOR-409001`
+
+**メッセージ**
+
+```markdown
+The specified asset is not found.
+```
+
+### `DL-AUDITOR-414001`
+
+**メッセージ**
+
+```markdown
+%s must be set if HMAC authentication is used.
+```
+
+### `DL-AUDITOR-414002`
+
+**メッセージ**
+
+```markdown
+Authentication between Ledger and Auditor is not correctly configured. Set %s or set %s along with a private key with %s or %s.
+```
+
+## `DL-AUDITOR-5xxxx` ステータスコード
+
+以下は、内部エラーカテゴリのステータスコードとメッセージです。
+
+### `DL-AUDITOR-500001`
+
+**メッセージ**
+
+```markdown
+Binding the request proof failed. Details: %s
+```
+
+### `DL-AUDITOR-500002`
+
+**メッセージ**
+
+```markdown
+Getting the request proof failed. Details: %s
+```
+
+### `DL-AUDITOR-500003`
+
+**メッセージ**
+
+```markdown
+Binding the asset record failed. Details: %s
+```
+
+### `DL-AUDITOR-500004`
+
+**メッセージ**
+
+```markdown
+Retrieving the asset records failed. Details: %s
+```
+
+### `DL-AUDITOR-500005`
+
+**メッセージ**
+
+```markdown
+Getting the asset lock for %s failed. Details: %s
+```
+
+### `DL-AUDITOR-502001`
+
+**メッセージ**
+
+```markdown
+The specified lock type is not supported. Type: %s
+```
+
+### `DL-AUDITOR-502002`
+
+**メッセージ**
+
+```markdown
+readUnlock is used for unlocked or write-locked assets.
+```
+
+### `DL-AUDITOR-502003`
+
+**メッセージ**
+
+```markdown
+writeUnlock is used for unlocked or read-locked assets.
+```
+
+### `DL-AUDITOR-504001`
+
+**メッセージ**
+
+```markdown
+The specified lock entry has been taken by write.
+```
+
+### `DL-AUDITOR-504002`
+
+**メッセージ**
+
+```markdown
+The specified asset record is in use.
+```
+
+### `DL-AUDITOR-504003`
+
+**メッセージ**
+
+```markdown
+The entry has already been recovered, or an issue might have occurred.
+```

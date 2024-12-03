@@ -1,0 +1,239 @@
+# ScalarDL Client Error Codes
+
+This page provides a list of error codes in ScalarDL clients.
+
+## Error code classes and descriptions
+
+| Class             | Description                              |
+|:------------------|:-----------------------------------------|
+| `DL-CLIENT-3xxxx` | Errors for the validation error category |
+| `DL-CLIENT-4xxxx` | Errors for the user error category       |
+| `DL-CLIENT-5xxxx` | Errors for the internal error category   |
+
+## `DL-CLIENT-3xxxx` status codes
+
+The following are status codes and messages for the validation error category.
+
+### `DL-CLIENT-305001`
+
+**Message**
+
+```markdown
+The results from Ledger and Auditor don't match.
+```
+
+## `DL-CLIENT-4xxxx` status codes
+
+The following are status codes and messages for the user error category.
+
+### `DL-CLIENT-414001`
+
+**Message**
+
+```markdown
+The specified option --asset-id is malformed. The format should be "[assetId]" or "[assetId],[startAge],[endAge]".
+```
+
+### `DL-CLIENT-414002`
+
+**Message**
+
+```markdown
+The specified option --asset-id contains an invalid integer.
+```
+
+### `DL-CLIENT-414003`
+
+**Message**
+
+```markdown
+The authentication method for the client mode must be either digital-signature or hmac.
+```
+
+### `DL-CLIENT-414004`
+
+**Message**
+
+```markdown
+The authentication method for the intermediary mode must be pass-through.
+```
+
+### `DL-CLIENT-414005`
+
+**Message**
+
+```markdown
+Both the certificate and the private key must be set to use digital signature.
+```
+
+### `DL-CLIENT-414006`
+
+**Message**
+
+```markdown
+The secret key must be set to use HMAC authentication.
+```
+
+### `DL-CLIENT-414007`
+
+**Message**
+
+```markdown
+%s and %s are missing, but either is required.
+```
+
+### `DL-CLIENT-414008`
+
+**Message**
+
+```markdown
+Digital signature authentication is not configured.
+```
+
+### `DL-CLIENT-414009`
+
+**Message**
+
+```markdown
+HMAC authentication is not configured.
+```
+
+### `DL-CLIENT-414010`
+
+**Message**
+
+```markdown
+validateLedger with Auditor is not supported in the intermediary mode. Please execute the ValidateLedger contract to validate assets.
+```
+
+### `DL-CLIENT-414011`
+
+**Message**
+
+```markdown
+The specified client mode is incorrect.
+```
+
+### `DL-CLIENT-414012`
+
+**Message**
+
+```markdown
+The contract ID cannot be null.
+```
+
+### `DL-CLIENT-414013`
+
+**Message**
+
+```markdown
+The contract name cannot be null.
+```
+
+### `DL-CLIENT-414014`
+
+**Message**
+
+```markdown
+The contractBytes cannot be null.
+```
+
+### `DL-CLIENT-414015`
+
+**Message**
+
+```markdown
+The contractArgument cannot be null.
+```
+
+### `DL-CLIENT-414016`
+
+**Message**
+
+```markdown
+The contractPath cannot be null.
+```
+
+### `DL-CLIENT-414017`
+
+**Message**
+
+```markdown
+The function ID cannot be null.
+```
+
+### `DL-CLIENT-414018`
+
+**Message**
+
+```markdown
+The function name cannot be null.
+```
+
+### `DL-CLIENT-414019`
+
+**Message**
+
+```markdown
+The functionBytes cannot be null.
+```
+
+### `DL-CLIENT-414020`
+
+**Message**
+
+```markdown
+The functionPath cannot be null.
+```
+
+### `DL-CLIENT-414021`
+
+**Message**
+
+```markdown
+The asset ID cannot be null.
+```
+
+### `DL-CLIENT-414022`
+
+**Message**
+
+```markdown
+The specified asset ages are invalid.
+```
+
+## `DL-CLIENT-5xxxx` status codes
+
+The following are status codes and messages for the internal error category.
+
+### `DL-CLIENT-502001`
+
+**Message**
+
+```markdown
+Reading the file failed. File: %s; Details: %s
+```
+
+### `DL-CLIENT-502002`
+
+**Message**
+
+```markdown
+Configuring SSL failed. Details: %s
+```
+
+### `DL-CLIENT-502003`
+
+**Message**
+
+```markdown
+Shutting down the channel failed. Details: %s
+```
+
+### `DL-CLIENT-502004`
+
+**Message**
+
+```markdown
+Processing JSON failed. Details: %s
+```
