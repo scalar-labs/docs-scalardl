@@ -253,6 +253,17 @@ const sidebars = {
         'compatibility',
         'scalardl-command-reference',
         'scalardl-benchmarks/README',
+        {
+          type: 'category',
+          label: 'Error codes',
+          collapsible: true,
+          items: [
+            'scalardl-auditor-status-codes',
+            'scalardl-client-status-codes',
+            'scalardl-common-status-codes',
+            'scalardl-ledger-status-codes',
+          ],
+        },
       ],
     },
     {
