@@ -72,8 +72,13 @@ const config = {
               },
               */
               current: { // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
-                label: '3.9',
+                label: '3.10',
                 path: 'latest', // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
+                banner: 'none',
+              },
+              "3.9": { // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
+                label: '3.9',
+                path: '3.9', // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
                 banner: 'none',
               },
               "3.8": {
