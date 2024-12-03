@@ -73,6 +73,7 @@ const sidebars = {
         'how-to-handle-errors',
         'how-to-write-contract',
         'how-to-write-function',
+        'use-generic-contracts',
         'how-to-use-proof',
       ],
     },
@@ -252,6 +253,7 @@ const sidebars = {
       items: [
         'compatibility',
         'scalardl-command-reference',
+        'generic-contracts-reference',
         'scalardl-benchmarks/README',
         {
           type: 'category',
