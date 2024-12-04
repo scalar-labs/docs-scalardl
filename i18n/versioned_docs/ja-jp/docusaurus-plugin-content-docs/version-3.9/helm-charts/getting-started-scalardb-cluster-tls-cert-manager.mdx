@@ -1,0 +1,595 @@
+---
+tags:
+  - Enterprise Standard
+  - Enterprise Premium
+---
+
+# Helm チャート入門 (cert-manager を使用した TLS 対応 ScalarDB Cluster)
+
+このチュートリアルでは、テスト環境の Kubernetes クラスターで Helm Charts と cert-manager を使用して、TLS 構成の ScalarDB Cluster を開始する方法について説明します。開始する前に、テスト用の Mac または Linux 環境がすでに用意されている必要があります。また、このチュートリアルでは **minikube** の使用について説明していますが、説明されている手順はどの Kubernetes クラスターでも機能するはずです。
+
+## 要件
+
+* ScalarDB Cluster のライセンスキー (試用ライセンスまたは商用ライセンス) が必要です。ライセンスキーをお持ちでない場合は、[お問い合わせ](https://www.scalar-labs.com/contact) ください。
+* TLS をサポートする ScalarDB Cluster 3.12 以降を使用する必要があります。
+
+## 作成するもの
+
+このチュートリアルでは、次の方法で Kubernetes クラスターに次のコンポーネントをデプロイします。
+
+```
++----------------------------------------------------------------------------------------------------------------------------------------------------+
+| [Kubernetes Cluster]                                                                                                                               |
+|                                            [Pod]                                                      [Pod]                           [Pod]        |
+|                                                                                                                                                    |
+|                                          +-------+                                          +------------------------+                             |
+|                                    +---> | Envoy | ---+                               +---> | ScalarDB Cluster node  | ---+                        |
+|    [Pod]                           |     +-------+    |                               |     +------------------------+    |                        |
+|                                    |                  |                               |                                   |                        |
+|  +-----------+      +---------+    |     +-------+    |     +--------------------+    |     +------------------------+    |     +---------------+  |
+|  |  Client   | ---> | Service | ---+---> | Envoy | ---+---> |  Service           | ---+---> | ScalarDB Cluster node  | ---+---> |  PostgreSQL   |  |
+|  | (SQL CLI) |      | (Envoy) |    |     +-------+    |     | (ScalarDB Cluster) |    |     +------------------------+    |     | (For Ledger)  |  |
+|  +-----------+      +---------+    |                  |     +--------------------+    |                                   |     +---------------+  |
+|                                    |     +-------+    |                               |     +------------------------+    |                        |
+|                                    +---> | Envoy | ---+                               +---> | ScalarDB Cluster node  | ---+                        |
+|                                          +-------+                                          +------------------------+                             |
+|                                                                                                                                                    |
+|  +----------------------------------------------------------------------------------+    +---------------------+                                   |
+|  | cert-manager (create private key and certificate for Envoy and ScalarDB Cluster) |    | Issuer (Private CA) |                                   |
+|  +----------------------------------------------------------------------------------+    +---------------------+                                   |
+|                                                                                                                                                    |
++----------------------------------------------------------------------------------------------------------------------------------------------------+
+```
+
+cert-manager は、TLS 接続用に次の秘密鍵と証明書ファイルを自動的に作成します。
+
+```
+                                                           +----------------------+
+                                                     +---> | For Scalar Envoy     |
+                                                     |     +----------------------+
+                                                     |     | tls.key              |
+                                                     |     | tls.crt              |
++-------------------------+                          |     +----------------------+
+| Issuer (Self-signed CA) | ---(Sign certificates)---+
++-------------------------+                          |     +----------------------+
+| tls.key                 |                          +---> | For ScalarDB Cluster |
+| tls.crt                 |                                +----------------------+
+| ca.crt                  |                                | tls.key              |
++-------------------------+                                | tls.crt              |
+                                                           +----------------------+
+```
+
+Scalar Helm Charts は、Envoy および ScalarDB Cluster の各秘密キーと証明書ファイルを次のように自動的にマウントし、各接続で TLS を有効にします。ルート CA 証明書ファイルはクライアントに手動でマウントします。
+
+```
++-------------------------------------+                            +------------------------------------------------+      +--------------------------------+
+| Client                              | ---(CRUD/SQL requests)---> | Envoy for ScalarDB Cluster                     | ---> | ScalarDB Cluster nodes         |
++-------------------------------------+                            +------------------------------------------------+      +--------------------------------+
+| ca.crt (to verify tls.crt of Envoy) |                            | tls.key                                        |      | tls.key                        |
++-------------------------------------+                            | tls.crt                                        |      | tls.crt                        |
+                                                                   | ca.crt (to verify tls.crt of ScalarDB Cluster) |      | ca.crt (to check health)       |
+                                                                   +------------------------------------------------+      +--------------------------------+
+```
+
+ScalarDB Cluster 関連コンポーネント間には、次の接続が存在します。
+
+* **`クライアント - ScalarDB Cluster の Envoy`:** CRUD API または SQL API 関数を実行すると、クライアントは ScalarDB Cluster の Envoy にアクセスします。
+* **`ScalarDB Cluster の Envoy - ScalarDB Cluster`:** Envoy は ScalarDB Cluster の前で L7 (gRPC) ロードバランサーとして機能します。
+* **`ScalarDB Cluster ノード - ScalarDB Cluster ノード`:** ScalarDB Cluster ノードは他の ScalarDB Cluster ノードにアクセスします。つまり、クラスターの内部通信はすべての ScalarDB Cluster ノード間で行われます。
+
+## ステップ1. Kubernetesクラスターを起動してツールをインストールする
+
+Kubernetes クラスターを準備し、いくつかのツール (`kubectl`、`helm`、`cfssl`、および `cfssljson`) をインストールする必要があります。インストール方法の詳細については、[Scalar Helm Charts の使用開始](getting-started-scalar-helm-charts.mdx) を参照してください。
+
+## ステップ2. PostgreSQLコンテナを起動する
+
+ScalarDB Cluster では、バックエンドデータベースとして何らかのデータベースシステムを使用する必要があります。このチュートリアルでは、PostgreSQL を使用します。
+
+次のようにして Kubernetes クラスターに PostgreSQL をデプロイできます。
+
+1. Bitnami helm リポジトリを追加します。
+
+   ```console
+   helm repo add bitnami https://charts.bitnami.com/bitnami
+   ```
+
+1. ScalarDB Cluster 用に PostgreSQL をデプロイします。
+
+   ```console
+   helm install postgresql-scalardb-cluster bitnami/postgresql \
+     --set auth.postgresPassword=postgres \
+     --set primary.persistence.enabled=false \
+     -n default
+   ```
+
+1. PostgreSQL コンテナが実行されているかどうかを確認します。
+
+   ```console
+   kubectl get pod -n default
+   ```
+
+   [コマンド実行結果]
+
+   ```console
+   NAME                            READY   STATUS    RESTARTS   AGE
+   postgresql-scalardb-cluster-0   1/1     Running   0          34s
+   ```
+
+## ステップ3. 作業ディレクトリを作成する
+
+ローカルにいくつかの設定ファイルを作成します。必ずそれらのファイル用の作業ディレクトリを作成してください。
+
+1. 作業ディレクトリを作成します。
+
+   ```console
+   mkdir -p ${HOME}/scalardb-cluster-test/
+   ```
+
+## ステップ4. cert-manager と issuer リソースをデプロイする
+
+このチュートリアルでは、cert-manager を使用して秘密鍵と証明書を発行および管理します。次のようにして、Kubernetes クラスターに cert-manager をデプロイできます。
+
+1. Jetstack helm リポジトリを追加します。
+
+   ```console
+   helm repo add jetstack https://charts.jetstack.io
+   ```
+
+1. cert-manager をデプロイします。
+
+   ```console
+   helm install cert-manager jetstack/cert-manager \
+     --create-namespace \
+     --set installCRDs=true \
+     -n cert-manager
+   ```
+
+1. cert-manager コンテナが実行されているかどうかを確認します。
+
+   ```console
+   kubectl get pod -n cert-manager
+   ```
+
+   [コマンド実行結果]
+
+   ```console
+   NAME                                      READY   STATUS    RESTARTS   AGE
+   cert-manager-6dc66985d4-6lvtt             1/1     Running   0          26s
+   cert-manager-cainjector-c7d4dbdd9-xlrpn   1/1     Running   0          26s
+   cert-manager-webhook-847d7676c9-ckcz2     1/1     Running   0          26s
+   ```
+
+1. 作業ディレクトリを `${HOME}/scalardb-cluster-test/` に変更します。
+
+   ```console
+   cd ${HOME}/scalardb-cluster-test/
+   ```
+
+1. プライベート CA のカスタム値ファイル (`private-ca-custom-values.yaml`) を作成します。
+
+     ```console
+     cat << 'EOF' > ${HOME}/scalardb-cluster-test/private-ca-custom-values.yaml
+     apiVersion: cert-manager.io/v1
+     kind: Issuer
+     metadata:
+       name: self-signed-issuer
+     spec:
+       selfSigned: {}
+     ---
+     apiVersion: cert-manager.io/v1
+     kind: Certificate
+     metadata:
+       name: self-signed-ca-cert
+     spec:
+       isCA: true
+       commonName: self-signed-ca
+       secretName: self-signed-ca-cert-secret
+       privateKey:
+         algorithm: ECDSA
+         size: 256
+       issuerRef:
+         name: self-signed-issuer
+         kind: Issuer
+         group: cert-manager.io
+     ---
+     apiVersion: cert-manager.io/v1
+     kind: Issuer
+     metadata:
+       name: self-signed-ca
+     spec:
+       ca:
+         secretName: self-signed-ca-cert-secret
+     EOF
+     ```
+
+1. 自己署名 CA を展開します。
+
+   ```console
+   kubectl apply -f ./private-ca-custom-values.yaml
+   ```
+
+1. 発行者リソースが `True` であるかどうかを確認します。
+
+   ```console
+   kubectl get issuer
+   ```
+
+   [コマンド実行結果]
+
+   ```console
+   NAME                 READY   AGE
+   self-signed-ca      True    6s
+   self-signed-issuer   True    6s
+   ```
+
+## ステップ 5. Helm Charts を使用して Kubernetes クラスターに ScalarDB Cluster をデプロイする
+
+1. Scalar Helm Charts リポジトリを追加します。
+
+   ```console
+   helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
+   ```
+
+1. ライセンス キーと証明書を環境変数として設定します。ライセンスキーがない場合は、[お問い合わせ](https://www.scalar-labs.com/contact) ください。`<CERT_PEM_FOR_YOUR_LICENSE_KEY>` の値の詳細については、[製品ライセンスキーを構成する方法](https://scalardb.scalar-labs.com/docs/latest/scalar-licensing/) を参照してください。
+
+   ```console
+   SCALAR_DB_CLUSTER_LICENSE_KEY='<YOUR_LICENSE_KEY>'
+   SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM='<CERT_PEM_FOR_YOUR_LICENSE_KEY>'
+   ```
+
+1. ScalarDB Cluster のカスタム値ファイル (`scalardb-cluster-custom-values.yaml`) を作成します。
+
+     ```console
+     cat << 'EOF' > ${HOME}/scalardb-cluster-test/scalardb-cluster-custom-values.yaml
+     envoy:
+
+       enabled: true
+
+       tls:
+         downstream:
+           enabled: true
+           certManager:
+             enabled: true
+             issuerRef:
+               name: self-signed-ca
+             dnsNames:
+               - envoy.scalar.example.com
+         upstream:
+           enabled: true
+           overrideAuthority: "cluster.scalardb.example.com"
+
+     scalardbCluster:
+
+       image:
+         repository: "ghcr.io/scalar-labs/scalardb-cluster-node-byol-premium"
+
+       scalardbClusterNodeProperties: |
+         ### Necessary configurations for deployment on Kuberetes
+         scalar.db.cluster.membership.type=KUBERNETES
+         scalar.db.cluster.membership.kubernetes.endpoint.namespace_name=${env:SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAMESPACE_NAME}
+         scalar.db.cluster.membership.kubernetes.endpoint.name=${env:SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME}
+
+         ### Storage configurations
+         scalar.db.contact_points=jdbc:postgresql://postgresql-scalardb-cluster.default.svc.cluster.local:5432/postgres
+         scalar.db.username=${env:SCALAR_DB_CLUSTER_POSTGRES_USERNAME}
+         scalar.db.password=${env:SCALAR_DB_CLUSTER_POSTGRES_PASSWORD}
+         scalar.db.storage=jdbc
+
+         ### SQL configurations
+         scalar.db.sql.enabled=true
+
+         ### Auth configurations
+         scalar.db.cluster.auth.enabled=true
+         scalar.db.cross_partition_scan.enabled=true
+
+         ### TLS configurations
+         scalar.db.cluster.tls.enabled=true
+         scalar.db.cluster.tls.ca_root_cert_path=/tls/scalardb-cluster/certs/ca.crt
+         scalar.db.cluster.node.tls.cert_chain_path=/tls/scalardb-cluster/certs/tls.crt
+         scalar.db.cluster.node.tls.private_key_path=/tls/scalardb-cluster/certs/tls.key
+         scalar.db.cluster.tls.override_authority=cluster.scalardb.example.com
+
+         ### License key configurations
+         scalar.db.cluster.node.licensing.license_key=${env:SCALAR_DB_CLUSTER_LICENSE_KEY}
+         scalar.db.cluster.node.licensing.license_check_cert_pem=${env:SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM}
+
+       tls:
+         enabled: true
+         overrideAuthority: "cluster.scalardb.example.com"
+         certManager:
+           enabled: true
+           issuerRef:
+             name: self-signed-ca
+           dnsNames:
+             - cluster.scalardb.example.com
+
+       secretName: "scalardb-credentials-secret"
+     EOF
+     ```
+
+1. 資格情報とライセンスキーを含む `scalardb-credentials-secret` という名前のシークレットリソースを作成します。
+
+   ```console
+   kubectl create secret generic scalardb-credentials-secret \
+   --from-literal=SCALAR_DB_CLUSTER_POSTGRES_USERNAME=postgres \
+   --from-literal=SCALAR_DB_CLUSTER_POSTGRES_PASSWORD=postgres \
+   --from-literal=SCALAR_DB_CLUSTER_LICENSE_KEY="${SCALAR_DB_CLUSTER_LICENSE_KEY}" \
+   --from-file=SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM=<(echo ${SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM} | sed 's/\\n/\
+   /g') \
+   -n default
+   ```
+
+1. ScalarDB Cluster のチャートバージョンを設定します。
+
+   ```console
+   SCALAR_DB_CLUSTER_VERSION=3.12.2
+   SCALAR_DB_CLUSTER_CHART_VERSION=$(helm search repo scalar-labs/scalardb-cluster -l | grep -F "${SCALAR_DB_CLUSTER_VERSION}" | awk '{print $2}' | sort --version-sort -r | head -n 1)
+   ```
+
+1. ScalarDB Cluster をデプロイします。
+
+   ```console
+   helm install scalardb-cluster scalar-labs/scalardb-cluster -f ${HOME}/scalardb-cluster-test/scalardb-cluster-custom-values.yaml --version ${SCALAR_DB_CLUSTER_CHART_VERSION} -n default
+   ```
+
+1. ScalarDB Cluster ポッドがデプロイされているかどうかを確認します。
+
+   ```console
+   kubectl get pod -n default
+   ```
+
+   [コマンド実行結果]
+
+   ```console
+   NAME                                     READY   STATUS    RESTARTS   AGE
+   postgresql-scalardb-cluster-0            1/1     Running   0          4m30s
+   scalardb-cluster-envoy-7cc948dfb-4rb8l   1/1     Running   0          18s
+   scalardb-cluster-envoy-7cc948dfb-hwt96   1/1     Running   0          18s
+   scalardb-cluster-envoy-7cc948dfb-rzbrx   1/1     Running   0          18s
+   scalardb-cluster-node-7c6959c79d-445kj   1/1     Running   0          18s
+   scalardb-cluster-node-7c6959c79d-4z54q   1/1     Running   0          18s
+   scalardb-cluster-node-7c6959c79d-vcv96   1/1     Running   0          18s
+   ```
+   
+   ScalarDB Cluster ポッドが適切にデプロイされている場合、それらのポッドの `STATUS` 列には `Running` と表示されます。
+
+1. ScalarDB Cluster サービスがデプロイされているかどうかを確認します。
+
+   ```console
+   kubectl get svc -n default
+   ```
+
+   [コマンド実行結果]
+
+   ```console
+   NAME                             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)     AGE
+   kubernetes                       ClusterIP   10.96.0.1       <none>        443/TCP     7h34m
+   postgresql-scalardb-cluster      ClusterIP   10.96.92.27     <none>        5432/TCP    4m52s
+   postgresql-scalardb-cluster-hl   ClusterIP   None            <none>        5432/TCP    4m52s
+   scalardb-cluster-envoy           ClusterIP   10.96.250.175   <none>        60053/TCP   40s
+   scalardb-cluster-envoy-metrics   ClusterIP   10.96.40.197    <none>        9001/TCP    40s
+   scalardb-cluster-headless        ClusterIP   None            <none>        60053/TCP   40s
+   scalardb-cluster-metrics         ClusterIP   10.96.199.135   <none>        9080/TCP    40s
+   ```
+
+   ScalarDB Cluster サービスが適切にデプロイされている場合は、`CLUSTER-IP` 列にプライベート IP アドレスが表示されます。
+
+:::note
+
+`postgresql-scalardb-cluster-hl` と `scalardb-cluster-headless` の `CLUSTER-IP` 値は、IP アドレスがないため `None` になります。
+
+:::
+
+## ステップ6. クライアントコンテナを起動する
+
+CA 証明書ファイルはクライアントコンテナーで使用します。そのため、シークレットリソースを作成し、それをクライアントコンテナーにマウントする必要があります。
+
+1. `client-ca-cert` という名前のシークレットリソースを作成します。
+
+   ```console
+   kubectl create secret generic client-ca-cert --from-file=ca.crt=<(kubectl get secret self-signed-ca-cert-secret -o "jsonpath={.data['ca\.crt']}" | base64 -d) -n default
+   ```
+
+1. クライアントポッドのマニフェストファイル (`scalardb-cluster-client-pod.yaml`) を作成します。
+
+   ```console
+   cat << 'EOF' > ${HOME}/scalardb-cluster-test/scalardb-cluster-client-pod.yaml
+   apiVersion: v1
+   kind: Pod
+   metadata:
+     name: "scalardb-cluster-client"
+   spec:
+     containers:
+       - name: scalardb-cluster-client
+         image: eclipse-temurin:8-jre-jammy
+         command: ['sleep']
+         args: ['inf']
+         env:
+           - name: SCALAR_DB_CLUSTER_VERSION
+             value: SCALAR_DB_CLUSTER_CLIENT_POD_SCALAR_DB_CLUSTER_VERSION
+         volumeMounts:
+           - name: "client-ca-cert"
+             mountPath: "/certs/"
+             readOnly: true
+     volumes:
+       - name: "client-ca-cert"
+         secret:
+           secretName: "client-ca-cert"
+     restartPolicy: Never
+   EOF
+   ```
+
+1. マニフェストファイルで ScalarDB Cluster のバージョンを設定します。
+
+   ```console
+   sed -i s/SCALAR_DB_CLUSTER_CLIENT_POD_SCALAR_DB_CLUSTER_VERSION/${SCALAR_DB_CLUSTER_VERSION}/ ${HOME}/scalardb-cluster-test/scalardb-cluster-client-pod.yaml
+   ```
+
+1. クライアントポッドをデプロイします。
+
+   ```console
+   kubectl apply -f ${HOME}/scalardb-cluster-test/scalardb-cluster-client-pod.yaml -n default
+   ```
+
+1. クライアントコンテナーが実行されているかどうかを確認します。
+
+   ```console
+   kubectl get pod scalardb-cluster-client -n default
+   ```
+
+   [コマンド実行結果]
+
+   ```console
+   NAME                      READY   STATUS    RESTARTS   AGE
+   scalardb-cluster-client   1/1     Running   0          26s
+   ```
+
+## ステップ7. クライアントコンテナで ScalarDB Cluster SQL CLI を実行する
+
+1. クライアントコンテナーで bash を実行します。
+
+   ```console
+   kubectl exec -it scalardb-cluster-client -n default -- bash
+   ```
+   
+   次の手順のコマンドは、クライアントコンテナーで実行する必要があります。
+
+1. [リリース](https://github.com/scalar-labs/scalardb/releases)から ScalarDB Cluster SQL CLI をダウンロードします。
+
+   ```console
+   curl -OL https://github.com/scalar-labs/scalardb/releases/download/v${SCALAR_DB_CLUSTER_VERSION}/scalardb-cluster-sql-cli-${SCALAR_DB_CLUSTER_VERSION}-all.jar
+   ```
+
+1. `database.properties` ファイルを作成し、設定を追加します。
+
+   ```console
+   cat << 'EOF' > /database.properties
+   # ScalarDB Cluster configurations
+   scalar.db.sql.connection_mode=cluster
+   scalar.db.sql.cluster_mode.contact_points=indirect:scalardb-cluster-envoy.default.svc.cluster.local
+
+   # Auth configurations
+   scalar.db.cluster.auth.enabled=true
+   scalar.db.sql.cluster_mode.username=admin
+   scalar.db.sql.cluster_mode.password=admin
+
+   # TLS configurations
+   scalar.db.cluster.tls.enabled=true
+   scalar.db.cluster.tls.ca_root_cert_path=/certs/ca.crt
+   scalar.db.cluster.tls.override_authority=envoy.scalar.example.com
+   EOF
+   ```
+
+1. ScalarDB Cluster SQL CLI を実行します。
+
+   ```console
+   java -jar /scalardb-cluster-sql-cli-${SCALAR_DB_CLUSTER_VERSION}-all.jar --config /database.properties
+   ```
+
+1. `ns` という名前のサンプル名前空間を作成します。
+
+   ```sql
+   CREATE NAMESPACE ns;
+   ```
+
+1. 名前空間 `ns` の下に `tbl` という名前のサンプル テーブルを作成します。
+
+   ```sql
+   CREATE TABLE ns.tbl (a INT, b INT, c INT, PRIMARY KEY(a, b));
+   ```
+
+1. サンプルレコードを挿入します。
+
+   ```sql
+   INSERT INTO ns.tbl VALUES (1,2,3), (4,5,6), (7,8,9);
+   ```
+
+1. 挿入したサンプルレコードを選択します。
+
+   ```sql
+   SELECT * FROM ns.tbl;
+   ```
+
+   [コマンド実行結果]
+
+   ```sql
+   0: scalardb> SELECT * FROM ns.tbl;
+   +---+---+---+
+   | a | b | c |
+   +---+---+---+
+   | 7 | 8 | 9 |
+   | 1 | 2 | 3 |
+   | 4 | 5 | 6 |
+   +---+---+---+
+   3 rows selected (0.059 seconds)
+   ```
+
+1. ScalarDB Cluster SQL CLI を終了するには、`Ctrl + D` を押します。
+
+   ```console
+   ^D
+   ```
+
+1. クライアントコンテナーを終了します。
+
+   ```console
+   exit
+   ```
+
+## ステップ8. すべてのリソースを削除する
+
+Kubernetes クラスターで ScalarDB Cluster テストを完了したら、すべてのリソースを削除します。
+
+1. ScalarDB Cluster と PostgreSQL をアンインストールします。
+
+   ```console
+   helm uninstall -n default scalardb-cluster postgresql-scalardb-cluster
+   ```
+
+1. 自己署名 CA を削除します。
+
+   ```
+   kubectl delete -f ./private-ca-custom-values.yaml
+   ```
+
+1. cert-manager をアンインストールします。
+
+   ```console
+   helm uninstall -n cert-manager cert-manager
+   ```
+
+1. クライアントコンテナを削除します。
+
+   ```
+   kubectl delete pod scalardb-cluster-client --grace-period 0 -n default
+   ```
+
+1. シークレットリソースを削除します。
+
+   ```
+   kubectl delete secrets scalardb-credentials-secret self-signed-ca-cert-secret scalardb-cluster-envoy-tls-cert scalardb-cluster-tls-cert client-ca-cert
+   ```
+
+1. ネームスペース `cert-manager` を削除します。
+
+   ```
+   kubectl delete ns cert-manager
+   ```
+
+1. 作業ディレクトリとサンプル構成ファイルを削除します。
+
+   ```console
+   cd ${HOME}
+   ```
+
+   ```console
+   rm -rf ${HOME}/scalardb-cluster-test/
+   ```
+
+## 参考文献
+
+Scalar 製品の監視またはログ記録を開始する方法については、次のチュートリアルを参照してください。
+
+* [Helm チャートの使用開始 (Prometheus Operator を使用したモニタリング)](getting-started-monitoring.mdx)
+* [Helm チャートの使用開始 (Loki Stack を使用したログ記録)](getting-started-logging.mdx)
+* [Helm チャートの使用開始 (Scalar Manager)](getting-started-scalar-manager.mdx)

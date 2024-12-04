@@ -1,0 +1,185 @@
+---
+tags:
+  - Enterprise Standard
+  - Enterprise Premium
+---
+
+# Kubernetes クラスター上の Scalar 製品からのログの収集
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このドキュメントでは、Helm を使用して Grafana Loki と Promtail を Kubernetes にデプロイする方法について説明します。 このドキュメントに従うと、Kubernetes 環境で Scalar 製品のログを収集できます。
+
+マネージド Kubernetes クラスターを使用しており、監視とログ記録にクラウド サービス機能を使用したい場合は、次のドキュメントを参照してください。
+
+* [Logging and monitoring on Amazon EKS](https://docs.aws.amazon.com/prescriptive-guidance/latest/implementing-logging-monitoring-cloudwatch/amazon-eks-logging-monitoring.html)
+* [Monitoring Azure Kubernetes Service (AKS) with Azure Monitor](https://learn.microsoft.com/en-us/azure/aks/monitor-aks)
+
+## 前提条件
+
+* Kubernetes クラスターを作成します。
+  * [Scalar 製品用の EKS クラスターを作成する](CreateEKSClusterForScalarProducts.mdx)
+  * [Scalar 製品用の AKS クラスターを作成する](CreateAKSClusterForScalarProducts.mdx)
+* 要塞サーバーを作成し、`kubeconfig` を設定します。
+  * [要塞サーバーの作成](CreateBastionServer.mdx)
+* Prometheus Operator をデプロイします (収集されたログを調査するために Grafana を使用します)
+  * [Kubernetes クラスター上の Scalar 製品の監視](K8sMonitorGuide.mdx)
+
+## Grafana helm リポジトリを追加します
+
+このドキュメントでは、Prometheus Operator のデプロイメントに Helm を使用します。
+
+```console
+helm repo add grafana https://grafana.github.io/helm-charts
+```
+```console
+helm repo update
+```
+
+## カスタム値ファイルを準備する
+
+loki-stack のサンプルファイル [scalar-loki-stack-custom-values.yaml](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalar-loki-stack-custom-values.yaml)  を入手してください。 Scalar 製品のロギングには、このサンプル ファイルの構成をお勧めします。
+
+### カスタム値ファイルで nodeSelector を設定する (オプション)
+
+Kubernetes ワーカーノードにラベルを追加している場合は、次のようにカスタム値ファイル (scalar-loki-stack-custom-values.yaml) で nodeSelector を設定する必要がある場合があります。使用している製品に応じて、次の例を参照してください。
+
+<Tabs groupId="products" queryString>
+  <TabItem value="scalardb" label="ScalarDB" default>
+    使用している ScalarDB 製品を選択します。
+    <Tabs groupId="products" queryString>
+      <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+        ```yaml
+        promtail:
+          nodeSelector:
+            scalar-labs.com/dedicated-node: scalardb-cluster
+        ```
+      </TabItem>
+      <TabItem value="scalardb-server" label="ScalarDB Server (非推奨)">
+        ```yaml
+        promtail:
+          nodeSelector:
+            scalar-labs.com/dedicated-node: scalardb
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+  <TabItem value="scalardl" label="ScalarDL">
+    使用している ScalarDL 製品を選択します。
+    <Tabs groupId="products" queryString>
+      <TabItem value="scalardl-ledger" label="ScalarDL Ledger" default>
+        ```yaml
+        promtail:
+          nodeSelector:
+            scalar-labs.com/dedicated-node: scalardl-ledger
+        ```
+      </TabItem>
+      <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+        ```yaml
+        promtail:
+          nodeSelector:
+            scalar-labs.com/dedicated-node: scalardl-auditor
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+</Tabs>
+
+### カスタム値ファイルで許容値を設定する (オプション)
+
+Kubernetes ワーカーノードにテイントを追加している場合は、次のようにカスタム値ファイル (scalar-loki-stack-custom-values.yaml) で許容値を設定する必要がある場合があります。使用している製品に応じて、次の例を参照してください。
+
+<Tabs groupId="products" queryString>
+  <TabItem value="scalardb" label="ScalarDB" default>
+    使用している ScalarDB 製品を選択します。
+    <Tabs groupId="products" queryString>
+      <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+        ```yaml
+        promtail:
+          tolerations:
+            - effect: NoSchedule
+              key: scalar-labs.com/dedicated-node
+              operator: Equal
+              value: scalardb-cluster
+        ```
+      </TabItem>
+      <TabItem value="scalardb-server" label="ScalarDB Server (deprecated)">
+        ```yaml
+        promtail:
+          tolerations:
+            - effect: NoSchedule
+              key: scalar-labs.com/dedicated-node
+              operator: Equal
+              value: scalardb
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+  <TabItem value="scalardl" label="ScalarDL">
+    使用している ScalarDL 製品を選択します。
+    <Tabs groupId="products" queryString>
+      <TabItem value="scalardl-ledger" label="ScalarDL Ledger" default>
+        ```yaml
+        promtail:
+          tolerations:
+            - effect: NoSchedule
+              key: scalar-labs.com/dedicated-node
+              operator: Equal
+              value: scalardl-ledger
+        ```
+      </TabItem>
+      <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+        ```yaml
+        promtail:
+          tolerations:
+            - effect: NoSchedule
+              key: scalar-labs.com/dedicated-node
+              operator: Equal
+              value: scalardl-auditor
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+</Tabs>
+
+## Loki と Promtail をデプロイする
+
+Loki と Promtail は、Prometheus や Grafana と同じ名前空間 `Monitoring` にデプロイすることをお勧めします。 `Monitoring` 名前空間は、ドキュメント [Kubernetes クラスター上の Scalar 製品の監視](K8sMonitorGuide.mdx) ですでに作成済みです。
+
+```console
+helm install scalar-logging-loki grafana/loki-stack -n monitoring -f scalar-loki-stack-custom-values.yaml
+```
+
+## Loki と Promtail がデプロイされているかどうかを確認する
+
+Loki および Promtail ポッドが適切にデプロイされている場合は、次のコマンドを使用して、`STATUS` が `Running` であることが確認できます。 promtail ポッドは DaemonSet としてデプロイされるため、promtail ポッドの数は Kubernetes ノードの数によって異なります。 次の例では、Kubernetes クラスター内に Scalar 製品のワーカーノードが 3 つあります。
+
+```console
+kubectl get pod -n monitoring
+```
+
+次のような結果が表示されます：
+
+```console
+NAME                                 READY   STATUS    RESTARTS   AGE
+scalar-logging-loki-0                1/1     Running   0          35m
+scalar-logging-loki-promtail-2fnzn   1/1     Running   0          32m
+scalar-logging-loki-promtail-2pwkx   1/1     Running   0          30m
+scalar-logging-loki-promtail-gfx44   1/1     Running   0          32m
+```
+
+## Grafana ダッシュボードでログを表示する
+
+収集されたログは、次のように Grafana ダッシュボードで確認できます。
+
+1. Grafana ダッシュボードにアクセスします。
+1. `Explore` ページに移動します。
+1. 左上のプルダウンから `Loki` を選択します。
+1. ログを問い合わせる条件を設定する。
+1. 右上の `Run query` ボタンを選択します。
+
+Grafana ダッシュボードへのアクセス方法の詳細については、[Kubernetes クラスター上の Scalar 製品の監視](K8sMonitorGuide.mdx) を参照してください。

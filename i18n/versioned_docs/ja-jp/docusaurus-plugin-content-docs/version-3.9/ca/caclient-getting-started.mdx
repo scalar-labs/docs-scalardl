@@ -1,0 +1,507 @@
+# 証明書の取得方法
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このドキュメントでは、ScalarDL に登録するための証明書を取得する方法について説明します。
+
+ScalarDL にはいくつかの種類の認証方法があります。認証方法として `digital-signature` を使用する場合は、秘密鍵と証明書ファイルを用意する必要があります。認証方法の詳細については、[ScalarDL 認証ガイド](../authentication.mdx) を参照してください。
+
+## 秘密鍵と証明書の要件
+
+[`digital-signature`](../authentication.mdx#digital-signatures) を認証方法として使用する場合は、次の要件を満たす秘密鍵と証明書を作成する必要があります。
+
+- `SEC1` または `PKCS#8` 鍵
+- アルゴリズムとして `ECDSA`
+- 曲線パラメータとして `P-256`
+- ハッシュ関数として `SHA256`
+
+:::note
+
+ScalarDL は証明書の有効期限をチェックしません。そのため、ScalarDL が使用する証明書には任意の有効期限を設定できます。
+
+:::
+
+## 秘密鍵と証明書ファイルを作成する
+
+<Tabs groupId="methods" queryString>
+  <TabItem value="self-signed" label="自己署名証明書" default>
+    自己署名証明書は次のように作成できます。
+
+:::note
+
+この例では、`SEC1` 鍵を作成します。
+
+:::
+
+    <Tabs groupId="tools" queryString>
+      <TabItem value="cfssl" label="CFSSL" default>
+
+        <h3>前提条件</h3>
+
+        次の手順では、[cfssl および cfssljson](https://github.com/cloudflare/cfssl) コマンドラインツールをインストールする必要があります。
+
+        <h3>ローカル CA を作成する</h3>
+
+        1. 作業ディレクトリを作成します。
+
+           ```console
+           mkdir -p ${HOME}/scalardl/digital-signature/certs/
+           ```
+
+        1. 作業ディレクトリを `${HOME}/scalardl/digital-signature/certs/` に変更します。
+
+           ```console
+           cd ${HOME}/scalardl/digital-signature/certs/
+           ```
+
+        1. CA の情報を含む JSON ファイルを作成します。
+
+           ```console
+           cat << 'EOF' > ${HOME}/scalardl/digital-signature/certs/ca.json
+           {
+               "CN": "scalardl-example-ca",
+               "key": {
+                   "algo": "ecdsa",
+                   "size": 256
+               },
+               "names": [
+                   {
+                       "C": "JP",
+                       "ST": "Tokyo",
+                       "L": "Shinjuku",
+                       "O": "ScalarDL Example CA"
+                   }
+               ]
+           }
+           EOF
+           ```
+
+        1. CA 秘密鍵と証明書ファイルを作成します。
+
+           ```console
+           cfssl gencert -initca ca.json | cfssljson -bare ca
+           ```
+
+        1. CA 構成を含む JSON ファイルを作成します。
+
+           ```console
+           cat << 'EOF' > ${HOME}/scalardl/digital-signature/certs/ca-config.json
+           {
+               "signing": {
+                   "default": {
+                       "expiry": "87600h"
+                   },
+                   "profiles": {
+                       "scalardl-example-ca": {
+                           "expiry": "87600h",
+                           "usages": [
+                               "signing",
+                               "key encipherment",
+                               "server auth"
+                           ]
+                       }
+                   }
+               }
+           }
+           EOF
+           ```
+
+        <h3>各コンポーネントの秘密鍵と証明書を作成する</h3>
+
+        <Tabs groupId="components" queryString>
+          <TabItem value="scalardl-ledger" label="ScalarDL Ledger" default>
+          1. ScalarDL Ledger の情報を含む JSON ファイルを作成します。
+
+             ```console
+             cat << 'EOF' > ${HOME}/scalardl/digital-signature/certs/ledger.json
+             {
+                 "CN": "scalardl-ledger",
+                 "hosts": [
+                     "ledger.scalardl.example.com",
+                     "localhost"
+                 ],
+                 "key": {
+                     "algo": "ecdsa",
+                     "size": 256
+                 },
+                 "names": [
+                     {
+                         "C": "JP",
+                         "ST": "Tokyo",
+                         "L": "Shinjuku",
+                         "O": "ScalarDL Ledger Example"
+                     }
+                 ]
+             }
+             EOF
+             ```
+
+          1. ScalarDL Ledger の秘密鍵と証明書ファイルを作成します。
+
+             ```console
+             cfssl gencert -ca ca.pem -ca-key ca-key.pem -config ca-config.json -profile scalardl-example-ca ledger.json | cfssljson -bare ledger
+             ```
+
+          1. 秘密鍵と証明書ファイルが作成されたことを確認します。
+
+             ```console
+             ls -1
+             ```
+
+             次のような結果が表示されます:
+
+             ```console
+             ca-config.json
+             ca-key.pem
+             ca.csr
+             ca.json
+             ca.pem
+             ledger-key.pem
+             ledger.csr
+             ledger.json
+             ledger.pem
+             ```
+
+             この場合:
+
+             - `ledger-key.pem` は ScalarDL Ledger の秘密鍵ファイルです。
+             - `ledger.pem` は ScalarDL Ledger の証明書ファイルです。
+             - `ca.pem` はルート CA の証明書ファイルです。
+          </TabItem>
+          <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+          1. ScalarDL Auditor の情報を含む JSON ファイルを作成します。
+
+             ```console
+             cat << 'EOF' > ${HOME}/scalardl/digital-signature/certs/auditor.json
+             {
+                 "CN": "scalardl-auditor",
+                 "hosts": [
+                     "auditor.scalardl.example.com",
+                     "localhost"
+                 ],
+                 "key": {
+                     "algo": "ecdsa",
+                     "size": 256
+                 },
+                 "names": [
+                     {
+                         "C": "JP",
+                         "ST": "Tokyo",
+                         "L": "Shinjuku",
+                         "O": "ScalarDL Auditor Example"
+                     }
+                 ]
+             }
+             EOF
+             ```
+
+          1. ScalarDL Auditor の秘密鍵と証明書ファイルを作成します。
+
+             ```console
+             cfssl gencert -ca ca.pem -ca-key ca-key.pem -config ca-config.json -profile scalardl-example-ca auditor.json | cfssljson -bare auditor
+             ```
+
+          1. 秘密鍵と証明書ファイルが作成されたことを確認します。
+
+             ```console
+             ls -1
+             ```
+
+             次のような結果が表示されます:
+
+             ```console
+             auditor-key.pem
+             auditor.csr
+             auditor.json
+             auditor.pem
+             ca-config.json
+             ca-key.pem
+             ca.csr
+             ca.json
+             ca.pem
+             ```
+
+             この場合:
+
+             - `auditor-key.pem` は ScalarDL Auditor の秘密鍵ファイルです。
+             - `auditor.pem` は ScalarDL Auditor の証明書ファイルです。
+             - `ca.pem` はルート CA の証明書ファイルです。
+          </TabItem>
+          <TabItem value="client" label="クライアント">
+          1. クライアントの情報を含む JSON ファイルを作成します。
+
+             ```console
+             cat << 'EOF' > ${HOME}/scalardl/digital-signature/certs/client.json
+             {
+                 "CN": "scalardl-client",
+                 "hosts": [
+                     "client.scalardl.example.com",
+                     "localhost"
+                 ],
+                 "key": {
+                     "algo": "ecdsa",
+                     "size": 256
+                 },
+                 "names": [
+                     {
+                         "C": "JP",
+                         "ST": "Tokyo",
+                         "L": "Shinjuku",
+                         "O": "ScalarDL Client Example"
+                     }
+                 ]
+             }
+             EOF
+             ```
+
+          1. クライアントの秘密鍵と証明書ファイルを作成します。
+
+             ```console
+             cfssl gencert -ca ca.pem -ca-key ca-key.pem -config ca-config.json -profile scalardl-example-ca client.json | cfssljson -bare client
+             ```
+
+          1. 秘密鍵と証明書ファイルが作成されたことを確認します。
+
+             ```console
+             ls -1
+             ```
+
+             次のような結果が表示されます:
+
+             ```console
+             ca-config.json
+             ca-key.pem
+             ca.csr
+             ca.json
+             ca.pem
+             client-key.pem
+             client.csr
+             client.json
+             client.pem
+             ```
+
+             この場合:
+
+             - `client-key.pem` はクライアントの秘密鍵ファイルです。
+             - `client.pem` はクライアントの証明書ファイルです。
+             - `ca.pem` はルート CA の証明書ファイルです。
+          </TabItem>
+        </Tabs>
+
+      </TabItem>
+      <TabItem value="openssl" label="OpenSSL">
+
+      <h3>前提条件</h3>
+
+      次の手順を実行するには、`openssl` コマンドラインツールをインストールする必要があります。
+
+      <h3>作業ディレクトリを作成する</h3>
+
+      1. 作業ディレクトリを作成します。
+
+         ```console
+         mkdir -p ${HOME}/scalardl/digital-signature/certs/
+         ```
+
+      1. 作業ディレクトリを `${HOME}/scalardl/digital-signature/certs/` に変更します。
+
+         ```console
+         cd ${HOME}/scalardl/digital-signature/certs/
+         ```
+
+        <h3>各コンポーネントの秘密鍵と証明書を作成する</h3>
+        <Tabs groupId="components" queryString>
+          <TabItem value="scalardl-ledger" label="ScalarDL Ledger" default>
+          1. EC パラメータを作成します。
+
+             ```console
+             openssl ecparam -name prime256v1 -out prime256v1.pem
+             ```
+
+          1. 秘密鍵と CSR を作成します。
+
+             ```console
+             openssl req -new -newkey ec:prime256v1.pem -nodes -keyout ledger-key.pem -out ledger.csr
+             ```
+
+          1. `PKCS#8` 鍵を `SEC1` 鍵に変換します。
+
+             ```console
+             openssl ec -in ledger-key.pem -out ledger-key.pem
+             ```
+
+          1. ScalarDL Ledger の証明書を作成します。
+
+             ```console
+             openssl x509 -req -days 3650 -signkey ledger-key.pem -in ledger.csr -out ledger.pem
+             ```
+
+          1. 秘密鍵と証明書ファイルが作成されたことを確認します。
+
+             ```console
+             ls -1
+             ```
+
+             次のような結果が表示されます:
+
+             ```console
+             ledger-key.pem
+             ledger.csr
+             ledger.pem
+             prime256v1.pem
+             ```
+
+             この場合:
+
+             - `ledger-key.pem` は ScalarDL Ledger の秘密鍵ファイルです。
+             - `ledger.pem` は ScalarDL Ledger の証明書ファイルです。
+          </TabItem>
+          <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+          1. EC パラメータを作成します。
+
+             ```console
+             openssl ecparam -name prime256v1 -out prime256v1.pem
+             ```
+
+          1. 秘密鍵と CSR を作成します。
+
+             ```console
+             openssl req -new -newkey ec:prime256v1.pem -nodes -keyout auditor-key.pem -out auditor.csr
+             ```
+
+          1. `PKCS#8` 鍵を `SEC1` 鍵に変換します。
+
+             ```console
+             openssl ec -in auditor-key.pem -out auditor-key.pem
+             ```
+
+          1. ScalarDL Auditor の証明書を作成します。
+
+             ```console
+             openssl x509 -req -days 3650 -signkey auditor-key.pem -in auditor.csr -out auditor.pem
+             ```
+
+          1. 秘密鍵と証明書ファイルが作成されたことを確認します。
+
+             ```console
+             ls -1
+             ```
+
+             次のような結果が表示されます:
+
+             ```console
+             auditor-key.pem
+             auditor.csr
+             auditor.pem
+             prime256v1.pem
+             ```
+
+             この場合:
+
+             - `auditor-key.pem` は ScalarDL Auditor の秘密鍵ファイルです。
+             - `auditor.pem` は ScalarDL Auditor の証明書ファイルです。
+          </TabItem>
+          <TabItem value="client" label="クライアント">
+          1. EC パラメータを作成します。
+
+             ```console
+             openssl ecparam -name prime256v1 -out prime256v1.pem
+             ```
+
+          1. 秘密鍵と CSR を作成します。
+
+             ```console
+             openssl req -new -newkey ec:prime256v1.pem -nodes -keyout client-key.pem -out client.csr
+             ```
+
+          1. `PKCS#8` 鍵を `SEC1` 鍵に変換します。
+
+             ```console
+             openssl ec -in client-key.pem -out client-key.pem
+             ```
+
+          1. クライアントの証明書を作成します。
+
+             ```console
+             openssl x509 -req -days 3650 -signkey client-key.pem -in client.csr -out client.pem
+             ```
+
+          1. 秘密鍵と証明書ファイルが作成されたことを確認します。
+
+             ```console
+             ls -1
+             ```
+
+             次のような結果が表示されます:
+
+             ```console
+             client-key.pem
+             client.csr
+             client.pem
+             prime256v1.pem
+             ```
+
+             この場合:
+
+             - `client-key.pem` はクライアントの秘密鍵ファイルです。
+             - `client.pem` はクライアントの証明書ファイルです。
+          </TabItem>
+        </Tabs>
+      </TabItem>
+    </Tabs>
+  </TabItem>
+  <TabItem value="cfssl-server" label="CFSSL サーバー">
+    [CFSSL サーバー](./caserver-getting-started.mdx) に証明書ファイルの作成を依頼できます。
+
+    <h3>前提条件</h3>
+
+    次の手順では、[cfssl および cfssljson](https://github.com/cloudflare/cfssl) コマンドラインツールをインストールする必要があります。
+
+    <h3>秘密鍵と証明書ファイルを作成する</h3>
+
+    1. CFSSL や OpenSSL などのツールを使用し、[要件](#private-key-and-certificate-requirements) に基づいて秘密鍵と CSR を作成します。[CFSSL](?methods=self-signed&tools=cfssl) タブで `cfssl` コマンドを使用して秘密鍵と CSR を作成する例を確認できます。また、[OpenSSL](?methods=self-signed&tools=openssl) タブで `openssl` コマンドを使用して秘密鍵と CSR を作成する例を確認できます。
+
+    1. CFSSL サーバーから証明書を要求します。
+
+       :::note
+
+       - CFSSL サーバーエンドポイント URI を指定するには、`-remote` オプションが必要です。
+       - 出力される鍵ファイルのプレフィックスを指定するには、cfssljson の `-bare` オプションが必要です。
+
+       :::
+
+    <Tabs groupId="components" queryString>
+      <TabItem value="scalardl-ledger" label="ScalarDL Ledger" default>
+
+         ```console
+         cfssl sign -remote "<IP_ADDRESS_OF_CFSSL_SERVER>:<PORT_OF_CFSSL_SERVER>" -profile "ledger" ledger.csr | cfssljson -bare ledger -
+         ```
+
+         CFSSL サーバーから `ledger.pem` という名前の証明書を取得します。その証明書を ScalarDL Ledger に使用できます。
+      </TabItem>
+      <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+
+         ```console
+         cfssl sign -remote "<IP_ADDRESS_OF_CFSSL_SERVER>:<PORT_OF_CFSSL_SERVER>" -profile "auditor" auditor.csr | cfssljson -bare auditor -
+         ```
+
+         CFSSL サーバーから `auditor.pem` という名前の証明書を取得します。その証明書を ScalarDL Auditor に使用できます。
+      </TabItem>
+      <TabItem value="client" label="クライアント">
+
+         ```console
+         cfssl sign -remote "<IP_ADDRESS_OF_CFSSL_SERVER>:<PORT_OF_CFSSL_SERVER>" -profile "client" client.csr | cfssljson -bare client -
+         ```
+
+         CFSSL サーバーから `client.pem` という名前の証明書を取得します。その証明書をクライアントに使用できます。
+      </TabItem>
+    </Tabs>
+  </TabItem>
+  <TabItem value="third-party-ca" label="サードパーティ CA またはプライベート CA">
+  証明書ファイルを作成するために、サードパーティ CA またはプライベート CA を利用できます。証明書ファイルの作成方法の詳細については、利用するサードパーティ CA またはプライベート CA にお問い合わせください。
+  </TabItem>
+</Tabs>

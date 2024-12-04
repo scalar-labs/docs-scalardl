@@ -73,6 +73,7 @@ const sidebars = {
         'how-to-handle-errors',
         'how-to-write-contract',
         'how-to-write-function',
+        'use-generic-contracts',
         'how-to-use-proof',
       ],
     },
@@ -240,8 +241,7 @@ const sidebars = {
         },
         'backup-restore',
         'scalar-kubernetes/HowToScaleScalarDL',
-        "scalar-kubernetes/HowToUpgradeScalarDL",
-        'troubleshooting-guide',
+        'scalar-kubernetes/HowToUpgradeScalarDL',
         'scalar-manager/overview',
       ],
     },
@@ -252,7 +252,19 @@ const sidebars = {
       items: [
         'compatibility',
         'scalardl-command-reference',
+        'generic-contracts-reference',
         'scalardl-benchmarks/README',
+        {
+          type: 'category',
+          label: 'Error codes',
+          collapsible: true,
+          items: [
+            'scalardl-auditor-status-codes',
+            'scalardl-client-status-codes',
+            'scalardl-common-status-codes',
+            'scalardl-ledger-status-codes',
+          ],
+        },
       ],
     },
     {

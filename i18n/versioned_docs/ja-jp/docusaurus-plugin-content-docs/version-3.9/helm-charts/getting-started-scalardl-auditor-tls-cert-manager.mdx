@@ -1,0 +1,948 @@
+---
+---
+
+# Helm チャートを使い始める (cert-manager / Auditor モードを使用した TLS 対応の ScalarDL Ledger および Auditor)
+
+このチュートリアルでは、Kubernetes クラスターでテスト環境として Helm Charts と cert-manager を使用して、TLS 構成で ScalarDL Ledger と ScalarDL Auditor を使い始める方法について説明します。開始する前に、テスト用の Mac または Linux 環境を用意しておく必要があります。また、このチュートリアルでは **minikube** の使用について説明していますが、説明されている手順はどの Kubernetes クラスターでも機能するはずです。
+
+## 要件
+
+* ScalarDL のライセンスキー (試用ライセンスまたは商用ライセンス) が必要です。ライセンスキーをお持ちでない場合は、[お問い合わせ](https://www.scalar-labs.com/contact) ください。
+* TLS をサポートする ScalarDL 3.9 以降を使用する必要があります。
+
+:::note
+
+監査によるビザンチン障害検出を適切に行うには、ScalarDL Ledger と ScalarDL Auditor を異なる管理ドメインにデプロイして管理する必要があります。ただし、このチュートリアルでは、テストを容易にするために、ScalarDL Ledger と ScalarDL Auditor を同じ Kubernetes クラスターにデプロイします。
+
+:::
+
+## 作成するもの
+
+このチュートリアルでは、次の方法で Kubernetes クラスターに次のコンポーネントをデプロイします。
+
+```
++-----------------------------------------------------------------------------------------------------------------------------+
+| [Kubernetes Cluster]                                                                                                        |
+|                                             [Pod]                                      [Pod]                   [Pod]        |
+|                                                                                                                             |
+|                                           +-------+                                 +---------+                             |
+|                                     +---> | Envoy | ---+                      +---> | Ledger  | ---+                        |
+|                                     |     +-------+    |                      |     +---------+    |                        |
+|                                     |                  |                      |                    |                        |
+|                      +---------+    |     +-------+    |     +-----------+    |     +---------+    |     +---------------+  |
+|                +---> | Service | ---+---> | Envoy | ---+---> |  Service  | ---+---> | Ledger  | ---+---> |  PostgreSQL   |  |
+|                |     | (Envoy) |    |     +-------+    |     | (Ledger)  |    |     +---------+    |     | (For Ledger)  |  |
+|                |     +---------+    |                  |     +-----------+    |                    |     +---------------+  |
+|    [Pod]       |                    |     +-------+    |                      |     +---------+    |                        |
+|                |                    +---> | Envoy | ---+                      +---> | Ledger  | ---+                        |
+|  +--------+    |                          +-------+                                 +---------+                             |
+|  | Client | ---+                                                                                                            |
+|  +--------+    |                          +-------+                                 +---------+                             |
+|                |                    +---> | Envoy | ---+                      +---> | Auditor | ---+                        |
+|                |                    |     +-------+    |                      |     +---------+    |                        |
+|                |                    |                  |                      |                    |                        |
+|                |     +---------+    |     +-------+    |     +-----------+    |     +---------+    |     +---------------+  |
+|                +---> | Service | ---+---> | Envoy | ---+---> |  Service  | ---+---> | Auditor | ---+---> |  PostgreSQL   |  |
+|                      | (Envoy) |    |     +-------+    |     | (Auditor) |    |     +---------+    |     | (For Auditor) |  |
+|                      +---------+    |                  |     +-----------+    |                    |     +---------------+  |
+|                                     |     +-------+    |                      |     +---------+    |                        |
+|                                     +---> | Envoy | ---+                      +---> | Auditor | ---+                        |
+|                                           +-------+                                 +---------+                             |
+|                                                                                                                             |
+|  +--------------------------------------------------------------------------+    +---------------------+                    |
+|  | cert-manager (create private key and certificate for Envoy and ScalarDL) |    | Issuer (Private CA) |                    |
+|  +--------------------------------------------------------------------------+    +---------------------+                    |
+|                                                                                                                             |
++-----------------------------------------------------------------------------------------------------------------------------+
+```
+
+cert-manager は、TLS 接続用に次の秘密鍵と証明書ファイルを自動的に作成します。
+
+```
+                                                           +----------------------+
+                                                     +---> | For Scalar Envoy     |
+                                                     |     +----------------------+
+                                                     |     | tls.key              |
+                                                     |     | tls.crt              |
+                                                     |     +----------------------+
+                                                     |     
++-------------------------+                          |     +----------------------+
+| Issuer (Self-signed CA) | ---(Sign certificates)---+---> | For ScalarDL Ledger  |
++-------------------------+                          |     +----------------------+
+| tls.key                 |                          |     | tls.key              |
+| tls.crt                 |                          |     | tls.crt              |
+| ca.crt                  |                          |     +----------------------+
++-------------------------+                          |     
+                                                     |     +----------------------+
+                                                     +---> | For ScalarDL Auditor |
+                                                           +----------------------+
+                                                           | tls.key              |
+                                                           | tls.crt              |
+                                                           +----------------------+
+```
+
+Scalar Helm Charts は、各接続で TLS を有効にするために、Envoy と ScalarDL の各秘密キーと証明書ファイルを次のように自動的にマウントします。ルート CA 証明書ファイルはクライアントに手動でマウントします。
+
+```
+                                                                            +------------------------------------------------+      +--------------------------------------+
+                                             +-------(Normal request)-----> | Envoy for ScalarDL Ledger                      | ---> | ScalarDL Ledger                      |
+                                             |                              +------------------------------------------------+      +--------------------------------------+
+                                             |   +---(Recovery request)---> | tls.key                                        | ---> | tls.key                              |
+                                             |   |                          | tls.crt                                        |      | tls.crt                              |
+                                             |   |                          | ca.crt (to verify tls.crt of ScalarDL Ledger)  |      | ca.crt (to check health)             |
+                                             |   |                          +------------------------------------------------+      +--------------------------------------+
++---------------------------------------+    |   |
+| Client                                | ---+   |
++---------------------------------------+    |   +------------------------------------------------------------------------------------------------------------------------------+
+| ca.crt (to verify tls.crt of Envoy)   |    |                                                                                                                                  |
++---------------------------------------+    |                                                                                                                                  |
+                                             |                              +------------------------------------------------+      +--------------------------------------+    |
+                                             +-------(Normal request)-----> | Envoy for ScalarDL Auditor                     | ---> | ScalarDL Auditor                     | ---+
+                                                                            +------------------------------------------------+      +--------------------------------------+
+                                                                            | tls.key                                        |      | tls.key                              |
+                                                                            | tls.crt                                        |      | tls.crt                              |
+                                                                            | ca.crt (to verify tls.crt of ScalarDL Auditor) |      | ca.crt (to check health)             |
+                                                                            +------------------------------------------------+      | ca.crt (to verify tls.crt of Envoy)  |
+                                                                                                                                    +--------------------------------------+
+```
+
+ScalarDL 関連コンポーネント間には、次の接続が存在します:
+
+* **`クライアント - ScalarDL Ledger 用 Envoy`:** ScalarDL API 関数を実行すると、クライアントは ScalarDL Ledger 用 Envoy にアクセスします。
+* **`クライアント - ScalarDL Auditor 用 Envoy`:** ScalarDL API 関数を実行すると、クライアントは ScalarDL Auditor 用 Envoy にアクセスします。
+* **`ScalarDL Ledger 用 Envoy - ScalarDL Ledger`:** Envoy は ScalarDL Ledger の前で L7 (gRPC) ロード バランサーとして機能します。
+* **`ScalarDL Auditor 用 Envoy - ScalarDL Auditor`:** Envoy は ScalarDL Auditor の前で L7 (gRPC) ロード バランサーとして機能します。
+* **`ScalarDL Auditor - Envoy for ScalarDL Ledger (ScalarDL Ledger)`:** ScalarDL がデータの一貫性を保つために回復プロセスを実行する必要がある場合、ScalarDL Auditor は Envoy を介して ScalarDL Ledger に対してリクエストを実行します。
+
+## ステップ 1. Kubernetes クラスターを起動してツールをインストールする
+
+Kubernetes クラスターを準備し、いくつかのツール (`kubectl`、`helm`、`cfssl`、および `cfssljson`) をインストールする必要があります。インストール方法の詳細については、[Scalar Helm Charts の使用開始](getting-started-scalar-helm-charts.mdx) を参照してください。
+
+## ステップ 2. PostgreSQL コンテナを起動する
+
+ScalarDL Ledger と ScalarDL Auditor は、バックエンド データベースとして何らかのデータベース システムを使用する必要があります。このチュートリアルでは、PostgreSQL を使用します。
+
+次のようにして、Kubernetes クラスターに PostgreSQL をデプロイできます。
+
+1. Bitnami helm リポジトリを追加します。
+
+   ```console
+   helm repo add bitnami https://charts.bitnami.com/bitnami
+   ```
+
+1. Ledger 用に PostgreSQL をデプロイします。
+
+   ```console
+   helm install postgresql-ledger bitnami/postgresql \
+     --set auth.postgresPassword=postgres \
+     --set primary.persistence.enabled=false \
+     -n default
+   ```
+
+1. Auditor 用に PostgreSQL をデプロイします。
+
+   ```console
+   helm install postgresql-auditor bitnami/postgresql \
+     --set auth.postgresPassword=postgres \
+     --set primary.persistence.enabled=false \
+     -n default
+   ```
+
+1. PostgreSQL コンテナが実行されているかどうかを確認します。
+
+   ```console
+   kubectl get pod -n default
+   ```
+
+   [コマンド実行結果]
+
+   ```console
+   NAME                   READY   STATUS    RESTARTS   AGE
+   postgresql-auditor-0   1/1     Running   0          11s
+   postgresql-ledger-0    1/1     Running   0          16s
+   ```
+
+## ステップ 3. 作業ディレクトリを作成する
+
+ローカルにいくつかの構成ファイルと秘密鍵および証明書ファイルを作成します。必ずそれらのファイル用の作業ディレクトリを作成してください。
+
+1. 作業ディレクトリを作成します。
+
+   ```console
+   mkdir -p ${HOME}/scalardl-test/
+   ```
+
+## ステップ 4. cert-manager と発行者リソースをデプロイする
+
+このチュートリアルでは、cert-manager を使用して秘密鍵と証明書を発行および管理します。次のようにして、Kubernetes クラスターに cert-manager をデプロイできます。
+
+1. Jetstack helm リポジトリを追加します。
+
+   ```console
+   helm repo add jetstack https://charts.jetstack.io
+   ```
+
+1. cert-manager をデプロイします。
+
+   ```console
+   helm install cert-manager jetstack/cert-manager \
+     --create-namespace \
+     --set installCRDs=true \
+     -n cert-manager
+   ```
+
+1. cert-manager コンテナが実行されているかどうかを確認します。
+
+   ```console
+   kubectl get pod -n cert-manager
+   ```
+
+   [コマンド実行結果]
+
+   ```console
+   NAME                                      READY   STATUS    RESTARTS   AGE
+   cert-manager-6dc66985d4-6lvtt             1/1     Running   0          26s
+   cert-manager-cainjector-c7d4dbdd9-xlrpn   1/1     Running   0          26s
+   cert-manager-webhook-847d7676c9-ckcz2     1/1     Running   0          26s
+   ```
+
+1. 作業ディレクトリを `${HOME}/scalardl-test/` に変更します。
+
+   ```console
+   cd ${HOME}/scalardl-test/
+   ```
+
+1. プライベート CA のカスタム値ファイル (`private-ca-custom-values.yaml`) を作成します。
+
+     ```console
+     cat << 'EOF' > ${HOME}/scalardl-test/private-ca-custom-values.yaml
+     apiVersion: cert-manager.io/v1
+     kind: Issuer
+     metadata:
+       name: self-signed-issuer
+     spec:
+       selfSigned: {}
+     ---
+     apiVersion: cert-manager.io/v1
+     kind: Certificate
+     metadata:
+       name: self-signed-ca-cert
+     spec:
+       isCA: true
+       commonName: self-signed-ca
+       secretName: self-signed-ca-cert-secret
+       privateKey:
+         algorithm: ECDSA
+         size: 256
+       issuerRef:
+         name: self-signed-issuer
+         kind: Issuer
+         group: cert-manager.io
+     ---
+     apiVersion: cert-manager.io/v1
+     kind: Issuer
+     metadata:
+       name: self-signed-ca
+     spec:
+       ca:
+         secretName: self-signed-ca-cert-secret
+     EOF
+     ```
+
+1. 自己署名 CA を展開します。
+
+   ```console
+   kubectl apply -f ./private-ca-custom-values.yaml
+   ```
+
+1. 発行者リソースが `True` であるかどうかを確認します。
+
+   ```console
+   kubectl get issuer
+   ```
+
+   [コマンド実行結果]
+
+   ```console
+   NAME                 READY   AGE
+   self-signed-ca      True    6s
+   self-signed-issuer   True    6s
+   ```
+
+## ステップ 5. Helm Charts を使用して ScalarDL Ledger と ScalarDL Auditor のデータベーススキーマを作成する
+
+Helm Charts を使用して、Kubernetes クラスターに 2 つの ScalarDL Schema Loader ポッドをデプロイします。ScalarDL Schema Loader は、PostgreSQL に ScalarDL Ledger と Auditor のデータベーススキーマを作成します。
+
+1. Scalar Helm Charts リポジトリを追加します。
+
+   ```console
+   helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
+   ```
+
+1. ScalarDL Schema Loader for Ledger のカスタム値ファイル (`schema-loader-ledger-custom-values.yaml`) を作成します。
+
+   ```console
+   cat << 'EOF' > ${HOME}/scalardl-test/schema-loader-ledger-custom-values.yaml
+   schemaLoading:
+     schemaType: "ledger"
+     databaseProperties: |
+       scalar.db.contact_points=jdbc:postgresql://postgresql-ledger.default.svc.cluster.local:5432/postgres
+       scalar.db.username=${env:SCALAR_DL_LEDGER_POSTGRES_USERNAME}
+       scalar.db.password=${env:SCALAR_DL_LEDGER_POSTGRES_PASSWORD}
+       scalar.db.storage=jdbc
+     secretName: "schema-ledger-credentials-secret"
+   EOF
+   ```
+
+1. ScalarDL Schema Loader for Auditor のカスタム値ファイル (`schema-loader-auditor-custom-values.yaml`) を作成します。
+
+   ```console
+   cat << 'EOF' > ${HOME}/scalardl-test/schema-loader-auditor-custom-values.yaml
+   schemaLoading:
+     schemaType: "auditor"
+     databaseProperties: |
+       scalar.db.contact_points=jdbc:postgresql://postgresql-auditor.default.svc.cluster.local:5432/postgres
+       scalar.db.username=${env:SCALAR_DL_AUDITOR_POSTGRES_USERNAME}
+       scalar.db.password=${env:SCALAR_DL_AUDITOR_POSTGRES_PASSWORD}
+       scalar.db.storage=jdbc
+     secretName: "schema-auditor-credentials-secret"
+   EOF
+   ```
+
+1. ScalarDL Ledger 用の PostgreSQL のユーザー名とパスワードを含む `schema-ledger-credentials-secret` という名前のシークレットリソースを作成します。
+
+   ```console
+   kubectl create secret generic schema-ledger-credentials-secret \
+     --from-literal=SCALAR_DL_LEDGER_POSTGRES_USERNAME=postgres \
+     --from-literal=SCALAR_DL_LEDGER_POSTGRES_PASSWORD=postgres \
+     -n default
+   ```
+
+1. ScalarDL Auditor 用の PostgreSQL のユーザー名とパスワードを含む `schema-auditor-credentials-secret` という名前のシークレットリソースを作成します。
+
+   ```console
+   kubectl create secret generic schema-auditor-credentials-secret \
+     --from-literal=SCALAR_DL_AUDITOR_POSTGRES_USERNAME=postgres \
+     --from-literal=SCALAR_DL_AUDITOR_POSTGRES_PASSWORD=postgres \
+     -n default
+   ```
+
+1. ScalarDL スキーマローダーのチャートバージョンを設定します。
+
+   ```console
+   SCALAR_DL_VERSION=3.9.1
+   SCALAR_DL_SCHEMA_LOADER_CHART_VERSION=$(helm search repo scalar-labs/schema-loading -l | grep -F "${SCALAR_DL_VERSION}" | awk '{print $2}' | sort --version-sort -r | head -n 1)
+   ```
+
+1. ScalarDL Ledger 用の ScalarDL スキーマローダーをデプロイします。
+
+   ```console
+   helm install schema-loader-ledger scalar-labs/schema-loading -f ${HOME}/scalardl-test/schema-loader-ledger-custom-values.yaml --version ${SCALAR_DL_SCHEMA_LOADER_CHART_VERSION} -n default
+   ```
+
+1. ScalarDL Auditor 用の ScalarDL スキーマローダーをデプロイします。
+
+   ```console
+   helm install schema-loader-auditor scalar-labs/schema-loading -f ${HOME}/scalardl-test/schema-loader-auditor-custom-values.yaml --version ${SCALAR_DL_SCHEMA_LOADER_CHART_VERSION} -n default
+   ```
+
+1. ScalarDL スキーマローダーポッドが「完了」ステータスでデプロイされているかどうかを確認します。
+
+   ```console
+   kubectl get pod -n default
+   ```
+
+   [コマンド実行結果]
+
+   ```console
+   NAME                                         READY   STATUS      RESTARTS   AGE
+   postgresql-auditor-0                         1/1     Running     0          2m56s
+   postgresql-ledger-0                          1/1     Running     0          3m1s
+   schema-loader-auditor-schema-loading-dvc5r   0/1     Completed   0          6s
+   schema-loader-ledger-schema-loading-mtllb    0/1     Completed   0          10s
+   ```
+   
+   ScalarDL スキーマローダーポッドのステータスが **ContainerCreating** または **Running** の場合、それらのポッドの `STATUS` 列に `Completed` と表示されるまで待ちます。
+
+## ステップ 6. Helm Charts を使用して、Kubernetes クラスターに ScalarDL Ledger と ScalarDL Auditor をデプロイします
+
+1. ライセンスキーと証明書を環境変数として設定します。ライセンスキーがない場合は、[お問い合わせ](https://www.scalar-labs.com/contact) ください。`<CERT_PEM_FOR_YOUR_SCALAR_DL_LEDGER_LICENSE_KEY>` と `<CERT_PEM_FOR_YOUR_SCALAR_DL_AUDITOR_LICENSE_KEY>` の値の詳細については、[製品ライセンス キーを構成する方法](https://scalardl.scalar-labs.com/docs/latest/scalar-licensing/) を参照してください。
+
+   ```console
+   SCALAR_DL_LEDGER_LICENSE_KEY='<YOUR_SCALAR_DL_LEDGER_LICENSE_KEY>'
+   SCALAR_DL_LEDGER_LICENSE_CHECK_CERT_PEM='<CERT_PEM_FOR_YOUR_SCALAR_DL_LEDGER_LICENSE_KEY>'
+   SCALAR_DL_AUDITOR_LICENSE_KEY='<YOUR_SCALAR_DL_AUDITOR_LICENSE_KEY>'
+   SCALAR_DL_AUDITOR_LICENSE_CHECK_CERT_PEM='<CERT_PEM_FOR_YOUR_SCALAR_DL_AUDITOR_LICENSE_KEY>'
+   ```
+
+1. ScalarDL Ledger のカスタム値ファイル (`scalardl-ledger-custom-values.yaml`) を作成します。
+
+     ```console
+     cat << 'EOF' > ${HOME}/scalardl-test/scalardl-ledger-custom-values.yaml
+     envoy:
+
+       tls:
+         downstream:
+           enabled: true
+           certManager:
+             enabled: true
+             issuerRef:
+               name: self-signed-ca
+             dnsNames:
+               - envoy.scalar.example.com
+         upstream:
+           enabled: true
+           overrideAuthority: "ledger.scalardl.example.com"
+
+     ledger:
+
+       image:
+         repository: "ghcr.io/scalar-labs/scalardl-ledger-byol"
+
+       ledgerProperties: |
+         ### Storage configurations
+         scalar.db.storage=jdbc
+         scalar.db.contact_points=jdbc:postgresql://postgresql-ledger.default.svc.cluster.local:5432/postgres
+         scalar.db.username=${env:SCALAR_DL_LEDGER_POSTGRES_USERNAME}
+         scalar.db.password=${env:SCALAR_DL_LEDGER_POSTGRES_PASSWORD}
+
+         ### Ledger configurations
+         scalar.dl.ledger.proof.enabled=true
+         scalar.dl.ledger.auditor.enabled=true
+         scalar.dl.ledger.authentication.method=hmac
+         scalar.dl.ledger.authentication.hmac.cipher_key=${env:SCALAR_DL_LEDGER_HMAC_CIPHER_KEY}
+         scalar.dl.ledger.servers.authentication.hmac.secret_key=${env:SCALAR_DL_LEDGER_HMAC_SECRET_KEY}
+
+         ### TLS configurations
+         scalar.dl.ledger.server.tls.enabled=true
+         scalar.dl.ledger.server.tls.cert_chain_path=/tls/scalardl-ledger/certs/tls.crt
+         scalar.dl.ledger.server.tls.private_key_path=/tls/scalardl-ledger/certs/tls.key
+
+         ### License key configurations
+         scalar.dl.licensing.license_key=${env:SCALAR_DL_LEDGER_LICENSE_KEY}
+         scalar.dl.licensing.license_check_cert_pem=${env:SCALAR_DL_LEDGER_LICENSE_CHECK_CERT_PEM}
+
+       tls:
+         enabled: true
+         overrideAuthority: "ledger.scalardl.example.com"
+         certManager:
+           enabled: true
+           issuerRef:
+             name: self-signed-ca
+           dnsNames:
+             - ledger.scalardl.example.com
+
+       secretName: "ledger-credentials-secret"
+     EOF
+     ```
+
+1. ScalarDL Auditor のカスタム値ファイル (`scalardl-auditor-custom-values.yaml`) を作成します。
+
+     ```console
+     cat << 'EOF' > ${HOME}/scalardl-test/scalardl-auditor-custom-values.yaml
+     envoy:
+
+       tls:
+         downstream:
+           enabled: true
+           certManager:
+             enabled: true
+             issuerRef:
+               name: self-signed-ca
+             dnsNames:
+               - envoy.scalar.example.com
+         upstream:
+           enabled: true
+           overrideAuthority: "auditor.scalardl.example.com"
+
+
+     auditor:
+
+       image:
+         repository: "ghcr.io/scalar-labs/scalardl-auditor-byol"
+
+       auditorProperties: |
+         ### Storage configurations
+         scalar.db.storage=jdbc
+         scalar.db.contact_points=jdbc:postgresql://postgresql-auditor.default.svc.cluster.local:5432/postgres
+         scalar.db.username=${env:SCALAR_DL_AUDITOR_POSTGRES_USERNAME}
+         scalar.db.password=${env:SCALAR_DL_AUDITOR_POSTGRES_PASSWORD}
+
+         ### Auditor configurations
+         scalar.dl.auditor.ledger.host=scalardl-ledger-envoy.default.svc.cluster.local
+         scalar.dl.auditor.authentication.method=hmac
+         scalar.dl.auditor.authentication.hmac.cipher_key=${env:SCALAR_DL_AUDITOR_HMAC_CIPHER_KEY}
+         scalar.dl.auditor.servers.authentication.hmac.secret_key=${env:SCALAR_DL_AUDITOR_HMAC_SECRET_KEY}
+
+         ### TLS configurations
+         scalar.dl.auditor.server.tls.enabled=true
+         scalar.dl.auditor.server.tls.cert_chain_path=/tls/scalardl-auditor/certs/tls.crt
+         scalar.dl.auditor.server.tls.private_key_path=/tls/scalardl-auditor/certs/tls.key
+         scalar.dl.auditor.tls.enabled=true
+         scalar.dl.auditor.tls.ca_root_cert_path=/tls/scalardl-ledger/certs/ca.crt
+         scalar.dl.auditor.tls.override_authority=envoy.scalar.example.com
+
+         ### License key configurations
+         scalar.dl.licensing.license_key=${env:SCALAR_DL_AUDITOR_LICENSE_KEY}
+         scalar.dl.licensing.license_check_cert_pem=${env:SCALAR_DL_AUDITOR_LICENSE_CHECK_CERT_PEM}
+
+       tls:
+         enabled: true
+         overrideAuthority: "auditor.scalardl.example.com"
+         certManager:
+           enabled: true
+           issuerRef:
+             name: self-signed-ca
+           dnsNames:
+             - auditor.scalardl.example.com
+
+       secretName: "auditor-credentials-secret"
+     EOF
+     ```
+
+1. 資格情報とライセンスキーを含む `ledger-credentials-secret` という名前のシークレットリソースを作成します。
+
+   ```console
+   kubectl create secret generic ledger-credentials-secret \
+   --from-literal=SCALAR_DL_LEDGER_POSTGRES_USERNAME=postgres \
+   --from-literal=SCALAR_DL_LEDGER_POSTGRES_PASSWORD=postgres \
+   --from-literal=SCALAR_DL_LEDGER_HMAC_CIPHER_KEY=ledger-hmac-cipher-key \
+   --from-literal=SCALAR_DL_LEDGER_HMAC_SECRET_KEY=scalardl-hmac-secret-key \
+   --from-literal=SCALAR_DL_LEDGER_LICENSE_KEY="${SCALAR_DL_LEDGER_LICENSE_KEY}" \
+   --from-file=SCALAR_DL_LEDGER_LICENSE_CHECK_CERT_PEM=<(echo ${SCALAR_DL_LEDGER_LICENSE_CHECK_CERT_PEM} | sed 's/\\n/\
+   /g') \
+   -n default
+   ```
+
+1. 資格情報とライセンスキーを含む `auditor-credentials-secret` という名前のシークレットリソースを作成します。
+
+   ```console
+   kubectl create secret generic auditor-credentials-secret \
+   --from-literal=SCALAR_DL_AUDITOR_POSTGRES_USERNAME=postgres \
+   --from-literal=SCALAR_DL_AUDITOR_POSTGRES_PASSWORD=postgres \
+   --from-literal=SCALAR_DL_AUDITOR_HMAC_CIPHER_KEY=auditor-hmac-cipher-key \
+   --from-literal=SCALAR_DL_AUDITOR_HMAC_SECRET_KEY=scalardl-hmac-secret-key \
+   --from-literal=SCALAR_DL_AUDITOR_LICENSE_KEY="${SCALAR_DL_AUDITOR_LICENSE_KEY}" \
+   --from-file=SCALAR_DL_AUDITOR_LICENSE_CHECK_CERT_PEM=<(echo ${SCALAR_DL_AUDITOR_LICENSE_CHECK_CERT_PEM} | sed 's/\\n/\
+   /g') \
+   -n default
+   ```
+
+1. `auditor-keys` という名前のシークレットリソースを作成して、`digital-signature` 認証方式を無効にします。このチュートリアルでは、`digital-signature` の代わりに `hmac` 認証方式を使用します。
+
+   ```console
+   kubectl create secret generic auditor-keys \
+     --from-literal=tls.key=dummy-data-to-disable-digital-signature-method \
+     --from-literal=certificate=dummy-data-to-disable-digital-signature-method \
+     -n default
+   ```
+
+   注意: 認証方法として `hmac` を使用する場合は、Helm Chart 側で `digital-signature` を無効にするためにダミーの秘密 `auditor-key` を作成する必要があります。
+
+1. ScalarDL Ledger と ScalarDL Auditor のチャート バージョンを設定します。
+
+   ```console
+   SCALAR_DL_LEDGER_CHART_VERSION=$(helm search repo scalar-labs/scalardl -l | grep -v -e "scalar-labs/scalardl-audit" | grep -F "${SCALAR_DL_VERSION}" | awk '{print $2}' | sort --version-sort -r | head -n 1)
+   SCALAR_DL_AUDITOR_CHART_VERSION=$(helm search repo scalar-labs/scalardl-audit -l | grep -F "${SCALAR_DL_VERSION}" | awk '{print $2}' | sort --version-sort -r | head -n 1)
+   ```
+
+1. ScalarDL Ledger をデプロイします。
+
+   ```console
+   helm install scalardl-ledger scalar-labs/scalardl -f ${HOME}/scalardl-test/scalardl-ledger-custom-values.yaml --version ${SCALAR_DL_LEDGER_CHART_VERSION} -n default
+   ```
+
+1. ScalarDL Auditor をデプロイします。
+
+   ```console
+   helm install scalardl-auditor scalar-labs/scalardl-audit -f ${HOME}/scalardl-test/scalardl-auditor-custom-values.yaml --version ${SCALAR_DL_AUDITOR_CHART_VERSION} -n default
+   ```
+
+1. ScalarDL Ledger および ScalarDL Auditor ポッドがデプロイされているかどうかを確認します。
+
+   ```console
+   kubectl get pod -n default
+   ```
+
+   [コマンド実行結果]
+
+   ```console
+   NAME                                         READY   STATUS      RESTARTS   AGE
+   postgresql-auditor-0                         1/1     Running     0          14m
+   postgresql-ledger-0                          1/1     Running     0          14m
+   scalardl-auditor-auditor-5b885ff4c8-fwkpf    1/1     Running     0          18s
+   scalardl-auditor-auditor-5b885ff4c8-g69cb    1/1     Running     0          18s
+   scalardl-auditor-auditor-5b885ff4c8-nsmnq    1/1     Running     0          18s
+   scalardl-auditor-envoy-689bcbdf65-5mn6v      1/1     Running     0          18s
+   scalardl-auditor-envoy-689bcbdf65-fpq8j      1/1     Running     0          18s
+   scalardl-auditor-envoy-689bcbdf65-lsz2t      1/1     Running     0          18s
+   scalardl-ledger-envoy-547bbf7546-n7p5x       1/1     Running     0          26s
+   scalardl-ledger-envoy-547bbf7546-p8nwp       1/1     Running     0          26s
+   scalardl-ledger-envoy-547bbf7546-pskpb       1/1     Running     0          26s
+   scalardl-ledger-ledger-6db5dc8774-5zsbj      1/1     Running     0          26s
+   scalardl-ledger-ledger-6db5dc8774-vnmrw      1/1     Running     0          26s
+   scalardl-ledger-ledger-6db5dc8774-wpjvs      1/1     Running     0          26s
+   schema-loader-auditor-schema-loading-dvc5r   0/1     Completed   0          11m
+   schema-loader-ledger-schema-loading-mtllb    0/1     Completed   0          11m
+   ```
+
+   ScalarDL Ledger ポッドと ScalarDL Auditor ポッドが適切にデプロイされている場合、それらのポッドの `STATUS` 列には `Running` と表示されます。
+
+1. ScalarDL Ledger および ScalarDL Auditor サービスがデプロイされているかどうかを確認します。
+
+   ```console
+   kubectl get svc -n default
+   ```
+
+   [コマンド実行結果]
+
+   ```console
+   NAME                             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                         AGE
+   kubernetes                       ClusterIP   10.96.0.1        <none>        443/TCP                         47d
+   postgresql-auditor               ClusterIP   10.107.9.78      <none>        5432/TCP                        15m
+   postgresql-auditor-hl            ClusterIP   None             <none>        5432/TCP                        15m
+   postgresql-ledger                ClusterIP   10.108.241.181   <none>        5432/TCP                        15m
+   postgresql-ledger-hl             ClusterIP   None             <none>        5432/TCP                        15m
+   scalardl-auditor-envoy           ClusterIP   10.100.61.202    <none>        40051/TCP,40052/TCP             55s
+   scalardl-auditor-envoy-metrics   ClusterIP   10.99.6.227      <none>        9001/TCP                        55s
+   scalardl-auditor-headless        ClusterIP   None             <none>        40051/TCP,40053/TCP,40052/TCP   55s
+   scalardl-auditor-metrics         ClusterIP   10.108.1.147     <none>        8080/TCP                        55s
+   scalardl-ledger-envoy            ClusterIP   10.101.191.116   <none>        50051/TCP,50052/TCP             61s
+   scalardl-ledger-envoy-metrics    ClusterIP   10.106.52.103    <none>        9001/TCP                        61s
+   scalardl-ledger-headless         ClusterIP   None             <none>        50051/TCP,50053/TCP,50052/TCP   61s
+   scalardl-ledger-metrics          ClusterIP   10.99.122.106    <none>        8080/TCP                        61s
+   ```
+
+   ScalarDL Ledger および ScalarDL Auditor サービスが適切にデプロイされている場合は、`CLUSTER-IP` 列にプライベート IP アドレスが表示されます。
+   
+:::note
+
+`scalardl-ledger-headless`、`scalardl-auditor-headless`、`postgresql-ledger-hl`、および `postgresql-auditor-hl` の `CLUSTER-IP` 値は、IP アドレスがないため `None` になります。
+
+:::
+
+## ステップ 7. クライアントコンテナを起動する
+
+クライアントコンテナで CA 証明書ファイルを使用します。そのため、シークレットリソースを作成し、クライアントコンテナにマウントする必要があります。
+
+1. `client-ca-cert` という名前のシークレットリソースを作成します。
+
+   ```console
+   kubectl create secret generic client-ca-cert --from-file=ca.crt=<(kubectl get secret self-signed-ca-cert-secret -o "jsonpath={.data['ca\.crt']}" | base64 -d) -n default
+   ```
+
+1. クライアント ポッドのマニフェスト ファイル (`scalardl-client-pod.yaml`) を作成します。
+
+   ```console
+   cat << 'EOF' > ${HOME}/scalardl-test/scalardl-client-pod.yaml
+   apiVersion: v1
+   kind: Pod
+   metadata:
+     name: "scalardl-client"
+   spec:
+     containers:
+       - name: scalardl-client
+         image: eclipse-temurin:8-jdk
+         command: ['sleep']
+         args: ['inf']
+         env:
+           - name: SCALAR_DL_VERSION
+             value: SCALAR_DL_CLIENT_POD_SCALAR_DL_VERSION
+         volumeMounts:
+           - name: "client-ca-cert"
+             mountPath: "/certs/"
+             readOnly: true
+     volumes:
+       - name: "client-ca-cert"
+         secret:
+           secretName: "client-ca-cert"
+     restartPolicy: Never
+   EOF
+   ```
+
+1. マニフェストファイルで ScalarDL バージョンを設定します。
+
+   ```console
+   sed -i s/SCALAR_DL_CLIENT_POD_SCALAR_DL_VERSION/${SCALAR_DL_VERSION}/ ${HOME}/scalardl-test/scalardl-client-pod.yaml
+   ```
+
+1. クライアントポッドをデプロイします。
+
+   ```console
+   kubectl apply -f ${HOME}/scalardl-test/scalardl-client-pod.yaml -n default
+   ```
+
+1. クライアントコンテナーが実行されているかどうかを確認します。
+
+   ```console
+   kubectl get pod scalardl-client -n default
+   ```
+
+   [コマンド実行結果]
+
+   ```console
+   NAME              READY   STATUS    RESTARTS   AGE
+   scalardl-client   1/1     Running   0          4s
+   ```
+
+## ステップ 8. クライアントコンテナで ScalarDL サンプルコントラクトを実行する
+
+以下では、サンプルコントラクトを実行するために必要な最小限の手順について説明します。ScalarDL Ledger と ScalarDL Auditor の詳細については、以下を参照してください。
+
+* [ScalarDL の使用開始](https://scalardl.scalar-labs.com/docs/latest/getting-started/)
+* [ScalarDL Auditor の使用開始](https://scalardl.scalar-labs.com/docs/latest/getting-started-auditor/)
+
+1. クライアントコンテナーで bash を実行します。
+
+   ```console
+   kubectl exec -it scalardl-client -n default -- bash
+   ```
+   
+   次の手順のコマンドは、クライアントコンテナーで実行する必要があります。
+
+1. クライアントコンテナーに git、curl、unzip コマンドをインストールします。
+
+   ```console
+   apt update && apt install -y git curl unzip
+   ```
+
+1. ScalarDL Java Client SDK git リポジトリをクローンします。
+
+   ```console
+   git clone https://github.com/scalar-labs/scalardl-java-client-sdk.git
+   ```
+
+1. 作業ディレクトリを `scalardl-java-client-sdk/` に変更します。
+
+   ```console
+   cd scalardl-java-client-sdk/
+   ```
+
+   ```console
+   pwd
+   ```
+
+   [コマンド実行結果]
+
+   ```console
+   /scalardl-java-client-sdk
+   ```
+
+1. 使用しているバージョンにブランチを変更します。
+
+   ```console
+   git checkout -b v${SCALAR_DL_VERSION} refs/tags/v${SCALAR_DL_VERSION}
+   ```
+
+1. サンプルコントラクトを作成します。
+
+   ```console
+   ./gradlew assemble
+   ```
+
+1. [ScalarDL Java Client SDK リリース](https://github.com/scalar-labs/scalardl-java-client-sdk/releases)から ScalarDL の CLI ツールをダウンロードします。
+
+   ```console
+   curl -OL https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v${SCALAR_DL_VERSION}/scalardl-java-client-sdk-${SCALAR_DL_VERSION}.zip
+   ```
+
+1. `scalardl-java-client-sdk-${SCALAR_DL_VERSION}.zip` ファイルを解凍します。
+
+   ```console
+   unzip ./scalardl-java-client-sdk-${SCALAR_DL_VERSION}.zip
+   ```
+
+1. Kubernetes クラスター上の ScalarDL Ledger および ScalarDL Auditor にアクセスするための `client.properties` という名前の構成ファイルを作成します。
+
+   ```console
+   cat << 'EOF' > client.properties
+   # Ledger configuration
+   scalar.dl.client.server.host=scalardl-ledger-envoy.default.svc.cluster.local
+   scalar.dl.client.tls.enabled=true
+   scalar.dl.client.tls.ca_root_cert_path=/certs/ca.crt
+   scalar.dl.client.tls.override_authority=envoy.scalar.example.com
+
+   # Auditor configuration
+   scalar.dl.client.auditor.enabled=true
+   scalar.dl.client.auditor.host=scalardl-auditor-envoy.default.svc.cluster.local
+   scalar.dl.client.auditor.tls.enabled=true
+   scalar.dl.client.auditor.tls.ca_root_cert_path=/certs/ca.crt
+   scalar.dl.client.auditor.tls.override_authority=envoy.scalar.example.com
+
+   # Client configuration
+   scalar.dl.client.authentication_method=hmac
+   scalar.dl.client.entity.id=client
+   scalar.dl.client.entity.identity.hmac.secret_key=scalardl-hmac-client-secert-key
+   EOF
+   ```
+
+1. クライアントシークレットを登録します。
+
+   ```console
+   ./scalardl-java-client-sdk-${SCALAR_DL_VERSION}/bin/scalardl register-secret --config ./client.properties
+   ```
+
+1. サンプルコントラクト `StateUpdater` を登録します。
+
+   ```console
+   ./scalardl-java-client-sdk-${SCALAR_DL_VERSION}/bin/scalardl register-contract --config ./client.properties --contract-id StateUpdater --contract-binary-name com.org1.contract.StateUpdater --contract-class-file ./build/classes/java/main/com/org1/contract/StateUpdater.class
+   ```
+
+1. サンプルコントラクト `StateReader` を登録します。
+
+   ```console
+   ./scalardl-java-client-sdk-${SCALAR_DL_VERSION}/bin/scalardl register-contract --config ./client.properties --contract-id StateReader --contract-binary-name com.org1.contract.StateReader --contract-class-file ./build/classes/java/main/com/org1/contract/StateReader.class
+   ```
+
+1. 検証リクエストを実行するには、コントラクト `ValidateLedger` を登録します。
+
+   ```console
+   ./scalardl-java-client-sdk-${SCALAR_DL_VERSION}/bin/scalardl register-contract --config ./client.properties --contract-id validate-ledger --contract-binary-name com.scalar.dl.client.contract.ValidateLedger --contract-class-file ./build/classes/java/main/com/scalar/dl/client/contract/ValidateLedger.class
+   ```
+
+1. コントラクト `StateUpdater` を実行します。
+
+   ```console
+   ./scalardl-java-client-sdk-${SCALAR_DL_VERSION}/bin/scalardl execute-contract --config ./client.properties --contract-id StateUpdater --contract-argument '{"asset_id": "test_asset", "state": 3}'
+   ```
+   
+   このサンプル契約は、`test_asset` という名前の資産の `state` (値) を `3` に更新します。
+
+1. コントラクト `StateReader` を実行します。
+
+   ```console
+   ./scalardl-java-client-sdk-${SCALAR_DL_VERSION}/bin/scalardl execute-contract --config ./client.properties --contract-id StateReader --contract-argument '{"asset_id": "test_asset"}'
+   ```
+
+   [コマンド実行結果]
+
+   ```console
+   Contract result:
+   {
+     "id" : "test_asset",
+     "age" : 0,
+     "output" : {
+       "state" : 3
+     }
+   }
+   ```
+
+   ### 参照
+
+   * 資産データが改ざんされていない場合、契約実行を要求する `execute-contract` コマンドを実行すると、結果として `OK` が返されます。
+   * アセットデータが改ざんされている場合（たとえば、データベースの `state` 値が改ざんされている場合）、コントラクト実行を要求する `execute-contract` コマンドを実行すると、結果として `OK` 以外の値（たとえば、`INCONSISTENT_STATES`）が返されます。ScalarDL がデータ改ざんを検出する方法の例については、以下を参照してください。
+
+     [コマンド実行結果（資産データが改ざんされた場合）]
+
+     ```console
+     {
+       "status_code" : "INCONSISTENT_STATES",
+       "error_message" : "The results from Ledger and Auditor don't match"
+     }
+     ```
+
+1. 資産の検証リクエストを実行します。
+
+   ```console
+   ./scalardl-java-client-sdk-${SCALAR_DL_VERSION}/bin/scalardl validate-ledger --config ./client.properties --asset-id "test_asset"
+   ```
+
+   [コマンド実行結果]
+
+   ```console
+   {
+     "status_code" : "OK",
+     "Ledger" : {
+       "id" : "test_asset",
+       "age" : 0,
+       "nonce" : "3533427d-03cf-41d1-bf95-4d31eb0cb24d",
+       "hash" : "FiquvtPMKLlxKf4VGoccSAGsi9ptn4ozYVVTwdSzEQ0=",
+       "signature" : "MEYCIQDiiXqzw6K+Ml4uvn8rK43o5wHWESU3hoXnZPi6/OeKVwIhAM+tFBcapl6zg47Uq0Uc8nVNGWNHZLBDBGve3F0xkzTR"
+     },
+     "Auditor" : {
+       "id" : "test_asset",
+       "age" : 0,
+       "nonce" : "3533427d-03cf-41d1-bf95-4d31eb0cb24d",
+       "hash" : "FiquvtPMKLlxKf4VGoccSAGsi9ptn4ozYVVTwdSzEQ0=",
+       "signature" : "MEUCIQDLsfUR2PmxSvfpL3YvHJUkz00RDpjCdctkroZKXE8d5QIgH73FQH2e11jfnynD00Pp9DrIG1vYizxDsvxUsMPo9IU="
+     }
+   }
+   ```
+
+   ### 参照
+
+   * 資産データが改ざんされていない場合、検証を要求する `validate-ledger` コマンドを実行すると、結果として `OK` が返されます。
+   * 資産データが改ざんされている場合 (たとえば、データベースの `state` 値が改ざんされている場合)、検証を要求する `validate-ledger` コマンドを実行すると、結果として `OK` 以外の値 (たとえば、`INVALID_OUTPUT`) が返されます。ScalarDL がデータ改ざんを検出する方法の例については、以下を参照してください。
+
+     [コマンド実行結果（資産データが改ざんされた場合）]
+
+     ```console
+     {
+       "status_code" : "INCONSISTENT_STATES",
+       "error_message" : "The results from Ledger and Auditor don't match"
+     }
+     ```
+
+1. クライアントコンテナーを終了します。
+
+   ```console
+   exit
+   ```
+
+## ステップ9. すべてのリソースを削除する
+
+Kubernetes クラスターで ScalarDL Ledger および ScalarDL Auditor テストを完了したら、すべてのリソースを削除します。
+
+1. ScalarDL Ledger、ScalarDL Auditor、ScalarDL Schema Loader、および PostgreSQL をアンインストールします。
+
+   ```console
+   helm uninstall -n default scalardl-ledger schema-loader-ledger postgresql-ledger scalardl-auditor schema-loader-auditor postgresql-auditor
+   ```
+
+1. 自己署名 CA を削除します。
+
+   ```
+   kubectl delete -f ./private-ca-custom-values.yaml
+   ```
+
+1. cert-manager をアンインストールします。
+
+   ```console
+   helm uninstall -n cert-manager cert-manager
+   ```
+
+1. クライアントコンテナーを削除します。
+
+   ```
+   kubectl delete pod scalardl-client --grace-period 0 -n default
+   ```
+
+1. シークレットリソースを削除します。
+
+   ```
+   kubectl delete secrets self-signed-ca-cert-secret schema-ledger-credentials-secret schema-auditor-credentials-secret scalardl-ledger-tls-cert scalardl-ledger-envoy-tls-cert scalardl-auditor-tls-cert scalardl-auditor-envoy-tls-cert ledger-credentials-secret auditor-credentials-secret client-ca-cert auditor-keys
+   ```
+
+1. ネームスペース `cert-manager` を削除します。
+
+   ```
+   kubectl delete ns cert-manager
+   ```
+
+1. 作業ディレクトリとサンプルファイル (構成ファイル) を削除します。
+
+   ```console
+   cd ${HOME}
+   ```
+
+   ```console
+   rm -rf ${HOME}/scalardl-test/
+   ```
+
+## 参考文献
+
+Scalar 製品の監視またはログ記録を開始する方法については、次のチュートリアルを参照してください。
+
+* [Helm チャートの使用開始 (Prometheus Operator を使用したモニタリング)](getting-started-monitoring.mdx)
+* [Helm チャートの使用開始 (Loki Stack を使用したログ記録)](getting-started-logging.mdx)
+* [Helm チャートの使用開始 (Scalar Manager)](getting-started-scalar-manager.mdx)

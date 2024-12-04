@@ -1,0 +1,100 @@
+---
+tags:
+  - Community
+---
+
+# Helm Charts の入門 (Loki スタックを使用したロギング)
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このドキュメントでは、Grafana Loki (Promtail を使用) を使用して、Kubernetes 上で Scalar 製品のログ集約を開始する方法について説明します。
+
+Scalar 製品の [モニタリングの開始](getting-started-monitoring.mdx) をすでに読み、kube-prometheus-stack をインストールしていることを前提としています。
+
+## 私たちが作るもの
+
+次のように、次のコンポーネントを Kubernetes クラスターにデプロイします。
+
+```
++--------------------------------------------------------------------------------------------------+
+| +------------------------------------+                                                           |
+| |             loki-stack             |                                                           |
+| |                                    |                                       +-----------------+ |
+| | +--------------+  +--------------+ | <-----------------(ログ)-------------- | Scalar 製品 | |
+| | |     Loki     |  |   Promtail   | |                                       |                 | |
+| | +--------------+  +--------------+ |                                       |  +-----------+  | |
+| +------------------------------------+                                       |  | ScalarDB  |  | |
+|                                                                              |  +-----------+  | |
+| +------------------------------------------------------+                     |                 | |
+| |                kube-prometheus-stack                 |                     |  +-----------+  | |
+| |                                                      |                     |  | ScalarDL  |  | |
+| | +--------------+  +--------------+  +--------------+ | -----(監視)----> |  +-----------+  | |
+| | |  Prometheus  |  | Alertmanager |  |   Grafana    | |                     +-----------------+ |
+| | +-------+------+  +------+-------+  +------+-------+ |                                         |
+| |         |                |                 |         |                                         |
+| |         +----------------+-----------------+         |                                         |
+| |                          |                           |                                         |
+| +--------------------------+---------------------------+                                         |
+|                            |                                                                     |
+|                            |         Kubernetes                                                  |
++----------------------------+---------------------------------------------------------------------+
+                             | <- localhost (127.0.0.1) に公開するか、ロードバランサーなどを使用してアクセスします
+                             |
+              (HTTP 経由でダッシュボードにアクセスする)
+                             |
+                        +----+----+
+                        | ブラウザ |
+                        +---------+
+```
+
+## ステップ 1. カスタム値ファイルを準備する
+
+1. `loki-stack` helm chart のサンプル ファイル [scalar-loki-stack-custom-values.yaml](./conf/scalar-loki-stack-custom-values.yaml) を取得します。
+
+## ステップ 2. `loki-stack` をデプロイする
+
+1. `grafana` helm リポジトリを追加します。
+   ```console
+   helm repo add grafana https://grafana.github.io/helm-charts
+   ```
+
+1. `loki-stack` helm chart をデプロイします。
+   ```console
+   helm install scalar-logging-loki grafana/loki-stack -n monitoring -f scalar-loki-stack-custom-values.yaml
+   ```
+
+## ステップ 3. Grafana 構成に Loki データ ソースを追加する
+
+1. Loki データ ソースの設定を `scalar-prometheus-custom-values.yaml` ファイルに追加します。
+   ```yaml
+   grafana:
+     additionalDataSources:
+     - name: Loki
+       type: loki
+       uid: loki
+       url: http://scalar-logging-loki:3100/
+       access: proxy
+       editable: false
+       isDefault: false
+   ```
+
+1. 構成を適用します (`kube-prometheus-stack` のデプロイメントをアップグレードします)。
+   ```console
+   helm upgrade scalar-monitoring prometheus-community/kube-prometheus-stack -n monitoring -f scalar-prometheus-custom-values.yaml
+   ```
+
+## ステップ 4. Grafana ダッシュボードにアクセスする
+
+1. Loki をデータソースとして追加する
+   - Grafana http://localhost:3000 に移動します (minikube を使用する場合)
+   - `Explore` に移動して、追加された Loki を見つけます
+   - 収集されたログは `Explore` ページで確認できます。
+
+## ステップ 5. `loki-stack` helm chartを削除する
+
+1. `loki-stack` をアンインストールします。
+   ```console
+   helm uninstall scalar-logging-loki -n monitoring
+   ```

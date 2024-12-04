@@ -1,6 +1,6 @@
 {
   "version.label": {
-    "message": "3.9",
+    "message": "3.10",
     "description": "The label for version current"
   },
   "sidebar.docs.category.About ScalarDL": {
@@ -60,7 +60,7 @@
     "description": "The label for category Scalar Helm Charts in sidebar docs"
   },
   "sidebar.docs.category.Manage": {
-    "message": "管理",
+    "message": "運用",
     "description": "The label for category Manage in sidebar docs"
   },
   "sidebar.docs.category.Monitoring Guides": {
@@ -81,6 +81,6 @@
   },
   "sidebar.docs.doc.Home": {
     "message": "ホーム",
-    "description": "The label for the doc item Home 3.8 in sidebar docs, linking to the doc index"
+    "description": "The label for the doc item Home 3.10 in sidebar docs, linking to the doc index"
   }
 }
