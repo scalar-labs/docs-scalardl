@@ -87,7 +87,7 @@ const CardsSamples = [
     },
     description: (
       <Translate id="home.samples.description">
-        Create a bank account application
+        Run a bank account application
       </Translate>
     ),
   },
