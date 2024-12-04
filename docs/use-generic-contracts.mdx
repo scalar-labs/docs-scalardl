@@ -18,7 +18,7 @@ For object authenticity management, you can manage the authenticity of any kind 
 
 For collection authenticity management, you can manage which objects exist in a collection. For example, you can create a collection of objects that need to be validated in an auditing process.
 
-For how those functionalities are achieved by using generic contracts and functions, see the examples in [Validate object authenticity](#validate-object-authenticity) and [Validate collection authenticity](#validate-collection-authenticity) below.
+For how those functionalities are achieved by using generic contracts and functions, see the examples in [Manage object authenticity](#manage-object-authenticity) and [Manage collection authenticity](#manage-collection-authenticity) below.
 
 ## Set up an environment
 
@@ -272,7 +272,7 @@ For the function argument, you need to specify a namespace name, a table name, a
 }
 ```
 
-## Validate collection authenticity
+## Manage collection authenticity
 
 As an example of collection authenticity management, think about managing an audit set, which is a collection of objects that must be validated by using the `object.Validate` contract in an auditing process. If a system cannot guarantee that the audit set has not been changed unexpectedly, a malicious user may be able to change an object fraudulently and remove it from the audit set to avoid being revealed as a fraud. Therefore, managing the audit set is an important and major use case of collection authenticity management.
 
