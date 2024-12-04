@@ -21,7 +21,7 @@ const CardsAbout = [
     },
     description: (
       <Translate id="home.about.description">
-        Overview
+        概要
       </Translate>
     ),
   },
@@ -33,7 +33,7 @@ const CardsAbout = [
     },
     description: (
       <Translate id="home.about.description">
-        Implementation
+        実装
       </Translate>
     ),
   },
@@ -48,7 +48,7 @@ const CardsGettingStarted = [
     },
     description: (
       <Translate id="home.gettingStarted.description">
-        Getting started with ScalarDL Ledger
+        ScalarDL Ledger をはじめよう
       </Translate>
     ),
   },
@@ -60,7 +60,7 @@ const CardsGettingStarted = [
     },
     description: (
       <Translate id="home.gettingStarted.description">
-        Getting started with ScalarDL Auditor
+        ScalarDL Auditor をはじめよう
       </Translate>
     ),
   },
@@ -75,7 +75,7 @@ const CardsSamples = [
     },
     description: (
       <Translate id="home.samples.description">
-        Set up ScalarDL locally in Docker
+        ローカル環境に ScalarDL をインストールする
       </Translate>
     ),
   },
@@ -87,7 +87,7 @@ const CardsSamples = [
     },
     description: (
       <Translate id="home.samples.description">
-        Run a bank account application
+        銀行口座申請を実行する
       </Translate>
     ),
   },
@@ -102,7 +102,7 @@ const CardsDevelop = [
     },
     description: (
       <Translate id="home.develop.description">
-        Load a database schema
+        データベーススキーマをロードする
       </Translate>
     ),
   },
@@ -114,7 +114,7 @@ const CardsDevelop = [
     },
     description: (
       <Translate id="home.develop.description">
-        Get a certificate for the network
+        証明書を取得する
       </Translate>
     ),
   },
@@ -129,7 +129,7 @@ const CardsDeploy = [
     },
     description: (
       <Translate id="home.deploy.description">
-        Set up a database for ScalarDL on AWS
+        AWS でデータベースをセットアップする
       </Translate>
     ),
   },
@@ -141,7 +141,7 @@ const CardsDeploy = [
     },
     description: (
       <Translate id="home.deploy.description">
-        See the ScalarDL Ledger production checklist
+        ScalarDL Ledger の本番環境チェックリスト
       </Translate>
     ),
   },
@@ -156,7 +156,7 @@ const CardsManage = [
     },
     description: (
       <Translate id="home.manage.description">
-        Monitor ScalarDL in a Kubernetes cluster
+        Kubernetes クラスター上の ScalarDLの監視
       </Translate>
     ),
   },
@@ -168,7 +168,7 @@ const CardsManage = [
     },
     description: (
       <Translate id="home.manage.description">
-        Back up and restore in a Kubernetes environment
+        Kubernetes 環境でデータをバックアップおよび復元する
       </Translate>
     ),
   },
@@ -183,7 +183,7 @@ const CardsReference = [
     },
     description: (
       <Translate id="home.reference.description">
-        Compatibility matrix
+        互換性マトリックス
       </Translate>
     ),
   },
@@ -195,7 +195,7 @@ const CardsReference = [
     },
     description: (
       <Translate id="home.reference.description">
-        Benchmarking tools
+        ベンチマークツール
       </Translate>
     ),
   },
