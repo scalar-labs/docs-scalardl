@@ -113,7 +113,7 @@ client/bin/scalardl register-functions --properties client.properties --function
 
 :::note
 
-`sha256sum` コマンドは Linux 環境専用です。`shasum` と `certutil` は、それぞれ Mac 環境と Windows 環境で使用できます。詳細については、これらのコマンドの使用方法を参照してください。
+`sha256sum` コマンドは Linux 環境専用です。`shasum` と `certutil` は、それぞれ Mac 環境と Windows 環境で使用できます。同じ SHA256 ハッシュ値を取得する方法の詳細については、これらのコマンドの使用方法を参照してください。
 
 :::
 
@@ -133,7 +133,7 @@ sha256sum a.txt
 ```console
 scalardl execute-contract --properties client.properties \
 --contract-id object.Put \
---contract-argument '{"object_id": "a.txt", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0", "properties": {"note": "created"}}'
+--contract-argument '{"object_id": "a.txt", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0", "metadata": {"note": "created"}}'
 ```
 
 汎用コントラクトおよびファンクションの入力および出力仕様については、[汎用コントラクトおよびファンクションのリファレンスガイド](generic-contracts-reference.mdx)を参照してください。
@@ -156,7 +156,7 @@ b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c  a.txt
 ```console
 scalardl execute-contract --properties client.properties \
 --contract-id object.Put \
---contract-argument '{"object_id": "a.txt", "hash_value": "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c", "properties": {"note": "updated"}}'
+--contract-argument '{"object_id": "a.txt", "hash_value": "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c", "metadata": {"note": "updated"}}'
 ```
 
 以下のコマンドを実行すると、[`object.Get` コントラクト](generic-contracts-reference.mdx#objectget-コントラクト)を使用してオブジェクトの最新のステータスを取得することもできます:
@@ -174,7 +174,7 @@ Contract result:
 {
   "object_id" : "a.txt",
   "hash_value" : "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c",
-  "properties" : {
+  "metadata" : {
     "note" : "updated"
   }
 }

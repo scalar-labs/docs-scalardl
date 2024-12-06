@@ -109,7 +109,7 @@ First, get the hash value of a file and put it into the tamper-evident ledger.
 
 :::note
 
-The `sha256sum` command is for Linux environments only. `shasum` and `certutil` are available for Mac and Windows environments, respectively. See usage of those commands for details.
+The `sha256sum` command is for Linux environments only. `shasum` and `certutil` are available for Mac and Windows environments, respectively. For details on getting the same SHA256 hash values, see the usage of those commands.
 
 :::
 
@@ -129,7 +129,7 @@ You can put the hash value by running the following command:
 ```console
 scalardl execute-contract --properties client.properties \
 --contract-id object.Put \
---contract-argument '{"object_id": "a.txt", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0", "properties": {"note": "created"}}'
+--contract-argument '{"object_id": "a.txt", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0", "metadata": {"note": "created"}}'
 ```
 
 For input and output specifications for generic contracts and functions, see the [Generic Contracts and Functions Reference Guide](generic-contracts-reference.mdx).
@@ -152,7 +152,7 @@ You can then update the hash value as follows:
 ```console
 scalardl execute-contract --properties client.properties \
 --contract-id object.Put \
---contract-argument '{"object_id": "a.txt", "hash_value": "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c", "properties": {"note": "updated"}}'
+--contract-argument '{"object_id": "a.txt", "hash_value": "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c", "metadata": {"note": "updated"}}'
 ```
 
 You can also get the latest status of the object with the [`object.Get` contract](generic-contracts-reference.mdx#objectget-contract) by running the following command:
@@ -170,7 +170,7 @@ Contract result:
 {
   "object_id" : "a.txt",
   "hash_value" : "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c",
-  "properties" : {
+  "metadata" : {
     "note" : "updated"
   }
 }
