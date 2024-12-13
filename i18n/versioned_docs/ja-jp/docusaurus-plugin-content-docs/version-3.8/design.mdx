@@ -38,11 +38,15 @@ ScalarDL のビザンチン故障検出プロトコルの鍵は、Ledger (プラ
 
 この3フェーズプロトコルでは、Ledger と Auditor の両方が正常である限り、両方のデータベースが同じ正しい (厳密に直列化可能な) 状態と結果を導き出します。どちらかがビザンチン故障を起こした場合 (たとえば、レコードを改ざんした場合)、その状態または結果は乖離します。データベースシステムの外部でこの乖離が観察できる場合、正しい ScalarDL クライアントはそれを検出できます。言い換えると、ScalarDL は、クライアントがデータベースシステムからの応答で乖離を観察した場合にのみ、ビザンチン故障を検出します。そのため、ScalarDLは故障を即座に検出することはできませんが、検証オーバーヘッドを削減しつつ、乖離した状態や結果を使用しようとした際に故障が検出されることを保証します。
 
-## 詳細情報
+## 詳細
 
-ScalarDL の設計と実装の詳細については、Scalar が VLDB 2022 カンファレンスで発表した次の資料を参照してください。
+ScalarDL の設計と実装の詳細については、次のドキュメントを参照してください。
 
-- **VLDB'22 での発表資料:** [ScalarDL: Scalable and Practical Byzantine Fault Detection for Transactional Database Systems](https://speakerdeck.com/scalar/scalar-dl-scalable-and-practical-byzantine-fault-detection-for-transactional-database-systems-vldb22)
-- **ホワイトペーパー (VLDB'22 の論文):** [ScalarDL: Scalable and Practical Byzantine Fault Detection for Transactional Database Systems](https://www.vldb.org/pvldb/vol15/p1324-yamada.pdf)
+- **Speaker Deck プレゼンテーション:** [ScalarDL Technical Overview](https://speakerdeck.com/scalar/scalar-dl-technical-overview)
+
+さらに、VLDB 2022 カンファレンスでは以下の資料が発表されました。
+
+- **Speaker Deck プレゼンテーション:** [ScalarDL: Scalable and Practical Byzantine Fault Detection for Transactional Database Systems](https://speakerdeck.com/scalar/scalar-dl-scalable-and-practical-byzantine-fault-detection-for-transactional-database-systems-vldb22)
+- **詳細な論文:** [ScalarDL: Scalable and Practical Byzantine Fault Detection for Transactional Database Systems](https://www.vldb.org/pvldb/vol15/p1324-yamada.pdf)
 
 [^1]: Leslie Lamport, Robert Shostak, Marshall Pease, The Byzantine Generals Problem, ACM Transactions on Programming Languages and Systems (TOPLAS), v.4 n.3, p.382-401, July 1982.
