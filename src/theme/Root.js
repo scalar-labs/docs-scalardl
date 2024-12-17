@@ -50,7 +50,7 @@ export default function Root({ children }) {
           expires={150}
           onAccept={handleConsentAccept}
         >
-          This website uses cookies to enhance the visitor experience. By continuing to use this website, you acknowledge that you have read and understood our <a href="https://www.scalar-labs.com/privacy-policy" style={{color: "white", textDecorationLine: "underline"}} target="_blank">privacy policy</a> and consent to the use of cookies to help improve your browsing experience and personalize content.
+          This website uses cookies to enhance the visitor experience. By continuing to use this website, you acknowledge that you have read and understood our <a href="https://www.scalar-labs.com/privacy-policy" style={{color: "white", textDecorationLine: "underline"}} target="_blank">privacy policy</a> and consent to the use of cookies to help improve your browsing experience and provide you with personalized content.
         </CookieConsent>
       </div>
     </>
