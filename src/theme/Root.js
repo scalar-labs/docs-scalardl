@@ -43,6 +43,7 @@ export default function Root({ children }) {
             backgroundColor: "#fff",
             color: "#000",
             fontWeight: "500",
+            fontSize: "15px",
             fontFamily:
               "system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
           }}
