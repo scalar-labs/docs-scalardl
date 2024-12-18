@@ -36,7 +36,7 @@ export default function Root({ children }) {
           location="bottom"
           buttonText="I understand"
           style={{
-            backgroundColor: "#080f53",
+            backgroundColor: "#2673bb",
             padding: "20px",
           }}
           buttonStyle={{
