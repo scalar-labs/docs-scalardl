@@ -560,7 +560,7 @@ const sidebars = {
         {
           type: 'doc',
           id: 'generic-contracts-reference',
-          label: 'Generic Contracts and Functions',
+          label: '汎用コントラクトおよびファンクション',
         },
         {
           type: 'doc',
@@ -734,6 +734,11 @@ const sidebars = {
           type: 'doc',
           id: 'how-to-write-function',
           label: 'ファンクションを書く',
+        },
+        {
+          type: 'doc',
+          id: 'use-generic-contracts',
+          label: '汎用コントラクトおよびファンクションの使用',
         },
         {
           type: 'doc',
@@ -1153,6 +1158,33 @@ const sidebars = {
           type: 'doc',
           id: 'scalardl-benchmarks/README',
           label: 'ベンチマークを実行する',
+        },
+        {
+          type: 'category',
+          label: 'Error codes',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'scalardl-common-status-codes',
+              label: 'ScalarDL 共通エラーコード',
+            },
+            {
+              type: 'doc',
+              id: 'scalardl-ledger-status-codes',
+              label: 'ScalarDL Ledger エラーコード',
+            },
+            {
+              type: 'doc',
+              id: 'scalardl-auditor-status-codes',
+              label: 'ScalarDL Auditor エラーコード',
+            },
+            {
+              type: 'doc',
+              id: 'scalardl-client-status-codes',
+              label: 'ScalarDL クライアントエラーコード',
+            },
+          ],
         },
       ],
     },
