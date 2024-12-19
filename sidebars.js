@@ -140,6 +140,11 @@ const sidebars = {
         },
         {
           type: 'doc',
+          id: 'use-generic-contracts',
+          label: 'Use Generic Contracts and Functions',
+        },
+        {
+          type: 'doc',
           id: 'how-to-use-proof',
           label: 'Use Asset Proofs',
         },
@@ -532,11 +537,6 @@ const sidebars = {
         },
         {
           type: 'doc',
-          id: 'troubleshooting-guide',
-          label: 'Troubleshooting Guide',
-        },
-        {
-          type: 'doc',
           id: 'scalar-manager/overview',
           label: 'Scalar Manager Overview',
         },
@@ -555,12 +555,44 @@ const sidebars = {
         {
           type: 'doc',
           id: 'scalardl-command-reference',
-          label: 'ScalarDL Client Command Reference',
+          label: 'ScalarDL Client Command',
+        },
+        {
+          type: 'doc',
+          id: 'generic-contracts-reference',
+          label: 'Generic Contracts and Functions',
         },
         {
           type: 'doc',
           id: 'scalardl-benchmarks/README',
           label: 'Run Benchmarks',
+        },
+        {
+          type: 'category',
+          label: 'Error codes',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'scalardl-common-status-codes',
+              label: 'ScalarDL Common Error Codes',
+            },
+            {
+              type: 'doc',
+              id: 'scalardl-ledger-status-codes',
+              label: 'ScalarDL Ledger Error Codes',
+            },
+            {
+              type: 'doc',
+              id: 'scalardl-auditor-status-codes',
+              label: 'ScalarDL Auditor Error Codes',
+            },
+            {
+              type: 'doc',
+              id: 'scalardl-client-status-codes',
+              label: 'ScalarDL Client Error Codes',
+            },
+          ],
         },
       ],
     },
@@ -1094,11 +1126,6 @@ const sidebars = {
           type: 'doc',
           id: 'scalar-kubernetes/HowToUpgradeScalarDL',
           label: 'アップグレードする',
-        },
-        {
-          type: 'doc',
-          id: 'troubleshooting-guide',
-          label: 'トラブルシューティングガイド',
         },
         {
           type: 'doc',
