@@ -1,0 +1,185 @@
+---
+tags:
+  - Enterprise Standard
+  - Enterprise Premium
+---
+
+# AWS で ScalarDB/ScalarDL デプロイメント用のデータベースをセットアップする
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このガイドでは、AWS で ScalarDB/ScalarDL をデプロイするためのデータベースをセットアップする方法について説明します。
+
+## Amazon DynamoDB
+
+### 認証方法
+
+DynamoDB を使用する場合、ScalarDB/ScalarDL プロパティ ファイルに `REGION`、`ACCESS_KEY_ID`、および `SECRET_ACCESS_KEY` を次のように設定する必要があります。
+
+```properties
+scalar.db.contact_points=<REGION>
+scalar.db.username=<ACCESS_KEY_ID>
+scalar.db.password=<SECRET_ACCESS_KEY>
+scalar.db.storage=dynamo
+```
+
+DynamoDB のプロパティの詳細については、次のドキュメントを参照してください。
+
+* [Configure ScalarDB for DynamoDB](https://scalardb.scalar-labs.com/docs/latest/getting-started-with-scalardb#set-up-your-database-for-scalardb)
+
+### 必要な構成/手順
+
+DynamoDB はデフォルトで AWS で使用できます。 使用するために手動で何かを設定する必要はありません。
+
+### オプションの構成/手順
+
+#### ポイントインタイムリカバリを有効にする (運用環境で推奨)
+
+DynamoDB のバックアップ/復元方法として PITR を有効にすることができます。 [ScalarDB Schema Loader](https://scalardb.scalar-labs.com/docs/latest/schema-loader) を使用してスキーマを作成すると、デフォルトでテーブルの PITR 機能が有効になります。 詳細については公式ドキュメントを参照してください。
+
+* [Point-in-time recovery for DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery.html)
+
+ポイントインタイム リカバリ機能により自動的かつ継続的にバックアップが作成されるため、バックアップ操作のダウンタイム (一時停止期間) を短縮できるため、この機能をお勧めします。 Scalar 製品データのバックアップ/復元方法の詳細については、次のドキュメントを参照してください。
+
+* [Scalar 製品のバックアップ復元ガイド](BackupRestoreGuide.mdx)
+
+#### 監視を構成する (運用環境で推奨)
+
+DynamoDB のネイティブ機能を使用して、DynamoDB のモニタリングとロギングを設定できます。 詳細については公式ドキュメントを参照してください。
+
+* [Monitoring and logging](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/monitoring.html)
+
+メトリクスとログは、運用環境で問題が発生したときにそれを調査するのに役立つため、これをお勧めします。
+
+#### VPC エンドポイントを使用する (本番環境で推奨)
+
+// この機能は Scalar 製品ではまだテストされていないことに注意してください。
+// TODO: この機能を Scalar 製品でテストする必要があります。
+
+* [Using Amazon VPC endpoints to access DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/vpc-endpoints-dynamodb.html)
+
+WAN 経由ではないプライベート内部接続によりシステムの安全性が高まるため、これをお勧めします。
+
+#### 読み取り/書き込み容量の構成 (環境に応じてオプション)
+
+要件に基づいて、DynamoDB テーブルの **読み取り/書き込み容量** を構成できます。 読み取り/書き込み容量の詳細については、公式ドキュメントを参照してください。
+
+* [Read/write capacity mode](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadWriteCapacityMode.html)
+
+テーブルの作成時に、ScalarDB/DL Schema Loader を使用して読み取り/書き込み容量を構成できます。 ScalarDB/DL Schema Loader を使用して読み取り/書き込み容量 (RU) を構成する方法の詳細については、次のドキュメントを参照してください。
+
+* [ScalarDB Schema Loader](https://scalardb.scalar-labs.com/docs/latest/schema-loader)
+
+## MySQL、PostgreSQL、Oracle、SQL Server 用の Amazon RDS
+
+### 認証方法
+
+RDS を使用する場合、ScalarDB/ScalarDL プロパティ ファイルに `JDBC_URL`、`USERNAME`、および `PASSWORD` を次のように設定する必要があります。
+
+```properties
+scalar.db.contact_points=<JDBC_URL>
+scalar.db.username=<USERNAME>
+scalar.db.password=<PASSWORD>
+scalar.db.storage=jdbc
+```
+
+RDS（JDBCデータベース）のプロパティの詳細については、以下のドキュメントを参照してください。
+
+* [Configure ScalarDB for JDBC databases](https://scalardb.scalar-labs.com/docs/latest/getting-started-with-scalardb#set-up-your-database-for-scalardb)
+
+### 必要な構成/手順
+
+#### RDS データベース インスタンスを作成する
+
+RDS データベース インスタンスを作成する必要があります。 詳細については公式ドキュメントを参照してください。
+
+* [Configuring an Amazon RDS DB instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_RDS_Configuring.html)
+
+### オプションの構成/手順
+
+#### 自動バックアップを有効にする (運用環境で推奨)
+
+自動バックアップを有効にすることができます。 詳細については公式ドキュメントを参照してください。
+
+* [Working with backups](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html)
+
+自動バックアップ機能によりポイントインタイムリカバリ機能が有効になるため、これをお勧めします。 データを特定の時点まで復元できます。 Scalar 製品で複数のデータベースを使用する場合、バックアップ操作のダウンタイム (一時停止時間) を短縮できます。 Scalar 製品データのバックアップ/復元方法の詳細については、次のドキュメントを参照してください。
+
+* [Scalar 製品のバックアップ復元ガイド](BackupRestoreGuide.mdx)
+
+#### 監視を構成する (運用環境で推奨)
+
+RDS のネイティブ機能を使用して、RDS の監視とログ記録を構成できます。 詳細については公式ドキュメントを参照してください。
+
+* [Monitoring metrics in an Amazon RDS instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Monitoring.html)
+* [Monitoring events, logs, and streams in an Amazon RDS DB instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Monitor_Logs_Events.html)
+
+メトリクスとログは、運用環境で問題が発生したときにそれを調査するのに役立つため、これをお勧めします。
+
+#### パブリック アクセスを無効にする (運用環境で推奨)
+
+パブリックアクセスはデフォルトでは無効になっています。 次のように、EKS クラスター上の Scalar 製品ポッドから RDS データベース インスタンスにアクセスできます。
+
+* EKS クラスターと同じ VPC 上に RDS データベース インスタンスを作成します。
+* [VPC peering](https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) を使用して、Scalar 製品デプロイの RDS 用 VPC と EKS クラスター用 VPC を接続します。 (// TODO: この機能を Scalar 製品でテストする必要があります。)
+
+WAN 経由ではないプライベート内部接続によりシステムの安全性が高まるため、これをお勧めします。
+
+## Amazon Aurora MySQL と Amazon Aurora PostgreSQL
+
+### 認証方法
+
+Amazon Aurora を使用する場合、ScalarDB/ScalarDL プロパティ ファイルに `JDBC_URL`、`USERNAME`、および `PASSWORD` を次のように設定する必要があります。
+
+```properties
+scalar.db.contact_points=<JDBC_URL>
+scalar.db.username=<USERNAME>
+scalar.db.password=<PASSWORD>
+scalar.db.storage=jdbc
+```
+
+Amazon Aurora (JDBC データベース) のプロパティの詳細については、次のドキュメントを参照してください。
+
+* [Configure ScalarDB for JDBC databases](https://scalardb.scalar-labs.com/docs/latest/getting-started-with-scalardb#set-up-your-database-for-scalardb)
+
+### 必要な構成/手順
+
+#### Amazon Aurora DB クラスターを作成する
+
+Amazon Aurora DB クラスターを作成する必要があります。 詳細については公式ドキュメントを参照してください。
+
+* [Configuring your Amazon Aurora DB cluster](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraSettingUp.html)
+
+### オプションの構成/手順
+
+#### バックアップ構成を構成します (環境に応じてオプション)
+
+Amazon Aurora はデフォルトで自動的にバックアップを取得します。 バックアップ機能を手動で有効にする必要はありません。
+
+バックアップ保持期間やバックアップウィンドウなどのバックアップ構成を変更する場合は、それらを構成できます。 詳細については公式ドキュメントを参照してください。
+
+* [Backing up and restoring an Amazon Aurora DB cluster](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/BackupRestoreAurora.html)
+
+Scalar 製品データのバックアップ/復元方法の詳細については、次のドキュメントを参照してください。
+
+* [Scalar 製品のバックアップ復元ガイド](BackupRestoreGuide.mdx)
+
+#### 監視を構成する (運用環境で推奨)
+
+Amazon Aurora のネイティブ機能を使用して、Amazon Aurora のモニタリングとロギングを設定できます。 詳細については公式ドキュメントを参照してください。
+
+* [Monitoring metrics in an Amazon Aurora cluster](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/MonitoringAurora.html)
+* [Monitoring events, logs, and streams in an Amazon Aurora DB cluster](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_Monitor_Logs_Events.html)
+
+メトリクスとログは、運用環境で問題が発生したときにそれを調査するのに役立つため、これをお勧めします。
+
+#### パブリック アクセスを無効にする (運用環境で推奨)
+
+パブリックアクセスはデフォルトでは無効になっています。 次のように、EKS クラスター上の Scalar 製品ポッドから Amazon Aurora DB クラスターにアクセスできます。
+
+* EKS クラスターと同じ VPC 上に Amazon Aurora DB クラスターを作成します。
+* [VPC peering](https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) を使用して、Scalar 製品デプロイメント用の Amazon Aurora DB クラスターの VPC と EKS クラスターの VPC を接続します。 (// TODO: この機能を Scalar 製品でテストする必要があります。)
+
+WAN 経由ではないプライベート内部接続によりシステムの安全性が高まるため、これをお勧めします。

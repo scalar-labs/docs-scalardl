@@ -1,0 +1,151 @@
+# ScalarDL 認証ガイド
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このドキュメントでは、ScalarDL の認証メカニズムとその適切な使用方法について説明します。
+
+## ScalarDL での認証
+
+認証は ScalarDL の重要な役割の 1 つであり、プロトコルを期待どおりに動作させることができます。
+ScalarDL は、次の 3 つの状況で認証を使用します。
+* クライアント認証（Ledger と Auditor 用）
+  * Ledger と Auditor は、クライアントからのリクエストに添付されたクライアント生成の署名を使用してクライアントを認証します。
+* Ledger 認証（Auditor 用）
+  * Auditor は、[アセット証明](how-to-use-proof.mdx) に添付された Ledger 生成の署名を使用して Ledger を認証します。
+* Auditor 認証（Ledger 用）
+  * Ledger は、クライアントのリクエストに添付された Auditor が生成した署名を使用して Auditor を認証します。
+
+Ledger 認証と Auditor 認証は Auditor モードでのみ使用されることに注意してください。 Auditor の詳細については、[ScalarDL Auditor 入門](getting-started-auditor.mdx) および [ScalarDL 実装](implementation.mdx) を参照してください。
+
+また、ここでは認証に使用されるバイト配列を指定するために `signature` という用語を使用していることに注意してください。
+
+## 認証方法
+
+ScalarDL は、デジタル署名と HMAC という 2 つの認証方法をサポートしています。
+以下に説明するように、これらの方法には両方とも長所と短所がありますが、どちらの方法でもビザンチン障害検出機能が犠牲になることはありません。
+
+### デジタル署名
+
+* 利点
+  * クライアントのリクエスト、アセットレコード、およびアセット証明には否認防止特性があります。 具体的には、クライアントのリクエストに添付されたデジタル署名は、そのリクエストが生成する対応するアセットレコードとともに保存されるため、クライアントのリクエストと対応するレコードには否認防止の特性が備わります。つまり、クライアントのリクエストに署名した秘密鍵の所有者が誰であるかを保証できます。 リクエストによりレコードが作成されました。 さらに、実行の結果としてクライアントに返されるアセット証明に添付されたデジタル署名により、Ledger と Auditor がそれぞれ証明を作成したことが保証されます。 クライアント（アプリケーション）がプルーフを保持しておけば、クライアントは必要に応じてプルーフを使用して結果を検証できます。
+* 短所
+  * デジタル署名は非常に遅いです。 上記の利点と引き換えに、無視できないパフォーマンスのオーバーヘッドが追加されます。
+
+### HMAC
+
+* 利点
+  * HMAC はデジタル署名よりもはるかに高速です。
+* 短所
+  * クライアントのリクエスト、アセットレコード、およびアセット証明には否認防止特性がありません。
+
+### どれを使用すればよいですか?
+
+否認防止プロパティが必要ない場合は、常に HMAC を使用する必要があります。
+技術的には、クライアント認証にはデジタル署名を使用し、Ledger/Auditor 認証には HMAC を使用するなど、認証方法を混合することができます。 ただし、混合方法は非常に混乱を招く可能性があるため、ScalarDL ではそのような使用を禁止しています。
+
+パフォーマンスを向上させるために、Ledger と Auditor の認証に HMAC のみを使用するように ScalarDL を更新する予定であることに注意してください。 同様に、Ledger と Auditor の認証をアセット証明への署名方法から分離する予定です。 上記の変更により、Ledger と Auditor の間で HMAC 認証を使用しながら、デジタル署名されたアセット証明を返すことができるようになります。
+
+## 構成、設定
+
+このセクションでは、ScalarDL 認証を適切に使用するために設定する必要がある変数について説明します。 各変数の詳細については、[Javadoc](https://scalar-labs.github.io/scalardl/javadoc/latest/) を参照してください。
+
+### デジタル署名
+
+* クライアント認証
+  * クライアント側のプロパティ
+    * `scalar.dl.client.auditor.enabled` (Auditor を使用する場合は `true` に設定します)
+    * `scalar.dl.client.authentication_method` (`digital-signature`に設定)
+    * `scalar.dl.client.entity.id` (または非推奨の `scalar.dl.client.cert_holder_id`)
+      * お客様を識別するために使用します。
+    * `scalar.dl.client.entity.identity.digital_signature.cert_pem` または `scalar.dl.client.entity.identity.digital_signature.cert_path` (または `scalar.dl.client.cert_pem` または `scalar.dl.client) .cert_path`、これは非推奨です。)
+      * クライアントが生成した署名を検証するために、Ledger と Auditor の証明書を登録するために使用されます。
+      * 証明書の取得方法については、[こちら](ca/caclient-getting-started.mdx#ca-サーバーから証明書を取得する) を参照してください。
+    * `scalar.dl.client.entity.identity.digital_signature.cert_version` (または非推奨の `scalar.dl.client.cert_version`)
+    * `scalar.dl.client.entity.identity.digital_signature.private_key_pem` または `scalar.dl.client.entity.identity.digital_signature.private_key_path` (または `scalar.dl.client.private_key_pem` または `scalar.dl.client) .private_key_path`、これは非推奨です。)
+      * リクエストの署名に使用されます。
+      * 秘密キーの取得方法については、[こちら](ca/caclient-getting-started.mdx#秘密キーと-csr-を生成する) を参照してください。
+  * Ledger 側のプロパティ
+    * `scalar.dl.ledger.authentication.method` (`digital-signature`に設定)
+  * Auditor 側のプロパティ
+    * `scalar.dl.auditor.authentication.method` (`digital-signature`に設定)
+* Ledger 認証
+  * Ledger 側のプロパティ
+    * `scalar.dl.ledger.proof.enabled` (`true` に設定)
+      * Ledger 認証ではアセット証明の署名が使用されるため必須です。
+    * `scalar.dl.ledger.proof.private_key_pem` または `scalar.dl.ledger.proof.private_key_path`
+      * アセット証明に署名するために使用されます。
+      * 秘密キーの取得方法については、[こちら](ca/caclient-getting-started.mdx#秘密キーと-csr-を生成する) を参照してください。
+* Auditor 側のプロパティ
+    * `scalar.dl.auditor.ledger.cert_holder_id`
+    * `scalar.dl.auditor.ledger.cert_version`
+        * アセット証明の署名を検証するために使用されます。
+* Auditor の認証
+  * Ledger 側のプロパティ
+    * `scalar.dl.ledger.auditor.cert_holder_id`
+      * クライアント要求に添付された Auditor が生成した署名を検証するために使用されます。
+    * `scalar.dl.ledger.auditor.cert_version`
+      * クライアント要求に添付された Auditor が生成した署名を検証するために使用されます。
+  * Auditor 側のプロパティ
+    * `scalar.dl.auditor.cert_holder_id`
+      * クライアント ライブラリを使用して Ledger サービスを直接呼び出すために使用されます。
+    * `scalar.dl.auditor.cert_version`
+      * クライアント ライブラリを使用して Ledger サービスを直接呼び出すために使用されます。
+    * `scalar.dl.auditor.private_key_pem` または `scalar.dl.auditor.private_key_path`
+      * クライアントのリクエストと Auditor から Ledger へのリクエストに署名するために使用されます。
+      * 秘密キーの取得方法については、[こちら](ca/caclient-getting-started.mdx#秘密キーと-csr-を生成する) を参照してください。
+
+### HMAC
+
+* クライアント認証
+  * クライアント側のプロパティ
+    * `scalar.dl.client.authentication_method` (`hmac`に設定)
+    * `scalar.dl.client.entity.id`
+        ※お客様を識別するために使用します。
+    * `scalar.dl.client.entity.identity.hmac.secret_key`
+        * リクエストの署名に使用されます。
+        * 秘密キーはランダムな長い値 (例: 32 文字の長さの 16 進文字列) である必要があります。
+    * `scalar.dl.client.entity.identity.hmac.secret_key_version`
+  * Ledger 側のプロパティ
+    * `scalar.dl.ledger.authentication.method` (`hmac`に設定)
+  * Auditor 側のプロパティ
+    * `scalar.dl.auditor.authentication.method` (`hmac`に設定)
+
+* Ledger と Auditor の認証
+  * Ledger 側のプロパティ
+    * `scalar.dl.ledger.proof.enabled` (`true` に設定)
+      * Ledger 認証ではアセット証明の署名が使用されるため必須です。
+    * `scalar.dl.ledger.servers.authentication.hmac.secret_key`
+      * Ledger と Auditor 間のメッセージとリクエストの署名と検証に使用されます。
+      * 秘密キーはランダムな長い値 (例: 32 文字の長さの 16 進文字列) である必要があります。
+    * `scalar.dl.ledger.authentication.hmac.cipher_key`
+      * クライアントの秘密鍵の暗号化および復号化に使用されます。
+      * 暗号キーは、予測できない長い値である必要があります。
+  * Auditor 側のプロパティ
+    * `scalar.dl.auditor.servers.authentication.hmac.secret_key`
+      * Ledger と Auditor 間のメッセージとリクエストの署名と検証に使用されます。 `scalar.dl.ledger.servers.authentication.hmac.secret_key` と同じキーである必要があります。
+      * 秘密キーはランダムな長い値 (例: 32 文字の長さの 16 進文字列) である必要があります。
+    * `scalar.dl.auditor.authentication.hmac.cipher_key`
+      * クライアントの秘密鍵の暗号化および復号化に使用されます。
+      * 暗号キーは、予測できない長い値である必要があります。
+
+## リクエストを実行する前に準備する
+
+構成後、実行リクエストを発行する準備として次の作業を行う必要があります。
+
+### デジタル署名
+
+* クライアントの証明書を Ledger (および有効な場合は Auditor) に登録します。
+  * クライアント ライブラリまたはコマンドライン ツール (`register-cert`) を使用します。
+* Auditor の証明書を Ledger に登録します。
+  * Auditor が有効な場合にのみ必須です。
+* Auditor に Ledger 証明書を登録します。
+  * Auditor が有効な場合にのみ必須です。
+* コントラクトを Ledger (および有効な場合は Auditor) に登録します。
+
+### HMAC
+
+* クライアントの秘密鍵を Ledger (および有効な場合は Auditor) に登録します。
+   * クライアント ライブラリまたはコマンドライン ツール (`register-secret`) を使用します。
+* コントラクトを Ledger  (および Auditor ) に登録します。

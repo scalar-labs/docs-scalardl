@@ -1,0 +1,48 @@
+---
+tags:
+  - Community
+  - Enterprise Standard
+  - Enterprise Premium
+---
+
+# ScalarDB をスケーリングする方法
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このガイドでは、ScalarDB をスケーリングする方法について説明します。ここでは、[Scalar Helm Chart](https://github.com/scalar-labs/helm-charts) (推奨されているデプロイ方法) を使用して ScalarDB Cluster をデプロイしていることを前提としています。
+
+:::note
+
+ScalarDB Cluster 側にボトルネックがある場合は、ScalarDB Cluster をスケーリングすることでパフォーマンスの問題を解決できる場合があります。ただし、パフォーマンスの問題はバックエンドデータベースのボトルネックによって発生することがあります。このような場合、ScalarDB Cluster をスケーリングしてもパフォーマンスの問題は解決されません。
+
+代わりに、ボトルネックが存在する場所を確認してください。ボトルネックがバックエンドデータベースに存在する場合は、バックエンドデータベースのスケーリングを検討してください。
+
+:::
+
+<Tabs groupId="editions" queryString>
+  <TabItem value="scalardb-cluster" label="ScalarDB Cluster (Enterprise edition)" default>
+
+  1. カスタム値ファイルに以下を追加します。`<NUMBER_OF_PODS>` を、スケーリングするポッドの数に置き換えます。
+
+     ```yaml
+     scalardbCluster:
+       replicaCount: <NUMBER_OF_PODS>
+     ```
+
+  1. 更新されたカスタム値ファイルを使用する次の `helm upgrade` コマンドを実行して、ScalarDB Cluster のデプロイメントをアップグレードします。説明に従って、山括弧内の内容を必ず置き換えてください。
+
+     ```console
+     helm upgrade <RELEASE_NAME> scalar-labs/scalardb-cluster -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDB_CLUSTER> --version <CHART_VERSION>
+     ```
+
+  </TabItem>
+  <TabItem value="scalardb-core" label="ScalarDB Core ライブラリ (Community edition)">
+
+    ScalarDB Core は Java ライブラリとして提供されます。そのため、アプリケーションをスケールさせると、ScalarDB もアプリケーションに合わせてスケールされます。
+
+  </TabItem>
+</Tabs>

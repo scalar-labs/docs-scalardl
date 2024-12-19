@@ -16,7 +16,7 @@
     "description": "The label for category Samples in sidebar docs"
   },
   "sidebar.docs.category.Develop": {
-    "message": "開発する",
+    "message": "開発",
     "description": "The label for category Develop in sidebar docs"
   },
   "sidebar.docs.category.SDKs": {
@@ -24,7 +24,7 @@
     "description": "The label for category Deploy in sidebar docs"
   },
   "sidebar.docs.category.Deploy": {
-    "message": "展開する",
+    "message": "デプロイ",
     "description": "The label for category Deploy in sidebar docs"
   },
   "sidebar.docs.category.Scalar Kubernetes": {
@@ -60,7 +60,7 @@
     "description": "The label for category Scalar Helm Charts in sidebar docs"
   },
   "sidebar.docs.category.Manage": {
-    "message": "管理",
+    "message": "運用",
     "description": "The label for category Manage in sidebar docs"
   },
   "sidebar.docs.category.Monitoring Guides": {
@@ -72,7 +72,7 @@
     "description": "The label for category Backup and Restore Guides in sidebar docs"
   },
   "sidebar.docs.category.Reference": {
-    "message": "参照",
+    "message": "関連情報",
     "description": "The label for category Reference in sidebar docs"
   },
   "sidebar.docs.category.Releases": {

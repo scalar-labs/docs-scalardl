@@ -1,0 +1,467 @@
+# ScalarDL 共通エラーコード
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このページでは、ScalarDL 全体で共通するエラーコードの一覧を示します。
+
+## エラーコードのクラスと説明
+
+| クラス             | 説明                       |
+|:------------------|:--------------------------|
+| `DL-COMMON-3xxxx` | 検証エラーカテゴリのエラー    |
+| `DL-COMMON-4xxxx` | ユーザーエラーカテゴリのエラー |
+| `DL-COMMON-5xxxx` | 内部エラーカテゴリのエラー    |
+
+## `DL-COMMON-3xxxx` ステータスコード
+
+以下は、検証エラーカテゴリのステータスコードとメッセージです。
+
+### `DL-COMMON-302001`
+
+**メッセージ**
+
+```markdown
+The format of the contract ID is invalid.
+```
+
+### `DL-COMMON-302002`
+
+**メッセージ**
+
+```markdown
+Contract validation failed. A bug might exist, or tampering might have occurred.
+```
+
+### `DL-COMMON-305001`
+
+**メッセージ**
+
+```markdown
+An unexpected record value is observed. A bug might exist, or tampering might have occurred. Details: %s
+```
+
+## `DL-COMMON-4xxxx` ステータスコード
+
+以下は、ユーザーエラーカテゴリのステータスコードとメッセージです。
+
+### `DL-COMMON-400001`
+
+**メッセージ**
+
+```markdown
+Signing failed. Details: %s
+```
+
+### `DL-COMMON-400002`
+
+**メッセージ**
+
+```markdown
+Validating signature failed. Details: %s
+```
+
+### `DL-COMMON-400003`
+
+**メッセージ**
+
+```markdown
+The request signature can't be validated.
+```
+
+### `DL-COMMON-400004`
+
+**メッセージ**
+
+```markdown
+The proof signature can't be validated.
+```
+
+### `DL-COMMON-401001`
+
+**メッセージ**
+
+```markdown
+Loading the key failed. Details: %s
+```
+
+### `DL-COMMON-401002`
+
+**メッセージ**
+
+```markdown
+Loading the certificate failed. Details: %s
+```
+
+### `DL-COMMON-401003`
+
+**メッセージ**
+
+```markdown
+Creating a cipher key failed. Details: %s
+```
+
+### `DL-COMMON-401004`
+
+**メッセージ**
+
+```markdown
+Invalid private key. File: %s
+```
+
+### `DL-COMMON-401005`
+
+**メッセージ**
+
+```markdown
+Invalid certificate. File: %s
+```
+
+### `DL-COMMON-401006`
+
+**メッセージ**
+
+```markdown
+Reading the private key failed. File: %s; Details: %s
+```
+
+### `DL-COMMON-401007`
+
+**メッセージ**
+
+```markdown
+Reading the certificate failed. File: %s; Details: %s
+```
+
+### `DL-COMMON-401008`
+
+**メッセージ**
+
+```markdown
+Creating a key store failed. Details: %s
+```
+
+### `DL-COMMON-402001`
+
+**メッセージ**
+
+```markdown
+Loading the contract failed. Details: %s
+```
+
+### `DL-COMMON-403001`
+
+**メッセージ**
+
+```markdown
+The specified certificate is not found.
+```
+
+### `DL-COMMON-404001`
+
+**メッセージ**
+
+```markdown
+The specified contract is not found.
+```
+
+### `DL-COMMON-405001`
+
+**メッセージ**
+
+```markdown
+The specified certificate is already registered.
+```
+
+### `DL-COMMON-406001`
+
+**メッセージ**
+
+```markdown
+The specified contract is already registered.
+```
+
+### `DL-COMMON-406002`
+
+**メッセージ**
+
+```markdown
+The specified contract binary name has been already registered with a different byte code.
+```
+
+### `DL-COMMON-413001`
+
+**メッセージ**
+
+```markdown
+The specified secret is already registered.
+```
+
+### `DL-COMMON-414001`
+
+**メッセージ**
+
+```markdown
+The specified value of the property '%s' is not a number. Value: %s
+```
+
+### `DL-COMMON-414002`
+
+**メッセージ**
+
+```markdown
+The specified value of the property '%s' is not a boolean. Value: %s
+```
+
+### `DL-COMMON-414003`
+
+**メッセージ**
+
+```markdown
+Reading the file failed. File: %s
+```
+
+### `DL-COMMON-414004`
+
+**メッセージ**
+
+```markdown
+Please set your license key to %s.
+```
+
+### `DL-COMMON-414005`
+
+**メッセージ**
+
+```markdown
+Please set your certificate for checking the corresponding license key to %s or %s.
+```
+
+### `DL-COMMON-414006`
+
+**メッセージ**
+
+```markdown
+The license key is not for the product '%s'. Please set the correct license key.
+```
+
+### `DL-COMMON-414007`
+
+**メッセージ**
+
+```markdown
+The license type of the license key must be ENTERPRISE or TRIAL. Please set the correct license key.
+```
+
+### `DL-COMMON-414008`
+
+**メッセージ**
+
+```markdown
+The port and privileged port must be greater than or equal to zero.
+```
+
+### `DL-COMMON-414009`
+
+**メッセージ**
+
+```markdown
+The private key and certificate are required.
+```
+
+### `DL-COMMON-414010`
+
+**メッセージ**
+
+```markdown
+The certificate version must be greater than or equal to zero.
+```
+
+### `DL-COMMON-414011`
+
+**メッセージ**
+
+```markdown
+A secret key is required for HMAC authentication.
+```
+
+### `DL-COMMON-414012`
+
+**メッセージ**
+
+```markdown
+The secret version for HMAC authentication must be greater than or equal to zero.
+```
+
+### `DL-COMMON-414013`
+
+**メッセージ**
+
+```markdown
+The grpc deadline duration must be greater than or equal to zero.
+```
+
+### `DL-COMMON-414014`
+
+**メッセージ**
+
+```markdown
+The grpc max inbound message size must be greater than or equal to zero.
+```
+
+### `DL-COMMON-414015`
+
+**メッセージ**
+
+```markdown
+The grpc max inbound metadata size must be greater than or equal to zero.
+```
+
+### `DL-COMMON-414016`
+
+**メッセージ**
+
+```markdown
+The authentication method name is invalid. Name: %s
+```
+
+### `DL-COMMON-414017`
+
+**メッセージ**
+
+```markdown
+The argument format is illegal.
+```
+
+### `DL-COMMON-414018`
+
+**メッセージ**
+
+```markdown
+The deserialization type is not supported. Type: %s
+```
+
+## `DL-COMMON-5xxxx` ステータスコード
+
+以下は、内部エラーカテゴリのステータスコードとメッセージです。
+
+### `DL-COMMON-500001`
+
+**メッセージ**
+
+```markdown
+Binding the certificate failed. Details: %s
+```
+
+### `DL-COMMON-500002`
+
+**メッセージ**
+
+```markdown
+Unbinding the certificate failed. Details: %s
+```
+
+### `DL-COMMON-500003`
+
+**メッセージ**
+
+```markdown
+Getting the certificate failed. Details: %s
+```
+
+### `DL-COMMON-500004`
+
+**メッセージ**
+
+```markdown
+Binding the secret key failed. Details: %s
+```
+
+### `DL-COMMON-500005`
+
+**メッセージ**
+
+```markdown
+Unbinding the secret key failed. Details: %s
+```
+
+### `DL-COMMON-500006`
+
+**メッセージ**
+
+```markdown
+Getting the secret key failed. Details: %s
+```
+
+### `DL-COMMON-500007`
+
+**メッセージ**
+
+```markdown
+Binding the contract failed. Details: %s
+```
+
+### `DL-COMMON-500008`
+
+**メッセージ**
+
+```markdown
+Getting the contract failed. Details: %s
+```
+
+### `DL-COMMON-500009`
+
+**メッセージ**
+
+```markdown
+Scanning the contracts failed. Details: %s
+```
+
+### `DL-COMMON-502001`
+
+**メッセージ**
+
+```markdown
+Serializing the specified json failed. Details: %s
+```
+
+### `DL-COMMON-502002`
+
+**メッセージ**
+
+```markdown
+Deserializing the specified json string failed. Details: %s
+```
+
+### `DL-COMMON-502003`
+
+**メッセージ**
+
+```markdown
+The required fields are not specified.
+```
+
+### `DL-COMMON-502004`
+
+**メッセージ**
+
+```markdown
+The metadata is not available since the asset has not been committed yet.
+```
+
+### `DL-COMMON-502005`
+
+**メッセージ**
+
+```markdown
+The specified transaction state is invalid.
+```
+
+### `DL-COMMON-502006`
+
+**メッセージ**
+
+```markdown
+The contract type or instance is not supported.
+```

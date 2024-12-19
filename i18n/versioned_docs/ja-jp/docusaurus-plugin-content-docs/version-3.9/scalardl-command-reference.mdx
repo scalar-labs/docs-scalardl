@@ -1,0 +1,263 @@
+# ScalarDL クライアント コマンド リファレンス
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このページでは、ScalarDL コンポーネントと対話するためのクライアント コマンドである `scalardl` を紹介します。
+
+## コマンドの概要
+
+- **ID 情報を登録する**
+  - [`register-cert`](#register-cert): 指定された証明書を登録します。
+  - [`register-secret`](#register-secret): 指定されたシークレットを登録します。
+- **ビジネス ロジックを登録する**
+  - [`register-contract`](#register-contract): 指定されたコントラクトを登録します。
+  - [`register-contracts`](#register-contracts): 指定されたコントラクトを登録します。
+  - [`register-function`](#register-function): 指定されたファンクションを登録します。
+  - [`register-functions`](#register-functions): 指定されたファンクションを登録します。
+- **登録されたビジネス ロジックを実行して一覧表示する**
+  - [`execute-contract`](#register-contract): 指定されたコントラクトを実行します。
+  - [`list-contracts`](#list-contracts): 登録されたコントラクトを一覧表示します。
+- **台帳を検証します**
+  - [`validate-ledger`](#validate-ledger): 台帳内の指定されたアセットを検証します。
+
+## `register-cert`
+
+指定された証明書を登録します。
+
+### オプション
+
+| オプション                   | 説明                      |
+|:---------------------------|:--------------------------|
+| `--config`, `--properties` | プロパティ形式の構成ファイル。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+```console
+scalardl register-cert --properties client.properties
+```
+
+## `register-secret`
+
+指定されたシークレットを登録します。
+
+### オプション
+
+| オプション                   | 説明                      |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | プロパティ形式の構成ファイル。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+```console
+scalardl register-secret --properties client.properties
+```
+
+## `register-contract`
+
+指定されたコントラクトを登録します。
+
+### オプション
+
+| オプション                   | 説明                                                                            |
+|:---------------------------|:--------------------------------------------------------------------------------|
+| `--config`, `--properties` | プロパティ形式の構成ファイル。                                                       |
+| `--contract-binary-name`   | 登録するコントラクトのバイナリ名。                                                    |
+| `--contract-class-file`    | 登録するコントラクト クラス ファイル。                                                |
+| `--contract-id`            | 登録するコントラクトの ID。                                                         |
+| `--contract-properties`    | シリアル化された形式のコントラクト プロパティ。                                         |
+| `--deserialization-format` | コントラクト プロパティの逆シリアル化形式。有効な値: JSON または STRING (デフォルト: JSON) |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+```console
+scalardl register-contract --properties client.properties --contract-id StateUpdater --contract-binary-name com.org1.contract.StateUpdater --contract-class-file build/classes/java/main/com/org1/contract/StateUpdater.class
+```
+
+## `register-contracts`
+
+指定されたコントラクトを登録します。
+
+### オプション
+
+| オプション                   | 説明                                     |
+|:---------------------------|:-----------------------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。                |
+| `--contracts-file`         | TOML 形式で登録するコントラクトを含むファイル。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+```console
+scalardl register-contracts --properties client.properties --contracts-file /path/to/contracts-file
+```
+
+コントラクトファイルの例は次のとおりです。
+
+```toml
+[[contracts]]
+contract-id = "StateUpdater"
+contract-binary-name = "com.org1.contract.StateUpdater"
+contract-class-file = "build/classes/java/main/com/org1/contract/StateUpdater.class"
+
+[[contracts]]
+contract-id = "StateReader"
+contract-binary-name = "com.org1.contract.StateReader"
+contract-class-file = "build/classes/java/main/com/org1/contract/StateReader.class"
+```
+
+## `register-function`
+
+指定されたファンクションを登録します。
+
+### オプション
+
+| オプション                   | 説明                      |
+|:---------------------------|:--------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。 |
+| `--function-binary-name`   | 登録するファンクションのバイナリ名。    |
+| `--function-class-file`    | 登録するファンクションクラス ファイル。 |
+| `--function-id`            | 登録するファンクションの ID。         |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+```console
+scalardl register-function --properties client.properties --function-id test-function --function-binary-name com.example.function.TestFunction --function-class-file /path/to/TestFunction.class
+```
+
+## `register-functions`
+
+指定された機能を登録します。
+
+### オプション
+
+| オプション                   | 説明                              |
+|:---------------------------|:----------------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。         |
+| `--functions-file`         | TOML 形式で登録するファンクションを含むファイル。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+```console
+scalardl register-functions --properties client.properties --functions-file /path/to/functions-file
+```
+
+ファンクションファイルの例は次のとおりです。
+
+```toml
+[[functions]]
+function-id = "TestFunction1"
+function-binary-name = "com.org1.function.TestFunction1"
+function-class-file = "build/classes/java/main/com/org1/function/TestFunction1.class"
+
+[[functions]]
+function-id = "TestFunction2"
+function-binary-name = "com.org1.function.TestFunction2"
+function-class-file = "build/classes/java/main/com/org1/function/TestFunction2.class"
+```
+
+## `execute-contract`
+
+指定されたコントラクトを実行します。
+
+### オプション
+
+| オプション                   | 説明                                                                                 |
+|:---------------------------|:------------------------------------------------------------------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。                                                           |
+| `--contract-argument`      | シリアル化された形式で実行するコントラクトの引数。                                           |
+| `--contract-id`            | 実行するコントラクトの ID。                                                             |
+| `--deserialization-format` | コントラクトおよびファンクションの引数のデシリアル化形式。有効な値: JSON または STRING (デフォルト: JSON) |
+| `--function-id`            | 実行するファンクションの ID。                                                                    |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+ファンクションなしでコントラクトを実行します。
+
+```console
+scalardl execute-contract --properties client.properties --contract-id StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}'
+```
+
+ファンクションを使用してコントラクトを実行します。
+
+```console
+scalardl execute-contract --properties client.properties --contract-id TestContract --contract-argument '{...}' --function-id TestFunction --function-argument '{...}'
+```
+
+## `list-contracts`
+
+登録されたコントラクトを一覧表示します。
+
+### オプション
+
+| オプション                   | 説明                      |
+|:---------------------------|:--------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。 |
+| `--contract-id`            | 表示するコントラクトの ID。          |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+指定されたエンティティによって登録されたすべてのコントラクトを一覧表示します。
+
+```console
+scalardl list-contracts --properties client.properties
+```
+
+指定されたコントラクトのみを表示します。
+
+```console
+scalardl list-contracts --properties client.properties --contract-id StateUpdater
+```
+
+## `validate-ledger`
+
+元帳内の指定されたアセットを検証します。
+
+### オプション
+
+| オプション                   | 説明                                                                                                                                             |
+|:---------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------|
+| `--config`, `--properties` | プロパティ形式の構成ファイル。                                                                                                                        |
+| `--asset-id`               | アセットの ID またはアセットの ID と経過時間。形式: 'ASSET_ID' (検証するアセットの ID)、または 'ASSET_ID,START_AGE,END_AGE' (検証するアセットの ID と経過時間)。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+すべての世代を対象にアセットを検証します。
+
+```console
+scalardl validate-ledger --properties client.properties --asset-id 'some_asset'
+```
+
+アセットを 0 から 10 までの世代のみ検証します。
+
+```console
+scalardl validate-ledger --properties client.properties --asset-id 'some_asset,0,10'
+```
+
+## 共通ユーティリティオプション
+
+上記のすべてのコマンドで次のオプションを使用できます。
+
+| オプション              | 説明                                                |
+|:----------------------|:----------------------------------------------------|
+| `-g`, `--use-gateway` | ゲートウェイを使用するためのフラグ。                      |
+| `-h`, `--help`        | コマンドのヘルプ メッセージを表示します。                 |
+| `--stacktrace`        | Java スタック トレースを `stderr` ストリームに出力します。 |

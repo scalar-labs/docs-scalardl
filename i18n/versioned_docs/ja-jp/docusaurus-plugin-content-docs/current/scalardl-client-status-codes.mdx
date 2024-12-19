@@ -1,0 +1,243 @@
+# ScalarDL クライアントエラーコード
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このページでは、ScalarDL クライアントのエラーコードの一覧を示します。
+
+## エラーコードのクラスと説明
+	
+| クラス             | 説明                       |
+|:------------------|:--------------------------|
+| `DL-CLIENT-3xxxx` | 検証エラーカテゴリのエラー    |
+| `DL-CLIENT-4xxxx` | ユーザーエラーカテゴリのエラー |
+| `DL-CLIENT-5xxxx` | 内部エラーカテゴリのエラー    |
+
+## `DL-CLIENT-3xxxx` ステータスコード
+
+以下は、検証エラーカテゴリのステータスコードとメッセージです。
+
+### `DL-CLIENT-305001`
+
+**メッセージ**
+
+```markdown
+The results from Ledger and Auditor don't match.
+```
+
+## `DL-CLIENT-4xxxx` ステータスコード
+
+以下は、ユーザーエラーカテゴリのステータスコードとメッセージです。
+
+### `DL-CLIENT-414001`
+
+**メッセージ**
+
+```markdown
+The specified option --asset-id is malformed. The format should be "[assetId]" or "[assetId],[startAge],[endAge]".
+```
+
+### `DL-CLIENT-414002`
+
+**メッセージ**
+
+```markdown
+The specified option --asset-id contains an invalid integer.
+```
+
+### `DL-CLIENT-414003`
+
+**メッセージ**
+
+```markdown
+The authentication method for the client mode must be either digital-signature or hmac.
+```
+
+### `DL-CLIENT-414004`
+
+**メッセージ**
+
+```markdown
+The authentication method for the intermediary mode must be pass-through.
+```
+
+### `DL-CLIENT-414005`
+
+**メッセージ**
+
+```markdown
+Both the certificate and the private key must be set to use digital signature.
+```
+
+### `DL-CLIENT-414006`
+
+**メッセージ**
+
+```markdown
+The secret key must be set to use HMAC authentication.
+```
+
+### `DL-CLIENT-414007`
+
+**メッセージ**
+
+```markdown
+%s and %s are missing, but either is required.
+```
+
+### `DL-CLIENT-414008`
+
+**メッセージ**
+
+```markdown
+Digital signature authentication is not configured.
+```
+
+### `DL-CLIENT-414009`
+
+**メッセージ**
+
+```markdown
+HMAC authentication is not configured.
+```
+
+### `DL-CLIENT-414010`
+
+**メッセージ**
+
+```markdown
+validateLedger with Auditor is not supported in the intermediary mode. Please execute the ValidateLedger contract to validate assets.
+```
+
+### `DL-CLIENT-414011`
+
+**メッセージ**
+
+```markdown
+The specified client mode is incorrect.
+```
+
+### `DL-CLIENT-414012`
+
+**メッセージ**
+
+```markdown
+The contract ID cannot be null.
+```
+
+### `DL-CLIENT-414013`
+
+**メッセージ**
+
+```markdown
+The contract name cannot be null.
+```
+
+### `DL-CLIENT-414014`
+
+**メッセージ**
+
+```markdown
+The contractBytes cannot be null.
+```
+
+### `DL-CLIENT-414015`
+
+**メッセージ**
+
+```markdown
+The contractArgument cannot be null.
+```
+
+### `DL-CLIENT-414016`
+
+**メッセージ**
+
+```markdown
+The contractPath cannot be null.
+```
+
+### `DL-CLIENT-414017`
+
+**メッセージ**
+
+```markdown
+The function ID cannot be null.
+```
+
+### `DL-CLIENT-414018`
+
+**メッセージ**
+
+```markdown
+The function name cannot be null.
+```
+
+### `DL-CLIENT-414019`
+
+**メッセージ**
+
+```markdown
+The functionBytes cannot be null.
+```
+
+### `DL-CLIENT-414020`
+
+**メッセージ**
+
+```markdown
+The functionPath cannot be null.
+```
+
+### `DL-CLIENT-414021`
+
+**メッセージ**
+
+```markdown
+The asset ID cannot be null.
+```
+
+### `DL-CLIENT-414022`
+
+**メッセージ**
+
+```markdown
+The specified asset ages are invalid.
+```
+
+## `DL-CLIENT-5xxxx` ステータスコード
+
+以下は、内部エラーカテゴリのステータスコードとメッセージです。
+
+### `DL-CLIENT-502001`
+
+**メッセージ**
+
+```markdown
+Reading the file failed. File: %s; Details: %s
+```
+
+### `DL-CLIENT-502002`
+
+**メッセージ**
+
+```markdown
+Configuring SSL failed. Details: %s
+```
+
+### `DL-CLIENT-502003`
+
+**メッセージ**
+
+```markdown
+Shutting down the channel failed. Details: %s
+```
+
+### `DL-CLIENT-502004`
+
+**メッセージ**
+
+```markdown
+Processing JSON failed. Details: %s
+```

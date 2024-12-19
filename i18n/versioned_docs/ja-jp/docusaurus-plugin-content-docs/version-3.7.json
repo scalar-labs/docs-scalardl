@@ -1,6 +1,6 @@
 {
   "version.label": {
-    "message": "3.7",
+    "message": "3.7 (サポートされていない)",
     "description": "The label for version 3.7"
   },
   "sidebar.docs.category.About ScalarDL": {
@@ -60,7 +60,7 @@
     "description": "The label for category Scalar Helm Charts in sidebar docs"
   },
   "sidebar.docs.category.Manage": {
-    "message": "管理",
+    "message": "運用",
     "description": "The label for category Manage in sidebar docs"
   },
   "sidebar.docs.category.Monitoring Guides": {

@@ -1,0 +1,365 @@
+# 汎用コントラクトおよびファンクションの使用
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このガイドでは、ScalarDL で汎用コントラクトおよびファンクションを使用する方法について説明します。
+
+汎用コントラクトおよびファンクションは、一般的なユースケース用に事前定義されたコントラクトとファンクションです。現在、ScalarDL は、オブジェクトの真正性管理とコレクションの真正性管理という 2 つの機能を提供しています。オブジェクトのハッシュ値を不変に設定して検証し、オブジェクトのコレクションを管理できます。たとえば、汎用コントラクトおよびファンクションを使用すると、独自のコントラクトとファンクションを記述しなくても、ファイルサービスや監査ログシステム用の真正性管理アプリケーションを簡単に開発できます。
+
+## 背景
+
+ScalarDL のコントラクトは、台帳データベースのアセットレコードの読み取りと書き込みを行う、デジタル署名された Java ベースのビジネスロジックです。ScalarDL のファンクションも、ScalarDB にアクセスし、単一のトランザクションでコントラクトと一緒に実行される Java ベースのビジネスロジックです。
+
+コントラクトとファンクションを記述することで、独自の目的のためにさまざまなアプリケーションを開発できます。ただし、ScalarDL のデータモデルとインターフェイスは従来のリレーショナルデータベースシステムとは少し異なるため、これらのコントラクトとファンクションの記述は難しい場合があります。そのため、ScalarDL では、一般的なユースケース向けに定義済みのコントラクトとファンクションを汎用コントラクトおよび汎用ファンクションとして提供し、開発者がユーザーインターフェイスなどのアプリケーション側に集中できるようにします。
+
+## ユースケース
+
+データの真正性の管理は、オブジェクトの真正性管理とオブジェクトのコレクションの真正性管理の 2 つの方法に分類できます。ScalarDL の汎用コントラクトおよびファンクションは、これら両方をサポートしているため、真正性管理アプリケーションを簡単に開発できます。
+
+オブジェクトの真正性管理では、ファイル、監査ログ、ファイルまたはオブジェクトストレージ内のディレクトリなど、あらゆる種類のオブジェクトの真正性を管理できます。
+
+コレクションの真正性管理では、コレクション内に存在するオブジェクトを管理できます。たとえば、監査プロセスで検証する必要があるオブジェクトのコレクションを作成できます。
+
+汎用コントラクトおよびファンクションを使用してこれらの機能を実現する方法については、以下の[オブジェクトの真正性を管理する](#オブジェクトの真正性を管理する)と[コレクションの真正性を管理する](#コレクションの真正性を管理する)の例を参照してください。
+
+## 環境をセットアップする
+
+このセクションでは、ScalarDL クライアントツールを介して汎用コントラクトおよびファンクションを使用し、ローカルファイルの真正性を確認します。アプリケーションで汎用コントラクトおよびファンクションを操作する場合は、ScalarDL Java Clinet SDK API を使用できます。詳細については、[ScalarDL の使用開始](getting-started.mdx)を参照してください。
+
+### JDK をインストールする
+
+このガイドでは、汎用コントラクトおよびファンクションの動作を確認するために Java ランタイム環境のみを使用します。ただし、このガイド以外で独自の ScalarDL アプリケーションを構築するには、次の Java Development Kit (JDK) のいずれかをインストールすることをお勧めします。
+
+- [Oracle JDK](https://www.oracle.com/java/technologies/downloads/) LTS バージョン (8、11、または 17)
+- [OpenJDK](https://openjdk.org/install/) LTS バージョン (8、11、または 17)
+
+### ScalarDL 環境をセットアップする
+
+独自の要件を満たす ScalarDL 環境をセットアップします。ローカルテスト環境に ScalarDL をデプロイする場合は、サンプルの Docker Compose 構成と Scalar Helm Chart を使用して、そのような環境をデプロイできます。詳細については、以下を参照してください。
+
+- [Docker を使用してローカル環境に ScalarDL をインストールする方法](installation-with-docker.mdx)
+- [Scalar Helm Chart の使用開始](helm-charts/getting-started-scalar-helm-charts.mdx)
+
+本番環境では、ScalarDL はコンテナイメージとして利用できます。詳細については、[Scalar 製品のコンテナイメージを取得する方法](scalar-kubernetes/HowToGetContainerImages.mdx)を参照してください。
+
+:::note
+
+汎用コントラクトおよびファンクションは、ScalarDL バージョン 3.10 以降でサポートされています。
+
+:::
+
+### 必要なツールと汎用コントラクトをダウンロードします
+
+次のコマンドを実行して、3.10.0 以上のバージョンを指定します。使用可能なバージョンについては、[Tags](https://github.com/scalar-labs/scalardl-java-client-sdk/tags) を参照してください。
+
+```console
+VERSION=X.Y.Z
+```
+
+次のコマンドを実行して、ScalarDL Java Client SDK リポジトリをクローンし、ツールと汎用コントラクトをダウンロードします:
+
+```console
+git clone https://github.com/scalar-labs/scalardl-java-client-sdk.git
+cd scalardl-java-client-sdk
+git checkout v$VERSION
+curl -OL https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v$VERSION/scalardl-java-client-sdk-$VERSION.zip
+unzip scalardl-java-client-sdk-$VERSION.zip
+mv scalardl-java-client-sdk-$VERSION client
+curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-generic-contracts-$VERSION.zip
+unzip scalardl-generic-contracts-$VERSION.zip
+mv scalardl-generic-contracts-$VERSION generic-contracts
+```
+
+## 証明書と汎用コントラクトを登録する
+
+このセクションでは、証明書と汎用コントラクトを登録する方法について説明します。
+
+### プロパティを構成する
+
+ScalarDL コンポーネントを操作するには、クライアントプロパティを構成する必要があります。詳細については、[プロパティを構成する](getting-started.mdx#プロパティを構成する)を参照してください。
+
+### 証明書またはシークレットを登録する
+
+登録用の証明書を準備します。詳細については、[証明書を取得する方法](ca/caclient-getting-started.mdx)を参照してください。
+
+次に、以下のように ScalarDL クライアント CLI を使用して証明書を登録します。
+
+```console
+client/bin/scalardl register-cert --properties client.properties
+```
+
+:::note
+
+証明書の代わりに HMAC 認証を使用することもできます。HMAC 認証の詳細については、[ScalarDL 認証ガイド](authentication.mdx)を参照してください。
+
+:::
+
+### 汎用コントラクトおよびファンクションを登録する
+
+証明書を登録したら、次のコマンドを実行して汎用コントラクトおよびファンクションを登録できます:
+
+```console
+client/bin/scalardl register-contracts --properties client.properties --contracts-file generic-contracts/conf/object-authenticity-management-contracts.toml
+client/bin/scalardl register-functions --properties client.properties --functions-file generic-contracts/conf/object-authenticity-management-functions.toml
+```
+
+## オブジェクトの真正性を管理する
+
+オブジェクトの真正性管理では、[`object.Put` コントラクト](generic-contracts-reference.mdx#objectput-コントラクト)を使用してオブジェクトのハッシュ値を登録できます。次の例のように、対象オブジェクト ID とオブジェクトのハッシュ値を指定します。オブジェクト ID は、オブジェクトまたはファイルを識別する一意の ID である必要があります (オブジェクトのキーやファイルパスなど)。`properties` オプションを使用して、オブジェクトに関連付けられたプロパティを配置することもできます。
+
+まず、ファイルのハッシュ値を取得し、改ざん検知台帳に登録します。
+
+:::note
+
+`sha256sum` コマンドは Linux 環境専用です。`shasum` と `certutil` は、それぞれ Mac 環境と Windows 環境で使用できます。同じ SHA256 ハッシュ値を取得する方法の詳細については、これらのコマンドの使用方法を参照してください。
+
+:::
+
+```console
+echo "Alice created this file." > a.txt
+sha256sum a.txt
+```
+
+ハッシュ値として次の結果が得られます:
+
+```console
+5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0  a.txt
+```
+
+ハッシュ値を入力するには、次のコマンドを実行します:
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id object.Put \
+--contract-argument '{"object_id": "a.txt", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0", "metadata": {"note": "created"}}'
+```
+
+汎用コントラクトおよびファンクションの入力および出力仕様については、[汎用コントラクトおよびファンクションのリファレンスガイド](generic-contracts-reference.mdx)を参照してください。
+
+オブジェクトが更新された場合は、同じコントラクトを使用して新しいハッシュ値を設定できます。たとえば、次のコマンドが実行されたと仮定します。
+
+```console
+echo "Alice updated this file." >> a.txt
+sha256sum a.txt
+```
+
+ハッシュ値として次の結果が得られます:
+
+```console
+b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c  a.txt
+```
+
+次のようにハッシュ値を更新できます:
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id object.Put \
+--contract-argument '{"object_id": "a.txt", "hash_value": "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c", "metadata": {"note": "updated"}}'
+```
+
+以下のコマンドを実行すると、[`object.Get` コントラクト](generic-contracts-reference.mdx#objectget-コントラクト)を使用してオブジェクトの最新のステータスを取得することもできます:
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id object.Get \
+--contract-argument '{"object_id": "a.txt"}'
+```
+
+次のような結果が得られます:
+
+```console
+Contract result:
+{
+  "object_id" : "a.txt",
+  "hash_value" : "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c",
+  "metadata" : {
+    "note" : "updated"
+  }
+}
+```
+
+オブジェクトの真正性を検証する場合は、まず、検証するオブジェクトの各バージョンについて、たとえば `sha256sum` コマンドを使用してハッシュ値を再計算します。
+
+次に、再計算されたハッシュ値とバージョン ID を降順で使用して [`object.Validate` コントラクト](generic-contracts-reference.mdx#objectvalidate-コントラクト)を実行します。任意の数のバージョンを指定できます。バージョン ID は、出力でどのハッシュ値が不完全であるかを識別するためにのみ使用されるため、任意の文字列値を使用できます。オブジェクトまたはファイルストレージにバージョン管理がない場合は、バージョン ID に空の文字列を使用します。
+
+:::note
+
+ファイルシステムで古いバージョンを取得できない場合は、現在のバージョンのハッシュ値を指定できます。
+
+:::
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id object.Validate \
+--contract-argument \
+'{"object_id": "a.txt", "versions": [{"version_id": "v2", "hash_value": "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c"}, {"version_id": "v1", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0"}]}'
+```
+
+オブジェクトの再計算されたハッシュ値が Ledger のものと同じであれば、次の結果が表示されます。
+
+```console
+Contract result:
+{
+  "status" : "correct",
+  "faulty_versions" : [ ]
+}
+```
+
+誰かが次のようにファイル `a.txt` を改ざんしたとします:
+
+```txt
+Bob created this file.
+Alice updated this file
+```
+
+これで、最新バージョンのハッシュ値は `1f75d715648a3b4b3a33ecd7428a3e7139d9357da7d38735c23bf38618ecf9c7` になります。次のコマンドを実行して検証を実行できます:
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id object.Validate \
+--contract-argument \
+'{"object_id": "a.txt", "versions": [{"version_id": "v2", "hash_value": "1f75d715648a3b4b3a33ecd7428a3e7139d9357da7d38735c23bf38618ecf9c7"}, {"version_id": "v1", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0"}]}'
+```
+
+次のような結果が返されるはずです:
+
+```console
+Contract result:
+{
+  "status" : "faulty",
+  "faulty_versions" : [ "v2" ]
+}
+```
+
+### ScalarDL Ledger と ScalarDB テーブル間でオブジェクトの状態を同期する
+
+ScalarDL のデータ (「アセット」と呼ばれる) は改ざん検知機能があり、追加のみ可能なため、データモデリング機能とアクセスメソッドは制限されています。これらの制限を補うために、ScalarDB を ScalarDL と組み合わせて使用することで、より強力で使いやすいモデリング機能を利用できます。具体的には、ScalarDL と ScalarDB 間の一貫性を保つために、単一のトランザクションで「ファンクション」と呼ばれる Java プログラムを使用してコントラクトを実行できます。
+
+オブジェクトの真正性管理では、ScalarDL は、オブジェクトのハッシュ値を入れるときに任意のレコードを ScalarDB テーブルに入れる汎用ファンクション [`object.PutToMutableDatabase`](generic-contracts-reference.mdx#objectputtomutabledatabase-ファンクション) を提供します。`object.PutToMutableDatabase` の主な使用例の 1 つは、ScalarDL のオブジェクト状態を ScalarDB のオブジェクト管理テーブルに反映することです。
+
+パフォーマンスと障害回復の理由から、更新されたオブジェクトのハッシュ値を ScalarDL に非同期的に格納したい状況を考えてみましょう。このような場合は、次の操作を行います。
+
+1. オブジェクトバージョンのハッシュ値がすでに登録されているかどうかを管理するために、ScalarDB にテーブル (たとえば、`objects`) を作成します。
+
+1. 対象オブジェクトをリストして、ハッシュ値が登録されていないステータスで、`objects` テーブルに入れます。
+1. ハッシュ値が ScalarDL に正常に登録された後、`objects` テーブルの状態を更新します。
+
+上記の 3 番目の手順は、[`object.Put` コントラクト](generic-contracts-reference.mdx#objectput-コントラクト)に対して [`object.PutToMutableDatabase` ファンクション](generic-contracts-reference.mdx#objectputtomutabledatabase-ファンクション)を使用して次のコマンドを実行することで、ACID な方法で実行できます。
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id object.Put \
+--contract-argument '{"object_id": "a.txt", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0"}' \
+--function-id object.PutToMutableDatabase \
+--function-argument '{...}'
+```
+
+汎用ファンクションの引数には、ScalarDB テーブルスキーマに応じて、名前空間名、テーブル名、パーティションキー、クラスタリングキー (ある場合)、および列を指定する必要があります。次に例を示します。
+
+```json
+{
+  "namespace": "myns",
+  "table": "objects",
+  "partition_key": [
+    { "column_name": "object_id", "value": "a.txt", "data_type": "TEXT" }
+  ],
+  "clustering_key": [
+    { "column_name": "version", "value": "1234aef", "data_type": "TEXT" }
+  ],
+  "columns": [
+    { "column_name": "status", "value": 3, "data_type": "INT" },
+    { "column_name": "size", "value": 10.000, "data_type": "DOUBLE" },
+    { "column_name": "timestamp", "value": 123456789, "data_type": "BIGINT" },
+    { "column_name": "comment", "value": "hash-registered", "data_type": "TEXT" }
+  ]
+}
+```
+
+## コレクションの真正性を管理する
+
+コレクションの真正性管理の例として、監査対象集合の管理について考えてみましょう。監査対象集合は、監査プロセスで `object.Validate` コントラクトを使用して検証する必要があるオブジェクトの集合です。監査対象集合が予期せず変更されていないことをシステムが保証できない場合、悪意のあるユーザーが不正にオブジェクトを変更し、不正行為として発覚することを避けるために監査対象集合からオブジェクトを削除できる可能性があります。したがって、監査対象集合の管理は、コレクション真正性管理の重要かつ主要なユースケースです。
+
+監査対象集合のコレクションを作成するには、次のコマンドを実行して [`collection.Create` コントラクト](generic-contracts-reference.mdx#collectioncreate-コントラクト) を使用します:
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id collection.Create \
+--contract-argument '{"collection_id":"audit_set", "object_ids": ["a.txt", "b.txt"]}'
+```
+
+コレクション ID は、コレクションを識別する一意の ID である必要があります。JSON 配列でオブジェクト ID のセットを指定できます。オブジェクト ID は単なる文字列値なので、任意の ID を指定できます。たとえば、コレクション ID を配置して、監査対象集合を階層的に表すことができます。汎用コントラクトおよびファンクションの入力および出力仕様については、[汎用コントラクトおよびファンクションのリファレンスガイド](generic-contracts-reference.mdx)を参照してください。
+
+[`collection.Add` コントラクト](generic-contracts-reference.mdx#collectionadd-コントラクト)と [`collection.Remove` コントラクト](generic-contracts-reference.mdx#collectionremove-コントラクト)を使用して、コレクションにオブジェクトを追加したり、コレクションからオブジェクトを削除したりすることもできます。これを行うには、次のコマンドを実行します。
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id collection.Add \
+--contract-argument '{"collection_id":"audit_set", "object_ids": ["c.txt", "d.txt"]}'
+scalardl execute-contract --properties client.properties \
+--contract-id collection.Remove \
+--contract-argument '{"collection_id":"audit_set", "object_ids": ["a.txt"]}'
+```
+
+[`collection.Get` コントラクト](generic-contracts-reference.mdx#collectionget-コントラクト)を使用して、コレクションの最新のステータスを取得できます。これを行うには、次のコマンドを実行します。
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id collection.Get \
+--contract-argument '{"collection_id":"audit_set"}'
+```
+
+次のような結果が得られるはずです。
+
+```console
+Contract result:
+{"object_ids": ["c.txt", "d.txt", "b.txt"]}
+```
+
+監査対象集合が予期せず変更されていないことを確認するには、[`collection.GetHistory` コントラクト](generic-contracts-reference.mdx#collectiongethistory-コントラクト)を使用して監査対象集合の更新履歴を確認します。これを行うには、次のコマンドを実行します。
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id collection.GetHistory \
+--contract-argument '{"collection_id":"audit_set"}'
+```
+
+次のような結果が得られるはずです。
+
+```console
+Contract result:
+{
+  "collection_id" : "audit_set",
+  "collection_events" : [ {
+    "operation_type" : "remove",
+    "age" : 2,
+    "object_ids" : [ "a.txt" ]
+  }, {
+    "operation_type" : "add",
+    "age" : 1,
+    "object_ids" : [ "c.txt", "d.txt" ]
+  }, {
+    "operation_type" : "create",
+    "age" : 0,
+    "object_ids" : [ "a.txt", "b.txt" ]
+  } ]
+}
+```
+
+## 参照
+
+Java アプリケーションで汎用コントラクトおよびファンクションを操作するには、以下を参照してください。
+
+* [ScalarDL 入門](getting-started.mdx)
+* [Javadoc](https://scalar-labs.github.io/scalardl/javadoc/)
+
+汎用コントラクトおよびファンクションに基づいて独自のコントラクトとファンクションを記述するには、以下を参照してください。
+
+* [ScalarDL の適切なコントラクトを作成する方法に関するガイド](how-to-write-contract.mdx)
+* [ScalarDL のファンクションの書き方に関するガイド](how-to-write-function.mdx)
+
+ScalarDL の基礎をより深く理解するには、以下を参照してください。
+
+* [ScalarDL 設計ドキュメント](design.mdx)
+* [ScalarDL の実装](implementation.mdx)
