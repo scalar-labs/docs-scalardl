@@ -34,11 +34,15 @@ The key to the Byzantine fault detection protocol of ScalarDL is that Ledger (pr
 
 The three-phase protocol makes both databases derive the same correct (strict serializable) states and results as long as both Ledger and Auditor are honest. If either is Byzantine faulty, for example, the records have been tampered, their states or results would diverge. When the divergence is observable outside of the database system, correct ScalarDL clients can detect it. In other words, ScalarDL detects a Byzantine fault only when the clients observe the divergence in the response from the database system. Therefore, ScalarDL does not detect the fault instantly, but it does guarantee that the clients will detect the fault when the diverged states are about to be used, minimizing the validation overheads.
 
-## Learn more
+## Further reading
 
-For details about the design and implementation of ScalarDL, please see the following materials, which Scalar presented at the VLDB 2022 conference:
+For more details about the design and implementation of ScalarDL, see the following documents:
 
-- **Speakerdeck presentation:** [ScalarDL: Scalable and Practical Byzantine Fault Detection for Transactional Database Systems](https://speakerdeck.com/scalar/scalar-dl-scalable-and-practical-byzantine-fault-detection-for-transactional-database-systems-vldb22)
+- **Speaker Deck presentation:** [ScalarDL Technical Overview](https://speakerdeck.com/scalar/scalar-dl-technical-overview)
+
+In addition, the following materials were presented at the VLDB 2022 conference:
+
+- **Speaker Deck presentation:** [ScalarDL: Scalable and Practical Byzantine Fault Detection for Transactional Database Systems](https://speakerdeck.com/scalar/scalar-dl-scalable-and-practical-byzantine-fault-detection-for-transactional-database-systems-vldb22)
 - **Detailed paper:** [ScalarDL: Scalable and Practical Byzantine Fault Detection for Transactional Database Systems](https://www.vldb.org/pvldb/vol15/p1324-yamada.pdf)
 
 [^1]: Leslie Lamport, Robert Shostak, Marshall Pease, The Byzantine Generals Problem, ACM Transactions on Programming Languages and Systems (TOPLAS), v.4 n.3, p.382-401, July 1982.

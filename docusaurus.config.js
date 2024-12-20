@@ -72,8 +72,13 @@ const config = {
               },
               */
               current: { // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
-                label: '3.9',
+                label: '3.10',
                 path: 'latest', // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
+                banner: 'none',
+              },
+              "3.9": { // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
+                label: '3.9',
+                path: '3.9', // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
                 banner: 'none',
               },
               "3.8": {
@@ -136,6 +141,14 @@ const config = {
           {
             to: '/docs/latest/releases/release-support-policy',
             from: '/docs/releases/release-support-policy',
+          },
+          {
+            to: '/docs/latest/helm-charts/getting-started-scalar-manager',
+            from: '/docs/latest/helm-charts/how-to-deploy-scalar-manager',
+          },
+          {
+            to: '/docs/3.8/helm-charts/getting-started-scalar-manager',
+            from: '/docs/3.8/helm-charts/how-to-deploy-scalar-manager',
           },
         ],
         createRedirects(existingPath) {
@@ -393,14 +406,15 @@ const config = {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
       },
-      // announcementBar: {
-      //   id: 'new_version',
-      //   content:
-      //     '<b>ScalarDL X.X is now available!🥳 For details on what\'s included in this new version, see the <a target="_self" rel="noopener noreferrer" href="/docs/latest/releases/release-notes">release notes</a>.<b>',
-      //   backgroundColor: '#2673BB',
-      //   textColor: '#FFFFFF',
-      //   isCloseable: false,
-      // },
+      announcementBar: {
+        id: 'new_version',
+        content:
+          '<b>Announcing the release of ScalarDL 3.10!🚀 For details on what\'s included in this new version, see the <a target="_self" rel="noopener noreferrer" href="/docs/latest/releases/release-notes">release notes</a>.',
+          // '<b>Announcing the release of ScalarDL X.X!🚀 For details on what\'s included in this new version, see the <a target="_self" rel="noopener noreferrer" href="/docs/latest/releases/release-notes">release notes</a>.<b>',
+        backgroundColor: '#2673BB',
+        textColor: '#FFFFFF',
+        isCloseable: false,
+      },
       zoom: {
         selector: '.markdown :not(em) > img',
         background: {

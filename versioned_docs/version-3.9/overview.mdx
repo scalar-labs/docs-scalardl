@@ -1,0 +1,53 @@
+# ScalarDL Overview
+
+This page describes what ScalarDL is and its primary use cases.
+
+## What is ScalarDL?
+
+ScalarDL is middleware for realizing a tamper-evident database system by detecting arbitrary faults (that is, Byzantine faults), such as data tampering and malicious attacks, in transactional database systems.
+It achieves such detection in a scalable and practical way like no other with its novel consensus algorithm.
+
+Since ScalarDL uses [ScalarDB](https://scalardb.scalar-labs.com/docs/) for database interactions, it inherits the database-agnostic property of ScalarDB, allowing it to work on a wide range of databases, such as relational and NoSQL databases.
+For details on which databases ScalarDB supports, refer to [Supported Databases](https://scalardb.scalar-labs.com/docs/latest/requirements#databases/).
+
+## Why ScalarDL?
+
+Several solutions, such as public blockchains, private blockchains, and ledger databases, deal with data tampering and malicious attacks, but they are limited in practicality, scalability, or correctness:
+
+- Public blockchains (like Bitcoin and Ethereum) are designed to mask Byzantine faults by composing a system with a large number (often thousands) of separately administered nodes that share a copy of data. However, copying data between many nodes makes the system not scalable. Moreover, managing and operating a system based on a public peer-to-peer network is essentially difficult, especially in enterprise systems, since system administrators have no control over it.
+- Private blockchains (like Hyperledger Fabric) are designed to mask Byzantine faults in enterprises by composing a system with at least four separately administered nodes (or subsystems) that share a copy of data. However, not only copying data between many nodes makes the system unable to be scalable but managing four separately administered nodes is not necessarily practical, especially in enterprise systems.
+- Ledger databases (like Amazon QLDB and Oracle Database Blockchain Table) do not guarantee they will deal with Byzantine faults because they are designed to run in a single administrative domain.
+
+ScalarDL, on the other hand, stands out from these solutions. It effectively handles Byzantine faults with just two separately administered nodes (subsystems), offering a scalable, practical, and guaranteed approach that is not found in other solutions.
+
+The following table summarizes how ScalarDL is different from the other solutions.
+
+|                                                                |              How to deal with Byzantine faults             | Number of administrative domains | Performance (TPS) | Scalability |
+| :--: | :--: | :--: | :--: | :--: |
+| Public blockchains (like Bitcoin and Ethereum) | Masking (N>2f*) | Thousands or more | Up to 100 | Low scalability |
+| Private blockchains (like Hyperledger Fabric) | Masking (N>3f*) | 4 or more | Up to a few thousands | Low scalability |
+| Ledger databases (like Amazon QLDB and Oracle Database Blockchain Table) | No guarantee | 1 | Up to a few thousands | Limited scalability (due to the scale-up approach) |
+| **ScalarDL** | **Detection (N>f\*)** | **2** | **Up to tens of thousands (could be more, depending on the underlying computing resources)** | **High scalability**|
+
+\* N is the number of nodes (or subsystems) composing a system, and f is the number of faulty nodes. The systems work correctly as long as the specified condition is met.
+
+## ScalarDL use cases
+
+ScalarDL can be used in various ways. Here are the primary use cases of ScalarDL.
+
+### Guaranteeing the authenticity of data
+
+There are several regulations and laws that require the authenticity of data. For example, regulations on data protection and privacy (for example, GDPR and CCPA/CPRA), laws for digital documents around finance and tax affairs, prior user rights for intellectual property, and vehicle regulations around over-the-air (OTA) software updates in WP.29.
+
+ScalarDL guarantees the authenticity of data with its real-time Byzantine fault detection capability.
+
+### Managing the traceability of data
+
+Data traceability is essential for enterprises. For example, many industries are subject to strict regulations that require manufacturers to maintain accurate records of their products' origins and destinations. Data traceability systems allow manufacturers to demonstrate compliance with these regulations.
+
+ScalarDL preserves data by using its tamper-evident, append-only ledger; thus, it correctly manages the traceability of data.
+
+## Further reading
+
+* [ScalarDL Technical Overview](https://speakerdeck.com/scalar/scalar-dl-technical-overview)
+* [ScalarDL Research Paper](https://dl.acm.org/doi/abs/10.14778/3523210.3523212) [VLDB'22]

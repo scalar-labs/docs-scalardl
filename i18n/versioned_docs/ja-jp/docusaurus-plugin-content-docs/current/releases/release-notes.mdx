@@ -1,159 +1,45 @@
-# ScalarDL 3.9 リリースノート
+# ScalarDL 3.10 リリースノート
 
 import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このページには、ScalarDL 3.9 のリリースノートのリストが含まれています。
+このページには、ScalarDL 3.10 のリリースノートのリストが含まれています。
 
-## v3.9.2
+## v3.10.0
 
-**発売日：** 2024 年 8 月 28 日
-
-### バグの修正
-
-- PKCS#8 形式のシークレット鍵の処理に関するバグを修正しました。
-- HMAC 設定のコメントを修正しました。
-- 成果物のソースと Javadoc を修正しました。
-- [CVE-2024-24790](https://github.com/advisories/GHSA-49gw-vxvf-fc2g "CVE-2024-24790")、[CVE-2023-45283](https://github.com/advisories/GHSA-vvjp-q62m-2vph "CVE-2023-45283")、[CVE-2023-45288](https://github.com/advisories/GHSA-4v7x-pqxf-cx7m "CVE-2023-45288") を修正しました。
-- JUnit5 との統合テストが実行されない問題を修正しました。
-- e2e テストが正しく実行されるように修正しました。
-- 予期しない検証実行を修正しました。
-- nonce 以外のトランザクション ID に関するバグを修正しました。
-- JDBC トランザクションマネージャーを使用したトランザクションによってアセットが誤って上書きされるバグを修正しました。
-- Ledger サービスが DynamoDB でコントラクトを実行できなくなるバグを修正しました。
-
-## v3.9.1
-
-**発売日：** 2024 年 4 月 19 日
+**発売日:** 2024 年 12 月 4 日
 
 ### まとめ
 
-このリリースでは、次のバグ修正が行われます。
-
-### バグの修正
-
-- リリースノート作成時のパラメータを修正しました。
-- TLS を使用した Prometheus エクスポータでの SNI ホスト チェックを修正しました。
-
-## v3.9.0
-
-**発売日：** 2024 年 4 月 5 日
-
-### まとめ
-
-このリリースには、使いやすさを向上させるためにすべての ScalarDL 管理コマンドを統合する単一のトップレベル コマンド「scalardl」の導入や、開発者が任意のプログラミング言語を使用して ScalarDL アプリケーションを作成できるようにするゲートウェイ機能など、いくつかの機能強化が含まれています。 このリリースには多くの改善とバグ修正も含まれています。 詳しい変更点は以下をご覧ください。
+このリリースでは、汎用コントラクトやファンクションなどの機能強化、およびエラーコードの追加を含むさまざまな改善が導入されています。また、いくつかのバグ修正も含まれています。詳細な変更については、以下を参照してください。
 
 ### 機能強化
 
-- 使いやすさを向上させるために「scalardl」コマンドを追加しました。
-- ScalarDL Gateway を追加しました。
-- ライセンスチェックメカニズムを追加しました。
-- Prometheus エクスポータに TLS サポートを追加しました。
+- 汎用的なコントラクトとファンクションを追加しました。
 
 ### 改善点
 
-- クライアントとサーバーの gRPC 構成が改善されました。
-- Gatekeeper の動作を改善しました。
-- CI リリースのワークフローが改善されました。
-- CI テストとメンテナンスが改善されました。
-- シャットダウンする前にサーバーを廃止状態に移行させました。
-- 登録時にコントラクトと機能をロードできるようにしました。
-- OpenShift をサポートしました。
-- schema-loader を元に移行しました。
-- 依存するライブラリをアップグレードしました。
-- アクション/チェックアウトを 2 から 4 にバンプします。
-- aws-actions/configure-aws-credentials を 1 から 4 に変更します。
-- spotbugsVersion を 4.7.1 から 4.7.3 に変更しました。
-- slackapi/slack-github-action を 1.23.0 から 1.24.0 にバンプします。
-- junit:junit を 4.12 から 4.13.2 にバンプします。
-- log4jVersion を 2.17.1 から 2.20.0 に変更します。
-- actions/cache を 1.1.2 から 3.3.2 にバンプします。
-- actions/upload-artifact を 1 から 3 にバンプします。
-- docker/login-action を 1 から 3 に変更します。
-- mockitoVersion を 4.6.0 から 4.11.0 にバンプします。
-- aws-actions/amazon-ecr-login を 1 から 2 に変更します。
-- DropwizardMetricsVersion を 4.2.2 から 4.2.20 に変更します。
-- info.picocli:picocli を 4.1.4 から 4.7.5 にバンプします。
-- com.fasterxml.jackson.core:jackson-databind を 2.13.4.2 から 2.15.3 にバンプします。
-- org.apache.cassandra:cassandra-all を 3.11.11 から 3.11.16 にバンプします。
-- prometheusVersion を 0.12.0 から 0.16.0 に変更します。
-- com.google.inject:guice を 5.0.1 から 5.1.0 に変更します。
-- dropwizardMetricsVersion を 4.2.20 から 4.2.21 に変更しました。
-- com.github.spotbugs を 5.0.9 から 5.2.1 にバンプします。
-- org.slf4j:slf4j-api を 1.7.32 から 1.7.36 にバンプします。
-- junitVersion を 5.10.0 から 5.10.1 に変更します。
-- log4jVersion を 2.20.0 から 2.21.1 に変更します。
-- com.github.everit-org.json-schema:org.everit.json.schema を 1.14.2 から 1.14.3 にバンプします。
-- DropwizardMetricsVersion を 4.2.21 から 4.2.22 に変更します。
-- org.apache.commons:commons-text を 1.10.0 から 1.11.0 にバンプします。
-- org.eclipse.jetty:jetty-servlet を 9.4.43.v20210629 から 9.4.53.v20231009 にバンプします。
-- com.google.protobuf を 0.8.17 から 0.9.4 に変更します。
-- com.github.spotbugs を 5.2.1 から 5.2.3 にバンプします。
-- org.assertj:assertj-core を 3.9.1 から 3.24.2 にバンプします。
-- org.junit.platform:junit-platform-console を 1.10.0 から 1.10.1 にバンプします。
-- com.google.guava:guava を 32.1.2-jre から 32.1.3-jre にバンプします。
-- spotbugsVersion を 4.7.3 から 4.8.1 に変更しました。
-- log4jVersion を 2.21.1 から 2.22.0 に変更します。
-- com.fasterxml.jackson.core:jackson-databind を 2.15.3 から 2.16.0 にバンプします。
-- com.google.protobuf:protoc を 3.24.4 から 3.25.1 に変更します。
-- com.github.spotbugs を 5.2.3 から 5.2.4 にアップグレードします。
-- spotbugsVersion を 4.8.1 から 4.8.2 に変更しました。
-- actions/setup-java を 3 から 4 に変更します。
-- com.github.spotbugs を 5.2.4 から 5.2.5 に変更します。
-- DropwizardMetricsVersion を 4.2.22 から 4.2.23 に変更します。
-- actions/upload-artifact を 3 から 4 に変更します。
-- SpotbugsVersion を 4.8.2 から 4.8.3 に変更しました。
-- com.github.everit-org.json-schema:org.everit.json.schema を 1.14.3 から 1.14.4 にバンプします。
-- com.fasterxml.jackson.core:jackson-databind を 2.16.0 から 2.16.1 にバンプします。
-- scalarDbVersion を 3.10.1 から 3.10.2 に変更します。
-- scalarDbVersion を 3.10.2 から 3.11.0 に変更します。
-- log4jVersion を 2.22.0 から 2.22.1 に変更します。
-- org.assertj:assertj-core を 3.24.2 から 3.25.1 に変更します。
-- com.google.protobuf:protoc を 3.25.1 から 3.25.2 にバンプします。
-- DropwizardMetricsVersion を 4.2.23 から 4.2.24 に変更します。
-- actions/cache を 3 から 4 にバンプします。
-- gradle/gradle-build-action を 2 から 3 に変更します。
--slackapi/slack-github-action を 1.24.0 から 1.25.0 にバンプします。
-- DropwizardMetricsVersion を 4.2.24 から 4.2.25 に変更します。
-- org.assertj:assertj-core を 3.25.1 から 3.25.2 にバンプします。
-- org.junit.platform:junit-platform-console を 1.10.1 から 1.10.2 にバンプします。
-- org.assertj:assertj-core を 3.25.2 から 3.25.3 にバンプします。
-- junitVersion を 5.10.1 から 5.10.2 に変更します。
-- scalarDbVersion を 3.11.0 から 3.12.0 に変更します。
-- com.google.protobuf:protoc を 3.25.2 から 3.25.3 に変更します。
-- org.eclipse.jetty:jetty-servlet を 9.4.53.v20231009 から 9.4.54.v20240208 にバンプします。
-- scalarDbVersion を 3.12.0 から 3.12.1 に変更します。
-- log4jVersion を 2.22.1 から 2.23.0 に変更します。
-- log4jVersion を 2.23.0 から 2.23.1 に変更します。
-- com.fasterxml.jackson.core:jackson-databind を 2.16.1 から 2.16.2 にバンプします。
-- com.fasterxml.jackson.core:jackson-databind を 2.16.2 から 2.17.0 にバンプします。
+- エラーメッセージにエラーコードを追加しました。
+- 可変データベースで暗黙的な事前読み取りを有効にしました。
+- 関数実行時の ScalarDB 例外処理を改善しました。
+- ScalarDB バージョンを 3.14.0 にアップグレードしました。
+- ノンスを使用した executeContract を非推奨にしました。
 
 ### バグの修正
 
-- AWS メーターのディメンション名を修正しました。
-- AWS Marketplace のレジストリ名を修正しました。
-- 認証情報をログとして出力しないように修正しました。
-- LEDGER_HOST を正しく取得するために getTargetHost() を使用するように修正されました。
-- Dockerfile の busybox バージョンを修正しました。
-- 中間モードを使用する際のバグを修正しました。
-- ThrowableConsumer および ThrowableFunction の gRPC スタブ メソッドの FunctionalInterface のバインドされた引数を修正しました。
-- 「デジタル署名」を受け入れるように AuthenticationMethod を修正しました。
-- spotbugs の問題を修正し、一貫性を保つためにコードをフォーマットしました。
-- 結果をクライアントに返すファンクションの実行を修正しました。
-・指定したシークレットが既に登録されている場合の不要な警告を修正しました。
-- TLS 関連のコードと構成が正しく動作するように修正されました。
-- gRPC 関連の構成を修正しました。
-- いくつかの構成の問題、特に TLS を使用した Gateway を修正しました。
-- TLS gRPC ヘルス チェックをサポートするために、Gateway Docker イメージで grpc_health_probe を使用するように修正されました。
-- org.everit.json.schema を 1.14.2 にアップグレードしました。 [CVE-2023-5072](https://github.com/advisories/GHSA-4jq9-2xhw-jpx7 "CVE-2023-5072")
-- セキュリティ問題を修正するために grpc-health-probe をアップグレードしました。 [CVE-2023-39325](https://github.com/advisories/GHSA-4374-p667-p6c8 "CVE-2023-39325") [GHSA-m425-mq94-257g](https://github.com /advisories/GHSA-m425-mq94-257g "GHSA-m425-mq94-257g")
-- セキュリティ問題を修正するために基本イメージをアップグレードしました。 [CVE-2022-29458](https://github.com/advisories/GHSA-jh4f-5j2m-4v9c "CVE-2022-29458") [CVE-2022-29458](https://github.com/advisories/GHSA-jh4f-5j2m-4v9c "CVE-2022-29458") [CVE-2023-4911](https://github.com/advisories/GHSA-m77w-6vjw-wh2f "CVE-2023-4911") [CVE-2023-29491](https://github.com/advisories/GHSA-vh2x-5rx6-qqhv "CVE-2023-29491") [CVE-2023-47038](https://github.com/advisories / GHSA-96fh-9q43-rmjh "CVE-2023-47038")
-- org.bouncycastle:bcprov-jdk15on を 1.59 から 1.70 にアップグレードしました。 [CVE-2018-1000180](https://github.com/advisories/GHSA-xqj7-j8j5-f2xr "CVE-2018-1000180") [CVE-2018-1000613](https://github.com/advisories/GHSA-4446-656p-f54g "CVE-2018-1000613") [CVE-2020-28052](https://github.com/advisories/GHSA-73xv-w5gp-frxh "CVE-2020-28052")
-
-### その他
-
-- google-java-format v1.7 のコード形式を改善しました。
-- E2E bash ファイル内のファンクション名のタイプミスを修正しました。
-- ScalarDB の非推奨コードを削除しました。
-- master (v4.x) での互換性のない変更を元に戻しました。
+- Prometheus エクスポーターの SNI ホストチェックを無効にしました。
+- PKCS#8 形式の秘密鍵を処理する際のバグを修正しました。
+- 予期しない検証実行を修正しました。
+- ノンス以外のトランザクション ID に関するバグを修正しました。
+- JDBC トランザクションマネージャーを使用したトランザクションによってアセットが誤って上書きされるバグを修正しました。
+- Ledger サービスが DynamoDB でコントラクトを実行できなくなるバグを修正しました。
+- ScalarDB のグループコミット機能の使用を無効にする検証を追加しました。
+- Cosmos DB で実行できるように修正しました。
+- 次の脆弱性を修正しました。
+  - [CVE-2023-1428](https://github.com/advisories/GHSA-6628-q6j9-w8vg "CVE-2023-1428")
+  - [CVE-2023-32731](https://github.com/advisories/GHSA-cfgp-2977-2fmm "CVE-2023-32731")
+  - [CVE-2023-45283](https://github.com/advisories/GHSA-vvjp-q62m-2vph "CVE-2023-45283")
+  - [CVE-2023-45288](https://github.com/advisories/GHSA-4v7x-pqxf-cx7m "CVE-2023-45288")
+  - [CVE-2024-24790](https://github.com/advisories/GHSA-49gw-vxvf-fc2g "CVE-2024-24790")
+  - [CVE-2024-34156](https://github.com/advisories/GHSA-crqm-pwhx-j97f "CVE-2024-34156")

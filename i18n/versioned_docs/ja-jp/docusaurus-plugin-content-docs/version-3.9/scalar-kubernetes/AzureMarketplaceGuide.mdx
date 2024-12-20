@@ -1,0 +1,238 @@
+---
+tags:
+  - Enterprise Standard
+  - Enterprise Premium
+---
+
+# Azure Marketplace を通じて Scalar 製品をインストールする方法
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+:::warning
+
+現在、Scalar 製品は Azure Marketplace では入手できません。 Scalar 製品のコンテナ イメージを取得するその他の方法については、[Scalar 製品のコンテナイメージを取得する方法](./HowToGetContainerImages.mdx) を参照してください。
+
+:::
+
+Scalar 製品 (ScalarDB、ScalarDL、およびそれらのツール) は、コンテナー オファーとして Azure Marketplace で提供されます。 このガイドでは、Azure Marketplace を通じて Scalar 製品をインストールする方法について説明します。
+
+一部の Scalar 製品は商用ライセンスに基づいてライセンスされており、Azure Marketplace では BYOL (Bring Your Own License) として提供されていることに注意してください。 適切なライセンスを持っていることを確認してください。
+
+## Microsoft Azure Marketplace から Scalar 製品を入手する
+
+1. Scalar 製品を選択すると、Microsoft Azure Marketplace へのリンクが表示されます。
+
+<Tabs groupId="products" queryString>
+  <TabItem value="scalardb" label="ScalarDB" default>
+    - [ScalarDB](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardb)
+  </TabItem>
+  <TabItem value="scalardl" label="ScalarDL" default>
+    - [ScalarDL](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardl)
+  </TabItem>
+</Tabs>
+
+1. **Get It Now** を選択します。
+
+1. 職場の電子メール アドレスを使用して Azure Marketplace にサインインします。
+   Microsoft Azureのアカウントとして使用している仕事用メールアドレスをご利用ください。
+   すでにサインインしている場合、この手順は自動的にスキップされます。
+
+1. あなたの情報を入力してください。
+   **会社**は必須ではありませんが、入力してください。
+
+1. 必要な **ソフトウェア プラン** をプルダウンから選択します。
+   **ソフトウェア プラン** とは、コンテナ イメージとライセンスの組み合わせを意味します。 ご使用の *ソフトウェア プラン* を選択してください。
+
+1. [**続行**] を選択します。
+   [**続行**] を選択すると、自動的に Azure ポータルに移動します。
+
+1. プライベート コンテナー レジストリ (Azure Container Registry) を作成します。
+   画面上のコマンドに従って、プライベート コンテナー レジストリを作成してください。
+   Scalar 製品のコンテナ イメージは、プライベート コンテナ レジストリにコピーされます。
+
+1. 必要に応じてこれらの手順を繰り返します。
+   Kubernetes 上で Scalar 製品を実行するには複数のコンテナー イメージが必要ですが、Azure Marketplace は一度に 1 つのコンテナー イメージのみをコピーします。 したがって、必要に応じて複数のソフトウェア プランを購読する (繰り返し購読操作) 必要があります。
+    - 必要なコンテナイメージは以下となります。コンテナイメージの詳細を表示するには、Scalar 製品を選択します。
+
+<Tabs groupId="products" queryString>
+  <TabItem value="scalardb" label="ScalarDB" default>
+    - ScalarDB Cluster (BYOL)
+    - [非推奨] ScalarDB Server のデフォルト (2vCPU, 4GiB Memory)
+    - [非推奨] ScalarDB GraphQL Server (optional)
+    - [非推奨] ScalarDB SQL Server (optional)
+  </TabItem>
+  <TabItem value="scalardl" label="ScalarDL" default>
+    - ScalarDL Ledger のデフォルト (2vCPU, 4GiB Memory)
+    - ScalarDL Auditor のデフォルト (2vCPU, 4GiB Memory)
+      - **ScalarDL Auditor** はオプションです。 **ScalarDL Auditor** を使用している場合は、サブスクライブしてください。
+    - ScalarDL Schema Loader
+  </TabItem>
+</Tabs>
+
+これで、プライベート コンテナー レジストリから Scalar 製品のコンテナー イメージをプルできるようになりました。
+Azure Container Registry の詳細については、 [Azure Container Registry documentation](https://docs.microsoft.com/en-us/azure/container-registry/) を参照してください。
+
+## Scalar Helm Charts を使用して、プライベート コンテナー レジストリから AKS (Azure Kubernetes Service) にコンテナーをデプロイします。
+
+1. AKS クラスターを作成するときに、プライベート コンテナー レジストリ (Azure Container Registry) を指定します。
+    * GUI (Azure ポータル)
+      [**統合**] タブの **Azure Container Registry** パラメーターで、プライベート コンテナー レジストリを指定してください。
+   * CLI ([az aks create](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az-aks-create) コマンド)
+      `--attach-acr` フラグにプライベート コンテナー レジストリの名前を指定してください。 また、`--attach-acr` フラグを指定した [az aks update](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az-aks-update) コマンドを使用して、既存の AKS クラスターの Azure Container Registry 統合を構成できます。 詳細は [Azure Official Document](https://docs.microsoft.com/en-us/azure/aks/cluster-container-registry-integration) をご参照ください。
+
+1. インストールする Scalar 製品の Helm Chart のカスタム値ファイルを更新します。
+   プライベート コンテナ レジストリをカスタム値ファイルの `[].image.repository` の値として指定する必要があります。使用している製品に応じて、次の例を参照してください。
+
+<Tabs groupId="products" queryString>
+  <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+     ```yaml
+     scalardbCluster:
+       image:
+         repository: "example.azurecr.io/scalarinc/scalardb-cluster-node-azure-byol"
+     ```
+  </TabItem>
+  <TabItem value="scalardl" label="ScalarDL">
+    使用している ScalarDL 製品を選択します。
+    <Tabs groupId="products" queryString>
+      <TabItem value="scalardl-ledger" label="ScalarDL Ledger" default>
+        `scalardl-ledger-custom-values.yaml` ファイル内:
+
+        ```yaml
+        ledger:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalar-ledger"
+        ```
+      </TabItem>
+      <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+        `scalardl-auditor-custom-values.yaml` ファイル内:
+
+        ```yaml
+        auditor:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalar-auditor"
+        ```
+      </TabItem>
+      <TabItem value="scalardl-schema-loader" label="ScalarDL Schema Loader">
+        `schema-loader-custom-values.yaml` ファイル内:
+
+        ```yaml
+        schemaLoading:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalardl-schema-loader"
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+</Tabs>
+
+1. 上記のカスタム値ファイルを含む Helm Chart を使用して、Scalar 製品をデプロイします。使用している製品に応じて、次の例を参照してください。
+
+<Tabs groupId="products" queryString>
+  <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+     ```console
+     helm install scalardb-cluster scalar-labs/scalardb-cluster -f scalardb-cluster-custom-values.yaml
+     ```
+  </TabItem>
+  <TabItem value="scalardl" label="ScalarDL">
+    使用している ScalarDL 製品を選択します。
+    <Tabs groupId="products" queryString>
+      <TabItem value="scalardl-ledger" label="ScalarDL Ledger" default>
+        ```console
+        helm install scalardl-ledger scalar-labs/scalardl -f ./scalardl-ledger-custom-values.yaml
+        ```
+      </TabItem>
+      <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+        ```console
+        helm install scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
+        ```
+      </TabItem>
+      <TabItem value="scalardl-schema-loader" label="ScalarDL Schema Loader">
+        ```console
+        helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-custom-values.yaml
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+</Tabs>
+
+## Scalar Helm Chart を使用して、プライベート コンテナー レジストリから AKS (Azure Kubernetes Service) 以外の Kubernetes にコンテナーをデプロイします。
+
+1. [Azure Official Document (How to install the Azure CLI)](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) に従って`az`コマンドをインストールします。
+
+1. Azure CLI を使用してサインインします。
+   ```console
+   az login
+   ```
+
+1. [Azure Official Document (Azure Container Registry authentication with service principals)](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-service-principal) に従って、プライベート コンテナー レジストリへの認証用の **service principal** を作成します。
+   次のステップでは、**Service principal ID** と **Service principal パスワード**を使用します。
+
+1. プライベート コンテナー レジストリからコンテナー イメージをプルするための `reg-acr-secrets` シークレット リソースを作成します。
+   ```console
+   kubectl create secret docker-registry reg-acr-secrets \
+     --docker-server=<your private container registry login server> \
+     --docker-username=<Service principal ID> \
+     --docker-password=<Service principal password>
+   ```
+
+1. インストールする Scalar 製品の Helm Chart のカスタム値ファイルを更新します。
+   プライベート コンテナ レジストリをカスタム値ファイルの `[].image.repository` の値として指定する必要があります。
+   また、`[].imagePullSecrets` の値として `reg-acr-secrets` を指定する必要があります。使用している製品に応じて、次の例を参照してください。
+
+<Tabs groupId="products" queryString>
+  <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
+    ```yaml
+    scalardbCluster:
+      image:
+        repository: "example.azurecr.io/scalarinc/scalardb-cluster-node-azure-byol"
+      imagePullSecrets:
+        - name: "reg-acr-secrets"
+    ```
+  </TabItem>
+  <TabItem value="scalardl" label="ScalarDL">
+    使用している ScalarDL 製品を選択します。
+    <Tabs groupId="products" queryString>
+      <TabItem value="scalardl-ledger" label="ScalarDL Ledger" default>
+        `scalardl-ledger-custom-values.yaml` ファイル内:
+
+        ```yaml
+        ledger:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalar-ledger"
+          imagePullSecrets:
+            - name: "reg-acr-secrets"
+        ```
+      </TabItem>
+      <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
+        `scalardl-auditor-custom-values.yaml`  ファイル内:
+
+        ```yaml
+        auditor:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalar-auditor"
+          imagePullSecrets:
+            - name: "reg-acr-secrets"
+        ```
+      </TabItem>
+      <TabItem value="scalardl-schema-loader" label="ScalarDL Schema Loader">
+        `schema-loader-custom-values.yaml` ファイル内:
+
+        ```yaml
+        schemaLoading:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalardl-schema-loader"
+          imagePullSecrets:
+            - name: "reg-acr-secrets"
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+</Tabs>
+
+1. 上記のカスタム値ファイルを含む Helm Chart を使用して、Scalar 製品をデプロイします。
+   * 例  
+     このドキュメントの **Scalar Helm Charts を使用して、プライベート コンテナー レジストリから AKS (Azure Kubernetes Service) にコンテナーをデプロイします** セクションを参照してください。

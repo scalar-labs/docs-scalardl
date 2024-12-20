@@ -116,6 +116,13 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
                serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
                automountServiceAccountToken: true
            ```
+
+     :::note
+
+     For more details on the configurations, see [Configure a custom values file for ScalarDB Cluster](../helm-charts/configure-custom-values-scalardb-cluster.mdx).
+
+     :::
+
          </TabItem>
          <TabItem value="scalardb-enterprise-premium" label="ScalarDB Enterprise Edition (Premium)">
            In the `scalardb-cluster-premium-custom-values.yaml` file:
@@ -128,6 +135,13 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
                serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
                automountServiceAccountToken: true
            ```
+
+     :::note
+
+     For more details on the configurations, see [Configure a custom values file for ScalarDB Cluster](../helm-charts/configure-custom-values-scalardb-cluster.mdx).
+
+     :::
+
          </TabItem>
        </Tabs>
      </TabItem>
@@ -145,9 +159,22 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
            automountServiceAccountToken: true
        ```
 
+     :::note
+
+     For more details on the configurations, see [Configure a custom values file for ScalarDL Ledger](../helm-charts/configure-custom-values-scalardl-ledger.mdx).
+
+     :::
+
        <h3>ScalarDL Schema Loader for Ledger</h3>
 
        You don't need to update the `[].image.repository` configuration in your `schema-loader-ledger-custom-values.yaml` file. The container image of ScalarDL Schema Loader is provided in the [public container repository](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader).
+
+     :::note
+
+     For more details on the configurations, see [Configure a custom values file for ScalarDL Schema Loader](../helm-charts/configure-custom-values-scalardl-schema-loader.mdx).
+
+     :::
+
      </TabItem>
      <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
        <h3>ScalarDL Auditor</h3>
@@ -163,9 +190,22 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
            automountServiceAccountToken: true
        ```
 
+     :::note
+
+     For more details on the configurations, see [Configure a custom values file for ScalarDL Auditor](../helm-charts/configure-custom-values-scalardl-auditor.mdx).
+
+     :::
+
        <h3>ScalarDL Schema Loader for Auditor</h3>
 
        You don't need to update the `[].image.repository` configuration in your `schema-loader-auditor-custom-values.yaml` file. The container image of ScalarDL Schema Loader is provided in the [public container repository](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader).
+
+     :::note
+
+     For more details on the configurations, see [Configure a custom values file for ScalarDL Schema Loader](../helm-charts/configure-custom-values-scalardl-schema-loader.mdx).
+
+     :::
+
      </TabItem>
      <TabItem value="scalar-manager" label="Scalar Manager">
        In the `scalar-manager-custom-values.yaml` file:
@@ -181,6 +221,13 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
          serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
          automountServiceAccountToken: true
        ```
+
+     :::note
+
+     For more details on the configurations, see [Configure a custom values file for Scalar Manager](../helm-charts/configure-custom-values-scalar-manager.mdx).
+
+     :::
+
      </TabItem>
    </Tabs>
 
@@ -249,6 +296,13 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
          image:
            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-cluster-node-aws-byol"
        ```
+
+     :::note
+
+     For more details on the configurations, see [Configure a custom values file for ScalarDB Cluster](../helm-charts/configure-custom-values-scalardb-cluster.mdx).
+
+     :::
+
      </TabItem>
      <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
        <h3>ScalarDL Ledger</h3>
@@ -261,9 +315,22 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-ledger"
        ```
 
+     :::note
+
+     For more details on the configurations, see [Configure a custom values file for ScalarDL Ledger](../helm-charts/configure-custom-values-scalardl-ledger.mdx).
+
+     :::
+
        <h3>ScalarDL Schema Loader for Ledger</h3>
 
        You don't need to update the `[].image.repository` configuration in your `schema-loader-ledger-custom-values.yaml` file. The container image of ScalarDL Schema Loader is provided in the [public container repository](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader).
+
+     :::note
+
+     For more details on the configurations, see [Configure a custom values file for ScalarDL Schema Loader](../helm-charts/configure-custom-values-scalardl-schema-loader.mdx).
+
+     :::
+
      </TabItem>
      <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
        <h3>ScalarDL Auditor</h3>
@@ -276,9 +343,22 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-auditor"
        ```
 
+     :::note
+
+     For more details on the configurations, see [Configure a custom values file for ScalarDL Auditor](../helm-charts/configure-custom-values-scalardl-auditor.mdx).
+
+     :::
+
        <h3>ScalarDL Schema Loader for Auditor</h3>
 
        You don't need to update the `[].image.repository` configuration in your `schema-loader-auditor-custom-values.yaml` file. The container image of ScalarDL Schema Loader is provided in the [public container repository](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader).
+
+     :::note
+
+     For more details on the configurations, see [Configure a custom values file for ScalarDL Schema Loader](../helm-charts/configure-custom-values-scalardl-schema-loader.mdx).
+
+     :::
+
      </TabItem>
    </Tabs>
 
@@ -345,6 +425,13 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
          imagePullSecrets:
            - name: "reg-ecr-mp-secrets"
        ```
+
+     :::note
+
+     For more details on the configurations, see [Configure a custom values file for ScalarDB Cluster](../helm-charts/configure-custom-values-scalardb-cluster.mdx).
+
+     :::
+
      </TabItem>
      <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
        <h3>ScalarDL Ledger</h3>
@@ -359,9 +446,22 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
            - name: "reg-ecr-mp-secrets"
        ```
 
+     :::note
+
+     For more details on the configurations, see [Configure a custom values file for ScalarDL Ledger](../helm-charts/configure-custom-values-scalardl-ledger.mdx).
+
+     :::
+
        <h3>ScalarDL Schema Loader for Ledger</h3>
 
        You don't need to update the `[].image.repository` configuration in your `schema-loader-ledger-custom-values.yaml` file. The container image of ScalarDL Schema Loader is provided in the [public container repository](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader).
+
+     :::note
+
+     For more details on the configurations, see [Configure a custom values file for ScalarDL Schema Loader](../helm-charts/configure-custom-values-scalardl-schema-loader.mdx).
+
+     :::
+
      </TabItem>
      <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
        <h3>ScalarDL Auditor</h3>
@@ -376,9 +476,22 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
            - name: "reg-ecr-mp-secrets"
        ```
 
+     :::note
+
+     For more details on the configurations, see [Configure a custom values file for ScalarDL Auditor](../helm-charts/configure-custom-values-scalardl-auditor.mdx).
+
+     :::
+
        <h3>ScalarDL Schema Loader for Auditor</h3>
 
        You don't need to update the `[].image.repository` configuration in your `schema-loader-auditor-custom-values.yaml` file. The container image of ScalarDL Schema Loader is provided in the [public container repository](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader).
+
+     :::note
+
+     For more details on the configurations, see [Configure a custom values file for ScalarDL Schema Loader](../helm-charts/configure-custom-values-scalardl-schema-loader.mdx).
+
+     :::
+
      </TabItem>
    </Tabs>
 

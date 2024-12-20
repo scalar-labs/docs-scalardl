@@ -1,0 +1,45 @@
+---
+---
+
+# ScalarDL Auditor のデプロイする方法
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このドキュメントでは、Scalar Helm Chart を使用して ScalarDL Auditor をデプロイする方法について説明します。 カスタム値ファイルを準備する必要があります。 ScalarDL Auditor および ScalarDL Schema Loader のカスタム値ファイルの詳細については、次のドキュメントを参照してください。
+
+* [ScalarDL Auditor のカスタム値ファイルを構成する](configure-custom-values-scalardl-auditor.mdx)
+* [ScalarDL Schema Loaderのカスタム値ファイルを構成する](configure-custom-values-scalardl-schema-loader.mdx)
+
+## 秘密鍵ファイルと証明書ファイルを準備する
+
+ScalarDL Auditor をデプロイするときは、秘密キー ファイルと証明書ファイルを ScalarDL Auditor ポッドにマウントするための Secrete リソースを作成する必要があります。
+
+ScalarDL ポッドにキー ファイルと証明書ファイルをマウントする方法の詳細については、[ScalarDL Helm Charts のポッドにキーファイルと証明書ファイルをマウントする](mount-files-or-volumes-on-scalar-pods.mdx#scalardl-helm-charts-のポッドにキーファイルと証明書ファイルをマウントする) を参照してください。
+
+## ScalarDL Auditor のスキーマの作成 (ScalarDL Schema Loader のデプロイ)
+
+ScalarDL Auditor をデプロイする前に、バックエンド データベースに ScalarDL Auditor のスキーマを作成する必要があります。
+
+```console
+helm install <RELEASE_NAME> scalar-labs/schema-loading -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDL_SCHEMA_LOADER> --version <CHART_VERSION>
+```
+
+## ScalarDL Auditor のデプロイ
+
+```console
+helm install <RELEASE_NAME> scalar-labs/scalardl-audit -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDL_AUDITOR> --version <CHART_VERSION>
+```
+
+## ScalarDL Auditor の展開をアップグレードする
+
+```console
+helm upgrade <RELEASE_NAME> scalar-labs/scalardl-audit -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDL_AUDITOR> --version <CHART_VERSION>
+```
+
+## ScalarDL Auditor および ScalarDL Schema Loader のデプロイメントを削除する
+
+```console
+helm uninstall <RELEASE_NAME> -n <NAMESPACE>
+```

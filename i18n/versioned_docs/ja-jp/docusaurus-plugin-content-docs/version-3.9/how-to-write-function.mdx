@@ -1,0 +1,167 @@
+# ScalarDL のファンクションの書き方に関するガイド
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このドキュメントでは、ScalarDL のファンクションを作成するためのガイドラインをいくつか示します。
+
+## ScalarDL のファンクションとは何ですか?
+
+ScalarDL のファンクション（スマートファンクション）は、単一のビジネスロジックを実装するために記述された [JacksonBasedFunction](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/function/JacksonBasedFunction.html) クラスのような定義済みのベースファンクションを拡張する Java プログラムです。単一のビジネス ロジックを実装するために作成されます。 Function は主に ScalarDL アプリケーションのデータを管理し、Contract はデータの証拠を管理します。 これを見る前に、[ScalarDL 入門](getting-started.mdx) と [ScalarDL のコントラクトの書き方](how-to-write-contract.mdx) を参照して、ScalarDL とは何か、ScalarDL とコントラクトで何ができるかを理解してください。
+
+## 背景
+
+ScalarDL のコントラクトによって管理されるアセットは改ざん防止機能があり、追加のみが可能なため、さまざまなアプリケーションをモデル化する際にそのデータ構造が制限されます。 さらに、改ざん証拠を保証するためにアセットを削除することはできません。 多くの分散 Ledger プラットフォームは、Ledger の前に RDBMS などの別のデータベースを配置して、データベース内のアプリケーションのデータを処理し、証拠として Ledger にログを書き込むことでこの問題に対処しています。 ただし、データベースと Ledger の間のデータの一貫性が常に維持されるとは限らないため、このスキームは理想的ではありません。 致命的な障害により、アプリケーションの Ledger に対応するログが存在しない場合があり、証拠として Ledger にログを書き込む目的が無効になります。 ScalarDL は、アプリケーションのデータを管理するファンクションを導入し、[ScalarDB](https://github.com/scalar-labs/scalardb) で基盤となる分散 ACID トランザクションを利用してコントラクトとファンクションをアトミックに実行することで、別のアプローチで問題を解決します。
+
+## ファンクションを書く
+
+ファンクションの書き方をよりよく理解するために、 `Payment` ファンクションを詳しく見てみましょう。
+
+```java
+public class Payment extends JacksonBasedFunction {
+  private final String FROM_KEY_NAME = "from";
+  private final String TO_KEY_NAME = "to";
+  private final String AMOUNT_KEY_NAME = "amount";
+  private final String NAMESPACE_KEY_NAME = "namespace";
+  private final String TABLE_KEY_NAME = "table";
+
+  @Nullable
+  @Override
+  public JsonNode invoke(
+      Database<Get, Scan, Put, Delete, Result> database,
+      @Nullable JsonNode functionArgument,
+      JsonNode contractArgument,
+      @Nullable JsonNode contractProperties) {
+    // error handling is omitted
+    String fromId = contractArgument.get(FROM_KEY_NAME).asText();
+    String toId = contractArgument.get(TO_KEY_NAME).asText();
+    int amount = contractArgument.get(AMOUNT_KEY_NAME).asInt();
+    String namespace = contractProperties.get(NAMESPACE_KEY_NAME).asText();
+    String table = contractProperties.get(TABLE_KEY_NAME).asText();
+
+    Key fromKey = Key.ofText("id", fromId);
+    Key toKey = Key.ofText("id", toId);
+
+    // get the account balances
+    Optional<Result> account1 =
+        database.get(
+            Get.newBuilder().namespace(namespace).table(table).partitionKey(fromKey).build());
+    Optional<Result> account2 =
+        database.get(
+            Get.newBuilder().namespace(namespace).table(table).partitionKey(toKey).build());
+
+    // assumes that both accounts exist, but it should be checked in production code
+    long balance1 = account1.get().getInt("balance");
+    long balance2 = account2.get().getInt("balance");
+
+    if (balance1 - amount < 0) {
+      throw new ContractContextException(
+          "The account " + fromId + " does not have enough account balance.");
+    }
+
+    // transfer amount
+    balance1 -= amount;
+    balance2 += amount;
+
+    // update the account balances
+    database.put(
+        Put.newBuilder()
+            .namespace(namespace)
+            .table(table)
+            .partitionKey(fromKey)
+            .bigIntValue("balance", balance1)
+            .build());
+    database.put(
+        Put.newBuilder()
+            .namespace(namespace)
+            .table(table)
+            .partitionKey(toKey)
+            .bigIntValue("balance", balance2)
+            .build());
+
+    return null;
+  }
+}
+```
+
+これは、ScalarDB API で記述された送金アプリケーションであり、指定された口座残高を取得し、2 つの口座残高間で指定された金額を送金し、残高を更新します。 ScalarDB API の詳細については、[ScalarDB ドキュメント](https://scalardb.scalar-labs.com/docs/latest/api-guide) もお読みください。
+
+### 基本ファンクション
+
+事前定義された基本コントラクトと同様に、ScalarDL は事前定義された基本ファンクションも提供します。 たとえば、上記の PaymentFunction は、JacksonBasedFunction と呼ばれる基本ファンクションの 1 つに基づいており、これにより、Jackson の JsonNode 形式でファンクションの入出力を処理できるようになります。
+
+これを書いている時点では、以下に示す 4 つの基本ファンクションが提供されています。 ただし、開発の生産性とパフォーマンスのバランスを適切に保つには、JacksonBasedFunction を使用することをお勧めします。
+
+| 基本ファンクションクラス                                                                                                                                               | ファンクションの入力と出力のタイプ                                                                                               | ライブラリ                                        |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
+| [JacksonBasedFunction](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/function/JacksonBasedFunction.html) (おすすめ)     | [JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html) | [Jackson](https://github.com/FasterXML/jackson) |
+| [JsonpBasedFunction](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/function/JsonpBasedFunction.html)                   | [JsonObject](https://javadoc.io/static/javax.json/javax.json-api/1.1.4/javax/json/JsonObject.html)                 | [JSONP](https://javaee.github.io/jsonp/)        |
+| [StringBasedFunction](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/function/StringBasedFunction.html)                 | [String](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html)                                          | Java標準ライブラリ                                |
+| [Function](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/function/Function.html) (廃止された)                            | [JsonObject](https://javadoc.io/static/javax.json/javax.json-api/1.1.4/javax/json/JsonObject.html)                 | [JSONP](https://javaee.github.io/jsonp/)       |
+
+The old [Function](https://scalar-labs.github.io/scalardl/javadoc/ledger/com/scalar/dl/ledger/function/Function.html) is still available, but it is now deprecated and will be removed in a later major version. So, it is highly recommended to use the above new (non-deprecated) Functions as a base Function.
+
+古い [ファンクション](https://scalar-labs.github.io/scalardl/javadoc/ledger/com/scalar/dl/ledger/function/Function.html) はまだ利用可能ですが、現在は非推奨となっており、 後のメジャー バージョンでは削除されました。 したがって、上記の新しい (非推奨ではない) ファンクションを基本ファンクションとして使用することを強くお勧めします。
+
+### `invoke` 引数について
+
+コントラクトが `Ledger` オブジェクトを使用してアセットを管理するのと同様に、ファンクションは `Database` オブジェクトを使用して基礎となるデータベースのレコードを管理します。 `Database` は、[ScalarDB](https://github.com/scalar-labs/scalardb) の [データモデル](https://scalardb.scalar-labs.com/docs/latest/design) に基づいてCRUD操作を行うことができるように、ScalarDB インターフェースを実装していることに注意してください。
+
+`functionArgument` は、リクエスタによって指定された Function の実行時引数です。 この引数は、コントラクト引数とは異なりデジタル署名されていないため、データベースに格納されているデータを渡すために使用できますが、後で何らかの理由で削除される可能性があります。
+
+`contractArgument` と `contractProperties` は、対応するコントラクトの引数とプロパティです。 コントラクト内容を理解するには、[コントラクトの書き方](how-to-write-contract.mdx) を参照してください。
+
+### コントラクトから情報を受け取る
+
+`JacksonBasedFunction` のような非推奨ではないファンクションでは、 `T getContractContext()` を呼び出すことでコントラクトから情報を受け取ることができます。
+Contracts に何も設定されていない場合、戻り値は null になる可能性があり、使用する基本 Function クラスによって戻り値の型 `T` が決定されることに注意してください。
+コントラクトからファンクションに情報を送信する方法の詳細については、[ファンクションに情報を送信する](./how-to-write-contract.mdx#send-information-to-functions) を参照してください。
+
+```Java
+JsonNode context = getContractContext();
+```
+
+### ファンクションの使用方法
+
+Function 機能はデフォルトで有効になっています。 したがって、次のことを除いて、Ledger では何も設定する必要はありません。 この機能を無効にしたい場合は、Ledger のプロパティで `scalar.dl.ledger.function.enabled` を `false` に設定してください。
+
+#### アプリケーション固有のスキーマを追加する
+
+Functions は ScalarDB CRUD インターフェイスを介して任意のレコードを読み書きできるため、ScalarDL はそれ自体で Function のデータベース スキーマを定義できません。 このようなスキーマを定義してデータベースに適用するのは、アプリケーションの所有者の責任です。データベースの所有者と管理者に応じて、自分で行うか、システム管理者に依頼する必要があります。 ScalarDB のデータベース スキーマの定義の詳細については、[ScalarDB Schema Loader](https://scalardb.scalar-labs.com/docs/latest/schema-loader) を参照してください。
+
+#### ファンクションを登録する
+
+次に、コントラクトを登録する場合と同様に、使用する前にファンクションを Ledger に登録する必要があります。
+
+```
+client/bin/scalardl register-function --properties client.properties --function-id test-function --function-binary-name com.example.function.TestFunction --function-class-file /path/to/TestFunction.class
+```
+
+#### ファンクションを実行する
+
+実行するコントラクトとともに実行するファンクションを指定できます。
+たとえば、コマンドライン ツールを使用して次のようにファンクションを実行できます。
+
+```
+client/bin/scalardl execute-contract --properties client.properties --contract-id test-contract --contract-argument '{...}' --function-id test-function --function-argument '{...}'
+```
+
+次のように [ClientService](https://scalar-labs.github.io/scalardl/javadoc/latest/client/com/scalar/dl/client/service/ClientService.html) を使用して行うこともできます。
+
+```java
+ContractExecutionResult result = clientService.executeContract(contractId, contractArgument, functionId, functionArgument);
+```
+
+コントラクトと同様に、ファンクションは別のファンクションを呼び出すことができるため、複数のファンクション (および複数のコントラクト) をグループ化できます。 ScalarDL は、一連のコントラクトとファンクションを ACID 方式で実行するため、それらをアトミックかつ一貫性があり、分離された永続的な方法で実行できます。
+
+## コントラクトとファンクションを適切に使用する方法
+
+スキームを意味のあるものにするために、コントラクトとファンクションを適切に使用する必要があります。 基本原則として、改ざん証明が必要なデータの管理にはコントラクトを使用し、更新または削除できるデータ、またはより柔軟なデータ モデルを必要とするデータの管理にはファンクションを使用する必要があります。 グッドプラクティスとして、ファンクションはアプリケーションのデータを管理するために使用され、コントラクトはアプリケーションの実行ログを証拠として管理するために使用されます。 たとえば、支払いアプリケーションでは、ファンクションはユーザーの口座残高を管理し、コントラクトはユーザー間の支払いの証拠を管理します。
+
+## 参考文献
+
+* [ScalarDL 入門](getting-started.mdx)
+* [ScalarDL のコントラクトの書き方ガイド](how-to-write-contract.mdx)
+* [ScalarDL設計ドキュメント](design.mdx)
+* [Javadoc](https://scalar-labs.github.io/scalardl/javadoc/)

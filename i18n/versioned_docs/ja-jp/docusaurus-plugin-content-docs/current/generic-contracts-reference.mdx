@@ -1,0 +1,473 @@
+# 汎用コントラクトおよびファンクションのリファレンスガイド
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このガイドでは、汎用コントラクトおよびファンクションの仕様について説明します。
+
+## 汎用コントラクトおよびファンクションのリスト
+
+- **オブジェクト管理**
+  - [`object.Put`](#objectput-コントラクト) コントラクト: オブジェクトのハッシュ値を持つオブジェクトを配置します。
+  - [`object.PutToMutableDatabase`](#objectputtomutabledatabase-ファンクション) ファンクション: `object.Put` コントラクトと組み合わせて可変レコードを配置します。
+  - [`object.Get`](#objectget-コントラクト) コントラクト: オブジェクトを取得します。
+  - [`object.Validate`](#objectvalidate-コントラクト) コントラクト: オブジェクトのハッシュ値を検証します。
+- **コレクション管理**
+  - [`collection.Create`](#collectioncreate-コントラクト) コントラクト: コレクションを作成します。
+  - [`collection.Add`](#collectionadd-コントラクト) コントラクト: コレクションに ID を追加します。
+  - [`collection.Remove`](#collectionremove-コントラクト) コントラクト: コレクションから ID を削除します。
+  - [`collection.Get`](#collectionget-コントラクト) コントラクト: コレクションを取得します。
+  - [`collection.GetHistory`](#collectiongethistory-コントラクト) コントラクト: コレクションの変更履歴を取得します。
+  - [`collection.GetCheckpointInterval`](#collectiongetcheckpointinterval-コントラクト) コントラクト: チェックポイント間隔を取得します。
+
+## `object.Put` コントラクト
+
+オブジェクトのハッシュ値を含むオブジェクト ID を入力します。オブジェクトがすでに存在する場合は、アセットレコードが更新されます。存在しない場合は、新しいアセットレコードが追加されます。
+
+### 入力
+
+入力として次のフィールドを持つ JSON オブジェクトを指定します。
+
+| フィールド        | 説明                                |
+|:-------------|:----------------------------------|
+| `object_id`  | 配置するオブジェクトの ID。                   |
+| `hash_value` | 指定されたオブジェクトのハッシュ値。                |
+| `metadata`   | (オプション) 追加情報を保存するための JSON オブジェクト。 |
+
+### 出力
+
+成功した場合は null 値が返されます。
+
+### 例
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id object.Put \
+--contract-argument '{"objct_id": "a.txt", "hash_value": "a3ae11", "metadata": {"note": "something"}}'
+```
+
+## `object.PutToMutableDatabase` ファンクション
+
+`object.Put` コントラクトと組み合わせて、変更可能なレコードを ScalarDB テーブルに格納します。レコードがすでに存在する場合は、レコードが更新されます。存在しない場合は、新しいレコードが追加されます。このファンクションの呼び出しはオプションです。
+
+### 入力
+
+入力として次のフィールドを持つ JSON オブジェクトを指定します。
+
+| フィールド            | 説明                           |
+|:-----------------|:-----------------------------|
+| `namespace`      | 名前空間名の文字列値。                  |
+| `table`          | テーブル名の文字列値。                  |
+| `partition_key`  | パーティションキー列の JSON オブジェクトの配列。 |
+| `clustering_key` | クラスタリングキー列の JSON オブジェクトの配列。 |
+| `columns`        | 通常の列の JSON オブジェクトの配列。        |
+
+各列は、次のフィールドを持つ JSON オブジェクトです。
+
+| フィールド         | 説明                                                                                                                                                               |
+|:--------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `column_name` | 列名の文字列値。                                                                                                                                                         |
+| `value`       | JSON 値。                                                                                                                                                          |
+| `data_type`   | [ScalarDB でサポートされているデータ型](https://scalardb.scalar-labs.com/docs/latest/schema-loader/#data-type-mapping-between-scalardb-and-other-databases)の大文字と小文字を区別しない文字列値。 |
+
+### 出力
+
+成功した場合は null 値が返されます。
+
+### 例
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id object.Put \
+--contract-argument '{"object_id": "a.txt", "hash_value": "a3ae11"}' \
+--function-id object.PutToMutableDatabase \
+--function-argument '{...}'
+```
+
+ファンクションの引数については、次の JSON オブジェクトの例を参照してください。
+
+```json
+{
+  "namespace": "myns",
+  "table": "objects",
+  "partition_key": [
+    { "column_name": "object_id", "value": "a.txt", "data_type": "TEXT" }
+  ],
+  "clustering_key": [
+    { "column_name": "version", "value": "1234aef", "data_type": "TEXT" }
+  ],
+  "columns": [
+    { "column_name": "status", "value": 3, "data_type": "INT" },
+    { "column_name": "size", "value": 10.000, "data_type": "DOUBLE" },
+    { "column_name": "timestamp", "value": 123456789, "data_type": "BIGINT" },
+    { "column_name": "comment", "value": "hash-registered", "data_type": "TEXT" }
+  ]
+}
+```
+
+## `object.Get` コントラクト
+
+指定された ID を持つオブジェクトを取得します。指定されたオブジェクトが存在しない場合は、null 値が返されます。
+
+### 入力
+
+入力として次のフィールドを持つ JSON オブジェクトを指定します。
+
+| フィールド       | 説明              |
+|:------------|:----------------|
+| `object_id` | 取得するオブジェクトの ID。 |
+
+### 出力
+
+次のフィールドを持つ JSON オブジェクトが返されます。
+
+| フィールド        | 説明                   |
+|:-------------|:---------------------|
+| `object_id`  | 取得するオブジェクトの ID。      |
+| `hash_value` | オブジェクトのハッシュ値。        |
+| `metadata`   | 存在する場合は JSON オブジェクト。 |
+
+### 例
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id object.Get \
+--contract-argument '{"objct_id": "a.txt"}'
+
+Contract result:
+{
+  "object_id" : "a.txt",
+  "hash_value" : "a3ae11",
+  "metadata" : {
+    "note" : "something"
+  }
+}
+```
+
+## `object.Validate` コントラクト
+
+オブジェクトの指定されたハッシュ値が、オブジェクトの保存されたハッシュ値と同じかどうかを検証します。デフォルトでは、最新のハッシュ値から指定された数のハッシュ値のみが検証されます。`all` オプションを使用すると、指定されたバージョンの数が ScalarDL に保存されているバージョンの数と一致するかどうかも検証できます。
+
+### 入力
+
+入力として次のフィールドを持つ JSON オブジェクトを指定します。
+
+| フィールド       | 説明                                                                                                                                                                    |
+|:------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `object_id` | 検証するオブジェクトの ID。                                                                                                                                                       |
+| `versions`  | 検証するバージョンを記述する JSON オブジェクトのリスト。最新から最古までの降順です。各 JSON オブジェクトには、`version_id`、`hash_value`、`metadata` (オプション) の 3 つのプロパティがあります。                                           |
+| `options`   | (オプション) オプションを指定するための JSON オブジェクト。使用可能なオプション:<br/><li>`all`: ScalarDL アセット内のすべての世代と世代の数を検証するかどうかを指定するブール値。</li><li>`verbose`: 問題のあるバージョンの詳細情報を表示するかどうかを指定するブール値。</li> |
+
+### 出力
+
+次のフィールドを持つ JSON オブジェクトが返されます。
+
+| フィールド                          | 説明                                                                              |
+|:-------------------------------|:--------------------------------------------------------------------------------|
+| `status`                       | オブジェクトのステータス。`correct` または `faulty` のいずれか。                                      |
+| `details`                      | オブジェクトのステータスに関する詳細なメッセージ。                                                       |
+| `faulty_versions`              | デフォルトでは障害のあるバージョン ID の配列、または `verbose` オプションが指定されている場合は障害のあるバージョンの JSON オブジェクト。 |
+| `corresponding_given_versions` | ScalarDL のバージョンと一致しない、指定されたバージョンの JSON オブジェクトの配列 (`verbose` オプションが指定されている場合のみ)。 |
+
+:::note
+
+`faulty_versions` と `corresponding_given_versions` の各 JSON オブジェクトには、入力バージョンと同じフィールドがあります。
+
+:::
+
+### 例
+
+指定されたハッシュ値がすべて Ledger 内のハッシュ値と同じである場合、次の結果が返されます。
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id object.Validate \
+--contract-argument \
+'{"object_id": "a.txt",
+  "versions": [
+    {"version_id": "v5", "hash_value": "a3ae11", "metadata":{...}},
+    {"version_id": "v4", "hash_value": "ea21f5", "metadata":{...}},
+    {"version_id": "v3", "hash_value": "440f28", "metadata":{...}}
+  ]
+ }'
+
+Contract result:
+{
+  "status" : "correct",
+  "details" : "The status is correct.",
+  "faulty_versions" : [ ]
+}
+```
+
+異なるハッシュ値が見つかった場合は、次の結果が返されます。
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id object.Validate \
+--contract-argument \
+'{"object_id": "a.txt",
+  "versions": [
+    {"version_id": "v5", "hash_value": "xxxx11", "metadata":{...}},
+    {"version_id": "v4", "hash_value": "ea21f5", "metadata":{...}},
+    {"version_id": "v3", "hash_value": "xxxx28", "metadata":{...}}
+  ]
+ }'
+
+Contract result:
+{
+  "status" : "faulty",
+  "details" : "A faulty version is found.",
+  "faulty_versions" : [ "v5", "v3" ]
+}
+```
+
+`verbose` オプションが指定され、異なるハッシュ値とメタデータが見つかった場合は、次の結果が返されます。
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id object.Validate \
+--contract-argument \
+'{"object_id": "a.txt",
+  "versions": [
+    {"version_id": "v5", "hash_value": "xxxx11", "metadata": { "note": "foo" }},
+    {"version_id": "v4", "hash_value": "ea21f5", "metadata": { "note": "bar" }},
+    {"version_id": "v3", "hash_value": "440f28", "metadata": { "note": "bug" }}
+  ],
+  "options": {"all": true}
+ }'
+
+Contract result:
+{
+  "status": "faulty",
+  "details": "A faulty version is found.",
+  "faulty_versions" : [
+    {"version_id": "v5", "hash_value": "a3ae11", "metadata": { "note": "foo" }},
+    {"version_id": "v3", "hash_value": "440f28", "metadata": { "note": "baz" }}
+  ]
+  "corresponding_given_versions" : [
+    {"version_id": "v5", "hash_value": "xxxx11", "metadata": { "note": "foo" }},
+    {"version_id": "v3", "hash_value": "440f28", "metadata": { "note": "bug" }} ]
+}
+```
+
+`all` オプションが指定され、指定されたバージョンの数が ScalarDL に保存されているバージョンの数と異なる場合は、次の結果が返されます。
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id object.Validate \
+--contract-argument \
+'{"object_id": "a.txt",
+  "versions": [
+    {"version_id": "v5", "hash_value": "a3ae11", "metadata":{...}},
+    {"version_id": "v4", "hash_value": "ea21f5", "metadata":{...}},
+    {"version_id": "v3", "hash_value": "440f28", "metadata":{...}}
+  ],
+  "options": {"all": true}
+ }'
+
+Contract result:
+{
+  "status" : "faulty",
+  "details" : "The number of versions is mismatched.",
+  "faulty_versions" : [ ]
+}
+```
+
+## `collection.Create` コントラクト
+
+ID のセットであるコレクションを作成します。監査対象のオブジェクト ID のセット、コレクション ID のセット、ユーザーのセットなど、任意の ID を管理できます。
+
+### 入力
+
+入力として次のフィールドを持つ JSON オブジェクトを指定します。
+
+| フィールド           | 説明              |
+|:----------------|:----------------|
+| `collection_id` | 作成するコレクションの ID。 |
+| `object_ids`    | 文字列値の配列。        |
+
+### 出力
+
+成功した場合は null 値が返されます。
+
+### 例
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id collection.Create \
+--contract-argument '{"collection_id": "audit_set", "object_ids": ["a.txt"]}'
+```
+
+## `collection.Add` コントラクト
+
+コレクションに ID を追加します。通常、ID は汎用コントラクトによって管理されるオブジェクトとコレクション用です。
+
+### 入力
+
+入力として次のフィールドを持つ JSON オブジェクトを指定します。
+
+| フィールド           | 説明                                                                                                                                |
+|:----------------|:----------------------------------------------------------------------------------------------------------------------------------|
+| `collection_id` | コレクションの ID。                                                                                                                       |
+| `object_ids`    | 文字列値の配列。                                                                                                                          |
+| `options`       | (オプション) オプションを指定するための JSON オブジェクト。使用可能なオプション:<br/><li>`force`: ID が存在する場合でもコントラクトが ID を追加するかどうかを指定するブール値。デフォルト値は `false` です。</li> |
+
+### 出力
+
+成功した場合は null 値が返されます。
+
+### 例
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id collection.Add \
+--contract-argument '{"collection_id": "audit_set", "object_ids": ["a.txt"], "options": {"force": true}}'
+```
+
+## `collection.Remove` コントラクト
+
+コレクションから ID を削除します。通常、ID は汎用コントラクトによって管理されるオブジェクトとコレクション用です。
+
+### 入力
+
+入力として次のフィールドを持つ JSON オブジェクトを指定します。
+
+| フィールド           | 説明                                                                                                                                           |
+|:----------------|:---------------------------------------------------------------------------------------------------------------------------------------------|
+| `collection_id` | 削除するコレクションの ID。                                                                                                                              |
+| `object_ids`    | 文字列値の配列。                                                                                                                                     |
+| `options`       | (オプション) オプションを指定するための JSON オブジェクト。使用可能なオプション:<br/><li>`force`: 指定された ID が存在しない場合でも、コントラクトが ID の削除を続行するかどうかを指定するブール値。デフォルト値は `false` です。</li> |
+
+### 出力
+
+成功した場合は null 値が返されます。
+
+### 例
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id collection.Remove \
+--contract-argument '{"collection_id": "audit_set", "object_ids": ["a.txt"], "options": {"force": true}}'
+```
+
+## `collection.Get` コントラクト
+
+指定された ID のコレクションを取得します。指定されたコレクションが存在しない場合は、null 値が返されます。
+
+### 入力
+
+入力として次のフィールドを持つ JSON オブジェクトを指定します。
+
+| フィールド           | 説明                            |
+|:----------------|:------------------------------|
+| `collection_id` | 取得するコレクションの ID。 |
+
+### 出力
+
+次のフィールドを持つ JSON オブジェクトが返されます。
+
+| フィールド        | 説明                         |
+|:-------------|:---------------------------|
+| `object_ids` | 文字列値の配列。 |
+
+### 例
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id collection.Get \
+--contract-argument '{"collection_id": "audit_set"}'
+
+Contract result:
+{"object_ids": ["a.txt", "b.txt"]}
+```
+
+## `collection.GetHistory` コントラクト
+
+指定された ID のコレクションの変更イベント履歴を取得します。イベントは、`create`、`add`、および `remove` のいずれかです。指定されたコレクションが存在しない場合は、空の `collection_events` 配列を持つ JSON オブジェクトが返されます。
+
+### 入力
+
+入力として次のフィールドを持つ JSON オブジェクトを指定します。
+
+| フィールド           | 説明                                                                                                               |
+|:----------------|:-----------------------------------------------------------------------------------------------------------------|
+| `collection_id` | 履歴を取得するコレクションの ID。                                                                                               |
+| `options`       | (オプション) オプションを指定するための JSON オブジェクト。使用可能なオプション: <br/><li>`limit`: 取得する最新のイベントの数を指定する整数値。デフォルトは `0` (制限なし) です。</li> |
+
+### 出力
+
+次のフィールドを持つ JSON オブジェクトが返されます。
+
+| フィールド               | 説明                                                                                                                                                                                                               |
+|:--------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `collection_id`     | コレクションの ID。                                                                                                                                                                                                      |
+| `collection_events` | 次のフィールドを持つ JSON オブジェクト: `operation_type`、`object_ids`、および `age`。`operation_type` の値は、`create`、`add`、および `remove` のいずれかです。`object_ids` は、イベントで追加または削除された ID のセットであり、値は文字列値の配列です。`age` はアセットレコードのバージョンであり、値は整数です。 |
+
+### 例
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id collection.GetHistory \
+--contract-argument '{"collectionId": "audit_set", "options": {"limit": 2}}'
+
+Contract result:
+{
+  "collection_id": "audit_set",
+  "collection_events": [
+    {
+      "operation_type": "remove",
+      "object_ids": ["a.txt"],
+      "age": 5
+    },
+    {
+      "operation_type": "add",
+      "object_ids": ["a.txt", "b.txt"],
+      "age": 4
+    }
+  ]
+}
+```
+
+## `collection.GetCheckpointInterval` コントラクト
+
+効率的なコレクション管理のために使用されるチェックポイント間隔を取得します。このコントラクトは他の汎用コントラクトから内部的に使用されるため、直接実行する必要はありませんが、このコントラクトを登録するときにコントラクトプロパティを介してチェックポイント間隔を構成できます。
+
+チェックポイント間隔は、コレクションのスナップショットが作成される頻度を構成します。コレクション内の ID を追加または削除する場合、新しいアセットレコードには、ストレージ効率のために、新しい ID セット全体ではなく差分データのみが保持されます。次に、コレクションを取得するときに、過去の差分データがマージされて返されます。毎回過去のデータをすべてマージしないようにするため、チェックポイントの経過時間 (バージョン) ごとにスナップショットを作成します。チェックポイント間隔は、前回のチェックポイント作成以降に待機する更新の数を示す整数です。
+
+### コントラクトプロパティ
+
+チェックポイント間隔を変更する場合は、コントラクトプロパティとして次のフィールドを持つ JSON オブジェクトを指定します。
+
+| フィールド                 | 説明              |
+|:----------------------|:----------------|
+| `checkpoint_interval` | チェックポイント間隔の整数値。 |
+
+:::note
+
+`collection.GetCheckpointInterval` コントラクトが登録され、複数のクライアント ID (つまり `scalar.dl.client.entity.id`) によって使用される場合は、コントラクトを登録するときに同じチェックポイント間隔を設定する必要があります。
+
+:::
+
+### 入力
+
+入力として空の JSON オブジェクトを指定します。
+
+### 出力
+
+次のフィールドを持つ JSON オブジェクトが返されます。
+
+| フィールド                 | 説明                                                       |
+|:----------------------|:---------------------------------------------------------|
+| `checkpoint_interval` | コントラクトプロパティで設定されたチェックポイント間隔の整数値。設定しない場合、デフォルト値は `10` です。 |
+
+### 例
+
+```console
+scalardl execute-contract --properties client.properties \
+--contract-id collection.GetCheckpointInterval \
+--contract-argument '{}'
+
+Contract result:
+{"checkpoint_interval": 10}
+```

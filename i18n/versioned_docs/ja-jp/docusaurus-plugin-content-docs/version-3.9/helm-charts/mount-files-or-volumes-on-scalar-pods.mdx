@@ -1,0 +1,141 @@
+---
+tags:
+  - Enterprise Standard
+  - Enterprise Premium
+---
+
+# Scalar 製品ポッドにファイルまたはボリュームをマウントします
+
+ScalarDB Server、ScalarDB Cluster、ScalarDB Analytics with PostgreSQL、または ScalarDL Helm Charts (ScalarDL Ledger および ScalarDL Auditor) を使用する場合、Scalar 製品ポッドに任意のファイルまたはボリュームをマウントできます。
+
+## ScalarDL Helm Charts のポッドにキーファイルと証明書ファイルをマウントする
+
+ScalarDL Auditor を実行するには、キー ファイルと証明書ファイルをマウントする必要があります。
+
+* 構成例
+    * ScalarDL Ledger
+      ```yaml
+      ledger:
+        ledgerProperties: |
+          ...
+          scalar.dl.ledger.proof.enabled=true
+          scalar.dl.ledger.auditor.enabled=true
+          scalar.dl.ledger.proof.private_key_path=/keys/private-key
+      ```
+    * ScalarDL Auditor
+      ```yaml
+      auditor:
+        auditorProperties: |
+          ...
+          scalar.dl.auditor.private_key_path=/keys/private-key
+          scalar.dl.auditor.cert_path=/keys/certificate
+      ```
+
+この例では、**秘密キー** ファイルと **証明書** ファイルをコンテナ内の `/keys` ディレクトリにマウントする必要があります。 そして、`private-key` と `certificate` という名前のファイルをマウントする必要があります。 これらのファイルをマウントするには、`extraVolumes` および `extraVolumeMounts` を使用できます。
+
+1. Kubernetes マニフェストと同じ構文を使用して、カスタム値ファイルに `extraVolumes` と `extraVolumeMounts` を設定します。 `mountPath` キーにディレクトリ名を指定する必要があります。
+   * 例
+        * ScalarDL Ledger
+          ```yaml
+          ledger:
+            extraVolumes:
+              - name: ledger-keys
+                secret:
+                  secretName: ledger-keys
+            extraVolumeMounts:
+              - name: ledger-keys
+                mountPath: /keys
+                readOnly: true
+          ```
+       * ScalarDL Auditor
+         ```yaml
+         auditor:
+            extraVolumes:
+              - name: auditor-keys
+                secret:
+                  secretName: auditor-keys
+            extraVolumeMounts:
+              - name: auditor-keys
+                mountPath: /keys
+                readOnly: true
+          ```
+
+1. キーと証明書ファイルを含む `Secret` リソースを作成します。
+
+   Secret のキーにはファイル名を指定する必要があります。
+
+   * 例
+       * ScalarDL Ledger
+         ```console
+         kubectl create secret generic ledger-keys \
+           --from-file=tls.key=./ledger-key.pem
+         ```
+       * ScalarDL Auditor
+         ```console
+         kubectl create secret generic auditor-keys \
+           --from-file=tls.key=./auditor-key.pem \
+           --from-file=certificate=./auditor-cert.pem
+         ```
+
+1. 上記のカスタム値ファイルを使用して Scalar 製品をデプロイします。
+
+   Scalar 製品を展開した後、次のようにキー ファイルと証明書ファイルが `/keys` ディレクトリにマウントされます。
+
+   * 例
+       * ScalarDL Ledger
+         ```console
+         ls -l /keys/
+         ```
+         
+         次のような結果が表示されます：
+         
+         ```console
+         total 0
+         lrwxrwxrwx 1 root root 18 Jun 27 03:12 private-key -> ..data/private-key
+         ```
+       * ScalarDL Auditor
+         ```console
+         ls -l /keys/
+         ```
+
+         次のような結果が表示されます：
+         
+         ```console
+         total 0
+         lrwxrwxrwx 1 root root 18 Jun 27 03:16 certificate -> ..data/certificate
+         lrwxrwxrwx 1 root root 18 Jun 27 03:16 private-key -> ..data/private-key
+         ```
+
+## emptyDir をマウントしてヒープ ダンプ ファイルを取得します
+
+カスタム値ファイルで次のキーを使用して、emptyDir を Scalar 製品ポッドにマウントできます。 たとえば、このボリュームを使用して、Scalar 製品のヒープ ダンプを取得できます。
+
+* キー
+  * `scalardb.extraVolumes` / `scalardb.extraVolumeMounts` (ScalarDB Server)
+  * `scalardbCluster.extraVolumes` / `scalardbCluster.extraVolumeMounts` (ScalarDB Cluster)
+  * `scalardbAnalyticsPostgreSQL.extraVolumes` / `scalardbAnalyticsPostgreSQL.extraVolumeMounts` (ScalarDB Analytics with PostgreSQL)
+  * `ledger.extraVolumes` / `ledger.extraVolumeMounts` (ScalarDL Ledger)
+  * `auditor.extraVolumes` / `auditor.extraVolumeMounts` (ScalarDL Auditor)
+
+* 例 (ScalarDB Server)
+  ```yaml
+  scalardb:
+    extraVolumes:
+      - name: heap-dump
+        emptyDir: {}
+    extraVolumeMounts:
+      - name: heap-dump
+        mountPath: /dump
+  ```
+
+この例では、次のように ScalarDB Server ポッドにマウントされたボリュームを確認できます。
+
+```console
+ls -ld /dump
+```
+
+次のような結果が表示されます：
+
+```console
+drwxrwxrwx 2 root root 4096 Feb  6 07:43 /dump
+```

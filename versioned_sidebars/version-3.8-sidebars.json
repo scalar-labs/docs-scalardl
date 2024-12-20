@@ -12,7 +12,8 @@
       "items": [
         "overview",
         "design",
-        "implementation"
+        "implementation",
+        "requirements"
       ]
     },
     {
@@ -45,6 +46,7 @@
             "scalardl-java-client-sdk/README"
           ]
         },
+        "configurations",
         "schema-loader",
         "ca/caclient-getting-started",
         "authentication",
@@ -162,7 +164,6 @@
             "helm-charts/how-to-deploy-scalar-products",
             "helm-charts/how-to-deploy-scalardl-ledger",
             "helm-charts/how-to-deploy-scalardl-auditor",
-            "helm-charts/how-to-deploy-scalar-manager",
             "helm-charts/how-to-deploy-scalar-admin-for-kubernetes",
             "helm-charts/mount-files-or-volumes-on-scalar-pods",
             "helm-charts/use-secret-for-credentials"
@@ -217,7 +218,6 @@
         "backup-restore",
         "scalar-kubernetes/HowToScaleScalarDL",
         "scalar-kubernetes/HowToUpgradeScalarDL",
-        "troubleshooting-guide",
         "scalar-manager/overview"
       ]
     },
@@ -227,7 +227,6 @@
       "collapsible": true,
       "items": [
         "compatibility",
-        "scalardb-versions",
         "scalardl-benchmarks/README"
       ]
     },

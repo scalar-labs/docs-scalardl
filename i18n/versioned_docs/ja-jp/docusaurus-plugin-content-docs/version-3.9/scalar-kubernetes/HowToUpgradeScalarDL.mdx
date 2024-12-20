@@ -1,0 +1,114 @@
+---
+---
+
+# ScalarDL のアップグレード方法
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このガイドでは、ScalarDL の新しいバージョンにアップグレードする方法について説明します。
+
+## 始める前に
+
+新しいバージョンにアップグレードする前に、[ScalarDL 互換性マトリックス](https://scalardl.scalar-labs.com/docs/latest/compatibility/)をチェックして、ScalarDL とクライアント SDK 間の互換性を確認してください。
+
+## アップグレード
+
+ScalarDL のバージョンのアップグレードについて詳しくは、実行するアップグレードの種類を選択してください。
+
+<Tabs groupId="versions" queryString>
+  <TabItem value="upgrade-major-version" label="メジャーバージョンへのアップグレード" default>
+    メジャーバージョンでは下位互換性が維持されません。そのため、あるメジャーバージョンから別のメジャーバージョンにアップグレードするときには、特別な操作が必要になる場合があります。例:
+
+    - バックエンドデータベース側のデータベーススキーマを更新します。
+    - アプリケーションの API を更新します。
+
+    メジャーバージョンにアップグレードするときに必要なものの詳細については、アップグレードするメジャーバージョンのリリースノートを参照してください。
+  </TabItem>
+  <TabItem value="upgrade-minor-version" label="マイナーバージョンへのアップグレード">
+    マイナーバージョンは下位互換性を維持します。そのため、特別な操作を行わなくても、ScalarDL を同じメジャーバージョン内のマイナーバージョンから別のマイナーバージョンにアップグレードできます。たとえば、バックエンドデータベース側のデータベーススキーマを更新したり、アプリケーション内の API を更新したりする必要はありません。
+
+    <Tabs groupId="minor-versions" queryString>
+      <TabItem value="ScalarDL_Ledger" label="ScalarDL Ledger" default>
+      [Scalar Helm Chart](https://github.com/scalar-labs/helm-charts) を使用して ScalarDL Ledger をデプロイする場合は、次のようにして ScalarDL Ledger のデプロイをアップグレードできます。
+
+      1. ScalarDL Ledger Helm Chart のバージョンを環境変数として設定します。これを行うには、次のコマンドを実行して、チャートのバージョンを環境変数 `SCALAR_DL_LEDGER_CHART_VERSION` に設定します。
+
+         ```console
+         SCALAR_DL_LEDGER_CHART_VERSION=4.8.0
+         ```
+
+         :::tip
+
+         ScalarDL Ledger バージョンに対応するチャートバージョンは、次のように検索できます。
+
+         ```console
+         helm search repo scalar-labs/scalardl -l
+         ```
+
+         次のコマンドは役に立つかもしれませんが、山括弧内の内容を ScalarDL Ledger のバージョンに置き換えてください。
+
+         ```console
+         SCALAR_DL_VERSION=<MAJOR>.<MINOR>.<PATCH>; SCALAR_DL_LEDGER_CHART_VERSION=$(helm search repo scalar-labs/scalardl -l | grep -v -e "scalar-labs/scalardl-audit" | grep -F "${SCALAR_DL_VERSION}" | awk '{print $2}' | sort --version-sort -r | head -n 1)
+         ```
+
+         :::
+
+      1. 次のように山括弧内の内容を置き換えて、ScalarDL Ledger デプロイメントをアップグレードします。
+
+         ```console
+         helm upgrade <RELEASE_NAME> scalar-labs/scalardl -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDL_LEDGER> --version ${SCALAR_DL_LEDGER_CHART_VERSION}
+         ```
+
+      ScalarDL Ledger デプロイメント (および Auditor モードを使用している場合は ScalarDL Auditor デプロイメント) をアップグレードした後、アプリケーション側で [ScalarDL Java Client SDK](https://mvnrepository.com/artifact/com.scalar-labs/scalardl-java-client-sdk) のバージョンをアップグレードすることを検討する必要があります。
+      </TabItem>
+      <TabItem value="ScalarDL_Auditor" label="ScalarDL Auditor">
+      [Scalar Helm Chart](https://github.com/scalar-labs/helm-charts) を使用して ScalarDL Auditor をデプロイする場合は、次のようにして ScalarDL Auditor のデプロイをアップグレードできます。
+
+      1. ScalarDL Auditor Helm Chart のバージョンを環境変数として設定します。これを行うには、次のコマンドを実行して、チャートのバージョンを環境変数 `SCALAR_DL_AUDITOR_CHART_VERSION` に設定します。
+
+         ```console
+         SCALAR_DL_AUDITOR_CHART_VERSION=2.8.0
+         ```
+
+         :::tip
+
+         ScalarDL Auditor バージョンに対応するチャートバージョンは、次のように検索できます。
+
+         ```console
+         helm search repo scalar-labs/scalardl-audit -l
+         ```
+
+         次のコマンドは役に立つかもしれませんが、山括弧内の内容を ScalarDL Auditor のバージョンに置き換えてください。
+
+         ```console
+         SCALAR_DL_VERSION=<MAJOR>.<MINOR>.<PATCH>; SCALAR_DL_AUDITOR_CHART_VERSION=$(helm search repo scalar-labs/scalardl-audit -l | grep -F "${SCALAR_DL_VERSION}" | awk '{print $2}' | sort --version-sort -r | head -n 1)
+         ```
+
+         :::
+
+      1. 次のように山括弧内の内容を置き換えて、ScalarDL Auditor のデプロイメントをアップグレードします。
+
+         ```console
+         helm upgrade <RELEASE_NAME> scalar-labs/scalardl-audit -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDL_AUDITOR> --version ${SCALAR_DL_AUDITOR_CHART_VERSION}
+         ```
+
+      ScalarDL Auditor デプロイメントと ScalarDL Ledger デプロイメントをアップグレードした後、アプリケーション側で [ScalarDL Java Client SDK](https://mvnrepository.com/artifact/com.scalar-labs/scalardl-java-client-sdk) のバージョンをアップグレードすることを検討する必要があります。
+      </TabItem>
+    </Tabs>
+  </TabItem>
+  <TabItem value="upgrade-patch-version" label="パッチバージョンにアップグレードする">
+    パッチバージョンは下位互換性を維持します。そのため、特別な操作を行わなくても、メジャーバージョンとマイナーバージョンが同じであれば、ScalarDL を 1つのパッチバージョンから別のパッチバージョンにアップグレードできます。たとえば、バックエンドデータベース側でデータベーススキーマを更新したり、アプリケーションで API を更新したりする必要はありません。
+
+    パッチバージョンへのアップグレード方法は、マイナーバージョンへのアップグレード方法と同様です。アップグレード方法の詳細については、[マイナーバージョンへのアップグレード](?versions=upgrade-minor-version)タブを参照してください。
+  </TabItem>
+</Tabs>
+
+:::warning
+
+ScalarDL は、以前のバージョン (メジャー、マイナー、またはパッチ) へのダウングレードをサポートしていません。新しいバージョンへのアップグレードのみ可能です。
+
+:::
