@@ -604,12 +604,12 @@
         {
           "type": "doc",
           "id": "getting-started",
-          "label": "ScalarDL Ledger を通じてコントラクトを実行する"
+          "label": "ScalarDL Ledger を通じてコントラクトを実行"
         },
         {
           "type": "doc",
           "id": "getting-started-auditor",
-          "label": "ScalarDL Ledger と ScalarDL Auditor を通じてコントラクトを実行する"
+          "label": "ScalarDL Ledger と ScalarDL Auditor を通じてコントラクトを実行"
         }
       ]
     },
@@ -655,32 +655,32 @@
         {
           "type": "doc",
           "id": "ca/caclient-getting-started",
-          "label": "証明書を取得する"
+          "label": "証明書を取得"
         },
         {
           "type": "doc",
           "id": "authentication",
-          "label": "認証を使用する"
+          "label": "認証を使用"
         },
         {
           "type": "doc",
           "id": "how-to-handle-errors",
-          "label": "エラーを処理する"
+          "label": "エラーを処理"
         },
         {
           "type": "doc",
           "id": "how-to-write-contract",
-          "label": "コントラクトを作成する"
+          "label": "コントラクトを作成"
         },
         {
           "type": "doc",
           "id": "how-to-write-function",
-          "label": "ファンクションを書く"
+          "label": "ファンクションを作成"
         },
         {
           "type": "doc",
           "id": "how-to-use-proof",
-          "label": "アセットプルーフを使用する"
+          "label": "アセットプルーフを使用"
         }
       ]
     },
@@ -739,7 +739,7 @@
                 {
                   "type": "doc",
                   "id": "scalar-kubernetes/CreateBastionServer",
-                  "label": "踏み台サーバーを作成する"
+                  "label": "踏み台サーバーを作成"
                 }
               ]
             },
@@ -751,22 +751,22 @@
                 {
                   "type": "doc",
                   "id": "scalar-kubernetes/CreateEKSClusterForScalarDL",
-                  "label": "ScalarDL Ledger 用の EKS クラスターを作成する"
+                  "label": "ScalarDL Ledger 用の EKS クラスターを作成"
                 },
                 {
                   "type": "doc",
                   "id": "scalar-kubernetes/CreateEKSClusterForScalarDLAuditor",
-                  "label": "ScalarDL Ledger と ScalarDL Auditor 用の EKS クラスターを作成する"
+                  "label": "ScalarDL Ledger と ScalarDL Auditor 用の EKS クラスターを作成"
                 },
                 {
                   "type": "doc",
                   "id": "scalar-kubernetes/CreateAKSClusterForScalarDL",
-                  "label": "ScalarDL Ledger 用の AKS クラスターを作成する"
+                  "label": "ScalarDL Ledger 用の AKS クラスターを作成"
                 },
                 {
                   "type": "doc",
                   "id": "scalar-kubernetes/CreateAKSClusterForScalarDLAuditor",
-                  "label": "ScalarDL Ledger と ScalarDL Auditor 用の AKS クラスターを作成する"
+                  "label": "ScalarDL Ledger と ScalarDL Auditor 用の AKS クラスターを作成"
                 }
               ]
             },
@@ -778,7 +778,7 @@
                 {
                   "type": "doc",
                   "id": "scalar-kubernetes/HowToGetContainerImages",
-                  "label": "コンテナイメージを取得する"
+                  "label": "コンテナイメージを取得"
                 },
                 {
                   "type": "doc",
@@ -795,22 +795,22 @@
                 {
                   "type": "doc",
                   "id": "scalar-kubernetes/ManualDeploymentGuideScalarDLOnEKS",
-                  "label": "Amazon EKS に ScalarDL Ledger をデプロイする"
+                  "label": "Amazon EKS に ScalarDL Ledger をデプロイ"
                 },
                 {
                   "type": "doc",
                   "id": "scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnEKS",
-                  "label": "Amazon EKS に ScalarDL Ledger と ScalarDL Auditorをデプロイする"
+                  "label": "Amazon EKS に ScalarDL Ledger と ScalarDL Auditorをデプロイ"
                 },
                 {
                   "type": "doc",
                   "id": "scalar-kubernetes/ManualDeploymentGuideScalarDLOnAKS",
-                  "label": "AKS に ScalarDL Ledger をデプロイする"
+                  "label": "AKS に ScalarDL Ledger をデプロイ"
                 },
                 {
                   "type": "doc",
                   "id": "scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnAKS",
-                  "label": "AKS に ScalarDL Ledger と ScalarDL Auditor をデプロイする"
+                  "label": "AKS に ScalarDL Ledger と ScalarDL Auditor をデプロイ"
                 }
               ]
             },
@@ -822,17 +822,17 @@
                 {
                   "type": "doc",
                   "id": "scalar-kubernetes/AccessScalarProducts",
-                  "label": "アプリケーションから Kubernetes 環境にアクセスする"
+                  "label": "アプリケーションから Kubernetes 環境にアクセス"
                 },
                 {
                   "type": "doc",
                   "id": "scalar-kubernetes/HowToCreateKeyAndCertificateFiles",
-                  "label": "秘密鍵と証明書ファイルを作成する"
+                  "label": "秘密鍵と証明書ファイルを作成"
                 },
                 {
                   "type": "doc",
                   "id": "scalar-kubernetes/NetworkPeeringForScalarDLAuditor",
-                  "label": "ネットワークピアリングを構成する"
+                  "label": "ネットワークピアリングを構成"
                 }
               ]
             }
@@ -892,70 +892,70 @@
             },
             {
               "type": "category",
-              "label": "カスタム値を設定する",
+              "label": "カスタム値を設定",
               "collapsible": true,
               "items": [
                 {
                   "type": "doc",
                   "id": "helm-charts/configure-custom-values-scalardl-ledger",
-                  "label": "ScalarDL Ledger のカスタム値ファイルを構成する"
+                  "label": "ScalarDL Ledger のカスタム値ファイルを構成"
                 },
                 {
                   "type": "doc",
                   "id": "helm-charts/configure-custom-values-scalardl-auditor",
-                  "label": "ScalarDL Auditor のカスタム値ファイルを構成する"
+                  "label": "ScalarDL Auditor のカスタム値ファイルを構成"
                 },
                 {
                   "type": "doc",
                   "id": "helm-charts/configure-custom-values-scalardl-schema-loader",
-                  "label": "ScalarDL Schema Loader のカスタム値ファイルを構成する"
+                  "label": "ScalarDL Schema Loader のカスタム値ファイルを構成"
                 },
                 {
                   "type": "doc",
                   "id": "helm-charts/configure-custom-values-scalar-admin-for-kubernetes",
-                  "label": "Scalar Admin for Kubernetes のカスタム値ファイルを構成する"
+                  "label": "Scalar Admin for Kubernetes のカスタム値ファイルを構成"
                 },
                 {
                   "type": "doc",
                   "id": "helm-charts/configure-custom-values-scalar-manager",
-                  "label": "Scalar Manager のカスタム値ファイルを構成する"
+                  "label": "Scalar Manager のカスタム値ファイルを構成"
                 },
                 {
                   "type": "doc",
                   "id": "helm-charts/configure-custom-values-envoy",
-                  "label": "Scalar Envoy のカスタム値ファイルを構成する"
+                  "label": "Scalar Envoy のカスタム値ファイルを構成"
                 }
               ]
             },
             {
               "type": "doc",
               "id": "helm-charts/how-to-deploy-scalar-products",
-              "label": "Helm Chart を使用して Scalar 製品をデプロイする"
+              "label": "Helm Chart を使用して Scalar 製品をデプロイ"
             },
             {
               "type": "doc",
               "id": "helm-charts/how-to-deploy-scalardl-ledger",
-              "label": "Helm Chart を使用して ScalarDL Ledger をデプロイする"
+              "label": "Helm Chart を使用して ScalarDL Ledger をデプロイ"
             },
             {
               "type": "doc",
               "id": "helm-charts/how-to-deploy-scalardl-auditor",
-              "label": "Helm Chart を使用して ScalarDL Auditor をデプロイする"
+              "label": "Helm Chart を使用して ScalarDL Auditor をデプロイ"
             },
             {
               "type": "doc",
               "id": "helm-charts/how-to-deploy-scalar-admin-for-kubernetes",
-              "label": "Kubernetes 用の Scalar Admin をデプロイする"
+              "label": "Kubernetes 用の Scalar Admin をデプロイ"
             },
             {
               "type": "doc",
               "id": "helm-charts/mount-files-or-volumes-on-scalar-pods",
-              "label": "ScalarDL ポッドにファイルまたはボリュームをマウントする"
+              "label": "ScalarDL ポッドにファイルまたはボリュームをマウント"
             },
             {
               "type": "doc",
               "id": "helm-charts/use-secret-for-credentials",
-              "label": "シークレットリソースを使用する"
+              "label": "シークレットリソースを使用"
             }
           ]
         },
@@ -967,18 +967,18 @@
         {
           "type": "doc",
           "id": "installation-with-docker",
-          "label": "ローカル環境に ScalarDL をインストールする"
+          "label": "ローカル環境に ScalarDL をインストール"
         },
         {
           "type": "doc",
           "id": "ca/caserver-getting-started",
-          "label": "CFSSL で CA サーバーを起動する"
+          "label": "CFSSL で CA サーバーを起動"
         }
       ]
     },
     {
       "type": "category",
-      "label": "管理",
+      "label": "運用",
       "collapsible": true,
       "items": [
         {
@@ -1028,22 +1028,22 @@
                 {
                   "type": "doc",
                   "id": "scalar-kubernetes/BackupRestoreGuide",
-                  "label": "Kubernetes 環境で ScalarDL データをバックアップおよび復元する"
+                  "label": "Kubernetes 環境で ScalarDL データをバックアップおよび復元"
                 },
                 {
                   "type": "doc",
                   "id": "scalar-kubernetes/BackupRDB",
-                  "label": "Kubernetes で RDB をバックアップする"
+                  "label": "Kubernetes で RDB をバックアップ"
                 },
                 {
                   "type": "doc",
                   "id": "scalar-kubernetes/BackupNoSQL",
-                  "label": "Kubernetes で NoSQL データベースをバックアップする"
+                  "label": "Kubernetes で NoSQL データベースをバックアップ"
                 },
                 {
                   "type": "doc",
                   "id": "scalar-kubernetes/RestoreDatabase",
-                  "label": "Kubernetes でデータベースを復元する"
+                  "label": "Kubernetes でデータベースを復元"
                 },
                 {
                   "type": "doc",
@@ -1062,12 +1062,12 @@
         {
           "type": "doc",
           "id": "scalar-kubernetes/HowToScaleScalarDL",
-          "label": "スケーリングする"
+          "label": "スケーリング"
         },
         {
           "type": "doc",
           "id": "scalar-kubernetes/HowToUpgradeScalarDL",
-          "label": "アップグレードする"
+          "label": "アップグレード"
         },
         {
           "type": "doc",
@@ -1094,7 +1094,7 @@
         {
           "type": "doc",
           "id": "scalardl-benchmarks/README",
-          "label": "ベンチマークを実行する"
+          "label": "ベンチマークを実行"
         }
       ]
     },
