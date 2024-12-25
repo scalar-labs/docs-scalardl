@@ -168,12 +168,12 @@ const sidebars = {
                 {
                   type: 'doc',
                   id: 'scalar-kubernetes/SetupDatabaseForAWS',
-                  label: 'AWS',
+                  label: 'Databases on AWS',
                 },
                 {
                   type: 'doc',
                   id: 'scalar-kubernetes/SetupDatabaseForAzure',
-                  label: 'Azure',
+                  label: 'Databases on Azure',
                 },
               ],
             },
@@ -765,12 +765,12 @@ const sidebars = {
                 {
                   type: 'doc',
                   id: 'scalar-kubernetes/SetupDatabaseForAWS',
-                  label: 'AWS',
+                  label: 'AWS が提供するデータベース',
                 },
                 {
                   type: 'doc',
                   id: 'scalar-kubernetes/SetupDatabaseForAzure',
-                  label: 'Azure',
+                  label: 'Azure が提供するデータベース',
                 },
               ],
             },
