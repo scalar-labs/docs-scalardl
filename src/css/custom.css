@@ -100,3 +100,47 @@ html[data-theme="dark"] .header-github-link::before {
 html[data-theme="dark"] .navbar-sidebar .header-github-link {
   filter: invert(0%);
 }
+
+/* Glossary tooltip styles */
+.glossary-term {
+  cursor: help;
+  text-decoration: underline dotted;
+}
+
+.tooltip-glossary {
+  background-color: #f6f6f6;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  left: 15px;
+  opacity: 1;
+  position: absolute;
+  padding: 10px 15px;
+  transform: translateY(5px);
+  visibility: visible;
+  white-space: normal;
+  width: 460px;
+  z-index: 10;
+}
+
+html[data-theme="dark"] .tooltip-glossary {
+  background-color: var(--ifm-dropdown-background-color);
+  border: 1px solid var(--ifm-table-border-color);
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  opacity: 1;
+  position: absolute;
+  padding: 10px 15px;
+  transform: translateY(5px);
+  visibility: visible;
+  white-space: normal;
+  width: 460px;
+  z-index: 10;
+}
+
+@media (max-width: 997px) {
+  .tooltip-glossary {
+    left: 15px !important;
+    width: 333px !important;
+  }
+}

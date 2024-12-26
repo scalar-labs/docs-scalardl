@@ -47,6 +47,11 @@ const sidebars = {
         },
         {
           type: 'doc',
+          id: 'glossary',
+          label: 'Glossary',
+        },
+        {
+          type: 'doc',
           id: 'requirements',
           label: 'Requirements',
         },
