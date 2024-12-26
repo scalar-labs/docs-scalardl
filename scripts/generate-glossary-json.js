@@ -14,8 +14,8 @@ const generateGlossaryJson = (glossaryFilePath, outputJsonPath) => {
   let currentTerm = '';
 
   glossaryLines.forEach((line) => {
-    if (line.startsWith('## ')) {
-      currentTerm = line.replace('## ', '').trim();
+    if (line.startsWith('### ')) {
+      currentTerm = line.replace('### ', '').trim();
     } else if (line.startsWith('# ')) {
       currentTerm = ''; // Reset the term for heading 1 lines.
     } else if (line.trim() !== '' && currentTerm !== '') {
