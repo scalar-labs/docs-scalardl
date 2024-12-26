@@ -15,7 +15,7 @@ export default function JavadocLink({ packageName, path, className }) {
   console.log('Docs ClassName:', docsClassName);
 
   // The link in the <a> code below is generated based on the following JavadocLink component that must be added in place of a static Javadoc link in the doc:
-  // <JavadocLink packageName="scalardl-common" path="com/scalar/dl/ledger/config" className="LedgerConfig" />
+  // <JavadocLink packageName="<PACKAGE_NAME>" path="<PATH>" className="<CLASS_NAME>" />
   // In addition, be sure to add the following below the title to import the component:
   // import JavadocLink from "/src/theme/JavadocLink.js";
   return (
