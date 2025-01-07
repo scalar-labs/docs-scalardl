@@ -438,7 +438,7 @@ const sidebars = {
         {
           type: 'doc',
           id: 'installation-with-docker',
-          label: 'Install ScalarDL in Your Local Environment',
+          label: 'Install ScalarDL in Your Local Environment with Docker',
         },
         {
           type: 'doc',
@@ -565,7 +565,7 @@ const sidebars = {
         {
           type: 'doc',
           id: 'generic-contracts-reference',
-          label: '汎用コントラクトおよびファンクション',
+          label: 'Generic Contracts',
         },
         {
           type: 'doc',
@@ -701,7 +701,7 @@ const sidebars = {
             {
               type: 'doc',
               id: 'scalardl-java-client-sdk/README',
-              label: 'ScalarDL Java クライアント SDK',
+              label: 'ScalarDL Java Client SDK',
             },
           ],
         },
@@ -723,12 +723,12 @@ const sidebars = {
         {
           type: 'doc',
           id: 'authentication',
-          label: '認証を使用',
+          label: '認証',
         },
         {
           type: 'doc',
           id: 'how-to-handle-errors',
-          label: 'エラーを処理',
+          label: 'エラーハンドリング',
         },
         {
           type: 'doc',
@@ -1013,7 +1013,7 @@ const sidebars = {
             {
               type: 'doc',
               id: 'helm-charts/how-to-deploy-scalar-admin-for-kubernetes',
-              label: 'Kubernetes 用の Scalar Admin をデプロイ',
+              label: 'Helm Chart を使用して Scalar Admin for Kubernetes をデプロイ',
             },
             {
               type: 'doc',
@@ -1035,7 +1035,7 @@ const sidebars = {
         {
           type: 'doc',
           id: 'installation-with-docker',
-          label: 'ローカル環境に ScalarDL をインストール',
+          label: 'Docker を使ってローカル環境に ScalarDL をインストール',
         },
         {
           type: 'doc',
@@ -1101,17 +1101,17 @@ const sidebars = {
                 {
                   type: 'doc',
                   id: 'scalar-kubernetes/BackupRDB',
-                  label: 'Kubernetes で RDB をバックアップ',
+                  label: 'Kubernetes 環境で RDB をバックアップ',
                 },
                 {
                   type: 'doc',
                   id: 'scalar-kubernetes/BackupNoSQL',
-                  label: 'Kubernetes で NoSQL データベースをバックアップ',
+                  label: 'Kubernetes 環境で NoSQL データベースをバックアップ',
                 },
                 {
                   type: 'doc',
                   id: 'scalar-kubernetes/RestoreDatabase',
-                  label: 'Kubernetes でデータベースを復元',
+                  label: 'Kubernetes 環境でデータベースを復元',
                 },
                 {
                   type: 'doc',
