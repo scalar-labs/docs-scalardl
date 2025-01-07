@@ -146,7 +146,7 @@ const sidebars = {
         {
           type: 'doc',
           id: 'use-generic-contracts',
-          label: 'Use Generic Contracts and Functions',
+          label: 'Use Generic Contracts',
         },
         {
           type: 'doc',
