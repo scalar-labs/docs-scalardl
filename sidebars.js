@@ -75,7 +75,7 @@ const sidebars = {
         {
           type: 'doc',
           id: 'getting-started-auditor',
-          label: 'Run a Contract Through ScalarDL Ledger and ScalarDL Auditor',
+          label: 'Run a Contract Through ScalarDL Ledger and Auditor',
         },
       ],
     },
@@ -111,7 +111,7 @@ const sidebars = {
         {
           type: 'doc',
           id: 'configurations',
-          label: 'ScalarDL Configurations',
+          label: 'Configurations',
         },
         {
           type: 'doc',
@@ -227,7 +227,7 @@ const sidebars = {
                 {
                   type: 'doc',
                   id: 'scalar-kubernetes/CreateEKSClusterForScalarDLAuditor',
-                  label: 'Create an EKS Cluster for ScalarDL Ledger and ScalarDL Auditor',
+                  label: 'Create an EKS Cluster for ScalarDL Ledger and Auditor',
                 },
                 {
                   type: 'doc',
@@ -237,7 +237,7 @@ const sidebars = {
                 {
                   type: 'doc',
                   id: 'scalar-kubernetes/CreateAKSClusterForScalarDLAuditor',
-                  label: 'Create an AKS cluster for ScalarDL Ledger and ScalarDL Auditor',
+                  label: 'Create an AKS cluster for ScalarDL Ledger and Auditor',
                 },
               ],
             },
@@ -271,7 +271,7 @@ const sidebars = {
                 {
                   type: 'doc',
                   id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnEKS',
-                  label: 'Deploy ScalarDL Ledger and ScalarDL Auditor on Amazon EKS',
+                  label: 'Deploy ScalarDL Ledger and Auditor on Amazon EKS',
                 },
                 {
                   type: 'doc',
@@ -281,7 +281,7 @@ const sidebars = {
                 {
                   type: 'doc',
                   id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnAKS',
-                  label: 'Deploy ScalarDL Ledger and ScalarDL Auditor on AKS',
+                  label: 'Deploy ScalarDL Ledger and Auditor on AKS',
                 },
               ],
             },
@@ -332,17 +332,17 @@ const sidebars = {
                 {
                   type: 'doc',
                   id: 'helm-charts/getting-started-scalardl-auditor',
-                  label: 'ScalarDL Ledger and ScalarDL Auditor by Using a Helm Chart',
+                  label: 'ScalarDL Ledger and Auditor by Using a Helm Chart',
                 },
                 {
                   type: 'doc',
                   id: 'helm-charts/getting-started-scalardl-auditor-tls',
-                  label: 'ScalarDL Ledger and ScalarDL Auditor with TLS by Using a Helm Chart',
+                  label: 'ScalarDL Ledger and Auditor with TLS by Using a Helm Chart',
                 },
                 {
                   type: 'doc',
                   id: 'helm-charts/getting-started-scalardl-auditor-tls-cert-manager',
-                  label: 'ScalarDL Ledger and ScalarDL Auditor with TLS by Using cert-manager and a Helm Chart',
+                  label: 'ScalarDL Ledger and Auditor with TLS by Using cert-manager and a Helm Chart',
                 },
                 {
                   type: 'doc',
@@ -528,7 +528,7 @@ const sidebars = {
         {
           type: 'doc',
           id: 'backup-restore',
-          label: 'Backup and Restore Data in ScalarDL',
+          label: 'Backup and Restore Data',
         },
         {
           type: 'doc',
@@ -555,12 +555,12 @@ const sidebars = {
         {
           type: 'doc',
           id: 'compatibility',
-          label: 'ScalarDL Compatibility Matrix',
+          label: 'Compatibility Matrix',
         },
         {
           type: 'doc',
           id: 'scalardl-command-reference',
-          label: 'ScalarDL Client Command',
+          label: 'Client Commands',
         },
         {
           type: 'doc',
@@ -672,7 +672,7 @@ const sidebars = {
         {
           type: 'doc',
           id: 'getting-started-auditor',
-          label: 'ScalarDL Ledger と ScalarDL Auditor を通じてコントラクトを実行',
+          label: 'ScalarDL Ledger と Auditor を通じてコントラクトを実行',
         },
       ],
     },
@@ -708,7 +708,7 @@ const sidebars = {
         {
           type: 'doc',
           id: 'configurations',
-          label: 'ScalarDL の設定',
+          label: '設定',
         },
         {
           type: 'doc',
@@ -824,7 +824,7 @@ const sidebars = {
                 {
                   type: 'doc',
                   id: 'scalar-kubernetes/CreateEKSClusterForScalarDLAuditor',
-                  label: 'ScalarDL Ledger と ScalarDL Auditor 用の EKS クラスターを作成',
+                  label: 'ScalarDL Ledger と Auditor 用の EKS クラスターを作成',
                 },
                 {
                   type: 'doc',
@@ -834,7 +834,7 @@ const sidebars = {
                 {
                   type: 'doc',
                   id: 'scalar-kubernetes/CreateAKSClusterForScalarDLAuditor',
-                  label: 'ScalarDL Ledger と ScalarDL Auditor 用の AKS クラスターを作成',
+                  label: 'ScalarDL Ledger と Auditor 用の AKS クラスターを作成',
                 },
               ],
             },
@@ -868,7 +868,7 @@ const sidebars = {
                 {
                   type: 'doc',
                   id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnEKS',
-                  label: 'Amazon EKS に ScalarDL Ledger と ScalarDL Auditorをデプロイ',
+                  label: 'Amazon EKS に ScalarDL Ledger と Auditorをデプロイ',
                 },
                 {
                   type: 'doc',
@@ -878,7 +878,7 @@ const sidebars = {
                 {
                   type: 'doc',
                   id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnAKS',
-                  label: 'AKS に ScalarDL Ledger と ScalarDL Auditor をデプロイ',
+                  label: 'AKS に ScalarDL Ledger と Auditor をデプロイ',
                 },
               ],
             },
@@ -929,17 +929,17 @@ const sidebars = {
                 {
                   type: 'doc',
                   id: 'helm-charts/getting-started-scalardl-auditor',
-                  label: 'Helm Chart を使用した ScalarDL Ledger と ScalarDL Auditor',
+                  label: 'Helm Chart を使用した ScalarDL Ledger と Auditor',
                 },
                 {
                   type: 'doc',
                   id: 'helm-charts/getting-started-scalardl-auditor-tls',
-                  label: 'Helm Chart を使用した TLS 対応 ScalarDL Ledger と ScalarDL Auditor',
+                  label: 'Helm Chart を使用した TLS 対応 ScalarDL Ledger と Auditor',
                 },
                 {
                   type: 'doc',
                   id: 'helm-charts/getting-started-scalardl-auditor-tls-cert-manager',
-                  label: 'cert-manager と Helm Chart を使用した TLS 対応 ScalarDL Ledger と ScalarDL Auditor',
+                  label: 'cert-manager と Helm Chart を使用した TLS 対応 ScalarDL Ledger と Auditor',
                 },
                 {
                   type: 'doc',
@@ -1125,7 +1125,7 @@ const sidebars = {
         {
           type: 'doc',
           id: 'backup-restore',
-          label: 'ScalarDL でのデータのバックアップと復元',
+          label: 'データのバックアップと復元',
         },
         {
           type: 'doc',
@@ -1152,12 +1152,12 @@ const sidebars = {
         {
           type: 'doc',
           id: 'compatibility',
-          label: 'ScalarDL 互換性マトリックス',
+          label: '互換性マトリックス',
         },
         {
           type: 'doc',
           id: 'scalardl-command-reference',
-          label: 'ScalarDL クライアントコマンドリファレンス',
+          label: 'クライアントコマンドリファレンス',
         },
         {
           type: 'doc',
