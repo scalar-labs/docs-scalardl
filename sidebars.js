@@ -26,10 +26,10 @@ const sidebars = {
       id: 'index',
     },
     {
-      'type': 'category',
-      'label': 'About ScalarDL',
-      'collapsible': true,
-      'items': [
+      type: 'category',
+      label: 'About ScalarDL',
+      collapsible: true,
+      items: [
         {
           type: 'doc',
           id: 'overview',
@@ -628,10 +628,10 @@ const sidebars = {
       id: 'index',
     },
     {
-      'type': 'category',
-      'label': 'ScalarDL について',
-      'collapsible': true,
-      'items': [
+      type: 'category',
+      label: 'ScalarDL について',
+      collapsible: true,
+      items: [
         {
           type: 'doc',
           id: 'overview',
