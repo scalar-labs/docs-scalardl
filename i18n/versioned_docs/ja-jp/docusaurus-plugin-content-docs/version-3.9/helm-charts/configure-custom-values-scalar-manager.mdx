@@ -1,6 +1,7 @@
 ---
 tags:
   - Enterprise Option
+displayed_sidebar: docsJapanese
 ---
 
 # Scalar Manager のカスタム値ファイルを構成する
@@ -9,28 +10,28 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このドキュメントでは、Scalar Manager チャートのカスタム値ファイルを作成する方法について説明します。 パラメータの詳細を知りたい場合は、Scalar Manager チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalar-manager/README.md) を参照してください。
+このドキュメントでは、Scalar Manager チャートのカスタム値ファイルを作成する方法について説明します。パラメータの詳細を知りたい場合は、Scalar Manager チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalar-manager/README.md) を参照してください。
 
 ## 必要な構成
 
 ### サービス構成
 
-Kubernetes のサービスリソースタイプを指定するには、`service.type` を設定する必要があります。 プロバイダーが提供するロードバランサーを使用する場合は、`service.type`を`LoadBalancer`に設定する必要があります。
+Kubernetes のサービスリソースタイプを指定するには、`service.type` を設定する必要があります。プロバイダーが提供するロードバランサーを使用する場合は、`service.type` を `LoadBalancer` に設定する必要があります。
 
 ```yaml
 service:
   type: LoadBalancer
 ```
 
-#### Scalar Managerの公開に関するセキュリティ上の懸念
+#### Scalar Manager の公開に関するセキュリティ上の懸念
 
-`service.type`を`LoadBalancer`に設定すると、Scalar Managerがクラスター外に公開されるため、セキュリティ上の懸念が生じる可能性があります。
+`service.type` を `LoadBalancer` に設定すると、Scalar Manager がクラスター外に公開されるため、セキュリティ上の懸念が生じる可能性があります。
 
-現在、Scalar Managerには認証やアクセス制御のメカニズムがありません。
-このため、適切なセキュリティ対策なしにScalar Managerを直接パブリックネットワークに公開すると、不正なアクションにつながる可能性があります。
-これは、Scalar Managerが Scalar製品の一時停止ジョブのスケジューリングなどの機能を提供しているためです。
+現在、Scalar Manager には認証やアクセス制御のメカニズムがありません。
+このため、適切なセキュリティ対策なしに Scalar Manager を直接パブリックネットワークに公開すると、不正なアクションにつながる可能性があります。
+これは、Scalar Manager が Scalar 製品の一時停止ジョブのスケジューリングなどの機能を提供しているためです。
 
-外部アクセスが必要な場合は、プライベートネットワークを使用するか、Kubernetesクラスターへのネットワークアクセスを適切に設定することをお勧めします。
+外部アクセスが必要な場合は、プライベートネットワークを使用するか、Kubernetes クラスターへのネットワークアクセスを適切に設定することをお勧めします。
 
 ### 画像構成
 
@@ -48,8 +49,8 @@ web:
 ## オプション設定
 このセクションでは、Scalar Manager用のカスタム値ファイルを設定する際のオプション設定について説明します。
 
-### Scalar Manager設定（環境に応じてオプション）
-`api.applicationProperties`カスタム値を上書きして、Scalar Managerのデフォルト設定を変更できます。
+### Scalar Manager 設定 (環境に応じてオプション) 
+`api.applicationProperties` カスタム値を上書きして、Scalar Managerのデフォルト設定を変更できます。
 
 ```yaml
 api:
@@ -62,40 +63,40 @@ api:
 Scalar Managerには、例えばScalar製品のデプロイメントやクラスター内のPrometheusおよびLokiサービスを検出するためのデフォルト設定があります。
 ほとんどのユースケースでは、特にkube-prometheus-stackのデプロイガイドやloki-stackのデプロイガイドに従っている場合、デフォルト設定を変更する必要はありません。
 
-#### api.applicationPropertiesで設定できるプロパティ
+#### api.applicationProperties で設定できるプロパティ
 
-Scalar Managerの設定は、Javaアプリケーションプロパティの形式で、key=valueのペアです。
-これらのアプリケーションプロパティは、Scalar Manager Helm Chartのapi.applicationPropertiesカスタム値を使用して設定できます。
+Scalar Manager の設定は、Java アプリケーションプロパティの形式で、key=valueのペアです。
+これらのアプリケーションプロパティは、Scalar Manager Helm Chart の api.applicationProperties カスタム値を使用して設定できます。
 
 |名前|説明|デフォルト値|
 |---|---|---|
-|`grafana.kubernetesServiceLabelName`|KubernetesでGrafanaサービスを検出するために使用されるラベル名|`app.kubernetes.io/name`|
-|`grafana.kubernetesServiceLabelValue`|`grafana.kubernetesServiceLabelName`に対応するラベル値|`grafana`|
-|`grafana.kubernetesServicePortName`|KubernetesでGrafanaサービスポートを検出するために使用されるポート名|`http-web`|
-|`prometheus.kubernetesServiceLabelName`|KubernetesでPrometheusサービスを検出するために使用されるラベル名|`app`|
-|`prometheus.kubernetesServiceLabelValue`|`prometheus.kubernetesServiceLabelName`に対応するラベル値|`kube-prometheus-stack-prometheus`|
-|`prometheus.kubernetesServicePortName`|KubernetesでPrometheusサービスポートを検出するために使用されるポート名|`http-web`|
-|`loki.kubernetesServiceLabelName`|KubernetesでPrometheusサービスを検出するために使用されるラベル名|`app`|
-|`loki.kubernetesServiceLabelValue`|`loki.kubernetesServiceLabelName`に対応するラベル値|`loki`|
-|`loki.kubernetesServicePortName`|KubernetesでLokiサービスポートを検出するために使用されるポート名|`http-metrics`|
-|`helm.scalarRepositoryName`|Scalar Helmリポジトリを表すために使用される名前|`scalar-labs`|
-|`helm.scalarRepositoryUrl`|Scalar HelmリポジトリのURL|`https://scalar-labs.github.io/helm-charts`|
-|`helm.scalarAdminForKubernetesChartName`|Scalar HelmリポジトリにおけるKubernetes用Scalar Adminの Helm Chart名|`scalar-admin-for-kubernetes`|
-|`helm.scalarAdminForKubernetesChartVersion`|Kubernetes用Scalar Admin Helm Chartのバージョン|`1.0.0`|
-|`configMapNamespace`|Scalar Managerが使用するConfigMapがデプロイされる名前空間|`default`|
-|`configMapName`|Scalar Managerが使用するConfigMapの名前|`scalar-manager-metadata`|
+|`grafana.kubernetesServiceLabelName`|Kubernetes で Grafana サービスを検出するために使用されるラベル名|`app.kubernetes.io/name`|
+|`grafana.kubernetesServiceLabelValue`|`grafana.kubernetesServiceLabelName` に対応するラベル値|`grafana`|
+|`grafana.kubernetesServicePortName`|Kubernetes で Grafana サービスポートを検出するために使用されるポート名|`http-web`|
+|`prometheus.kubernetesServiceLabelName`|Kubernetes で Prometheus サービスを検出するために使用されるラベル名|`app`|
+|`prometheus.kubernetesServiceLabelValue`|`prometheus.kubernetesServiceLabelName` に対応するラベル値|`kube-prometheus-stack-prometheus`|
+|`prometheus.kubernetesServicePortName`|Kubernetes で Prometheus サービスポートを検出するために使用されるポート名|`http-web`|
+|`loki.kubernetesServiceLabelName`|Kubernetes で Prometheus サービスを検出するために使用されるラベル名|`app`|
+|`loki.kubernetesServiceLabelValue`|`loki.kubernetesServiceLabelName` に対応するラベル値|`loki`|
+|`loki.kubernetesServicePortName`|Kubernetes で Loki サービスポートを検出するために使用されるポート名|`http-metrics`|
+|`helm.scalarRepositoryName`|Scalar Helm リポジトリを表すために使用される名前|`scalar-labs`|
+|`helm.scalarRepositoryUrl`|Scalar Helm リポジトリの URL|`https://scalar-labs.github.io/helm-charts`|
+|`helm.scalarAdminForKubernetesChartName`|Scalar Helm リポジトリにおける Kubernetes 用 Scalar Admin の Helm Chart 名|`scalar-admin-for-kubernetes`|
+|`helm.scalarAdminForKubernetesChartVersion`|Kubernetes 用 Scalar Admin Helm Chart のバージョン|`1.0.0`|
+|`configMapNamespace`|Scalar Manager が使用する ConfigMap がデプロイされる名前空間|`default`|
+|`configMapName`|Scalar Manager が使用する ConfigMap の名前|`scalar-manager-metadata`|
 |`paused-state-retention.storage`|一時停止状態を保持するために使用されるストレージタイプ|`configmap`|
-|`paused-state-retention.max-number`|Scalar Managerが保持する一時停止状態の最大数|`100`|
+|`paused-state-retention.max-number`|Scalar Manager が保持する一時停止状態の最大数|`100`|
 
 #### サービスディスカバリー
 
-Scalar Managerはラベルセレクターを使用して、Kubernetes内のGrafana、Prometheus、Lokiサービスを検出し、ポート名を使用してそれらに接続します。`*.kubernetesServiceLabelName`、`*.kubernetesServiceLabelValue`、`*.kubernetesServicePortName`の設定を変更することで、ラベルセレクターとポート名を修正できます。
+Scalar Manager はラベルセレクターを使用して、Kubernetes 内の Grafana、Prometheus、Loki サービスを検出し、ポート名を使用してそれらに接続します。`*.kubernetesServiceLabelName`、`*.kubernetesServiceLabelValue`、`*.kubernetesServicePortName` の設定を変更することで、ラベルセレクターとポート名を修正できます。
 
-一般的に、これらの設定を変更する必要はありません。ただし、Grafana、Prometheus、またはLokiサービスのHelm Chartをインストールする際にラベルやポート名をカスタマイズした場合は、これらの設定をカスタマイズに合わせて調整する必要があります。
+一般的に、これらの設定を変更する必要はありません。ただし、Grafana、Prometheus、または Loki サービスの Helm Chart をインストールする際にラベルやポート名をカスタマイズした場合は、これらの設定をカスタマイズに合わせて調整する必要があります。
 
-##### Kubernetes用Scalar Adminの使用
+##### Kubernetes 用 Scalar Admin の使用
 
-Scalar Managerは、[Kubernetes用Scalar Admin](https://github.com/scalar-labs/scalar-admin-for-kubernetes) Helm Chartをインストールして、Scalar製品の一時停止ジョブのスケジューリングや実行を行います。以下の設定を使用して、Scalar Helmリポジトリをセットアップし、Helm Chartを配置します：
+Scalar Manager は、[Kubernetes 用 Scalar Admin](https://github.com/scalar-labs/scalar-admin-for-kubernetes) Helm Chart をインストールして、Scalar製品の一時停止ジョブのスケジューリングや実行を行います。以下の設定を使用して、Scalar Helm リポジトリをセットアップし、Helm Chart を配置します:
 
 - `helm.scalarRepositoryName`
 - `helm.scalarRepositoryUrl`
@@ -103,24 +104,30 @@ Scalar Managerは、[Kubernetes用Scalar Admin](https://github.com/scalar-labs/s
 - `helm.scalarAdminForKubernetesChartVersion`
 
 :::note
+
 特別な理由がない限り、これらの設定を変更することはお勧めしません。
+
 :::
 
-##### Scalar Managerが使用するConfigMap
+##### Scalar Manager が使用する ConfigMap
 
-Scalar Managerは、デフォルトのアプリケーションプロパティなどのメタデータを保存するためにConfigMapを使用します。ConfigMapは以下の設定で指定された名前空間にデプロイされます：
+Scalar Manager は、デフォルトのアプリケーションプロパティなどのメタデータを保存するために ConfigMap を使用します。ConfigMap は以下の設定で指定された名前空間にデプロイされます:
 
 - `configMapNamespace`
 - `configMapName`
 
 :::note
-競合するConfigMapを使用している場合など、特別な理由がない限り、これらの設定を変更することはお勧めしません。
+
+競合する ConfigMap を使用している場合など、特別な理由がない限り、これらの設定を変更することはお勧めしません。
+
 :::
 
 ##### 一時停止状態の保持
 
-Scalar Managerは、Scalar製品の一時停止状態をストレージに保持します。現在、Scalar ManagerはストレージとしてConfigMapのみを使用できるため、`paused-state-retention.storage`設定は`configmap`に設定する必要があります。`paused-state-retention.max-number`設定を設定することで、Scalar Managerが保持する一時停止状態の最大数を調整できます。
+Scalar Manager は、Scalar 製品の一時停止状態をストレージに保持します。現在、Scalar Manager はストレージとして ConfigMap のみを使用できるため、`paused-state-retention.storage` 設定は `configmap` に設定する必要があります。`paused-state-retention.max-number` 設定を設定することで、Scalar Manager が保持する一時停止状態の最大数を調整できます。
 
 :::warning
-ストレージにConfigMapを使用する場合、ConfigMapのサイズ制限があるため、`paused-state-retention.max-number`に大きな値を設定することはお勧めしません。ConfigMapに保存されるデータは1 MiBを超えることができないため、Scalar Managerが保持できる一時停止状態の最大数は約3,000です。
+
+ストレージに ConfigMap を使用する場合、ConfigMap のサイズ制限があるため、`paused-state-retention.max-number` に大きな値を設定することはお勧めしません。ConfigMap に保存されるデータは 1MiB を超えることができないため、Scalar Manager が保持できる一時停止状態の最大数は約3,000です。
+
 :::

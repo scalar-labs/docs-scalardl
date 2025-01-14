@@ -1,6 +1,7 @@
 ---
 tags:
   - Community
+displayed_sidebar: docsJapanese
 ---
 
 # ScalarDB Analytics with PostgreSQL のカスタム値ファイルを構成する
@@ -9,15 +10,15 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このドキュメントでは、PostgreSQL チャートを使用した ScalarDB Analytics のカスタム値ファイルを作成する方法について説明します。 パラメーターの詳細については、ScalarDB Analytics with PostgreSQL チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardb-analytics-postgresql/README.md) を参照してください。
+このドキュメントでは、PostgreSQL チャートを使用した ScalarDB Analytics のカスタム値ファイルを作成する方法について説明します。パラメーターの詳細については、ScalarDB Analytics with PostgreSQL チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalardb-analytics-postgresql/README.md) を参照してください。
 
 ## 必要な構成
 
-このセクションでは、PostgreSQL で ScalarDB Analytics のカスタム値ファイルを設定するときに必要な構成について説明します。
+このセクションでは、ScalarDB Analytics with PostgreSQL のカスタム値ファイルを設定するときに必要な構成について説明します。
 
 ### データベース構成
 
-PostgreSQL を使用した ScalarDB Analytics 経由でデータベースにアクセスするには、`database.properties` ファイルの構成に使用するのと同じ構文に従って、`scalardbAnalyticsPostgreSQL.databaseProperties` パラメータを設定する必要があります。 設定の詳細については、[ScalarDB Configurations](https://scalardb.scalar-labs.com/docs/latest/configurations/) を参照してください。
+ScalarDB Analytics with PostgreSQL 経由でデータベースにアクセスするには、`database.properties` ファイルの構成に使用するのと同じ構文に従って、`scalardbAnalyticsPostgreSQL.databaseProperties` パラメータを設定する必要があります。設定の詳細については、[ScalarDB Configurations](https://scalardb.scalar-labs.com/docs/latest/configurations/) を参照してください。
 
 ```yaml
 scalardbAnalyticsPostgreSQL:
@@ -30,7 +31,7 @@ scalardbAnalyticsPostgreSQL:
 
 ### データベース名前空間の構成
 
-PostgreSQL を使用した ScalarDB Analytics 経由で読み取りたいテーブルを含むすべてのデータベース名前空間に `schemaImporter.namespaces` を設定する必要があります。
+ScalarDB Analytics with PostgreSQL 経由で読み取りたいテーブルを含むすべてのデータベース名前空間に `schemaImporter.namespaces` を設定する必要があります。
 
 ```yaml
 schemaImporter:
@@ -42,13 +43,13 @@ schemaImporter:
 
 ## オプションの構成
 
-このセクションでは、PostgreSQL で ScalarDB Analytics のカスタム値ファイルを設定する場合のオプションの構成について説明します。
+このセクションでは、ScalarDB Analytics with PostgreSQL のカスタム値ファイルを設定する場合のオプションの構成について説明します。
 
 ### リソース構成 (実稼働環境で推奨)
 
-Kubernetes でリクエストと制限を使用してポッド リソースを制御するには、`scalardbAnalyticsPostgreSQL.resources` を使用できます。
+Kubernetes でリクエストと制限を使用してポッドリソースを制御するには、`scalardbAnalyticsPostgreSQL.resources` を使用できます。
 
-Kubernetes のリクエストと制限と同じ構文を使用して、リクエストと制限を構成できます。 Kubernetes のリクエストと制限の詳細については、[Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)を参照してください。
+Kubernetes のリクエストと制限と同じ構文を使用して、リクエストと制限を構成できます。Kubernetes のリクエストと制限の詳細については、[Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) を参照してください。
 
 ```yaml
 scalardbAnalyticsPostgreSQL:
@@ -63,11 +64,11 @@ scalardbAnalyticsPostgreSQL:
 
 ### シークレット構成 (運用環境で推奨)
 
-環境変数を使用して `scalardbAnalyticsPostgreSQL.databaseProperties` で資格情報などのいくつかのプロパティを設定するには、`scalardbAnalyticsPostgreSQL.secretName` を使用していくつかの資格情報を含むシークレット リソースを指定します。
+環境変数を使用して `scalardbAnalyticsPostgreSQL.databaseProperties` で資格情報などのいくつかのプロパティを設定するには、`scalardbAnalyticsPostgreSQL.secretName` を使用していくつかの資格情報を含むシークレットリソースを指定します。
 
-たとえば、環境変数を使用してバックエンド データベースの資格情報 (`scalar.db.username` および `scalar.db.password`) を設定できるため、ポッドの安全性が高まります。
+たとえば、環境変数を使用してバックエンドデータベースの資格情報 (`scalar.db.username` および `scalar.db.password`) を設定できるため、ポッドの安全性が高まります。
 
-シークレットリソースの使用方法の詳細については、[シークレットリソースを使用して資格情報を環境変数としてプロパティファイルに渡す方法(./use-secret-for-credentials.mdx) を参照してください。
+シークレットリソースの使用方法の詳細については、[シークレットリソースを使用して資格情報を環境変数としてプロパティファイルに渡す方法(./use-secret-for-credentials.mdx)を参照してください。
 
 ```yaml
 scalardbAnalyticsPostgreSQL:
@@ -78,7 +79,7 @@ scalardbAnalyticsPostgreSQL:
 
 Kubernetes でアフィニティとアンチアフィニティを使用してポッドのデプロイメントを制御するには、`scalardbAnalyticsPostgreSQL.affinity` を使用できます。
 
-Kubernetes のアフィニティとアンチアフィニティと同じ構文を使用して、アフィニティとアンチアフィニティを構成できます。 Kubernetes でのアフィニティの構成の詳細については、[Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/) を参照してください。
+Kubernetes のアフィニティとアンチアフィニティと同じ構文を使用して、アフィニティとアンチアフィニティを構成できます。Kubernetes でのアフィニティの構成の詳細については、[Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/) を参照してください。
 
 ```yaml
 scalardbAnalyticsPostgreSQL:
@@ -102,7 +103,7 @@ scalardbAnalyticsPostgreSQL:
 
 PostgreSQL ポッドを使用して ScalarDB Analytics の SecurityContext と PodSecurityContext を設定するには、`scalardbAnalyticsPostgreSQL.securityContext`、`scalardbAnalyticsPostgreSQL.podSecurityContext`、および `schemaImporter.securityContext` を使用できます。
 
-Kubernetes の SecurityContext および PodSecurityContext と同じ構文を使用して、SecurityContext および PodSecurityContext を構成できます。 Kubernetes の SecurityContext および PodSecurityContext 構成の詳細については、[Configure a Security Context for a Pod or Container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) を参照してください。
+Kubernetes の SecurityContext および PodSecurityContext と同じ構文を使用して、SecurityContext および PodSecurityContext を構成できます。Kubernetes の SecurityContext および PodSecurityContext 構成の詳細については、[Configure a Security Context for a Pod or Container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) を参照してください。
 
 ```yaml
 scalardbAnalyticsPostgreSQL:
@@ -129,7 +130,7 @@ schemaImporter:
 
 ### 画像構成 (デフォルト値を推奨)
 
-イメージ リポジトリを変更する場合は、`scalardbAnalyticsPostgreSQL.image.repository` と `schemaImporter.image.repository` を使用して、プルする ScalarDB Analytics with PostgreSQL および Schema Importer イメージのコンテナ リポジトリ情報を指定できます。
+イメージリポジトリを変更する場合は、`scalardbAnalyticsPostgreSQL.image.repository` と `schemaImporter.image.repository` を使用して、プルする ScalarDB Analytics with PostgreSQL および Schema Importer イメージのコンテナリポジトリ情報を指定できます。
 
 ```yaml
 scalardbAnalyticsPostgreSQL:
@@ -150,9 +151,9 @@ scalardbAnalyticsPostgreSQL:
   replicaCount: 3
 ```
 
-### PostgreSQL database name configuration (optional based on your environment)
+### PostgreSQL データベース名の構成 (環境に応じてオプション)
 
-You can specify the database name that you create in PostgreSQL. Schema Importer creates some objects, such as a view of ScalarDB Analytics with PostgreSQL, in this database.
+PostgreSQL で作成するデータベース名を指定できます。Schema Importer は、ScalarDB Analytics with PostgreSQL のビューなど、いくつかのオブジェクトをこのデータベースに作成します。
 
 ```yaml
 scalardbAnalyticsPostgreSQL:
@@ -172,7 +173,7 @@ scalardbAnalyticsPostgreSQL:
 
 :::note
 
-PostgreSQL で ScalarDB Analytics をデプロイする前に、この名前 (デフォルトでは `scalardb-analytics-postgresql-superuser-password`) でシークレット リソースを作成する必要があります。 詳細については、[シークレットリソースを準備する](how-to-deploy-scalardb-analytics-postgresql.mdx#シークレットリソースを準備する) を参照してください。
+ScalarDB Analytics with PostgreSQL をデプロイする前に、この名前 (デフォルトでは `scalardb-analytics-postgresql-superuser-password`) でシークレットリソースを作成する必要があります。詳細については、[シークレットリソースを準備する](how-to-deploy-scalardb-analytics-postgresql.mdx#シークレットリソースを準備する)を参照してください。
 
 :::
 
@@ -180,7 +181,7 @@ PostgreSQL で ScalarDB Analytics をデプロイする前に、この名前 (�
 
 Kubernetes でテイントと許容を使用してポッドのデプロイメントを制御したい場合は、`scalardbAnalyticsPostgreSQL.tolerations` を使用できます。
 
-Kubernetes の許容と同じ構文を使用して、テイントと許容を構成できます。 Kubernetes での許容設定の詳細については、Kubernetes の公式ドキュメント [Taints and Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/) を参照してください。
+Kubernetes の許容と同じ構文を使用して、テイントと許容を構成できます。Kubernetes での許容設定の詳細については、Kubernetes の公式ドキュメント [Taints and Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/) を参照してください。
 
 ```yaml
 scalardbAnalyticsPostgreSQL:
