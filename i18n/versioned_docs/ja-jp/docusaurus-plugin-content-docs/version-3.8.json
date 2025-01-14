@@ -8,11 +8,11 @@
     "description": "The label for category About ScalarDL in sidebar docs"
   },
   "sidebar.docs.category.Getting Started": {
-    "message": "始めましょう",
+    "message": "はじめよう",
     "description": "The label for category Getting Started in sidebar docs"
   },
   "sidebar.docs.category.Samples": {
-    "message": "サンプルアプリケーション",
+    "message": "サンプル",
     "description": "The label for category Samples in sidebar docs"
   },
   "sidebar.docs.category.Develop": {
@@ -72,7 +72,7 @@
     "description": "The label for category Backup and Restore Guides in sidebar docs"
   },
   "sidebar.docs.category.Reference": {
-    "message": "関連情報",
+    "message": "詳細",
     "description": "The label for category Reference in sidebar docs"
   },
   "sidebar.docs.category.Releases": {
