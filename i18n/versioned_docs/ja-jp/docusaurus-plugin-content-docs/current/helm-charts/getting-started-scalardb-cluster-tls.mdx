@@ -2,15 +2,16 @@
 tags:
   - Enterprise Standard
   - Enterprise Premium
+displayed_sidebar: docsJapanese
 ---
 
-# Helm チャートの入門 (TLS を使用した ScalarDB Cluster)
+# Helm Charts をはじめよう (TLS を使用した ScalarDB Cluster)
 
-このドキュメントでは、Kubernetes クラスター上の Helm Chart をテスト環境として使用して、TLS 構成で ScalarDB クラスターを開始する方法について説明します。 ここでは、テスト用の Mac または Linux 環境がすでにあることを前提としています。 このドキュメントでは **minikube** を使用しますが、これから説明する手順はどの Kubernetes クラスターでも機能するはずです。
+このドキュメントでは、Kubernetes クラスター上の Helm Chart をテスト環境として使用して、TLS 構成で ScalarDB Cluster を開始する方法について説明します。ここでは、テスト用の Mac または Linux 環境がすでにあることを前提としています。このドキュメントでは **minikube** を使用しますが、これから説明する手順はどの Kubernetes クラスターでも機能するはずです。
 
 ## 要件
 
-* ScalarDB Cluster のライセンスキー（トライアルライセンスまたは商用ライセンス）を取得する必要があります。 ライセンスキーをお持ちでない場合は、[お問い合わせ](https://www.scalar-labs.com/contact) してください。
+* ScalarDB Cluster のライセンスキー (トライアルライセンスまたは商用ライセンス) を取得する必要があります。ライセンスキーをお持ちでない場合は、[お問い合わせ](https://www.scalar-labs.com/contact)してください。
 * TLSをサポートするScalarDB Cluster v3.12以降を使用する必要があります。
 
 ## 作成するもの
@@ -37,7 +38,7 @@ tags:
 +----------------------------------------------------------------------------------------------------------------------------------------------------+
 ```
 
-TLS 接続用に次の秘密キーファイルと証明書ファイルを作成します。
+TLS 接続用に次の秘密鍵ファイルと証明書ファイルを作成します。
 
 ```
                                                         +-------------------------------+
@@ -55,7 +56,7 @@ TLS 接続用に次の秘密キーファイルと証明書ファイルを作成�
                                                         +-------------------------------+
 ```
 
-各接続で TLS を有効にするために、各秘密キーと証明書ファイルを次のように設定します。
+各接続で TLS を有効にするために、各秘密鍵と証明書ファイルを次のように設定します。
 
 ```
 +--------------------------------+                            +-----------------------------------------+      +-----------------------------------------+
@@ -71,15 +72,15 @@ ScalarDB Cluster 関連コンポーネント間には、次の接続がありま
 
 * **`クライアント - ScalarDB Cluster の Envoy`:** 一部のCRUD APIやSQL APIを実行すると、クライアントはEnvoy for ScalarDB Clusterにアクセスします。
 * **`ScalarDB Cluster の Envoy - ScalarDB Cluster`:** Envoy は、ScalarDB Cluster の前の L7 (gRPC) ロードバランサーとして機能します。
-* **`ScalarDB Cluster ノード - ScalarDB Cluster ノード`:** ScalarDB Cluster ノードから別の ScalarDB Cluster ノードにアクセスします。 言い換えれば、すべての ScalarDB Cluster ノード間でクラスターの内部通信が行われます。
+* **`ScalarDB Cluster ノード - ScalarDB Cluster ノード`:** ScalarDB Cluster ノードから別の ScalarDB Cluster ノードにアクセスします。言い換えれば、すべての ScalarDB Cluster ノード間でクラスターの内部通信が行われます。
 
-## ステップ 1. Kubernetes クラスターを開始する
+## ステップ1. Kubernetes クラスターを開始する
 
-Kubernetes クラスターを準備し、いくつかのツール (`kubectl`、`helm`、`cfssl`、および `cfssljson`) をインストールする必要があります。 インストール方法の詳細については、[Scalar Helm Charts の開始](getting-started-scalar-helm-charts.mdx) を参照してください。
+Kubernetes クラスターを準備し、いくつかのツール (`kubectl`、`helm`、`cfssl`、および `cfssljson`) をインストールする必要があります。インストール方法の詳細については、[Scalar Helm Charts をはじめよう](getting-started-scalar-helm-charts.mdx)を参照してください。
 
-## ステップ 2. PostgreSQL コンテナーを開始する
+## ステップ2. PostgreSQL コンテナーを開始する
 
-ScalarDB Cluster は、バックエンドデータベースとして何らかのデータベースシステムを使用する必要があります。 このチュートリアルでは、PostgreSQL を使用します。
+ScalarDB Cluster は、バックエンドデータベースとして何らかのデータベースシステムを使用する必要があります。このチュートリアルでは、PostgreSQL を使用します。
 
 次のようにして、Kubernetes クラスターに PostgreSQL をデプロイできます。
 
@@ -89,7 +90,7 @@ ScalarDB Cluster は、バックエンドデータベースとして何らかの
    helm repo add bitnami https://charts.bitnami.com/bitnami
    ```
 
-1. ScalarDB クラスター用の PostgreSQL をデプロイします。
+1. ScalarDB Cluster 用の PostgreSQL をデプロイします。
 
    ```console
    helm install postgresql-scalardb-cluster bitnami/postgresql \
@@ -111,9 +112,9 @@ ScalarDB Cluster は、バックエンドデータベースとして何らかの
    postgresql-scalardb-cluster-0   1/1     Running   0          34s
    ```
 
-## ステップ 3. 作業ディレクトリを作成する
+## ステップ3. 作業ディレクトリを作成する
 
-いくつかの構成ファイルと秘密キーおよび証明書ファイルをローカルに作成します。 したがって、それらの作業ディレクトリを作成します。
+いくつかの構成ファイルと秘密鍵および証明書ファイルをローカルに作成します。したがって、それらの作業ディレクトリを作成します。
 
 1. 作業ディレクトリを作成します。
 
@@ -121,9 +122,9 @@ ScalarDB Cluster は、バックエンドデータベースとして何らかの
    mkdir -p ${HOME}/scalardb-cluster-test/certs/
    ```
 
-## ステップ 4. 秘密キーおよび証明書ファイルを作成する
+## ステップ4. 秘密鍵および証明書ファイルを作成する
 
-秘密キーと証明書ファイルを作成します。
+秘密鍵と証明書ファイルを作成します。
 
 1. 作業ディレクトリを `${HOME}/scalardb-cluster-test/certs/` ディレクトリに変更します。
 
@@ -153,7 +154,7 @@ ScalarDB Cluster は、バックエンドデータベースとして何らかの
    EOF
    ```
 
-1. CA の鍵/証明書ファイルを作成します。
+1. CA の秘密鍵/証明書ファイルを作成します。
 
    ```console
    cfssl gencert -initca ca.json | cfssljson -bare ca
@@ -235,19 +236,19 @@ ScalarDB Cluster は、バックエンドデータベースとして何らかの
    EOF
    ```
 
-1. Envoy の秘密キーおよび証明書ファイルを作成します。
+1. Envoy の秘密鍵および証明書ファイルを作成します。
 
    ```console
    cfssl gencert -ca ca.pem -ca-key ca-key.pem -config ca-config.json -profile scalar-test-ca envoy.json | cfssljson -bare envoy
    ```
 
-1. ScalarDB Cluster の秘密キーおよび証明書ファイルを作成します。
+1. ScalarDB Cluster の秘密鍵および証明書ファイルを作成します。
 
    ```console
    cfssl gencert -ca ca.pem -ca-key ca-key.pem -config ca-config.json -profile scalar-test-ca scalardb-cluster.json | cfssljson -bare scalardb-cluster
    ```
 
-1. 秘密キーおよび証明書ファイルが作成されたことを確認します。
+1. 秘密鍵および証明書ファイルが作成されたことを確認します。
 
    ```console
    ls -1
@@ -271,7 +272,7 @@ ScalarDB Cluster は、バックエンドデータベースとして何らかの
    scalardb-cluster.pem
    ```
 
-## ステップ 5. Helm チャートを使用して Kubernetes クラスターに ScalarDB Cluster をデプロイする
+## ステップ5. Helm Charts を使用して Kubernetes クラスターに ScalarDB Cluster をデプロイする
 
 1. Scalar helm リポジトリを追加します。
 
@@ -343,14 +344,14 @@ ScalarDB Cluster は、バックエンドデータベースとして何らかの
      EOF
      ```
 
-1. ライセンスキーと証明書を環境変数に設定します。 ライセンスキーをお持ちでない場合は、[お問い合わせ](https://www.scalar-labs.com/contact) してください。
+1. ライセンスキーと証明書を環境変数に設定します。ライセンスキーをお持ちでない場合は、[お問い合わせ](https://www.scalar-labs.com/contact)してください。
 
    ```console
    SCALAR_DB_CLUSTER_LICENSE_KEY=<YOUR_LICENSE_KEY>
    SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM=<CERT_PEM_FOR_YOUR_LICENSE_KEY>
    ```
 
-1. 資格情報とライセンスキーを含むシークレット リソース「scalardb-credentials-secret」を作成します。
+1. 資格情報とライセンスキーを含むシークレットリソース「scalardb-credentials-secret」を作成します。
 
    ```console
    kubectl create secret generic scalardb-credentials-secret \
@@ -361,14 +362,14 @@ ScalarDB Cluster は、バックエンドデータベースとして何らかの
      -n default
    ```
 
-1. Envoy の秘密キーファイルと証明書ファイルを含むシークレットリソースを作成します。
+1. Envoy の秘密鍵ファイルと証明書ファイルを含むシークレットリソースを作成します。
 
    ```console
    kubectl create secret generic envoy-tls-cert --from-file=tls.crt=${HOME}/scalardb-cluster-test/certs/envoy.pem -n default
    kubectl create secret generic envoy-tls-key --from-file=tls.key=${HOME}/scalardb-cluster-test/certs/envoy-key.pem -n default
    ```
 
-1. ScalarDB Cluster の秘密キー、証明書、CA 証明書ファイルを含むシークレットリソースを作成します。
+1. ScalarDB Cluster の秘密鍵、証明書、CA 証明書ファイルを含むシークレットリソースを作成します。
 
    ```console
    kubectl create secret generic scalardb-cluster-tls-ca --from-file=ca.crt=${HOME}/scalardb-cluster-test/certs/ca.pem -n default
@@ -427,7 +428,7 @@ ScalarDB Cluster は、バックエンドデータベースとして何らかの
    scalardb-cluster-headless        ClusterIP   None            <none>        60053/TCP   40s
    scalardb-cluster-metrics         ClusterIP   10.96.199.135   <none>        9080/TCP    40s
    ```
-   ScalarDB クラスター サービスが適切にデプロイされている場合は、CLUSTER-IP 列にプライベート IP アドレスが表示されます。
+   ScalarDB Cluster サービスが適切にデプロイされている場合は、CLUSTER-IP 列にプライベート IP アドレスが表示されます。
 
 :::note
 
@@ -435,9 +436,9 @@ ScalarDB Cluster は、バックエンドデータベースとして何らかの
 
 :::
 
-## ステップ 6. クライアントコンテナを開始する
+## ステップ6. クライアントコンテナを開始する
 
-クライアントコンテナでCAの証明書ファイルを使用します。 そこで、シークレットリソースを作成し、クライアントコンテナにマウントします。
+クライアントコンテナでCAの証明書ファイルを使用します。そこで、シークレットリソースを作成し、クライアントコンテナにマウントします。
 
 1. シークレットリソース `client-ca-cert` を作成します。
 
@@ -475,7 +476,7 @@ ScalarDB Cluster は、バックエンドデータベースとして何らかの
    EOF
    ```
 
-1. マニフェスト ファイルで ScalarDB Cluster のバージョンを設定します。
+1. マニフェストファイルで ScalarDB Cluster のバージョンを設定します。
 
    ```console
    sed -i s/SCALAR_DB_CLUSTER_CLIENT_POD_SCALAR_DB_CLUSTER_VERSION/${SCALAR_DB_CLUSTER_VERSION}/ ${HOME}/scalardb-cluster-test/scalardb-cluster-client-pod.yaml
@@ -500,17 +501,17 @@ ScalarDB Cluster は、バックエンドデータベースとして何らかの
    scalardb-cluster-client   1/1     Running   0          26s
    ```
 
-## ステップ 7. ScalarDB Cluster SQL CLI をダウンロードしてクライアント コンテナにコピーします
+## ステップ7. ScalarDB Cluster SQL CLI をダウンロードしてクライアントコンテナにコピーします
 
-1. ScalarDB Cluster SQL CLI を [リリース](https://github.com/scalar-labs/scalardb/releases) からディレクトリ `${HOME}/scalardb-cluster-test/` の下にダウンロードします。
+1. ScalarDB Cluster SQL CLI を [リリース](https://github.com/scalar-labs/scalardb/releases)からディレクトリ `${HOME}/scalardb-cluster-test/` の下にダウンロードします。
 
-1. ScalarDB Cluster SQL CLI をクライアント コンテナにコピーします。
+1. ScalarDB Cluster SQL CLI をクライアントコンテナにコピーします。
 
    ```console
    kubectl cp ${HOME}/scalardb-cluster-test/scalardb-cluster-sql-cli-${SCALAR_DB_CLUSTER_VERSION}-all.jar scalardb-cluster-client:/
    ```
 
-## ステップ 8. クライアントコンテナで ScalarDB Cluster SQL CLI を実行する
+## ステップ8. クライアントコンテナで ScalarDB Cluster SQL CLI を実行する
 
 1. クライアントコンテナで bash を実行します。
 
@@ -551,7 +552,7 @@ ScalarDB Cluster は、バックエンドデータベースとして何らかの
    CREATE NAMESPACE ns;
    ```
 
-1. 名前空間 `ns` の下にサンプル テーブル `tbl` を作成します。
+1. 名前空間 `ns` の下にサンプルテーブル `tbl` を作成します。
 
    ```sql
    CREATE TABLE ns.tbl (a INT, b INT, c INT, PRIMARY KEY(a, b));
@@ -563,7 +564,7 @@ ScalarDB Cluster は、バックエンドデータベースとして何らかの
    INSERT INTO ns.tbl VALUES (1,2,3), (4,5,6), (7,8,9);
    ```
 
-1. 挿入したサンプル レコードを選択します。
+1. 挿入したサンプルレコードを選択します。
 
    ```sql
    SELECT * FROM ns.tbl;
@@ -583,7 +584,7 @@ ScalarDB Cluster は、バックエンドデータベースとして何らかの
    3 rows selected (0.059 seconds)
    ```
 
-## ステップ 9. すべてのリソースを削除する
+## ステップ9. すべてのリソースを削除する
 
 Kubernetes クラスターで ScalarDB Cluster のテストが完了したら、すべてのリソースを削除します。
 
@@ -605,7 +606,7 @@ Kubernetes クラスターで ScalarDB Cluster のテストが完了したら、
    kubectl delete secrets scalardb-credentials-secret scalardb-cluster-tls-key scalardb-cluster-tls-cert scalardb-cluster-tls-ca envoy-tls-key envoy-tls-cert client-ca-cert
    ```
 
-1. 作業ディレクトリとサンプル ファイル (構成ファイル、秘密キー、および証明書) を削除します。
+1. 作業ディレクトリとサンプルファイル (構成ファイル、秘密鍵、および証明書) を削除します。
 
    ```console
    cd ${HOME}
@@ -619,6 +620,6 @@ Kubernetes クラスターで ScalarDB Cluster のテストが完了したら、
 
 Scalar 製品の監視またはログ記録を開始する方法については、次のドキュメントで説明しています。
 
-* [Helm Charts の入門 (Prometheus Operator を使用したモニタリング)](getting-started-monitoring.mdx)
-* [Helm Charts の入門 (Loki スタックを使用したロギング)](getting-started-logging.mdx)
-* [Helm Charts の入門 (Scalar Manager)](getting-started-scalar-manager.mdx)
+* [Helm Charts をはじめよう (Prometheus Operator を使用したモニタリング)](getting-started-monitoring.mdx)
+* [Helm Charts をはじめよう (Loki スタックを使用したロギング)](getting-started-logging.mdx)
+* [Helm Charts をはじめよう (Scalar Manager)](getting-started-scalar-manager.mdx)
