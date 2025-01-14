@@ -3,9 +3,10 @@ tags:
   - Enterprise Standard
   - Enterprise Premium
   - Deprecated
+displayed_sidebar: docsJapanese
 ---
 
-# [非推奨] Helm Charts の入門 (ScalarDB Server)
+# [非推奨] Helm Charts をはじめよう (ScalarDB Server)
 
 import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
@@ -13,15 +14,15 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 :::note
 
-ScalarDB Server は非推奨になりました。 代わりに [ScalarDB Cluster](https://scalardb.scalar-labs.com/docs/latest/scalardb-cluster/setup-scalardb-cluster-on-kubernetes-by-using-helm-chart) を使用してください。
+ScalarDB Server は非推奨になりました。代わりに [ScalarDB Cluster](https://scalardb.scalar-labs.com/docs/latest/scalardb-cluster/setup-scalardb-cluster-on-kubernetes-by-using-helm-chart) を使用してください。
 
 :::
 
-このドキュメントでは、Kubernetes クラスター上の Helm Chart をテスト環境として使用して、ScalarDB Server を開始する方法について説明します。 ここでは、テスト用の Mac または Linux 環境がすでにあることを前提としています。 このドキュメントでは **Minikube** を使用しますが、これから説明する手順はどの Kubernetes クラスターでも機能するはずです。
+このドキュメントでは、Kubernetes クラスター上の Helm Chart をテスト環境として使用して、ScalarDB Server を開始する方法について説明します。ここでは、テスト用の Mac または Linux 環境がすでにあることを前提としています。このドキュメントでは **Minikube** を使用しますが、これから説明する手順はどの Kubernetes クラスターでも機能するはずです。
 
 ## 要件
 
-※コンテナイメージ(`scalardb-server` および `scalardb-envoy`)を取得するには、[AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2) または[Azure Marketplace](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardb) で ScalarDB を購読する必要があります。 詳細については、以下のドキュメントを参照してください。
+※コンテナイメージ (`scalardb-server` および `scalardb-envoy`) を取得するには、[AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2) または [Azure Marketplace](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardb) で ScalarDB を購読する必要があります。詳細については、以下のドキュメントを参照してください。
    * [How to install Scalar products through AWS Marketplace](../scalar-kubernetes/AwsMarketplaceGuide.mdx)
    * [How to install Scalar products through Azure Marketplace](../scalar-kubernetes/AzureMarketplaceGuide.mdx)
 
@@ -50,13 +51,13 @@ ScalarDB Server は非推奨になりました。 代わりに [ScalarDB Cluster
 +--------------------------------------------------------------------------------------------------------------------------------------+
 ```
 
-## ステップ 1. Kubernetes クラスターを開始する
+## ステップ1. Kubernetes クラスターを開始する
 
-まず、Kubernetes クラスターを準備する必要があります。 **minikube** 環境を使用する場合は、[Scalar Helm Charts の入門](getting-started-scalar-helm-charts.mdx) を参照してください。 すでに Kubernetes クラスターを開始している場合は、この手順をスキップできます。
+まず、Kubernetes クラスターを準備する必要があります。**minikube** 環境を使用する場合は、[Scalar Helm Charts をはじめよう](getting-started-scalar-helm-charts.mdx)を参照してください。すでに Kubernetes クラスターを開始している場合は、この手順をスキップできます。
 
-## ステップ 2. PostgreSQL コンテナーを開始する
+## ステップ2. PostgreSQL コンテナーを開始する
 
-ScalarDB は、バックエンド データベースとして何らかのデータベース システムを使用します。 このドキュメントでは PostgreSQL を使用します。
+ScalarDB は、バックエンドデータベースとして何らかのデータベースシステムを使用します。このドキュメントでは PostgreSQL を使用します。
 
 次のようにして、Kubernetes クラスターに PostgreSQL をデプロイできます。
 
@@ -82,14 +83,14 @@ ScalarDB は、バックエンド データベースとして何らかのデー�
    postgresql-scalardb-0   1/1     Running   0          2m42s
    ```
 
-## ステップ 3. Helm Charts を使用して Kubernetes クラスターに ScalarDB Server をデプロイする
+## ステップ3. Helm Charts を使用して Kubernetes クラスターに ScalarDB Server をデプロイする
 
 1. Scalar helm リポジトリを追加します。
    ```console
    helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
    ```
 
-1. AWS/Azure Marketplace から ScalarDB コンテナー イメージをプルするためのシークレット リソースを作成します。
+1. AWS/Azure Marketplace から ScalarDB コンテナーイメージをプルするためのシークレットリソースを作成します。
    * AWS Marketplace
      ```console
      kubectl create secret docker-registry reg-ecr-mp-secrets \
@@ -106,7 +107,7 @@ ScalarDB は、バックエンド データベースとして何らかのデー�
      ```
 
    詳細については、以下のドキュメントを参照してください。
-   
+
    * [How to install Scalar products through AWS Marketplace](../scalar-kubernetes/AwsMarketplaceGuide.mdx)
    * [How to install Scalar products through Azure Marketplace](../scalar-kubernetes/AzureMarketplaceGuide.mdx)
 
@@ -121,7 +122,7 @@ ScalarDB は、バックエンド データベースとして何らかのデー�
          version: "1.3.0"
        imagePullSecrets:
          - name: "reg-ecr-mp-secrets"
-     
+
      scalardb:
        image:
          repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-server"
@@ -138,7 +139,7 @@ ScalarDB は、バックエンド データベースとして何らかのデー�
      ```
 
    * Azure Marketplace
-     
+
      ```console
      cat << 'EOF' > scalardb-custom-values.yaml
      envoy:
@@ -147,7 +148,7 @@ ScalarDB は、バックエンド データベースとして何らかのデー�
          version: "1.3.0"
        imagePullSecrets:
          - name: "reg-acr-secrets"
-     
+
      scalardb:
        image:
          repository: "<your private container registry>/scalarinc/scalardb-server"
@@ -207,11 +208,11 @@ ScalarDB は、バックエンド データベースとして何らかのデー�
    scalardb-headless        ClusterIP   None             <none>        60051/TCP   41s
    scalardb-metrics         ClusterIP   10.108.188.10    <none>        8080/TCP    41s
    ```
-   ScalarDB Server サービスが適切にデプロイされている場合は、CLUSTER-IP 列にプライベート IP アドレスが表示されます。 (注記： `scalardb-headless` には CLUSTER-IP がありません。)
+   ScalarDB Server サービスが適切にデプロイされている場合は、CLUSTER-IP 列にプライベート IP アドレスが表示されます。(注記： `scalardb-headless` には CLUSTER-IP がありません。)
 
-## ステップ 4. クライアントコンテナを開始する
+## ステップ4. クライアントコンテナを開始する
 
-1. Kubernetes クラスター上でクライアント コンテナーを起動します。
+1. Kubernetes クラスター上でクライアントコンテナーを起動します。
    ```console
    kubectl run scalardb-client --image eclipse-temurin:8-jdk --command sleep inf
    ```
@@ -226,17 +227,17 @@ ScalarDB は、バックエンド データベースとして何らかのデー�
    scalardb-client   1/1     Running   0          23s
    ```
 
-## ステップ 5. クライアント コンテナで ScalarDB サンプル アプリケーションを実行する
+## ステップ5. クライアントコンテナで ScalarDB サンプルアプリケーションを実行する
 
-以下に最低限の手順を説明します。 ScalarDB についてさらに詳しく知りたい場合は、[Getting Started with ScalarDB](https://scalardb.scalar-labs.com/docs/latest/getting-started-with-scalardb) を参照してください。
+以下に最低限の手順を説明します。ScalarDB についてさらに詳しく知りたい場合は、[Getting Started with ScalarDB](https://scalardb.scalar-labs.com/docs/latest/getting-started-with-scalardb) を参照してください。
 
 1. クライアントコンテナで bash を実行します。
    ```console
    kubectl exec -it scalardb-client -- bash
    ```
-   この手順の後、クライアント コンテナで各コマンドを実行します。
+   この手順の後、クライアントコンテナで各コマンドを実行します。
 
-1. git およびcurl コマンドをクライアント コンテナにインストールします。
+1. git およびcurl コマンドをクライアントコンテナにインストールします。
    ```console
    apt update && apt install -y git curl
    ```
@@ -266,13 +267,13 @@ ScalarDB は、バックエンド データベースとして何らかのデー�
    git branch
    ```
    【コマンド実行結果】
-   
+
    ```console
      master
    * v3.7.0
    ```
 
-   別のバージョンを使用する場合は、使用するバージョン（タグ）を指定してください。
+   別のバージョンを使用する場合は、使用するバージョン (タグ) を指定してください。
 
 1. ディレクトリを `docs/getting-started/` に変更します。
    ```console
@@ -302,7 +303,7 @@ ScalarDB は、バックエンド データベースとして何らかのデー�
    EOF
    ```
 
-1. サンプル アプリケーションの DB スキーマを定義する JSON ファイル (emoney-transaction.json) を作成します。
+1. サンプルアプリケーションの DB スキーマを定義する JSON ファイル (emoney-transaction.json) を作成します。
    ```console
    cat << 'EOF' > emoney-transaction.json
    {
@@ -326,7 +327,7 @@ ScalarDB は、バックエンド データベースとして何らかのデー�
    java -jar ./scalardb-schema-loader-3.7.0.jar --config ./scalardb.properties -f emoney-transaction.json --coordinator
    ```
 
-1. サンプル アプリケーションを実行します。
+1. サンプルアプリケーションを実行します。
    * `1000` を `user1` に請求します。
      ```console
      ./gradlew run --args="-action charge -amount 1000 -to user1"
@@ -348,7 +349,7 @@ ScalarDB は、バックエンド データベースとして何らかのデー�
      ./gradlew run --args="-action getBalance -id merchant1"
      ```
 
-1. (オプション) 次のコマンドを使用して、サンプル アプリケーションを通じて挿入および変更された (INSERT/UPDATE) データを確認できます。 (このコマンドは、クライアント コンテナではなくローカルホストで実行する必要があります。)
+1. (オプション) 次のコマンドを使用して、サンプルアプリケーションを通じて挿入および変更された (INSERT/UPDATE) データを確認できます。(このコマンドは、クライアントコンテナではなくローカルホストで実行する必要があります。)
    ```console
    kubectl exec -it postgresql-scalardb-0 -- bash -c 'export PGPASSWORD=postgres && psql -U postgres -d postgres -c "SELECT * FROM emoney.account"'
    ```
@@ -361,9 +362,9 @@ ScalarDB は、バックエンド データベースとして何らかのデー�
    (2 rows)
    ```
    * 注記：
-       * 通常はScalarDB経由でデータ(レコード)にアクセスする必要があります。 上記のコマンドはサンプルアプリケーションの動作を説明、確認するために使用します。
+       * 通常はScalarDB経由でデータ (レコード) にアクセスする必要があります。上記のコマンドはサンプルアプリケーションの動作を説明、確認するために使用します。
 
-## ステップ 6. すべてのリソースを削除する
+## ステップ6. すべてのリソースを削除する
 
 Kubernetes クラスター上で ScalarDB Server テストが完了したら、すべてのリソースを削除します。
 
@@ -381,6 +382,6 @@ Kubernetes クラスター上で ScalarDB Server テストが完了したら、�
 
 Scalar 製品の監視またはログ記録を開始する方法については、次のドキュメントで説明しています。
 
-* [Helm Charts の入門 (Prometheus Operator を使用したモニタリング)](getting-started-monitoring.mdx)
-* [Helm Charts の入門 (Loki スタックを使用したロギング)](getting-started-logging.mdx)
-* [Helm Charts の入門 (Scalar Manager)](getting-started-scalar-manager.mdx)
+* [Helm Charts をはじめよう (Prometheus Operator を使用したモニタリング)](getting-started-monitoring.mdx)
+* [Helm Charts をはじめよう (Loki スタックを使用したロギング)](getting-started-logging.mdx)
+* [Helm Charts をはじめよう (Scalar Manager)](getting-started-scalar-manager.mdx)

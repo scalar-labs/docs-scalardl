@@ -1,9 +1,10 @@
 ---
 tags:
   - Community
+displayed_sidebar: docsJapanese
 ---
 
-# Helm Charts の入門 (Loki スタックを使用したロギング)
+# Helm Charts をはじめよう (Loki スタックを使用したロギング)
 
 import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
@@ -11,7 +12,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 このドキュメントでは、Grafana Loki (Promtail を使用) を使用して、Kubernetes 上で Scalar 製品のログ集約を開始する方法について説明します。
 
-Scalar 製品の [モニタリングの開始](getting-started-monitoring.mdx) をすでに読み、kube-prometheus-stack をインストールしていることを前提としています。
+Scalar 製品の[モニタリングの開始](getting-started-monitoring.mdx)をすでに読み、kube-prometheus-stack をインストールしていることを前提としています。
 
 ## 私たちが作るもの
 
@@ -49,11 +50,11 @@ Scalar 製品の [モニタリングの開始](getting-started-monitoring.mdx) �
                         +---------+
 ```
 
-## ステップ 1. カスタム値ファイルを準備する
+## ステップ1. カスタム値ファイルを準備する
 
-1. `loki-stack` helm chart のサンプル ファイル [scalar-loki-stack-custom-values.yaml](./conf/scalar-loki-stack-custom-values.yaml) を取得します。
+1. `loki-stack` helm chart のサンプルファイル [scalar-loki-stack-custom-values.yaml](./conf/scalar-loki-stack-custom-values.yaml) を取得します。
 
-## ステップ 2. `loki-stack` をデプロイする
+## ステップ2. `loki-stack` をデプロイする
 
 1. `grafana` helm リポジトリを追加します。
    ```console
@@ -65,9 +66,9 @@ Scalar 製品の [モニタリングの開始](getting-started-monitoring.mdx) �
    helm install scalar-logging-loki grafana/loki-stack -n monitoring -f scalar-loki-stack-custom-values.yaml
    ```
 
-## ステップ 3. Grafana 構成に Loki データ ソースを追加する
+## ステップ3. Grafana 構成に Loki データソースを追加する
 
-1. Loki データ ソースの設定を `scalar-prometheus-custom-values.yaml` ファイルに追加します。
+1. Loki データソースの設定を `scalar-prometheus-custom-values.yaml` ファイルに追加します。
    ```yaml
    grafana:
      additionalDataSources:
@@ -85,14 +86,14 @@ Scalar 製品の [モニタリングの開始](getting-started-monitoring.mdx) �
    helm upgrade scalar-monitoring prometheus-community/kube-prometheus-stack -n monitoring -f scalar-prometheus-custom-values.yaml
    ```
 
-## ステップ 4. Grafana ダッシュボードにアクセスする
+## ステップ4. Grafana ダッシュボードにアクセスする
 
 1. Loki をデータソースとして追加する
    - Grafana http://localhost:3000 に移動します (minikube を使用する場合)
    - `Explore` に移動して、追加された Loki を見つけます
    - 収集されたログは `Explore` ページで確認できます。
 
-## ステップ 5. `loki-stack` helm chartを削除する
+## ステップ5. `loki-stack` helm chartを削除する
 
 1. `loki-stack` をアンインストールします。
    ```console

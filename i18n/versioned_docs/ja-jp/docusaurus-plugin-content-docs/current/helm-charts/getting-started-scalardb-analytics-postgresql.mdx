@@ -1,15 +1,16 @@
 ---
 tags:
   - Community
+displayed_sidebar: docsJapanese
 ---
 
-# Helm Charts の入門 (ScalarDB Analytics with PostgreSQL)
+# Helm Charts をはじめよう (ScalarDB Analytics with PostgreSQL)
 
 import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このガイドでは、Kubernetes クラスターの Helm Chart をテスト環境として使用して、ScalarDB Analytics with PostgreSQL を開始する方法について説明します。 さらに、このガイドの内容は、テスト用に Mac または Linux 環境がすでにセットアップされていることを前提としています。 **minikube** について言及していますが、説明されている手順はどの Kubernetes クラスターでも機能するはずです。
+このガイドでは、Kubernetes クラスターの Helm Chart をテスト環境として使用して、ScalarDB Analytics with PostgreSQL を開始する方法について説明します。さらに、このガイドの内容は、テスト用に Mac または Linux 環境がすでにセットアップされていることを前提としています。**minikube** について言及していますが、説明されている手順はどの Kubernetes クラスターでも機能するはずです。
 
 ## あなたが作成するもの
 
@@ -34,19 +35,19 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 |                                            +------------------------------------+                                                      |  |
 |                                                                                                                                        |  |
 |  +-------------+                                                                                                                       |  |
-|  | OLTP クライアント | ---(テスト OLTP ワークロードでサンプル データをロードする)-----------------------------------------------------------------------+  |
+|  | OLTP クライアント | ---(テスト OLTP ワークロードでサンプルデータをロードする)-----------------------------------------------------------------------+  |
 |  +-------------+                                                                                                                          |
 |                                                                                                                                           |
 +-------------------------------------------------------------------------------------------------------------------------------------------+
 ```
 
-## ステップ 1. Kubernetes クラスターを開始する
+## ステップ1. Kubernetes クラスターを開始する
 
-まず、Kubernetes クラスターを準備する必要があります。 **minikube** 環境を使用している場合は、[Scalar Helm Charts の入門](getting-started-scalar-helm-charts.mdx) を参照してください。 すでに Kubernetes クラスターを開始している場合は、この手順をスキップできます。
+まず、Kubernetes クラスターを準備する必要があります。**minikube** 環境を使用している場合は、[Scalar Helm Charts をはじめよう](getting-started-scalar-helm-charts.mdx)を参照してください。すでに Kubernetes クラスターを開始している場合は、この手順をスキップできます。
 
-## ステップ 2. MySQL および PostgreSQL ポッドを開始する
+## ステップ2. MySQL および PostgreSQL ポッドを開始する
 
-ScalarDB Analytics with PostgreSQL を含むScalarDBは、バックエンドデータベースとして数種類のデータベースシステムを利用できます。 このガイドでは、MySQL と PostgreSQL を使用します。
+ScalarDB Analytics with PostgreSQL を含むScalarDBは、バックエンドデータベースとして数種類のデータベースシステムを利用できます。このガイドでは、MySQL と PostgreSQL を使用します。
 
 次のようにして、Kubernetes クラスターに MySQL と PostgreSQL をデプロイできます。
 
@@ -98,7 +99,7 @@ ScalarDB Analytics with PostgreSQL を含むScalarDBは、バックエンドデ�
    postgresql-scalardb-0   1/1     Running   0          3m12s
    ```
 
-## ステップ 3. 作業ディレクトリを作成する
+## ステップ3. 作業ディレクトリを作成する
 
 いくつかの構成ファイルをローカルに作成するので、それらのファイル用の作業ディレクトリを作成します。
 
@@ -106,13 +107,13 @@ ScalarDB Analytics with PostgreSQL を含むScalarDBは、バックエンドデ�
    mkdir -p ~/scalardb-analytics-postgresql-test/
    ```
 
-## ステップ 4. ScalarDB、ScalarDB Analytics with PostgreSQL、およびチャートのバージョンを設定します
+## ステップ4. ScalarDB、ScalarDB Analytics with PostgreSQL、およびチャートのバージョンを設定します
 
-以下の 3 つの環境変数を設定します。 別のバージョンの ScalarDB および ScalarDB Analytics with PostgreSQL を使用する場合は、必ず使用するバージョンに設定してください。
+以下の3つの環境変数を設定します。別のバージョンの ScalarDB および ScalarDB Analytics with PostgreSQL を使用する場合は、必ず使用するバージョンに設定してください。
 
 :::note
 
-ScalarDB Analytics with PostgreSQL のマイナー バージョン (例: 3.10.x) を ScalarDB と同じにする必要がありますが、パッチのバージョンを一致させる必要はありません。 たとえば、ScalarDB 3.10.1 と ScalarDB Analytics with PostgreSQL 3.10.3 を併用できます。
+ScalarDB Analytics with PostgreSQL のマイナーバージョン (例: 3.10.x) を ScalarDB と同じにする必要がありますが、パッチのバージョンを一致させる必要はありません。たとえば、ScalarDB 3.10.1と ScalarDB Analytics with PostgreSQL 3.10.3を併用できます。
 
 :::
 
@@ -128,17 +129,17 @@ SCALARDB_ANALYTICS_WITH_POSTGRESQL_VERSION=3.10.3
 CHART_VERSION=$(helm search repo scalar-labs/scalardb-analytics-postgresql -l | grep  -e ${SCALARDB_ANALYTICS_WITH_POSTGRESQL_VERSION} | awk '{print $2}' | sort --version-sort -r | head -n 1)
 ```
 
-## ステップ 5. OLTP トランザクションを実行して、サンプル データを MySQL および PostgreSQL にロードします
+## ステップ5. OLTP トランザクションを実行して、サンプルデータを MySQL および PostgreSQL にロードします
 
 ScalarDB Analytics with PostgreSQL を導入する前に、OLTPトランザクションを実行してサンプルデータを作成します。
 
-1. Kubernetes クラスターで OLTP クライアント ポッドを開始します。
+1. Kubernetes クラスターで OLTP クライアントポッドを開始します。
 
    ```console
    kubectl run oltp-client --image eclipse-temurin:8-jdk-jammy --env SCALARDB_VERSION=${SCALARDB_VERSION} -- sleep inf
    ```
 
-1. OLTP クライアント ポッドが実行されているかどうかを確認します。
+1. OLTP クライアントポッドが実行されているかどうかを確認します。
 
    ```console
    kubectl get pod oltp-client
@@ -157,21 +158,21 @@ ScalarDB Analytics with PostgreSQL を導入する前に、OLTPトランザク�
    oltp-client   1/1     Running   0          17s
    ```
 
-1. OLTP クライアント ポッドで bash を実行します。
+1. OLTP クライアントポッドで bash を実行します。
 
    ```console
    kubectl exec -it oltp-client -- bash
    ```
 
-   この手順の後、OLTP クライアント ポッドで各コマンドを実行します。
+   この手順の後、OLTP クライアントポッドで各コマンドを実行します。
 
-1. git および curl コマンドを OLTP クライアント ポッドにインストールします。
+1. git および curl コマンドを OLTP クライアントポッドにインストールします。
 
    ```console
    apt update && apt install -y curl git
    ```
 
-1. ScalarDB サンプル リポジトリのクローンを作成します。
+1. ScalarDB サンプルリポジトリのクローンを作成します。
 
    ```console
    git clone https://github.com/scalar-labs/scalardb-samples.git
@@ -200,19 +201,19 @@ ScalarDB Analytics with PostgreSQL を導入する前に、OLTPトランザク�
    cat << 'EOF' > database.properties
    scalar.db.storage=multi-storage
    scalar.db.multi_storage.storages=storage0,storage1
-   
+
    # Storage 0
    scalar.db.multi_storage.storages.storage0.storage=jdbc
    scalar.db.multi_storage.storages.storage0.contact_points=jdbc:mysql://mysql-scalardb.default.svc.cluster.local:3306/
    scalar.db.multi_storage.storages.storage0.username=root
    scalar.db.multi_storage.storages.storage0.password=mysql
-   
+
    # Storage 1
    scalar.db.multi_storage.storages.storage1.storage=jdbc
    scalar.db.multi_storage.storages.storage1.contact_points=jdbc:postgresql://postgresql-scalardb.default.svc.cluster.local:5432/postgres
    scalar.db.multi_storage.storages.storage1.username=postgres
    scalar.db.multi_storage.storages.storage1.password=postgres
-   
+
    scalar.db.multi_storage.namespace_mapping=customer:storage0,order:storage1
    scalar.db.multi_storage.default_storage=storage1
    EOF
@@ -224,19 +225,19 @@ ScalarDB Analytics with PostgreSQL を導入する前に、OLTPトランザク�
    curl -OL https://github.com/scalar-labs/scalardb/releases/download/v${SCALARDB_VERSION}/scalardb-schema-loader-${SCALARDB_VERSION}.jar
    ```
 
-1. Schema Loader を実行してサンプル テーブルを作成します。
+1. Schema Loader を実行してサンプルテーブルを作成します。
 
    ```console
    java -jar scalardb-schema-loader-${SCALARDB_VERSION}.jar --config database.properties --schema-file schema.json --coordinator
    ```
 
-1. サンプル ワークロードの初期データをロードします。
+1. サンプルワークロードの初期データをロードします。
 
    ```console
    ./gradlew run --args="LoadInitialData"
    ```
 
-1. OLTP トランザクションのサンプル ワークロードを実行します。 これらのコマンドを実行すると、サンプル データとしていくつかの `order` エントリが作成されます。
+1. OLTP トランザクションのサンプルワークロードを実行します。これらのコマンドを実行すると、サンプルデータとしていくつかの `order` エントリが作成されます。
 
    ```console
    ./gradlew run --args="PlaceOrder 1 1:3,2:2"
@@ -277,7 +278,7 @@ ScalarDB Analytics with PostgreSQL を導入する前に、OLTPトランザク�
    exit
    ```
 
-## ステップ 6. ScalarDB Analytics with PostgreSQL のデプロイ
+## ステップ6. ScalarDB Analytics with PostgreSQL のデプロイ
 
 バックエンドデータベースにScalarDB経由でサンプルデータを作成した後、ScalarDB Analytics with PostgreSQL をデプロイします。
 
@@ -289,19 +290,19 @@ ScalarDB Analytics with PostgreSQL を導入する前に、OLTPトランザク�
      databaseProperties: |
        scalar.db.storage=multi-storage
        scalar.db.multi_storage.storages=storage0,storage1
-       
+
        # Storage 0
        scalar.db.multi_storage.storages.storage0.storage=jdbc
        scalar.db.multi_storage.storages.storage0.contact_points=jdbc:mysql://mysql-scalardb.default.svc.cluster.local:3306/
        scalar.db.multi_storage.storages.storage0.username=root
        scalar.db.multi_storage.storages.storage0.password=mysql
-       
+
        # Storage 1
        scalar.db.multi_storage.storages.storage1.storage=jdbc
        scalar.db.multi_storage.storages.storage1.contact_points=jdbc:postgresql://postgresql-scalardb.default.svc.cluster.local:5432/postgres
        scalar.db.multi_storage.storages.storage1.username=postgres
        scalar.db.multi_storage.storages.storage1.password=postgres
-       
+
        scalar.db.multi_storage.namespace_mapping=customer:storage0,order:storage1
        scalar.db.multi_storage.default_storage=storage1
    schemaImporter:
@@ -311,7 +312,7 @@ ScalarDB Analytics with PostgreSQL を導入する前に、OLTPトランザク�
    EOF
    ```
 
-1. PostgreSQL のスーパーユーザー パスワードを設定するためのシークレット リソースを作成します。
+1. PostgreSQL のスーパーユーザーパスワードを設定するためのシークレットリソースを作成します。
 
    ```console
    kubectl create secret generic scalardb-analytics-postgresql-superuser-password --from-literal=superuser-password=scalardb-analytics
@@ -323,17 +324,17 @@ ScalarDB Analytics with PostgreSQL を導入する前に、OLTPトランザク�
    helm install scalardb-analytics-postgresql scalar-labs/scalardb-analytics-postgresql -n default -f ~/scalardb-analytics-postgresql-test/scalardb-analytics-postgresql-custom-values.yaml --version ${CHART_VERSION}
    ```
 
-## ステップ 7. OLAP クライアント ポッドを実行する
+## ステップ7. OLAP クライアントポッドを実行する
 
-ScalarDB Analytics with PostgreSQL を介して一部のクエリを実行するには、OLAP クライアント ポッドを実行します。
+ScalarDB Analytics with PostgreSQL を介して一部のクエリを実行するには、OLAP クライアントポッドを実行します。
 
-1. Kubernetes クラスターで OLAP クライアント ポッドを開始します。
+1. Kubernetes クラスターで OLAP クライアントポッドを開始します。
 
    ```console
    kubectl run olap-client --image postgres:latest -- sleep inf
    ```
 
-1. OLAP クライアント ポッドが実行されているかどうかを確認します。
+1. OLAP クライアントポッドが実行されているかどうかを確認します。
 
    ```console
    kubectl get pod olap-client
@@ -352,17 +353,17 @@ ScalarDB Analytics with PostgreSQL を介して一部のクエリを実行する
    olap-client   1/1     Running   0          10s
    ```
 
-## ステップ 8. ScalarDB Analytics with PostgreSQL を介してサンプル クエリを実行する
+## ステップ8. ScalarDB Analytics with PostgreSQL を介してサンプルクエリを実行する
 
-OLAP クライアント ポッドを実行した後、ScalarDB Analytics with PostgreSQL を介していくつかのクエリを実行できます。
+OLAP クライアントポッドを実行した後、ScalarDB Analytics with PostgreSQL を介していくつかのクエリを実行できます。
 
-1. OLAP クライアント ポッドで bash を実行します。
+1. OLAP クライアントポッドで bash を実行します。
 
    ```console
    kubectl exec -it olap-client -- bash
    ```
 
-   この手順の後、OLAP クライアント ポッドで各コマンドを実行します。
+   この手順の後、OLAP クライアントポッドで各コマンドを実行します。
 
 1. psqlコマンドを実行して ScalarDB Analytics with PostgreSQL にアクセスします。
 
@@ -372,7 +373,7 @@ OLAP クライアント ポッドを実行した後、ScalarDB Analytics with Po
 
    パスワードは `scalardb-analytics` です。
 
-1. `customer.customers` テーブルのサンプル データを読み取ります。
+1. `customer.customers` テーブルのサンプルデータを読み取ります。
 
    ```sql
    SELECT * FROM customer.customers;
@@ -389,7 +390,7 @@ OLAP クライアント ポッドを実行した後、ScalarDB Analytics with Po
    (3 rows)
    ```
 
-1. `order.orders` テーブルのサンプル データを読み取ります。
+1. `order.orders` テーブルのサンプルデータを読み取ります。
 
    ```sql
    SELECT * FROM "order".orders;
@@ -412,7 +413,7 @@ OLAP クライアント ポッドを実行した後、ScalarDB Analytics with Po
    (8 rows)
    ```
 
-1. `order.statements` テーブルのサンプル データを読み取ります。
+1. `order.statements` テーブルのサンプルデータを読み取ります。
 
    ```sql
    SELECT * FROM "order".statements;
@@ -437,7 +438,7 @@ OLAP クライアント ポッドを実行した後、ScalarDB Analytics with Po
    (10 rows)
    ```
 
-1. `order.items` テーブルのサンプル データを読み取ります。
+1. `order.items` テーブルのサンプルデータを読み取ります。
 
    ```sql
    SELECT * FROM "order".items;
@@ -457,7 +458,7 @@ OLAP クライアント ポッドを実行した後、ScalarDB Analytics with Po
    (5 rows)
    ```
 
-1. `JOIN` クエリを実行します。 例えば以下のように各ユーザーのクレジット残高情報を確認できます。
+1. `JOIN` クエリを実行します。例えば以下のように各ユーザーのクレジット残高情報を確認できます。
 
    ```sql
    SELECT * FROM (
@@ -493,13 +494,13 @@ OLAP クライアント ポッドを実行した後、ScalarDB Analytics with Po
    \q
    ```
 
-1. OLAP クライアント ポッドを終了します。
+1. OLAP クライアントポッドを終了します。
 
    ```console
    exit
    ```
 
-## ステップ 9. すべてのリソースを削除する
+## ステップ9. すべてのリソースを削除する
 
 Kubernetes クラスターで ScalarDB Analytics with PostgreSQL テストを完了したら、すべてのリソースを削除します。
 
@@ -509,19 +510,19 @@ Kubernetes クラスターで ScalarDB Analytics with PostgreSQL テストを完
    helm uninstall mysql-scalardb postgresql-scalardb scalardb-analytics-postgresql
    ```
 
-1. クライアント ポッドを削除します。
+1. クライアントポッドを削除します。
 
    ```console
    kubectl delete pod oltp-client olap-client --grace-period 0
    ```
 
-1. 秘密リソースを削除します。
+1. シークレットリソースを削除します。
 
    ```console
    kubectl delete secrets scalardb-analytics-postgresql-superuser-password
    ```
 
-1. 作業ディレクトリとサンプル ファイルを削除します。
+1. 作業ディレクトリとサンプルファイルを削除します。
 
    ```console
    cd ~

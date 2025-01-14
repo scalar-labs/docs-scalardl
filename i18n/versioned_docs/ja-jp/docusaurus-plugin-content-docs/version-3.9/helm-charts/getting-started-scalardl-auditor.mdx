@@ -1,13 +1,14 @@
 ---
+displayed_sidebar: docsJapanese
 ---
 
-# Helm Charts の入門  (ScalarDL Ledger と Auditor / Auditor モード)
+# Helm Charts をはじめよう (ScalarDL Ledger と Auditor / Auditor モード)
 
 import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このドキュメントでは、Kubernetes クラスター上の Helm Chart をテスト環境として使用して、ScalarDL Ledger および Auditor を開始する方法について説明します。 ここでは、テスト用の Mac または Linux 環境がすでにあることを前提としています。 このドキュメントでは **Minikube** を使用しますが、これから説明する手順はどの Kubernetes クラスターでも機能するはずです。
+このドキュメントでは、Kubernetes クラスター上の Helm Chart をテスト環境として使用して、ScalarDL Ledger および Auditor を開始する方法について説明します。ここでは、テスト用の Mac または Linux 環境がすでにあることを前提としています。このドキュメントでは **Minikube** を使用しますが、これから説明する手順はどの Kubernetes クラスターでも機能するはずです。
 
 ## 要件
 
@@ -30,7 +31,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
    * [How to install Scalar products through Azure Marketplace](../scalar-kubernetes/AzureMarketplaceGuide.mdx)
 
 ## 注記
-監査によるビザンチン障害検出を適切に機能させるには、Ledger と Auditor を異なる管理ドメインに展開して管理する必要があります。 ただし、このガイドでは、テストを容易にするために、Ledger と Auditor を同じ Kubernetes クラスターにデプロイします。
+監査によるビザンチン障害検出を適切に機能させるには、Ledger と Auditor を異なる管理ドメインに展開して管理する必要があります。ただし、このガイドでは、テストを容易にするために、Ledger と Auditor を同じ Kubernetes クラスターにデプロイします。
 
 ## 私たちが作るもの
 
@@ -68,13 +69,13 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 +-----------------------------------------------------------------------------------------------------------------------------+
 ```
 
-## ステップ 1. Kubernetes クラスターを開始する
+## ステップ1. Kubernetes クラスターを開始する
 
-まず、Kubernetes クラスターを準備する必要があります。 **minikube** 環境を使用する場合は、[Scalar Helm Charts の入門] (./getting-started-scalar-helm-charts.mdx)を参照してください。 すでに Kubernetes クラスターを開始している場合は、この手順をスキップできます。
+まず、Kubernetes クラスターを準備する必要があります。**minikube** 環境を使用する場合は、[Scalar Helm Charts をはじめよう](./getting-started-scalar-helm-charts.mdx)を参照してください。すでに Kubernetes クラスターを開始している場合は、この手順をスキップできます。
 
-## ステップ 2. PostgreSQL コンテナーを開始する
+## ステップ2. PostgreSQL コンテナーを開始する
 
-ScalarDL Ledger と Auditor は、バックエンド データベースとして何らかのデータベース システムを使用します。 このドキュメントでは PostgreSQL を使用します。
+ScalarDL Ledger と Auditor は、バックエンドデータベースとして何らかのデータベースシステムを使用します。このドキュメントでは PostgreSQL を使用します。
 
 次のようにして、Kubernetes クラスターに PostgreSQL をデプロイできます。
 
@@ -108,18 +109,18 @@ ScalarDL Ledger と Auditor は、バックエンド データベースとして
    postgresql-ledger-0    1/1     Running   0          16s
    ```
 
-## ステップ 3. 作業ディレクトリを作成する
+## ステップ3. 作業ディレクトリを作成する
 
-いくつかの構成ファイルとキー/証明書ファイルをローカルに作成します。 したがって、それらの作業ディレクトリを作成します。
+いくつかの構成ファイルとキー/証明書ファイルをローカルに作成します。したがって、それらの作業ディレクトリを作成します。
 
 1. 作業ディレクトリを作成します。
    ```console
    mkdir -p ~/scalardl-test/certs/
    ```
 
-## ステップ 4. 秘密鍵/証明書ファイルを作成する
+## ステップ4. 秘密鍵/証明書ファイルを作成する
 
-注記：このガイドでは、テストに自己署名証明書を使用します。 ただし、これらの証明書を運用環境では使用しないことを強くお勧めします。
+注記：このガイドでは、テストに自己署名証明書を使用します。ただし、これらの証明書を運用環境では使用しないことを強くお勧めします。
 
 1. 作業ディレクトリを `~/scalardl-test/certs/` ディレクトリに変更します。
    ```console
@@ -230,9 +231,9 @@ ScalarDL Ledger と Auditor は、バックエンド データベースとして
    ledger.pem
    ```
 
-## ステップ 5. Helm Charts を使用して ScalarDL Ledger と ScalarDL Auditor の DB スキーマを作成する
+## ステップ5. Helm Charts を使用して ScalarDL Ledger と ScalarDL Auditor の DB スキーマを作成する
 
-Helm Chart を使用して、Kubernetes クラスターに 2 つの ScalarDL Schema Loader ポッドをデプロイします。
+Helm Chart を使用して、Kubernetes クラスターに2つの ScalarDL Schema Loader ポッドをデプロイします。
 ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB スキーマを作成します。
 
 1. 作業ディレクトリを `~/scalardl-test/` に変更します。
@@ -245,7 +246,7 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB �
    helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
    ```
 
-1. AWS/Azure Marketplace から ScalarDL コンテナー イメージをプルするためのシークレット リソースを作成します。
+1. AWS/Azure Marketplace から ScalarDL コンテナーイメージをプルするためのシークレットリソースを作成します。
    * AWS Marketplace
      ```console
      kubectl create secret docker-registry reg-ecr-mp-secrets \
@@ -262,7 +263,7 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB �
      ```
 
    詳細については、以下のドキュメントを参照してください。
-   
+
    * [How to install Scalar products through AWS Marketplace](../scalar-kubernetes/AwsMarketplaceGuide.mdx)
    * [How to install Scalar products through Azure Marketplace](../scalar-kubernetes/AzureMarketplaceGuide.mdx)
 
@@ -288,7 +289,7 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB �
      ```
 
    * Azure Marketplace
-     
+
      ```console
      cat << 'EOF' > ~/scalardl-test/schema-loader-ledger-custom-values.yaml
      schemaLoading:
@@ -329,7 +330,7 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB �
      ```
 
    * Azure Marketplace
-     
+
      ```console
      cat << 'EOF' > ~/scalardl-test/schema-loader-auditor-custom-values.yaml
      schemaLoading:
@@ -348,14 +349,14 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB �
      EOF
      ```
 
-1. PostgreSQL for Ledger のユーザー名とパスワードを含むシークレット リソースを作成します。
+1. PostgreSQL for Ledger のユーザー名とパスワードを含むシークレットリソースを作成します。
    ```console
    kubectl create secret generic ledger-credentials-secret \
      --from-literal=SCALAR_DL_LEDGER_POSTGRES_USERNAME=postgres \
      --from-literal=SCALAR_DL_LEDGER_POSTGRES_PASSWORD=postgres
    ```
 
-1. PostgreSQL for Auditor のユーザー名とパスワードを含むシークレット リソースを作成します。
+1. PostgreSQL for Auditor のユーザー名とパスワードを含むシークレットリソースを作成します。
    ```console
    kubectl create secret generic auditor-credentials-secret \
      --from-literal=SCALAR_DL_AUDITOR_POSTGRES_USERNAME=postgres \
@@ -386,7 +387,7 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB �
    ```
    ScalarDL Schema Loader ポッドが **ContainerCreating** または **Running** の場合は、プロセスが完了するまで待ちます (STATUS は **Completed** になります)。
 
-## ステップ 6. Helm Chart を使用して Kubernetes クラスターに ScalarDL Ledger と Auditor をデプロイする
+## ステップ6. Helm Chart を使用して Kubernetes クラスターに ScalarDL Ledger と Auditor をデプロイする
 
 1. ScalarDL Ledger のカスタム値ファイル (scalardl-ledger-custom-values.yaml) を作成します。
    * AWS Marketplace
@@ -399,7 +400,7 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB �
          version: "1.3.0"
        imagePullSecrets:
          - name: "reg-ecr-mp-secrets"
-     
+
      ledger:
        image:
          repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-ledger"
@@ -436,7 +437,7 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB �
          version: "1.3.0"
        imagePullSecrets:
          - name: "reg-acr-secrets"
-     
+
      ledger:
        image:
          repository: "<your private container registry>/scalarinc/scalar-ledger"
@@ -473,7 +474,7 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB �
          version: "1.3.0"
        imagePullSecrets:
          - name: "reg-ecr-mp-secrets"
-     
+
      auditor:
        image:
          repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-auditor"
@@ -510,7 +511,7 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB �
          version: "1.3.0"
        imagePullSecrets:
          - name: "reg-acr-secrets"
-     
+
      auditor:
        image:
          repository: "<your private container registry>/scalarinc/scalar-auditor"
@@ -537,12 +538,12 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB �
      EOF
      ```
 
-1. 秘密リソース `ledger-keys` を作成します。
+1. シークレットリソース `ledger-keys` を作成します。
    ```console
    kubectl create secret generic ledger-keys --from-file=certificate=./certs/ledger.pem --from-file=private-key=./certs/ledger-key.pem
    ```
 
-1. 秘密リソース `auditor-keys` を作成します。
+1. シークレットリソース `auditor-keys` を作成します。
    ```console
    kubectl create secret generic auditor-keys --from-file=certificate=./certs/auditor.pem --from-file=private-key=./certs/auditor-key.pem
    ```
@@ -604,18 +605,18 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB �
    scalardl-ledger-headless         ClusterIP   None             <none>        50051/TCP,50053/TCP,50052/TCP   61s
    scalardl-ledger-metrics          ClusterIP   10.99.122.106    <none>        8080/TCP                        61s
    ```
-   ScalarDL Ledger サービスと Auditor サービスが適切にデプロイされている場合は、CLUSTER-IP 列にプライベート IP アドレスが表示されます。 (注記： `scalardl-ledger-headless` と `scalardl-auditor-headless` には CLUSTER-IP がありません。)
+   ScalarDL Ledger サービスと Auditor サービスが適切にデプロイされている場合は、CLUSTER-IP 列にプライベート IP アドレスが表示されます。(注記： `scalardl-ledger-headless` と `scalardl-auditor-headless` には CLUSTER-IP がありません。)
 
-## ステップ 7. クライアントコンテナを開始する
+## ステップ7. クライアントコンテナを開始する
 
-クライアントコンテナで証明書ファイルを使用します。 そこで、シークレット リソースを作成し、クライアント コンテナにマウントします。
+クライアントコンテナで証明書ファイルを使用します。そこで、シークレットリソースを作成し、クライアントコンテナにマウントします。
 
-1. 秘密リソース `client-keys` を作成します。
+1. シークレットリソース `client-keys` を作成します。
    ```
    kubectl create secret generic client-keys --from-file=certificate=./certs/client.pem --from-file=private-key=./certs/client-key.pem
    ```
 
-1. Kubernetes クラスター上でクライアント コンテナーを起動します。
+1. Kubernetes クラスター上でクライアントコンテナーを起動します。
    ```console
    cat << 'EOF' | kubectl apply -f -
    apiVersion: v1
@@ -648,7 +649,7 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB �
        - name: "client-keys"
          secret:
            secretName: "client-keys"
-     restartPolicy: Never 
+     restartPolicy: Never
    EOF
    ```
 
@@ -662,21 +663,21 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB �
    scalardl-client   1/1     Running   0          4s
    ```
 
-## ステップ 8. クライアント コンテナで ScalarDL サンプル コントラクトを実行する
+## ステップ8. クライアントコンテナで ScalarDL サンプルコントラクトを実行する
 
-以下に最低限の手順を説明します。 ScalarDL Ledger とAuditor について詳しく知りたい場合は、以下のドキュメントを参照してください。
+以下に最低限の手順を説明します。ScalarDL Ledger と Auditor について詳しく知りたい場合は、以下のドキュメントを参照してください。
    * [Getting Started with ScalarDL](https://scalardl.scalar-labs.com/ja-jp/docs/latest/getting-started)
    * [Getting Started with ScalarDL Auditor](https://scalardl.scalar-labs.com/ja-jp/docs/latest/getting-started-auditor)
 
-Auditor を使用する場合、クライアントアプリケーションを起動する前に Ledger と Auditor の証明書を登録する必要があります。 Ledger はその証明書を Auditor に登録する必要があり、Auditor はその証明書を Ledger に登録する必要があります。
+Auditor を使用する場合、クライアントアプリケーションを起動する前に Ledger と Auditor の証明書を登録する必要があります。Ledger はその証明書を Auditor に登録する必要があり、Auditor はその証明書を Ledger に登録する必要があります。
 
 1. クライアントコンテナで bash を実行します。
    ```console
    kubectl exec -it scalardl-client -- bash
    ```
-   この手順の後、クライアント コンテナで各コマンドを実行します。
+   この手順の後、クライアントコンテナで各コマンドを実行します。
 
-1. git、curl、および unzip コマンドをクライアント コンテナにインストールします。
+1. git、curl、および unzip コマンドをクライアントコンテナにインストールします。
    ```console
    apt update && apt install -y git curl unzip
    ```
@@ -711,7 +712,7 @@ Auditor を使用する場合、クライアントアプリケーションを起
      master
    * v3.6.0
    ```
-   別のバージョンを使用する場合は、使用するバージョン（タグ）を指定してください。 同じバージョンの ScalarDL Ledger と ScalarDL Java Client SDK を使用する必要があります。
+   別のバージョンを使用する場合は、使用するバージョン (タグ) を指定してください。同じバージョンの ScalarDL Ledger と ScalarDL Java Client SDK を使用する必要があります。
 
 1. サンプルコントラクトを作成します。
    ```console
@@ -734,11 +735,11 @@ Auditor を使用する場合、クライアントアプリケーションを起
    cat << 'EOF' > ledger.as.client.properties
    # Ledger
    scalar.dl.client.server.host=scalardl-ledger-envoy.default.svc.cluster.local
-   
+
    # Auditor
    scalar.dl.client.auditor.enabled=true
    scalar.dl.client.auditor.host=scalardl-auditor-envoy.default.svc.cluster.local
-   
+
    # Certificate
    scalar.dl.client.cert_holder_id=ledger
    scalar.dl.client.cert_path=/keys/ledger/certificate
@@ -751,11 +752,11 @@ Auditor を使用する場合、クライアントアプリケーションを起
    cat << 'EOF' > auditor.as.client.properties
    # Ledger
    scalar.dl.client.server.host=scalardl-ledger-envoy.default.svc.cluster.local
-   
+
    # Auditor
    scalar.dl.client.auditor.enabled=true
    scalar.dl.client.auditor.host=scalardl-auditor-envoy.default.svc.cluster.local
-   
+
    # Certificate
    scalar.dl.client.cert_holder_id=auditor
    scalar.dl.client.cert_path=/keys/auditor/certificate
@@ -768,11 +769,11 @@ Auditor を使用する場合、クライアントアプリケーションを起
    cat << 'EOF' > client.properties
    # Ledger
    scalar.dl.client.server.host=scalardl-ledger-envoy.default.svc.cluster.local
-   
+
    # Auditor
    scalar.dl.client.auditor.enabled=true
    scalar.dl.client.auditor.host=scalardl-auditor-envoy.default.svc.cluster.local
-   
+
    # Certificate
    scalar.dl.client.cert_holder_id=client
    scalar.dl.client.cert_path=/keys/client/certificate
@@ -814,7 +815,7 @@ Auditor を使用する場合、クライアントアプリケーションを起
    ```console
    ./scalardl-java-client-sdk-3.6.0/bin/execute-contract --properties ./client.properties --contract-id StateUpdater --contract-argument '{"asset_id": "test_asset", "state": 3}'
    ```
-   このサンプル コントラクトは、`test_asset` という名前のアセットの `state` (値) を `3` に更新します。
+   このサンプルコントラクトは、`test_asset` という名前のアセットの `state` (値) を `3` に更新します。
 
 1. コントラクト `StateReader` を実行します。
    ```console
@@ -832,9 +833,9 @@ Auditor を使用する場合、クライアントアプリケーションを起
    }
    ```
    * 参考情報
-      * 資産データが改ざんされていない場合、コントラクト実行要求（execute-contract コマンド）は結果として `OK` を返します。
-      * 資産データが改ざんされている場合（例：DBの `state` 値が改ざんされている場合）、コントラクト実行要求（execute-contract コマンド）は結果として `OK` 以外の値（例：`INCONSISTENT_STATES`）を返す , 以下のような感じです。  
-        【コマンド実行結果（資産データが改ざんされた場合）】
+      * 資産データが改ざんされていない場合、コントラクト実行要求 (execute-contract コマンド) は結果として `OK` を返します。
+      * 資産データが改ざんされている場合 (例: DB の `state` 値が改ざんされている場合) 、コントラクト実行要求 (execute-contract コマンド) は結果として `OK` 以外の値 (例：`INCONSISTENT_STATES`) を返す , 以下のような感じです。
+        【コマンド実行結果 (資産データが改ざんされた場合) 】
         ```console
         {
           "status_code" : "INCONSISTENT_STATES",
@@ -868,9 +869,9 @@ Auditor を使用する場合、クライアントアプリケーションを起
    }
    ```
    * 参考情報
-      * 資産データが改ざんされていない場合、検証リクエスト(validate-ledger コマンド)は結果として `OK` を返します。
-      * 資産データが改ざんされている場合（例：DBの `state` 値が改ざんされている場合）、検証リクエスト（validate-ledger コマンド）は結果として `OK` 以外の値（例： `INVALID_OUTPUT`）を返します。 以下のような。  
-        【コマンド実行結果（資産データが改ざんされた場合）】
+      * 資産データが改ざんされていない場合、検証リクエスト (validate-ledger コマンド) は結果として `OK` を返します。
+      * 資産データが改ざんされている場合 (例: DB の `state` 値が改ざんされている場合) 、検証リクエスト (validate-ledger コマンド) は結果として `OK` 以外の値 (例： `INVALID_OUTPUT`) を返します。以下のような。
+        【コマンド実行結果 (資産データが改ざんされた場合) 】
         ```console
         {
           "status_code" : "INCONSISTENT_STATES",
@@ -879,7 +880,7 @@ Auditor を使用する場合、クライアントアプリケーションを起
         ```
           * このようにして、ScalarDL Ledger はデータの改ざんを検出できます。
 
-## ステップ 9. すべてのリソースを削除する
+## ステップ9. すべてのリソースを削除する
 
 Kubernetes クラスターで ScalarDL Ledger テストを完了したら、すべてのリソースを削除します。
 
@@ -893,7 +894,7 @@ Kubernetes クラスターで ScalarDL Ledger テストを完了したら、す�
    kubectl delete pod scalardl-client --force --grace-period 0
    ```
 
-1. 作業ディレクトリとサンプル ファイル (構成ファイル、キー、証明書) を削除します。
+1. 作業ディレクトリとサンプルファイル (構成ファイル、秘密鍵、証明書) を削除します。
    ```console
    cd ~
    ```
@@ -905,6 +906,6 @@ Kubernetes クラスターで ScalarDL Ledger テストを完了したら、す�
 
 Scalar 製品の監視またはログ記録を開始する方法については、次のドキュメントで説明しています。
 
-* [Helm Charts の入門 (Prometheus Operator を使用したモニタリング)](getting-started-monitoring.mdx)
-* [Helm Charts の入門 (Loki スタックを使用したロギング)](getting-started-logging.mdx)
-* [Helm Charts の入門 (Scalar Manager)](getting-started-scalar-manager.mdx)
+* [Helm Charts をはじめよう (Prometheus Operator を使用したモニタリング)](getting-started-monitoring.mdx)
+* [Helm Charts をはじめよう (Loki スタックを使用したロギング)](getting-started-logging.mdx)
+* [Helm Charts をはじめよう (Scalar Manager)](getting-started-scalar-manager.mdx)

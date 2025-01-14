@@ -1,15 +1,16 @@
 ---
 tags:
   - Community
+displayed_sidebar: docsJapanese
 ---
 
-# Helm Charts の入門 (Prometheus Operator を使用したモニタリング)
+# Helm Charts をはじめよう (Prometheus Operator を使用したモニタリング)
 
 import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このドキュメントでは、Prometheus Operator (kube-prometheus-stack) を使用して Kubernetes 上で Scalar 製品の監視を開始する方法について説明します。 ここでは、テスト用の Mac または Linux 環境がすでにあることを前提としています。 このドキュメントでは **Minikube** を使用しますが、これから説明する手順はどの Kubernetes クラスターでも機能するはずです。
+このドキュメントでは、Prometheus Operator (kube-prometheus-stack) を使用して Kubernetes 上で Scalar 製品の監視を開始する方法について説明します。ここでは、テスト用の Mac または Linux 環境がすでにあることを前提としています。このドキュメントでは **Minikube** を使用しますが、これから説明する手順はどの Kubernetes クラスターでも機能するはずです。
 
 ## 私たちが作るもの
 
@@ -39,13 +40,13 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
                         +---------+
 ```
 
-## ステップ 1. Kubernetes クラスターを開始する
+## ステップ1. Kubernetes クラスターを開始する
 
-まず、Kubernetes クラスターを準備する必要があります。 **minikube** 環境を使用する場合は、[Scalar Helm Charts の入門](getting-started-scalar-helm-charts.mdx) を参照してください。 すでに Kubernetes クラスターを開始している場合は、この手順をスキップできます。
+まず、Kubernetes クラスターを準備する必要があります。**minikube** 環境を使用する場合は、[Scalar Helm Charts をはじめよう](getting-started-scalar-helm-charts.mdx)を参照してください。すでに Kubernetes クラスターを開始している場合は、この手順をスキップできます。
 
-## ステップ 2. カスタム値ファイルを準備する
+## ステップ2. カスタム値ファイルを準備する
 
-1. `kube-prometheus-stack` のサンプル ファイル [scalar-prometheus-custom-values.yaml](./conf/scalar-prometheus-custom-values.yaml) を保存します。
+1. `kube-prometheus-stack` のサンプルファイル [scalar-prometheus-custom-values.yaml](./conf/scalar-prometheus-custom-values.yaml) を保存します。
 
 1. 次のように `scalar-prometheus-custom-values.yaml` にカスタム値を追加します。
    * 設定
@@ -81,7 +82,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
        * Helm Chart を使用して Prometheus Operator デプロイメントをカスタマイズする場合は、Scalar 製品を監視するために次の構成を設定する必要があります。
            * Prometheus Operator が Scalar 製品の `ServiceMonitor` および `PrometheusRule` を検出できるように、`serviceMonitorSelectorNilUsesHelmValues` および `ruleSelectorNilUsesHelmValues` を `false` (デフォルトでは `true`) に設定します。
 
-       * Scalar Manager を使用する場合は、Scalar Manager が CPU およびメモリ リソースを収集できるように次の構成を設定する必要があります。
+       * Scalar Manager を使用する場合は、Scalar Manager が CPU およびメモリリソースを収集できるように次の構成を設定する必要があります。
            * `kubeStateMetrics.enabled`、`nodeExporter.enabled`、および `kubelet.enabled` を `true` に設定します。
 
        * Scalar Manager を使用する場合は、Scalar Manager が Grafana を組み込みきるように次の構成を設定する必要があります。
@@ -89,7 +90,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
            * `grafana.ini.auth.anonymous.org_name` を使用中の組織に設定します。Scalar のサンプルを使う場合では、`Main Org.` に設定します。
            * `grafana.ini.auth.anonymous.org_role` を `Editor` に設定します。
 
-## ステップ 3. `kube-prometheus-stack` をデプロイする
+## ステップ3. `kube-prometheus-stack` をデプロイする
 
 1. `prometheus-community` helm リポジトリを追加します。
    ```console
@@ -106,10 +107,10 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
    helm install scalar-monitoring prometheus-community/kube-prometheus-stack -n monitoring -f scalar-prometheus-custom-values.yaml
    ```
 
-## ステップ 4. Helm Chart を使用して Scalar 製品をデプロイ (またはアップグレード)
+## ステップ4. Helm Chart を使用して Scalar 製品をデプロイ (またはアップグレード)
 
 * 注記：
-   * 最低限の手順を説明します。 ScalarDB および ScalarDL のデプロイメントについて詳しく知りたい場合は、以下のドキュメントを参照してください。
+   * 最低限の手順を説明します。ScalarDB および ScalarDL のデプロイメントについて詳しく知りたい場合は、以下のドキュメントを参照してください。
        * [Helm Charts 入門 (ScalarDB Server)](getting-started-scalardb.mdx)
        * [Helm Charts 入門 (ScalarDL Ledger / Ledger のみ)](getting-started-scalardl-ledger.mdx)
        * [Helm Charts 入門 (ScalarDL Ledger および Auditor / Auditor モード)](getting-started-scalardl-auditor.mdx)
@@ -199,11 +200,11 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
          helm upgrade scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
          ```
 
-## ステップ 5. ダッシュボードにアクセスする
+## ステップ5. ダッシュボードにアクセスする
 
 ### minikube を使用する場合
 
-1. 各サービス リソースを `localhost (127.0.0.1)` として公開するには、別のターミナルを開き、`minikube tunnel` コマンドを実行します。
+1. 各サービスリソースを `localhost (127.0.0.1)` として公開するには、別のターミナルを開き、`minikube tunnel` コマンドを実行します。
    ```console
    minikube tunnel
    ```
@@ -246,13 +247,13 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ### minikube 以外の Kubernetes を使用する場合
 
-minikube 以外の Kubernetes クラスターを使用する場合は、各 Kubernetes クラスターの方式に従って LoadBalancer サービスにアクセスする必要があります。 たとえば、クラウド サービスによって提供されるロード バランサーや `kubectl port-forward` コマンドを使用します。
+minikube 以外の Kubernetes クラスターを使用する場合は、各 Kubernetes クラスターの方式に従って LoadBalancer サービスにアクセスする必要があります。たとえば、クラウドサービスによって提供されるロードバランサーや `kubectl port-forward` コマンドを使用します。
 
-## ステップ 6. すべてのリソースを削除する
+## ステップ6. すべてのリソースを削除する
 
-Kubernetes クラスターでのモニタリング テストが完了したら、すべてのリソースを削除します。
+Kubernetes クラスターでのモニタリングテストが完了したら、すべてのリソースを削除します。
 
-1. `minikube tunnel` コマンドを終了します。 (minikubeを使用する場合)
+1. `minikube tunnel` コマンドを終了します。(minikubeを使用する場合)
    ```console
    Ctrl + C
    ```
@@ -262,7 +263,7 @@ Kubernetes クラスターでのモニタリング テストが完了したら�
    helm uninstall scalar-monitoring -n monitoring
    ```
 
-1. minikube を削除します。 (オプション / minikube を使用する場合)
+1. minikube を削除します。(オプション / minikube を使用する場合)
    ```console
    minikube delete --all
    ```

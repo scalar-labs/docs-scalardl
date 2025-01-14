@@ -1,14 +1,15 @@
 ---
+displayed_sidebar: docsJapanese
 ---
 
-# Helm チャートを使い始める (cert-manager / Auditor モードを使用した TLS 対応の ScalarDL Ledger および Auditor)
+# Helm Charts をはじめよう (cert-manager / Auditor モードを使用した TLS 対応の ScalarDL Ledger および Auditor)
 
 このチュートリアルでは、Kubernetes クラスターでテスト環境として Helm Charts と cert-manager を使用して、TLS 構成で ScalarDL Ledger と ScalarDL Auditor を使い始める方法について説明します。開始する前に、テスト用の Mac または Linux 環境を用意しておく必要があります。また、このチュートリアルでは **minikube** の使用について説明していますが、説明されている手順はどの Kubernetes クラスターでも機能するはずです。
 
 ## 要件
 
-* ScalarDL のライセンスキー (試用ライセンスまたは商用ライセンス) が必要です。ライセンスキーをお持ちでない場合は、[お問い合わせ](https://www.scalar-labs.com/contact) ください。
-* TLS をサポートする ScalarDL 3.9 以降を使用する必要があります。
+* ScalarDL のライセンスキー (試用ライセンスまたは商用ライセンス) が必要です。ライセンスキーをお持ちでない場合は、[お問い合わせ](https://www.scalar-labs.com/contact)ください。
+* TLS をサポートする ScalarDL 3.9以降を使用する必要があります。
 
 :::note
 
@@ -81,7 +82,7 @@ cert-manager は、TLS 接続用に次の秘密鍵と証明書ファイルを自
                                                            +----------------------+
 ```
 
-Scalar Helm Charts は、各接続で TLS を有効にするために、Envoy と ScalarDL の各秘密キーと証明書ファイルを次のように自動的にマウントします。ルート CA 証明書ファイルはクライアントに手動でマウントします。
+Scalar Helm Charts は、各接続で TLS を有効にするために、Envoy と ScalarDL の各秘密鍵と証明書ファイルを次のように自動的にマウントします。ルート CA 証明書ファイルはクライアントに手動でマウントします。
 
 ```
                                                                             +------------------------------------------------+      +--------------------------------------+
@@ -110,17 +111,17 @@ ScalarDL 関連コンポーネント間には、次の接続が存在します:
 
 * **`クライアント - ScalarDL Ledger 用 Envoy`:** ScalarDL API 関数を実行すると、クライアントは ScalarDL Ledger 用 Envoy にアクセスします。
 * **`クライアント - ScalarDL Auditor 用 Envoy`:** ScalarDL API 関数を実行すると、クライアントは ScalarDL Auditor 用 Envoy にアクセスします。
-* **`ScalarDL Ledger 用 Envoy - ScalarDL Ledger`:** Envoy は ScalarDL Ledger の前で L7 (gRPC) ロード バランサーとして機能します。
-* **`ScalarDL Auditor 用 Envoy - ScalarDL Auditor`:** Envoy は ScalarDL Auditor の前で L7 (gRPC) ロード バランサーとして機能します。
+* **`ScalarDL Ledger 用 Envoy - ScalarDL Ledger`:** Envoy は ScalarDL Ledger の前で L7 (gRPC) ロードバランサーとして機能します。
+* **`ScalarDL Auditor 用 Envoy - ScalarDL Auditor`:** Envoy は ScalarDL Auditor の前で L7 (gRPC) ロードバランサーとして機能します。
 * **`ScalarDL Auditor - Envoy for ScalarDL Ledger (ScalarDL Ledger)`:** ScalarDL がデータの一貫性を保つために回復プロセスを実行する必要がある場合、ScalarDL Auditor は Envoy を介して ScalarDL Ledger に対してリクエストを実行します。
 
-## ステップ 1. Kubernetes クラスターを起動してツールをインストールする
+## ステップ1. Kubernetes クラスターを起動してツールをインストールする
 
-Kubernetes クラスターを準備し、いくつかのツール (`kubectl`、`helm`、`cfssl`、および `cfssljson`) をインストールする必要があります。インストール方法の詳細については、[Scalar Helm Charts の使用開始](getting-started-scalar-helm-charts.mdx) を参照してください。
+Kubernetes クラスターを準備し、いくつかのツール (`kubectl`、`helm`、`cfssl`、および `cfssljson`) をインストールする必要があります。インストール方法の詳細については、[Scalar Helm Charts の使用開始](getting-started-scalar-helm-charts.mdx)を参照してください。
 
-## ステップ 2. PostgreSQL コンテナを起動する
+## ステップ2. PostgreSQL コンテナを起動する
 
-ScalarDL Ledger と ScalarDL Auditor は、バックエンド データベースとして何らかのデータベース システムを使用する必要があります。このチュートリアルでは、PostgreSQL を使用します。
+ScalarDL Ledger と ScalarDL Auditor は、バックエンドデータベースとして何らかのデータベースシステムを使用する必要があります。このチュートリアルでは、PostgreSQL を使用します。
 
 次のようにして、Kubernetes クラスターに PostgreSQL をデプロイできます。
 
@@ -162,7 +163,7 @@ ScalarDL Ledger と ScalarDL Auditor は、バックエンド データベース
    postgresql-ledger-0    1/1     Running   0          16s
    ```
 
-## ステップ 3. 作業ディレクトリを作成する
+## ステップ3. 作業ディレクトリを作成する
 
 ローカルにいくつかの構成ファイルと秘密鍵および証明書ファイルを作成します。必ずそれらのファイル用の作業ディレクトリを作成してください。
 
@@ -172,7 +173,7 @@ ScalarDL Ledger と ScalarDL Auditor は、バックエンド データベース
    mkdir -p ${HOME}/scalardl-test/
    ```
 
-## ステップ 4. cert-manager と発行者リソースをデプロイする
+## ステップ4. cert-manager と発行者リソースをデプロイする
 
 このチュートリアルでは、cert-manager を使用して秘密鍵と証明書を発行および管理します。次のようにして、Kubernetes クラスターに cert-manager をデプロイできます。
 
@@ -269,9 +270,9 @@ ScalarDL Ledger と ScalarDL Auditor は、バックエンド データベース
    self-signed-issuer   True    6s
    ```
 
-## ステップ 5. Helm Charts を使用して ScalarDL Ledger と ScalarDL Auditor のデータベーススキーマを作成する
+## ステップ5. Helm Charts を使用して ScalarDL Ledger と ScalarDL Auditor のデータベーススキーマを作成する
 
-Helm Charts を使用して、Kubernetes クラスターに 2 つの ScalarDL Schema Loader ポッドをデプロイします。ScalarDL Schema Loader は、PostgreSQL に ScalarDL Ledger と Auditor のデータベーススキーマを作成します。
+Helm Charts を使用して、Kubernetes クラスターに2つの ScalarDL Schema Loader ポッドをデプロイします。ScalarDL Schema Loader は、PostgreSQL に ScalarDL Ledger と Auditor のデータベーススキーマを作成します。
 
 1. Scalar Helm Charts リポジトリを追加します。
 
@@ -327,26 +328,26 @@ Helm Charts を使用して、Kubernetes クラスターに 2 つの ScalarDL Sc
      -n default
    ```
 
-1. ScalarDL スキーマローダーのチャートバージョンを設定します。
+1. ScalarDL Schema Loader のチャートバージョンを設定します。
 
    ```console
    SCALAR_DL_VERSION=3.9.1
    SCALAR_DL_SCHEMA_LOADER_CHART_VERSION=$(helm search repo scalar-labs/schema-loading -l | grep -F "${SCALAR_DL_VERSION}" | awk '{print $2}' | sort --version-sort -r | head -n 1)
    ```
 
-1. ScalarDL Ledger 用の ScalarDL スキーマローダーをデプロイします。
+1. ScalarDL Ledger 用の ScalarDL Schema Loader をデプロイします。
 
    ```console
    helm install schema-loader-ledger scalar-labs/schema-loading -f ${HOME}/scalardl-test/schema-loader-ledger-custom-values.yaml --version ${SCALAR_DL_SCHEMA_LOADER_CHART_VERSION} -n default
    ```
 
-1. ScalarDL Auditor 用の ScalarDL スキーマローダーをデプロイします。
+1. ScalarDL Auditor 用の ScalarDL Schema Loader をデプロイします。
 
    ```console
    helm install schema-loader-auditor scalar-labs/schema-loading -f ${HOME}/scalardl-test/schema-loader-auditor-custom-values.yaml --version ${SCALAR_DL_SCHEMA_LOADER_CHART_VERSION} -n default
    ```
 
-1. ScalarDL スキーマローダーポッドが「完了」ステータスでデプロイされているかどうかを確認します。
+1. ScalarDL Schema Loader ポッドが「完了」ステータスでデプロイされているかどうかを確認します。
 
    ```console
    kubectl get pod -n default
@@ -361,12 +362,12 @@ Helm Charts を使用して、Kubernetes クラスターに 2 つの ScalarDL Sc
    schema-loader-auditor-schema-loading-dvc5r   0/1     Completed   0          6s
    schema-loader-ledger-schema-loading-mtllb    0/1     Completed   0          10s
    ```
-   
-   ScalarDL スキーマローダーポッドのステータスが **ContainerCreating** または **Running** の場合、それらのポッドの `STATUS` 列に `Completed` と表示されるまで待ちます。
 
-## ステップ 6. Helm Charts を使用して、Kubernetes クラスターに ScalarDL Ledger と ScalarDL Auditor をデプロイします
+   ScalarDL Schema Loader ポッドのステータスが **ContainerCreating** または **Running** の場合、それらのポッドの `STATUS` 列に `Completed` と表示されるまで待ちます。
 
-1. ライセンスキーと証明書を環境変数として設定します。ライセンスキーがない場合は、[お問い合わせ](https://www.scalar-labs.com/contact) ください。`<CERT_PEM_FOR_YOUR_SCALAR_DL_LEDGER_LICENSE_KEY>` と `<CERT_PEM_FOR_YOUR_SCALAR_DL_AUDITOR_LICENSE_KEY>` の値の詳細については、[製品ライセンス キーを構成する方法](https://scalardl.scalar-labs.com/docs/latest/scalar-licensing/) を参照してください。
+## ステップ6. Helm Charts を使用して、Kubernetes クラスターに ScalarDL Ledger と ScalarDL Auditor をデプロイします
+
+1. ライセンスキーと証明書を環境変数として設定します。ライセンスキーがない場合は、[お問い合わせ](https://www.scalar-labs.com/contact)ください。`<CERT_PEM_FOR_YOUR_SCALAR_DL_LEDGER_LICENSE_KEY>` と `<CERT_PEM_FOR_YOUR_SCALAR_DL_AUDITOR_LICENSE_KEY>` の値の詳細については、[製品ライセンスキーを構成する方法](https://scalardl.scalar-labs.com/docs/latest/scalar-licensing/)を参照してください。
 
    ```console
    SCALAR_DL_LEDGER_LICENSE_KEY='<YOUR_SCALAR_DL_LEDGER_LICENSE_KEY>'
@@ -537,9 +538,9 @@ Helm Charts を使用して、Kubernetes クラスターに 2 つの ScalarDL Sc
      -n default
    ```
 
-   注意: 認証方法として `hmac` を使用する場合は、Helm Chart 側で `digital-signature` を無効にするためにダミーの秘密 `auditor-key` を作成する必要があります。
+   注意: 認証方法として `hmac` を使用する場合は、Helm Chart 側で `digital-signature` を無効にするためにダミーのシークレット `auditor-key` を作成する必要があります。
 
-1. ScalarDL Ledger と ScalarDL Auditor のチャート バージョンを設定します。
+1. ScalarDL Ledger と ScalarDL Auditor のチャートバージョンを設定します。
 
    ```console
    SCALAR_DL_LEDGER_CHART_VERSION=$(helm search repo scalar-labs/scalardl -l | grep -v -e "scalar-labs/scalardl-audit" | grep -F "${SCALAR_DL_VERSION}" | awk '{print $2}' | sort --version-sort -r | head -n 1)
@@ -614,14 +615,14 @@ Helm Charts を使用して、Kubernetes クラスターに 2 つの ScalarDL Sc
    ```
 
    ScalarDL Ledger および ScalarDL Auditor サービスが適切にデプロイされている場合は、`CLUSTER-IP` 列にプライベート IP アドレスが表示されます。
-   
+
 :::note
 
 `scalardl-ledger-headless`、`scalardl-auditor-headless`、`postgresql-ledger-hl`、および `postgresql-auditor-hl` の `CLUSTER-IP` 値は、IP アドレスがないため `None` になります。
 
 :::
 
-## ステップ 7. クライアントコンテナを起動する
+## ステップ7. クライアントコンテナを起動する
 
 クライアントコンテナで CA 証明書ファイルを使用します。そのため、シークレットリソースを作成し、クライアントコンテナにマウントする必要があります。
 
@@ -631,7 +632,7 @@ Helm Charts を使用して、Kubernetes クラスターに 2 つの ScalarDL Sc
    kubectl create secret generic client-ca-cert --from-file=ca.crt=<(kubectl get secret self-signed-ca-cert-secret -o "jsonpath={.data['ca\.crt']}" | base64 -d) -n default
    ```
 
-1. クライアント ポッドのマニフェスト ファイル (`scalardl-client-pod.yaml`) を作成します。
+1. クライアントポッドのマニフェストファイル (`scalardl-client-pod.yaml`) を作成します。
 
    ```console
    cat << 'EOF' > ${HOME}/scalardl-test/scalardl-client-pod.yaml
@@ -685,7 +686,7 @@ Helm Charts を使用して、Kubernetes クラスターに 2 つの ScalarDL Sc
    scalardl-client   1/1     Running   0          4s
    ```
 
-## ステップ 8. クライアントコンテナで ScalarDL サンプルコントラクトを実行する
+## ステップ8. クライアントコンテナで ScalarDL サンプルコントラクトを実行する
 
 以下では、サンプルコントラクトを実行するために必要な最小限の手順について説明します。ScalarDL Ledger と ScalarDL Auditor の詳細については、以下を参照してください。
 
@@ -697,7 +698,7 @@ Helm Charts を使用して、Kubernetes クラスターに 2 つの ScalarDL Sc
    ```console
    kubectl exec -it scalardl-client -n default -- bash
    ```
-   
+
    次の手順のコマンドは、クライアントコンテナーで実行する必要があります。
 
 1. クライアントコンテナーに git、curl、unzip コマンドをインストールします。
@@ -805,8 +806,8 @@ Helm Charts を使用して、Kubernetes クラスターに 2 つの ScalarDL Sc
    ```console
    ./scalardl-java-client-sdk-${SCALAR_DL_VERSION}/bin/scalardl execute-contract --config ./client.properties --contract-id StateUpdater --contract-argument '{"asset_id": "test_asset", "state": 3}'
    ```
-   
-   このサンプル契約は、`test_asset` という名前の資産の `state` (値) を `3` に更新します。
+
+   このサンプルコントラクトは、`test_asset` という名前のアセットの `state` (値) を `3` に更新します。
 
 1. コントラクト `StateReader` を実行します。
 
@@ -829,10 +830,10 @@ Helm Charts を使用して、Kubernetes クラスターに 2 つの ScalarDL Sc
 
    ### 参照
 
-   * 資産データが改ざんされていない場合、契約実行を要求する `execute-contract` コマンドを実行すると、結果として `OK` が返されます。
-   * アセットデータが改ざんされている場合（たとえば、データベースの `state` 値が改ざんされている場合）、コントラクト実行を要求する `execute-contract` コマンドを実行すると、結果として `OK` 以外の値（たとえば、`INCONSISTENT_STATES`）が返されます。ScalarDL がデータ改ざんを検出する方法の例については、以下を参照してください。
+   * 資産データが改ざんされていない場合、コントラクト実行を要求する `execute-contract` コマンドを実行すると、結果として `OK` が返されます。
+   * アセットデータが改ざんされている場合 (たとえば、データベースの `state` 値が改ざんされている場合) 、コントラクト実行を要求する `execute-contract` コマンドを実行すると、結果として `OK` 以外の値 (たとえば、`INCONSISTENT_STATES`) が返されます。ScalarDL がデータ改ざんを検出する方法の例については、以下を参照してください。
 
-     [コマンド実行結果（資産データが改ざんされた場合）]
+     [コマンド実行結果 (資産データが改ざんされた場合) ]
 
      ```console
      {
@@ -874,7 +875,7 @@ Helm Charts を使用して、Kubernetes クラスターに 2 つの ScalarDL Sc
    * 資産データが改ざんされていない場合、検証を要求する `validate-ledger` コマンドを実行すると、結果として `OK` が返されます。
    * 資産データが改ざんされている場合 (たとえば、データベースの `state` 値が改ざんされている場合)、検証を要求する `validate-ledger` コマンドを実行すると、結果として `OK` 以外の値 (たとえば、`INVALID_OUTPUT`) が返されます。ScalarDL がデータ改ざんを検出する方法の例については、以下を参照してください。
 
-     [コマンド実行結果（資産データが改ざんされた場合）]
+     [コマンド実行結果 (資産データが改ざんされた場合) ]
 
      ```console
      {
@@ -943,6 +944,6 @@ Kubernetes クラスターで ScalarDL Ledger および ScalarDL Auditor テス�
 
 Scalar 製品の監視またはログ記録を開始する方法については、次のチュートリアルを参照してください。
 
-* [Helm チャートの使用開始 (Prometheus Operator を使用したモニタリング)](getting-started-monitoring.mdx)
-* [Helm チャートの使用開始 (Loki Stack を使用したログ記録)](getting-started-logging.mdx)
-* [Helm チャートの使用開始 (Scalar Manager)](getting-started-scalar-manager.mdx)
+* [Helm Charts をはじめよう (Prometheus Operator を使用したモニタリング)](getting-started-monitoring.mdx)
+* [Helm Charts をはじめよう (Loki Stack を使用したログ記録)](getting-started-logging.mdx)
+* [Helm Charts をはじめよう (Scalar Manager)](getting-started-scalar-manager.mdx)
