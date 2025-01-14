@@ -1,4 +1,5 @@
 ---
+displayed_sidebar: docsJapanese
 ---
 
 # ScalarDL Schema Loader のカスタム値ファイルを構成する
@@ -7,13 +8,13 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このドキュメントでは、ScalarDL Schema Loader チャートのカスタム値ファイルを作成する方法について説明します。 パラメータの詳細を知りたい場合は、ScalarDL Schema Loader チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/schema-loading/README.md) を参照してください。
+このドキュメントでは、ScalarDL Schema Loader チャートのカスタム値ファイルを作成する方法について説明します。パラメータの詳細を知りたい場合は、ScalarDL Schema Loader チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/schema-loading/README.md) を参照してください。
 
 ## 必要な構成
 
 ### データベース構成
 
-`schemaLoading.databaseProperties` を設定する必要があります。 バックエンド データベースにアクセスするには、`database.properties` をこのパラメータに設定してください。 ScalarDB のデータベース構成の詳細については、[Getting Started with ScalarDB](https://scalardb.scalar-labs.com/docs/latest/getting-started-with-scalardb) を参照してください。
+`schemaLoading.databaseProperties` を設定する必要があります。バックエンドデータベースにアクセスするには、`database.properties` をこのパラメータに設定してください。ScalarDB のデータベース構成の詳細については、[Getting Started with ScalarDB](https://scalardb.scalar-labs.com/docs/latest/getting-started-with-scalardb) を参照してください。
 
 ```yaml
 schemaLoading:
@@ -49,9 +50,9 @@ schemaLoading:
 
 環境変数を使用して `schemaLoading.databaseProperties` 内の一部のプロパティ (資格情報など) を設定したい場合は、`schemaLoading.secretName` を使用して、いくつかの資格情報を含む Secret リソースを指定できます。
 
-たとえば、環境変数を使用してバックエンド データベースの資格情報 (`scalar.db.username` および `scalar.db.password`) を設定でき、これによりポッドの安全性が高まります。
+たとえば、環境変数を使用してバックエンドデータベースの資格情報 (`scalar.db.username` および `scalar.db.password`) を設定でき、これによりポッドの安全性が高まります。
 
-Secret リソースの使用方法の詳細については、ドキュメント [Secret リソースを使用して資格情報を環境変数としてプロパティ ファイルに渡す方法](use-secret-for-credentials.mdx) を参照してください。
+Secret リソースの使用方法の詳細については、ドキュメント [Secret リソースを使用して資格情報を環境変数としてプロパティファイルに渡す方法](use-secret-for-credentials.mdx)を参照してください。
 
 ```yaml
 schemaLoading:
@@ -60,7 +61,7 @@ schemaLoading:
 
 ### 画像構成 (デフォルト値を推奨)
 
-イメージ リポジトリを変更する場合は、`schemaLoading.image.repository` を使用して、プルする ScalarDL Schema Loader コンテナ イメージのコンテナ リポジトリ情報を指定できます。
+イメージリポジトリを変更する場合は、`schemaLoading.image.repository` を使用して、プルする ScalarDL Schema Loader コンテナイメージのコンテナリポジトリ情報を指定できます。
 
 ```yaml
 schemaLoading:
@@ -70,7 +71,7 @@ schemaLoading:
 
 ### フラグ設定 (環境に応じてオプション)
 
-複数のフラグを配列として指定できます。 フラグの詳細については、ドキュメント [ScalarDB Schema Loader](https://scalardb.scalar-labs.com/docs/latest/schema-loader) を参照してください。
+複数のフラグを配列として指定できます。フラグの詳細については、ドキュメント [ScalarDB Schema Loader](https://scalardb.scalar-labs.com/docs/latest/schema-loader) を参照してください。
 
 ```yaml
 schemaLoading:

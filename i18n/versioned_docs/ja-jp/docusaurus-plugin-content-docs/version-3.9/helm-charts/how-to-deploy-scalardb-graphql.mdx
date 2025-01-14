@@ -2,6 +2,7 @@
 tags:
   - Enterprise Standard
   - Enterprise Premium
+displayed_sidebar: docsJapanese
 ---
 
 # [非推奨] ScalarDB GraphQL をデプロイする方法
@@ -12,23 +13,23 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 :::note
 
-ScalarDB GraphQL サーバーは非推奨になりました。 代わりに [ScalarDB Cluster](how-to-deploy-scalardb-cluster.mdx) を使用してください。
+ScalarDB GraphQL サーバーは非推奨になりました。代わりに [ScalarDB Cluster](how-to-deploy-scalardb-cluster.mdx) を使用してください。
 
 :::
 
-このドキュメントでは、Scalar Helm Chart を使用して ScalarDB GraphQL をデプロイする方法について説明します。 カスタム値ファイルを準備する必要があります。 ScalarDB GraphQL のカスタム値ファイルの詳細については、次のドキュメントを参照してください。
+このドキュメントでは、Scalar Helm Chart を使用して ScalarDB GraphQL をデプロイする方法について説明します。カスタム値ファイルを準備する必要があります。ScalarDB GraphQL のカスタム値ファイルの詳細については、次のドキュメントを参照してください。
 
 * [[非推奨] ScalarDB GraphQL のカスタム値ファイルを構成する](configure-custom-values-scalardb-graphql.mdx)
 
 ## ScalarDB Server のデプロイ (推奨オプション)
 
-ScalarDB GraphQL をデプロイする場合は、次のように ScalarDB GraphQL とバックエンド データベースの間に ScalarDB Server をデプロイすることをお勧めします。
+ScalarDB GraphQL をデプロイする場合は、次のように ScalarDB GraphQL とバックエンドデータベースの間に ScalarDB Server をデプロイすることをお勧めします。
 
 ```
 [クライアント] ---> [ScalarDB GraphQL] ---> [ScalarDB Server] ---> [バックエンドデータベース]
 ```
 
-ScalarDB GraphQLをデプロイする前に、ドキュメント [ScalarDB Server をデプロイする方法](how-to-deploy-scalardb.mdx) に従ってScalarDB Serverをデプロイしてください。
+ScalarDB GraphQLをデプロイする前に、ドキュメント [ScalarDB Server をデプロイする方法](how-to-deploy-scalardb.mdx)に従ってScalarDB Serverをデプロイしてください。
 
 ## ScalarDB GraphQL をデプロイする
 
