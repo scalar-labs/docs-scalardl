@@ -2,6 +2,7 @@
 tags:
   - Enterprise Standard
   - Enterprise Premium
+displayed_sidebar: docsJapanese
 ---
 
 # ScalarDB Cluster のデプロイする方法
@@ -10,7 +11,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このドキュメントでは、Scalar Helm Chart を使用して ScalarDB Cluster をデプロイする方法について説明します。 ScalarDB Cluster のカスタム値ファイルの詳細については、[ScalarDB Cluster のカスタム値ファイルの構成](configure-custom-values-scalardb-cluster.mdx) を参照してください。
+このドキュメントでは、Scalar Helm Chart を使用して ScalarDB Cluster をデプロイする方法について説明します。ScalarDB Cluster のカスタム値ファイルの詳細については、[ScalarDB Cluster のカスタム値ファイルの構成](configure-custom-values-scalardb-cluster.mdx)を参照してください。
 
 ## ScalarDB Cluster をデプロイする
 
@@ -30,15 +31,15 @@ helm upgrade <RELEASE_NAME> scalar-labs/scalardb-cluster -n <NAMESPACE> -f /<PAT
 helm uninstall <RELEASE_NAME> -n <NAMESPACE>
 ```
 
-## `direct-kubernetes` モードを使用してクライアント アプリケーションを Kubernetes にデプロイします
+## `direct-kubernetes` モードを使用してクライアントアプリケーションを Kubernetes にデプロイします
 
 ScalarDB Cluster を `direct-kubernetes` モードで使用する場合は、次のことを行う必要があります。
 
-1. アプリケーション ポッドを ScalarDB Cluster と同じ Kubernetes クラスターにデプロイします。
-2. 3 つの Kubernetes リソース (`Role`、`RoleBinding`、`ServiceAccount`) を作成します。
-3. アプリケーション ポッドに `ServiceAccount` をマウントします。
+1. アプリケーションポッドを ScalarDB Cluster と同じ Kubernetes クラスターにデプロイします。
+2. 3つの Kubernetes リソース (`Role`、`RoleBinding`、`ServiceAccount`) を作成します。
+3. アプリケーションポッドに `ServiceAccount` をマウントします。
 
-このメソッドが必要なのは、`direct-kubernetes` モードの ScalarDB Cluster クライアント ライブラリがアプリケーション ポッド内から Kubernetes API を実行して、ScalarDB Cluster ポッドに関する情報を取得するためです。
+このメソッドが必要なのは、`direct-kubernetes` モードの ScalarDB Cluster クライアントライブラリがアプリケーションポッド内から Kubernetes API を実行して、ScalarDB Cluster ポッドに関する情報を取得するためです。
 
 * Role
   ```yaml

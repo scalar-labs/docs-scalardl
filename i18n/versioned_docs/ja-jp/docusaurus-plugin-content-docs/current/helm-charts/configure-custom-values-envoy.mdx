@@ -2,29 +2,30 @@
 tags:
   - Enterprise Standard
   - Enterprise Premium
+displayed_sidebar: docsJapanese
 ---
+
+# Scalar Envoy のカスタム値ファイルを構成する
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Scalar Envoy のカスタム値ファイルを構成する
-
-このドキュメントでは、Scalar Envoy チャートのカスタム値ファイルを作成する方法について説明します。 パラメータの詳細を知りたい場合は、Scalar Envoy チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/envoy/README.md) を参照してください。
+このドキュメントでは、Scalar Envoy チャートのカスタム値ファイルを作成する方法について説明します。パラメータの詳細を知りたい場合は、Scalar Envoy チャートの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/envoy/README.md) を参照してください。
 
 ## Scalar Envoy チャートのカスタム値を構成する
 
-Scalar Envoy チャートは他のチャート (scalardb、scalardb-cluster、scalardl、scalardl-audit) 経由で使用されるため、Scalar Envoy チャートのカスタム値ファイルを作成する必要はありません。 Scalar Envoy を設定したい場合は、`envoy.*` 設定を他のチャートに追加する必要があります。
+Scalar Envoy チャートは他のチャート (scalardb、scalardb-cluster、scalardl、scalardl-audit) 経由で使用されるため、Scalar Envoy チャートのカスタム値ファイルを作成する必要はありません。Scalar Envoy を設定したい場合は、`envoy.*` 設定を他のチャートに追加する必要があります。
 
 たとえば、ScalarDB Server 用に Scalar Envoy を構成する場合は、次のように ScalarDB のカスタム値ファイルでいくつかの Scalar Envoy 構成を構成できます。
 
 * 例 (scalardb-custom-values.yaml)
   ```yaml
   envoy:
-    configurationsForScalarEnvoy: 
+    configurationsForScalarEnvoy:
       ...
-  
+
   scalardb:
-    configurationsForScalarDB: 
+    configurationsForScalarDB:
        ...
   ```
 
@@ -32,9 +33,9 @@ Scalar Envoy チャートは他のチャート (scalardb、scalardb-cluster、sc
 
 ### サービス構成
 
-Kubernetes のサービス リソース タイプを指定するには、`envoy.service.type` を設定する必要があります。
+Kubernetes のサービスリソースタイプを指定するには、`envoy.service.type` を設定する必要があります。
 
-Kubernetes クラスターの内部からのみクライアント リクエストを受け入れる場合 (たとえば、クライアント アプリケーションを Scalar 製品と同じ Kubernetes クラスターにデプロイする場合)、`envoy.service.type` を `ClusterIP` に設定できます。 この構成では、クラウド サービス プロバイダーが提供するロード バランサーは作成されません。
+Kubernetes クラスターの内部からのみクライアントリクエストを受け入れる場合 (たとえば、クライアントアプリケーションを Scalar 製品と同じ Kubernetes クラスターにデプロイする場合)、`envoy.service.type` を `ClusterIP` に設定できます。この構成では、クラウドサービスプロバイダーが提供するロードバランサーは作成されません。
 
 ```yaml
 envoy:
@@ -42,7 +43,7 @@ envoy:
     type: ClusterIP
 ```
 
-クラウド サービス プロバイダーが提供するロード バランサーを使用して、Kubernetes クラスターの外部からのクライアント リクエストを受け入れる場合は、`envoy.service.type` を `LoadBalancer` に設定する必要があります。
+クラウドサービスプロバイダーが提供するロードバランサーを使用して、Kubernetes クラスターの外部からのクライアントリクエストを受け入れる場合は、`envoy.service.type` を `LoadBalancer` に設定する必要があります。
 
 ```yaml
 envoy:
@@ -65,9 +66,9 @@ envoy:
 
 ### リソース構成 (本番環境で推奨)
 
-Kubernetes のリクエストと制限を使用してポッド リソースを制御したい場合は、`envoy.resources` を使用できます。
+Kubernetes のリクエストと制限を使用してポッドリソースを制御したい場合は、`envoy.resources` を使用できます。
 
-これらは、Kubernetes のリクエストと制限と同じ構文を使用して構成できます。 そのため、Kubernetes の要求と制限の詳細については、公式ドキュメント [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) を参照してください。
+これらは、Kubernetes のリクエストと制限と同じ構文を使用して構成できます。そのため、Kubernetes の要求と制限の詳細については、公式ドキュメント [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) を参照してください。
 
 ```yaml
 envoy:
@@ -84,7 +85,7 @@ envoy:
 
 Kubernetes のアフィニティと反アフィニティを使用してポッドのデプロイメントを制御したい場合は、`envoy.affinity` を使用できます。
 
-Kubernetes のアフィニティと同じ構文を使用して構成できます。 そのため、Kubernetes のアフィニティ設定の詳細については、公式ドキュメント [Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/) を参照してください。
+Kubernetes のアフィニティと同じ構文を使用して構成できます。そのため、Kubernetes のアフィニティ設定の詳細については、公式ドキュメント [Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/) を参照してください。
 
 ```yaml
 envoy:
@@ -108,7 +109,7 @@ envoy:
 
 ### Prometheus および Grafana 構成 (実稼働環境で推奨)
 
-[kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) を使用して Scalar Envoy ポッドを監視する場合は、`envoy.grafanaDashboard.enabled`、`envoy.serviceMonitor` を使用して、kube-prometheus-stack の ConfigMap、ServiceMonitor、および PrometheusRule リソースをデプロイできます。 `envoy.prometheusRule.enabled` と `envoy.prometheusRule.enabled`。
+[kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) を使用して Scalar Envoy ポッドを監視する場合は、`envoy.grafanaDashboard.enabled`、`envoy.serviceMonitor` を使用して、kube-prometheus-stack の ConfigMap、ServiceMonitor、および PrometheusRule リソースをデプロイできます。`envoy.prometheusRule.enabled` と `envoy.prometheusRule.enabled`。
 
 ```yaml
 envoy:
@@ -128,7 +129,7 @@ envoy:
 
 Scalar Envoy ポッドに SecurityContext と PodSecurityContext を設定する場合は、`envoy.securityContext` と `envoy.podSecurityContext` を使用できます。
 
-KubernetesのSecurityContextやPodSecurityContextと同じ構文を使用して設定できます。 したがって、Kubernetes の SecurityContext および PodSecurityContext 構成の詳細については、公式ドキュメント [Configure a Security Context for a Pod or Container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) を参照してください。
+Kubernetes の SecurityContext や PodSecurityContext と同じ構文を使用して設定できます。したがって、Kubernetes の SecurityContext および PodSecurityContext 構成の詳細については、公式ドキュメント [Configure a Security Context for a Pod or Container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) を参照してください。
 
 ```yaml
 envoy:
@@ -145,7 +146,7 @@ envoy:
 
 ### 画像構成 (デフォルト値を推奨)
 
-イメージ リポジトリとバージョンを変更したい場合は、`envoy.image.repository` を使用して、プルする Scalar Envoy コンテナ イメージのコンテナ リポジトリ情報を指定できます。
+イメージリポジトリとバージョンを変更したい場合は、`envoy.image.repository` を使用して、プルする Scalar Envoy コンテナイメージのコンテナリポジトリ情報を指定できます。
 
 ```yaml
 envoy:
@@ -165,7 +166,7 @@ AWS または Azure を使用している場合、詳細については次のド
 - クライアントと Scalar Envoy 間のダウンストリーム接続。
 - Scalar Envoy と Scalar 製品間のアップストリーム接続。
 
-さらに、次の 2 つの観点からいくつかのオプションがあります。
+さらに、次の2つの観点からいくつかのオプションがあります。
 
 1. 秘密鍵と証明書ファイルの管理
    1. [cert-manager](https://cert-manager.io/docs/) を使用して秘密鍵と証明書ファイルを自動的に管理します。
@@ -174,7 +175,7 @@ AWS または Azure を使用している場合、詳細については次のド
    1. 秘密鍵と証明書ファイルを手動で管理します。
       - ご自身のお好みの方法で、秘密鍵と証明書ファイルを発行・管理することができます。
       - cert-manager がサポートしていない場合でも、任意の証明書を使用できます。
-      - 証明書の有効期限が切れた場合は、シークレット リソースを更新する必要があります。
+      - 証明書の有効期限が切れた場合は、シークレットリソースを更新する必要があります。
 1. 証明書の種類
    1. 信頼できる CA (サードパーティによる署名付き証明書) を使用します。
       - サードパーティの証明書発行者からの信頼できる証明書を使用できます。
@@ -184,7 +185,7 @@ AWS または Azure を使用している場合、詳細については次のド
       - 証明書発行にかかるコストを削減できます。
       - 証明書の信頼性は信頼できる CA よりも低くなりますが、パケットを暗号化できます。
 
-つまり、次の 4 つのオプションがあります。
+つまり、次の4つのオプションがあります。
 
 1. 自動管理で自己署名 CA を使用します。
 1. 自動管理で信頼できる CA を使用します。
@@ -241,7 +242,7 @@ kubectl create secret generic envoy-tls-cert --from-file=tls.crt=/<PATH_TO_YOUR_
 kubectl create secret generic envoy-tls-key --from-file=tls.key=/<PATH_TO_YOUR_PRIVATE_KEY_FILE_FOR_SCALAR_ENVOY> -n <NAMESPACE>
 ```
 
-秘密鍵と証明書ファイルの準備方法の詳細については、[Scalar 製品の秘密鍵と証明書ファイルの作成方法](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.mdx) を参照してください。
+秘密鍵と証明書ファイルの準備方法の詳細については、[Scalar 製品の秘密鍵と証明書ファイルの作成方法](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.mdx)を参照してください。
 
 
 ##### cert-manager で信頼できる CA を使用して秘密鍵と証明書ファイルを管理する
@@ -250,8 +251,8 @@ kubectl create secret generic envoy-tls-key --from-file=tls.key=/<PATH_TO_YOUR_P
 
 :::note
 
-* cert-manager を使用する場合は、cert-manager をデプロイし、`Issuers` リソースを準備する必要があります。詳細については、cert-manager のドキュメント、[インストール](https://cert-manager.io/docs/installation/) および [発行者構成](https://cert-manager.io/docs/configuration/) を参照してください。
-* デフォルトでは、Scalar Helm Chart は Scalar 製品の証明書要件を満たす `Certificate` リソースを作成します。デフォルトの証明書構成が推奨されますが、カスタム証明書構成を使用する場合は、Scalar 製品の証明書要件を満たす必要があります。詳細については、[Scalar 製品の秘密キーと証明書ファイルを作成する方法](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.mdx#certificate-requirements) を参照してください。
+* cert-manager を使用する場合は、cert-manager をデプロイし、`Issuers` リソースを準備する必要があります。詳細については、cert-manager のドキュメント、[インストール](https://cert-manager.io/docs/installation/)および[発行者構成](https://cert-manager.io/docs/configuration/)を参照してください。
+* デフォルトでは、Scalar Helm Chart は Scalar 製品の証明書要件を満たす `Certificate` リソースを作成します。デフォルトの証明書構成が推奨されますが、カスタム証明書構成を使用する場合は、Scalar 製品の証明書要件を満たす必要があります。詳細については、[Scalar 製品の秘密鍵と証明書ファイルを作成する方法](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.mdx#certificate-requirements)を参照してください。
 
 :::
 
@@ -272,12 +273,12 @@ envoy:
 
 ##### cert-manager で自己署名 CA を使用して秘密鍵と証明書ファイルを管理する
 
-次の構成を使用して、cert-manager で秘密キーと自己署名証明書ファイルを管理できます。
+次の構成を使用して、cert-manager で秘密鍵と自己署名証明書ファイルを管理できます。
 
 :::note
 
-* cert-manager を使用する場合は、cert-manager をデプロイする必要があります。詳細については、cert-manager のドキュメント [インストール](https://cert-manager.io/docs/installation/) を参照してください。
-* デフォルトでは、Scalar Helm Chart は Scalar 製品の証明書要件を満たす `Certificate` リソースを作成します。デフォルトの証明書構成が推奨されますが、カスタム証明書構成を使用する場合は、Scalar 製品の証明書要件を満たす必要があります。詳細については、[Scalar 製品の秘密キーと証明書ファイルを作成する方法](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.mdx#certificate-requirements) を参照してください。
+* cert-manager を使用する場合は、cert-manager をデプロイする必要があります。詳細については、cert-manager のドキュメント [インストール](https://cert-manager.io/docs/installation/)を参照してください。
+* デフォルトでは、Scalar Helm Chart は Scalar 製品の証明書要件を満たす `Certificate` リソースを作成します。デフォルトの証明書構成が推奨されますが、カスタム証明書構成を使用する場合は、Scalar 製品の証明書要件を満たす必要があります。詳細については、[Scalar 製品の秘密鍵と証明書ファイルを作成する方法](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.mdx#certificate-requirements)を参照してください。
 
 :::
 
@@ -333,7 +334,7 @@ envoy:
       caRootCertSecret: "envoy-upstream-scalardb-cluster-root-ca"
 ```
 
-この場合、次のように CA 証明書ファイルを含むシークレット リソースを作成する必要があります。使用するアップストリーム (ScalarDB Cluster、ScalarDL Ledger、または ScalarDL Auditor) に基づいてルート CA 証明書ファイルを設定する必要があります。説明されているように、山括弧内の内容を必ず置き換えてください。
+この場合、次のように CA 証明書ファイルを含むシークレットリソースを作成する必要があります。使用するアップストリーム (ScalarDB Cluster、ScalarDL Ledger、または ScalarDL Auditor) に基づいてルート CA 証明書ファイルを設定する必要があります。説明されているように、山括弧内の内容を必ず置き換えてください。
 
 <Tabs>
   <TabItem value="ScalarDB_Cluster" label="ScalarDB Cluster" default>
@@ -353,11 +354,11 @@ envoy:
   </TabItem>
 </Tabs>
 
-秘密鍵と証明書ファイルを準備する方法の詳細については、[Scalar 製品のキーと証明書ファイルを作成する方法](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.mdx) を参照してください。
+秘密鍵と証明書ファイルを準備する方法の詳細については、[Scalar 製品のキーと証明書ファイルを作成する方法](../scalar-kubernetes/HowToCreateKeyAndCertificateFiles.mdx)を参照してください。
 
 ##### TLS通信のカスタム権限を設定する
 
-`envoy.tls.upstream.overrideAuthority` を使用して、TLS 通信のカスタム権限を設定できます。この値によって、実際に接続されているホストが変わることはありません。この値はテスト用ですが、DNS オーバーライドの代替としてテスト以外でも安全に使用できます。たとえば、使用している製品に応じて、`scalardbCluster.tls.certChainSecret`、`ledger.tls.certChainSecret`、または `auditor.tls.certChainSecret` を使用して設定した証明書チェーン ファイルに示されているホスト名を指定できます。Envoy はこの値を使用して、ScalarDB Cluster または ScalarDL との TLS 接続の証明書を検証します。
+`envoy.tls.upstream.overrideAuthority` を使用して、TLS 通信のカスタム権限を設定できます。この値によって、実際に接続されているホストが変わることはありません。この値はテスト用ですが、DNS オーバーライドの代替としてテスト以外でも安全に使用できます。たとえば、使用している製品に応じて、`scalardbCluster.tls.certChainSecret`、`ledger.tls.certChainSecret`、または `auditor.tls.certChainSecret` を使用して設定した証明書チェーンファイルに示されているホスト名を指定できます。Envoy はこの値を使用して、ScalarDB Cluster または ScalarDL との TLS 接続の証明書を検証します。
 
 ```yaml
 envoy:
@@ -380,7 +381,7 @@ envoy:
 
 Kubernetes のテイントと許容を使用してポッドのデプロイメントを制御したい場合は、`envoy.tolerations` を使用できます。
 
-Kubernetes の許容と同じ構文を使用して、テイントと許容を構成できます。 Kubernetes での許容設定の詳細については、Kubernetes の公式ドキュメント [Taints and Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/) を参照してください。
+Kubernetes の許容と同じ構文を使用して、テイントと許容を構成できます。Kubernetes での許容設定の詳細については、Kubernetes の公式ドキュメント [Taints and Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/) を参照してください。
 
 ```yaml
 envoy:

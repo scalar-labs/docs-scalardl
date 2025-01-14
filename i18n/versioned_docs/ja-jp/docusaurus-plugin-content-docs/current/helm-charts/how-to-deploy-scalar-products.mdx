@@ -2,6 +2,7 @@
 tags:
   - Enterprise Standard
   - Enterprise Premium
+displayed_sidebar: docsJapanese
 ---
 
 # Scalar Helm Chart を使用して Scalar 製品をデプロイする
@@ -10,15 +11,15 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このドキュメントでは、Scalar Helm Chart を使用して Scalar 製品をデプロイする方法について説明します。 minikube クラスターを使用してローカル環境で Scalar 製品をテストする場合は、次のスタート ガイドを参照してください。
+このドキュメントでは、Scalar Helm Chart を使用して Scalar 製品をデプロイする方法について説明します。minikube クラスターを使用してローカル環境で Scalar 製品をテストする場合は、次のスタートガイドを参照してください。
 
-* [Scalar Helm Charts の入門](getting-started-scalar-helm-charts.mdx)
+* [Scalar Helm Charts をはじめよう](getting-started-scalar-helm-charts.mdx)
 
 ## 前提条件
 
 ### Helm コマンドをインストールする
 
-Scalar Helm Charts を使用するには、helm コマンドをインストールする必要があります。 [Helm ドキュメント](https://helm.sh/docs/intro/install/)に従って helm コマンドをインストールしてください。
+Scalar Helm Charts を使用するには、helm コマンドをインストールする必要があります。[Helm ドキュメント](https://helm.sh/docs/intro/install/)に従って helm コマンドをインストールしてください。
 
 ### Scalar Helm Charts リポジトリを追加する
 
@@ -31,7 +32,7 @@ helm repo update scalar-labs
 
 ### Kubernetes クラスターを準備する
 
-Scalar 製品を展開するには、Kubernetes クラスターを準備する必要があります。 運用環境で EKS (Amazon Elastic Kubernetes Service) または AKS (Azure Kubernetes Service) を使用している場合。 詳細については、次のドキュメントを参照してください。
+Scalar 製品を展開するには、Kubernetes クラスターを準備する必要があります。運用環境で EKS (Amazon Elastic Kubernetes Service) または AKS (Azure Kubernetes Service) を使用している場合。詳細については、次のドキュメントを参照してください。
 
 - [Scalar 製品用の Amazon EKS クラスターを作成するためのガイドライン](../scalar-kubernetes/CreateEKSClusterForScalarProducts.mdx)
 - [Scalar 製品用の AKS クラスターを作成するためのガイドライン](../scalar-kubernetes/CreateAKSClusterForScalarProducts.mdx)
@@ -40,21 +41,21 @@ Scalar 製品を展開するには、Kubernetes クラスターを準備する�
 
 ### データベースの準備 (ScalarDB、ScalarDL Ledger、ScalarDL Auditor)
 
-ScalarDB/ScalarDLのバックエンドストレージとしてデータベースを用意する必要があります。 ScalarDB/ScalarDL がサポートするデータベースは次のドキュメントで確認できます。
+ScalarDB/ScalarDLのバックエンドストレージとしてデータベースを用意する必要があります。ScalarDB/ScalarDL がサポートするデータベースは次のドキュメントで確認できます。
 
 * [ScalarDB がサポートするデータベース](https://scalardb.scalar-labs.com/docs/latest/requirements#databases)
 
 ### カスタム値ファイルを準備する
 
-環境に基づいてカスタム値ファイルを準備する必要があります。 カスタム値ファイルの作成方法の詳細については、次のドキュメントを参照してください。
+環境に基づいてカスタム値ファイルを準備する必要があります。カスタム値ファイルの作成方法の詳細については、次のドキュメントを参照してください。
 
 * [Scalar Helm Charts のカスタム値ファイルを構成する](configure-custom-values-file.mdx)
 
 ### コンテナイメージを取得する
 
-特に商用ライセンス製品を使用する場合は、Scalar 製品のコンテナ イメージを取得する必要があります。 Scalar 製品のコンテナ リポジトリの詳細については、[Scalar 製品のコンテナ イメージを取得する方法](../scalar-kubernetes/HowToGetContainerImages.mdx) を参照してください。
+特に商用ライセンス製品を使用する場合は、Scalar 製品のコンテナイメージを取得する必要があります。Scalar 製品のコンテナリポジトリの詳細については、[Scalar 製品のコンテナイメージを取得する方法](../scalar-kubernetes/HowToGetContainerImages.mdx)を参照してください。
 
-PostgreSQL で ScalarDB Analytics などの OSS 製品を使用する場合は、パブリック コンテナ リポジトリからコンテナ イメージを取得できます。
+ScalarDB Analytics with PostgreSQL などの OSS 製品を使用する場合は、パブリックコンテナリポジトリからコンテナイメージを取得できます。
 
 ## Scalar 製品をデプロイする
 

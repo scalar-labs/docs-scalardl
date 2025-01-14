@@ -2,15 +2,16 @@
 tags:
   - Enterprise Standard
   - Enterprise Premium
+displayed_sidebar: docsJapanese
 ---
 
 # Scalar 製品ポッドにファイルまたはボリュームをマウントします
 
 ScalarDB Server、ScalarDB Cluster、ScalarDB Analytics with PostgreSQL、または ScalarDL Helm Charts (ScalarDL Ledger および ScalarDL Auditor) を使用する場合、Scalar 製品ポッドに任意のファイルまたはボリュームをマウントできます。
 
-## ScalarDL Helm Charts のポッドにキーファイルと証明書ファイルをマウントする
+## ScalarDL Helm Charts のポッドに秘密鍵ファイルと証明書ファイルをマウントする
 
-ScalarDL Auditor を実行するには、キー ファイルと証明書ファイルをマウントする必要があります。
+ScalarDL Auditor を実行するには、秘密鍵ファイルと証明書ファイルをマウントする必要があります。
 
 * 構成例
     * ScalarDL Ledger
@@ -31,9 +32,9 @@ ScalarDL Auditor を実行するには、キー ファイルと証明書ファ�
           scalar.dl.auditor.cert_path=/keys/certificate
       ```
 
-この例では、**秘密キー** ファイルと **証明書** ファイルをコンテナ内の `/keys` ディレクトリにマウントする必要があります。 そして、`private-key` と `certificate` という名前のファイルをマウントする必要があります。 これらのファイルをマウントするには、`extraVolumes` および `extraVolumeMounts` を使用できます。
+この例では、**秘密鍵** ファイルと **証明書** ファイルをコンテナ内の `/keys` ディレクトリにマウントする必要があります。そして、`private-key` と `certificate` という名前のファイルをマウントする必要があります。これらのファイルをマウントするには、`extraVolumes` および `extraVolumeMounts` を使用できます。
 
-1. Kubernetes マニフェストと同じ構文を使用して、カスタム値ファイルに `extraVolumes` と `extraVolumeMounts` を設定します。 `mountPath` キーにディレクトリ名を指定する必要があります。
+1. Kubernetes マニフェストと同じ構文を使用して、カスタム値ファイルに `extraVolumes` と `extraVolumeMounts` を設定します。`mountPath` キーにディレクトリ名を指定する必要があります。
    * 例
         * ScalarDL Ledger
           ```yaml
@@ -79,16 +80,16 @@ ScalarDL Auditor を実行するには、キー ファイルと証明書ファ�
 
 1. 上記のカスタム値ファイルを使用して Scalar 製品をデプロイします。
 
-   Scalar 製品を展開した後、次のようにキー ファイルと証明書ファイルが `/keys` ディレクトリにマウントされます。
+   Scalar 製品を展開した後、次のように秘密鍵ファイルと証明書ファイルが `/keys` ディレクトリにマウントされます。
 
    * 例
        * ScalarDL Ledger
          ```console
          ls -l /keys/
          ```
-         
+
          次のような結果が表示されます：
-         
+
          ```console
          total 0
          lrwxrwxrwx 1 root root 18 Jun 27 03:12 private-key -> ..data/private-key
@@ -99,16 +100,16 @@ ScalarDL Auditor を実行するには、キー ファイルと証明書ファ�
          ```
 
          次のような結果が表示されます：
-         
+
          ```console
          total 0
          lrwxrwxrwx 1 root root 18 Jun 27 03:16 certificate -> ..data/certificate
          lrwxrwxrwx 1 root root 18 Jun 27 03:16 private-key -> ..data/private-key
          ```
 
-## emptyDir をマウントしてヒープ ダンプ ファイルを取得します
+## emptyDir をマウントしてヒープダンプファイルを取得します
 
-カスタム値ファイルで次のキーを使用して、emptyDir を Scalar 製品ポッドにマウントできます。 たとえば、このボリュームを使用して、Scalar 製品のヒープ ダンプを取得できます。
+カスタム値ファイルで次のキーを使用して、emptyDir を Scalar 製品ポッドにマウントできます。たとえば、このボリュームを使用して、Scalar 製品のヒープダンプを取得できます。
 
 * キー
   * `scalardb.extraVolumes` / `scalardb.extraVolumeMounts` (ScalarDB Server)
