@@ -103,7 +103,7 @@ client/bin/scalardl register-functions --properties client.properties --function
 
 ## Manage object authenticity
 
-For object authenticity management, you can put a hash value of an object by using the [`object.Put` contract](generic-contracts-reference.mdx#objectput-contract). Specify the target object ID and the hash value of the object like in the following example. The object ID must be a unique ID that identifies your objects or files, for example, a key of an object or a file path. You can also put any properties associated with the object by using the `properties` option.
+For object authenticity management, you can put a hash value of an object by using the [`object.Put` contract](generic-contracts-reference.mdx#objectput-contract). Specify the target object ID and the hash value of the object like in the following example. The object ID must be a unique ID that identifies your objects or files, for example, a key of an object or a file path. You can also put any metadata associated with the object by using the `metadata` option.
 
 First, get the hash value of a file and put it into the tamper-evident ledger.
 
