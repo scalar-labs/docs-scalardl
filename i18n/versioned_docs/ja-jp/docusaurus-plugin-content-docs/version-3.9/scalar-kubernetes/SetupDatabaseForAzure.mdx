@@ -2,6 +2,7 @@
 tags:
   - Enterprise Standard
   - Enterprise Premium
+displayed_sidebar: docsJapanese
 ---
 
 # Azure で ScalarDB/ScalarDL デプロイ用のデータベースをセットアップする
@@ -16,7 +17,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ### 認証方法
 
-Cosmos DB for NoSQL を使用する場合は、ScalarDB/ScalarDL プロパティ ファイルで `COSMOS_DB_URI` と `COSMOS_DB_KEY` を次のように設定する必要があります。
+Cosmos DB for NoSQL を使用する場合は、ScalarDB/ScalarDL プロパティファイルで `COSMOS_DB_URI` と `COSMOS_DB_KEY` を次のように設定する必要があります。
 
 ```properties
 scalar.db.contact_points=<COSMOS_DB_URI>
@@ -32,13 +33,13 @@ Cosmos DB for NoSQL のプロパティの詳細については、次のドキュ
 
 #### Azure Cosmos DB アカウントを作成する
 
-NoSQL (コア) API を使用して Azure Cosmos DB アカウントを作成する必要があります。 **Capacity mode**を作成するときは、**Provisioned throughput**として設定する必要があります。 詳細については公式ドキュメントを参照してください。
+NoSQL (コア) API を使用して Azure Cosmos DB アカウントを作成する必要があります。**Capacity mode**を作成するときは、**Provisioned throughput**として設定する必要があります。詳細については公式ドキュメントを参照してください。
 
 * [Quickstart: Create an Azure Cosmos DB account, database, container, and items from the Azure portal](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/quickstart-portal)
 
 #### デフォルトの整合性構成を構成する
 
-**Default consistency level**を**Strong**に設定する必要があります。 詳細については公式ドキュメントを参照してください。
+**Default consistency level**を**Strong**に設定する必要があります。詳細については公式ドキュメントを参照してください。
 
 * [Configure the default consistency level](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/how-to-manage-consistency#config/ure-the-default-consistency-level)
 
@@ -46,37 +47,37 @@ NoSQL (コア) API を使用して Azure Cosmos DB アカウントを作成す�
 
 #### バックアップ構成を構成する (実稼働環境で推奨)
 
-PITR の **Backup modes**を **Continuous backup mode**として構成できます。 詳細については公式ドキュメントを参照してください。
+PITR の **Backup modes**を **Continuous backup mode**として構成できます。詳細については公式ドキュメントを参照してください。
 
 * [Backup modes](https://learn.microsoft.com/en-us/azure/cosmos-db/online-backup-and-restore#backup-modes)
 
-継続バックアップ モードでは自動的かつ継続的にバックアップが取得されるため、バックアップ操作のダウンタイム (一時停止期間) を短縮できるため、このモードをお勧めします。 Scalar 製品データのバックアップ/復元方法の詳細については、次のドキュメントを参照してください。
+継続バックアップモードでは自動的かつ継続的にバックアップが取得されるため、バックアップ操作のダウンタイム (一時停止期間) を短縮できるため、このモードをお勧めします。Scalar 製品データのバックアップ/復元方法の詳細については、次のドキュメントを参照してください。
 
 * [Scalar 製品のバックアップ復元ガイド](BackupRestoreGuide.mdx)
 
-#### Configure monitoring (Recommended in the production environment)
+#### 監視を構成する (運用環境で推奨)
 
-You can configure the monitoring of Cosmos DB using its native feature. Please refer to the official document for more details.
+Cosmos DB の監視は、ネイティブ機能を使用して構成できます。詳細については、公式ドキュメントを参照してください。
 
-* [Monitor Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/monitor)
+* [Azure Cosmos DB を監視する](https://learn.microsoft.com/en-us/azure/cosmos-db/monitor)
 
-It is recommended since the metrics and logs help you to investigate some issues in the production environment when they happen.
+メトリックとログは、運用環境で問題が発生したときに調査するのに役立つため、推奨されます。
 
-#### サービス エンドポイントを有効にする (運用環境で推奨)
+#### サービスエンドポイントを有効にする (運用環境で推奨)
 
-仮想ネットワーク (VNet) の特定のサブネットからのアクセスのみを許可するように Azure Cosmos DB アカウントを構成できます。 詳細については公式ドキュメントを参照してください。
+仮想ネットワーク (VNet) の特定のサブネットからのアクセスのみを許可するように Azure Cosmos DB アカウントを構成できます。詳細については公式ドキュメントを参照してください。
 
 * [Configure access to Azure Cosmos DB from virtual networks (VNet)](https://learn.microsoft.com/en-us/azure/cosmos-db/how-to-configure-vnet-service-endpoint)
 
 WAN 経由ではないプライベート内部接続によりシステムの安全性が高まるため、これをお勧めします。
 
-#### リクエスト ユニットを構成します (環境に応じてオプション)
+#### リクエストユニットを構成します (環境に応じてオプション)
 
-要件に基づいて Cosmos DB の **Request Units** を構成できます。 リクエスト単位の詳細については公式ドキュメントを参照してください。
+要件に基づいて Cosmos DB の **Request Units** を構成できます。リクエスト単位の詳細については公式ドキュメントを参照してください。
 
 * [Request Units in Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/request-units)
 
-テーブルの作成時に、ScalarDB/DL Schema Loader を使用してリクエスト ユニットを構成できます。 ScalarDB/DL Schema Loader を使用してリクエスト ユニット (RU) を構成する方法の詳細については、次のドキュメントを参照してください。
+テーブルの作成時に、ScalarDB/DL Schema Loader を使用してリクエストユニットを構成できます。ScalarDB/DL Schema Loader を使用してリクエストユニット (RU) を構成する方法の詳細については、次のドキュメントを参照してください。
 
 * [ScalarDB Schema Loader](https://scalardb.scalar-labs.com/docs/latest/schema-loader)
 
@@ -84,7 +85,7 @@ WAN 経由ではないプライベート内部接続によりシステムの安�
 
 ### 認証方法
 
-Azure Database for MySQL を使用する場合は、ScalarDB/ScalarDL プロパティ ファイルで `JDBC_URL`、`USERNAME`、および `PASSWORD` を次のように設定する必要があります。
+Azure Database for MySQL を使用する場合は、ScalarDB/ScalarDL プロパティファイルで `JDBC_URL`、`USERNAME`、および `PASSWORD` を次のように設定する必要があります。
 
 ```properties
 scalar.db.contact_points=<JDBC_URL>
@@ -99,13 +100,13 @@ Azure Database for MySQL (JDBC データベース) のプロパティの詳細�
 
 ### 必要な構成/手順
 
-#### データベース サーバーを作成する
+#### データベースサーバーを作成する
 
-データベースサーバーを作成する必要があります。 詳細については公式ドキュメントを参照してください。
+データベースサーバーを作成する必要があります。詳細については公式ドキュメントを参照してください。
 
 * [Quickstart: Use the Azure portal to create an Azure Database for MySQL Flexible Server](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/quickstart-create-server-portal)
 
-導入には **Single Server** または **Flexible Server** を選択できます。 ただし、Azure では Flexible Server が推奨されます。 このドキュメントは、Flexible Server の使用を前提としています。 導入モデルの詳細については、公式ドキュメントを参照してください。
+導入には **Single Server** または **Flexible Server** を選択できます。ただし、Azure では Flexible Server が推奨されます。このドキュメントは、Flexible Server の使用を前提としています。導入モデルの詳細については、公式ドキュメントを参照してください。
 
 * [What is Azure Database for MySQL?](https://learn.microsoft.com/en-us/azure/mysql/single-server/overview#deployment-models)
 
@@ -113,9 +114,9 @@ Azure Database for MySQL (JDBC データベース) のプロパティの詳細�
 
 #### バックアップ構成を構成します (環境に応じてオプション)
 
-Azure Database for MySQL は、既定でバックアップを取得します。 バックアップ機能を手動で有効にする必要はありません。
+Azure Database for MySQL は、既定でバックアップを取得します。バックアップ機能を手動で有効にする必要はありません。
 
-バックアップの保持期間など、一部のバックアップ構成を変更する場合は、それを構成できます。 詳細については公式ドキュメントを参照してください。
+バックアップの保持期間など、一部のバックアップ構成を変更する場合は、それを構成できます。詳細については公式ドキュメントを参照してください。
 
 * [Backup and restore in Azure Database for MySQL Flexible Server](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/concepts-backup-restore)
 
@@ -125,22 +126,22 @@ Scalar 製品データのバックアップ/復元方法の詳細については
 
 #### 監視を構成する (運用環境で推奨)
 
-Azure Database for MySQL のネイティブ機能を使用して、その監視を構成できます。 詳細については公式ドキュメントを参照してください。
+Azure Database for MySQL のネイティブ機能を使用して、その監視を構成できます。詳細については公式ドキュメントを参照してください。
 
 * [Monitor Azure Database for MySQL Flexible Server](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/concepts-monitoring)
 
 メトリクスとログは、運用環境で問題が発生したときにそれを調査するのに役立つため、これをお勧めします。
 
-#### パブリック アクセスを無効にする (運用環境で推奨)
+#### パブリックアクセスを無効にする (運用環境で推奨)
 
-**Private access (VNet Integration)** を **Connectivity method** として構成できます。 詳細については公式ドキュメントを参照してください。
+**Private access (VNet Integration)** を **Connectivity method** として構成できます。詳細については公式ドキュメントを参照してください。
 
 * [Connectivity and networking concepts for Azure Database for MySQL - Flexible Server](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/concepts-networking)
 
-次のように、AKS クラスター上の Scalar 製品ポッドからデータベース サーバーにアクセスできます。
+次のように、AKS クラスター上の Scalar 製品ポッドからデータベースサーバーにアクセスできます。
 
-* AKS クラスターと同じ VNet 上にデータベース サーバーを作成します。
-* [Virtual network peering](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview) を使用して、Scalar 製品デプロイのデータベース サーバー用の VNet と AKS クラスター用の VNet を接続します。 (// TODO: この機能を Scalar 製品でテストする必要があります。)
+* AKS クラスターと同じ VNet 上にデータベースサーバーを作成します。
+* [Virtual network peering](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview) を使用して、Scalar 製品デプロイのデータベースサーバー用の VNet と AKS クラスター用の VNet を接続します。(// TODO: この機能を Scalar 製品でテストする必要があります。)
 
 WAN 経由ではないプライベート内部接続によりシステムの安全性が高まるため、これをお勧めします。
 
@@ -148,7 +149,7 @@ WAN 経由ではないプライベート内部接続によりシステムの安�
 
 ### 認証方法
 
-Azure Database for PostgreSQL を使用する場合は、ScalarDB/ScalarDL プロパティ ファイルで `JDBC_URL`、`USERNAME`、および `PASSWORD` を次のように設定する必要があります。
+Azure Database for PostgreSQL を使用する場合は、ScalarDB/ScalarDL プロパティファイルで `JDBC_URL`、`USERNAME`、および `PASSWORD` を次のように設定する必要があります。
 
 ```properties
 scalar.db.contact_points=<JDBC_URL>
@@ -163,13 +164,13 @@ Azure Database for PostgreSQL (JDBC データベース) のプロパティの詳
 
 ### 必要な構成/手順
 
-#### データベース サーバーを作成する
+#### データベースサーバーを作成する
 
-データベースサーバーを作成する必要があります。 詳細については公式ドキュメントを参照してください。
+データベースサーバーを作成する必要があります。詳細については公式ドキュメントを参照してください。
 
 * [Quickstart: Create an Azure Database for PostgreSQL - Flexible Server in the Azure portal](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/quickstart-create-server-portal)
 
-導入には **Single Server** または **Flexible Server** を選択できます。 ただし、Azure では Flexible Server が推奨されます。 このドキュメントは、Flexible Server の使用を前提としています。 導入モデルの詳細については、公式ドキュメントを参照してください。
+導入には **Single Server** または **Flexible Server** を選択できます。ただし、Azure では Flexible Server が推奨されます。このドキュメントは、Flexible Server の使用を前提としています。導入モデルの詳細については、公式ドキュメントを参照してください。
 
 * [What is Azure Database for PostgreSQL?](https://learn.microsoft.com/en-us/azure/postgresql/single-server/overview#deployment-models)
 
@@ -177,9 +178,9 @@ Azure Database for PostgreSQL (JDBC データベース) のプロパティの詳
 
 #### バックアップ構成を構成します (環境に応じてオプション)
 
-Azure Database for PostgreSQL は、既定でバックアップを取得します。 バックアップ機能を手動で有効にする必要はありません。
+Azure Database for PostgreSQL は、既定でバックアップを取得します。バックアップ機能を手動で有効にする必要はありません。
 
-バックアップの保持期間など、一部のバックアップ構成を変更する場合は、それを構成できます。 詳細については公式ドキュメントを参照してください。
+バックアップの保持期間など、一部のバックアップ構成を変更する場合は、それを構成できます。詳細については公式ドキュメントを参照してください。
 
 * [Backup and restore in Azure Database for PostgreSQL - Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-backup-restore)
 
@@ -189,21 +190,21 @@ Scalar 製品データのバックアップ/復元方法の詳細については
 
 #### 監視を構成する (運用環境で推奨)
 
-Azure Database for PostgreSQL のネイティブ機能を使用して、その監視を構成できます。 詳細については公式ドキュメントを参照してください。
+Azure Database for PostgreSQL のネイティブ機能を使用して、その監視を構成できます。詳細については公式ドキュメントを参照してください。
 
 * [Monitor metrics on Azure Database for PostgreSQL - Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-monitoring)
 
 メトリクスとログは、運用環境で問題が発生したときにそれを調査するのに役立つため、これをお勧めします。
 
-#### パブリック アクセスを無効にする (運用環境で推奨)
+#### パブリックアクセスを無効にする (運用環境で推奨)
 
-**Private access (VNet Integration)** を **Connectivity method** として構成できます。 詳細については公式ドキュメントを参照してください。
+**Private access (VNet Integration)** を **Connectivity method** として構成できます。詳細については公式ドキュメントを参照してください。
 
 * [Networking overview for Azure Database for PostgreSQL - Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-networking)
 
-次のように、AKS クラスター上の Scalar 製品ポッドからデータベース サーバーにアクセスできます。
+次のように、AKS クラスター上の Scalar 製品ポッドからデータベースサーバーにアクセスできます。
 
-* AKS クラスターと同じ VNet 上にデータベース サーバーを作成します。
-* [Virtual network peering](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview) を使用して、Scalar 製品デプロイのデータベース サーバー用の VNet と AKS クラスター用の VNet を接続します。 (// TODO: この機能を Scalar 製品でテストする必要があります。)
+* AKS クラスターと同じ VNet 上にデータベースサーバーを作成します。
+* [Virtual network peering](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview) を使用して、Scalar 製品デプロイのデータベースサーバー用の VNet と AKS クラスター用の VNet を接続します。(// TODO: この機能を Scalar 製品でテストする必要があります。)
 
 WAN 経由ではないプライベート内部接続によりシステムの安全性が高まるため、これをお勧めします。

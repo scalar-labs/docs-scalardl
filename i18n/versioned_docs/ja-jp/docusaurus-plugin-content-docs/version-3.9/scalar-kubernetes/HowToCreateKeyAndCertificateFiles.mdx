@@ -2,6 +2,7 @@
 tags:
   - Enterprise Standard
   - Enterprise Premium
+displayed_sidebar: docsJapanese
 ---
 
 # Scalar 製品で TLS 接続に利用する秘密鍵と証明書ファイルを作成する方法
@@ -16,14 +17,14 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 * 秘密鍵と証明書ファイルのアルゴリズムとしては `RSA` または `ECDSA` のみ使用可能です。
 
-## サンプルの秘密キーと証明書ファイルを作成する手順の例
+## サンプルの秘密鍵と証明書ファイルを作成する手順の例
 
-[`cfssl` および `cfssljson`](https://github.com/cloudflare/cfssl) を使用して、サンプルの秘密キーと証明書ファイルを作成できます。 `cfssl` と `cfssljson` をまだインストールしていない場合は、まずインストールしてください。
+[`cfssl` および `cfssljson`](https://github.com/cloudflare/cfssl) を使用して、サンプルの秘密鍵と証明書ファイルを作成できます。`cfssl` と `cfssljson` をまだインストールしていない場合は、まずインストールしてください。
 
 :::note
 
-* `openssl` などの他のツールを使用して、秘密鍵と証明書ファイルを作成することもできます。 あるいは、サードパーティ CA またはプライベート CA の管理者に本番環境用の秘密キーと証明書の作成を依頼することもできます。
-* この例では自己署名証明書を作成します。 ただし、これらの証明書を運用環境では使用しないことを強くお勧めします。 セキュリティ要件に基づいて実稼働環境用の証明書ファイルを作成するように、信頼できる発行者 (パブリック CA またはプライベート CA) に依頼してください。
+* `openssl` などの他のツールを使用して、秘密鍵と証明書ファイルを作成することもできます。あるいは、サードパーティ CA またはプライベート CA の管理者に本番環境用の秘密鍵と証明書の作成を依頼することもできます。
+* この例では自己署名証明書を作成します。ただし、これらの証明書を運用環境では使用しないことを強くお勧めします。セキュリティ要件に基づいて実稼働環境用の証明書ファイルを作成するように、信頼できる発行者 (パブリック CA またはプライベート CA) に依頼してください。
 
 :::
 
@@ -117,13 +118,13 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
    EOF
    ```
 
-1. サーバーの秘密キーと証明書ファイルを作成します。
+1. サーバーの秘密鍵と証明書ファイルを作成します。
 
    ```console
    cfssl gencert -ca ca.pem -ca-key ca-key.pem -config ca-config.json -profile scalar-example-ca server.json | cfssljson -bare server
    ```
 
-1. 秘密キーと証明書ファイルが作成されたことを確認します。
+1. 秘密鍵と証明書ファイルが作成されたことを確認します。
 
    ```console
    ls -1
