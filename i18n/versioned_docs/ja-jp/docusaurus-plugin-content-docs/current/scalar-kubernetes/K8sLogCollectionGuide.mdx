@@ -2,6 +2,7 @@
 tags:
   - Enterprise Standard
   - Enterprise Premium
+displayed_sidebar: docsJapanese
 ---
 
 # Kubernetes クラスター上の Scalar 製品からのログの収集
@@ -12,9 +13,9 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このドキュメントでは、Helm を使用して Grafana Loki と Promtail を Kubernetes にデプロイする方法について説明します。 このドキュメントに従うと、Kubernetes 環境で Scalar 製品のログを収集できます。
+このドキュメントでは、Helm を使用して Grafana Loki と Promtail を Kubernetes にデプロイする方法について説明します。このドキュメントに従うと、Kubernetes 環境で Scalar 製品のログを収集できます。
 
-マネージド Kubernetes クラスターを使用しており、監視とログ記録にクラウド サービス機能を使用したい場合は、次のドキュメントを参照してください。
+マネージド Kubernetes クラスターを使用しており、監視とログ記録にクラウドサービス機能を使用したい場合は、次のドキュメントを参照してください。
 
 * [Logging and monitoring on Amazon EKS](https://docs.aws.amazon.com/prescriptive-guidance/latest/implementing-logging-monitoring-cloudwatch/amazon-eks-logging-monitoring.html)
 * [Monitoring Azure Kubernetes Service (AKS) with Azure Monitor](https://learn.microsoft.com/en-us/azure/aks/monitor-aks)
@@ -24,8 +25,8 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 * Kubernetes クラスターを作成します。
   * [Scalar 製品用の EKS クラスターを作成する](CreateEKSClusterForScalarProducts.mdx)
   * [Scalar 製品用の AKS クラスターを作成する](CreateAKSClusterForScalarProducts.mdx)
-* 要塞サーバーを作成し、`kubeconfig` を設定します。
-  * [要塞サーバーの作成](CreateBastionServer.mdx)
+* 踏み台サーバーを作成し、`kubeconfig` を設定します。
+  * [踏み台サーバーの作成](CreateBastionServer.mdx)
 * Prometheus Operator をデプロイします (収集されたログを調査するために Grafana を使用します)
   * [Kubernetes クラスター上の Scalar 製品の監視](K8sMonitorGuide.mdx)
 
@@ -42,7 +43,7 @@ helm repo update
 
 ## カスタム値ファイルを準備する
 
-loki-stack のサンプルファイル [scalar-loki-stack-custom-values.yaml](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalar-loki-stack-custom-values.yaml)  を入手してください。 Scalar 製品のロギングには、このサンプル ファイルの構成をお勧めします。
+loki-stack のサンプルファイル [scalar-loki-stack-custom-values.yaml](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalar-loki-stack-custom-values.yaml) を入手してください。Scalar 製品のロギングには、このサンプルファイルの構成をお勧めします。
 
 ### カスタム値ファイルで nodeSelector を設定する (オプション)
 
@@ -148,7 +149,7 @@ Kubernetes ワーカーノードにテイントを追加している場合は、
 
 ## Loki と Promtail をデプロイする
 
-Loki と Promtail は、Prometheus や Grafana と同じ名前空間 `Monitoring` にデプロイすることをお勧めします。 `Monitoring` 名前空間は、ドキュメント [Kubernetes クラスター上の Scalar 製品の監視](K8sMonitorGuide.mdx) ですでに作成済みです。
+Loki と Promtail は、Prometheus や Grafana と同じ名前空間 `Monitoring` にデプロイすることをお勧めします。`Monitoring` 名前空間は、ドキュメント [Kubernetes クラスター上の Scalar 製品の監視](K8sMonitorGuide.mdx)ですでに作成済みです。
 
 ```console
 helm install scalar-logging-loki grafana/loki-stack -n monitoring -f scalar-loki-stack-custom-values.yaml
@@ -156,7 +157,7 @@ helm install scalar-logging-loki grafana/loki-stack -n monitoring -f scalar-loki
 
 ## Loki と Promtail がデプロイされているかどうかを確認する
 
-Loki および Promtail ポッドが適切にデプロイされている場合は、次のコマンドを使用して、`STATUS` が `Running` であることが確認できます。 promtail ポッドは DaemonSet としてデプロイされるため、promtail ポッドの数は Kubernetes ノードの数によって異なります。 次の例では、Kubernetes クラスター内に Scalar 製品のワーカーノードが 3 つあります。
+Loki および Promtail ポッドが適切にデプロイされている場合は、次のコマンドを使用して、`STATUS` が `Running` であることが確認できます。promtail ポッドは DaemonSet としてデプロイされるため、promtail ポッドの数は Kubernetes ノードの数によって異なります。次の例では、Kubernetes クラスター内に Scalar 製品のワーカーノードが3つあります。
 
 ```console
 kubectl get pod -n monitoring
@@ -182,4 +183,4 @@ scalar-logging-loki-promtail-gfx44   1/1     Running   0          32m
 1. ログを問い合わせる条件を設定する。
 1. 右上の `Run query` ボタンを選択します。
 
-Grafana ダッシュボードへのアクセス方法の詳細については、[Kubernetes クラスター上の Scalar 製品の監視](K8sMonitorGuide.mdx) を参照してください。
+Grafana ダッシュボードへのアクセス方法の詳細については、[Kubernetes クラスター上の Scalar 製品の監視](K8sMonitorGuide.mdx)を参照してください。

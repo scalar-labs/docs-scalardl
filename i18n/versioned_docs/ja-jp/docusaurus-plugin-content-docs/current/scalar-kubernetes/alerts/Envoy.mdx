@@ -2,6 +2,7 @@
 tags:
   - Enterprise Standard
   - Enterprise Premium
+displayed_sidebar: docsJapanese
 ---
 
 # Envoy アラート
@@ -12,7 +13,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ## EnvoyClusterDown
 
-これは最も重要なアラートであり、Envoy クラスターがリクエストを処理できないことを示します。 このアラートは最優先で処理する必要があります。
+これは最も重要なアラートであり、Envoy クラスターがリクエストを処理できないことを示します。このアラートは最優先で処理する必要があります。
 
 ### アラートの例
 
@@ -43,12 +44,12 @@ Alert: Envoy cluster is down - critical
 * `kubectl get deployments. prod-scalardl-envoy` で設定されたレプリカの数を確認します。
 * `kubectl describe deployments. prod-scalardl-envoy` はデプロイメントを説明するために設定されたレプリカの数を確認します。
 * `kubectl get node -o wide` でノードのステータスを確認します。
-* ログ サーバーをチェックして、モニター サーバー `/log/kubernetes/<year>/<month>-<day>/kube.log` 上の kubernetes ログで障害の根本原因を特定します。
-* 既知の問題があるかどうかをクラウド プロバイダーに確認してください。 たとえば、Azure の彫像は [ここ](https://status.azure.com/en-us/status) で確認できます。
+* ログサーバーをチェックして、モニターサーバー `/log/kubernetes/<year>/<month>-<day>/kube.log` 上の kubernetes ログで障害の根本原因を特定します。
+* 既知の問題があるかどうかをクラウドプロバイダーに確認してください。たとえば、Azure の彫像は[ここ](https://status.azure.com/en-us/status)で確認できます。
 
 ## EnvoyClusterDegraded
 
-このアラートは、Kubernetes クラスターが Envoy ポッドを開始できないかどうかを示します。これは、クラスターにデプロイメントを実行するための十分なリソースがない、または 1 つまたは複数の Kubernetes ノードが失われたことを意味します。
+このアラートは、Kubernetes クラスターが Envoy ポッドを開始できないかどうかを示します。これは、クラスターにデプロイメントを実行するための十分なリソースがない、または1つまたは複数の Kubernetes ノードが失われたことを意味します。
 
 ### アラートの例
 
@@ -76,11 +77,11 @@ Alert: Envoy cluster is running in a degraded mode - warning
 
 ### 必要なアクション
 
-* ログ サーバーをチェックして、モニター サーバー `/log/kubernetes/<year>/<month>-<day>/kube.log` または  `kubectl logs prod-scalardl-envoy-xxxx-yyyy`  上の kubernetes ログに関する障害の根本原因を特定します。
+* ログサーバーをチェックして、モニターサーバー `/log/kubernetes/<year>/<month>-<day>/kube.log` または  `kubectl logs prod-scalardl-envoy-xxxx-yyyy`  上の kubernetes ログに関する障害の根本原因を特定します。
 * `kubectl describe deployments prod-scalardl-envoy` で kubernetes のデプロイメントを確認します。
-* `kubectl get replicasets.apps` でレプリカ セットを確認します。
+* `kubectl get replicasets.apps` でレプリカセットを確認します。
 * `kubectl get node -o wide` でノードのステータスを確認します。
-* 既知の問題があるかどうかをクラウド プロバイダーに確認してください。 たとえば、Azure の彫像は [ここ](https://status.azure.com/en-us/status) で確認できます。
+* 既知の問題があるかどうかをクラウドプロバイダーに確認してください。たとえば、Azure の彫像は[ここ](https://status.azure.com/en-us/status)で確認できます。
 
 ## EnvoyPodsPending
 
