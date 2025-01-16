@@ -78,7 +78,7 @@ cd scalardl-benchmarks
 
 ベンチマークを実行するには、ベンチマーク構成ファイルを準備する必要があります。 構成ファイルには、少なくとも実行するワークロード モジュールの場所とクライアント構成が必要です。
 
-以下は、TPC-C ベンチマークを実行するための設定例です。 `client_config` の下の構成は、[以前にセットアップしたベンチマーク環境](#set-up-your-environment) と一致する必要があります。
+以下は、TPC-C ベンチマークを実行するための設定例です。 `client_config` の下の構成は、[以前にセットアップしたベンチマーク環境](#環境をセットアップする) と一致する必要があります。
 
 :::note
 
@@ -108,7 +108,7 @@ config_file = "/<PATH_TO>/client.properties"
 #private_key = "/<PATH_TO>/client-key.pem"
 ```
 
-構成ファイル内のモジュールに渡すパラメータを定義できます。 詳細については、以下のサンプル構成ファイルと、[共通パラメータ](#common-parameters) で使用可能なパラメータを参照してください。
+構成ファイル内のモジュールに渡すパラメータを定義できます。 詳細については、以下のサンプル構成ファイルと、[共通パラメータ](#共通パラメータ) で使用可能なパラメータを参照してください。
 
 - **SmallBank:** [`smallbank-benchmark-config.toml`](https://github.com/scalar-labs/scalardl-benchmarks/blob/master/smallbank-benchmark-config.toml)
 - **TPC-C:** [`tpcc-benchmark-config.toml`](https://github.com/scalar-labs/scalardl-benchmarks/blob/master/tpcc-benchmark-config.toml)
