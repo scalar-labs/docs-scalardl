@@ -2,6 +2,7 @@
 tags:
   - Enterprise Standard
   - Enterprise Premium
+displayed_sidebar: docsJapanese
 ---
 
 # Kubernetes クラスター上の Scalar 製品の監視
@@ -10,9 +11,9 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このドキュメントでは、Helm を使用して Prometheus Operator を Kubernetes にデプロイする方法について説明します。 このドキュメントに従うと、Prometheus、Alertmanager、および Grafana を使用して、Kubernetes 環境上の Scalar 製品を監視できるようになります。
+このドキュメントでは、Helm を使用して Prometheus Operator を Kubernetes にデプロイする方法について説明します。このドキュメントに従うと、Prometheus、Alertmanager、および Grafana を使用して、Kubernetes 環境上の Scalar 製品を監視できるようになります。
 
-マネージド Kubernetes クラスターを使用しており、監視とログ記録にクラウド サービス機能を使用したい場合は、次のドキュメントを参照してください。
+マネージド Kubernetes クラスターを使用しており、監視とログ記録にクラウドサービス機能を使用したい場合は、次のドキュメントを参照してください。
 
 * [Logging and monitoring on Amazon EKS](https://docs.aws.amazon.com/prescriptive-guidance/latest/implementing-logging-monitoring-cloudwatch/amazon-eks-logging-monitoring.html)
 * [Monitoring Azure Kubernetes Service (AKS) with Azure Monitor](https://learn.microsoft.com/en-us/azure/aks/monitor-aks)
@@ -22,8 +23,8 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 * Kubernetes クラスターを作成します。
     * [Scalar 製品用の EKS クラスターを作成する](CreateEKSClusterForScalarProducts.mdx)
     * [Scalar 製品用の AKS クラスターを作成する](CreateAKSClusterForScalarProducts.mdx)
-* 要塞サーバーを作成し、`kubeconfig`を設定します。
-    * [要塞サーバーの作成](CreateBastionServer.mdx)
+* 踏み台サーバーを作成し、`kubeconfig`を設定します。
+    * [踏み台サーバーの作成](CreateBastionServer.mdx)
 
 ## prometheus-community helm リポジトリを追加します
 
@@ -38,9 +39,9 @@ helm repo update
 
 ## カスタム値ファイルを準備する
 
-kube-prometheus-stack のサンプル ファイル [scalar-prometheus-custom-values.yaml](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalar-prometheus-custom-values.yaml) を取得してください。 Scalar 製品の監視には、このサンプル ファイルの構成をお勧めします。
+kube-prometheus-stack のサンプルファイル [scalar-prometheus-custom-values.yaml](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalar-prometheus-custom-values.yaml) を取得してください。Scalar 製品の監視には、このサンプルファイルの構成をお勧めします。
 
-このサンプル ファイルでは、サービス リソースは Kubernetes クラスターの外部からのアクセスに公開されていません。 Kubernetes クラスターの外部からダッシュボードにアクセスしたい場合は、`*.service.type` を `LoadBalancer` に設定するか、`*.ingress.enabled` を `true` に設定する必要があります。
+このサンプルファイルでは、サービスリソースは Kubernetes クラスターの外部からのアクセスに公開されていません。Kubernetes クラスターの外部からダッシュボードにアクセスしたい場合は、`*.service.type` を `LoadBalancer` に設定するか、`*.ingress.enabled` を `true` に設定する必要があります。
 
 kube-prometheus-stackの設定の詳細については、以下の公式ドキュメントを参照してください。
 
@@ -48,7 +49,7 @@ kube-prometheus-stackの設定の詳細については、以下の公式ドキ�
 
 ## Prometheus Operator をデプロイする
 
-Scalar 製品は、Prometheus Operator がデフォルトで `monitoring` 名前空間にデプロイされていることを前提としています。 したがって、`monitoring` 名前空間を作成し、`monitoring` 名前空間に Prometheus Operator をデプロイしてください。
+Scalar 製品は、Prometheus Operator がデフォルトで `monitoring` 名前空間にデプロイされていることを前提としています。したがって、`monitoring` 名前空間を作成し、`monitoring` 名前空間に Prometheus Operator をデプロイしてください。
 
 1. Kubernetes 上に名前空間 `monitoring` を作成します。
    ```console
@@ -107,7 +108,7 @@ scalar-monitoring-kube-pro-operator-865bbb8454-9ppkc     1/1     Running   0    
 
 ## ダッシュボードにアクセスする方法
 
-`*.service.type` を `LoadBalancer` に設定するか、`*.ingress.enabled` を `true` に設定すると、Kubernetes の Service または Ingress 経由でダッシュボードにアクセスできます。 具体的な実装とアクセス方法はKubernetesクラスタに依存します。 マネージド Kubernetes クラスターを使用する場合、詳細についてはクラウド プロバイダーの公式ドキュメントを参照してください。
+`*.service.type` を `LoadBalancer` に設定するか、`*.ingress.enabled` を `true` に設定すると、Kubernetes の Service または Ingress 経由でダッシュボードにアクセスできます。具体的な実装とアクセス方法はKubernetesクラスタに依存します。マネージド Kubernetes クラスターを使用する場合、詳細についてはクラウドプロバイダーの公式ドキュメントを参照してください。
 
 * EKS
     * [Network load balancing on Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/network-load-balancing.html)
@@ -116,11 +117,11 @@ scalar-monitoring-kube-pro-operator-865bbb8454-9ppkc     1/1     Running   0    
     * [Use a public standard load balancer in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/load-balancer-standard)
     * [Create an ingress controller in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/ingress-basic)
 
-## ローカル マシンからダッシュボードにアクセスします (テスト目的のみ / 運用環境では推奨されません)
+## ローカルマシンからダッシュボードにアクセスします (テスト目的のみ / 運用環境では推奨されません)
 
-`kubectl port-forward` コマンドを使用して、ローカル マシンから各ダッシュボードにアクセスできます。
+`kubectl port-forward` コマンドを使用して、ローカルマシンから各ダッシュボードにアクセスできます。
 
-1. ローカル マシンから各サービスへのポート転送。
+1. ローカルマシンから各サービスへのポート転送。
    * Prometheus
      ```console
      kubectl port-forward -n monitoring svc/scalar-monitoring-kube-pro-prometheus 9090:9090

@@ -2,6 +2,7 @@
 tags:
   - Enterprise Standard
   - Enterprise Premium
+displayed_sidebar: docsJapanese
 ---
 
 # AWS Marketplace を通じて Scalar 製品をインストールする方法
@@ -18,7 +19,7 @@ Scalar 製品 (ScalarDB、ScalarDL、およびそれらのツール) は、AWS M
 
 - 一部の Scalar 製品は商用ライセンスで利用可能であり、AWS Marketplace ではそれらの製品を従量課金制 (PAYG) 料金で提供しています。従量課金制料金を使用する場合、AWS は使用量に基づいて Scalar 製品のライセンス料を請求します。
 - 以前は、AWS Marketplace でライセンス持ち込み (BYOL) オプションが提供されていました。ただし、このオプションは廃止され、削除されたため、AWS Marketplace ではサポートされなくなりました。
-- BYOL オプションは、AWS Marketplace ではなく、次のパブリックコンテナリポジトリで提供されています。ライセンスキーをお持ちでない場合は、[お問い合わせ](https://www.scalar-labs.com/contact-jp) ください。
+- BYOL オプションは、AWS Marketplace ではなく、次のパブリックコンテナリポジトリで提供されています。ライセンスキーをお持ちでない場合は、[お問い合わせ](https://www.scalar-labs.com/contact-jp)ください。
   - [ScalarDB Cluster Enterprise Standard](https://github.com/orgs/scalar-labs/packages/container/package/scalardb-cluster-node-byol-standard)
   - [ScalarDB Cluster Enterprise Premium](https://github.com/orgs/scalar-labs/packages/container/package/scalardb-cluster-node-byol-premium)
   - [ScalarDL Ledger](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-ledger-byol)
@@ -69,11 +70,11 @@ Scalar 製品 (ScalarDB、ScalarDL、およびそれらのツール) は、AWS M
    すでにサインインしている場合、この手順は自動的にスキップされます。
 
 1. **利用規約**を読み、**利用規約に同意する**を選択します。
-   時間がかかります。 完了すると、**発効日**列に現在の日付が表示されます。
+   時間がかかります。完了すると、**発効日**列に現在の日付が表示されます。
    また、AWS コンソールの  [Manage subscriptions](https://us-east-1.console.aws.amazon.com/marketplace/home#/subscriptions) ページでも製品を確認できます。
 
 ## Scalar Helm Charts を使用して AWS Marketplace から EKS (Amazon Elastic Kubernetes Service) にコンテナをデプロイする
-AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketplace のプライベート コンテナ レジストリ ([ECR](https://aws.amazon.com/ecr/)) から Scalar 製品のコンテナ イメージをプルできます。 このセクションでは、プライベート コンテナー レジストリから [EKS](https://aws.amazon.com/eks/) クラスターに従量課金制の価格で Scalar 製品をデプロイする方法について説明します。
+AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketplace のプライベートコンテナレジストリ ([ECR](https://aws.amazon.com/ecr/)) から Scalar 製品のコンテナイメージをプルできます。このセクションでは、プライベートコンテナーレジストリから [EKS](https://aws.amazon.com/eks/) クラスターに従量課金制の価格で Scalar 製品をデプロイする方法について説明します。
 
 1. OIDC プロバイダーを作成します。
 
@@ -101,7 +102,7 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
    ```
 
 1. インストールする Scalar 製品の Helm Chart のカスタム値ファイルを更新します。
-   カスタム値ファイルの `[].image.repository` の値として、AWS Marketplace のプライベート コンテナ レジストリ (ECR) を指定する必要があります。 また、前の手順で作成したサービス アカウント名を `[].serviceAccount.serviceAccountName` の値として指定し、 `[].serviceAccount.automountServiceAccountToken` を `true` に設定する必要があります。使用している製品に応じて、次の例を参照してください。
+   カスタム値ファイルの `[].image.repository` の値として、AWS Marketplace のプライベートコンテナレジストリ (ECR) を指定する必要があります。また、前の手順で作成したサービスアカウント名を `[].serviceAccount.serviceAccountName` の値として指定し、 `[].serviceAccount.automountServiceAccountToken` を `true` に設定する必要があります。使用している製品に応じて、次の例を参照してください。
 
    <Tabs groupId="products" queryString>
      <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
@@ -169,7 +170,7 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
 
        <h3>ScalarDL Schema Loader for Ledger</h3>
 
-       `schema-loader-ledger-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader) で提供されています。
+       `schema-loader-ledger-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader)で提供されています。
 
      :::note
 
@@ -286,10 +287,10 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
 
 ## **[非推奨] [BYOL]** Scalar Helm Chart を使用して AWS Marketplace から EKS (Amazon Elastic Kubernetes Service) にコンテナをデプロイする
 
-AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketplace のプライベート コンテナ レジストリ ([ECR](https://aws.amazon.com/ecr/)) から Scalar 製品のコンテナ イメージをプルできます。 このセクションでは、プライベート コンテナー レジストリから [EKS](https://aws.amazon.com/eks/)  クラスターに BYOL オプションを使用して Scalar 製品をデプロイする方法について説明します。
+AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketplace のプライベートコンテナレジストリ ([ECR](https://aws.amazon.com/ecr/)) から Scalar 製品のコンテナイメージをプルできます。このセクションでは、プライベートコンテナーレジストリから [EKS](https://aws.amazon.com/eks/)  クラスターに BYOL オプションを使用して Scalar 製品をデプロイする方法について説明します。
 
 1. インストールする Scalar 製品の Helm Chart のカスタム値ファイルを更新します。
-   AWS Marketplace のプライベート コンテナ レジストリ (ECR) をカスタム値ファイルの `[].image.repository` の値として指定する必要があります。使用している製品に応じて、次の例を参照してください。
+   AWS Marketplace のプライベートコンテナレジストリ (ECR) をカスタム値ファイルの `[].image.repository` の値として指定する必要があります。使用している製品に応じて、次の例を参照してください。
 
    <Tabs groupId="products" queryString>
      <TabItem value="scalardb-cluster" label="ScalarDB Cluster" default>
@@ -416,7 +417,7 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
    ```
 
 1. インストールする Scalar 製品の Helm Chart のカスタム値ファイルを更新します。
-   AWS Marketplace のプライベート コンテナ レジストリ (ECR) をカスタム値ファイルの `[].image.repository` の値として指定する必要があります。
+   AWS Marketplace のプライベートコンテナレジストリ (ECR) をカスタム値ファイルの `[].image.repository` の値として指定する必要があります。
    また、`[].imagePullSecrets` の値として `reg-ecr-mp-secrets` を指定する必要があります。使用している製品に応じて、次の例を参照してください。
 
    <Tabs groupId="products" queryString>
@@ -457,7 +458,7 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
 
        <h3>ScalarDL Schema Loader for Ledger</h3>
 
-       `schema-loader-ledger-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader) で提供されています。
+       `schema-loader-ledger-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader)で提供されています。
 
      :::note
 
@@ -487,7 +488,7 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
 
        <h3>ScalarDL Schema Loader for Auditor</h3>
 
-       `schema-loader-auditor-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader) で提供されています。
+       `schema-loader-auditor-custom-values.yaml` ファイル内の `[].image.repository` 構成を更新する必要はありません。ScalarDL Schema Loader のコンテナイメージは、[パブリックコンテナリポジトリ](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader)で提供されています。
 
      :::note
 
