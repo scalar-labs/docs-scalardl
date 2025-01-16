@@ -648,6 +648,11 @@ const sidebars = {
           label: '実装',
         },
         {
+          "type": "doc",
+          "id": "glossary",
+          "label": "用語集",
+        },
+        {
           type: 'doc',
           id: 'requirements',
           label: '要件',
