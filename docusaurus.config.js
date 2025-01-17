@@ -409,6 +409,7 @@ const config = {
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
+        additionalLanguages: ['csharp', 'docker', 'java', 'json', 'log', 'properties', 'python', 'scala', 'sql', 'toml'],
       },
       announcementBar: {
         id: 'new_version',
