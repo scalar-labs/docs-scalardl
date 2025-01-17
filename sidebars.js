@@ -1166,6 +1166,11 @@ const sidebars = {
         },
         {
           type: 'doc',
+          id: 'generic-contracts-reference',
+          label: '汎用コントラクト',
+        },
+        {
+          type: 'doc',
           id: 'scalardl-benchmarks/README',
           label: 'ベンチマークを実行',
         },
