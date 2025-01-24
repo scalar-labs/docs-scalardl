@@ -12,7 +12,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ## v3.9.4
 
-**発売日：** 2024 年 11 月 25 日
+**発売日：** 2024年11月25日
 
 ### まとめ
 
@@ -28,7 +28,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ## v3.9.3
 
-**発売日：** 2024 年 11 月 1 日
+**発売日：** 2024年11月1日
 
 ### まとめ
 
@@ -40,7 +40,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ## v3.9.2
 
-**発売日：** 2024 年 8 月 28 日
+**発売日：** 2024年8月28日
 
 ### バグの修正
 
@@ -57,7 +57,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ## v3.9.1
 
-**発売日：** 2024 年 4 月 19 日
+**発売日：** 2024年4月19日
 
 ### まとめ
 
@@ -66,15 +66,15 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 ### バグの修正
 
 - リリースノート作成時のパラメータを修正しました。
-- TLS を使用した Prometheus エクスポータでの SNI ホスト チェックを修正しました。
+- TLS を使用した Prometheus エクスポータでの SNI ホストチェックを修正しました。
 
 ## v3.9.0
 
-**発売日：** 2024 年 4 月 5 日
+**発売日：** 2024年4月5日
 
 ### まとめ
 
-このリリースには、使いやすさを向上させるためにすべての ScalarDL 管理コマンドを統合する単一のトップレベル コマンド「scalardl」の導入や、開発者が任意のプログラミング言語を使用して ScalarDL アプリケーションを作成できるようにするゲートウェイ機能など、いくつかの機能強化が含まれています。 このリリースには多くの改善とバグ修正も含まれています。 詳しい変更点は以下をご覧ください。
+このリリースには、使いやすさを向上させるためにすべての ScalarDL 管理コマンドを統合する単一のトップレベルコマンド「scalardl」の導入や、開発者が任意のプログラミング言語を使用して ScalarDL アプリケーションを作成できるようにするゲートウェイ機能など、いくつかの機能強化が含まれています。 このリリースには多くの改善とバグ修正も含まれています。 詳しい変更点は以下をご覧ください。
 
 ### 機能強化
 
@@ -85,7 +85,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ### 改善点
 
-- クライアントとサーバーの gRPC 構成が改善されました。
+- クライアントとサーバーの gRPC 設定が改善されました。
 - Gatekeeper の動作を改善しました。
 - CI リリースのワークフローが改善されました。
 - CI テストとメンテナンスが改善されました。
@@ -169,15 +169,15 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 - LEDGER_HOST を正しく取得するために getTargetHost() を使用するように修正されました。
 - Dockerfile の busybox バージョンを修正しました。
 - 中間モードを使用する際のバグを修正しました。
-- ThrowableConsumer および ThrowableFunction の gRPC スタブ メソッドの FunctionalInterface のバインドされた引数を修正しました。
-- 「デジタル署名」を受け入れるように AuthenticationMethod を修正しました。
+- ThrowableConsumer および ThrowableFunction の gRPC スタブメソッドの FunctionalInterface のバインドされた引数を修正しました。
+- 「電子署名」を受け入れるように AuthenticationMethod を修正しました。
 - spotbugs の問題を修正し、一貫性を保つためにコードをフォーマットしました。
 - 結果をクライアントに返すファンクションの実行を修正しました。
 ・指定したシークレットが既に登録されている場合の不要な警告を修正しました。
-- TLS 関連のコードと構成が正しく動作するように修正されました。
-- gRPC 関連の構成を修正しました。
-- いくつかの構成の問題、特に TLS を使用した Gateway を修正しました。
-- TLS gRPC ヘルス チェックをサポートするために、Gateway Docker イメージで grpc_health_probe を使用するように修正されました。
+- TLS 関連のコードと設定が正しく動作するように修正されました。
+- gRPC 関連の設定を修正しました。
+- いくつかの設定の問題、特に TLS を使用した Gateway を修正しました。
+- TLS gRPC ヘルスチェックをサポートするために、Gateway Docker イメージで grpc_health_probe を使用するように修正されました。
 - org.everit.json.schema を 1.14.2 にアップグレードしました。 [CVE-2023-5072](https://github.com/advisories/GHSA-4jq9-2xhw-jpx7 "CVE-2023-5072")
 - セキュリティ問題を修正するために grpc-health-probe をアップグレードしました。 [CVE-2023-39325](https://github.com/advisories/GHSA-4374-p667-p6c8 "CVE-2023-39325") [GHSA-m425-mq94-257g](https://github.com/advisories/GHSA-m425-mq94-257g "GHSA-m425-mq94-257g")
 - セキュリティ問題を修正するために基本イメージをアップグレードしました。 [CVE-2022-29458](https://github.com/advisories/GHSA-jh4f-5j2m-4v9c "CVE-2022-29458") [CVE-2022-29458](https://github.com/advisories/GHSA-jh4f-5j2m-4v9c "CVE-2022-29458") [CVE-2023-4911](https://github.com/advisories/GHSA-m77w-6vjw-wh2f "CVE-2023-4911") [CVE-2023-29491](https://github.com/advisories/GHSA-vh2x-5rx6-qqhv "CVE-2023-29491") [CVE-2023-47038](https://github.com/advisories/GHSA-96fh-9q43-rmjh "CVE-2023-47038")
