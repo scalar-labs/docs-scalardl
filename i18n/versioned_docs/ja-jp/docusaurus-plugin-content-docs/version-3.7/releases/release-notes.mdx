@@ -4,11 +4,11 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このページには、ScalarDL 3.7 のリリース ノートのリストが含まれています。
+このページには、ScalarDL 3.7 のリリースノートのリストが含まれています。
 
 ## v3.7.3
 
-**発売日：** 2024 年 4 月 17 日
+**発売日：** 2024年4月17日
 
 ### バグの修正
 
@@ -17,19 +17,19 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 - LEDGER_HOST を正しく取得するために getTargetHost() を使用するように修正されました。
 - Dockerfile の busybox バージョンを修正しました。
 - 中間モードを使用する際のバグを修正しました。
-- ThrowableConsumer および ThrowableFunction の gRPC スタブ メソッドの FunctionalInterface のバインドされた引数を修正しました。
+- ThrowableConsumer および ThrowableFunction の gRPC スタブメソッドの FunctionalInterface のバインドされた引数を修正しました。
 - 結果をクライアントに返す関数の実行を修正しました。
-- TLS 関連のコードと構成が正しく動作するように修正されました。
-- いくつかの構成の問題を修正しました。
-- org.everit.json.schema を 1.14.2 にアップグレードしました。 [CVE-2023-5072](https://github.com/advisories/GHSA-4jq9-2xhw-jpx7 "CVE-2023-5072")
-- セキュリティ問題を修正するために grpc-health-probe をアップグレードしました。 [CVE-2023-39325](https://github.com/advisories/GHSA-4374-p667-p6c8 "CVE-2023-39325") [GHSA-m425-mq94-257g](https://github.com/advisories/GHSA-m425-mq94-257g "GHSA-m425-mq94-257g")
-- セキュリティ問題を修正するために基本イメージをアップグレードしました。 [CVE-2022-29458](https://github.com/advisories/GHSA-jh4f-5j2m-4v9c "CVE-2022-29458") [CVE-2022-29458](https://github.com/advisories/GHSA-jh4f-5j2m-4v9c "CVE-2022-29458") [CVE-2023-4911](https://github.com/advisories/GHSA-m77w-6vjw-wh2f "CVE-2023-4911") [CVE-2023-29491](https://github.com/advisories/GHSA-vh2x-5rx6-qqhv "CVE-2023-29491") [CVE-2023-47038](https://github.com/advisories/GHSA-96fh-9q43-rmjh "CVE-2023-47038")
-- org.bouncycastle:bcprov-jdk15on を 1.59 から 1.70 にアップグレードしました。 [CVE-2023-33201](https://github.com/advisories/GHSA-hr8g-6v94-x4m9 "CVE-2023-33201") [CVE-2023-33202](https://github.com/advisories/GHSA-wjxj-5m7g-mg7q "CVE-2023-33202")
+- TLS 関連のコードと設定が正しく動作するように修正されました。
+- いくつかの設定の問題を修正しました。
+- org.everit.json.schema を 1.14.2 にアップグレードしました。 [CVE-2023-5072](https://github.com/advisories/GHSA-4jq9-2xhw-jpx7 "CVE-2023-5072")
+- セキュリティ問題を修正するために grpc-health-probe をアップグレードしました。 [CVE-2023-39325](https://github.com/advisories/GHSA-4374-p667-p6c8 "CVE-2023-39325") [GHSA-m425-mq94-257g](https://github.com/advisories/GHSA-m425-mq94-257g "GHSA-m425-mq94-257g")
+- セキュリティ問題を修正するために基本イメージをアップグレードしました。 [CVE-2022-29458](https://github.com/advisories/GHSA-jh4f-5j2m-4v9c "CVE-2022-29458") [CVE-2022-29458](https://github.com/advisories/GHSA-jh4f-5j2m-4v9c "CVE-2022-29458") [CVE-2023-4911](https://github.com/advisories/GHSA-m77w-6vjw-wh2f "CVE-2023-4911") [CVE-2023-29491](https://github.com/advisories/GHSA-vh2x-5rx6-qqhv "CVE-2023-29491") [CVE-2023-47038](https://github.com/advisories/GHSA-96fh-9q43-rmjh "CVE-2023-47038")
+- org.bouncycastle:bcprov-jdk15on を 1.59 から 1.70 にアップグレードしました。 [CVE-2023-33201](https://github.com/advisories/GHSA-hr8g-6v94-x4m9 "CVE-2023-33201") [CVE-2023-33202](https://github.com/advisories/GHSA-wjxj-5m7g-mg7q "CVE-2023-33202")
 
 
 ## v3.7.2
 
-**発売日：** 2023 年 4 月 18 日
+**発売日：** 2023年4月18日
 
 ### 改善点
 
@@ -46,7 +46,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ## v3.7.1
 
-**発売日：** 2023 年 1 月 6 日
+**発売日：** 2023年1月6日
 
 ### 改善点
 
@@ -55,12 +55,12 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ## v3.7.0
 
-**発売日：** 2022 年 12 月 2 日
+**発売日：** 2022年12月2日
 
 ### 機能強化
 
 - `Asset` が内部メタデータを含む `AssetMetadata` を返せるようにしました。
-- Ledger 資産をスキャンするためのトランザクション資産スキャナーを追加しました。
+- Ledger アセットをスキャンするためのトランザクションアセットスキャナーを追加しました。
 - トランザクションスキャン可能なトレーサマネージャを追加しました。
 
 ### 改善点
@@ -73,7 +73,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 ### バグの修正
 
 - `Function` をモック可能にするための `FunctionManager` を追加しました。
-- `Contract` 内のストレージ スキャンを実行するスキャン可能な LedgerTracer を使用しました。
+- `Contract` 内のストレージスキャンを実行するスキャン可能な LedgerTracer を使用しました。
 - [CVE-2022-27664](https://github.com/advisories/GHSA-69cg-p879-7622) を修正しました。
 - [CVE-2022-32149](https://github.com/advisories/GHSA-69ch-w2m2-3vjp "CVE-2022-32149") を修正しました。
 - [CVE-2022-42003](https://github.com/advisories/GHSA-jjjh-jjxp-wpff) と [CVE-2022-42004](https://github.com/advisories/GHSA-rgv9-q543-rqg4).
