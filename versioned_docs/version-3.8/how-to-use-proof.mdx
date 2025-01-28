@@ -22,9 +22,9 @@ Thus, making use of Asset Proofs appropriately could reduce the risk of tamperin
 
 You can get Asset Proofs ([AssetProof](https://scalar-labs.github.io/scalardl/javadoc/latest/common/com/scalar/dl/ledger/asset/AssetProof.html)) from the result ([ContractExecutionResult](https://scalar-labs.github.io/scalardl/javadoc/latest/common/com/scalar/dl/ledger/model/ContractExecutionResult.html)) of the `executeContract` method of the SDKs. A proof can be validated if it is not tampered and it is from the Ledger by verifying the signature.
 
-It is recommended to store the proofs outside of a domain in which the Ledger runs so that malicious activities in one domain can be detected by the other domain. It is worth considering storing proofs in cloud storages for ease of management.
+It is recommended to store the asset proofs outside of a domain in which the Ledger runs so that malicious activities in one domain can be detected by the other domain. It is worth considering storing asset proofs in cloud storages for ease of management.
 
-The proofs obtained in execution can be utilized when you do `validateLedger`. `validateLedger` also returns the proof of a specified asset record after doing Ledger-side validation. Then, the client can check if the proof is the same as the one that have returned from the Ledger before.
+The asset proofs obtained in execution can be utilized when you do `validateLedger`. `validateLedger` also returns the proof of a specified asset record after doing Ledger-side validation. Then, the client can check if the asset proof is the same as the one that have returned from the Ledger before.
 
 ## ScalarDL Auditor
 
