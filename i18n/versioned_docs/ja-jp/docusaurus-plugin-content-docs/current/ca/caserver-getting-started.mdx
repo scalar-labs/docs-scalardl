@@ -40,7 +40,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 }
 ```
 
-CSR に基づいて自己署名証明書と秘密キーを生成します。
+CSR に基づいて自己署名証明書と秘密鍵を生成します。
 
 ```console
 cfssl gencert -initca ca-csr.json | cfssljson -bare ca
@@ -56,9 +56,9 @@ CFSSL は現在、MySQL、PostgreSQL、SQLite をサポートしています。
 今回は簡単にするために SQLite を使用します。
 
 ```console
-go get bitbucket.org/liamstask/goose/cmd/goose   
+go get bitbucket.org/liamstask/goose/cmd/goose
 goose -path $GOPATH/src/github.com/cloudflare/cfssl/certdb/sqlite up
-``` 
+```
 
 これにより、現在の場所に certstore_development.db が作成されます。
 
@@ -106,7 +106,7 @@ goose -path $GOPATH/src/github.com/cloudflare/cfssl/certdb/sqlite up
 
 TODO: 設定について詳しく調べる
 
-次に、前のセクションで作成したデータベース ファイルを指すデータベースの構成ファイルを作成します。
+次に、前のセクションで作成したデータベースファイルを指すデータベースの構成ファイルを作成します。
 
 ```
 [db-config.json]
@@ -147,7 +147,7 @@ cfssl gencert -ca ca.pem -ca-key ca-key.pem -config cfssl-config.json -profile "
 
 ### OCSP サーバー証明書を生成する
 
-注記: OCSP は、X.509 デジタル証明書の失効ステータスを取得するために使用されるインターネット プロトコルです。
+注記: OCSP は、X.509 デジタル証明書の失効ステータスを取得するために使用されるインターネットプロトコルです。
 
 ```
 [ocsp.csr.json]
@@ -174,7 +174,7 @@ cfssl gencert -ca ca-server.pem -ca-key ca-server-key.pem -config cfssl-config.j
 
 ## サーバーを起動する
 
-これで準備は完了です。 サーバーを起動しましょう。
+これで準備は完了です。サーバーを起動しましょう。
 
 ### CA サーバー
 
