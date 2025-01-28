@@ -119,7 +119,7 @@ Note that you can only add new certs and cannot update existing certs in place f
 
 ## Create a contract
 
-Contracts in ScalarDL are simply Java classes that extend the predefined base contract classes (such as [JacksonBasedContract](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/JacksonBasedContract.html) class) and override the `invoke` method. Let's take a closer look at the [StateUpdater.java](https://github.com/scalar-labs/scalardl-java-client-sdk/blob/master/src/main/java/com/org1/contract/StateUpdater.java) contract which creates an asset and associates some states with it.
+Contracts in ScalarDL are simply Java classes that extend the predefined base contract classes (such as [`JacksonBasedContract`](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/JacksonBasedContract.html) class) and override the `invoke` method. Let's take a closer look at the [StateUpdater.java](https://github.com/scalar-labs/scalardl-java-client-sdk/blob/master/src/main/java/com/org1/contract/StateUpdater.java) contract which creates an asset and associates some states with it.
 
 ```java
 package com.org1.contract;
@@ -237,7 +237,7 @@ First, you should always use `ClientServiceFactory` to create `ClientService` ob
 `ClientServiceFactory` caches objects required to create `ClientService` and reuses them as much as possible on the basis of given configurations, so `ClientServiceFactory` object should always be reused.
 
 `ClientService` is a thread-safe client that interacts with ScalarDL components (e.g., Ledger and Auditor) to register certificates, register contracts, execute contracts, and validate data.
-When you execute a contract, you need to specify the corresponding argument type of the contract. For example, if your contract extends JacksonBasedContract, you need to pass JsonNode argument when you execute the contract.
+When you execute a contract, you need to specify the corresponding argument type of the contract. For example, if your contract extends `JacksonBasedContract`, you need to pass JsonNode argument when you execute the contract.
 
 For more information, please take a look at [Javadoc](https://scalar-labs.github.io/scalardl/javadoc/).
 
