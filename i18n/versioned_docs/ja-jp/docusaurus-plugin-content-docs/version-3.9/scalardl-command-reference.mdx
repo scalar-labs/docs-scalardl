@@ -2,25 +2,25 @@
 displayed_sidebar: docsJapanese
 ---
 
-# ScalarDL クライアント コマンド リファレンス
+# ScalarDL クライアントコマンドリファレンス
 
 import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このページでは、ScalarDL コンポーネントと対話するためのクライアント コマンドである `scalardl` を紹介します。
+このページでは、ScalarDL コンポーネントと対話するためのクライアントコマンドである `scalardl` を紹介します。
 
 ## コマンドの概要
 
 - **ID 情報を登録する**
   - [`register-cert`](#register-cert): 指定された証明書を登録します。
   - [`register-secret`](#register-secret): 指定されたシークレットを登録します。
-- **ビジネス ロジックを登録する**
+- **ビジネスロジックを登録する**
   - [`register-contract`](#register-contract): 指定されたコントラクトを登録します。
   - [`register-contracts`](#register-contracts): 指定されたコントラクトを登録します。
   - [`register-function`](#register-function): 指定されたファンクションを登録します。
   - [`register-functions`](#register-functions): 指定されたファンクションを登録します。
-- **登録されたビジネス ロジックを実行して一覧表示する**
+- **登録されたビジネスロジックを実行して一覧表示する**
   - [`execute-contract`](#register-contract): 指定されたコントラクトを実行します。
   - [`list-contracts`](#list-contracts): 登録されたコントラクトを一覧表示します。
 - **台帳を検証します**
@@ -72,10 +72,10 @@ scalardl register-secret --properties client.properties
 |:---------------------------|:--------------------------------------------------------------------------------|
 | `--config`, `--properties` | プロパティ形式の構成ファイル。                                                       |
 | `--contract-binary-name`   | 登録するコントラクトのバイナリ名。                                                    |
-| `--contract-class-file`    | 登録するコントラクト クラス ファイル。                                                |
+| `--contract-class-file`    | 登録するコントラクトクラスファイル。                                                |
 | `--contract-id`            | 登録するコントラクトの ID。                                                         |
-| `--contract-properties`    | シリアル化された形式のコントラクト プロパティ。                                         |
-| `--deserialization-format` | コントラクト プロパティの逆シリアル化形式。有効な値: JSON または STRING (デフォルト: JSON) |
+| `--contract-properties`    | シリアル化された形式のコントラクトプロパティ。                                         |
+| `--deserialization-format` | コントラクトプロパティの逆シリアル化形式。有効な値: JSON または STRING (デフォルト: JSON) |
 
 [共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
 
@@ -128,7 +128,7 @@ contract-class-file = "build/classes/java/main/com/org1/contract/StateReader.cla
 |:---------------------------|:--------------------------|
 | `--config`, `--properties` | プロパティ形式の設定ファイル。 |
 | `--function-binary-name`   | 登録するファンクションのバイナリ名。    |
-| `--function-class-file`    | 登録するファンクションクラス ファイル。 |
+| `--function-class-file`    | 登録するファンクションクラスファイル。 |
 | `--function-id`            | 登録するファンクションの ID。         |
 
 [共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
@@ -262,6 +262,6 @@ scalardl validate-ledger --properties client.properties --asset-id 'some_asset,0
 
 | オプション              | 説明                                                |
 |:----------------------|:----------------------------------------------------|
-| `-g`, `--use-gateway` | ゲートウェイを使用するためのフラグ。                      |
-| `-h`, `--help`        | コマンドのヘルプ メッセージを表示します。                 |
-| `--stacktrace`        | Java スタック トレースを `stderr` ストリームに出力します。 |
+| `-g`, `--use-gateway` | ゲートウェイを使用するためのオプション。                      |
+| `-h`, `--help`        | コマンドのヘルプメッセージを表示します。                 |
+| `--stacktrace`        | Java スタックトレースを `stderr` ストリームに出力します。 |

@@ -12,15 +12,15 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ## 基本
 
-ScalarDL は、ユーザーが ScalarDL システムと適切に対話するために [クライアント SDK](implementation.mdx#クライアント-sdk) を使用することを期待しています。
-エラーが発生すると、クライアント SDK はステータス コードとともに例外 (JavaScript ベースの SDK ではエラー) をユーザーに返します。
-ユーザーはステータス コードを確認してエラーの原因を特定する必要があります。
+ScalarDL は、ユーザーが ScalarDL システムと適切に対話するために[Client SDK](implementation.mdx#client-sdk) を使用することを期待しています。
+エラーが発生すると、Client SDK はステータスコードとともに例外 (JavaScript ベースの SDK ではエラー) をユーザーに返します。
+ユーザーはステータスコードを確認してエラーの原因を特定する必要があります。
 
 ## エラー処理の書き方
 
 ここでは、エラーが発生した場合の対処方法を詳しく説明します。
 
-Java クライアント SDK では、SDK が [ClientException](https://scalar-labs.github.io/scalardl/javadoc/latest/client/com/scalar/dl/client/Exception/ClientException.html) をスローするため、ユーザーは 次のように例外をキャッチしてエラーを処理します。
+Java Client SDK では、SDK が [ClientException](https://scalar-labs.github.io/scalardl/javadoc/latest/client/com/scalar/dl/client/Exception/ClientException.html) をスローするため、ユーザーは次のように例外をキャッチしてエラーを処理します。
 
 ```java
 ClientService clientService = ...;
@@ -31,7 +31,7 @@ try {
 }
 ```
 
-Javascript ベースのクライアント SDK でも同様にエラーを処理できます。
+Javascript ベースの Client SDK でも同様にエラーを処理できます。
 
 ```javascript
 const clientService = ...; // ClientService object
@@ -46,7 +46,7 @@ try {
 
 ## ステータスコード
 
-ステータス コードは、HTTP ステータス コードと同様に 5 つのクラスにグループ化されています。
+ステータスコードは、HTTP ステータスコードと同様に5つのクラスにグループ化されています。
 
 * 成功した彫像 (200-299)
 * 検証エラー (300-399)
@@ -54,4 +54,4 @@ try {
 * サーバーエラー (500-599)
 * クライアントエラー (600-699)
 
-詳細については、[StatusCode](https://scalar-labs.github.io/scalardl/javadoc/latest/common/com/scalar/dl/ledger/service/StatusCode.html)をご確認ください。
+詳細については、[StatusCode](https://scalar-labs.github.io/scalardl/javadoc/latest/common/com/scalar/dl/ledger/service/StatusCode.html) をご確認ください。
