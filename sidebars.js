@@ -110,6 +110,11 @@ const sidebars = {
         },
         {
           type: 'doc',
+          id: 'data-modeling',
+          label: 'Model Your Data',
+        },
+        {
+          type: 'doc',
           id: 'configurations',
           label: 'Configurations',
         },
@@ -709,6 +714,11 @@ const sidebars = {
               label: 'ScalarDL Java Client SDK',
             },
           ],
+        },
+        {
+          type: 'doc',
+          id: 'data-modeling',
+          label: 'データモデリング',
         },
         {
           type: 'doc',

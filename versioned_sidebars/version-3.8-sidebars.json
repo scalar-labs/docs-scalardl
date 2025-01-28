@@ -47,6 +47,7 @@
             "scalardl-java-client-sdk/README"
           ]
         },
+        "data-modeling",
         "configurations",
         "schema-loader",
         "ca/caclient-getting-started",
