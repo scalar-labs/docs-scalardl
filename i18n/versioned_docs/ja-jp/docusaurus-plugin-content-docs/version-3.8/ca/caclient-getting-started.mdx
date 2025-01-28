@@ -8,7 +8,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 このドキュメントでは、ScalarDL に登録するための証明書を取得する方法について説明します。
 
-ScalarDL にはいくつかの種類の認証方法があります。認証方法として `digital-signature` を使用する場合は、秘密鍵と証明書ファイルを用意する必要があります。認証方法の詳細については、[ScalarDL 認証ガイド](../authentication.mdx) を参照してください。
+ScalarDL にはいくつかの種類の認証方法があります。認証方法として `digital-signature` を使用する場合は、秘密鍵と証明書ファイルを用意する必要があります。認証方法の詳細については、[ScalarDL 認証ガイド](../authentication.mdx)を参照してください。
 
 ## 秘密鍵と証明書の要件
 
@@ -455,7 +455,7 @@ ScalarDL は証明書の有効期限をチェックしません。そのため�
     </Tabs>
   </TabItem>
   <TabItem value="cfssl-server" label="CFSSL サーバー">
-    [CFSSL サーバー](./caserver-getting-started.mdx) に証明書ファイルの作成を依頼できます。
+    [CFSSL サーバー](./caserver-getting-started.mdx)に証明書ファイルの作成を依頼できます。
 
     <h3>前提条件</h3>
 
@@ -463,14 +463,14 @@ ScalarDL は証明書の有効期限をチェックしません。そのため�
 
     <h3>秘密鍵と証明書ファイルを作成する</h3>
 
-    1. CFSSL や OpenSSL などのツールを使用し、[要件](#private-key-and-certificate-requirements) に基づいて秘密鍵と CSR を作成します。[CFSSL](?methods=self-signed&tools=cfssl) タブで `cfssl` コマンドを使用して秘密鍵と CSR を作成する例を確認できます。また、[OpenSSL](?methods=self-signed&tools=openssl) タブで `openssl` コマンドを使用して秘密鍵と CSR を作成する例を確認できます。
+    1. CFSSL や OpenSSL などのツールを使用し、[要件](#private-key-and-certificate-requirements)に基づいて秘密鍵と CSR を作成します。[CFSSL](?methods=self-signed&tools=cfssl) タブで `cfssl` コマンドを使用して秘密鍵と CSR を作成する例を確認できます。また、[OpenSSL](?methods=self-signed&tools=openssl) タブで `openssl` コマンドを使用して秘密鍵と CSR を作成する例を確認できます。
 
     1. CFSSL サーバーから証明書を要求します。
 
        :::note
 
        - CFSSL サーバーエンドポイント URI を指定するには、`-remote` オプションが必要です。
-       - 出力される鍵ファイルのプレフィックスを指定するには、cfssljson の `-bare` オプションが必要です。
+       - 出力されるキーファイルのプレフィックスを指定するには、cfssljson の `-bare` オプションが必要です。
 
        :::
 

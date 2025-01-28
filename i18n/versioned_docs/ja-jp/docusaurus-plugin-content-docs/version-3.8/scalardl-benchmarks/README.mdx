@@ -6,7 +6,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このチュートリアルでは、ScalarDL のベンチマーク ツールを実行する方法について説明します。 ベンチマークは、一連の標準に対してシステムがどのように動作するかを評価するのに役立ちます。
+このチュートリアルでは、ScalarDL のベンチマークツールを実行する方法について説明します。ベンチマークは、一連の標準に対してシステムがどのように動作するかを評価するのに役立ちます。
 
 ## ワークロードのベンチマーク
 
@@ -16,51 +16,51 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ## 前提条件
 
-- 次の Java 開発キット (JDK) のいずれか:
+- 次の Java Development Kit (JDK) のいずれか:
    - [Oracle JDK](https://www.oracle.com/java/technologies/downloads/) LTS バージョン 8
    - [OpenJDK](https://openjdk.org/install/) LTS バージョン 8
 - Gradle
 - [Kelpie](https://github.com/scalar-labs/kelpie)
-   - Kelpie は、システムのベンチマークや検証などのエンドツーエンドのテストを実行するためのフレームワークです。 [Kelpie Releases](https://github.com/scalar-labs/kelpie/releases) から最新バージョンを入手し、アーカイブ ファイルを解凍します。
+   - Kelpie は、システムのベンチマークや検証などのエンドツーエンドのテストを実行するためのフレームワークです。[Kelpie Releases](https://github.com/scalar-labs/kelpie/releases) から最新バージョンを入手し、アーカイブファイルを解凍します。
 
 :::note
 
-現在、ベンチマーク ツールを実行するときに使用できるのは JDK 8 のみです。
+現在、ベンチマークツールを実行するときに使用できるのは JDK 8 のみです。
 
 :::
 
 ### 環境をセットアップする
 
-ベンチマーク ツールには次のものが必要です。
+ベンチマークツールには次のものが必要です。
 
 - ベンチマークを実行するクライアント
 - 対象の Ledger サーバー
 - ターゲット Auditor サーバー (オプション)
 
-上記のコンポーネントをセットアップし、次のスタート ガイドに従ってクライアント、Ledger、および Auditor  (オプション) のプロパティを構成します。
+上記のコンポーネントをセットアップし、次のスタートガイドに従ってクライアント、Ledger、および Auditor  (オプション) のプロパティを構成します。
 
 - [Ledger のみの構成](../getting-started.mdx)
 - [Ledger と Auditor の構成](../getting-started-auditor.mdx)
 
 :::note
 
-クライアント SDK をダウンロードして証明書を手動で登録する必要はありません。 このチュートリアルで後ほど説明するように、ベンチマーク ツールは必要な証明書とコントラクトを自動的に登録します。
+Client SDK をダウンロードして証明書を手動で登録する必要はありません。このチュートリアルで後ほど説明するように、ベンチマークツールは必要な証明書とコントラクトを自動的に登録します。
 
 :::
 
-## ベンチマーク ツールをセットアップする
+## ベンチマークツールをセットアップする
 
-次のセクションでは、ベンチマーク ツールのセットアップ方法について説明します。
+次のセクションでは、ベンチマークツールのセットアップ方法について説明します。
 
-### ScalarDL ベンチマーク リポジトリのクローンを作成します。
+### ScalarDL ベンチマークリポジトリのクローンを作成します。
 
-**ターミナル**を開き、次のコマンドを実行して ScalarDL ベンチマーク リポジトリのクローンを作成します。
+**ターミナル**を開き、次のコマンドを実行して ScalarDL ベンチマークリポジトリのクローンを作成します。
 
 ```console
 git clone https://github.com/scalar-labs/scalardl-benchmarks
 ```
 
-次に、次のコマンドを実行して、ベンチマーク ファイルが含まれるディレクトリに移動します。
+次に、以下のコマンドを実行して、ベンチマークファイルが含まれるディレクトリに移動します。
 
 ```console
 cd scalardl-benchmarks
@@ -68,7 +68,7 @@ cd scalardl-benchmarks
 
 ### ツールを構築する
 
-ベンチマーク ツールを構築するには、次のコマンドを実行します。
+ベンチマークツールを構築するには、次のコマンドを実行します。
 
 ```console
 ./gradlew shadowJar
@@ -76,13 +76,13 @@ cd scalardl-benchmarks
 
 ### ベンチマーク構成ファイルを準備する
 
-ベンチマークを実行するには、ベンチマーク構成ファイルを準備する必要があります。 構成ファイルには、少なくとも実行するワークロード モジュールの場所とクライアント構成が必要です。
+ベンチマークを実行するには、ベンチマーク構成ファイルを準備する必要があります。構成ファイルには、少なくとも実行するワークロードモジュールの場所とクライアント構成が必要です。
 
-以下は、TPC-C ベンチマークを実行するための設定例です。 `client_config` の下の構成は、[以前にセットアップしたベンチマーク環境](#環境をセットアップする) と一致する必要があります。
+以下は、TPC-C ベンチマークを実行するための設定例です。`client_config` の下の構成は、[以前にセットアップしたベンチマーク環境](#環境をセットアップする)と一致する必要があります。
 
 :::note
 
-あるいは、 `.toml` ファイルで各クライアント構成項目を指定する代わりに、ScalarDL クライアント プロパティ ファイルを使用することもできます。 `config_file` が指定されている場合 (以下でコメントアウトされています)、`client_config` の下にある他のすべての設定は無視されます。
+あるいは、 `.toml` ファイルで各クライアント構成項目を指定する代わりに、ScalarDL クライアントプロパティファイルを使用することもできます。`config_file` が指定されている場合 (以下でコメントアウトされています)、`client_config` の下にある他のすべての設定は無視されます。
 
 :::
 
@@ -108,7 +108,7 @@ config_file = "/<PATH_TO>/client.properties"
 #private_key = "/<PATH_TO>/client-key.pem"
 ```
 
-構成ファイル内のモジュールに渡すパラメータを定義できます。 詳細については、以下のサンプル構成ファイルと、[共通パラメータ](#共通パラメータ) で使用可能なパラメータを参照してください。
+構成ファイル内のモジュールに渡すパラメータを定義できます。詳細については、以下のサンプル構成ファイルと、[共通パラメータ](#共通パラメータ)で使用可能なパラメータを参照してください。
 
 - **SmallBank:** [`smallbank-benchmark-config.toml`](https://github.com/scalar-labs/scalardl-benchmarks/blob/master/smallbank-benchmark-config.toml)
 - **TPC-C:** [`tpcc-benchmark-config.toml`](https://github.com/scalar-labs/scalardl-benchmarks/blob/master/tpcc-benchmark-config.toml)
@@ -144,10 +144,10 @@ config_file = "/<PATH_TO>/client.properties"
 
 さらに、次のオプションが利用可能です。
 
-- `--only-pre`。 証明書とコントラクトを登録し、データをロードするだけです。
-- `--only-process`。 ベンチマークのみを実行します。
-- `--除く-pre` 証明書とコントラクトの登録とデータのロードを行わずにジョブを実行します。
-- `--プロセスを除く`。 ベンチマークを実行せずにジョブを実行します。
+- `--only-pre`。証明書とコントラクトの登録、およびデータのロードのみを実行します。
+- `--only-process`。ベンチマークのみを実行します。
+- `--except-pre` 証明書とコントラクトの登録とデータのロードを行わずにジョブを実行します。
+- `--except-process`。ベンチマークを実行せずにジョブを実行します。
 
 ## 共通パラメータ
 
@@ -180,7 +180,7 @@ config_file = "/<PATH_TO>/client.properties"
     | 名前                | 説明                                   | デフォルト |
     |:-------------------|:---------------------------------------|:---------|
     | `record_count`     | ベンチマークのレコード数。                 | `1000`   |
-    | `payload_size`     | 各レコードのペイロード サイズ (バイト単位)。  | `1000`   |
+    | `payload_size`     | 各レコードのペイロードサイズ (バイト単位)。  | `1000`   |
     | `ops_per_tx`       | 単一トランザクション内の操作の数。           | `2`      |
     | `workload`         | ワークロードのタイプ (A、C、または F)。     | `A`      |
     | `load_concurrency` | ロードするスレッドの数。                   | `1`      |
