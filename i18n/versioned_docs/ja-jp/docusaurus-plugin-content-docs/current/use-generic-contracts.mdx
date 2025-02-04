@@ -135,7 +135,7 @@ sha256sum a.txt
 ハッシュ値を入力するには、次のコマンドを実行します:
 
 ```console
-scalardl execute-contract --properties client.properties \
+client/bin/scalardl execute-contract --properties client.properties \
 --contract-id object.Put \
 --contract-argument '{"object_id": "a.txt", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0", "metadata": {"note": "created"}}'
 ```
@@ -158,7 +158,7 @@ b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c  a.txt
 次のようにハッシュ値を更新できます:
 
 ```console
-scalardl execute-contract --properties client.properties \
+client/bin/scalardl execute-contract --properties client.properties \
 --contract-id object.Put \
 --contract-argument '{"object_id": "a.txt", "hash_value": "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c", "metadata": {"note": "updated"}}'
 ```
@@ -166,7 +166,7 @@ scalardl execute-contract --properties client.properties \
 以下のコマンドを実行すると、[`object.Get` コントラクト](generic-contracts-reference.mdx#objectget-コントラクト)を使用してオブジェクトの最新のステータスを取得することもできます:
 
 ```console
-scalardl execute-contract --properties client.properties \
+client/bin/scalardl execute-contract --properties client.properties \
 --contract-id object.Get \
 --contract-argument '{"object_id": "a.txt"}'
 ```
@@ -195,7 +195,7 @@ Contract result:
 :::
 
 ```console
-scalardl execute-contract --properties client.properties \
+client/bin/scalardl execute-contract --properties client.properties \
 --contract-id object.Validate \
 --contract-argument \
 '{"object_id": "a.txt", "versions": [{"version_id": "v2", "hash_value": "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c"}, {"version_id": "v1", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0"}]}'
@@ -221,7 +221,7 @@ Alice updated this file
 これで、最新バージョンのハッシュ値は `1f75d715648a3b4b3a33ecd7428a3e7139d9357da7d38735c23bf38618ecf9c7` になります。次のコマンドを実行して検証を実行できます:
 
 ```console
-scalardl execute-contract --properties client.properties \
+client/bin/scalardl execute-contract --properties client.properties \
 --contract-id object.Validate \
 --contract-argument \
 '{"object_id": "a.txt", "versions": [{"version_id": "v2", "hash_value": "1f75d715648a3b4b3a33ecd7428a3e7139d9357da7d38735c23bf38618ecf9c7"}, {"version_id": "v1", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0"}]}'
@@ -253,7 +253,7 @@ ScalarDL のデータ (「アセット」と呼ばれる) は改ざん検知機�
 上記の3番目の手順は、[`object.Put` コントラクト](generic-contracts-reference.mdx#objectput-コントラクト)に対して [`object.PutToMutableDatabase` ファンクション](generic-contracts-reference.mdx#objectputtomutabledatabase-ファンクション)を使用して次のコマンドを実行することで、ACID な方法で実行できます。
 
 ```console
-scalardl execute-contract --properties client.properties \
+client/bin/scalardl execute-contract --properties client.properties \
 --contract-id object.Put \
 --contract-argument '{"object_id": "a.txt", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0"}' \
 --function-id object.PutToMutableDatabase \
@@ -288,7 +288,7 @@ scalardl execute-contract --properties client.properties \
 監査対象集合のコレクションを作成するには、次のコマンドを実行して [`collection.Create` コントラクト](generic-contracts-reference.mdx#collectioncreate-コントラクト) を使用します:
 
 ```console
-scalardl execute-contract --properties client.properties \
+client/bin/scalardl execute-contract --properties client.properties \
 --contract-id collection.Create \
 --contract-argument '{"collection_id":"audit_set", "object_ids": ["a.txt", "b.txt"]}'
 ```
@@ -298,10 +298,12 @@ scalardl execute-contract --properties client.properties \
 [`collection.Add` コントラクト](generic-contracts-reference.mdx#collectionadd-コントラクト)と [`collection.Remove` コントラクト](generic-contracts-reference.mdx#collectionremove-コントラクト)を使用して、コレクションにオブジェクトを追加したり、コレクションからオブジェクトを削除したりすることもできます。これを行うには、次のコマンドを実行します。
 
 ```console
-scalardl execute-contract --properties client.properties \
+client/bin/scalardl execute-contract --properties client.properties \
 --contract-id collection.Add \
 --contract-argument '{"collection_id":"audit_set", "object_ids": ["c.txt", "d.txt"]}'
-scalardl execute-contract --properties client.properties \
+```
+```console
+client/bin/scalardl execute-contract --properties client.properties \
 --contract-id collection.Remove \
 --contract-argument '{"collection_id":"audit_set", "object_ids": ["a.txt"]}'
 ```
@@ -309,7 +311,7 @@ scalardl execute-contract --properties client.properties \
 [`collection.Get` コントラクト](generic-contracts-reference.mdx#collectionget-コントラクト)を使用して、コレクションの最新のステータスを取得できます。これを行うには、次のコマンドを実行します。
 
 ```console
-scalardl execute-contract --properties client.properties \
+client/bin/scalardl execute-contract --properties client.properties \
 --contract-id collection.Get \
 --contract-argument '{"collection_id":"audit_set"}'
 ```
@@ -324,7 +326,7 @@ Contract result:
 監査対象集合が予期せず変更されていないことを確認するには、[`collection.GetHistory` コントラクト](generic-contracts-reference.mdx#collectiongethistory-コントラクト)を使用して監査対象集合の更新履歴を確認します。これを行うには、次のコマンドを実行します。
 
 ```console
-scalardl execute-contract --properties client.properties \
+client/bin/scalardl execute-contract --properties client.properties \
 --contract-id collection.GetHistory \
 --contract-argument '{"collection_id":"audit_set"}'
 ```
