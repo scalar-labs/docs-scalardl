@@ -101,6 +101,59 @@ html[data-theme="dark"] .navbar-sidebar .header-github-link {
   filter: invert(0%);
 }
 
+/* Make tags appear above doc title (tags are natively at the bottom of docs in Docusaurus) */
+
+.badge {
+  border: none;
+  display: flow-root;
+  font-size: 85%;
+  line-height: 2;
+  margin: 0.25rem 0 1rem 0;
+  padding-top: 0.5rem;
+  width: -webkit-fill-available;
+}
+
+.theme-doc-footer-tags-row {
+  display: inline-flex;
+  float: inline-end;
+}
+
+.margin-top--sm, .margin-vert--sm {
+  margin-top: 0 !important;
+}
+
+.margin-left--sm {
+  margin-left: 0 !important;
+}
+
+a[class^='tag_'] {
+  background-color: #2673BB;
+  border: 2px solid #2673BB;
+  color: white;
+  font-weight: bold;
+
+  /* &:hover {
+    border: 2px solid #78C740;
+  } */
+}
+
+html[data-theme="dark"] .badge {
+  background-color: #252526;
+  border: none;
+  color: white;
+}
+
+html[data-theme="dark"] a[class^='tag_'] {
+  background-color: #2673BB;
+  border: 2px solid #2673BB;
+  color: white;
+  font-weight: bold;
+
+  /* &:hover {
+    border: 2px solid #78C740;
+  } */
+}
+
 /* The following Font Awesome-related styles are for the question mark next to the Editions tags. These styles are currently not being used but might be useful later. */
 a[class^='fa-solid fa-circle-question'] {
   color: #6B7280;
