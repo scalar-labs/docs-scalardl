@@ -101,6 +101,54 @@ html[data-theme="dark"] .navbar-sidebar .header-github-link {
   filter: invert(0%);
 }
 
+/* The following Font Awesome-related styles are for the question mark next to the Editions tags. These styles are currently not being used but might be useful later. */
+a[class^='fa-solid fa-circle-question'] {
+  color: #6B7280;
+  vertical-align: middle;
+
+  &:hover {
+    color: #78C740;
+  }
+}
+
+html[data-theme="dark"] a[class^='fa-solid fa-circle-question'] {
+  color: #9CA3AF;
+  vertical-align: middle;
+
+  &:hover {
+    color: #78C740;
+  }
+}
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  /* border-bottom: 1px dotted black; */ /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  background-color: #6c6c6c;
+  border-radius: 5px;
+  color: white;
+  font-size: 12px;
+  padding: 3px 10px;
+  position: absolute;
+  text-align: center;
+  text-wrap: nowrap;
+  visibility: hidden;
+  width: auto;
+  z-index: 1;
+  top: -2px;
+  left: 125%;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
 /* Glossary tooltip styles */
 .glossary-term {
   cursor: help;
