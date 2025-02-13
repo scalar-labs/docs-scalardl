@@ -29,6 +29,24 @@ export default function DocVersionBadge({
   const {tags} = metadata;
 
   const versionMetadata = useDocsVersion();
+
+  // Normalize and deduplicate Enterprise tags.
+  const normalizedTags = Array.from(
+    new Map(
+      tags.map(tag => [
+        tag.label === 'Enterprise Standard' || tag.label === 'Enterprise Premium'
+          ? 'Enterprise'
+          : tag.label, // Use "Enterprise" as the key for both variants.
+        {
+          ...tag,
+          label: 'Enterprise Standard' === tag.label || 'Enterprise Premium' === tag.label
+            ? 'Enterprise'
+            : tag.label,
+        },
+      ])
+    ).values()
+  );
+
   if (versionMetadata.badge) {
     return (
       <span
@@ -48,7 +66,7 @@ export default function DocVersionBadge({
             ThemeClassNames.docs.docFooterTagsRow,
           )}>
           <div className="col">
-            <TagsListInline tags={tags} />
+            <TagsListInline tags={normalizedTags} />
             <a href="https://scalar-labs.com/pricing/" target="_blank" className="fa-solid fa-circle-question tooltip"><FontAwesomeIcon icon={faCircleQuestion} size="lg" /><span className="tooltiptext">Features and pricing</span></a>
           </div>
         </div>
