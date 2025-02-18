@@ -140,11 +140,6 @@ const sidebars = {
         },
         {
           type: 'doc',
-          id: 'how-to-handle-errors',
-          label: 'Handle Errors',
-        },
-        {
-          type: 'doc',
           id: 'how-to-write-contract',
           label: 'Write a Contract',
         },
@@ -157,11 +152,6 @@ const sidebars = {
           type: 'doc',
           id: 'use-generic-contracts',
           label: 'Use Generic Contracts',
-        },
-        {
-          type: 'doc',
-          id: 'how-to-use-proof',
-          label: 'Use Asset Proofs',
         },
       ],
     },
