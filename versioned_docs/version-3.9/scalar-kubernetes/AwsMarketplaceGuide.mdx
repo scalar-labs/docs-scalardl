@@ -54,11 +54,6 @@ Scalar products (ScalarDB, ScalarDL, and their tools) are available in the AWS M
        |:---------------------------------------------------------------------------------|:---------------------------------------------------------------------------------|
        | [ScalarDL Auditor](https://aws.amazon.com/marketplace/pp/prodview-ke3yiw4mhriuu) | [ScalarDL Auditor](https://aws.amazon.com/marketplace/pp/prodview-tj7svy75gu7m6) |
      </TabItem>
-     <TabItem value="scalar-manager" label="Scalar Manager">
-       | PAYG                                                                           | BYOL                                       |
-       |:-------------------------------------------------------------------------------|:-------------------------------------------|
-       | [Scalar Manager](https://aws.amazon.com/marketplace/pp/prodview-gfyn6ipmxf2hq) | Scalar Manager doesn't have a BYOL option. |
-     </TabItem>
    </Tabs>
 
 1. Select **Continue to Subscribe**.
@@ -208,28 +203,6 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
      :::
 
      </TabItem>
-     <TabItem value="scalar-manager" label="Scalar Manager">
-       In the `scalar-manager-custom-values.yaml` file:
-
-       ```yaml
-       api:
-         image:
-           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-manager-api-aws-payg"
-       web:
-         image:
-           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-manager-web-aws-payg"
-       serviceAccount:
-         serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
-         automountServiceAccountToken: true
-       ```
-
-     :::note
-
-     For more details on the configurations, see [Configure a custom values file for Scalar Manager](../helm-charts/configure-custom-values-scalar-manager.mdx).
-
-     :::
-
-     </TabItem>
    </Tabs>
 
 1. Deploy Scalar products by using Helm Charts in conjunction with the above custom values files. See the following examples based on the product you're using.
@@ -274,11 +247,6 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
 
        ```console
        helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-auditor-custom-values.yaml
-       ```
-     </TabItem>
-     <TabItem value="scalar-manager" label="Scalar Manager">
-       ```console
-       helm install scalar-manager scalar-labs/scalar-manager -f ./scalar-manager-custom-values.yaml
        ```
      </TabItem>
    </Tabs>
