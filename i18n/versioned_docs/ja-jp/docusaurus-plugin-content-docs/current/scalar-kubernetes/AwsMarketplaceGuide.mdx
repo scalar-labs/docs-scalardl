@@ -57,11 +57,6 @@ Scalar 製品 (ScalarDB、ScalarDL、およびそれらのツール) は、AWS M
        |:---------------------------------------------------------------------------------|:---------------------------------------------------------------------------------|
        | [ScalarDL Auditor](https://aws.amazon.com/marketplace/pp/prodview-ke3yiw4mhriuu) | [ScalarDL Auditor](https://aws.amazon.com/marketplace/pp/prodview-tj7svy75gu7m6) |
      </TabItem>
-     <TabItem value="scalar-manager" label="Scalar Manager">
-       | PAYG                                                                           | BYOL                                         |
-       |:-------------------------------------------------------------------------------|:---------------------------------------------|
-       | [Scalar Manager](https://aws.amazon.com/marketplace/pp/prodview-gfyn6ipmxf2hq) | Scalar Manager には BYOL オプションがありません。 |
-     </TabItem>
    </Tabs>
 
 1. [**購読を続ける**] を選択します。
@@ -210,28 +205,6 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
      :::
 
      </TabItem>
-     <TabItem value="scalar-manager" label="Scalar Manager">
-       `scalar-manager-custom-values.yaml` ファイル内:
-
-       ```yaml
-       api:
-         image:
-           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-manager-api-aws-payg"
-       web:
-         image:
-           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-manager-web-aws-payg"
-       serviceAccount:
-         serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
-         automountServiceAccountToken: true
-       ```
-
-     :::note
-
-     設定の詳細については、[Scalar Manager のカスタム値ファイルを構成する](../helm-charts/configure-custom-values-scalar-manager.mdx)を参照してください。
-
-     :::
-
-     </TabItem>
    </Tabs>
 
 1. Helm Charts を上記のカスタム値ファイルと組み合わせて使用して、Scalar 製品をデプロイします。使用している製品に応じて、次の例を参照してください。
@@ -276,11 +249,6 @@ AWS Marketplace で Scalar 製品をサブスクライブすると、AWS Marketp
 
        ```console
        helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-auditor-custom-values.yaml
-       ```
-     </TabItem>
-     <TabItem value="scalar-manager" label="Scalar Manager">
-       ```console
-       helm install scalar-manager scalar-labs/scalar-manager -f ./scalar-manager-custom-values.yaml
        ```
      </TabItem>
    </Tabs>
