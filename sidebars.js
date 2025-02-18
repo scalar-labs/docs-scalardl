@@ -115,6 +115,11 @@ const sidebars = {
         },
         {
           type: 'doc',
+          id: 'how-to-write-applications',
+          label: 'Write an Application in Java',
+        },
+        {
+          type: 'doc',
           id: 'configurations',
           label: 'Configurations',
         },
