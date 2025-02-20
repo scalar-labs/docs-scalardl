@@ -1,4 +1,10 @@
-# ScalarDL ベンチマーク ツール
+---
+tags:
+  - Community
+  - Enterprise
+---
+
+# ScalarDL ベンチマークツール
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -64,6 +70,19 @@ git clone https://github.com/scalar-labs/scalardl-benchmarks
 
 ```console
 cd scalardl-benchmarks
+```
+
+### クライアント SDK バージョンの変更
+
+[ScalarDL と Client SDK の互換性](../compatibility.mdx) に基づいて、ScalarDL Java Client SDK のバージョンが対象の ScalarDL Ledger および Auditor でサポートされているバージョンであるかどうかを `build.gralde` ファイルで確認します。サポートされていない場合は、`build.gradle` ファイル内の次の部分の `<VERSION>` を `X.Y.Z` のようなバージョン (たとえば `3.9.4`) に変更します。
+
+```gradle
+dependencies {
+    implementation group: 'com.google.inject', name: 'guice', version: '5.0.1'
+    implementation group: 'com.scalar-labs', name: 'kelpie', version: '1.2.3'
+    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '<VERSION>'
+    implementation group: 'io.github.resilience4j', name: 'resilience4j-retry', version: '1.3.1'
+}
 ```
 
 ### ツールを構築する
@@ -145,9 +164,9 @@ config_file = "/<PATH_TO>/client.properties"
 さらに、次のオプションが利用可能です。
 
 - `--only-pre`。証明書とコントラクトの登録、およびデータのロードのみを実行します。
-- `--only-process`。ベンチマークのみを実行します。
 - `--except-pre` 証明書とコントラクトの登録とデータのロードを行わずにジョブを実行します。
-- `--except-process`。ベンチマークを実行せずにジョブを実行します。
+
+`--only-pre` オプションを使用して初期化が完了したら、`--except-pre` オプションを使用してベンチマークを複数回実行できます。
 
 ## 共通パラメータ
 
