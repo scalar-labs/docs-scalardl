@@ -5,36 +5,25 @@ tags:
 displayed_sidebar: docsEnglish
 ---
 
-# Getting Started with ScalarDL
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import JavadocLink from "/src/theme/JavadocLink.js";
+import DbSpecificSteps from '/src/components/en-us/_getting-started-db-specific-steps.mdx';
 
-This document explains how to get started with ScalarDL by running your first simple contract using the Client SDK.
-Here, we assume that you have already installed ScalarDL, and ScalarDL Ledger is running and listening to 50051 and 50052 ports on localhost. If you don't have such an environment, please follow [the document](./installation-with-docker.mdx). We also assume that you already have a certificate and a private key required to run contracts.
+# Get Started with ScalarDL Ledger
 
-## What is ScalarDL?
+This getting started tutorial explains how to configure ScalarDL on your preferred database and illustrates the process of creating a simple application where the historical states of data are traced.
 
-ScalarDL is scalable and practical Byzantine fault detection middleware for transactional database systems, which achieves correctness, scalability, and database agnosticism.
+## Prerequisites
 
-ScalarDL is composed of Ledger, Auditor, and Client SDK as shown in the following figure. ScalarDL Ledger manages application data in its own unique way using hash-chain and digital signature. ScalarDL Auditor is an optional component and manages a copy of Ledger data without depending on Ledger to identify the discrepancy between Ledger and Auditor data.
-The Client SDK is a set of user-facing programs to interact with Ledger and Auditor. For more details, please read the [design doc](design.mdx) and [implementation details](implementation.mdx).
-
-![](images/scalardl.png)
-
-ScalarDL (Ledger and Auditor) abstracts data as a set of assets, where each asset is composed of the history of a record identified by a key called `asset_id` and a historical version number called `age`.
-In this document, you will create a very simple application to manage an asset's status using ScalarDL Client SDK.
-
-## Install a JDK
-
-Because ScalarDL is written in Java, using Java is one of the easiest ways to build a ScalarDL applications.
-In such a case, you must have one of the following Java Development Kits (JDKs) installed in your environment:
-
-- [Oracle JDK](https://www.oracle.com/java/technologies/downloads/) LTS version (8, 11, or 17)
-- [OpenJDK](https://openjdk.org/install/) LTS version (8, 11, or 17)
+- One of the following Java Development Kits (JDKs)
+  - **[Oracle JDK](https://www.oracle.com/java/):** 8, 11, 17, or 21 (LTS versions)
+  - **[OpenJDK](https://openjdk.org/) ([Eclipse Temurin](https://adoptium.net/temurin/), [Amazon Corretto](https://aws.amazon.com/corretto/), or [Microsoft Build of OpenJDK](https://learn.microsoft.com/en-us/java/openjdk/)):** 8, 11, 17, or 21 (LTS versions)
+- [Docker](https://www.docker.com/get-started/) 20.10 or later with [Docker Compose](https://docs.docker.com/compose/install/) v2.20.0 or later
 
 :::warning
 
-Since ScalarDL is built with JDK 8, contracts must be a JDK 8-compatible binary.
-If you use a version other than JDK 8, you must configure your build tool to build the JDK 8-compatible binary.
-There are several ways to specify binary compatibility, including using the `--release 8` option for javac or setting Gradle (or Maven) configurations to use the JDK 8 toolchain as follows.
+Since ScalarDL is built with JDK 8, contracts must be a JDK 8–compatible binary. If you use a version other than JDK 8, you must configure your build tool to build the JDK 8–compatible binary. There are several ways to specify binary compatibility, including using the `--release 8` option for javac or setting Gradle or Maven configurations to use the JDK 8 toolchain. The following shows the configuration for Gradle:
 
 ```gradle
 java {
@@ -48,34 +37,159 @@ For more details about the Gradle and Maven configurations, see [Toolchains for 
 
 :::
 
-:::note
+## Clone the ScalarDL samples repository
 
-We recommend using the LTS versions mentioned above, but other non-LTS versions may work.
+Open **Terminal**, then clone the ScalarDL samples repository by running the following command:
 
-In addition, other JDKs should work with ScalarDL, but we haven't tested them.
+```console
+git clone https://github.com/scalar-labs/scalardl-samples
+```
 
-:::
+Then, go to the directory that contains the sample configuration by running the following command:
+
+```console
+cd scalardl-samples
+```
+
+## Start up ScalarDL with your preferred database
+
+Select your database, and follow the instructions to deploy ScalarDL Ledger with it. For a list of databases that ScalarDL supports, see [Databases](requirements.mdx#databases).
+
+<Tabs groupId="databases" queryString>
+  <TabItem value="mysql" label="MySQL" default>
+  <DbSpecificSteps productName="MySQL" shortName="mysql" />
+  </TabItem>
+
+  <TabItem value="postgres" label="PostgreSQL">
+  <DbSpecificSteps productName="PostgreSQL" shortName="postgres" />
+  </TabItem>
+
+  <TabItem value="oracle" label="Oracle Database">
+  <DbSpecificSteps productName="Oracle Database" shortName="oracle" />
+  </TabItem>
+
+  <TabItem value="dynamodb" label="DynamoDB">
+  <DbSpecificSteps productName="DynamoDB" shortName="dynamodb" />
+  </TabItem>
+
+  <TabItem value="cosmosdb" label="Cosmos DB for NoSQL">
+
+  <h3>Set up your license (Enterprise edition only)</h3>
+
+  If you're using the ScalarDL Enterprise edition, set up your license as follows. If you're using the Community edition, skip to the next section to start up ScalarDL.
+
+  <details>
+  <summary>See here to set up your license</summary>
+
+  1. Enable the Docker image for the Enterprise edition in the `docker-compose-ledger-cosmosdb.yml` file as follows:
+
+     - Before changing the image (default configuration):
+
+       ```yaml
+       services:
+         scalar-ledger:
+           image: ghcr.io/scalar-labs/scalardl-ledger:${SCALARDL_VERSION}
+           # image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
+       ```
+
+      - After changing the image:
+
+       ```yaml
+       services:
+         scalar-ledger:
+           # image: ghcr.io/scalar-labs/scalardl-ledger:${SCALARDL_VERSION}
+           image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
+       ```
+
+  2. Set your license key for ScalarDL Ledger. In the `docker-compose-ledger-cosmosdb.yml` file, replace `<SET_YOUR_LICENSE_KEY>` with your license key. For example:
+
+     ```yaml
+     services:
+       scalar-ledger:
+         environment:
+           - SCALAR_DL_LICENSING_LICENSE_KEY={"organization_name":"XXXXXXXX","expiration_date_time":"YYYY-MM-DDTHH:mm:SS+TIMEZONE","product_name":"ScalarDL Ledger","product_version":N,"license_type":"trial","signature":"XXXXXXXX"}
+     ```
+
+  3. To check the license, update the `docker-compose-ledger-cosmosdb.yml` file as follows. If you're using a trial license, skip this step.
+
+     - Before changing the certificate file path (default configuration):
+
+       ```yaml
+       services:
+         scalar-ledger:
+           volumes:
+             - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
+             - ./fixture/ledger.properties.tmpl:/scalar/ledger/ledger.properties.tmpl
+             - ./fixture/trial-license-cert.pem:/scalar/license-cert.pem
+             # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+             # - ./fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+       ```
+
+     - After changing the certificate file path:
+
+       ```yaml
+       services:
+         scalar-ledger:
+           volumes:
+             - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
+             - ./fixture/ledger.properties.tmpl:/scalar/ledger/ledger.properties.tmpl
+             # - ./fixture/trial-license-cert.pem:/scalar/license-cert.pem
+             # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+             - ./fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+       ```
+
+  </details>
+
+  <h3>Start up ScalarDL</h3>
+
+  You can start using ScalarDL Ledger by following the steps below:
+
+  1. Configure Cosmos DB for NoSQL.
+
+     To use Azure Cosmos DB for NoSQL, you must have an Azure account. If you don't have an Azure account, visit [Create an Azure Cosmos DB account](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/quickstart-portal#create-account).
+
+     After setting up Cosmos DB for NoSQL, modify the following items in `docker-compose-ledger-cosmodb.yml` based on your configuration of Cosmos DB for NoSQL.
+
+     ```yaml
+     services:
+       scalar-ledger:
+         environment:
+           - SCALAR_DB_CONTACT_POINTS=<COSMOS_DB_FOR_NOSQL_URI>
+           - SCALAR_DB_PASSWORD=<COSMOS_DB_FOR_NOSQL_KEY>
+     ```
+
+  2. Load the database schema for ScalarDL Ledger by running the following command:
+
+     ```console
+     docker compose -f docker-compose-ledger-cosmosdb.yml up -d scalardl-ledger-schema-loader
+     ```
+
+  3. Run ScalarDL Ledger by running the following command:
+
+     ```console
+     docker compose -f docker-compose-ledger-cosmosdb.yml up -d
+     ```
+  </TabItem>
+
+  <TabItem value="cassandra" label="Cassandra">
+  <DbSpecificSteps productName="Cassandra" shortName="cassandra" />
+  </TabItem>
+
+</Tabs>
 
 ## Download the Client SDK
 
-The Client SDK library is available on [Maven Central](https://search.maven.org/search?q=a:scalardl-java-client-sdk). You can install it in your application using your build tool such as Gradle.
-For example in Gradle, you can add the following dependency to your build.gradle.
+Next, you'll use the ScalarDL client tools and samples in the `scalardl-java-client-sdk` repository to interact with ScalarDL.
 
-```
-dependencies {
-    compile group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '<version>'
-}
-```
+Specify a version that is the same as the deployed ScalarDL version and is used for downloading the tools by running the following command:
 
-From here, let's use the [scalardl-java-client-sdk](https://github.com/scalar-labs/scalardl-java-client-sdk) repo that has a sample `build.gradle`, sample contracts, and tools for quick testing.
-
-First, specify a version (e.g., 3.6.0) to use. Please see [tags](https://github.com/scalar-labs/scalardl-java-client-sdk/tags) for available versions.
-```shell
-VERSION=X.Y.Z
+```console
+VERSION=$(grep SCALARDL_VERSION .env | awk -F= '{print $2}')
 ```
 
-Then, clone the repo and download the tools.
-```shell
+Then, clone the repo and download the tools by running the following command:
+
+```console
 git clone https://github.com/scalar-labs/scalardl-java-client-sdk.git
 cd scalardl-java-client-sdk
 git checkout v$VERSION
@@ -84,40 +198,39 @@ unzip scalardl-java-client-sdk-$VERSION.zip
 mv scalardl-java-client-sdk-$VERSION client
 ```
 
-## Configure properties
+## Configure the client properties
 
-The first thing you need to do is to configure the Client SDK.
-The following sample properties are the minimum required properties for the Client SDK to interact with ScalarDL Ledger.
-```
-[client.properties]
-# A host name of ScalarDL Ledger
+Before you can run ScalarDL Ledger, you need to configure the ScalarDL client. To create a configuration file with the minimum required properties for the client to interact with ScalarDL Ledger, run the following command:
+
+```console
+cat << 'EOF' > client.properties
+# A host name for ScalarDL Ledger.
 scalar.dl.client.server.host=localhost
 
-# An ID of a certificate holder. It must be configured for each private key and unique in the system.
+# An ID for the certificate holder. This must be configured for each private key and must be unique in the system.
 scalar.dl.client.cert_holder_id=foo
 
-# A certificate file path to use.
-scalar.dl.client.cert_path=/path/to/foo.pem
+# A path to the certificate file.
+scalar.dl.client.cert_path=../fixture/client.pem
 
-# A private key file path to use. 
-scalar.dl.client.private_key_path=/path/to/foo-key.pem
+# A path to the private key file. 
+scalar.dl.client.private_key_path=../fixture/client-key.pem
+EOF
 ```
 
-A sample `client.properties` file is available at the `conf` directory, so let's copy it to the current directory.
+You can use `localhost` for the ScalarDL Ledger host name in this tutorial. For the private key and certificate, you can use the ones provided in the `fixture` directory of `scalardl-samples` (`client-key.pem` and `client.pem`, respectively). For the certificate holder, any unique ID can be specified.
 
-```shell
-cp conf/client.properties .
-```
+:::warning
 
-Please update the values of the copied `client.properties` file depending on your environment.
+Do not use the sample private key and certificate in production environments. For details about getting your own certificate, see [How to Get a Certificate](ca/caclient-getting-started.mdx).
+
+:::
 
 ## Register the certificate
 
-Next, let's register your certificate to ScalarDL Ledger. Please check [caclient-getting-started](ca/caclient-getting-started.mdx) for how to prepare a certificate.
+Next, you can register your certificate to ScalarDL Ledger by running the following command:
 
-This time, let's use a simple tool to register your certificate as follows.
-
-```shell
+```console
 client/bin/scalardl register-cert --properties client.properties
 ```
 
@@ -126,7 +239,11 @@ Note that you can only add new certs and cannot update existing certs in place f
 
 ## Create a contract
 
-Contracts in ScalarDL are simply Java classes that extend the predefined base contract classes (such as [`JacksonBasedContract`](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/JacksonBasedContract.html) class) and override the `invoke` method. Let's take a closer look at the [StateUpdater.java](https://github.com/scalar-labs/scalardl-java-client-sdk/blob/master/src/main/java/com/org1/contract/StateUpdater.java) contract which creates an asset and associates some states with it.
+You can interact with ScalarDL through a contract, which is a Java program that implements single business logic. In this tutorial, you can see how a contract is written, built, and works by using a basic contract example, which creates an asset and associates some states with it.
+
+Below, you can see a sample contract, [StateUpdater.java](https://github.com/scalar-labs/scalardl-java-client-sdk/blob/master/src/main/java/com/org1/contract/StateUpdater.java). A contract is simply a Java class that extends the predefined base contract classes (such as <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="JacksonBasedContract" /> class) and overrides the `invoke` method. The business logic is implemented in the `invoke` method.
+
+Specifically, the `invoke` method will extract a client-defined asset ID (`asset_id`) and state (`state`) from the argument, and then associate the asset ID with the state in the ledger if the given state is different from the asset's current state.
 
 ```java
 package com.org1.contract;
@@ -164,11 +281,9 @@ public class StateUpdater extends JacksonBasedContract {
 }
 ```
 
-This contract will extract a client-defined asset ID (`asset_id`) and state (`state`) from the argument and associate the asset ID with the state in the ledger if the given state is different from the asset's current state. 
+You can compile the contract by running the following command:
 
-Next we compile the contract as follows.
-
-```shell
+```console
 ./gradlew assemble
 ```
 
@@ -176,22 +291,27 @@ This will generate `build/classes/java/main/com/org1/contract/StateUpdater.class
 
 ## Register the contract
 
-Let's register your contract. Here again we use a simple tool.
+Next, register your contract by running the following command:
 
-```shell
+```console
 client/bin/scalardl register-contract --properties client.properties --contract-id StateUpdater --contract-binary-name com.org1.contract.StateUpdater --contract-class-file build/classes/java/main/com/org1/contract/StateUpdater.class
 ```
 
 Please set a globally unique ID for the contract ID (e.g. `StateUpdater` in the above command).
-You can set different contract IDs on the same contract to clarify "who did what" in a tamper-evident way.
 
-For example, let's think about a voting application. In the application, anyone can vote with the same voting logic, and hence can use the same Contract, but A's vote and B's vote need to be properly and securely distinguished; A cannot vote for B, and vice versa. Having different contract IDs on the same contract can be utilized to achieve such things.
+:::tip
+
+You can set different contract IDs on the same contract by using different certificates to clarify "who did what" in a tamper-evident way.
+
+For example, think about a voting application. In the application, anyone can vote with the same voting logic and therefore can use the same contract, but A's vote and B's vote need to be properly and securely distinguished—A cannot vote for B, and vice versa. By using different contract IDs on the same contract, you can ensure that A's vote and B's vote are identified differently from one another.
+
+:::
 
 ## Execute the contract
 
 Now you are ready to execute the contract with the following command.
 
-```shell
+```console
 client/bin/scalardl execute-contract --properties client.properties --contract-id StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}'
 ```
 
@@ -201,7 +321,7 @@ In the contract argument, the value specified with the key `asset_id` must be un
 
 You can validate the states of Ledger by executing the following command.
 
-```shell
+```console
 client/bin/scalardl validate-ledger --properties client.properties --asset-id="some_asset"
 ```
 
@@ -210,53 +330,30 @@ Briefly speaking, if only ScalarDL Ledger is used, the validation traverses asse
 With ScalarDL Ledger and Auditor, the validation checks discrepancies (i.e., Byzantine faults) between the states of Ledger and Auditor without centralized coordination.
 Please read [Getting Started with ScalarDL Auditor](getting-started-auditor.mdx) for more details about the validation with Auditor.
 
-## Create your own contracts
+## Create your own contracts or use generic contracts
 
-As we explained above, what you need to do to create your contracts is to extend the predefined base contract classes and override the `invoke` method as you like. For more detail, please look at [A Guide on How to Write a Good Contract](how-to-write-contract.mdx).
+There are two options for preparing contracts: creating your own or using predefined ones.
 
-## Interact with ClientService 
+As explained above, what you need to do to create your contracts is to extend the predefined base contract classes and override the `invoke` method as you like. For details, see [A Guide on How to Write a Good Contract](how-to-write-contract.mdx).
 
-If you want to interact with ScalarDL components in your applications, you can use the Client SDK APIs. The APIs are provided by a service layer called [`ClientService`](https://scalar-labs.github.io/scalardl/javadoc/latest/client/com/scalar/dl/client/service/ClientService.html).
+Predefined ones are called generic contracts and provide basic functionalities for common use cases. For details, see [Use Generic Contracts and Functions](use-generic-contracts.mdx).
 
-The following is a code snippet showing how to use `ClientService` to execute a contract.
+## See also
 
-```java
-  // ClientServiceFactory should always be reused.
-  ClientServiceFactory factory = new ClientServiceFactory();
-
-  // ClientServiceFactory creates a new ClientService object in every create method call
-  // but reuses the internal objects and connections as much as possible for better performance and resource usage.
-  ClientService service = factory.create(new ClientConfig(new File(properties));
-  try {
-    // create an application-specific argument that matches your contract
-    JsonNode jsonArgument = ...;
-    ContractExecutionResult result = service.executeContract(contractId, jsonArgument);
-    result.getContractResult().ifPresent(System.out::println);
-  } catch (ClientException e) {
-    System.err.println(e.getStatusCode());
-    System.err.println(e.getMessage());
-  }
-
-  factory.close();
-```
-
-First, you should always use `ClientServiceFactory` to create `ClientService` objects.
-`ClientServiceFactory` caches objects required to create `ClientService` and reuses them as much as possible on the basis of given configurations, so `ClientServiceFactory` object should always be reused.
-
-`ClientService` is a thread-safe client that interacts with ScalarDL components (e.g., Ledger and Auditor) to register certificates, register contracts, execute contracts, and validate data.
-When you execute a contract, you need to specify the corresponding argument type of the contract. For example, if your contract extends `JacksonBasedContract`, you need to pass JsonNode argument when you execute the contract.
-
-For more information, please take a look at [Javadoc](https://scalar-labs.github.io/scalardl/javadoc/).
-
-## Run and test your contracts
-
-To quickly run and test your contracts in your local environment, [ScalarDL Samples](https://github.com/scalar-labs/scalardl-samples) is useful. To run ScalarDL in a production environment, please see [scalar-kubernetes](https://github.com/scalar-labs/scalar-kubernetes) for details.
-
-## Further reading
+To write your own contracts, see the following:
 
 * [A Guide on How to Write a Good Contract](how-to-write-contract.mdx)
-* [A Guide on How to Write a Good Function](how-to-write-function.mdx)
-* [Getting Started with ScalarDL Auditor](getting-started-auditor.mdx)
-* [Javadoc](https://scalar-labs.github.io/scalardl/javadoc/)
+
+To use generic contracts, see the following:
+
+* [Use Generic Contracts and Functions](use-generic-contracts.mdx)
+* [Generic Contracts and Functions Reference Guide](generic-contracts-reference.mdx)
+
+To interact with ScalarDL components in your Java applications, see the following:
+
+* [Write a ScalarDL Application in Java](how-to-write-applications.mdx)
+
+To better understand the foundation of ScalarDL, see the following:
+
 * [ScalarDL Design Document](design.mdx)
 * [ScalarDL Implementation](implementation.mdx)
