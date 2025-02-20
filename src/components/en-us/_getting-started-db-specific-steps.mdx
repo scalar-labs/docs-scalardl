@@ -1,0 +1,83 @@
+import CodeBlock from '@theme/CodeBlock';
+
+<h3>Set up your license (Enterprise edition only)</h3>
+
+If you're using the ScalarDL Enterprise edition, set up your license as follows. If you're using the Community edition, skip to the next section to start up ScalarDL.
+
+<details>
+<summary>See here to set up your license</summary>
+
+1. Enable the Docker image for the Enterprise edition in the <code>docker-compose-ledger-{props.shortName}.yml</code> file as follows:
+
+    - Before changing the image (default configuration):
+
+      ```yaml
+      services:
+        scalar-ledger:
+          image: ghcr.io/scalar-labs/scalardl-ledger:${SCALARDL_VERSION}
+          # image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
+      ```
+
+    - After changing the image:
+
+      ```yaml
+      services:
+        scalar-ledger:
+          # image: ghcr.io/scalar-labs/scalardl-ledger:${SCALARDL_VERSION}
+          image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
+      ```
+
+2. Set your license key for ScalarDL Ledger. In the <code>docker-compose-ledger-{props.shortName}.yml</code> file, replace `<SET_YOUR_LICENSE_KEY>` with your license key. For example:
+
+   ```yaml
+   services:
+     scalar-ledger:
+       environment:
+         - SCALAR_DL_LICENSING_LICENSE_KEY={"organization_name":"XXXXXXXX","expiration_date_time":"YYYY-MM-DDTHH:mm:SS+TIMEZONE","product_name":"ScalarDL Ledger","product_version":N,"license_type":"trial","signature":"XXXXXXXX"}
+   ```
+
+3. To check the license, update the <code>docker-compose-ledger-{props.shortName}.yml</code> file as follows. If you're using a trial license, skip this step.
+
+    - Before changing the certificate file path (default configuration):
+
+      ```yaml
+      services:
+        scalar-ledger:
+          volumes:
+            - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
+            - ./fixture/ledger.properties.tmpl:/scalar/ledger/ledger.properties.tmpl
+            - ./fixture/trial-license-cert.pem:/scalar/license-cert.pem
+            # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+            # - ./fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+      ```
+
+    - After changing the certificate file path:
+
+      ```yaml
+      services:
+        scalar-ledger:
+          volumes:
+            - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
+            - ./fixture/ledger.properties.tmpl:/scalar/ledger/ledger.properties.tmpl
+            # - ./fixture/trial-license-cert.pem:/scalar/license-cert.pem
+            # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+            - ./fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+      ```
+
+</details>
+
+<h3>Start up ScalarDL</h3>
+
+You can start using ScalarDL Ledger by following the steps below:
+
+1. Run {props.productName} locally by running the following command:
+
+   <CodeBlock language="console">docker compose -f docker-compose-ledger-{props.shortName}.yml up -d {props.database}</CodeBlock>
+
+2. Load the database schema for ScalarDL Ledger by running the following command:
+
+   <CodeBlock language="console">docker compose -f docker-compose-ledger-{props.shortName}.yml up -d scalardl-ledger-schema-loader</CodeBlock>
+
+3. Run ScalarDL Ledger by running the following command:
+
+   <CodeBlock language="console">docker compose -f docker-compose-ledger-{props.shortName}.yml up -d</CodeBlock>
