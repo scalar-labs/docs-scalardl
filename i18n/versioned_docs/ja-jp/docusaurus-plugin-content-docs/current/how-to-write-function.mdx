@@ -4,6 +4,7 @@ displayed_sidebar: docsJapanese
 
 # ScalarDL のファンクションの書き方に関するガイド
 
+import JavadocLink from '/src/theme/JavadocLink.js';
 import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
@@ -12,7 +13,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ## ScalarDL のファンクションとは何ですか?
 
-ScalarDL のファンクション（スマートファンクション）は、単一のビジネスロジックを実装するために記述された [JacksonBasedFunction](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/function/JacksonBasedFunction.html) クラスのような定義済みのベースファンクションを拡張する Java プログラムです。Function は主に ScalarDL アプリケーションのデータを管理し、Contract はデータの証拠を管理します。これを見る前に、[ScalarDL 入門](getting-started.mdx)と [ScalarDL のコントラクトの書き方](how-to-write-contract.mdx)を参照して、ScalarDL とは何か、ScalarDL とコントラクトで何ができるかを理解してください。
+ScalarDL のファンクション（スマートファンクション）は、単一のビジネスロジックを実装するために記述された <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/function" className="JacksonBasedFunction" /> クラスのような定義済みのベースファンクションを拡張する Java プログラムです。Function は主に ScalarDL アプリケーションのデータを管理し、Contract はデータの証拠を管理します。これを見る前に、[ScalarDL 入門](getting-started.mdx)と [ScalarDL のコントラクトの書き方](how-to-write-contract.mdx)を参照して、ScalarDL とは何か、ScalarDL とコントラクトで何ができるかを理解してください。
 
 ## 背景
 
@@ -99,14 +100,12 @@ public class Payment extends JacksonBasedFunction {
 
 | 基本ファンクションクラス                                                                                                                                               | ファンクションの入力と出力のタイプ                                                                                               | ライブラリ                                        |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
-| [JacksonBasedFunction](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/function/JacksonBasedFunction.html) (おすすめ)     | [JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html) | [Jackson](https://github.com/FasterXML/jackson) |
-| [JsonpBasedFunction](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/function/JsonpBasedFunction.html)                   | [JsonObject](https://javadoc.io/static/javax.json/javax.json-api/1.1.4/javax/json/JsonObject.html)                 | [JSONP](https://javaee.github.io/jsonp/)        |
-| [StringBasedFunction](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/function/StringBasedFunction.html)                 | [String](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html)                                          | Java 標準ライブラリ                                |
-| [Function](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/function/Function.html) (廃止された)                            | [JsonObject](https://javadoc.io/static/javax.json/javax.json-api/1.1.4/javax/json/JsonObject.html)                 | [JSONP](https://javaee.github.io/jsonp/)       |
+| <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/function" className="JacksonBasedFunction" /> (おすすめ)     | [JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html) | [Jackson](https://github.com/FasterXML/jackson) |
+| <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/function" className="JsonpBasedFunction" />                   | [JsonObject](https://javadoc.io/static/javax.json/javax.json-api/1.1.4/javax/json/JsonObject.html)                 | [JSONP](https://javaee.github.io/jsonp/)        |
+| <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/function" className="StringBasedFunction" />                 | [String](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html)                                          | Java 標準ライブラリ                                |
+| <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/function" className="Function" /> (廃止された)                            | [JsonObject](https://javadoc.io/static/javax.json/javax.json-api/1.1.4/javax/json/JsonObject.html)                 | [JSONP](https://javaee.github.io/jsonp/)       |
 
-The old [Function](https://scalar-labs.github.io/scalardl/javadoc/ledger/com/scalar/dl/ledger/function/Function.html) is still available, but it is now deprecated and will be removed in a later major version. So, it is highly recommended to use the above new (non-deprecated) Functions as a base Function.
-
-古い [ファンクション](https://scalar-labs.github.io/scalardl/javadoc/ledger/com/scalar/dl/ledger/function/Function.html)はまだ利用可能ですが、現在は非推奨となっており、今後のメジャーバージョンで削除される予定です。したがって、上記の新しい (非推奨ではない) ファンクションを基本ファンクションとして使用することを強くお勧めします。
+古い <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/function" className="Function" />はまだ利用可能ですが、現在は非推奨となっており、今後のメジャーバージョンで削除される予定です。したがって、上記の新しい (非推奨ではない) ファンクションを基本ファンクションとして使用することを強くお勧めします。
 
 ### `invoke` 引数について
 
@@ -151,7 +150,7 @@ client/bin/scalardl register-function --properties client.properties --function-
 client/bin/scalardl execute-contract --properties client.properties --contract-id test-contract --contract-argument '{...}' --function-id test-function --function-argument '{...}'
 ```
 
-次のように [ClientService](https://scalar-labs.github.io/scalardl/javadoc/latest/client/com/scalar/dl/client/service/ClientService.html) を使用して行うこともできます。
+次のように <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を使用して行うこともできます。
 
 ```java
 ContractExecutionResult result = clientService.executeContract(contractId, contractArgument, functionId, functionArgument);
@@ -168,4 +167,4 @@ ContractExecutionResult result = clientService.executeContract(contractId, contr
 * [ScalarDL 入門](getting-started.mdx)
 * [ScalarDL のコントラクトの書き方ガイド](how-to-write-contract.mdx)
 * [ScalarDL設計ドキュメント](design.mdx)
-* [Javadoc](https://scalar-labs.github.io/scalardl/javadoc/)
+* [Javadoc](javadoc/index.mdx)
