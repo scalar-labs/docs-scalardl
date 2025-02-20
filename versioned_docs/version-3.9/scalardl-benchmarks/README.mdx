@@ -70,6 +70,19 @@ Then, go to the directory that contains the benchmarking files by running the fo
 cd scalardl-benchmarks
 ```
 
+### Change the client SDK version
+
+Check the `build.gradle` file to see if the ScalarDL Java Client SDK version is a supported version for the target ScalarDL Ledger and Auditor, based on [ScalarDL compatibility with client SDKs](../compatibility.mdx). If it is not supported, change `<VERSION>` in the following part of the `build.gradle` file to a version like `X.Y.Z` (for example, `3.9.4`).
+
+```gradle
+dependencies {
+    implementation group: 'com.google.inject', name: 'guice', version: '5.0.1'
+    implementation group: 'com.scalar-labs', name: 'kelpie', version: '1.2.3'
+    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '<VERSION>'
+    implementation group: 'io.github.resilience4j', name: 'resilience4j-retry', version: '1.3.1'
+}
+```
+
 ### Build the tools
 
 To build the benchmarking tools, run the following command:
@@ -149,9 +162,9 @@ Select a benchmark, and follow the instructions to run the benchmark.
 In addition, the following options are available:
 
 - `--only-pre`. Only registers certificates and contracts and loads the data.
-- `--only-process`. Only runs the benchmark.
 - `--except-pre` Runs a job without registering certificates and contracts and loading the data.
-- `--except-process`. Runs a job without running the benchmark.
+
+You can run the benchmark several times by using the `--except-pre` option after the initialization is done by using the `--only-pre` option.
 
 ## Common parameters
 
