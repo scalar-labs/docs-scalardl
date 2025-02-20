@@ -1,8 +1,13 @@
 ---
+tags:
+  - Community
+  - Enterprise
 displayed_sidebar: docsEnglish
 ---
 
 # Model Your Data
+
+import JavadocLink from '/src/theme/JavadocLink.js';
 
 Data modeling (or in other words, organizing your data) is the process of conceptualizing and visualizing how data will be stored and used by identifying the patterns used to access data and the types of queries to be performed within business operations.
 
@@ -62,7 +67,7 @@ You can get the latest asset record by specifying an asset ID.
 
 #### Scan asset records of an asset
 
-You can scan multiple records of an asset (in other words, histories of an asset) by specifying an asset ID and age. Specifically, the asset ID and age can be specified in the `AssetFilter` class. For details about the specification, see the `AssetFilter` page in the [Javadoc](https://javadoc.io/doc/com.scalar-labs/scalardl-java-client-sdk/latest/index.html) of the version of ScalarDL that you are using.
+You can scan multiple records of an asset (in other words, histories of an asset) by specifying an asset ID and age. Specifically, the asset ID and age can be specified in the `AssetFilter` class. For details about the specification, see the <JavadocLink packageName="scalardl-common" path="com/scalar/dl/ledger/database" className="AssetFilter" /> page in the Javadoc.
 
 ### How to locate mutable records
 

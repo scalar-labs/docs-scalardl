@@ -48,14 +48,13 @@
           ]
         },
         "data-modeling",
+        "how-to-write-applications",
         "configurations",
         "schema-loader",
         "ca/caclient-getting-started",
         "authentication",
-        "how-to-handle-errors",
         "how-to-write-contract",
-        "how-to-write-function",
-        "how-to-use-proof"
+        "how-to-write-function"
       ]
     },
     {

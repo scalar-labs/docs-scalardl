@@ -1,9 +1,13 @@
 ---
+tags:
+  - Community
+  - Enterprise
 displayed_sidebar: docsJapanese
 ---
 
 # ScalarDL の適切なコントラクトを作成する方法に関するガイド
 
+import JavadocLink from '/src/theme/JavadocLink.js';
 import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
@@ -12,7 +16,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ## ScalarDL のコントラクトとは何ですか?
 
-ScalarDL のコントラクト (別名スマートコントラクト) は、単一のビジネスロジックを実装するために記述された、事前定義済みの基本コントラクト (基本コントラクトは [ContractBase](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/ContractBase.html) クラスも拡張する) を拡張する Java プログラムです 。コントラクトとその引数は、コントラクト所有者の秘密鍵で電子署名され、ScalarDL に渡されます。この仕組みにより、コントラクトは所有者のみが実行できるようになり、データ改ざんなどの悪意のある行為をシステムが検出できるようになります。
+ScalarDL のコントラクト (別名スマートコントラクト) は、単一のビジネスロジックを実装するために記述された、事前定義済みの基本コントラクトを拡張する Java プログラムです。コントラクトとその引数は、コントラクト所有者の秘密鍵で電子署名され、ScalarDL に渡されます。この仕組みにより、コントラクトは所有者のみが実行できるようになり、データ改ざんなどの悪意のある行為をシステムが検出できるようになります。
 
 このドキュメントを参照する前に、[ScalarDL 入門](getting-started.mdx)を参照して、ScalarDL とは何か、およびその基本用語を理解してください。
 
@@ -56,16 +60,16 @@ Ledger データと Contract 引数の内部表現は String です。ただし�
 
 | 基本コントラクトクラス                                                                                                                                                | コントラクト引数のタイプ、コントラクトプロパティ、コントラクト出力、およびLedger データ                                                                  | ライブラリ                                        |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| [JacksonBasedContract](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/JacksonBasedContract.html) (おすすめ)      | [JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html) | [Jackson](https://github.com/FasterXML/jackson) |
-| [JsonpBasedContract](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/JsonpBasedContract.html)                   | [JsonObject](https://javadoc.io/static/javax.json/javax.json-api/1.1.4/javax/json/JsonObject.html)                  | [JSONP](https://javaee.github.io/jsonp/)        |
-| [StringBasedContract](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/StringBasedContract.html)                 | [String](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html)                                           | Java標準ライブラリ                                |
-| [Contract](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/Contract.html) (廃止された)                            | [JsonObject](https://javadoc.io/static/javax.json/javax.json-api/1.1.4/javax/json/JsonObject.html)                 | [JSONP](https://javaee.github.io/jsonp/)         |
+| <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="JacksonBasedContract" /> (おすすめ)      | [JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html) | [Jackson](https://github.com/FasterXML/jackson) |
+| <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="JsonpBasedContract" />                   | [JsonObject](https://javadoc.io/static/javax.json/javax.json-api/1.1.4/javax/json/JsonObject.html)                  | [JSONP](https://javaee.github.io/jsonp/)        |
+| <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="StringBasedContract" />                 | [String](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html)                                           | Java標準ライブラリ                                |
+| <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="Contract" /> (廃止された)                            | [JsonObject](https://javadoc.io/static/javax.json/javax.json-api/1.1.4/javax/json/JsonObject.html)                 | [JSONP](https://javaee.github.io/jsonp/)         |
 
-古い [Contract](https://scalar-labs.github.io/scalardl/javadoc/ledger/com/scalar/dl/ledger/contract/Contract.html) はまだ利用可能ですが、現在は非推奨となっており、今後のメジャーバージョンで削除される予定です。したがって、上記の新しい (非推奨ではない) コントラクトを基本コントラクトとして使用することを強くお勧めします。
+古い <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="Contract" /> はまだ利用可能ですが、現在は非推奨となっており、今後のメジャーバージョンで削除される予定です。したがって、上記の新しい (非推奨ではない) コントラクトを基本コントラクトとして使用することを強くお勧めします。
 
 ### `invoke` 引数について
 
-上に示したように、オーバーライドされた `invoke` メソッドは、基礎となるデータベースと対話するための [Ledger](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/statemachine/Ledger.html)、コントラクト引数の [JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html)、およびコントラクトプロパティ用のオプションである [JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html) を受け取ります。
+上に示したように、オーバーライドされた `invoke` メソッドは、基礎となるデータベースと対話するための <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/statemachine" className="Ledger" />、コントラクト引数の [JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html)、およびコントラクトプロパティ用のオプションである [JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html) を受け取ります。
 
  `Ledger` は一連のアセットを管理するデータベース抽象化であり、各アセットは `asset_id` と呼ばれるキーと `age` と呼ばれる履歴バージョン番号によって識別されるレコードの履歴で構成されます。`get`、`put`、および `scan` API を使用して `Ledger` と対話できます。`get` API は、指定されたアセットの最新のアセットレコードを取得するために使用されます。`put` API は、指定されたアセットに新しいアセットレコードを追加するために使用されます。`scan` API は、指定されたアセットを走査するために使用されます。この抽象化では Ledger にアセットレコードを追加できるだけであることに注意してください。したがって、ScalarDL のコントラクトを作成する前に、抽象化を使用してデータを設計することを常に推奨します。
 
@@ -163,7 +167,7 @@ public class StateUpdaterReader extends JacksonBasedContract {
 
 `getClientIdentityKey()` を呼び出すと、コントラクト内でコントラクトを実行しているユーザーを示す ID 情報を取得できます。この機能は、特定のアセットにアクセスできるユーザーを制御するのに役立ちます。次の例は、state-xxx (xxx は証明書またはシークレットのホルダーのエンティティ ID) という名前の制限付きアセットのみを更新できるように変更された `StateUpdater` を示しています。
 
-詳細については、使用している ScalarDL バージョンの [Javadoc](https://javadoc.io/doc/com.scalar-labs/scalardl-java-client-sdk/latest/index.html) のベースコントラクトのページと `ClientIdentityKey ` ページを参照してください。
+詳細については、Javadoc の[基本コントラクト](#基本コントラクト)セクションと <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/crypto" className="ClientIdentityKey" /> ページを参照してください。
 
 ```java
 public class StateUpdater extends JacksonBasedContract {
@@ -210,4 +214,4 @@ ScalarDL の適切なコントラクトを作成するためのベストプラ�
 
 * [ScalarDL 入門](getting-started.mdx)
 * [ScalarDL 設計ドキュメント](design.mdx)
-* [Javadoc](https://scalar-labs.github.io/scalardl/javadoc/)
+* [Javadoc](javadoc/index.mdx)

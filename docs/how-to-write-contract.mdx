@@ -1,15 +1,20 @@
 ---
+tags:
+  - Community
+  - Enterprise
 displayed_sidebar: docsEnglish
 ---
 
 # A Guide on How to Write a Good Contract for ScalarDL
+
+import JavadocLink from '/src/theme/JavadocLink.js';
 
 This document sets out some guidelines for writing contracts for ScalarDL.
 
 ## What is a contract for ScalarDL ?
 
 
-A contract (a.k.a Smart Contract) for ScalarDL is a Java program extending predefined base contracts (that also extend [ContractBase](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/ContractBase.html) class) written for implementing single business logic. A contract and its arguments are digitally-signed with the contract owner's private key and passed to the ScalarDL. This mechanism allows the contract only to be executed by the owner and makes it possible for the system to detect malicious activity such as data tampering.
+A contract (a.k.a Smart Contract) for ScalarDL is a Java program extending predefined base contracts written for implementing single business logic. A contract and its arguments are digitally-signed with the contract owner's private key and passed to the ScalarDL. This mechanism allows the contract only to be executed by the owner and makes it possible for the system to detect malicious activity such as data tampering.
 
 Before looking at this document, please check the [Getting Started with ScalarDL](getting-started.mdx) to understand what ScalarDL is and its basic terminologies.
 
@@ -53,18 +58,17 @@ As of writing this, we provide four base contracts as shown below; however, usin
 
 | Base Contract Class                                                                                                                                        | Type of Contract Argument, Contract Properties, Contract Output, and Ledger Data                                   | Library                                         |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
-| [JacksonBasedContract](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/JacksonBasedContract.html) (recommended) | [JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html) | [Jackson](https://github.com/FasterXML/jackson) |
-| [JsonpBasedContract](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/JsonpBasedContract.html)                   | [JsonObject](https://javadoc.io/static/javax.json/javax.json-api/1.1.4/javax/json/JsonObject.html)                 | [JSONP](https://javaee.github.io/jsonp/)        |
-| [StringBasedContract](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/StringBasedContract.html)                 | [String](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html)                                          | Java Standard Libraries                         |
-| [Contract](https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/contract/Contract.html) (deprecated)                          | [JsonObject](https://javadoc.io/static/javax.json/javax.json-api/1.1.4/javax/json/JsonObject.html)                 | [JSONP](https://javaee.github.io/jsonp/)        |
+| <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="JacksonBasedContract" /> (recommended) | [JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html) | [Jackson](https://github.com/FasterXML/jackson) |
+| <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="JsonpBasedContract" />                   | [JsonObject](https://javadoc.io/static/javax.json/javax.json-api/1.1.4/javax/json/JsonObject.html)                 | [JSONP](https://javaee.github.io/jsonp/)        |
+| <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="StringBasedContract" />                 | [String](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html)                                          | Java Standard Libraries                         |
+| <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="Contract" /> (deprecated)                          | [JsonObject](https://javadoc.io/static/javax.json/javax.json-api/1.1.4/javax/json/JsonObject.html)                 | [JSONP](https://javaee.github.io/jsonp/)        |
 
 
-The old [Contract](https://scalar-labs.github.io/scalardl/javadoc/ledger/com/scalar/dl/ledger/contract/Contract.html) is still available, but it is now deprecated and will be removed in a later major version. So, it is highly recommended to use the above new (non-deprecated) contracts as a base contract.
+The old <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="Contract" /> is still available, but it is now deprecated and will be removed in a later major version. So, it is highly recommended to use the above new (non-deprecated) contracts as a base contract.
 
 ### About the `invoke` arguments
 
-As shown above, the overridden `invoke` method accepts [Ledger](
-https://scalar-labs.github.io/scalardl/javadoc/latest/ledger/com/scalar/dl/ledger/statemachine/Ledger.html) for interacting with the underlying database, a [JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html) for the contract argument, and an optional [JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html) for contract properties.
+As shown above, the overridden `invoke` method accepts <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/statemachine" className="Ledger" /> for interacting with the underlying database, a [JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html) for the contract argument, and an optional [JsonNode](https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/JsonNode.html) for contract properties.
 
 The `Ledger` is a database abstraction that manages a set of assets, where each asset is composed of the history of a record identified by a key called `asset_id` and a historical version number called `age`.  You can interact with the `Ledger` with `get`, `put`, and `scan` APIs. The `get` API is used to retrieve the latest asset record of a specified asset. The `put` API is used to append a new asset record to a specified asset. The `scan` API is used to traverse a specified asset. Note that you can only append an asset record to the ledger with this abstraction. Thus, it is always a good practice to design your data with the abstraction before writing a contract for ScalarDL.
 
@@ -165,7 +169,7 @@ It's to be noted that all the contracts in the nested invocation are executed tr
 
 You can get identity information, which indicates who is executing the contract, by calling `getClientIdentityKey()` in a contract. This functionality helps to control who can access a certain asset. The following example shows `StateUpdater`, which has been modified so that it can only update a restricted asset with the name `state-xxx`, where `xxx` is an entity ID of the certificate or secret holder.
 
-For details, see the base contract page and the `ClientIdentityKey` page in the [Javadoc](https://javadoc.io/doc/com.scalar-labs/scalardl-java-client-sdk/latest/index.html) of the version of ScalarDL that you are using.
+For details, see the [base contract](#base-contracts) section and the <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/crypto" className="ClientIdentityKey" /> page in the Javadoc.
 
 ```java
 public class StateUpdater extends JacksonBasedContract {
@@ -213,4 +217,4 @@ You can find more contract samples in [caliper-benchmarks](https://github.com/sc
 
 * [Getting Started with ScalarDL](getting-started.mdx)
 * [ScalarDL Design Document](design.mdx)
-* [Javadoc](https://scalar-labs.github.io/scalardl/javadoc/)
+* [Javadoc](javadoc/index.mdx)

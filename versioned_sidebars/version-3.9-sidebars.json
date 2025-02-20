@@ -95,6 +95,11 @@
         },
         {
           "type": "doc",
+          "id": "how-to-write-applications",
+          "label": "Write an Application in Java"
+        },
+        {
+          "type": "doc",
           "id": "configurations",
           "label": "Configurations"
         },
@@ -115,11 +120,6 @@
         },
         {
           "type": "doc",
-          "id": "how-to-handle-errors",
-          "label": "Handle Errors"
-        },
-        {
-          "type": "doc",
           "id": "how-to-write-contract",
           "label": "Write a Contract"
         },
@@ -127,11 +127,6 @@
           "type": "doc",
           "id": "how-to-write-function",
           "label": "Write a Function"
-        },
-        {
-          "type": "doc",
-          "id": "how-to-use-proof",
-          "label": "Use Asset Proofs"
         }
       ]
     },

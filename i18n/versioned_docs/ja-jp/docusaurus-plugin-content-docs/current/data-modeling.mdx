@@ -1,9 +1,13 @@
 ---
+tags:
+  - Community
+  - Enterprise
 displayed_sidebar: docsJapanese
 ---
 
 # データをモデル化する
 
+import JavadocLink from '/src/theme/JavadocLink.js';
 import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
@@ -66,7 +70,7 @@ ScalarDL の台帳は、アセットの集合として抽象化されます。
 
 #### アセットのアセットレコードをスキャンする
 
-アセット ID と世代を指定すると、アセットの複数のレコード (つまり、アセットの履歴) をスキャンできます。具体的には、アセット ID と世代は `AssetFilter` クラスで指定できます。仕様の詳細については、使用している ScalarDL バージョンの [Javadoc](https://javadoc.io/doc/com.scalar-labs/scalardl-java-client-sdk/latest/index.html) の `AssetFilter` ページを参照してください。
+アセット ID と世代を指定すると、アセットの複数のレコード (つまり、アセットの履歴) をスキャンできます。具体的には、アセット ID と世代は `AssetFilter` クラスで指定できます。仕様の詳細については、Javadoc の <JavadocLink packageName="scalardl-common" path="com/scalar/dl/ledger/database" className="AssetFilter" /> ページを参照してください。
 
 ### 可変レコードの検索方法
 
