@@ -51,11 +51,6 @@
           "type": "doc",
           "id": "getting-started",
           "label": "Run a Contract Through ScalarDL Ledger"
-        },
-        {
-          "type": "doc",
-          "id": "getting-started-auditor",
-          "label": "Run a Contract Through ScalarDL Ledger and Auditor"
         }
       ]
     },
@@ -87,6 +82,11 @@
               "label": "ScalarDL Java Client SDK"
             }
           ]
+        },
+        {
+          "type": "doc",
+          "id": "getting-started-auditor",
+          "label": "Run a Contract Through ScalarDL Ledger and Auditor"
         },
         {
           "type": "doc",
@@ -615,11 +615,6 @@
           "type": "doc",
           "id": "getting-started",
           "label": "ScalarDL Ledger を通じてコントラクトを実行"
-        },
-        {
-          "type": "doc",
-          "id": "getting-started-auditor",
-          "label": "ScalarDL Ledger と Auditor を通じてコントラクトを実行"
         }
       ]
     },
@@ -651,6 +646,11 @@
               "label": "ScalarDL Java Client SDK"
             }
           ]
+        },
+        {
+          "type": "doc",
+          "id": "getting-started-auditor",
+          "label": "ScalarDL Ledger と Auditor を通じてコントラクトを実行"
         },
         {
           "type": "doc",

@@ -72,11 +72,6 @@ const sidebars = {
           id: 'getting-started',
           label: 'Run a Contract Through ScalarDL Ledger',
         },
-        {
-          type: 'doc',
-          id: 'getting-started-auditor',
-          label: 'Run a Contract Through ScalarDL Ledger and Auditor',
-        },
       ],
     },
     {
@@ -107,6 +102,11 @@ const sidebars = {
               label: 'ScalarDL Java Client SDK',
             },
           ],
+        },
+        {
+          type: 'doc',
+          id: 'getting-started-auditor',
+          label: 'Run a Contract Through ScalarDL Ledger and Auditor',
         },
         {
           type: 'doc',
@@ -674,11 +674,6 @@ const sidebars = {
           id: 'getting-started',
           label: 'ScalarDL Ledger を通じてコントラクトを実行',
         },
-        {
-          type: 'doc',
-          id: 'getting-started-auditor',
-          label: 'ScalarDL Ledger と Auditor を通じてコントラクトを実行',
-        },
       ],
     },
     {
@@ -709,6 +704,11 @@ const sidebars = {
               label: 'ScalarDL Java Client SDK',
             },
           ],
+        },
+        {
+          type: 'doc',
+          id: 'getting-started-auditor',
+          label: 'ScalarDL Ledger と Auditor を通じてコントラクトを実行',
         },
         {
           type: 'doc',

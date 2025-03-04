@@ -22,8 +22,7 @@
       "label": "Getting Started",
       "collapsible": true,
       "items": [
-        "getting-started",
-        "getting-started-auditor"
+        "getting-started"
       ]
     },
     {
@@ -47,6 +46,7 @@
             "scalardl-java-client-sdk/README"
           ]
         },
+        "getting-started-auditor",
         "data-modeling",
         "how-to-write-applications",
         "configurations",
