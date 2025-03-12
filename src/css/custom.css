@@ -318,7 +318,7 @@ html[data-theme="dark"] .tooltip-glossary {
 }
 
 .supportDropdownContent a {
-  color: black;
+  color: var(--ifm-dropdown-link-color);
   display: block;
   margin: 4px 10px;
   padding: 4px 10px;
