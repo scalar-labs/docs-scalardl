@@ -251,7 +251,7 @@ const config = {
         },
       },
       // Replace with your project's social card
-      image: 'img/scalardl-logo.png',
+      image: 'img/scalardl-social-card-preview.png',
       navbar: {
         title: '',
         logo: {
