@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef, lazy, Suspense, MouseEvent } from 'react';
-import { useDoc } from '@docusaurus/plugin-content-docs/client';
+import React, { useState, useEffect, useRef, lazy, Suspense, MouseEvent } from "react";
+import { useDoc } from "@docusaurus/plugin-content-docs/client";
 import { useLocation } from "@docusaurus/router";
 
 // Lazy-load AssistantModal.
-const AssistantModal = lazy(() => import('./AssistantModal'));
+const AssistantModal = lazy(() => import("./AssistantModal"));
 
 const SupportDropdownMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
