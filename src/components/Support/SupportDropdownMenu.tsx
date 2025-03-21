@@ -131,13 +131,13 @@ If applicable, add screenshots to help explain your problem.
 
         <div className="supportDropdownContent">
           <div>
-            <a href="#" onClick={handleSupportClick} rel="noopener noreferrer">
+            <a href="#" onClick={handleSupportClick}>
               <b>{isJapanese ? "テクニカルサポートに問い合わせ" : "Contact technical support"}</b><br />
               {isJapanese ? "商用ライセンスをご契約のお客様のみご利用いただけます。" : "Available only to customers with a commercial license."}
             </a>
           </div>
           <hr />
-          {/* <a href="https://stackoverflow.com/questions/tagged/scalardl" target="_blank" rel="noopener noreferrer">
+          {/* <a href="https://stackoverflow.com/questions/tagged/scalardl" target="_blank">
             <b>{isJapanese ? "Stack Overflow をチェック" : "Check Stack Overflow"}</b><br />
             {isJapanese ? "すべてのユーザーがご利用いただけます。" : "Available to all users."}
           </a>
@@ -147,7 +147,7 @@ If applicable, add screenshots to help explain your problem.
             {isJapanese ? "Scalar Membership Programにご参加の方のみご利用いただけます。" : "Available only to members of the Scalar Membership Program."}
           </a>
           <hr />
-          <a href={githubIssueUrl} target="_blank" rel="noopener noreferrer">
+          <a href={githubIssueUrl} target="_blank">
             <b>{isJapanese ? "ドキュメントの問題を報告" : "Report doc issue"}</b><br />
             {isJapanese ? "このページについて何かお気づきの点がありましたら、こちらから報告いただけます。" : "If you have any feedback about this page, please submit an issue."}
           </a>
