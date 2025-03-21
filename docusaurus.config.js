@@ -416,8 +416,8 @@ const config = {
       announcementBar: {
         id: 'new_version',
         content:
-          '<b>🎊ScalarDL Ledger, the ledger database middleware component of ScalarDL, is now open-sourced under Apache License 2.0! To try it out, see <a target="_self" rel="noopener noreferrer" href="/docs/latest/getting-started">Get Started with ScalarDL Ledger</a>.</b>',
-          // '<b>Announcing the release of ScalarDL X.X!🚀 For details on what\'s included in this new version, see the <a target="_self" rel="noopener noreferrer" href="/docs/latest/releases/release-notes">release notes</a>.</b>',
+          '<b>🎊ScalarDL Ledger, the ledger database middleware component of ScalarDL, is now open-sourced under Apache License 2.0! To try it out, see <a target="_self" href="https://scalardb.scalar-labs.com/docs/latest/getting-started">Get Started with ScalarDL Ledger</a>.</b>',
+          // '<b>Announcing the release of ScalarDL X.X!🚀 For details on what\'s included in this new version, see the <a target="_self" href="/docs/latest/releases/release-notes">release notes</a>.</b>',
         backgroundColor: '#2673BB',
         textColor: '#FFFFFF',
         isCloseable: false,
