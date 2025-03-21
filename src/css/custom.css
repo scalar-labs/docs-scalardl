@@ -245,3 +245,108 @@ html[data-theme="dark"] .tooltip-glossary {
     width: 333px !important;
   }
 }
+
+/* Support button and dropdown */
+.supportDropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.supportDropdownContent {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: var(--ifm-global-shadow-md);
+  color: var(--ifm-color-emphasis-700);
+  font-size: 14px;
+  min-width: 303px;
+  opacity: 0;
+  overflow: hidden;
+  padding: 8px 0px;
+  position: absolute;
+  right: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  visibility: hidden;
+  z-index: 1;
+}
+
+.supportDropdown:hover .supportDropdownContent {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.supportDropdownContent {
+  transition-delay: 0.1s;
+}
+
+.supportDropBtn {
+  align-items: center;
+  background-color: inherit;
+  border: 0;
+  border-radius: var(--ifm-badge-border-radius);
+  color: var(--ifm-navbar-link-color);
+  cursor: pointer;
+  display: flex;
+  font-family: var(--ifm-font-family-base);
+  font-size: 14.5px;
+  font-weight: var(--ifm-font-weight-semibold);
+  justify-content: space-between;
+  min-width: 145px;
+  padding: 6px 0;
+  text-align: left;
+  z-index: 1;
+}
+
+.supportDropBtn svg { /* Keep dropdown open when moving the mouse between text and icon. */
+  pointer-events: none;
+}
+
+.supportDropdown:hover .supportDropBtn {
+  color: var(--ifm-color-primary);
+}
+
+@media (max-width: 996px) {
+  .supportDropBtn {
+    font-size: 15px;
+  }
+  .supportDropdownContent {
+    font-size: 15px;
+    left: 0;
+    min-width: 320px;
+  }
+}
+
+.supportDropdownContent a {
+  color: var(--ifm-dropdown-link-color);
+  display: block;
+  margin: 4px 10px;
+  padding: 4px 10px;
+  text-decoration: none;
+}
+
+.supportDropdownContent a:hover {
+  background-color: var(--ifm-dropdown-hover-background-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+html[data-theme="dark"] .supportDropBtn {
+  background-color: inherit;
+  border: 0;
+  color: #f9f9f9;
+}
+
+html[data-theme="dark"] .supportDropdownContent {
+  background-color: var(--ifm-dropdown-background-color);
+
+  a {
+    color: #f9f9f9;
+  }
+}
+
+hr {
+  text-align: center;
+  margin: auto;
+  max-width: 91%;
+}
