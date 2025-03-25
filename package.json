@@ -5,7 +5,7 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
-    "build": "docusaurus build && node scripts/generate-glossary-json.js",
+    "build": "docusaurus build 2>&1 | tee brokenLinks.log && node scripts/filter-broken-link-warnings.js && node scripts/generate-glossary-json.js",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
