@@ -13,7 +13,7 @@ This document explains how to write ScalarDL applications. You will learn how to
 
 ## Use the ScalarDL Client SDK
 
-You have two options to interact with ScalarDL: using [commands](scalardl-command-reference.mdx) as shown in the [getting started guide](getting-started.mdx) or using the [Java Client SDK](scalardl-java-client-sdk/README.mdx).
+You have two options to interact with ScalarDL: using [commands](scalardl-command-reference.mdx) as shown in the [getting started guide](getting-started.mdx) or using the [Java Client SDK](https://github.com/scalar-labs/scalardl-java-client-sdk).
 Using commands is convenient because you don't need to write applications. However, they invoke a process for each execution, which is slow, so they are mainly for quickly testing your contracts. Instead, using the Client SDK is usually recommended when you write ScalarDL-based applications because it is more efficient.
 
 The Client SDK is available on [Maven Central](https://search.maven.org/search?q=a:scalardl-java-client-sdk). You can install it in your application by using a build tool such as Gradle. For example in Gradle, you can add the following dependency to `build.gradle`, replacing `VERSION` with the version of ScalarDL that you want to use.
@@ -135,15 +135,15 @@ Asset Proof in ScalarDL is a set of information about an asset record and used a
 
 #### Benefits of Asset Proof
 
-Since Asset Proof is evidence at the time of execution by Ledger, it is difficult for Ledger to tamper data after the evidence is created because the proofs and Ledger states would be diverged. Thus, making use of Asset Proof appropriately could reduce the risk of data tampering.
+Since Asset Proof is evidence at the time of execution by Ledger, it is difficult for Ledger to tamper data after the evidence is created because the Asset Proofs and Ledger states would be diverged. Thus, making use of Asset Proof appropriately could reduce the risk of data tampering.
 
 #### How to access Asset Proof from your applications
 
-You can get <JavadocLink packageName="scalardl-common" path="com/scalar/dl/ledger/asset" className="AssetProof" /> from the result <JavadocLink packageName="scalardl-common" path="com/scalar/dl/ledger/model" className="ContractExecutionResult" /> of the `executeContract` method of the Client SDK. A proof can be validated if it is not tampered and it is from Ledger by verifying the signature.
+You can get <JavadocLink packageName="scalardl-common" path="com/scalar/dl/ledger/asset" className="AssetProof" /> from the result <JavadocLink packageName="scalardl-common" path="com/scalar/dl/ledger/model" className="ContractExecutionResult" /> of the `executeContract` method of the Client SDK. An Asset Proof can be validated if it is not tampered and it is from Ledger by verifying the signature.
 
-Storing proofs outside of a domain in which Ledger runs is recommended. This is so that malicious activities in one domain can be detected by the other domain. Storing proofs in cloud storages for ease of management is also worth considering.
+Storing Asset Proofs outside of a domain in which Ledger runs is recommended. This is so that malicious activities in one domain can be detected by the other domain. Storing Asset Proofs in cloud storages for ease of management is also worth considering.
 
-The proofs obtained in execution can be used when you do `validateLedger`. `validateLedger` also returns the proof of a specified asset record after doing Ledger-side validation. Then, the client can check if the proof is the same as the one that was previously returned from Ledger.
+The Asset Proofs obtained in execution can be used when you do `validateLedger`. `validateLedger` also returns the Asset Proof of a specified asset record after doing Ledger-side validation. Then, the client can check if the Asset Proof is the same as the one that was previously returned from Ledger.
 
 ## Use other languages
 
