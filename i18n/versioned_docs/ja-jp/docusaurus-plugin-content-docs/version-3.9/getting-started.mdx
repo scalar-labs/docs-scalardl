@@ -182,7 +182,7 @@ cd scalardl-samples
 
 ## Client SDK をダウンロードする
 
-次に、`scalardl-java-client-sdk` リポジトリ内の ScalarDL クライアントツールとサンプルを使用して ScalarDL と対話します。
+次に、[`scalardl-java-client-sdk`](https://github.com/scalar-labs/scalardl-java-client-sdk) リポジトリ内の ScalarDL クライアントツールとサンプルを使用して ScalarDL と対話します。
 
 次のコマンドを実行して、デプロイされた ScalarDL バージョンと同じバージョンを指定し、ツールのダウンロードに使用します。
 
@@ -329,24 +329,15 @@ client/bin/scalardl validate-ledger --properties client.properties --asset-id="s
 
 検証が何を行うかは、ScalarDL の設定方法によって異なります。簡単に言うと、ScalarDL Ledger のみを使用する場合、検証はアセットを走査して、アセットが再計算可能で、有効なハッシュチェーン構造を持っているかどうかを確認します。ScalarDL Ledger と Auditor を使用する場合、検証は Ledger と Auditor の状態間の矛盾 (つまり、ビザンチン故障) を中央集権的な調整なしでチェックします。Auditor による検証の詳細については、[ScalarDL Auditor の使用を開始する](getting-started-auditor.mdx)をお読みください。
 
-## 独自のコントラクトを作成するか、汎用コントラクトを使用する
-
-コントラクトを準備するには、独自のコントラクトを作成するか、定義済みのコントラクトを使用するかの2つのオプションがあります。
+## 独自のコントラクトを作成する
 
 上で説明したように、コントラクトを作成するには、定義済みの基本コントラクトクラスを拡張し、必要に応じて `invoke` メソッドをオーバーライドする必要があります。詳細については、[適切なコントラクトを作成する方法に関するガイド](how-to-write-contract.mdx)を参照してください。
-
-定義済みのコントラクトは汎用コントラクトと呼ばれ、一般的なユースケースの基本機能を提供します。詳細については、[汎用コントラクトおよびファンクションの使用](use-generic-contracts.mdx)を参照してください。
 
 ## 参考文献
 
 独自のコントラクトを作成するには、以下を参照してください。
 
 * [適切なコントラクトを作成する方法に関するガイド](how-to-write-contract.mdx)
-
-汎用コントラクトを使用するには、以下を参照してください。
-
-* [汎用コントラクトおよびファンクションの使用](use-generic-contracts.mdx)
-* [Generic Contracts and Functions Reference Guide](generic-contracts-reference.mdx)
 
 Java アプリケーションで ScalarDL コンポーネントを操作するには、以下を参照してください。
 
