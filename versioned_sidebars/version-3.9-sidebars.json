@@ -659,6 +659,11 @@
         },
         {
           "type": "doc",
+          "id": "how-to-write-applications",
+          "label": "Java でアプリケーションを書く"
+        },
+        {
+          "type": "doc",
           "id": "configurations",
           "label": "の設定"
         },

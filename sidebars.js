@@ -693,6 +693,11 @@ const sidebars = {
         },
         {
           type: 'doc',
+          id: 'how-to-write-applications',
+          label: 'Java でアプリケーションを書く',
+        },
+        {
+          type: 'doc',
           id: 'configurations',
           label: '設定',
         },
