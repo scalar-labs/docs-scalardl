@@ -92,18 +92,6 @@ const sidebars = {
       collapsible: true,
       items: [
         {
-          type: 'category',
-          label: 'SDKs',
-          collapsible: true,
-          items: [
-            {
-              type: 'doc',
-              id: 'scalardl-java-client-sdk/README',
-              label: 'ScalarDL Java Client SDK',
-            },
-          ],
-        },
-        {
           type: 'doc',
           id: 'getting-started-auditor',
           label: 'Run a Contract Through ScalarDL Ledger and Auditor',
@@ -693,18 +681,6 @@ const sidebars = {
       label: '開発',
       collapsible: true,
       items: [
-        {
-          type: 'category',
-          label: 'SDKs',
-          collapsible: true,
-          items: [
-            {
-              type: 'doc',
-              id: 'scalardl-java-client-sdk/README',
-              label: 'ScalarDL Java Client SDK',
-            },
-          ],
-        },
         {
           type: 'doc',
           id: 'getting-started-auditor',
