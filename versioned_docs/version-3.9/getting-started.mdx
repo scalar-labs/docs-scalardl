@@ -179,7 +179,7 @@ Select your database, and follow the instructions to deploy ScalarDL Ledger with
 
 ## Download the Client SDK
 
-Next, you'll use the ScalarDL client tools and samples in the `scalardl-java-client-sdk` repository to interact with ScalarDL.
+Next, you'll use the ScalarDL client tools and samples in the [`scalardl-java-client-sdk`](https://github.com/scalar-labs/scalardl-java-client-sdk) repository to interact with ScalarDL.
 
 Specify a version that is the same as the deployed ScalarDL version and is used for downloading the tools by running the following command:
 
@@ -330,24 +330,15 @@ Briefly speaking, if only ScalarDL Ledger is used, the validation traverses asse
 With ScalarDL Ledger and Auditor, the validation checks discrepancies (i.e., Byzantine faults) between the states of Ledger and Auditor without centralized coordination.
 Please read [Getting Started with ScalarDL Auditor](getting-started-auditor.mdx) for more details about the validation with Auditor.
 
-## Create your own contracts or use generic contracts
-
-There are two options for preparing contracts: creating your own or using predefined ones.
+## Create your own contracts
 
 As explained above, what you need to do to create your contracts is to extend the predefined base contract classes and override the `invoke` method as you like. For details, see [A Guide on How to Write a Good Contract](how-to-write-contract.mdx).
-
-Predefined ones are called generic contracts and provide basic functionalities for common use cases. For details, see [Use Generic Contracts and Functions](use-generic-contracts.mdx).
 
 ## See also
 
 To write your own contracts, see the following:
 
 * [A Guide on How to Write a Good Contract](how-to-write-contract.mdx)
-
-To use generic contracts, see the following:
-
-* [Use Generic Contracts and Functions](use-generic-contracts.mdx)
-* [Generic Contracts and Functions Reference Guide](generic-contracts-reference.mdx)
 
 To interact with ScalarDL components in your Java applications, see the following:
 
