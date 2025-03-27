@@ -38,14 +38,6 @@
       "label": "Develop",
       "collapsible": true,
       "items": [
-        {
-          "type": "category",
-          "label": "SDKs",
-          "collapsible": true,
-          "items": [
-            "scalardl-java-client-sdk/README"
-          ]
-        },
         "getting-started-auditor",
         "data-modeling",
         "how-to-write-applications",
