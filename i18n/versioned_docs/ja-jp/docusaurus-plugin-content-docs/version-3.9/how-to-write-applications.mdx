@@ -1,0 +1,151 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+# Java で ScalarDL アプリケーションを書く
+
+import JavadocLink from "/src/theme/JavadocLink.js";
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このドキュメントでは、ScalarDL アプリケーションの作成方法について説明します。ScalarDL をアプリケーションに統合し、エラーを処理し、データを検証する方法を学習します。
+
+## ScalarDL Client SDK を使用する
+
+ScalarDL を操作するには、2つのオプションがあります。[ScalarDL Ledger をはじめよう](getting-started.mdx)に示されている[コマンド](scalardl-command-reference.mdx)を使用するか、[Java Client SDK](https://github.com/scalar-labs/scalardl-java-client-sdk) を使用するかです。
+
+コマンドを使用すると、アプリケーションを作成する必要がないため便利です。ただし、コマンドは実行ごとにプロセスを呼び出すため、処理が遅くなります。そのため、コマンドは主にコントラクトをすばやくテストするために使用されます。代わりに、ScalarDL ベースのアプリケーションを作成する場合は、より効率的な Java Client SDK を使用することをお勧めします。
+
+Java Client SDK は、[Maven Central](https://search.maven.org/search?q=a:scalardl-java-client-sdk) で入手できます。Gradle などのビルドツールを使用して、アプリケーションにインストールできます。たとえば、Gradle では、`build.gradle` に次の依存関係を追加し、`VERSION` を使用する ScalarDL のバージョンに置き換えます。
+
+```gradle
+dependencies {
+    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '<VERSION>'
+}
+```
+
+Java Client SDK の API は、<JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> というサービスクラスによって提供されます。以下は、`ClientService` を使用してコントラクトを実行する方法を示したコードスニペットです。
+
+```java
+  // ClientServiceFactory should always be reused.
+  ClientServiceFactory factory = new ClientServiceFactory();
+
+  // ClientServiceFactory creates a new ClientService object in every create method call
+  // but reuses the internal objects and connections as much as possible for better performance and resource usage.
+  ClientService service = factory.create(new ClientConfig(new File(properties));
+  try {
+    // create an application-specific argument that matches your contract
+    JsonNode jsonArgument = ...;
+    ContractExecutionResult result = service.executeContract(contractId, jsonArgument);
+    result.getContractResult().ifPresent(System.out::println);
+  } catch (ClientException e) {
+    System.err.println(e.getStatusCode());
+    System.err.println(e.getMessage());
+  }
+
+  factory.close();
+```
+
+`ClientService` オブジェクトを作成するには、常に `ClientServiceFactory` を使用する必要があります。`ClientServiceFactory` は、`ClientService` の作成に必要なオブジェクトをキャッシュし、指定された構成に基づいてそれらを再利用するため、`ClientServiceFactory` オブジェクトは常に再利用する必要があります。
+
+`ClientService` は、Ledger や Auditor などの ScalarDL コンポーネントと対話して、証明書の登録、コントラクトの登録、コントラクトの実行、データの検証を行うスレッドセーフなクライアントです。コントラクトを実行するときは、コントラクトの対応する引数タイプを指定する必要があります。たとえば、コントラクトが `JacksonBasedContract` を拡張する場合、コントラクトを実行するときに `JsonNode` 引数を渡す必要があります。
+
+詳細については、[Javadoc](https://javadoc.io/doc/com.scalar-labs/scalardl-java-client-sdk/latest/index.html) を参照してください。
+
+## エラーの処理
+
+アプリケーションでエラーが発生した場合、Client SDK はステータスコードを含む例外を返します。エラーの原因を特定するには、ステータスコードを確認する必要があります。
+
+### エラー処理を実装する
+
+Client SDK は、エラーが発生すると <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/exception" className="ClientException" /> をスローします。次のように例外をキャッチすることで、エラーを処理できます。
+
+```java
+ClientService clientService = ...;
+try {
+    // interact with ScalarDL through a ClientService object
+} catch (ClientException) {
+    // e.getStatusCode() returns the status of the error
+}
+```
+
+### ステータスコード
+
+ステータスコードは、どのようなステータスリクエストが最終的に発生したかを説明します。ScalarDL のステータスコードは、HTTP ステータスコードに似た5つのクラスに分類されます。
+
+- 成功ステータス (200-299)
+  - ステータスコードの 2xx クラスは、リクエストが成功したことを示します。
+- 検証エラー (300-399)
+  - ステータスコードの 3xx クラスは、データベース内のアセットレコードが無効な状態にあり、改ざんされている可能性があることを示します。
+- ユーザーエラー (400-499)
+  - ステータスコードの 4xx クラスは、署名または鍵ペアが無効である、コントラクト内で実行エラーが発生する、コントラクトが見つからないなどの、クライアントエラーと認識される問題が原因で、サーバーがリクエストを処理できないか、処理しないことを示します。
+- サーバーエラー (500-599)
+  - ステータスコードの 5xx クラスは、Ledger 側または Auditor 側のいずれかのサーバーで予期しない状況が発生し、リクエストを処理できなかったことを示します。
+- クライアントエラー (600-699)
+  - ステータスコードの 6xx クラスは、クライアントで予期しない状況が発生し、リクエストを処理できなかったことを示します。
+
+詳細については、<JavadocLink packageName="scalardl-common" path="com/scalar/dl/ledger/service" className="StatusCode" /> を参照してください。
+
+## データを検証する
+
+ScalarDL では、すべてのデータが有効な状態であることを確認するために、時々データを検証する必要があります。有効な状態は、ScalarDL の設定方法と構成方法によって異なります。
+
+Ledger のみを使用する場合、有効な状態とは、データが格納されているハッシュチェーン構造が有効であることを意味します。そのため、悪意のあるユーザーがデータの一部を変更した場合、構造検証によって変更を検出できます。ただし、悪意のあるユーザーが Ledger プログラム自体を変更した場合、たとえば構造検証コードも変更できるため、変更を検出できない可能性があります。
+
+Ledger と Auditor を使用する場合、有効な状態とは、Ledger と Auditor のデータに矛盾がないことを意味します。そのため、悪意のあるユーザーが Ledger プログラムを変更した場合でも、Auditor が正しく、変更がデータまたは出力に影響する限り、変更が検出されます。Auditor は、実行ごとに、Ledger と Auditor が参照した状態と作成した状態の矛盾をチェックします。したがって、これらの状態は実行時に正しいことが保証されます。
+
+この違いにより、Auditor を使用するかどうかによって検証の内容が異なります。Ledger のみを使用する場合、検証はアセットをトラバースして、アセットが再計算可能で、有効なハッシュチェーン構造を持っているかどうかを確認します。Ledger と Auditor を使用する場合、検証は Ledger と Auditor の状態間の矛盾を中央集権的な調整なしでチェックします。
+
+また、何をいつ検証するかも異なる場合があります。Ledger のみを使用する場合、明示的な検証がなければ検証されないため、アセットを信頼できるものにしたいときはいつでもアセットを検証する必要があります。Ledger と Auditor を使用する場合、コントラクト実行によって読み取られたアセットまたは書き込まれたアセットは実行時に検証されるため、最近読み取られていないアセットを使用するときは検証する必要があります。
+
+次のように `validateLedger` メソッドを使用して検証を行うことができます。
+
+```java
+  ClientService service = ...
+  try {
+    LedgerValidationResult result = service.validateLedger(assetId);
+    // You can also specify age range.
+    // LedgerValidationResult result = service.validateLedger(assetId, startAge, endAge);
+  } catch (ClientException e) {
+  }
+```
+
+Ledger のみを使用する場合、アセットプルーフと呼ばれる情報を使用することで検出機能を強化できます。Ledger と Auditor を使用する場合、アセットプルーフを明示的に使用する必要はありませんが、Auditor は内部的にこれを使用してビザンチン故障検出機能を実現します。Auditor の詳細については、[ScalarDL 設計ドキュメント](design.mdx)を参照してください。
+
+### アセットプルーフとは?
+
+ScalarDL のアセットプルーフは、アセットレコードに関する情報のセットであり、アセットレコードの存在の証拠として使用されます。次の項目で構成されます。
+
+- アセットレコードの ID
+- アセットレコードの経過時間
+- アセットレコードを作成する実行リクエストの nonce
+- アセットレコードを作成するための入力 (参照される \<ID, age\> ペアのリスト)
+- アセットレコードの暗号化ハッシュ
+- 前の経過時間のアセットレコードの暗号化ハッシュ (ある場合)
+- 上記のエントリの電子署名
+
+#### アセットプルーフの利点
+
+アセットプルーフは Ledger による実行時の証拠であるため、証拠の作成後に Ledger がデータを改ざんすることは困難です。これは、アセットプルーフと Ledger の状態が相違するためです。したがって、アセットプルーフを適切に使用することで、データ改ざんのリスクを軽減できます。
+
+#### アプリケーションからアセットプルーフにアクセスする方法
+
+アセットプルーフは、Client SDK の `executeContract` メソッドの結果から <JavadocLink packageName="scalardl-common" path="com/scalar/dl/ledger/asset" className="AssetProof" /> として取得できます。署名を検証することで、改ざんされておらず Ledger からのアセットプルーフであることが検証できます。
+
+Ledger が実行されるドメインの外部にアセットプルーフを保存することをお勧めします。これは、あるドメインでの悪意のあるアクティビティを別のドメインで検出できるようにするためです。管理を容易にするために、クラウドストレージにアセットプルーフを保存することも検討する価値があります。
+
+実行時に取得されたアセットプルーフは、`validateLedger` を実行するときに使用できます。 `validateLedger` は、Ledger 側の検証を行った後、指定されたアセットレコードのアセットプルーフも返します。その後、クライアントは、アセットプルーフが以前 Ledger から返されたものと同じかどうかを確認できます。
+
+## 他の言語を使用する
+
+Java 以外の言語で ScalarDL を操作するには、ScalarDL Gateway を使用できます。
+
+:::note
+
+ScalarDL Gateway のドキュメントは現在作成中であり、近い将来に準備が整う予定です。
+
+:::
