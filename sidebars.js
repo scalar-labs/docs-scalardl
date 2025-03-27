@@ -694,18 +694,6 @@ const sidebars = {
       collapsible: true,
       items: [
         {
-          type: 'category',
-          label: 'SDKs',
-          collapsible: true,
-          items: [
-            {
-              type: 'doc',
-              id: 'scalardl-java-client-sdk/README',
-              label: 'ScalarDL Java Client SDK',
-            },
-          ],
-        },
-        {
           type: 'doc',
           id: 'getting-started-auditor',
           label: 'ScalarDL Ledger と Auditor を通じてコントラクトを実行',
