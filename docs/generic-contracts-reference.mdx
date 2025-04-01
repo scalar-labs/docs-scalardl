@@ -45,7 +45,7 @@ A null value is returned if it is successful.
 ### Examples
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Put \
 --contract-argument '{"objct_id": "a.txt", "hash_value": "a3ae11", "metadata": {"note": "something"}}'
 ```
@@ -81,7 +81,7 @@ A null value is returned if it is successful.
 ### Examples
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Put \
 --contract-argument '{"object_id": "a.txt", "hash_value": "a3ae11"}' \
 --function-id object.PutToMutableDatabase \
@@ -134,7 +134,7 @@ A JSON object that has the following fields is returned.
 ### Examples
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Get \
 --contract-argument '{"objct_id": "a.txt"}'
 
@@ -184,7 +184,7 @@ Each JSON object for `faulty_versions` and `corresponding_given_versions` has th
 If all specified hash values are the same as the ones in Ledger, the following result is returned.
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Validate \
 --contract-argument \
 '{"object_id": "a.txt",
@@ -206,7 +206,7 @@ Contract result:
 If a different hash values is found, the following result is returned.
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Validate \
 --contract-argument \
 '{"object_id": "a.txt",
@@ -228,7 +228,7 @@ Contract result:
 If the `verbose` option is specified and a different hash value and metadata are found, the following result is returned.
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Validate \
 --contract-argument \
 '{"object_id": "a.txt",
@@ -257,7 +257,7 @@ Contract result:
 If the `all` option is specified and the number of given versions are different from the number of versions stored in ScalarDL, the following result is returned.
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Validate \
 --contract-argument \
 '{"object_id": "a.txt",
@@ -297,7 +297,7 @@ A null value is returned if it is successful.
 ### Examples
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.Create \
 --contract-argument '{"collection_id": "audit_set", "object_ids": ["a.txt"]}'
 ```
@@ -323,7 +323,7 @@ A null value is returned if it is successful.
 ### Examples
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.Add \
 --contract-argument '{"collection_id": "audit_set", "object_ids": ["a.txt"], "options": {"force": true}}'
 ```
@@ -349,7 +349,7 @@ A null value is returned if it is successful.
 ### Examples
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.Remove \
 --contract-argument '{"collection_id": "audit_set", "object_ids": ["a.txt"], "options": {"force": true}}'
 ```
@@ -377,7 +377,7 @@ A JSON object that has the following field is returned.
 ### Examples
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.Get \
 --contract-argument '{"collection_id": "audit_set"}'
 
@@ -410,7 +410,7 @@ A JSON object that has the following fields is returned.
 ### Examples
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.GetHistory \
 --contract-argument '{"collectionId": "audit_set", "options": {"limit": 2}}'
 
@@ -467,7 +467,7 @@ A JSON object that has the following field is returned.
 ### Examples
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.GetCheckpointInterval \
 --contract-argument '{}'
 

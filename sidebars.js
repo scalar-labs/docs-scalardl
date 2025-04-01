@@ -141,6 +141,11 @@ const sidebars = {
           id: 'use-generic-contracts',
           label: 'Use Generic Contracts',
         },
+        {
+          type: 'doc',
+          id: 'how-to-write-applications-with-generic-contracts',
+          label: 'Write an Application with Generic Contracts',
+        },
       ],
     },
     {
