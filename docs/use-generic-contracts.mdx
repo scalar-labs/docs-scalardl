@@ -42,7 +42,7 @@ In this guide, you'll only use a Java runtime environment for seeing how generic
 
 Set up a ScalarDL environment that meets your own requirements. If you want to deploy ScalarDL in a local test environment, you can deploy such an environment by using a sample Docker Compose configuration and Scalar Helm Chart. For details, see the following:
 
-- [How to install ScalarDL in your local environment with Docker](installation-with-docker.mdx)
+- [Getting Started with ScalarDL Ledger](getting-started.mdx)
 - [Getting Started with Scalar Helm Charts](helm-charts/getting-started-scalar-helm-charts.mdx)
 
 For a production environment, ScalarDL is available as container images. For details, see [How to get the container images of Scalar products](scalar-kubernetes/HowToGetContainerImages.mdx).
@@ -55,7 +55,7 @@ Generic contracts and functions are supported in ScalarDL version 3.10 or later 
 
 ### Download the necessary tools and the generic contracts
 
-Specify a version that is equal to or greater than 3.10.0 by running the following command. For available versions, see [Tags](https://github.com/scalar-labs/scalardl-java-client-sdk/tags).
+Specify a version that is equal to or greater than 3.10.1 by running the following command. For available versions, see [Tags](https://github.com/scalar-labs/scalardl-java-client-sdk/tags).
 
 ```console
 VERSION=X.Y.Z
@@ -90,7 +90,7 @@ Prepare a certificate for registration. For details, see [How to get a certifica
 Then, register your certificate by using the ScalarDL client CLI as follows:
 
 ```console
-client/bin/scalardl register-cert --properties client.properties
+client/bin/scalardl generic-contracts register-cert --properties client.properties
 ```
 
 :::note
@@ -104,8 +104,8 @@ You can also use HMAC authentication instead of using a certificate. For details
 After registering the certificate, you can register the generic contracts and functions by running the following commands:
 
 ```console
-client/bin/scalardl register-contracts --properties client.properties --contracts-file generic-contracts/conf/object-authenticity-management-contracts.toml
-client/bin/scalardl register-functions --properties client.properties --functions-file generic-contracts/conf/object-authenticity-management-functions.toml
+client/bin/scalardl generic-contracts register-contracts --properties client.properties --contracts-file generic-contracts/conf/object-authenticity-management-contracts.toml
+client/bin/scalardl generic-contracts register-functions --properties client.properties --functions-file generic-contracts/conf/object-authenticity-management-functions.toml
 ```
 
 ## Manage object authenticity
@@ -134,7 +134,7 @@ You should get the following hash value:
 You can put the hash value by running the following command:
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Put \
 --contract-argument '{"object_id": "a.txt", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0", "metadata": {"note": "created"}}'
 ```
@@ -157,7 +157,7 @@ b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c  a.txt
 You can then update the hash value as follows:
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Put \
 --contract-argument '{"object_id": "a.txt", "hash_value": "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c", "metadata": {"note": "updated"}}'
 ```
@@ -165,7 +165,7 @@ client/bin/scalardl execute-contract --properties client.properties \
 You can also get the latest status of the object with the [`object.Get` contract](generic-contracts-reference.mdx#objectget-contract) by running the following command:
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Get \
 --contract-argument '{"object_id": "a.txt"}'
 ```
@@ -194,7 +194,7 @@ If you cannot get an older version in your file system, you can specify the hash
 :::
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Validate \
 --contract-argument \
 '{"object_id": "a.txt", "versions": [{"version_id": "v2", "hash_value": "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c"}, {"version_id": "v1", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0"}]}'
@@ -220,7 +220,7 @@ Alice updated this file
 Now the hash value of the latest version is `1f75d715648a3b4b3a33ecd7428a3e7139d9357da7d38735c23bf38618ecf9c7`. You can execute validation by running the following command:
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Validate \
 --contract-argument \
 '{"object_id": "a.txt", "versions": [{"version_id": "v2", "hash_value": "1f75d715648a3b4b3a33ecd7428a3e7139d9357da7d38735c23bf38618ecf9c7"}, {"version_id": "v1", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0"}]}'
@@ -235,6 +235,8 @@ Contract result:
   "faulty_versions" : [ "v2" ]
 }
 ```
+
+This validation process confirms if the data outside ScalarDL has not been changed by using the tamper-evident hash values stored in ScalarDL. To validate whether the data in ScalarDL (the hash values in this case) has not been tampered with, you can use the `validate-ledger` command and the `validateLedger` API. For details, see [ScalarDL Client Command Reference](scalardl-command-reference.mdx#generic-contracts) and [Write a ScalarDL Application with Generic Contracts](how-to-write-applications-with-generic-contracts.mdx#validate-your-data).
 
 ### Synchronize the object state between ScalarDL Ledger and a ScalarDB table
 
@@ -251,7 +253,7 @@ Think about a situation where you would like to store hash values of updated obj
 The third step above can be done in an ACID manner by executing the following command for the [`object.Put` contract](generic-contracts-reference.mdx#objectput-contract) with the [`object.PutToMutableDatabase` function](generic-contracts-reference.mdx#objectputtomutabledatabase-function):
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Put \
 --contract-argument '{"object_id": "a.txt", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0"}' \
 --function-id object.PutToMutableDatabase \
@@ -286,7 +288,7 @@ As an example of collection authenticity management, think about managing an aud
 To create a collection for an audit set, use the [`collection.Create` contract](generic-contracts-reference.mdx#collectioncreate-contract) by running the following command:
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.Create \
 --contract-argument '{"collection_id":"audit_set", "object_ids": ["a.txt", "b.txt"]}'
 ```
@@ -296,12 +298,12 @@ The collection ID must be a unique ID that identifies the collection. You can sp
 You can also add and remove objects to or from the collection by using the [`collection.Add` contract](generic-contracts-reference.mdx#collectionadd-contract) and the [`collection.Remove` contract](generic-contracts-reference.mdx#collectionremove-contract). To do this, run the following commands:
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.Add \
 --contract-argument '{"collection_id":"audit_set", "object_ids": ["c.txt", "d.txt"]}'
 ```
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.Remove \
 --contract-argument '{"collection_id":"audit_set", "object_ids": ["a.txt"]}'
 ```
@@ -309,7 +311,7 @@ client/bin/scalardl execute-contract --properties client.properties \
 You can get the latest status of the collection by using the [`collection.Get` contract](generic-contracts-reference.mdx#collectionget-contract). To do this, run the following command:
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.Get \
 --contract-argument '{"collection_id":"audit_set"}'
 ```
@@ -324,7 +326,7 @@ Contract result:
 To confirm that the audit set has not been changed unexpectedly, you can check the update history of the audit set by using the [`collection.GetHistory` contract](generic-contracts-reference.mdx#collectiongethistory-contract). To do this, run the following command:
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.GetHistory \
 --contract-argument '{"collection_id":"audit_set"}'
 ```
@@ -355,7 +357,7 @@ Contract result:
 
 To interact with generic contracts and functions in your Java applications, see the following:
 
-* [Getting Started with ScalarDL](getting-started.mdx)
+* [Write a ScalarDL Application with Generic Contracts](how-to-write-applications-with-generic-contracts.mdx)
 * [Javadoc](javadoc/index.mdx)
 
 To write your own contracts and functions based on generic contracts and functions, see the following:
