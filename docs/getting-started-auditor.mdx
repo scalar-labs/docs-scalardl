@@ -12,7 +12,7 @@ Here, we assume that you have already finished reading the following guides and 
 * [Getting Started with ScalarDL](getting-started.mdx)
 * [A Guide on How to Write a Good Contract for ScalarDL](how-to-write-contract.mdx)
 * [A Guide on How to Write Function for ScalarDL](how-to-write-function.mdx)
-* [A Guide on How to Use Asset Proofs in ScalarDL](how-to-use-proof.mdx)
+* [What an Asset Proof is and how to access it](how-to-write-applications.mdx#what-is-asset-proof)
 
 ## What is ScalarDL Auditor?
 
@@ -47,7 +47,7 @@ scalar.dl.ledger.auditor.enabled=true
 ```
 
 You first need to set `scalar.dl.ledger.auditor.enabled` to true to let Ledger know if the ScalarDL system uses Auditor.
-Note that you also need to enable `scalar.dl.ledger.proof.enabled` and set a proper private key to `scalar.dl.ledger.proof.private_key_path` since Auditor uses [AssetProof](how-to-use-proof.mdx) to work.
+Note that you also need to enable `scalar.dl.ledger.proof.enabled` and set a proper private key to `scalar.dl.ledger.proof.private_key_path` since Auditor uses [AssetProof](how-to-write-applications.mdx#what-is-asset-proof) to work.
 If they are not properly and consistently configured, Ledger will throw an exception.
 
 Also, Ledger manages an Auditor's certificate (i.e., Auditor needs to register its certificate to Ledger) and uses the certificate to validate a request signed by Auditor's private key to identify the request origin; thus, the certificate holder ID (`scalar.dl.ledger.auditor.cert_holder_id`) and version (`scalar.dl.ledger.auditor.cert_version`) are required to be set as well. 
