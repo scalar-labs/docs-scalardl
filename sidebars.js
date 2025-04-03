@@ -723,11 +723,6 @@ const sidebars = {
         },
         {
           type: 'doc',
-          id: 'how-to-handle-errors',
-          label: 'エラーハンドリング',
-        },
-        {
-          type: 'doc',
           id: 'how-to-write-contract',
           label: 'コントラクトを作成',
         },
@@ -740,11 +735,6 @@ const sidebars = {
           type: 'doc',
           id: 'use-generic-contracts',
           label: '汎用コントラクトを使用',
-        },
-        {
-          type: 'doc',
-          id: 'how-to-use-proof',
-          label: 'アセットプルーフを使用',
         },
       ],
     },

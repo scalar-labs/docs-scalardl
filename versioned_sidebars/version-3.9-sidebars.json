@@ -660,11 +660,6 @@
         },
         {
           "type": "doc",
-          "id": "how-to-handle-errors",
-          "label": "エラーハンドリング"
-        },
-        {
-          "type": "doc",
           "id": "how-to-write-contract",
           "label": "コントラクトを作成"
         },
@@ -672,11 +667,6 @@
           "type": "doc",
           "id": "how-to-write-function",
           "label": "ファンクションを作成"
-        },
-        {
-          "type": "doc",
-          "id": "how-to-use-proof",
-          "label": "アセットプルーフを使用"
         }
       ]
     },
