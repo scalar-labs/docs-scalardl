@@ -15,7 +15,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 * [ScalarDL 入門](getting-started.mdx)
 * [ScalarDL の適切なコントラクトの書き方に関するガイド](how-to-write-contract.mdx)
 * [ScalarDL ファンクションの書き方ガイド](how-to-write-function.mdx)
-* [ScalarDL でアセットプルーフを使用する方法に関するガイド](how-to-use-proof.mdx)
+* [アセットプルーフとは何か、およびアセットプルーフにアクセスする方法](how-to-write-applications.mdx#アセットプルーフとは)
 
 ## ScalarDL Auditor とは何ですか?
 
@@ -47,7 +47,7 @@ scalar.dl.ledger.auditor.enabled=true
 ```
 
 まず、`scalar.dl.ledger.auditor.enabled` を true に設定して、ScalarDL システムが Auditor を使用しているかどうかを Ledger に知らせる必要があります。
-Auditor は [AssetProof](how-to-use-proof.mdx) を使用して機能するため、`scalar.dl.ledger.proof.enabled` を有効にし、適切な秘密鍵を `scalar.dl.ledger.proof.private_key_path` に設定する必要もあることに注意してください。
+Auditor は [AssetProof](how-to-write-applications.mdx#アセットプルーフとは) を使用して機能するため、`scalar.dl.ledger.proof.enabled` を有効にし、適切な秘密鍵を `scalar.dl.ledger.proof.private_key_path` に設定する必要もあることに注意してください。
 これらが適切かつ一貫して構成されていない場合、Ledger は例外をスローします。
 
 また、Ledger は Auditor の証明書を管理し (つまり、 Auditor はその証明書を Ledger に登録する必要があります)、その証明書を使用して Auditor の秘密鍵で署名されたリクエストを検証し、リクエストの送信元を識別します。したがって、証明書所有者 ID (`scalar.dl.ledger.auditor.cert_holder_id`) とバージョン (`scalar.dl.ledger.auditor.cert_version`) も設定する必要があります。
