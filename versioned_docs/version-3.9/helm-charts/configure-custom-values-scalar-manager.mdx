@@ -4,32 +4,34 @@ tags:
 displayed_sidebar: docsEnglish
 ---
 
-# Configure a custom values file for Scalar Manager
+# Configure a Custom Values File for Scalar Manager
 
-This document explains how to create your custom values file for the Scalar Manager chart. If you want to know the details of the parameters, please refer to the [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalar-manager/README.md) of the Scalar Manager chart.
+This document provides instructions on how to configure a custom values file for the Scalar Manager Helm Chart. For details about the available parameters, see the [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalar-manager/README.md) in the Scalar Manager chart repository.
 
 ## Required configurations
 
+This section describes the service, image, and Scalar Manager configurations that you must include in the Scalar Manager values file.
+
 ### Service configurations
 
-You must set `service.type` to specify the Service resource type of Kubernetes. If you want to use a load balancer provided by could providers, you need to set `service.type` to `LoadBalancer`.
+You must configure `web.service.type` to define the Kubernetes Service resource type. To use a load balancer that cloud service providers offer for exposing the service, set `web.service.type` to `LoadBalancer`.
 
 ```yaml
-service:
-  type: LoadBalancer
+web:
+  service:
+    type: LoadBalancer
+  # other web configurations
 ```
 
-#### Security concerns regarding exposing Scalar Manager
+#### Security considerations for exposing Scalar Manager
 
-Setting `service.type` to `LoadBalancer` exposes Scalar Manager outside the cluster, which may be a security concern.
+Setting `web.service.type` to `LoadBalancer` exposes Scalar Manager externally via `HTTP` by default, which creates security risks on untrusted networks due to unencrypted traffic. If external access is not required, using a private network or properly configuring network access to your Kubernetes cluster is recommended.
 
-Currently, Scalar Manager lacks authentication or access-control mechanisms. Because of this, exposing Scalar Manager directly to a public network without proper security measures can lead to unauthorized actions, because Scalar Manager provides features like scheduling jobs to pause Scalar products.
-
-If external access is necessary, using a private network or properly configuring network access to your Kubernetes cluster is recommended.
+Scalar Manager supports authentication and authorization mechanisms. You can configure these mechanisms to ensure authorized actions for features like scheduling jobs to pause Scalar products. For details, see [Authentication configuration for Scalar Manager](#authentication-configuration-for-scalar-manager).
 
 ### Image configurations
 
-You must set `api.image.repository` and `web.image.repository`. Be sure to specify the Scalar Manager container image so that you can pull the image from the container repository.
+You must configure `api.image.repository` and `web.image.repository`. These settings specify the Scalar Manager container images, ensuring you can pull them from the container repository.
 
 ```yaml
 api:
@@ -42,86 +44,107 @@ web:
 
 ## Optional configurations
 
-This section explains the optional configurations when setting up a custom values file for Scalar Manager.
+This section describes optional configurations for customizing the Scalar Manager values file.
 
 ### Scalar Manager configurations (optional based on your environment)
 
-You can override the `api.applicationProperties` custom value to change the default configurations of Scalar Manager.
+You can override the `api.applicationProperties` setting to modify the default Scalar Manager configurations.
 
 ```yaml
 api:
   applicationProperties: |
-    grafana.kubernetesServiceLabelName="app.kubernetes.io/name"
-    grafana.kubernetesServiceLabelValue="grafana"
-    grafana.kubernetesServicePortName="http-web"
+    prometheus.kubernetes-service-label-name="app"
+    prometheus.kubernetes-service-label-value="kube-prometheus-stack-prometheus"
+    prometheus.kubernetes-service-port-name="http-web"
+    # other application properties
 ```
 
-Scalar Manager has default configurations that, for example, discover Scalar product deployments and the Prometheus and Loki services in the cluster. In most use cases, especially if you follow the [guide to deploy `kube-prometheus-stack`](getting-started-monitoring.mdx) and the [guide to deploy `loki-stack`](getting-started-logging.mdx), you don't need to change the default configurations.
+Scalar Manager includes default configurations to discover Scalar product deployments and the Prometheus service within the cluster. In most scenarios, especially when following the guides to deploy `kube-prometheus-stack` and `loki-stack`, these default configurations are sufficient and do not require modification.
 
-#### Properties that you can set in `api.applicationProperties`
+#### Configurable properties in `api.applicationProperties`
 
 The configurations for Scalar Manager are in the format of Java application properties, which are `key=value` pairs. These application properties can be set by using the `api.applicationProperties` custom value in the Scalar Manager Helm Chart.
 
-|Name|Description|Default value|
+|Name|Description|Default Value|
 |---|---|---|
-|`grafana.kubernetesServiceLabelName`|The label name used to discover the Grafana service in Kubernetes|`app.kubernetes.io/name`|
-|`grafana.kubernetesServiceLabelValue`|The label value corresponding to `grafana.kubernetesServiceLabelName`|`grafana`|
-|`grafana.kubernetesServicePortName`|The port name used to discover the Grafana service port in Kubernetes|`http-web`|
-|`prometheus.kubernetesServiceLabelName`|The label name used to discover the Prometheus service in Kubernetes|`app`|
-|`prometheus.kubernetesServiceLabelValue`|The label value corresponding to `prometheus.kubernetesServiceLabelName`|`kube-prometheus-stack-prometheus`|
-|`prometheus.kubernetesServicePortName`|The port name used to discover the Prometheus service port in Kubernetes|`http-web`|
-|`loki.kubernetesServiceLabelName`|The label name used to discover the Loki service in Kubernetes|`app`|
-|`loki.kubernetesServiceLabelValue`|The label value corresponding to `loki.kubernetesServiceLabelName`|`loki`|
-|`loki.kubernetesServicePortName`|The port name used to discover the Loki service port in Kubernetes|`http-metrics`|
-|`helm.scalarRepositoryName`|The name used to represent the Scalar Helm repository|`scalar-labs`|
-|`helm.scalarRepositoryUrl`|The URL of the Scalar Helm repository|`https://scalar-labs.github.io/helm-charts`|
-|`helm.scalarAdminForKubernetesChartName`|The Helm Chart name of `Scalar Admin for Kubernetes` in the Scalar Helm repository|`scalar-admin-for-kubernetes`|
-|`helm.scalarAdminForKubernetesChartVersion`|The version of the Scalar Admin for Kubernetes Helm Chart|`1.0.0`|
-|`configMapNamespace`|The namespace where the ConfigMap used by Scalar Manager is deployed|`default`|
-|`configMapName`|The name of the ConfigMap used by Scalar Manager|`scalar-manager-metadata`|
-|`paused-state-retention.storage`|The storage type used to retain paused states|`configmap`|
-|`paused-state-retention.max-number`|The max number that the paused states are retained by Scalar Manager|`100`|
+|`prometheus.kubernetes-service-label-name`|The label name used to discover the Prometheus service in Kubernetes|`app`|
+|`prometheus.kubernetes-service-label-value`|The label value corresponding to `prometheus.kubernetes-service-label-name`|`kube-prometheus-stack-prometheus`|
+|`prometheus.kubernetes-service-port-name`|The port name used to discover the Prometheus service port in Kubernetes|`http-web`|
+|`springdoc.swagger-ui.enabled`|Whether to enable the Swagger UI or not|`false`|
+|`springdoc.swagger-ui.path`|The path of the Swagger UI|`/swagger-ui.html`|
+|`app.cors.allowed-origins`|The allowed origins for CORS|`*`|
+|`app.cors.allowed-methods`|The allowed methods for CORS|`*`|
+|`app.cors.allowed-headers`|The allowed headers for CORS|`*`|
+|`authentication.providers.static-jwt.secret`|Secret key used for signing JWT tokens; minimum 32 characters|`example-jwt-secret-with-minimum-32-characters`|
+|`authentication.providers.static-jwt.issuer-uri`|The issuer URI of the JWT tokens|`https://scalar-manager.example.com`|
+|`authentication.providers.static-jwt.access-token-expiration-time`|The expiration time of the access token|`1h`|
+|`authentication.providers.static-jwt.refresh-token-expiration-time`|The expiration time of the refresh token|`3d`|
+|`app.initial-admin-user.enabled`|Whether to enable the initial admin user or not|`true`|
+|`app.initial-admin-user.email`|The email address of the initial admin user|`admin@example.com`|
+|`app.initial-admin-user.name`|The name of the initial admin user|`Administrator`|
+|`app.initial-admin-user.password`|The password of the initial admin user|`Password@123!`|
+|`spring.jpa.hibernate.ddl-auto`|The DDL mode for Hibernate|`update`|
+|`spring.jpa.show-sql`| Whether to show the SQL query|`false`|
+|`spring.jpa.properties.hibernate.format_sql` | Whether to format the SQL query|`false`|
+|`spring.datasource.url`|The URL of the database|`jdbc:postgresql://scalar-manager-postgres-postgresql:5432/scalar-manager`|
+|`spring.datasource.username`|The username of the database|`scalar-manager`|
+|`spring.datasource.password`|The password of the database|`scalar-manager`|
+|`spring.datasource.driver-class-name`|The driver class name of the database|`org.postgresql.Driver`|
+
+:::note
+
+There are more configurations that you can set in `api.applicationProperties` regarding the JPA, Hibernate, and Spring Data. If you're familiar with these configurations, you can set them to customize the database connection and the behavior of Scalar Manager.
+
+:::
+
+##### Authentication configuration for Scalar Manager
+
+By default, to access Scalar Manager, you need to authenticate by using a username and password.
+
+The following are the prerequisites for setting up authentication:
+
+- You need to have a PostgreSQL database, either your own or one that a cloud service provider hosts. For example, you can use the [Bitnami package for PostgreSQL](https://artifacthub.io/packages/helm/bitnami/postgresql) to deploy a PostgreSQL database in your Kubernetes cluster.
+- You must set the `authentication.providers.static-jwt.secret` configuration. This configuration is used for signing JWT tokens, and the minimum length of the secret is 32 characters.
+
+The following is an example of the additional configurations you need to set in the `api.applicationProperties` to apply the above prerequisites. Be sure to change the configurations to match your environment.
+
+```properties
+# JWT configuration
+# Secret key used for signing JWT tokens, minimum 32 characters
+authentication.providers.static-jwt.secret=${AUTHENTICATION_PROVIDERS_STATIC_JWT_SECRET:example-jwt-secret-with-minimum-32-characters}
+authentication.providers.static-jwt.issuer-uri=${AUTHENTICATION_PROVIDERS_STATIC_JWT_ISSUER_URI:https://scalar-manager.example.com}
+authentication.providers.static-jwt.access-token-expiration-time=${AUTHENTICATION_PROVIDERS_STATIC_JWT_ACCESS_TOKEN_EXPIRATION_TIME:1h}
+authentication.providers.static-jwt.refresh-token-expiration-time=${AUTHENTICATION_PROVIDERS_STATIC_JWT_REFRESH_TOKEN_EXPIRATION_TIME:3d}
+
+# Initial admin configuration
+app.initial-admin-user.enabled=${APP_INITIAL_ADMIN_USER_ENABLED:true}
+app.initial-admin-user.email=${APP_INITIAL_ADMIN_USER_EMAIL:admin@example.com}
+app.initial-admin-user.name=${APP_INITIAL_ADMIN_USER_NAME:Administrator}
+app.initial-admin-user.password=${APP_INITIAL_ADMIN_USER_PASSWORD:Password@123!}
+
+# JPA configuration
+spring.jpa.hibernate.ddl-auto=${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
+spring.jpa.show-sql=${SPRING_JPA_SHOW_SQL:false}
+spring.jpa.properties.hibernate.format_sql=${SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL:false}
+
+# Database configuration
+spring.datasource.url=jdbc:postgresql://${DATABASE_HOST:scalar-manager-postgres-postgresql}:${DATABASE_PORT:5432}/${DATABASE_NAME:scalar-manager}
+spring.datasource.username=${DATABASE_USERNAME:scalar-manager}
+spring.datasource.password=${DATABASE_PASSWORD:scalar-manager}
+spring.datasource.driver-class-name=org.postgresql.Driver
+```
 
 ##### Service discovery
 
-Scalar Manager uses label selectors to discover Grafana, Prometheus, and Loki services in Kubernetes, and then uses the port name to connect to them. You can modify the label selectors and the port name by setting the `*.kubernetesServiceLabelName`, `*.kubernetesServiceLabelValue`, and `*.kubernetesServicePortName` configurations.
+Scalar Manager uses labels to discover the Prometheus service in Kubernetes, and then uses the port name to connect to them. You can modify the labels and the port name by setting the `prometheus.kubernetes-service-label-name`, `prometheus.kubernetes-service-label-value`, and `prometheus.kubernetes-service-port-name` configurations.
 
-In general, you don't need to modify these configurations. However, if you customized the labels or port names of the Grafana, Prometheus, or Loki services when installing their Helm Charts, you should adjust these configurations to match your customizations.
+In general, you don't need to modify these configurations. However, if you customized the labels or port names of the Prometheus service when installing their Helm Charts, you should adjust these configurations to match your customizations.
 
-##### Use of Scalar Admin for Kubernetes
 
-Scalar Manager installs the [Scalar Admin for Kubernetes](https://github.com/scalar-labs/scalar-admin-for-kubernetes) Helm Chart to schedule or execute the pausing of jobs on Scalar products. It sets up the Scalar Helm repository and locates the Helm Chart by using the following configurations:
+#### Configurable environment variables in `web.env`
 
-- `helm.scalarRepositoryName`
-- `helm.scalarRepositoryUrl`
-- `helm.scalarAdminForKubernetesChartName`
-- `helm.scalarAdminForKubernetesChartVersion`
+|Name|Description|Default Value|
+|---|---|---|
+|`GRAFANA_SERVER_URL`|The URL of the Grafana service in the Kubernetes cluster|`http://scalar-monitoring-grafana.monitoring.svc.cluster.local:3000`|
 
-:::note
-
-Modifying these configurations isn't recommended unless you have a specific reason to do so.
-
-:::
-
-##### ConfigMap used by Scalar Manager
-
-Scalar Manager uses ConfigMap to store metadata, such as the default application properties. ConfigMap is deployed in the namespace specified by the following configurations:
-
-- `configMapNamespace`
-- `configMapName`
-
-:::note
-
-Modifying these configurations isn't recommended unless you have a specific reason to do so, like if you're using a conflicting ConfigMap.
-
-:::
-
-##### Retention of paused states
-
-Scalar Manager retains the paused states of Scalar products in storage. Currently, Scalar Manager can only use ConfigMap as the storage, so the `paused-state-retention.storage` configuration must be set to `configmap`. You can adjust the maximum number of paused states that Scalar Manager retains by setting the `paused-state-retention.max-number` configuration.
-
-:::warning
-
-When using ConfigMap for storage, it is not recommended to set a large value for `paused-state-retention.max-number` due to the size limitation of ConfigMap. Data stored in a ConfigMap cannot exceed 1 MiB, which means that the maximum number of paused states that Scalar Manager can retain is approximately 3,000.
-
-:::
+Currently, the `GRAFANA_SERVER_URL` variable can be set in `web.env` to customize the proxy from the Scalar Manager web UI to the Grafana UI. By default, the variable is set to the Grafana service `scalar-monitoring-grafana` installed in the `monitoring` namespace. If you have installed Grafana in different namespace or have changed the name of the Grafana service, you will need to update the `GRAFANA_SERVER_URL` variable accordingly.
