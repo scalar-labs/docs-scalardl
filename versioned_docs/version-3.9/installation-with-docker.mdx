@@ -47,7 +47,7 @@ The [scalar-labs/scalardl-samples](https://github.com/scalar-labs/scalardl-sampl
 
      ```yaml
      services:
-       scalar-ledger:
+       scalardl-ledger:
          environment:
            - SCALAR_DL_LICENSING_LICENSE_KEY={"organization_name":"XXXXXXXX","expiration_date_time":"YYYY-MM-DDTHH:mm:SS+TIMEZONE","product_name":"ScalarDL Ledger","product_version":N,"license_type":"trial","signature":"XXXXXXXX"}
      ```
@@ -59,7 +59,7 @@ The [scalar-labs/scalardl-samples](https://github.com/scalar-labs/scalardl-sampl
 
      ```yaml
      services:
-       scalar-ledger:
+       scalardl-ledger:
          environment:
            - SCALAR_DL_LICENSING_LICENSE_KEY={"organization_name":"XXXXXXXX","expiration_date_time":"YYYY-MM-DDTHH:mm:SS+TIMEZONE","product_name":"ScalarDL Ledger","product_version":N,"license_type":"trial","signature":"XXXXXXXX"}
      ```
@@ -70,7 +70,7 @@ The [scalar-labs/scalardl-samples](https://github.com/scalar-labs/scalardl-sampl
 
      ```yaml
      services:
-       scalar-auditor:
+       scalardl-auditor:
          environment:
            - SCALAR_DL_LICENSING_LICENSE_KEY={"organization_name":"XXXXXXXX","expiration_date_time":"YYYY-MM-DDTHH:mm:SS+TIMEZONE","product_name":"ScalarDL Auditor","product_version":N,"license_type":"trial","signature":"XXXXXXXX"}
      ```
@@ -97,7 +97,7 @@ If you have a trial license, you can skip this step and [start up ScalarDL](#sta
 
        ```yaml
        services:
-         scalar-ledger:
+         scalardl-ledger:
            volumes:
              - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
              - ./fixture/ledger.properties.tmpl:/scalar/ledger/ledger.properties.tmpl
@@ -110,7 +110,7 @@ If you have a trial license, you can skip this step and [start up ScalarDL](#sta
 
        ```yaml
        services:
-         scalar-ledger:
+         scalardl-ledger:
            volumes:
              - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
              - ./fixture/ledger.properties.tmpl:/scalar/ledger/ledger.properties.tmpl
@@ -130,7 +130,7 @@ If you have a trial license, you can skip this step and [start up ScalarDL](#sta
 
        ```yaml
        services:
-         scalar-ledger:
+         scalardl-ledger:
            volumes:
              - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
              - ./fixture/ledger.properties.tmpl:/scalar/ledger/ledger.properties.tmpl
@@ -143,7 +143,7 @@ If you have a trial license, you can skip this step and [start up ScalarDL](#sta
 
        ```yaml
        services:
-         scalar-ledger:
+         scalardl-ledger:
            volumes:
              - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
              - ./fixture/ledger.properties.tmpl:/scalar/ledger/ledger.properties.tmpl
@@ -160,7 +160,7 @@ If you have a trial license, you can skip this step and [start up ScalarDL](#sta
 
        ```yaml
        services:
-         scalar-auditor:
+         scalardl-auditor:
            volumes:
              - ./fixture/auditor.pem:/scalar/auditor.pem
              - ./fixture/auditor-key.pem:/scalar/auditor-key.pem
@@ -174,7 +174,7 @@ If you have a trial license, you can skip this step and [start up ScalarDL](#sta
 
        ```yaml
        services:
-         scalar-auditor:
+         scalardl-auditor:
            volumes:
              - ./fixture/auditor.pem:/scalar/auditor.pem
              - ./fixture/auditor-key.pem:/scalar/auditor-key.pem
