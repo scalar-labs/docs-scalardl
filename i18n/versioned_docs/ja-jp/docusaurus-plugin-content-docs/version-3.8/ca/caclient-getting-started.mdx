@@ -92,7 +92,7 @@ ScalarDL は証明書の有効期限をチェックしません。そのため�
            cfssl gencert -initca ca.json | cfssljson -bare ca
            ```
 
-        1. CA 構成を含む JSON ファイルを作成します。
+        1. CA 設定を含む JSON ファイルを作成します。
 
            ```console
            cat << 'EOF' > ${HOME}/scalardl/digital-signature/certs/ca-config.json
