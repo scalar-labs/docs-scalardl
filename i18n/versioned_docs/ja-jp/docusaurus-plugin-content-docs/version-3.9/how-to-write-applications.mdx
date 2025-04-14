@@ -50,7 +50,7 @@ Java Client SDK の API は、<JavadocLink packageName="scalardl-java-client-sdk
   factory.close();
 ```
 
-`ClientService` オブジェクトを作成するには、常に `ClientServiceFactory` を使用する必要があります。`ClientServiceFactory` は、`ClientService` の作成に必要なオブジェクトをキャッシュし、指定された構成に基づいてそれらを再利用するため、`ClientServiceFactory` オブジェクトは常に再利用する必要があります。
+`ClientService` オブジェクトを作成するには、常に `ClientServiceFactory` を使用する必要があります。`ClientServiceFactory` は、`ClientService` の作成に必要なオブジェクトをキャッシュし、指定された設定に基づいてそれらを再利用するため、`ClientServiceFactory` オブジェクトは常に再利用する必要があります。
 
 `ClientService` は、Ledger や Auditor などの ScalarDL コンポーネントと対話して、証明書の登録、コントラクトの登録、コントラクトの実行、データの検証を行うスレッドセーフなクライアントです。コントラクトを実行するときは、コントラクトの対応する引数タイプを指定する必要があります。たとえば、コントラクトが `JacksonBasedContract` を拡張する場合、コントラクトを実行するときに `JsonNode` 引数を渡す必要があります。
 
@@ -92,7 +92,7 @@ try {
 
 ## データを検証する
 
-ScalarDL では、すべてのデータが有効な状態であることを確認するために、時々データを検証する必要があります。有効な状態は、ScalarDL の設定方法と構成方法によって異なります。
+ScalarDL では、すべてのデータが有効な状態であることを確認するために、時々データを検証する必要があります。有効な状態は、ScalarDL の構成と設定方法によって異なります。
 
 Ledger のみを使用する場合、有効な状態とは、データが格納されているハッシュチェーン構造が有効であることを意味します。そのため、悪意のあるユーザーがデータの一部を変更した場合、構造検証によって変更を検出できます。ただし、悪意のあるユーザーが Ledger プログラム自体を変更した場合、たとえば構造検証コードも変更できるため、変更を検出できない可能性があります。
 
