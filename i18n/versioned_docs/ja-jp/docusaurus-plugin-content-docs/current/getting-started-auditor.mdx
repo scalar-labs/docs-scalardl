@@ -31,11 +31,11 @@ Auditor によるビザンチン故障検知を適切に機能させるには、
 このガイドでは、Ledger と Auditor の両方が ScalarDB 経由で Cassandra を使用し、両方の Cassandra インスタンスが管理者権限としてデフォルトのユーザー名とパスワードを使用すると仮定します。
 また、Ledger、Auditor、および Cassandra はすべて同じネットワーク内に配置されているため、相互にアクセスできます。
 
-## プロパティを構成する
+## プロパティを設定する
 
-検出が適切に機能するように、Ledger と Auditor を構成する必要があります。
+検出が適切に機能するように、Ledger と Auditor を設定する必要があります。
 
-Ledger のプロパティについては、次のエントリを構成する必要があります。
+Ledger のプロパティについては、次のエントリを設定する必要があります。
 
 ```
 [ledger.properties]
@@ -49,12 +49,12 @@ scalar.dl.ledger.auditor.enabled=true
 
 まず、`scalar.dl.ledger.auditor.enabled` を true に設定して、ScalarDL システムが Auditor を使用しているかどうかを Ledger に知らせる必要があります。
 Auditor は [AssetProof](how-to-write-applications.mdx#アセットプルーフとは) を使用して機能するため、`scalar.dl.ledger.proof.enabled` を有効にし、適切な秘密鍵を `scalar.dl.ledger.proof.private_key_path` に設定する必要もあることに注意してください。
-これらが適切かつ一貫して構成されていない場合、Ledger は例外をスローします。
+これらが適切かつ一貫して設定されていない場合、Ledger は例外をスローします。
 
 また、Ledger は Auditor の証明書を管理し (つまり、 Auditor はその証明書を Ledger に登録する必要があります)、その証明書を使用して Auditor の秘密鍵で署名されたリクエストを検証し、リクエストの送信元を識別します。したがって、証明書所有者 ID (`scalar.dl.ledger.auditor.cert_holder_id`) とバージョン (`scalar.dl.ledger.auditor.cert_version`) も設定する必要があります。
 デフォルトでは、Ledger は、Auditor がその証明書を名前 `auditor` 、バージョン `1` で登録すると想定します。
 
-Auditor のプロパティについては、次のエントリを構成する必要があります。
+Auditor のプロパティについては、次のエントリを設定する必要があります。
 
 ```
 [auditor.properties]
@@ -112,7 +112,7 @@ client/bin/scalardl register-cert --properties client.properties.auditor
 ```
 
 `client.properties.ledger` と `client.properties.auditor` を正しく設定してください。
-(このドキュメントは、client.properties を適切に構成する方法を理解していることを前提としています。)
+(このドキュメントは、client.properties を適切に設定する方法を理解していることを前提としています。)
 `scalar.dl.client.cert_holder_id` は、Ledger と Auditor でそれぞれ設定されたものと一致するように適切に設定する必要があることに注意してください。
 
 ## 証明書を登録します
