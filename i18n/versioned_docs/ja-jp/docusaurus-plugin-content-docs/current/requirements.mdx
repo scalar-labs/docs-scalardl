@@ -28,7 +28,7 @@ ScalarDL は Java で記述されているため、ScalarDL を操作する最�
 
 :::warning
 
-ScalarDL は JDK 8 でビルドされているため、コントラクトは JDK 8 互換バイナリである必要があります。JDK 8 以外のバージョンを使用する場合は、ビルドツールを設定して JDK 8 互換バイナリをビルドする必要があります。バイナリ互換性を指定するには、javac の `--release 8` オプションを使用するか、Gradle または Maven 構成を設定して JDK 8 ツールチェーンを使用するなど、いくつかの方法があります。次に、Gradle の構成を示します。
+ScalarDL は JDK 8 でビルドされているため、コントラクトは JDK 8 互換バイナリである必要があります。JDK 8 以外のバージョンを使用する場合は、ビルドツールを設定して JDK 8 互換バイナリをビルドする必要があります。バイナリ互換性を指定するには、javac の `--release 8` オプションを使用するか、Gradle または Maven の設定を変更して JDK 8 ツールチェーンを使用するなど、いくつかの方法があります。次に、Gradle の設定を示します。
 
 ```gradle
 java {
@@ -38,7 +38,7 @@ java {
 }
 ```
 
-Gradle および Maven の構成の詳細については、[Gradle の JVM プロジェクトのツールチェーン](https://docs.gradle.org/current/userguide/toolchains.html)および [Maven のツールチェーンの使用ガイド](https://maven.apache.org/guides/mini/guide-using-toolchains.html)を参照してください。
+Gradle および Maven の設定の詳細については、[Gradle の JVM プロジェクトのツールチェーン](https://docs.gradle.org/current/userguide/toolchains.html)および [Maven のツールチェーンの使用ガイド](https://maven.apache.org/guides/mini/guide-using-toolchains.html)を参照してください。
 
 :::
 
@@ -171,7 +171,7 @@ ScalarDL は、次のデータベースとそのバージョン上で実行さ�
 
 :::note
 
-ScalarDL は、基盤となるデータベースを抽象化するために ScalarDB を使用します。各データベースの構成方法の詳細については、[ScalarDB の基盤となるデータベースの構成](https://scalardb.scalar-labs.com/docs/latest/database-configurations)を参照してください。
+ScalarDL は、基盤となるデータベースを抽象化するために ScalarDB を使用します。各データベースの設定方法の詳細については、[ScalarDB の基盤となるデータベースの設定](https://scalardb.scalar-labs.com/docs/latest/database-configurations)を参照してください。
 
 次のリストは、ScalarDL で内部的に使用されている ScalarDB のバージョンを示しています。このバージョンリストは、次の場合に役立ちます。
 
