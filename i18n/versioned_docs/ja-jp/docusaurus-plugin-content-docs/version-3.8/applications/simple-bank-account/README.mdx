@@ -133,7 +133,7 @@ public class Deposit extends JacksonBasedContract {
 
 これでコントラクトを作成し、コンパイルしたはずです。ただし、それらを実行する前に、ScalarDL ネットワークに登録する必要があります。[ScalarDL Client SDK](https://github.com/scalar-labs/scalardl-client-sdk) `client/bin` ディレクトリで利用可能なツールを利用して、コントラクトを登録して実行します。このディレクトリにアクセスできることを確認してください。
 
-ここで、証明書 (例: `client.pem`) とそれに対応する秘密鍵 (例: `client-key.pem`)、および ScalarDL を起動して実行する必要があります。構成に合わせて `client.properties` (`conf` ディレクトリにあります) を編集します。次のような行が含まれている必要があります。
+ここで、証明書 (例: `client.pem`) とそれに対応する秘密鍵 (例: `client-key.pem`)、および ScalarDL を起動して実行する必要があります。設定に合わせて `client.properties` (`conf` ディレクトリにあります) を編集します。次のような行が含まれている必要があります。
 
 ```console
 scalar.dl.client.server.host=localhost
