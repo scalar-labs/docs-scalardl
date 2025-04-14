@@ -65,9 +65,9 @@ goose -path $GOPATH/src/github.com/cloudflare/cfssl/certdb/sqlite up
 
 これにより、現在の場所に certstore_development.db が作成されます。
 
-## CA サーバーの構成ファイルを作成する
+## CA サーバーの設定ファイルを作成する
 
-署名アルゴリズム、エンドポイント URL、中間サーバーの使用法などを構成します。
+署名アルゴリズム、エンドポイント URL、中間サーバーの使用法などを設定します。
 サーバーがローカル環境でのみ実行されることを前提としています。
 
 ```
@@ -109,7 +109,7 @@ goose -path $GOPATH/src/github.com/cloudflare/cfssl/certdb/sqlite up
 
 TODO: 設定について詳しく調べる
 
-次に、前のセクションで作成したデータベースファイルを指すデータベースの構成ファイルを作成します。
+次に、前のセクションで作成したデータベースファイルを指すデータベースの設定ファイルを作成します。
 
 ```
 [db-config.json]
