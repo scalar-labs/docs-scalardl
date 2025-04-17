@@ -350,3 +350,7 @@ hr {
   margin: auto;
   max-width: 91%;
 }
+
+html[data-theme="dark"] .container img[src$=".png"] { /* Adds a white background to transparent .png images. */
+  background-color: #ffffff;
+}
