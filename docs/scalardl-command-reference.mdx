@@ -320,7 +320,7 @@ scalardl generic-contracts register-secret --properties client.properties
 Register a specified contract. For available options, see [`register-contract`](#register-contract).
 
 ```console
-scalardl generic-contracts register-contract --properties client.properties --contract-id StateUpdater --contract-binary-name com.org1.contract.StateUpdater --contract-class-file build/classes/java/main/com/org1/contract/StateUpdater.class
+scalardl generic-contracts register-contract --properties client.properties --contract-id object.Put --contract-binary-name com.scalar.dl.genericcontracts.object.Put --contract-class-file /path/to/Put.class
 ```
 
 Register specified contracts. For available options, see [`register-contracts`](#register-contracts).
@@ -332,7 +332,7 @@ scalardl generic-contracts register-contracts --properties client.properties --c
 Register a specified function. For available options, see [`register-function`](#register-function).
 
 ```console
-scalardl generic-contracts register-function --properties client.properties --function-id test-function --function-binary-name com.example.function.TestFunction --function-class-file /path/to/TestFunction.class
+scalardl generic-contracts register-function --properties client.properties --function-id object.PutToMutableDatabase --function-binary-name com.scalar.dl.genericcontracts.object.PutToMutableDatabase --function-class-file /path/to/PutToMutableDatabase.class
 ```
 
 Register specified functions. For available options, see [`register-functions`](#register-functions).
@@ -350,7 +350,7 @@ scalardl generic-contracts execute-contract --properties client.properties --con
 List registered contracts. For available options, see [`list-contracts`](#list-contracts).
 
 ```console
-scalardl generic-contracts execute-contract --properties client.properties
+scalardl generic-contracts list-contracts --properties client.properties
 ```
 
 Validate an object for all ages.
