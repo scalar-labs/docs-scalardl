@@ -111,7 +111,7 @@ The old <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/
 
 ### About the `invoke` arguments
 
-Similar to a Contract using `Ledger` object to manage assets, a Function uses `Database` object to manage records of the underlying database. Note that `Database` implements [ScalarDB](https://github.com/scalar-labs/scalardb) interface so that you can do the CRUD operations based on [the data model](https://scalardb.scalar-labs.com/docs/latest/design) of ScalarDB.
+Similar to a Contract using `Ledger` object to manage assets, a Function uses `Database` object to manage records of the underlying database. Note that `Database` implements [ScalarDB](https://github.com/scalar-labs/scalardb) interface so that you can do the CRUD operations based on the [data model](https://scalardb.scalar-labs.com/docs/latest/data-modeling#scalardb-data-model) of ScalarDB.
 
 A `functionArgument` is a runtime argument for the Function specified by the requester. The argument is not digitally signed as opposed to the contract argument so that it can be used to pass data that is stored in the database but it might be deleted at some later point for some reason.
 
