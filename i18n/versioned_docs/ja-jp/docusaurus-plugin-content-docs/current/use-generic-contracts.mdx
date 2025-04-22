@@ -33,7 +33,7 @@ ScalarDL のコントラクトは、台帳データベースのアセットレ�
 
 ## 環境をセットアップする
 
-このセクションでは、ScalarDL クライアントツールを介して汎用コントラクトおよびファンクションを使用し、ローカルファイルの真正性を確認します。アプリケーションで汎用コントラクトおよびファンクションを操作する場合は、ScalarDL Java Clinet SDK API を使用できます。詳細については、[ScalarDL の使用開始](getting-started.mdx)を参照してください。
+このセクションでは、ScalarDL クライアントツールを介して汎用コントラクトおよびファンクションを使用し、ローカルファイルの真正性を確認します。アプリケーションで汎用コントラクトおよびファンクションを操作する場合は、ScalarDL Java Client SDK API を使用できます。詳細については、[ScalarDL Ledger をはじめよう](getting-started.mdx)を参照してください。
 
 ### JDK をインストールする
 
@@ -46,7 +46,7 @@ ScalarDL のコントラクトは、台帳データベースのアセットレ�
 
 独自の要件を満たす ScalarDL 環境をセットアップします。ローカルテスト環境に ScalarDL をデプロイする場合は、サンプルの Docker Compose 設定と Scalar Helm Chart を使用して、そのような環境をデプロイできます。詳細については、以下を参照してください。
 
-- [Docker を使用してローカル環境に ScalarDL をインストールする方法](installation-with-docker.mdx)
+- [ScalarDL Ledger をはじめよう](getting-started.mdx)
 - [Scalar Helm Chart の使用開始](helm-charts/getting-started-scalar-helm-charts.mdx)
 
 本番環境では、ScalarDL はコンテナイメージとして利用できます。詳細については、[Scalar 製品のコンテナイメージを取得する方法](scalar-kubernetes/HowToGetContainerImages.mdx)を参照してください。
@@ -59,7 +59,7 @@ ScalarDL のコントラクトは、台帳データベースのアセットレ�
 
 ### 必要なツールと汎用コントラクトをダウンロードします
 
-次のコマンドを実行して、3.10.0 以上のバージョンを指定します。使用可能なバージョンについては、[Tags](https://github.com/scalar-labs/scalardl-java-client-sdk/tags) を参照してください。
+次のコマンドを実行して、3.10.1 以上のバージョンを指定します。使用可能なバージョンについては、[Tags](https://github.com/scalar-labs/scalardl-java-client-sdk/tags) を参照してください。
 
 ```console
 VERSION=X.Y.Z
@@ -94,7 +94,7 @@ ScalarDL コンポーネントを操作するには、クライアントプロ�
 次に、以下のように ScalarDL クライアント CLI を使用して証明書を登録します。
 
 ```console
-client/bin/scalardl register-cert --properties client.properties
+client/bin/scalardl generic-contracts register-cert --properties client.properties
 ```
 
 :::note
@@ -108,8 +108,8 @@ client/bin/scalardl register-cert --properties client.properties
 証明書を登録したら、次のコマンドを実行して汎用コントラクトおよびファンクションを登録できます:
 
 ```console
-client/bin/scalardl register-contracts --properties client.properties --contracts-file generic-contracts/conf/object-authenticity-management-contracts.toml
-client/bin/scalardl register-functions --properties client.properties --functions-file generic-contracts/conf/object-authenticity-management-functions.toml
+client/bin/scalardl generic-contracts register-contracts --properties client.properties --contracts-file generic-contracts/conf/object-authenticity-management-contracts.toml
+client/bin/scalardl generic-contracts register-functions --properties client.properties --functions-file generic-contracts/conf/object-authenticity-management-functions.toml
 ```
 
 ## オブジェクトの真正性を管理する
@@ -138,7 +138,7 @@ sha256sum a.txt
 ハッシュ値を入力するには、次のコマンドを実行します:
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Put \
 --contract-argument '{"object_id": "a.txt", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0", "metadata": {"note": "created"}}'
 ```
@@ -161,7 +161,7 @@ b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c  a.txt
 次のようにハッシュ値を更新できます:
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Put \
 --contract-argument '{"object_id": "a.txt", "hash_value": "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c", "metadata": {"note": "updated"}}'
 ```
@@ -169,7 +169,7 @@ client/bin/scalardl execute-contract --properties client.properties \
 以下のコマンドを実行すると、[`object.Get` コントラクト](generic-contracts-reference.mdx#objectget-コントラクト)を使用してオブジェクトの最新のステータスを取得することもできます:
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Get \
 --contract-argument '{"object_id": "a.txt"}'
 ```
@@ -198,7 +198,7 @@ Contract result:
 :::
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Validate \
 --contract-argument \
 '{"object_id": "a.txt", "versions": [{"version_id": "v2", "hash_value": "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c"}, {"version_id": "v1", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0"}]}'
@@ -224,7 +224,7 @@ Alice updated this file
 これで、最新バージョンのハッシュ値は `1f75d715648a3b4b3a33ecd7428a3e7139d9357da7d38735c23bf38618ecf9c7` になります。次のコマンドを実行して検証を実行できます:
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Validate \
 --contract-argument \
 '{"object_id": "a.txt", "versions": [{"version_id": "v2", "hash_value": "1f75d715648a3b4b3a33ecd7428a3e7139d9357da7d38735c23bf38618ecf9c7"}, {"version_id": "v1", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0"}]}'
@@ -239,6 +239,8 @@ Contract result:
   "faulty_versions" : [ "v2" ]
 }
 ```
+
+この検証プロセスでは、ScalarDL に保存されている改ざん検知用のハッシュ値を使用して、ScalarDL の外部のデータが変更されていないかどうかを確認します。ScalarDL のデータ (この場合はハッシュ値) が改ざんされていないかどうかを検証するには、`validate-ledger` コマンドと `validateLedger` API を使用できます。詳細については、[ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx#generic-contracts)および[汎用コントラクトを用いた ScalarDL アプリケーションを書く](how-to-write-applications-with-generic-contracts.mdx#データを検証する)を参照してください。
 
 ### ScalarDL Ledger と ScalarDB テーブル間でオブジェクトの状態を同期する
 
@@ -256,7 +258,7 @@ ScalarDL のデータ (「アセット」と呼ばれる) は改ざん検知機�
 上記の3番目の手順は、[`object.Put` コントラクト](generic-contracts-reference.mdx#objectput-コントラクト)に対して [`object.PutToMutableDatabase` ファンクション](generic-contracts-reference.mdx#objectputtomutabledatabase-ファンクション)を使用して次のコマンドを実行することで、ACID な方法で実行できます。
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Put \
 --contract-argument '{"object_id": "a.txt", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0"}' \
 --function-id object.PutToMutableDatabase \
@@ -291,7 +293,7 @@ client/bin/scalardl execute-contract --properties client.properties \
 監査対象集合のコレクションを作成するには、次のコマンドを実行して [`collection.Create` コントラクト](generic-contracts-reference.mdx#collectioncreate-コントラクト) を使用します:
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.Create \
 --contract-argument '{"collection_id":"audit_set", "object_ids": ["a.txt", "b.txt"]}'
 ```
@@ -301,7 +303,7 @@ client/bin/scalardl execute-contract --properties client.properties \
 [`collection.Add` コントラクト](generic-contracts-reference.mdx#collectionadd-コントラクト)と [`collection.Remove` コントラクト](generic-contracts-reference.mdx#collectionremove-コントラクト)を使用して、コレクションにオブジェクトを追加したり、コレクションからオブジェクトを削除したりすることもできます。これを行うには、次のコマンドを実行します。
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.Add \
 --contract-argument '{"collection_id":"audit_set", "object_ids": ["c.txt", "d.txt"]}'
 ```
@@ -314,7 +316,7 @@ client/bin/scalardl execute-contract --properties client.properties \
 [`collection.Get` コントラクト](generic-contracts-reference.mdx#collectionget-コントラクト)を使用して、コレクションの最新のステータスを取得できます。これを行うには、次のコマンドを実行します。
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.Get \
 --contract-argument '{"collection_id":"audit_set"}'
 ```
@@ -329,7 +331,7 @@ Contract result:
 監査対象集合が予期せず変更されていないことを確認するには、[`collection.GetHistory` コントラクト](generic-contracts-reference.mdx#collectiongethistory-コントラクト)を使用して監査対象集合の更新履歴を確認します。これを行うには、次のコマンドを実行します。
 
 ```console
-client/bin/scalardl execute-contract --properties client.properties \
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.GetHistory \
 --contract-argument '{"collection_id":"audit_set"}'
 ```
@@ -360,7 +362,7 @@ Contract result:
 
 Java アプリケーションで汎用コントラクトおよびファンクションを操作するには、以下を参照してください。
 
-* [ScalarDL 入門](getting-started.mdx)
+* [汎用コントラクトを用いた ScalarDL アプリケーションを書く](how-to-write-applications-with-generic-contracts.mdx)
 * [Javadoc](javadoc/index.mdx)
 
 汎用コントラクトおよびファンクションに基づいて独自のコントラクトとファンクションを記述するには、以下を参照してください。

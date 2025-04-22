@@ -49,7 +49,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 ### 例
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Put \
 --contract-argument '{"objct_id": "a.txt", "hash_value": "a3ae11", "metadata": {"note": "something"}}'
 ```
@@ -85,7 +85,7 @@ scalardl execute-contract --properties client.properties \
 ### 例
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Put \
 --contract-argument '{"object_id": "a.txt", "hash_value": "a3ae11"}' \
 --function-id object.PutToMutableDatabase \
@@ -138,7 +138,7 @@ scalardl execute-contract --properties client.properties \
 ### 例
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Get \
 --contract-argument '{"objct_id": "a.txt"}'
 
@@ -188,7 +188,7 @@ Contract result:
 指定されたハッシュ値がすべて Ledger 内のハッシュ値と同じである場合、次の結果が返されます。
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Validate \
 --contract-argument \
 '{"object_id": "a.txt",
@@ -210,7 +210,7 @@ Contract result:
 異なるハッシュ値が見つかった場合は、次の結果が返されます。
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Validate \
 --contract-argument \
 '{"object_id": "a.txt",
@@ -232,7 +232,7 @@ Contract result:
 `verbose` オプションが指定され、異なるハッシュ値とメタデータが見つかった場合は、次の結果が返されます。
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Validate \
 --contract-argument \
 '{"object_id": "a.txt",
@@ -261,7 +261,7 @@ Contract result:
 `all` オプションが指定され、指定されたバージョンの数が ScalarDL に保存されているバージョンの数と異なる場合は、次の結果が返されます。
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id object.Validate \
 --contract-argument \
 '{"object_id": "a.txt",
@@ -301,7 +301,7 @@ ID のセットであるコレクションを作成します。監査対象の�
 ### 例
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.Create \
 --contract-argument '{"collection_id": "audit_set", "object_ids": ["a.txt"]}'
 ```
@@ -327,7 +327,7 @@ scalardl execute-contract --properties client.properties \
 ### 例
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.Add \
 --contract-argument '{"collection_id": "audit_set", "object_ids": ["a.txt"], "options": {"force": true}}'
 ```
@@ -353,7 +353,7 @@ scalardl execute-contract --properties client.properties \
 ### 例
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.Remove \
 --contract-argument '{"collection_id": "audit_set", "object_ids": ["a.txt"], "options": {"force": true}}'
 ```
@@ -381,7 +381,7 @@ scalardl execute-contract --properties client.properties \
 ### 例
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.Get \
 --contract-argument '{"collection_id": "audit_set"}'
 
@@ -414,7 +414,7 @@ Contract result:
 ### 例
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.GetHistory \
 --contract-argument '{"collectionId": "audit_set", "options": {"limit": 2}}'
 
@@ -471,7 +471,7 @@ Contract result:
 ### 例
 
 ```console
-scalardl execute-contract --properties client.properties \
+scalardl generic-contracts execute-contract --properties client.properties \
 --contract-id collection.GetCheckpointInterval \
 --contract-argument '{}'
 
