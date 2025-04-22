@@ -19,7 +19,7 @@ ScalarDL にはいくつかの種類の認証方法があります。認証方�
 
 ## 秘密鍵と証明書の要件
 
-[`digital-signature`](../authentication.mdx#digital-signatures) を認証方法として使用する場合は、次の要件を満たす秘密鍵と証明書を作成する必要があります。
+[`digital-signature`](../authentication.mdx#電子署名) を認証方法として使用する場合は、次の要件を満たす秘密鍵と証明書を作成する必要があります。
 
 - `SEC1` または `PKCS#8` 鍵
 - アルゴリズムとして `ECDSA`
@@ -470,7 +470,7 @@ ScalarDL は証明書の有効期限をチェックしません。そのため�
 
     <h3>秘密鍵と証明書ファイルを作成する</h3>
 
-    1. CFSSL や OpenSSL などのツールを使用し、[要件](#private-key-and-certificate-requirements)に基づいて秘密鍵と CSR を作成します。[CFSSL](?methods=self-signed&tools=cfssl) タブで `cfssl` コマンドを使用して秘密鍵と CSR を作成する例を確認できます。また、[OpenSSL](?methods=self-signed&tools=openssl) タブで `openssl` コマンドを使用して秘密鍵と CSR を作成する例を確認できます。
+    1. CFSSL や OpenSSL などのツールを使用し、[要件](#秘密鍵と証明書の要件)に基づいて秘密鍵と CSR を作成します。[CFSSL](?methods=self-signed&tools=cfssl) タブで `cfssl` コマンドを使用して秘密鍵と CSR を作成する例を確認できます。また、[OpenSSL](?methods=self-signed&tools=openssl) タブで `openssl` コマンドを使用して秘密鍵と CSR を作成する例を確認できます。
 
     1. CFSSL サーバーから証明書を要求します。
 
