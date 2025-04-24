@@ -268,7 +268,7 @@ html[data-theme="dark"] .tooltip-glossary {
   transform: translateY(-10px);
   transition: opacity 0.3s ease-out, transform 0.3s ease-out;
   visibility: hidden;
-  z-index: 5; /* Lowered to avoid overlapping with zoomed-in images. */
+  z-index: 1;
 }
 
 .supportDropdown:hover .supportDropdownContent {
