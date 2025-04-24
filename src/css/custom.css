@@ -267,7 +267,7 @@ html[data-theme="dark"] .tooltip-glossary {
   transform: translateY(-10px);
   transition: opacity 0.3s ease-out, transform 0.3s ease-out;
   visibility: hidden;
-  z-index: 1;
+  z-index: 5; /* Lowered to avoid overlapping with zoomed-in images. */
 }
 
 .supportDropdown:hover .supportDropdownContent {
@@ -353,4 +353,14 @@ hr {
 
 html[data-theme="dark"] .container img[src$=".png"] { /* Adds a white background to transparent .png images. */
   background-color: #ffffff;
+}
+
+.medium-zoom-overlay {
+  z-index: 15;
+  position: fixed;
+}
+
+.medium-zoom-image {
+  z-index: 20;
+  position: relative;
 }
