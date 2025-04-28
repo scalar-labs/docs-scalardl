@@ -441,11 +441,7 @@
             }
           ]
         },
-        {
-          "type": "doc",
-          "id": "scalar-licensing/README",
-          "label": "Configure a Product License Key"
-        },
+        
         {
           "type": "doc",
           "id": "installation-with-docker",
@@ -566,6 +562,11 @@
       "items": [
         
         
+        {
+          "type": "doc",
+          "id": "scalar-licensing/README",
+          "label": "Configure a Product License Key"
+        }
       ]
     }
   ],
@@ -1014,11 +1015,6 @@
         },
         {
           "type": "doc",
-          "id": "scalar-licensing/README",
-          "label": "製品ライセンスキーの設定"
-        },
-        {
-          "type": "doc",
           "id": "installation-with-docker",
           "label": "Docker を使ってローカル環境に ScalarDL をインストール"
         },
@@ -1134,6 +1130,11 @@
       "label": "詳細",
       "collapsible": true,
       "items": [
+        {
+          "type": "doc",
+          "id": "scalar-licensing/README",
+          "label": "製品ライセンスキーの設定"
+        }
       ]
     }
   ]

@@ -478,11 +478,6 @@ const sidebars = {
         },
         {
           type: 'doc',
-          id: 'scalar-licensing/README',
-          label: 'Configure a Product License Key',
-        },
-        {
-          type: 'doc',
           id: 'installation-with-docker',
           label: 'Install ScalarDL in Your Local Environment with Docker',
         },
@@ -628,7 +623,9 @@ const sidebars = {
         
         
         {
-          label: 'Error codes',
+          type: 'doc',
+          id: 'scalar-licensing/README',
+          label: 'Configure a Product License Key',
         },
       ]
     },
@@ -1094,11 +1091,6 @@ const sidebars = {
         },
         {
           type: 'doc',
-          id: 'scalar-licensing/README',
-          label: '製品ライセンスキーの設定',
-        },
-        {
-          type: 'doc',
           id: 'installation-with-docker',
           label: 'Docker を使ってローカル環境に ScalarDL をインストール',
         },
@@ -1242,8 +1234,11 @@ const sidebars = {
       collapsible: true,
       items: [
         {
+          type: 'doc',
+          id: 'scalar-licensing/README',
+          label: '製品ライセンスキーの設定',
         },
-      ],
+      ]
     },
   ],
 };
