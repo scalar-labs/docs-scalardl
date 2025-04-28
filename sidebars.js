@@ -410,11 +410,6 @@ const sidebars = {
                   id: 'helm-charts/getting-started-logging',
                   label: 'Loki Stack for Logging by Using a Helm Chart by Using a Helm Chart',
                 },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalar-manager',
-                  label: 'Scalar Manager by Using a Helm Chart',
-                },
               ]
             },
             {
@@ -471,11 +466,6 @@ const sidebars = {
             },
             {
               type: 'doc',
-              id: 'helm-charts/how-to-deploy-scalar-admin-for-kubernetes',
-              label: 'Deploy Scalar Admin for Kubernetes',
-            },
-            {
-              type: 'doc',
               id: 'helm-charts/mount-files-or-volumes-on-scalar-pods',
               label: 'Mount Files or Volumes on ScalarDL Pods',
             },
@@ -509,84 +499,6 @@ const sidebars = {
       collapsible: true,
       items: [
         {
-          type: 'category',
-          label: 'Scalar Kubernetes',
-          collapsible: true,
-          items: [
-            {
-              type: 'category',
-              label: 'Monitoring Guides',
-              collapsible: true,
-              items: [
-                {
-                  type: 'category',
-                  label: 'Alerts',
-                  collapsible: true,
-                  items: [
-                    {
-                      type: 'doc',
-                      id: 'scalar-kubernetes/alerts/Envoy',
-                      label: 'Envoy Alerts',
-                    },
-                    {
-                      type: 'doc',
-                      id: 'scalar-kubernetes/alerts/Ledger',
-                      label: 'Ledger Alerts',
-                    },
-                  ],
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/K8sMonitorGuide',
-                  label: 'Kubernetes Monitoring Guide',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/K8sLogCollectionGuide',
-                  label: 'Collect Logs from ScalarDL on a Kubernetes Cluster',
-                },
-              ],
-            },
-            {
-              type: 'category',
-              label: 'Backup and Restore Guides',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/BackupRestoreGuide',
-                  label: 'Back Up and Restore ScalarDL Data in Kubernetes',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/BackupRDB',
-                  label: 'Back Up an RDB in Kubernetes',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/BackupNoSQL',
-                  label: 'Back Up a NoSQL Database in Kubernetes',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/RestoreDatabase',
-                  label: 'Restore Databases in Kubernetes',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/RegularCheck',
-                  label: 'Components to Regularly Check When Running on Kubernetes',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          type: 'doc',
-          id: 'backup-restore',
-          label: 'Backup and Restore Data',
-        },
-        {
           type: 'doc',
           id: 'scalar-kubernetes/HowToScaleScalarDL',
           label: 'Scale',
@@ -597,9 +509,99 @@ const sidebars = {
           label: 'Upgrade',
         },
         {
+          type: 'category',
+          label: 'Monitor',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'monitor-by-using-scalar-manager',
+              label: 'Monitor ScalarDL by Using Scalar Manager',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/alerts/Envoy',
+              label: 'Envoy Alerts',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/alerts/Ledger',
+              label: 'Ledger Alerts',
+            },
+            {
+              type: 'category',
+              label: 'Reference',
+              collapsible: true,
+              items: [
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/K8sMonitorGuide',
+                  label: 'Kubernetes Monitoring Guide',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-manager/overview',
+                  label: 'Scalar Manager Overview',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/getting-started-scalar-manager',
+                  label: 'Scalar Manager by Using a Helm Chart',
+                },                
+                {
+                  type: 'doc',
+                  id: 'helm-charts/how-to-deploy-scalar-admin-for-kubernetes',
+                  label: 'Deploy Scalar Admin for Kubernetes',
+                },    
+              ]
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Back Up and Restore',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'manage-backup-and-restore-overview',
+              label: 'Back Up and Restore Databases',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/BackupNoSQL',
+              label: 'Back Up a NoSQL Database in Kubernetes',
+            },
+            {
+              type: 'category',
+              label: 'Reference',
+              collapsible: true,
+              items: [
+                {
+                  type: 'doc',
+                  id: 'backup-restore',
+                  label: 'Backup and Restore Data',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/RestoreDatabase',
+                  label: 'Restore Databases in Kubernetes',
+                },
+              ],
+            },
+          ],
+        },
+        {
           type: 'doc',
-          id: 'scalar-manager/overview',
-          label: 'Scalar Manager Overview',
+        },
+        {
+          type: 'doc',
+        },
+        {
+          type: 'doc',
+        },
+        {
+          type: 'doc',
         },
       ],
     },
@@ -1033,11 +1035,6 @@ const sidebars = {
                   id: 'helm-charts/getting-started-logging',
                   label: 'Helm Chart を使用したログ記録用 Loki スタック',
                 },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalar-manager',
-                  label: 'Helm Chart を使用した Scalar Manager',
-                },
               ]
             },
             {
@@ -1094,11 +1091,6 @@ const sidebars = {
             },
             {
               type: 'doc',
-              id: 'helm-charts/how-to-deploy-scalar-admin-for-kubernetes',
-              label: 'Helm Chart を使用して Scalar Admin for Kubernetes をデプロイ',
-            },
-            {
-              type: 'doc',
               id: 'helm-charts/mount-files-or-volumes-on-scalar-pods',
               label: 'ScalarDL ポッドにファイルまたはボリュームをマウント',
             },
@@ -1132,84 +1124,6 @@ const sidebars = {
       collapsible: true,
       items: [
         {
-          type: 'category',
-          label: 'Scalar Kubernetes',
-          collapsible: true,
-          items: [
-            {
-              type: 'category',
-              label: 'モニタリングガイド',
-              collapsible: true,
-              items: [
-                {
-                  type: 'category',
-                  label: 'アラート',
-                  collapsible: true,
-                  items: [
-                    {
-                      type: 'doc',
-                      id: 'scalar-kubernetes/alerts/Envoy',
-                      label: 'Envoy アラート',
-                    },
-                    {
-                      type: 'doc',
-                      id: 'scalar-kubernetes/alerts/Ledger',
-                      label: 'Ledger アラート',
-                    },
-                  ],
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/K8sMonitorGuide',
-                  label: 'Kubernetes モニタリングガイド',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/K8sLogCollectionGuide',
-                  label: 'Kubernetes ログ収集ガイド',
-                },
-              ],
-            },
-            {
-              type: 'category',
-              label: 'バックアップと復元のガイド',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/BackupRestoreGuide',
-                  label: 'Kubernetes 環境で ScalarDL データをバックアップおよび復元',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/BackupRDB',
-                  label: 'Kubernetes 環境で RDB をバックアップ',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/BackupNoSQL',
-                  label: 'Kubernetes 環境で NoSQL データベースをバックアップ',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/RestoreDatabase',
-                  label: 'Kubernetes 環境でデータベースを復元',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/RegularCheck',
-                  label: 'Kubernetes 環境で実行するときに定期的にチェックするコンポーネント',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          type: 'doc',
-          id: 'backup-restore',
-          label: 'データのバックアップと復元',
-        },
-        {
           type: 'doc',
           id: 'scalar-kubernetes/HowToScaleScalarDL',
           label: 'スケーリング',
@@ -1220,9 +1134,99 @@ const sidebars = {
           label: 'アップグレード',
         },
         {
+          type: 'category',
+          label: '監視',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'monitor-by-using-scalar-manager',
+              label: 'Scalar Manager を使用して ScalarDL を監視する',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/alerts/Envoy',
+              label: 'Envoy アラート',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/alerts/Ledger',
+              label: 'Ledger アラート',
+            },
+            {
+              type: 'category',
+              label: '詳細',
+              collapsible: true,
+              items: [
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/K8sMonitorGuide',
+                  label: 'Kubernetes モニタリングガイド',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-manager/overview',
+                  label: 'Scalar Manager の概要',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/getting-started-scalar-manager',
+                  label: 'Helm Chart を使用した Scalar Manager',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/how-to-deploy-scalar-admin-for-kubernetes',
+                  label: 'Helm Chart を使用して Scalar Admin for Kubernetes をデプロイ',
+                },
+              ]
+            }
+          ]
+        },
+        {
+          type: 'category',
+          label: 'バックアップと復元',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'manage-backup-and-restore-overview',
+              label: 'データベースのバックアップと復元',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/BackupNoSQL',
+              label: 'Kubernetes 環境で NoSQL データベースをバックアップ',
+            },
+            {
+              type: 'category',
+              label: '詳細',
+              collapsible: true,
+              items: [
+                {
+                  type: 'doc',
+                  id: 'backup-restore',
+                  label: 'データのバックアップと復元',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/RestoreDatabase',
+                  label: 'Kubernetes 環境でデータベースを復元',
+                },
+              ],
+            },
+          ],
+        },
+        {
           type: 'doc',
-          id: 'scalar-manager/overview',
-          label: 'Scalar Manager の概要',
+        },
+        {
+          type: 'doc',
+        },
+        {
+          type: 'doc',
+        },
+        {
+          type: 'doc',
         },
       ],
     },
