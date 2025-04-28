@@ -591,17 +591,32 @@ const sidebars = {
             },
           ],
         },
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Troubleshoot',
+      collapsible: true,
+      items: [
         {
           type: 'doc',
+          id: 'scalardl-common-status-codes',
+          label: 'ScalarDL Common Error Codes',
         },
         {
           type: 'doc',
+          id: 'scalardl-ledger-status-codes',
+          label: 'ScalarDL Ledger Error Codes',
         },
         {
           type: 'doc',
+          id: 'scalardl-auditor-status-codes',
+          label: 'ScalarDL Auditor Error Codes',
         },
         {
           type: 'doc',
+          id: 'scalardl-client-status-codes',
+          label: 'ScalarDL Client Error Codes',
         },
       ],
     },
@@ -613,33 +628,9 @@ const sidebars = {
         
         
         {
-          type: 'category',
           label: 'Error codes',
-          collapsible: true,
-          items: [
-            {
-              type: 'doc',
-              id: 'scalardl-common-status-codes',
-              label: 'ScalarDL Common Error Codes',
-            },
-            {
-              type: 'doc',
-              id: 'scalardl-ledger-status-codes',
-              label: 'ScalarDL Ledger Error Codes',
-            },
-            {
-              type: 'doc',
-              id: 'scalardl-auditor-status-codes',
-              label: 'ScalarDL Auditor Error Codes',
-            },
-            {
-              type: 'doc',
-              id: 'scalardl-client-status-codes',
-              label: 'ScalarDL Client Error Codes',
-            },
-          ],
         },
-      ],
+      ]
     },
   ],
 
@@ -1216,17 +1207,32 @@ const sidebars = {
             },
           ],
         },
+      ],
+    },
+    {
+      type: 'category',
+      label: 'トラブルシュート',
+      collapsible: true,
+      items: [
         {
           type: 'doc',
+          id: 'scalardl-common-status-codes',
+          label: 'ScalarDL 共通エラーコード',
         },
         {
           type: 'doc',
+          id: 'scalardl-ledger-status-codes',
+          label: 'ScalarDL Ledger エラーコード',
         },
         {
           type: 'doc',
+          id: 'scalardl-auditor-status-codes',
+          label: 'ScalarDL Auditor エラーコード',
         },
         {
           type: 'doc',
+          id: 'scalardl-client-status-codes',
+          label: 'ScalarDL クライアントエラーコード',
         },
       ],
     },
@@ -1236,31 +1242,6 @@ const sidebars = {
       collapsible: true,
       items: [
         {
-          type: 'category',
-          label: 'Error codes',
-          collapsible: true,
-          items: [
-            {
-              type: 'doc',
-              id: 'scalardl-common-status-codes',
-              label: 'ScalarDL 共通エラーコード',
-            },
-            {
-              type: 'doc',
-              id: 'scalardl-ledger-status-codes',
-              label: 'ScalarDL Ledger エラーコード',
-            },
-            {
-              type: 'doc',
-              id: 'scalardl-auditor-status-codes',
-              label: 'ScalarDL Auditor エラーコード',
-            },
-            {
-              type: 'doc',
-              id: 'scalardl-client-status-codes',
-              label: 'ScalarDL クライアントエラーコード',
-            },
-          ],
         },
       ],
     },
