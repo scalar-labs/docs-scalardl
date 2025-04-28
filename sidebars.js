@@ -57,6 +57,16 @@ const sidebars = {
         },
         {
           type: 'doc',
+          id: 'releases/release-notes',
+          label: 'Release Notes',
+        },
+        {
+          type: 'doc',
+          id: 'releases/release-support-policy',
+          label: 'Release Support Policy',
+        },
+        {
+          type: 'doc',
           id: 'roadmap',
           label: 'Roadmap',
         },
@@ -594,23 +604,6 @@ const sidebars = {
         },
       ],
     },
-    {
-      type: 'category',
-      label: 'Releases',
-      collapsible: true,
-      items: [
-        {
-          type: 'doc',
-          id: 'releases/release-notes',
-          label: 'Release Notes',
-        },
-        {
-          type: 'doc',
-          id: 'releases/release-support-policy',
-          label: 'Release Support Policy',
-        },
-      ],
-    },
   ],
 
   // Japanese sidebar nav
@@ -649,6 +642,16 @@ const sidebars = {
           type: 'doc',
           id: 'requirements',
           label: '要件',
+        },
+        {
+          type: 'doc',
+          id: 'releases/release-notes',
+          label: 'リリースノート',
+        },
+        {
+          type: 'doc',
+          id: 'releases/release-support-policy',
+          label: 'リリースサポートポリシー',
         },
         {
           type: 'doc',
@@ -1186,23 +1189,6 @@ const sidebars = {
               label: 'ScalarDL クライアントエラーコード',
             },
           ],
-        },
-      ],
-    },
-    {
-      type: 'category',
-      label: 'リリース',
-      collapsible: true,
-      items: [
-        {
-          type: 'doc',
-          id: 'releases/release-notes',
-          label: 'リリースノート',
-        },
-        {
-          type: 'doc',
-          id: 'releases/release-support-policy',
-          label: 'リリースサポートポリシー',
         },
       ],
     },

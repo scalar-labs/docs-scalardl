@@ -37,6 +37,16 @@
         },
         {
           "type": "doc",
+          "id": "releases/release-notes",
+          "label": "Release Notes"
+        },
+        {
+          "type": "doc",
+          "id": "releases/release-support-policy",
+          "label": "Release Support Policy"
+        },
+        {
+          "type": "doc",
           "id": "roadmap",
           "label": "Roadmap"
         }
@@ -532,21 +542,6 @@
         }
       ]
     },
-    {
-      "type": "category",
-      "label": "Releases",
-      "collapsible": true,
-      "items": [
-        {
-          "type": "doc",
-          "id": "releases/release-notes",
-          "label": "Release Notes"
-        },
-        {
-          "type": "doc",
-          "id": "releases/release-support-policy",
-          "label": "Release Support Policy"
-        }
       ]
     }
   ],
@@ -586,6 +581,16 @@
           "type": "doc",
           "id": "requirements",
           "label": "要件"
+        },
+        {
+          "type": "doc",
+          "id": "releases/release-notes",
+          "label": "リリースノート"
+        },
+        {
+          "type": "doc",
+          "id": "releases/release-support-policy",
+          "label": "リリースサポートポリシー"
         },
         {
           "type": "doc",
@@ -1084,21 +1089,6 @@
         }
       ]
     },
-    {
-      "type": "category",
-      "label": "リリース",
-      "collapsible": true,
-      "items": [
-        {
-          "type": "doc",
-          "id": "releases/release-notes",
-          "label": "リリースノート"
-        },
-        {
-          "type": "doc",
-          "id": "releases/release-support-policy",
-          "label": "リリースサポートポリシー"
-        }
       ]
     }
   ]
