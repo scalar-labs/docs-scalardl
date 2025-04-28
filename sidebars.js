@@ -82,17 +82,8 @@ const sidebars = {
           id: 'quickstart-overview',
           label: 'Overview',
         },
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Samples',
-      collapsible: true,
-      items: [
         {
           type: 'doc',
-          id: 'applications/simple-bank-account/README',
-          label: 'Bank Account Application',
           id: 'getting-started',
           label: 'Run a Contract Through ScalarDL Ledger',
         },
@@ -105,38 +96,8 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          id: 'getting-started-auditor',
-          label: 'Run a Contract Through ScalarDL Ledger and Auditor',
-        },
-        {
-          type: 'doc',
           id: 'data-modeling',
           label: 'Model Your Data',
-        },
-        {
-          type: 'doc',
-          id: 'how-to-write-applications',
-          label: 'Write an Application in Java',
-        },
-        {
-          type: 'doc',
-          id: 'configurations',
-          label: 'Configurations',
-        },
-        {
-          type: 'doc',
-          id: 'schema-loader',
-          label: 'ScalarDL Schema Loader',
-        },
-        {
-          type: 'doc',
-          id: 'ca/caclient-getting-started',
-          label: 'Get a Certificate',
-        },
-        {
-          type: 'doc',
-          id: 'authentication',
-          label: 'Authentication',
         },
         {
           type: 'doc',
@@ -154,9 +115,99 @@ const sidebars = {
           label: 'Use Generic Contracts',
         },
         {
-          type: 'doc',
-          id: 'how-to-write-applications-with-generic-contracts',
-          label: 'Write an Application with Generic Contracts',
+          type: 'category',
+          label: 'Write an Application',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'how-to-write-applications',
+              label: 'Write an Application in Java',
+            },
+            {
+              type: 'doc',
+              id: 'how-to-write-applications-with-generic-contracts',
+              label: 'Write an Application with Generic Contracts',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Run an Application',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'getting-started-auditor',
+              label: 'Run a Contract Through ScalarDL Ledger and Auditor',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Run Sample Applications',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'applications/simple-bank-account/README',
+              label: 'Bank Account Application',
+            },
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Advanced Configurations and Operations',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'authentication',
+              label: 'Authentication',
+            },
+            {
+              type: 'doc',
+              id: 'scalardl-benchmarks/README',
+              label: 'Run Benchmarks',
+            },
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Reference',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'compatibility',
+              label: 'Compatibility Matrix',
+            },
+            {
+              type: 'doc',
+              id: 'configurations',
+              label: 'Configurations',
+            },
+            {
+              type: 'doc',
+              id: 'scalardl-command-reference',
+              label: 'Client Commands',
+            },
+            {
+              type: 'doc',
+              id: 'schema-loader',
+              label: 'ScalarDL Schema Loader',
+            },
+            {
+              type: 'doc',
+              id: 'generic-contracts-reference',
+              label: 'Generic Contracts',
+            },
+            {
+              type: 'doc',
+              id: 'ca/caclient-getting-started',
+              label: 'Get a Certificate',
+            },
+          ],
         },
       ],
     },
@@ -557,26 +608,8 @@ const sidebars = {
       label: 'Reference',
       collapsible: true,
       items: [
-        {
-          type: 'doc',
-          id: 'compatibility',
-          label: 'Compatibility Matrix',
-        },
-        {
-          type: 'doc',
-          id: 'scalardl-command-reference',
-          label: 'Client Commands',
-        },
-        {
-          type: 'doc',
-          id: 'generic-contracts-reference',
-          label: 'Generic Contracts',
-        },
-        {
-          type: 'doc',
-          id: 'scalardl-benchmarks/README',
-          label: 'Run Benchmarks',
-        },
+        
+        
         {
           type: 'category',
           label: 'Error codes',
@@ -672,17 +705,8 @@ const sidebars = {
           id: 'quickstart-overview',
           label: '概要',
         },
-      ],
-    },
-    {
-      type: 'category',
-      label: 'サンプル',
-      collapsible: true,
-      items: [
         {
           type: 'doc',
-          id: 'applications/simple-bank-account/README',
-          label: '銀行口座アプリケーション',
           id: 'getting-started',
           label: 'ScalarDL Ledger を通じてコントラクトを実行',
         },
@@ -695,38 +719,8 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          id: 'getting-started-auditor',
-          label: 'ScalarDL Ledger と Auditor を通じてコントラクトを実行',
-        },
-        {
-          type: 'doc',
           id: 'data-modeling',
           label: 'データモデリング',
-        },
-        {
-          type: 'doc',
-          id: 'how-to-write-applications',
-          label: 'Java でアプリケーションを書く',
-        },
-        {
-          type: 'doc',
-          id: 'configurations',
-          label: '設定',
-        },
-        {
-          type: 'doc',
-          id: 'schema-loader',
-          label: 'ScalarDL Schema Loader',
-        },
-        {
-          type: 'doc',
-          id: 'ca/caclient-getting-started',
-          label: '証明書を取得',
-        },
-        {
-          type: 'doc',
-          id: 'authentication',
-          label: '認証',
         },
         {
           type: 'doc',
@@ -744,9 +738,99 @@ const sidebars = {
           label: '汎用コントラクトを使用',
         },
         {
-          type: 'doc',
-          id: 'how-to-write-applications-with-generic-contracts',
-          label: '汎用コントラクトを用いたアプリケーションを作成',
+          type: 'category',
+          label: 'アプリケーションを書く',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'how-to-write-applications',
+              label: 'Java でアプリケーションを書く',
+            },
+            {
+              type: 'doc',
+              id: 'how-to-write-applications-with-generic-contracts',
+              label: '汎用コントラクトを用いたアプリケーションを作成',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: 'アプリケーションを実行',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'getting-started-auditor',
+              label: 'ScalarDL Ledger と Auditor を通じてコントラクトを実行',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: 'サンプルアプリケーションを実行',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'applications/simple-bank-account/README',
+              label: '銀行口座アプリケーション',
+            },
+          ],
+        },
+        {
+          type: 'category',
+          label: '高度な設定と操作',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'authentication',
+              label: '認証',
+            },
+            {
+              type: 'doc',
+              id: 'scalardl-benchmarks/README',
+              label: 'ベンチマークを実行',
+            },
+          ],
+        },
+        {
+          type: 'category',
+          label: '詳細',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'compatibility',
+              label: '互換性マトリックス',
+            },
+            {
+              type: 'doc',
+              id: 'configurations',
+              label: '設定',
+            },
+            {
+              type: 'doc',
+              id: 'scalardl-command-reference',
+              label: 'クライアントコマンドリファレンス',
+            },
+            {
+              type: 'doc',
+              id: 'schema-loader',
+              label: 'ScalarDL Schema Loader',
+            },
+            {
+              type: 'doc',
+              id: 'generic-contracts-reference',
+              label: '汎用コントラクト',
+            },
+            {
+              type: 'doc',
+              id: 'ca/caclient-getting-started',
+              label: '証明書を取得',
+            },
+          ],
         },
       ],
     },
@@ -1147,26 +1231,6 @@ const sidebars = {
       label: '詳細',
       collapsible: true,
       items: [
-        {
-          type: 'doc',
-          id: 'compatibility',
-          label: '互換性マトリックス',
-        },
-        {
-          type: 'doc',
-          id: 'scalardl-command-reference',
-          label: 'クライアントコマンドリファレンス',
-        },
-        {
-          type: 'doc',
-          id: 'generic-contracts-reference',
-          label: '汎用コントラクト',
-        },
-        {
-          type: 'doc',
-          id: 'scalardl-benchmarks/README',
-          label: 'ベンチマークを実行',
-        },
         {
           type: 'category',
           label: 'Error codes',
