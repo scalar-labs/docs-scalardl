@@ -74,13 +74,13 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Getting Started',
+      label: 'Quickstart',
       collapsible: true,
       items: [
         {
           type: 'doc',
-          id: 'getting-started',
-          label: 'Run a Contract Through ScalarDL Ledger',
+          id: 'quickstart-overview',
+          label: 'Overview',
         },
       ],
     },
@@ -93,6 +93,8 @@ const sidebars = {
           type: 'doc',
           id: 'applications/simple-bank-account/README',
           label: 'Bank Account Application',
+          id: 'getting-started',
+          label: 'Run a Contract Through ScalarDL Ledger',
         },
       ],
     },
@@ -662,13 +664,13 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'はじめよう',
+      label: 'クイックスタート',
       collapsible: true,
       items: [
         {
           type: 'doc',
-          id: 'getting-started',
-          label: 'ScalarDL Ledger を通じてコントラクトを実行',
+          id: 'quickstart-overview',
+          label: '概要',
         },
       ],
     },
@@ -681,6 +683,8 @@ const sidebars = {
           type: 'doc',
           id: 'applications/simple-bank-account/README',
           label: '銀行口座アプリケーション',
+          id: 'getting-started',
+          label: 'ScalarDL Ledger を通じてコントラクトを実行',
         },
       ],
     },

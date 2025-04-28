@@ -54,25 +54,25 @@
     },
     {
       "type": "category",
-      "label": "Getting Started",
+      "label": "Quickstart",
       "collapsible": true,
       "items": [
         {
           "type": "doc",
-          "id": "getting-started",
-          "label": "Run a Contract Through ScalarDL Ledger"
-        }
-      ]
-    },
     {
       "type": "category",
       "label": "Samples",
       "collapsible": true,
       "items": [
+          "id": "quickstart-overview",
+          "label": "Overview"
+        },
         {
           "type": "doc",
           "id": "applications/simple-bank-account/README",
           "label": "Bank Account Application"
+          "id": "getting-started",
+          "label": "Run a Contract Through ScalarDL Ledger"
         }
       ]
     },
@@ -601,25 +601,25 @@
     },
     {
       "type": "category",
-      "label": "はじめよう",
+      "label": "クイックスタート",
       "collapsible": true,
       "items": [
         {
           "type": "doc",
-          "id": "getting-started",
-          "label": "ScalarDL Ledger を通じてコントラクトを実行"
-        }
-      ]
-    },
     {
       "type": "category",
       "label": "サンプル",
       "collapsible": true,
       "items": [
+          "id": "quickstart-overview",
+          "label": "概要"
+        },
         {
           "type": "doc",
           "id": "applications/simple-bank-account/README",
           "label": "銀行口座アプリケーション"
+          "id": "getting-started",
+          "label": "ScalarDL Ledger を通じてコントラクトを実行"
         }
       ]
     },
