@@ -93,7 +93,7 @@ public class Payment extends JacksonBasedFunction {
 }
 ```
 
-これは、ScalarDB API で記述された送金アプリケーションであり、指定された口座残高を取得し、2つの口座残高間で指定された金額を送金し、残高を更新します。ScalarDB API の詳細については、[ScalarDB ドキュメント](https://scalardb.scalar-labs.com/docs/latest/api-guide)もお読みください。
+これは、ScalarDB API で記述された送金アプリケーションであり、指定された口座残高を取得し、2つの口座残高間で指定された金額を送金し、残高を更新します。ScalarDB API の詳細については、[ScalarDB ドキュメント](https://scalardb.scalar-labs.com/ja-jp/docs/latest/api-guide)もお読みください。
 
 ### 基本ファンクション
 
@@ -112,7 +112,7 @@ public class Payment extends JacksonBasedFunction {
 
 ### `invoke` 引数について
 
-コントラクトが `Ledger` オブジェクトを使用してアセットを管理するのと同様に、ファンクションは `Database` オブジェクトを使用して基礎となるデータベースのレコードを管理します。`Database` は、[ScalarDB](https://github.com/scalar-labs/scalardb) の[データモデル](https://scalardb.scalar-labs.com/docs/latest/design)に基づいてCRUD操作を行うことができるように、ScalarDB インターフェースを実装していることに注意してください。
+コントラクトが `Ledger` オブジェクトを使用してアセットを管理するのと同様に、ファンクションは `Database` オブジェクトを使用して基礎となるデータベースのレコードを管理します。`Database` は、[ScalarDB](https://github.com/scalar-labs/scalardb) の[データモデル](https://scalardb.scalar-labs.com/ja-jp/docs/latest/data-modeling#scalardb-データモデル)に基づいてCRUD操作を行うことができるように、ScalarDB インターフェースを実装していることに注意してください。
 
 `functionArgument` は、リクエスタによって指定された Function の実行時引数です。この引数は、コントラクト引数とは異なり電子署名されていないため、データベースに格納されているデータを渡すために使用できますが、後で何らかの理由で削除される可能性があります。
 
@@ -122,7 +122,7 @@ public class Payment extends JacksonBasedFunction {
 
 `JacksonBasedFunction` のような非推奨ではないファンクションでは、 `T getContractContext()` を呼び出すことでコントラクトから情報を受け取ることができます。
 Contracts に何も設定されていない場合、戻り値は null になる可能性があり、使用する基本 Function クラスによって戻り値の型 `T` が決定されることに注意してください。
-コントラクトからファンクションに情報を送信する方法の詳細については、[ファンクションに情報を送信する](./how-to-write-contract.mdx#send-information-to-functions)を参照してください。
+コントラクトからファンクションに情報を送信する方法の詳細については、[ファンクションに情報を送信する](./how-to-write-contract.mdx#ファンクションに情報を送信する)を参照してください。
 
 ```Java
 JsonNode context = getContractContext();
@@ -134,7 +134,7 @@ Function 機能はデフォルトで有効になっています。したがっ�
 
 #### アプリケーション固有のスキーマを追加する
 
-Functions は ScalarDB CRUD インターフェースを介して任意のレコードを読み書きできるため、ScalarDL はそれ自体で Function のデータベーススキーマを定義できません。このようなスキーマを定義してデータベースに適用するのは、アプリケーションの所有者の責任です。データベースの所有者と管理者に応じて、自分で行うか、システム管理者に依頼する必要があります。ScalarDB のデータベーススキーマの定義の詳細については、[ScalarDB Schema Loader](https://scalardb.scalar-labs.com/docs/latest/schema-loader) を参照してください。
+Functions は ScalarDB CRUD インターフェースを介して任意のレコードを読み書きできるため、ScalarDL はそれ自体で Function のデータベーススキーマを定義できません。このようなスキーマを定義してデータベースに適用するのは、アプリケーションの所有者の責任です。データベースの所有者と管理者に応じて、自分で行うか、システム管理者に依頼する必要があります。ScalarDB のデータベーススキーマの定義の詳細については、[ScalarDB Schema Loader](https://scalardb.scalar-labs.com/ja-jp/docs/latest/schema-loader) を参照してください。
 
 #### ファンクションを登録する
 

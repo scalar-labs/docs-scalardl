@@ -56,6 +56,7 @@
 div[class^='announcementBar'] {
   font-size: 1.1rem;
   padding: 20px 0;
+  z-index: 21; /* Ensures the announcement bar stays visible when images are zoomed in on */
 }
 
 /* Home page cards */
@@ -349,6 +350,20 @@ hr {
   text-align: center;
   margin: auto;
   max-width: 91%;
+}
+
+html[data-theme="dark"] .container img[src$=".png"] { /* Adds a white background to transparent .png images. */
+  background-color: #ffffff;
+}
+
+.medium-zoom-overlay {
+  z-index: 15;
+  position: fixed;
+}
+
+.medium-zoom-image {
+  z-index: 20;
+  position: relative;
 }
 
 /* In-site notification feature */
