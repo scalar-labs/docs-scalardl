@@ -40,7 +40,7 @@ export const getNotifications = (language = 'en') => {
     .sort((a, b) => b.id - a.id);
 };
 
-// Utility function that detects the language from thr URL path.
+// Utility function that detects the language from the URL path.
 export const detectLanguage = () => {
   if (typeof window !== 'undefined') {
     return window.location.pathname.includes('ja-jp') ? 'ja' : 'en';
