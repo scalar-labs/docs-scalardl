@@ -217,10 +217,111 @@ const sidebars = {
       collapsible: true,
       items: [
         {
+          type: 'doc',
+          id: 'deploy-overview',
+          label: 'Overview',
+        },
+        {
           type: 'category',
-          label: 'Scalar Kubernetes',
+          label: 'In Your Local Environment',
           collapsible: true,
           items: [
+            {
+              type: 'doc',
+              id: 'helm-charts/getting-started-scalardl-ledger',
+              label: 'ScalarDL Ledger by Using a Helm Chart',
+            },
+            {
+              type: 'doc',
+              id: 'helm-charts/getting-started-scalardl-auditor',
+              label: 'ScalarDL Ledger and Auditor by Using a Helm Chart',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: 'In Managed Kubernetes Environments',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLOnEKS',
+              label: 'Deploy ScalarDL Ledger on Amazon EKS',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnEKS',
+              label: 'Deploy ScalarDL Ledger and Auditor on Amazon EKS',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLOnAKS',
+              label: 'Deploy ScalarDL Ledger on AKS',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnAKS',
+              label: 'Deploy ScalarDL Ledger and Auditor on AKS',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Reference',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ProductionChecklistForScalarDLLedger',
+              label: 'Production checklist for ScalarDL Ledger',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ProductionChecklistForScalarDLAuditor',
+              label: 'Production checklist for ScalarDL Auditor',
+            },
+            {
+              type: 'category',
+              label: 'Getting Started Guides',
+              collapsible: true,
+              items: [
+                {
+                  type: 'doc',
+                  id: 'helm-charts/getting-started-scalar-helm-charts',
+                  label: 'Use Scalar Helm Charts',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/getting-started-scalardl-auditor-tls',
+                  label: 'ScalarDL Ledger and Auditor with TLS by Using a Helm Chart',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/getting-started-scalardl-auditor-tls-cert-manager',
+                  label: 'ScalarDL Ledger and Auditor with TLS by Using cert-manager and a Helm Chart',
+                },
+                {
+                  type: 'doc',
+                  id: 'ca/caserver-getting-started',
+                  label: 'Start CA Server with CFSSL',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/getting-started-monitoring',
+                  label: 'Prometheus Operator for Monitoring by Using a Helm Chart',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/getting-started-logging',
+                  label: 'Loki Stack for Logging by Using a Helm Chart by Using a Helm Chart',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/getting-started-scalar-manager',
+                  label: 'Scalar Manager by Using a Helm Chart',
+                },
+              ]
+            },
             {
               type: 'category',
               label: 'Database Setup Guides',
@@ -236,7 +337,7 @@ const sidebars = {
                   id: 'scalar-kubernetes/SetupDatabaseForAzure',
                   label: 'Databases on Azure',
                 },
-              ],
+              ]
             },
             {
               type: 'category',
@@ -245,13 +346,8 @@ const sidebars = {
               items: [
                 {
                   type: 'doc',
-                  id: 'scalar-kubernetes/ProductionChecklistForScalarDLLedger',
-                  label: 'Production checklist for ScalarDL Ledger',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ProductionChecklistForScalarDLAuditor',
-                  label: 'Production checklist for ScalarDL Auditor',
+                  id: 'scalar-kubernetes/HowToGetContainerImages',
+                  label: 'Get Container Images',
                 },
                 {
                   type: 'doc',
@@ -260,19 +356,14 @@ const sidebars = {
                 },
                 {
                   type: 'doc',
-                  id: 'scalar-kubernetes/AzureMarketplaceGuide',
-                  label: 'Install from Azure Marketplace',
+                  id: 'scalar-kubernetes/HowToUseContainerImages',
+                  label: 'Use Container Images',
                 },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/CreateBastionServer',
-                  label: 'Create a Bastion Server',
-                },
-              ],
+              ]
             },
             {
               type: 'category',
-              label: 'Cluster Guides',
+              label: 'Deployment Guides',
               collapsible: true,
               items: [
                 {
@@ -287,65 +378,31 @@ const sidebars = {
                 },
                 {
                   type: 'doc',
-                  id: 'scalar-kubernetes/CreateAKSClusterForScalarDL',
-                  label: 'Create an AKS cluster for ScalarDL Ledger',
+                  id: 'scalar-kubernetes/CreateBastionServer',
+                  label: 'Create a Bastion Server',
                 },
                 {
                   type: 'doc',
-                  id: 'scalar-kubernetes/CreateAKSClusterForScalarDLAuditor',
-                  label: 'Create an AKS cluster for ScalarDL Ledger and Auditor',
-                },
-              ],
-            },
-            {
-              type: 'category',
-              label: 'Container Image Guides',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/HowToGetContainerImages',
-                  label: 'Get Container Images',
+                  id: 'helm-charts/how-to-deploy-scalardl-ledger',
+                  label: 'Deploy ScalarDL Ledger',
                 },
                 {
                   type: 'doc',
-                  id: 'scalar-kubernetes/HowToUseContainerImages',
-                  label: 'Use Container Images',
+                  id: 'helm-charts/how-to-deploy-scalardl-auditor',
+                  label: 'Deploy ScalarDL Auditor',
                 },
-              ],
-            },
-            {
-              type: 'category',
-              label: 'Deployment Guides',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLOnEKS',
-                  label: 'Deploy ScalarDL Ledger on Amazon EKS',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnEKS',
-                  label: 'Deploy ScalarDL Ledger and Auditor on Amazon EKS',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLOnAKS',
-                  label: 'Deploy ScalarDL Ledger on AKS',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnAKS',
-                  label: 'Deploy ScalarDL Ledger and Auditor on AKS',
-                },
-              ],
+              ]
             },
             {
               type: 'category',
               label: 'Configuration Guides',
               collapsible: true,
               items: [
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/NetworkPeeringForScalarDLAuditor',
+                  label: 'Configure Network Peering for ScalarDL Auditor',
+                },
                 {
                   type: 'doc',
                   id: 'scalar-kubernetes/AccessScalarProducts',
@@ -356,67 +413,6 @@ const sidebars = {
                   id: 'scalar-kubernetes/HowToCreateKeyAndCertificateFiles',
                   label: 'Create Private Key and Certificate Files',
                 },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/NetworkPeeringForScalarDLAuditor',
-                  label: 'Configure Network Peering for ScalarDL Auditor',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          type: 'category',
-          label: 'Scalar Helm Charts',
-          collapsible: true,
-          items: [
-            {
-              type: 'category',
-              label: 'Getting Started',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalar-helm-charts',
-                  label: 'Use Scalar Helm Charts',
-                },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalardl-ledger',
-                  label: 'ScalarDL Ledger by Using a Helm Chart',
-                },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalardl-auditor',
-                  label: 'ScalarDL Ledger and Auditor by Using a Helm Chart',
-                },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalardl-auditor-tls',
-                  label: 'ScalarDL Ledger and Auditor with TLS by Using a Helm Chart',
-                },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalardl-auditor-tls-cert-manager',
-                  label: 'ScalarDL Ledger and Auditor with TLS by Using cert-manager and a Helm Chart',
-                },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-monitoring',
-                  label: 'Prometheus Operator for Monitoring by Using a Helm Chart',
-                },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-logging',
-                  label: 'Loki Stack for Logging by Using a Helm Chart by Using a Helm Chart',
-                },
-              ]
-            },
-            {
-              type: 'category',
-              label: 'Configure Custom Values',
-              collapsible: true,
-              items: [
                 {
                   type: 'doc',
                   id: 'helm-charts/configure-custom-values-scalardl-ledger',
@@ -447,44 +443,19 @@ const sidebars = {
                   id: 'helm-charts/configure-custom-values-envoy',
                   label: 'Configure a Custom Values File for Scalar Envoy',
                 },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/mount-files-or-volumes-on-scalar-pods',
+                  label: 'Mount Files or Volumes on ScalarDL Pods',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/use-secret-for-credentials',
+                  label: 'Use Secret Resources',
+                },
               ],
             },
-            {
-              type: 'doc',
-              id: 'helm-charts/how-to-deploy-scalar-products',
-              label: 'Deploy Scalar Products Using Scalar Helm Charts',
-            },
-            {
-              type: 'doc',
-              id: 'helm-charts/how-to-deploy-scalardl-ledger',
-              label: 'Deploy ScalarDL Ledger',
-            },
-            {
-              type: 'doc',
-              id: 'helm-charts/how-to-deploy-scalardl-auditor',
-              label: 'Deploy ScalarDL Auditor',
-            },
-            {
-              type: 'doc',
-              id: 'helm-charts/mount-files-or-volumes-on-scalar-pods',
-              label: 'Mount Files or Volumes on ScalarDL Pods',
-            },
-            {
-              type: 'doc',
-              id: 'helm-charts/use-secret-for-credentials',
-              label: 'Use Secret Resources',
-            },
           ],
-        },
-        {
-          type: 'doc',
-          id: 'installation-with-docker',
-          label: 'Install ScalarDL in Your Local Environment with Docker',
-        },
-        {
-          type: 'doc',
-          id: 'ca/caserver-getting-started',
-          label: 'Start CA Server with CFSSL',
         },
       ],
     },
@@ -537,12 +508,7 @@ const sidebars = {
                   type: 'doc',
                   id: 'scalar-manager/overview',
                   label: 'Scalar Manager Overview',
-                },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalar-manager',
-                  label: 'Scalar Manager by Using a Helm Chart',
-                },                
+                },             
                 {
                   type: 'doc',
                   id: 'helm-charts/how-to-deploy-scalar-admin-for-kubernetes',
@@ -620,8 +586,6 @@ const sidebars = {
       label: 'Reference',
       collapsible: true,
       items: [
-        
-        
         {
           type: 'doc',
           id: 'scalar-licensing/README',
@@ -702,6 +666,7 @@ const sidebars = {
         },
       ],
     },
+    
     {
       type: 'category',
       label: '開発',
@@ -830,10 +795,112 @@ const sidebars = {
       collapsible: true,
       items: [
         {
+          type: 'doc',
+          id: 'deploy-overview',
+          label: '概要',
+        },
+        {
           type: 'category',
-          label: 'Scalar Kubernetes',
+          label: 'In Your Local Environment',
           collapsible: true,
           items: [
+            {
+              type: 'doc',
+              id: 'helm-charts/getting-started-scalardl-ledger',
+              label: 'Helm Chart を使用した ScalarDL Ledger',
+            },
+            {
+              type: 'doc',
+              id: 'helm-charts/getting-started-scalardl-auditor',
+              label: 'Helm Chart を使用した ScalarDL Ledger と Auditor',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: 'In Managed Kubernetes Environments',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLOnEKS',
+              label: 'Amazon EKS に ScalarDL Ledger をデプロイ',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnEKS',
+              label: 'Amazon EKS に ScalarDL Ledger と Auditorをデプロイ',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLOnAKS',
+              label: 'AKS に ScalarDL Ledger をデプロイ',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnAKS',
+              label: 'AKS に ScalarDL Ledger と Auditor をデプロイ',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: '詳細',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ProductionChecklistForScalarDLLedger',
+              label: 'ScalarDL Ledger の本番環境チェックリスト',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ProductionChecklistForScalarDLAuditor',
+              label: 'ScalarDL Auditor の本番環境チェックリスト',
+            },
+            {
+              type: 'category',
+              label: 'はじめようガイド',
+              collapsible: true,
+              items: [
+                {
+                  type: 'doc',
+                  id: 'helm-charts/getting-started-scalar-helm-charts',
+                  label: 'Scalar Helm Charts をはじめよう',
+                },
+                
+                {
+                  type: 'doc',
+                  id: 'helm-charts/getting-started-scalardl-auditor-tls',
+                  label: 'Helm Chart を使用した TLS 対応 ScalarDL Ledger と Auditor',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/getting-started-scalardl-auditor-tls-cert-manager',
+                  label: 'cert-manager と Helm Chart を使用した TLS 対応 ScalarDL Ledger と Auditor',
+                },
+                {
+                  type: 'doc',
+                  id: 'ca/caserver-getting-started',
+                  label: 'CFSSL で CA サーバーを起動',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/getting-started-monitoring',
+                  label: 'Helm Chart を使用した監視用 Prometheus Operator',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/getting-started-logging',
+                  label: 'Helm Chart を使用したログ記録用 Loki スタック',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/getting-started-scalar-manager',
+                  label: 'Helm Chart を使用した Scalar Manager',
+                },
+              ]
+            },
             {
               type: 'category',
               label: 'データベースセットアップガイド',
@@ -849,7 +916,7 @@ const sidebars = {
                   id: 'scalar-kubernetes/SetupDatabaseForAzure',
                   label: 'Azure が提供するデータベース',
                 },
-              ],
+              ]
             },
             {
               type: 'category',
@@ -858,13 +925,8 @@ const sidebars = {
               items: [
                 {
                   type: 'doc',
-                  id: 'scalar-kubernetes/ProductionChecklistForScalarDLLedger',
-                  label: 'ScalarDL Ledger の本番環境チェックリスト',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ProductionChecklistForScalarDLAuditor',
-                  label: 'ScalarDL Auditor の本番環境チェックリスト',
+                  id: 'scalar-kubernetes/HowToGetContainerImages',
+                  label: 'コンテナイメージを取得',
                 },
                 {
                   type: 'doc',
@@ -873,19 +935,14 @@ const sidebars = {
                 },
                 {
                   type: 'doc',
-                  id: 'scalar-kubernetes/AzureMarketplaceGuide',
-                  label: 'Azure Marketplace からインストール',
+                  id: 'scalar-kubernetes/HowToUseContainerImages',
+                  label: 'コンテナイメージを使用',
                 },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/CreateBastionServer',
-                  label: '踏み台サーバーを作成',
-                },
-              ],
+              ]
             },
             {
               type: 'category',
-              label: 'クラスターガイド',
+              label: 'デプロイメントガイド',
               collapsible: true,
               items: [
                 {
@@ -900,65 +957,31 @@ const sidebars = {
                 },
                 {
                   type: 'doc',
-                  id: 'scalar-kubernetes/CreateAKSClusterForScalarDL',
-                  label: 'ScalarDL Ledger 用の AKS クラスターを作成',
+                  id: 'scalar-kubernetes/CreateBastionServer',
+                  label: '踏み台サーバーを作成',
                 },
                 {
                   type: 'doc',
-                  id: 'scalar-kubernetes/CreateAKSClusterForScalarDLAuditor',
-                  label: 'ScalarDL Ledger と Auditor 用の AKS クラスターを作成',
-                },
-              ],
-            },
-            {
-              type: 'category',
-              label: 'コンテナイメージガイド',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/HowToGetContainerImages',
-                  label: 'コンテナイメージを取得',
+                  id: 'helm-charts/how-to-deploy-scalardl-ledger',
+                  label: 'Helm Chart を使用して ScalarDL Ledger をデプロイ',
                 },
                 {
                   type: 'doc',
-                  id: 'scalar-kubernetes/HowToUseContainerImages',
-                  label: 'コンテナイメージを使用',
+                  id: 'helm-charts/how-to-deploy-scalardl-auditor',
+                  label: 'Helm Chart を使用して ScalarDL Auditor をデプロイ',
                 },
-              ],
-            },
-            {
-              type: 'category',
-              label: 'デプロイメントガイド',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLOnEKS',
-                  label: 'Amazon EKS に ScalarDL Ledger をデプロイ',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnEKS',
-                  label: 'Amazon EKS に ScalarDL Ledger と Auditorをデプロイ',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLOnAKS',
-                  label: 'AKS に ScalarDL Ledger をデプロイ',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnAKS',
-                  label: 'AKS に ScalarDL Ledger と Auditor をデプロイ',
-                },
-              ],
+              ]
             },
             {
               type: 'category',
               label: '設定のガイド',
               collapsible: true,
               items: [
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/NetworkPeeringForScalarDLAuditor',
+                  label: 'ネットワークピアリングを構成',
+                },
                 {
                   type: 'doc',
                   id: 'scalar-kubernetes/AccessScalarProducts',
@@ -969,67 +992,6 @@ const sidebars = {
                   id: 'scalar-kubernetes/HowToCreateKeyAndCertificateFiles',
                   label: '秘密鍵と証明書ファイルを作成',
                 },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/NetworkPeeringForScalarDLAuditor',
-                  label: 'ネットワークピアリングを構成',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          type: 'category',
-          label: 'Scalar Helm Charts',
-          collapsible: true,
-          items: [
-            {
-              type: 'category',
-              label: 'はじめよう',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalar-helm-charts',
-                  label: 'Scalar Helm Charts をはじめよう',
-                },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalardl-ledger',
-                  label: 'Helm Chart を使用した ScalarDL Ledger',
-                },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalardl-auditor',
-                  label: 'Helm Chart を使用した ScalarDL Ledger と Auditor',
-                },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalardl-auditor-tls',
-                  label: 'Helm Chart を使用した TLS 対応 ScalarDL Ledger と Auditor',
-                },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalardl-auditor-tls-cert-manager',
-                  label: 'cert-manager と Helm Chart を使用した TLS 対応 ScalarDL Ledger と Auditor',
-                },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-monitoring',
-                  label: 'Helm Chart を使用した監視用 Prometheus Operator',
-                },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-logging',
-                  label: 'Helm Chart を使用したログ記録用 Loki スタック',
-                },
-              ]
-            },
-            {
-              type: 'category',
-              label: 'カスタム値を設定',
-              collapsible: true,
-              items: [
                 {
                   type: 'doc',
                   id: 'helm-charts/configure-custom-values-scalardl-ledger',
@@ -1060,44 +1022,19 @@ const sidebars = {
                   id: 'helm-charts/configure-custom-values-envoy',
                   label: 'Scalar Envoy のカスタム値ファイルを構成',
                 },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/mount-files-or-volumes-on-scalar-pods',
+                  label: 'ScalarDL ポッドにファイルまたはボリュームをマウント',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/use-secret-for-credentials',
+                  label: 'シークレットリソースを使用',
+                },
               ],
             },
-            {
-              type: 'doc',
-              id: 'helm-charts/how-to-deploy-scalar-products',
-              label: 'Helm Chart を使用して Scalar 製品をデプロイ',
-            },
-            {
-              type: 'doc',
-              id: 'helm-charts/how-to-deploy-scalardl-ledger',
-              label: 'Helm Chart を使用して ScalarDL Ledger をデプロイ',
-            },
-            {
-              type: 'doc',
-              id: 'helm-charts/how-to-deploy-scalardl-auditor',
-              label: 'Helm Chart を使用して ScalarDL Auditor をデプロイ',
-            },
-            {
-              type: 'doc',
-              id: 'helm-charts/mount-files-or-volumes-on-scalar-pods',
-              label: 'ScalarDL ポッドにファイルまたはボリュームをマウント',
-            },
-            {
-              type: 'doc',
-              id: 'helm-charts/use-secret-for-credentials',
-              label: 'シークレットリソースを使用',
-            },
           ],
-        },
-        {
-          type: 'doc',
-          id: 'installation-with-docker',
-          label: 'Docker を使ってローカル環境に ScalarDL をインストール',
-        },
-        {
-          type: 'doc',
-          id: 'ca/caserver-getting-started',
-          label: 'CFSSL で CA サーバーを起動',
         },
       ],
     },
@@ -1150,11 +1087,6 @@ const sidebars = {
                   type: 'doc',
                   id: 'scalar-manager/overview',
                   label: 'Scalar Manager の概要',
-                },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalar-manager',
-                  label: 'Helm Chart を使用した Scalar Manager',
                 },
                 {
                   type: 'doc',
