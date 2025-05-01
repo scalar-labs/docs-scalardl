@@ -350,3 +350,112 @@ hr {
   margin: auto;
   max-width: 91%;
 }
+
+/* In-site notification feature */
+.notification-wrapper {
+  position: relative;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.notification-count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #ff4444;
+  color: white;
+  border-radius: 50%;
+  padding: 0.2rem 0.2rem;
+  font-size: 0.8rem;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(30%, 15%);
+}
+
+.notification-dropdown {
+  background-color: white;
+  box-shadow: var(--ifm-global-shadow-md);
+  border-radius: 8px;
+  color: var(--ifm-color-emphasis-700);
+  right: 12px;
+  position: absolute;
+  text-decoration: none;
+  top: 38px;
+  width: 293px;
+  z-index: 1000;
+}
+
+.notification-item {
+  border-bottom: 1px solid #e0e0e0;
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.notification-item.unread {
+  border-left: 5px solid #2673BB;
+}
+
+.notification-item {
+  transition: background-color 0.2s ease;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notification-item:hover {
+  background-color: var(--ifm-dropdown-hover-background-color);
+  text-decoration: none;
+}
+
+html[data-theme="dark"] .notification-item {
+  color: inherit;
+  padding: 10px;
+}
+
+html[data-theme="dark"] .notification-item:hover {
+  background-color: var(--ifm-dropdown-hover-background-color);
+  text-decoration: none;
+}
+
+html[data-theme="dark"] .notification-dropdown {
+  background-color: var(--ifm-background-color);
+  box-shadow: var(--ifm-global-shadow-md);
+  color: #f9f9f9 !important;
+  text-decoration: none;
+}
+
+/* Hide the notification icon in the main navbar on smaller screens */
+@media (max-width: 997px) {
+  .notification-wrapper {
+    display: none; /* Hide in the main navbar on mobile */
+    position: sticky;
+  }
+}
+
+/* Show notification icon in the sidebar menu on mobile */
+@media (max-width: 997px) {
+  .navbar-sidebar .notification-wrapper {
+    display: flex; /* Make it visible only in the sidebar on mobile */
+    position: relative;
+  }
+
+  .notification-count {
+    align-items: center;
+    background-color: red;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    font-size: 0.8rem;
+    height: 20px;
+    justify-content: center;
+    position: relative;
+    right: 2px;
+    top: 2px;
+    width: 20px;
+  }
+}
