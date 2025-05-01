@@ -481,8 +481,8 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              id: 'monitor-by-using-scalar-manager',
-              label: 'Monitor ScalarDL by Using Scalar Manager',
+              id: 'manage-monitor-overview',
+              label: 'Overview',
             },
             {
               type: 'doc',
@@ -1060,8 +1060,8 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              id: 'monitor-by-using-scalar-manager',
-              label: 'Scalar Manager を使用して ScalarDL を監視する',
+              id: 'manage-monitor-overview',
+              label: '概要',
             },
             {
               type: 'doc',
