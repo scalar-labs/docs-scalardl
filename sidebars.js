@@ -801,7 +801,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          label: 'In Your Local Environment',
+          label: 'ローカル環境で',
           collapsible: true,
           items: [
             {
@@ -818,7 +818,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          label: 'In Managed Kubernetes Environments',
+          label: 'マネージド Kubernetes 環境で',
           collapsible: true,
           items: [
             {
