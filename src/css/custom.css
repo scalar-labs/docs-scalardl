@@ -391,20 +391,21 @@ html[data-theme="dark"] .container img[src$=".png"] { /* Adds a white background
 }
 
 .notification-dropdown {
-  background-color: white;
+  background-color: var(--ifm-dropdown-background-color);
   box-shadow: var(--ifm-global-shadow-md);
   border-radius: 8px;
-  color: var(--ifm-color-emphasis-700);
-  right: 12px;
+  font-size: 0.875rem;
+  right: 0px;
   position: absolute;
   text-decoration: none;
   top: 38px;
-  width: 293px;
+  width: 330px;
   z-index: 1000;
 }
 
 .notification-item {
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 3px solid none;
+  color: inherit;
   display: block;
   padding: 10px;
   text-decoration: none;
@@ -412,6 +413,8 @@ html[data-theme="dark"] .container img[src$=".png"] { /* Adds a white background
 
 .notification-item.unread {
   border-left: 5px solid #2673BB;
+  border-bottom: 3px solid none;
+  margin: 8px;
 }
 
 .notification-item {
@@ -424,6 +427,7 @@ html[data-theme="dark"] .container img[src$=".png"] { /* Adds a white background
 
 .notification-item:hover {
   background-color: var(--ifm-dropdown-hover-background-color);
+  color: inherit;
   text-decoration: none;
 }
 
@@ -438,10 +442,8 @@ html[data-theme="dark"] .notification-item:hover {
 }
 
 html[data-theme="dark"] .notification-dropdown {
-  background-color: var(--ifm-background-color);
+  background-color: var(--ifm-dropdown-background-color);
   box-shadow: var(--ifm-global-shadow-md);
-  color: #f9f9f9 !important;
-  text-decoration: none;
 }
 
 /* Hide the notification icon in the main navbar on smaller screens */
@@ -456,6 +458,7 @@ html[data-theme="dark"] .notification-dropdown {
 @media (max-width: 997px) {
   .navbar-sidebar .notification-wrapper {
     display: flex; /* Make it visible only in the sidebar on mobile */
+    margin-left: 5px;
     position: relative;
   }
 
@@ -469,8 +472,21 @@ html[data-theme="dark"] .notification-dropdown {
     height: 20px;
     justify-content: center;
     position: relative;
-    right: 2px;
-    top: 2px;
+    right: 12px;
+    top: -12px;
     width: 20px;
+  }
+
+  .notification-dropdown {
+    background-color: var(--ifm-dropdown-background-color);
+    box-shadow: var(--ifm-global-shadow-md);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    left: 0px;
+    position: absolute;
+    text-decoration: none;
+    top: 38px;
+    width: 330px;
+    z-index: 1000;
   }
 }
