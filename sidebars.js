@@ -57,6 +57,16 @@ const sidebars = {
         },
         {
           type: 'doc',
+          id: 'releases/release-notes',
+          label: 'Release Notes',
+        },
+        {
+          type: 'doc',
+          id: 'releases/release-support-policy',
+          label: 'Release Support Policy',
+        },
+        {
+          type: 'doc',
           id: 'roadmap',
           label: 'Roadmap',
         },
@@ -64,25 +74,18 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Getting Started',
+      label: 'Quickstart',
       collapsible: true,
       items: [
+        {
+          type: 'doc',
+          id: 'quickstart-overview',
+          label: 'Overview',
+        },
         {
           type: 'doc',
           id: 'getting-started',
           label: 'Run a Contract Through ScalarDL Ledger',
-        },
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Samples',
-      collapsible: true,
-      items: [
-        {
-          type: 'doc',
-          id: 'applications/simple-bank-account/README',
-          label: 'Bank Account Application',
         },
       ],
     },
@@ -93,38 +96,8 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          id: 'getting-started-auditor',
-          label: 'Run a Contract Through ScalarDL Ledger and Auditor',
-        },
-        {
-          type: 'doc',
           id: 'data-modeling',
           label: 'Model Your Data',
-        },
-        {
-          type: 'doc',
-          id: 'how-to-write-applications',
-          label: 'Write an Application in Java',
-        },
-        {
-          type: 'doc',
-          id: 'configurations',
-          label: 'Configurations',
-        },
-        {
-          type: 'doc',
-          id: 'schema-loader',
-          label: 'ScalarDL Schema Loader',
-        },
-        {
-          type: 'doc',
-          id: 'ca/caclient-getting-started',
-          label: 'Get a Certificate',
-        },
-        {
-          type: 'doc',
-          id: 'authentication',
-          label: 'Authentication',
         },
         {
           type: 'doc',
@@ -142,9 +115,99 @@ const sidebars = {
           label: 'Use Generic Contracts',
         },
         {
-          type: 'doc',
-          id: 'how-to-write-applications-with-generic-contracts',
-          label: 'Write an Application with Generic Contracts',
+          type: 'category',
+          label: 'Write an Application',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'how-to-write-applications',
+              label: 'Write an Application in Java',
+            },
+            {
+              type: 'doc',
+              id: 'how-to-write-applications-with-generic-contracts',
+              label: 'Write an Application with Generic Contracts',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Run an Application',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'getting-started-auditor',
+              label: 'Run a Contract Through ScalarDL Ledger and Auditor',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Run Sample Applications',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'applications/simple-bank-account/README',
+              label: 'Bank Account Application',
+            },
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Advanced Configurations and Operations',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'authentication',
+              label: 'Authentication',
+            },
+            {
+              type: 'doc',
+              id: 'scalardl-benchmarks/README',
+              label: 'Run Benchmarks',
+            },
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Reference',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'compatibility',
+              label: 'Compatibility Matrix',
+            },
+            {
+              type: 'doc',
+              id: 'configurations',
+              label: 'Configurations',
+            },
+            {
+              type: 'doc',
+              id: 'scalardl-command-reference',
+              label: 'Client Commands',
+            },
+            {
+              type: 'doc',
+              id: 'schema-loader',
+              label: 'ScalarDL Schema Loader',
+            },
+            {
+              type: 'doc',
+              id: 'generic-contracts-reference',
+              label: 'Generic Contracts',
+            },
+            {
+              type: 'doc',
+              id: 'ca/caclient-getting-started',
+              label: 'Get a Certificate',
+            },
+          ],
         },
       ],
     },
@@ -154,178 +217,78 @@ const sidebars = {
       collapsible: true,
       items: [
         {
-          type: 'category',
-          label: 'Scalar Kubernetes',
-          collapsible: true,
-          items: [
-            {
-              type: 'category',
-              label: 'Database Setup Guides',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/SetupDatabaseForAWS',
-                  label: 'Databases on AWS',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/SetupDatabaseForAzure',
-                  label: 'Databases on Azure',
-                },
-              ],
-            },
-            {
-              type: 'category',
-              label: 'Installation Guides',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ProductionChecklistForScalarDLLedger',
-                  label: 'Production checklist for ScalarDL Ledger',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ProductionChecklistForScalarDLAuditor',
-                  label: 'Production checklist for ScalarDL Auditor',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/AwsMarketplaceGuide',
-                  label: 'Install from AWS Marketplace',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/AzureMarketplaceGuide',
-                  label: 'Install from Azure Marketplace',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/CreateBastionServer',
-                  label: 'Create a Bastion Server',
-                },
-              ],
-            },
-            {
-              type: 'category',
-              label: 'Cluster Guides',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/CreateEKSClusterForScalarDL',
-                  label: 'Create an EKS Cluster for ScalarDL Ledger',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/CreateEKSClusterForScalarDLAuditor',
-                  label: 'Create an EKS Cluster for ScalarDL Ledger and Auditor',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/CreateAKSClusterForScalarDL',
-                  label: 'Create an AKS cluster for ScalarDL Ledger',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/CreateAKSClusterForScalarDLAuditor',
-                  label: 'Create an AKS cluster for ScalarDL Ledger and Auditor',
-                },
-              ],
-            },
-            {
-              type: 'category',
-              label: 'Container Image Guides',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/HowToGetContainerImages',
-                  label: 'Get Container Images',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/HowToUseContainerImages',
-                  label: 'Use Container Images',
-                },
-              ],
-            },
-            {
-              type: 'category',
-              label: 'Deployment Guides',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLOnEKS',
-                  label: 'Deploy ScalarDL Ledger on Amazon EKS',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnEKS',
-                  label: 'Deploy ScalarDL Ledger and Auditor on Amazon EKS',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLOnAKS',
-                  label: 'Deploy ScalarDL Ledger on AKS',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnAKS',
-                  label: 'Deploy ScalarDL Ledger and Auditor on AKS',
-                },
-              ],
-            },
-            {
-              type: 'category',
-              label: 'Configuration Guides',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/AccessScalarProducts',
-                  label: 'Access Kubernetes Environment from Applications',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/HowToCreateKeyAndCertificateFiles',
-                  label: 'Create Private Key and Certificate Files',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/NetworkPeeringForScalarDLAuditor',
-                  label: 'Configure Network Peering for ScalarDL Auditor',
-                },
-              ],
-            },
-          ],
+          type: 'doc',
+          id: 'deploy-overview',
+          label: 'Overview',
         },
         {
           type: 'category',
-          label: 'Scalar Helm Charts',
+          label: 'In Your Local Environment',
           collapsible: true,
           items: [
             {
+              type: 'doc',
+              id: 'helm-charts/getting-started-scalardl-ledger',
+              label: 'ScalarDL Ledger by Using a Helm Chart',
+            },
+            {
+              type: 'doc',
+              id: 'helm-charts/getting-started-scalardl-auditor',
+              label: 'ScalarDL Ledger and Auditor by Using a Helm Chart',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: 'In Managed Kubernetes Environments',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLOnEKS',
+              label: 'Deploy ScalarDL Ledger on Amazon EKS',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnEKS',
+              label: 'Deploy ScalarDL Ledger and Auditor on Amazon EKS',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLOnAKS',
+              label: 'Deploy ScalarDL Ledger on AKS',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnAKS',
+              label: 'Deploy ScalarDL Ledger and Auditor on AKS',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Reference',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ProductionChecklistForScalarDLLedger',
+              label: 'Production checklist for ScalarDL Ledger',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ProductionChecklistForScalarDLAuditor',
+              label: 'Production checklist for ScalarDL Auditor',
+            },
+            {
               type: 'category',
-              label: 'Getting Started',
+              label: 'Getting Started Guides',
               collapsible: true,
               items: [
                 {
                   type: 'doc',
                   id: 'helm-charts/getting-started-scalar-helm-charts',
                   label: 'Use Scalar Helm Charts',
-                },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalardl-ledger',
-                  label: 'ScalarDL Ledger by Using a Helm Chart',
-                },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalardl-auditor',
-                  label: 'ScalarDL Ledger and Auditor by Using a Helm Chart',
                 },
                 {
                   type: 'doc',
@@ -336,6 +299,11 @@ const sidebars = {
                   type: 'doc',
                   id: 'helm-charts/getting-started-scalardl-auditor-tls-cert-manager',
                   label: 'ScalarDL Ledger and Auditor with TLS by Using cert-manager and a Helm Chart',
+                },
+                {
+                  type: 'doc',
+                  id: 'ca/caserver-getting-started',
+                  label: 'Start CA Server with CFSSL',
                 },
                 {
                   type: 'doc',
@@ -356,9 +324,95 @@ const sidebars = {
             },
             {
               type: 'category',
-              label: 'Configure Custom Values',
+              label: 'Database Setup Guides',
               collapsible: true,
               items: [
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/SetupDatabaseForAWS',
+                  label: 'Databases on AWS',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/SetupDatabaseForAzure',
+                  label: 'Databases on Azure',
+                },
+              ]
+            },
+            {
+              type: 'category',
+              label: 'Installation Guides',
+              collapsible: true,
+              items: [
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/HowToGetContainerImages',
+                  label: 'Get Container Images',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/AwsMarketplaceGuide',
+                  label: 'Install from AWS Marketplace',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/HowToUseContainerImages',
+                  label: 'Use Container Images',
+                },
+              ]
+            },
+            {
+              type: 'category',
+              label: 'Deployment Guides',
+              collapsible: true,
+              items: [
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/CreateEKSClusterForScalarDL',
+                  label: 'Create an EKS Cluster for ScalarDL Ledger',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/CreateEKSClusterForScalarDLAuditor',
+                  label: 'Create an EKS Cluster for ScalarDL Ledger and Auditor',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/CreateBastionServer',
+                  label: 'Create a Bastion Server',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/how-to-deploy-scalardl-ledger',
+                  label: 'Deploy ScalarDL Ledger',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/how-to-deploy-scalardl-auditor',
+                  label: 'Deploy ScalarDL Auditor',
+                },
+              ]
+            },
+            {
+              type: 'category',
+              label: 'Configuration Guides',
+              collapsible: true,
+              items: [
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/NetworkPeeringForScalarDLAuditor',
+                  label: 'Configure Network Peering for ScalarDL Auditor',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/AccessScalarProducts',
+                  label: 'Access Kubernetes Environment from Applications',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/HowToCreateKeyAndCertificateFiles',
+                  label: 'Create Private Key and Certificate Files',
+                },
                 {
                   type: 'doc',
                   id: 'helm-charts/configure-custom-values-scalardl-ledger',
@@ -389,54 +443,19 @@ const sidebars = {
                   id: 'helm-charts/configure-custom-values-envoy',
                   label: 'Configure a Custom Values File for Scalar Envoy',
                 },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/mount-files-or-volumes-on-scalar-pods',
+                  label: 'Mount Files or Volumes on ScalarDL Pods',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/use-secret-for-credentials',
+                  label: 'Use Secret Resources',
+                },
               ],
             },
-            {
-              type: 'doc',
-              id: 'helm-charts/how-to-deploy-scalar-products',
-              label: 'Deploy Scalar Products Using Scalar Helm Charts',
-            },
-            {
-              type: 'doc',
-              id: 'helm-charts/how-to-deploy-scalardl-ledger',
-              label: 'Deploy ScalarDL Ledger',
-            },
-            {
-              type: 'doc',
-              id: 'helm-charts/how-to-deploy-scalardl-auditor',
-              label: 'Deploy ScalarDL Auditor',
-            },
-            {
-              type: 'doc',
-              id: 'helm-charts/how-to-deploy-scalar-admin-for-kubernetes',
-              label: 'Deploy Scalar Admin for Kubernetes',
-            },
-            {
-              type: 'doc',
-              id: 'helm-charts/mount-files-or-volumes-on-scalar-pods',
-              label: 'Mount Files or Volumes on ScalarDL Pods',
-            },
-            {
-              type: 'doc',
-              id: 'helm-charts/use-secret-for-credentials',
-              label: 'Use Secret Resources',
-            },
           ],
-        },
-        {
-          type: 'doc',
-          id: 'scalar-licensing/README',
-          label: 'Configure a Product License Key',
-        },
-        {
-          type: 'doc',
-          id: 'installation-with-docker',
-          label: 'Install ScalarDL in Your Local Environment with Docker',
-        },
-        {
-          type: 'doc',
-          id: 'ca/caserver-getting-started',
-          label: 'Start CA Server with CFSSL',
         },
       ],
     },
@@ -445,84 +464,6 @@ const sidebars = {
       label: 'Manage',
       collapsible: true,
       items: [
-        {
-          type: 'category',
-          label: 'Scalar Kubernetes',
-          collapsible: true,
-          items: [
-            {
-              type: 'category',
-              label: 'Monitoring Guides',
-              collapsible: true,
-              items: [
-                {
-                  type: 'category',
-                  label: 'Alerts',
-                  collapsible: true,
-                  items: [
-                    {
-                      type: 'doc',
-                      id: 'scalar-kubernetes/alerts/Envoy',
-                      label: 'Envoy Alerts',
-                    },
-                    {
-                      type: 'doc',
-                      id: 'scalar-kubernetes/alerts/Ledger',
-                      label: 'Ledger Alerts',
-                    },
-                  ],
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/K8sMonitorGuide',
-                  label: 'Kubernetes Monitoring Guide',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/K8sLogCollectionGuide',
-                  label: 'Collect Logs from ScalarDL on a Kubernetes Cluster',
-                },
-              ],
-            },
-            {
-              type: 'category',
-              label: 'Backup and Restore Guides',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/BackupRestoreGuide',
-                  label: 'Back Up and Restore ScalarDL Data in Kubernetes',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/BackupRDB',
-                  label: 'Back Up an RDB in Kubernetes',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/BackupNoSQL',
-                  label: 'Back Up a NoSQL Database in Kubernetes',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/RestoreDatabase',
-                  label: 'Restore Databases in Kubernetes',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/RegularCheck',
-                  label: 'Components to Regularly Check When Running on Kubernetes',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          type: 'doc',
-          id: 'backup-restore',
-          label: 'Backup and Restore Data',
-        },
         {
           type: 'doc',
           id: 'scalar-kubernetes/HowToScaleScalarDL',
@@ -534,9 +475,109 @@ const sidebars = {
           label: 'Upgrade',
         },
         {
+          type: 'category',
+          label: 'Monitor',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'manage-monitor-overview',
+              label: 'Overview',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/alerts/Envoy',
+              label: 'Envoy Alerts',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/alerts/Ledger',
+              label: 'Ledger Alerts',
+            },
+            {
+              type: 'category',
+              label: 'Reference',
+              collapsible: true,
+              items: [
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/K8sMonitorGuide',
+                  label: 'Kubernetes Monitoring Guide',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-manager/overview',
+                  label: 'Scalar Manager Overview',
+                },             
+                {
+                  type: 'doc',
+                  id: 'helm-charts/how-to-deploy-scalar-admin-for-kubernetes',
+                  label: 'Deploy Scalar Admin for Kubernetes',
+                },    
+              ]
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Back Up and Restore',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'manage-backup-and-restore-overview',
+              label: 'Back Up and Restore Databases',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/BackupNoSQL',
+              label: 'Back Up a NoSQL Database in Kubernetes',
+            },
+            {
+              type: 'category',
+              label: 'Reference',
+              collapsible: true,
+              items: [
+                {
+                  type: 'doc',
+                  id: 'backup-restore',
+                  label: 'Backup and Restore Data',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/RestoreDatabase',
+                  label: 'Restore Databases in Kubernetes',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Troubleshoot',
+      collapsible: true,
+      items: [
+        {
           type: 'doc',
-          id: 'scalar-manager/overview',
-          label: 'Scalar Manager Overview',
+          id: 'scalardl-common-status-codes',
+          label: 'ScalarDL Common Error Codes',
+        },
+        {
+          type: 'doc',
+          id: 'scalardl-ledger-status-codes',
+          label: 'ScalarDL Ledger Error Codes',
+        },
+        {
+          type: 'doc',
+          id: 'scalardl-auditor-status-codes',
+          label: 'ScalarDL Auditor Error Codes',
+        },
+        {
+          type: 'doc',
+          id: 'scalardl-client-status-codes',
+          label: 'ScalarDL Client Error Codes',
         },
       ],
     },
@@ -547,69 +588,10 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          id: 'compatibility',
-          label: 'Compatibility Matrix',
+          id: 'scalar-licensing/README',
+          label: 'Configure a Product License Key',
         },
-        {
-          type: 'doc',
-          id: 'scalardl-command-reference',
-          label: 'Client Commands',
-        },
-        {
-          type: 'doc',
-          id: 'generic-contracts-reference',
-          label: 'Generic Contracts',
-        },
-        {
-          type: 'doc',
-          id: 'scalardl-benchmarks/README',
-          label: 'Run Benchmarks',
-        },
-        {
-          type: 'category',
-          label: 'Error codes',
-          collapsible: true,
-          items: [
-            {
-              type: 'doc',
-              id: 'scalardl-common-status-codes',
-              label: 'ScalarDL Common Error Codes',
-            },
-            {
-              type: 'doc',
-              id: 'scalardl-ledger-status-codes',
-              label: 'ScalarDL Ledger Error Codes',
-            },
-            {
-              type: 'doc',
-              id: 'scalardl-auditor-status-codes',
-              label: 'ScalarDL Auditor Error Codes',
-            },
-            {
-              type: 'doc',
-              id: 'scalardl-client-status-codes',
-              label: 'ScalarDL Client Error Codes',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Releases',
-      collapsible: true,
-      items: [
-        {
-          type: 'doc',
-          id: 'releases/release-notes',
-          label: 'Release Notes',
-        },
-        {
-          type: 'doc',
-          id: 'releases/release-support-policy',
-          label: 'Release Support Policy',
-        },
-      ],
+      ]
     },
   ],
 
@@ -652,6 +634,16 @@ const sidebars = {
         },
         {
           type: 'doc',
+          id: 'releases/release-notes',
+          label: 'リリースノート',
+        },
+        {
+          type: 'doc',
+          id: 'releases/release-support-policy',
+          label: 'リリースサポートポリシー',
+        },
+        {
+          type: 'doc',
           id: 'roadmap',
           label: 'ロードマップ',
         },
@@ -659,9 +651,14 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'はじめよう',
+      label: 'クイックスタート',
       collapsible: true,
       items: [
+        {
+          type: 'doc',
+          id: 'quickstart-overview',
+          label: '概要',
+        },
         {
           type: 'doc',
           id: 'getting-started',
@@ -669,18 +666,7 @@ const sidebars = {
         },
       ],
     },
-    {
-      type: 'category',
-      label: 'サンプル',
-      collapsible: true,
-      items: [
-        {
-          type: 'doc',
-          id: 'applications/simple-bank-account/README',
-          label: '銀行口座アプリケーション',
-        },
-      ],
-    },
+    
     {
       type: 'category',
       label: '開発',
@@ -688,38 +674,8 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          id: 'getting-started-auditor',
-          label: 'ScalarDL Ledger と Auditor を通じてコントラクトを実行',
-        },
-        {
-          type: 'doc',
           id: 'data-modeling',
           label: 'データモデリング',
-        },
-        {
-          type: 'doc',
-          id: 'how-to-write-applications',
-          label: 'Java でアプリケーションを書く',
-        },
-        {
-          type: 'doc',
-          id: 'configurations',
-          label: '設定',
-        },
-        {
-          type: 'doc',
-          id: 'schema-loader',
-          label: 'ScalarDL Schema Loader',
-        },
-        {
-          type: 'doc',
-          id: 'ca/caclient-getting-started',
-          label: '証明書を取得',
-        },
-        {
-          type: 'doc',
-          id: 'authentication',
-          label: '認証',
         },
         {
           type: 'doc',
@@ -737,9 +693,99 @@ const sidebars = {
           label: '汎用コントラクトを使用',
         },
         {
-          type: 'doc',
-          id: 'how-to-write-applications-with-generic-contracts',
-          label: '汎用コントラクトを用いたアプリケーションを作成',
+          type: 'category',
+          label: 'アプリケーションを書く',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'how-to-write-applications',
+              label: 'Java でアプリケーションを書く',
+            },
+            {
+              type: 'doc',
+              id: 'how-to-write-applications-with-generic-contracts',
+              label: '汎用コントラクトを用いたアプリケーションを作成',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: 'アプリケーションを実行',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'getting-started-auditor',
+              label: 'ScalarDL Ledger と Auditor を通じてコントラクトを実行',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: 'サンプルアプリケーションを実行',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'applications/simple-bank-account/README',
+              label: '銀行口座アプリケーション',
+            },
+          ],
+        },
+        {
+          type: 'category',
+          label: '高度な設定と操作',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'authentication',
+              label: '認証',
+            },
+            {
+              type: 'doc',
+              id: 'scalardl-benchmarks/README',
+              label: 'ベンチマークを実行',
+            },
+          ],
+        },
+        {
+          type: 'category',
+          label: '詳細',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'compatibility',
+              label: '互換性マトリックス',
+            },
+            {
+              type: 'doc',
+              id: 'configurations',
+              label: '設定',
+            },
+            {
+              type: 'doc',
+              id: 'scalardl-command-reference',
+              label: 'クライアントコマンドリファレンス',
+            },
+            {
+              type: 'doc',
+              id: 'schema-loader',
+              label: 'ScalarDL Schema Loader',
+            },
+            {
+              type: 'doc',
+              id: 'generic-contracts-reference',
+              label: '汎用コントラクト',
+            },
+            {
+              type: 'doc',
+              id: 'ca/caclient-getting-started',
+              label: '証明書を取得',
+            },
+          ],
         },
       ],
     },
@@ -749,162 +795,72 @@ const sidebars = {
       collapsible: true,
       items: [
         {
-          type: 'category',
-          label: 'Scalar Kubernetes',
-          collapsible: true,
-          items: [
-            {
-              type: 'category',
-              label: 'データベースセットアップガイド',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/SetupDatabaseForAWS',
-                  label: 'AWS が提供するデータベース',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/SetupDatabaseForAzure',
-                  label: 'Azure が提供するデータベース',
-                },
-              ],
-            },
-            {
-              type: 'category',
-              label: 'インストールガイド',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ProductionChecklistForScalarDLLedger',
-                  label: 'ScalarDL Ledger の本番環境チェックリスト',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ProductionChecklistForScalarDLAuditor',
-                  label: 'ScalarDL Auditor の本番環境チェックリスト',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/AwsMarketplaceGuide',
-                  label: 'AWS Marketplace からインストール',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/AzureMarketplaceGuide',
-                  label: 'Azure Marketplace からインストール',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/CreateBastionServer',
-                  label: '踏み台サーバーを作成',
-                },
-              ],
-            },
-            {
-              type: 'category',
-              label: 'クラスターガイド',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/CreateEKSClusterForScalarDL',
-                  label: 'ScalarDL Ledger 用の EKS クラスターを作成',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/CreateEKSClusterForScalarDLAuditor',
-                  label: 'ScalarDL Ledger と Auditor 用の EKS クラスターを作成',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/CreateAKSClusterForScalarDL',
-                  label: 'ScalarDL Ledger 用の AKS クラスターを作成',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/CreateAKSClusterForScalarDLAuditor',
-                  label: 'ScalarDL Ledger と Auditor 用の AKS クラスターを作成',
-                },
-              ],
-            },
-            {
-              type: 'category',
-              label: 'コンテナイメージガイド',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/HowToGetContainerImages',
-                  label: 'コンテナイメージを取得',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/HowToUseContainerImages',
-                  label: 'コンテナイメージを使用',
-                },
-              ],
-            },
-            {
-              type: 'category',
-              label: 'デプロイメントガイド',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLOnEKS',
-                  label: 'Amazon EKS に ScalarDL Ledger をデプロイ',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnEKS',
-                  label: 'Amazon EKS に ScalarDL Ledger と Auditorをデプロイ',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLOnAKS',
-                  label: 'AKS に ScalarDL Ledger をデプロイ',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnAKS',
-                  label: 'AKS に ScalarDL Ledger と Auditor をデプロイ',
-                },
-              ],
-            },
-            {
-              type: 'category',
-              label: '設定のガイド',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/AccessScalarProducts',
-                  label: 'アプリケーションから Kubernetes 環境にアクセス',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/HowToCreateKeyAndCertificateFiles',
-                  label: '秘密鍵と証明書ファイルを作成',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/NetworkPeeringForScalarDLAuditor',
-                  label: 'ネットワークピアリングを構成',
-                },
-              ],
-            },
-          ],
+          type: 'doc',
+          id: 'deploy-overview',
+          label: '概要',
         },
         {
           type: 'category',
-          label: 'Scalar Helm Charts',
+          label: 'ローカル環境で',
           collapsible: true,
           items: [
             {
+              type: 'doc',
+              id: 'helm-charts/getting-started-scalardl-ledger',
+              label: 'Helm Chart を使用した ScalarDL Ledger',
+            },
+            {
+              type: 'doc',
+              id: 'helm-charts/getting-started-scalardl-auditor',
+              label: 'Helm Chart を使用した ScalarDL Ledger と Auditor',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: 'マネージド Kubernetes 環境で',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLOnEKS',
+              label: 'Amazon EKS に ScalarDL Ledger をデプロイ',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnEKS',
+              label: 'Amazon EKS に ScalarDL Ledger と Auditorをデプロイ',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLOnAKS',
+              label: 'AKS に ScalarDL Ledger をデプロイ',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnAKS',
+              label: 'AKS に ScalarDL Ledger と Auditor をデプロイ',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: '詳細',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ProductionChecklistForScalarDLLedger',
+              label: 'ScalarDL Ledger の本番環境チェックリスト',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/ProductionChecklistForScalarDLAuditor',
+              label: 'ScalarDL Auditor の本番環境チェックリスト',
+            },
+            {
               type: 'category',
-              label: 'はじめよう',
+              label: 'はじめようガイド',
               collapsible: true,
               items: [
                 {
@@ -912,16 +868,7 @@ const sidebars = {
                   id: 'helm-charts/getting-started-scalar-helm-charts',
                   label: 'Scalar Helm Charts をはじめよう',
                 },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalardl-ledger',
-                  label: 'Helm Chart を使用した ScalarDL Ledger',
-                },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalardl-auditor',
-                  label: 'Helm Chart を使用した ScalarDL Ledger と Auditor',
-                },
+                
                 {
                   type: 'doc',
                   id: 'helm-charts/getting-started-scalardl-auditor-tls',
@@ -931,6 +878,11 @@ const sidebars = {
                   type: 'doc',
                   id: 'helm-charts/getting-started-scalardl-auditor-tls-cert-manager',
                   label: 'cert-manager と Helm Chart を使用した TLS 対応 ScalarDL Ledger と Auditor',
+                },
+                {
+                  type: 'doc',
+                  id: 'ca/caserver-getting-started',
+                  label: 'CFSSL で CA サーバーを起動',
                 },
                 {
                   type: 'doc',
@@ -951,9 +903,95 @@ const sidebars = {
             },
             {
               type: 'category',
-              label: 'カスタム値を設定',
+              label: 'データベースセットアップガイド',
               collapsible: true,
               items: [
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/SetupDatabaseForAWS',
+                  label: 'AWS が提供するデータベース',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/SetupDatabaseForAzure',
+                  label: 'Azure が提供するデータベース',
+                },
+              ]
+            },
+            {
+              type: 'category',
+              label: 'インストールガイド',
+              collapsible: true,
+              items: [
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/HowToGetContainerImages',
+                  label: 'コンテナイメージを取得',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/AwsMarketplaceGuide',
+                  label: 'AWS Marketplace からインストール',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/HowToUseContainerImages',
+                  label: 'コンテナイメージを使用',
+                },
+              ]
+            },
+            {
+              type: 'category',
+              label: 'デプロイメントガイド',
+              collapsible: true,
+              items: [
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/CreateEKSClusterForScalarDL',
+                  label: 'ScalarDL Ledger 用の EKS クラスターを作成',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/CreateEKSClusterForScalarDLAuditor',
+                  label: 'ScalarDL Ledger と Auditor 用の EKS クラスターを作成',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/CreateBastionServer',
+                  label: '踏み台サーバーを作成',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/how-to-deploy-scalardl-ledger',
+                  label: 'Helm Chart を使用して ScalarDL Ledger をデプロイ',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/how-to-deploy-scalardl-auditor',
+                  label: 'Helm Chart を使用して ScalarDL Auditor をデプロイ',
+                },
+              ]
+            },
+            {
+              type: 'category',
+              label: '設定のガイド',
+              collapsible: true,
+              items: [
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/NetworkPeeringForScalarDLAuditor',
+                  label: 'ネットワークピアリングを構成',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/AccessScalarProducts',
+                  label: 'アプリケーションから Kubernetes 環境にアクセス',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/HowToCreateKeyAndCertificateFiles',
+                  label: '秘密鍵と証明書ファイルを作成',
+                },
                 {
                   type: 'doc',
                   id: 'helm-charts/configure-custom-values-scalardl-ledger',
@@ -984,54 +1022,19 @@ const sidebars = {
                   id: 'helm-charts/configure-custom-values-envoy',
                   label: 'Scalar Envoy のカスタム値ファイルを構成',
                 },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/mount-files-or-volumes-on-scalar-pods',
+                  label: 'ScalarDL ポッドにファイルまたはボリュームをマウント',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/use-secret-for-credentials',
+                  label: 'シークレットリソースを使用',
+                },
               ],
             },
-            {
-              type: 'doc',
-              id: 'helm-charts/how-to-deploy-scalar-products',
-              label: 'Helm Chart を使用して Scalar 製品をデプロイ',
-            },
-            {
-              type: 'doc',
-              id: 'helm-charts/how-to-deploy-scalardl-ledger',
-              label: 'Helm Chart を使用して ScalarDL Ledger をデプロイ',
-            },
-            {
-              type: 'doc',
-              id: 'helm-charts/how-to-deploy-scalardl-auditor',
-              label: 'Helm Chart を使用して ScalarDL Auditor をデプロイ',
-            },
-            {
-              type: 'doc',
-              id: 'helm-charts/how-to-deploy-scalar-admin-for-kubernetes',
-              label: 'Helm Chart を使用して Scalar Admin for Kubernetes をデプロイ',
-            },
-            {
-              type: 'doc',
-              id: 'helm-charts/mount-files-or-volumes-on-scalar-pods',
-              label: 'ScalarDL ポッドにファイルまたはボリュームをマウント',
-            },
-            {
-              type: 'doc',
-              id: 'helm-charts/use-secret-for-credentials',
-              label: 'シークレットリソースを使用',
-            },
           ],
-        },
-        {
-          type: 'doc',
-          id: 'scalar-licensing/README',
-          label: '製品ライセンスキーの設定',
-        },
-        {
-          type: 'doc',
-          id: 'installation-with-docker',
-          label: 'Docker を使ってローカル環境に ScalarDL をインストール',
-        },
-        {
-          type: 'doc',
-          id: 'ca/caserver-getting-started',
-          label: 'CFSSL で CA サーバーを起動',
         },
       ],
     },
@@ -1040,84 +1043,6 @@ const sidebars = {
       label: '運用',
       collapsible: true,
       items: [
-        {
-          type: 'category',
-          label: 'Scalar Kubernetes',
-          collapsible: true,
-          items: [
-            {
-              type: 'category',
-              label: 'モニタリングガイド',
-              collapsible: true,
-              items: [
-                {
-                  type: 'category',
-                  label: 'アラート',
-                  collapsible: true,
-                  items: [
-                    {
-                      type: 'doc',
-                      id: 'scalar-kubernetes/alerts/Envoy',
-                      label: 'Envoy アラート',
-                    },
-                    {
-                      type: 'doc',
-                      id: 'scalar-kubernetes/alerts/Ledger',
-                      label: 'Ledger アラート',
-                    },
-                  ],
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/K8sMonitorGuide',
-                  label: 'Kubernetes モニタリングガイド',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/K8sLogCollectionGuide',
-                  label: 'Kubernetes ログ収集ガイド',
-                },
-              ],
-            },
-            {
-              type: 'category',
-              label: 'バックアップと復元のガイド',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/BackupRestoreGuide',
-                  label: 'Kubernetes 環境で ScalarDL データをバックアップおよび復元',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/BackupRDB',
-                  label: 'Kubernetes 環境で RDB をバックアップ',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/BackupNoSQL',
-                  label: 'Kubernetes 環境で NoSQL データベースをバックアップ',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/RestoreDatabase',
-                  label: 'Kubernetes 環境でデータベースを復元',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/RegularCheck',
-                  label: 'Kubernetes 環境で実行するときに定期的にチェックするコンポーネント',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          type: 'doc',
-          id: 'backup-restore',
-          label: 'データのバックアップと復元',
-        },
         {
           type: 'doc',
           id: 'scalar-kubernetes/HowToScaleScalarDL',
@@ -1129,9 +1054,109 @@ const sidebars = {
           label: 'アップグレード',
         },
         {
+          type: 'category',
+          label: '監視',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'manage-monitor-overview',
+              label: '概要',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/alerts/Envoy',
+              label: 'Envoy アラート',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/alerts/Ledger',
+              label: 'Ledger アラート',
+            },
+            {
+              type: 'category',
+              label: '詳細',
+              collapsible: true,
+              items: [
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/K8sMonitorGuide',
+                  label: 'Kubernetes モニタリングガイド',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-manager/overview',
+                  label: 'Scalar Manager の概要',
+                },
+                {
+                  type: 'doc',
+                  id: 'helm-charts/how-to-deploy-scalar-admin-for-kubernetes',
+                  label: 'Helm Chart を使用して Scalar Admin for Kubernetes をデプロイ',
+                },
+              ]
+            }
+          ]
+        },
+        {
+          type: 'category',
+          label: 'バックアップと復元',
+          collapsible: true,
+          items: [
+            {
+              type: 'doc',
+              id: 'manage-backup-and-restore-overview',
+              label: 'データベースのバックアップと復元',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/BackupNoSQL',
+              label: 'Kubernetes 環境で NoSQL データベースをバックアップ',
+            },
+            {
+              type: 'category',
+              label: '詳細',
+              collapsible: true,
+              items: [
+                {
+                  type: 'doc',
+                  id: 'backup-restore',
+                  label: 'データのバックアップと復元',
+                },
+                {
+                  type: 'doc',
+                  id: 'scalar-kubernetes/RestoreDatabase',
+                  label: 'Kubernetes 環境でデータベースを復元',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'category',
+      label: 'トラブルシュート',
+      collapsible: true,
+      items: [
+        {
           type: 'doc',
-          id: 'scalar-manager/overview',
-          label: 'Scalar Manager の概要',
+          id: 'scalardl-common-status-codes',
+          label: 'ScalarDL 共通エラーコード',
+        },
+        {
+          type: 'doc',
+          id: 'scalardl-ledger-status-codes',
+          label: 'ScalarDL Ledger エラーコード',
+        },
+        {
+          type: 'doc',
+          id: 'scalardl-auditor-status-codes',
+          label: 'ScalarDL Auditor エラーコード',
+        },
+        {
+          type: 'doc',
+          id: 'scalardl-client-status-codes',
+          label: 'ScalarDL クライアントエラーコード',
         },
       ],
     },
@@ -1142,69 +1167,10 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          id: 'compatibility',
-          label: '互換性マトリックス',
+          id: 'scalar-licensing/README',
+          label: '製品ライセンスキーの設定',
         },
-        {
-          type: 'doc',
-          id: 'scalardl-command-reference',
-          label: 'クライアントコマンドリファレンス',
-        },
-        {
-          type: 'doc',
-          id: 'generic-contracts-reference',
-          label: '汎用コントラクト',
-        },
-        {
-          type: 'doc',
-          id: 'scalardl-benchmarks/README',
-          label: 'ベンチマークを実行',
-        },
-        {
-          type: 'category',
-          label: 'Error codes',
-          collapsible: true,
-          items: [
-            {
-              type: 'doc',
-              id: 'scalardl-common-status-codes',
-              label: 'ScalarDL 共通エラーコード',
-            },
-            {
-              type: 'doc',
-              id: 'scalardl-ledger-status-codes',
-              label: 'ScalarDL Ledger エラーコード',
-            },
-            {
-              type: 'doc',
-              id: 'scalardl-auditor-status-codes',
-              label: 'ScalarDL Auditor エラーコード',
-            },
-            {
-              type: 'doc',
-              id: 'scalardl-client-status-codes',
-              label: 'ScalarDL クライアントエラーコード',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      type: 'category',
-      label: 'リリース',
-      collapsible: true,
-      items: [
-        {
-          type: 'doc',
-          id: 'releases/release-notes',
-          label: 'リリースノート',
-        },
-        {
-          type: 'doc',
-          id: 'releases/release-support-policy',
-          label: 'リリースサポートポリシー',
-        },
-      ],
+      ]
     },
   ],
 };
