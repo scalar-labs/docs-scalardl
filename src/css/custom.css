@@ -398,7 +398,7 @@ html[data-theme="dark"] .container img[src$=".png"] { /* Adds a white background
   background-color: var(--ifm-dropdown-background-color);
   box-shadow: var(--ifm-global-shadow-md);
   border-radius: 8px;
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   right: 0px;
   position: absolute;
   text-decoration: none;
