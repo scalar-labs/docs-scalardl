@@ -366,6 +366,10 @@ html[data-theme="dark"] .container img[src$=".png"] { /* Adds a white background
   position: relative;
 }
 
+.medium-zoom-image--opened {
+  background-color: #ffffff;
+}
+
 /* In-site notification feature */
 .notification-wrapper {
   position: relative;
