@@ -1,34 +1,41 @@
 // This file contains the notifications data and a function to retrieve it.
-// The notifications are stored in an array of objects, each containing a message in multiple languages and a URL. 
-// Ideal number of notifications: 3 to 5
+// The notifications are stored in an array of objects, each containing a message in multiple languages and URLs for those messages.
 const notificationsList = [
   {
     languages: {
-      en: '<NOTIFICATION>',
-      ja: '<通知>'
+      en: 'Discover how to use generic contracts and functions in ScalarDL',
+      ja: 'ScalarDL で汎用コントラクトおよびファンクションの使用方法を学ぶ'
     },
-    url: '<URL>',
+    url: {
+      en: 'use-generic-contracts?utm_source=docs-site&utm_medium=notifications',
+      ja: 'use-generic-contracts?utm_source=docs-site&utm_medium=notifications'
+    },
     unread: true
   },
   {
     languages: {
-      en: '<NOTIFICATION>',
-      ja: '<通知>'
+      en: 'Blog post: Migrating from Amazon QLDB to ScalarDL',
+      ja: 'ブログ記事: データベースエンジニアリングの最新トレンドとベストプラクティスを学ぶ DBEM #6 のハイライト'
     },
-    url: '<URL>',
+    url: {
+      en: 'https://medium.com/scalar-engineering/migrating-from-amazon-qldb-to-scalardl-ad6ffacbf598?utm_source=docs-site&utm_medium=notifications',
+      ja: 'https://medium.com/scalar-engineering-ja/database-engineering-meetup-%E7%AC%AC6%E5%9B%9E-dbem-6-%E3%82%92%E9%96%8B%E5%82%AC%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F-fccde39d2926?utm_source=docs-site&utm_medium=notifications'
+    },
     unread: true
   },
   {
     languages: {
-      en: '<NOTIFICATION>',
-      ja: '<通知>'
+      en: 'Learn how to organize your data based on the ScalarDL data model',
+      ja: 'ScalarDL データモデルに基づいたデータの整理方法を学ぼう'
     },
-    url: '<URL>',
+    url: {
+      en: 'data-modeling?utm_source=docs-site&utm_medium=notifications',
+      ja: 'data-modeling?utm_source=docs-site&utm_medium=notifications'
+    },
     unread: true
   }
 ];
 
-// Update the getNotifications function to handle both single URL and language-specific URLs,
 // Update the getNotifications function to handle both single URL and language-specific URLs, and prepend the correct base URL for relative paths.
 export const getNotifications = (language = 'en') => {
   const totalNotifications = notificationsList.length;
