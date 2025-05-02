@@ -42,6 +42,7 @@ const NotificationBell = ({ notifications }) => {
     if (!notification.isExternal) {
       event.preventDefault();
       window.location.href = notification.url;
+    }
 
     const updatedList = notificationList.map(notif =>
       notif.id === notification.id ? { ...notif, read: true } : notif
