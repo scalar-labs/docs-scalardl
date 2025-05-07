@@ -74,7 +74,7 @@ const NotificationBell = ({ notifications }) => {
 
   return (
     <div className="notification-wrapper" onClick={toggleDropdown} ref={wrapperRef}>
-      <i className="fa-solid fa-bell"></i><FontAwesomeIcon icon={faBell} size="lg" />
+      <FontAwesomeIcon icon={faBell} size="lg" />
       {unreadCount > 0 && <span className="notification-count">{unreadCount}</span>}
       {isOpen && (
         <div className="notification-dropdown" ref={dropdownRef}>
