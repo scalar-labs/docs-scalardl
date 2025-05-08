@@ -24,13 +24,23 @@ const NotificationBell = ({ notifications }) => {
   // Load notifications from localStorage and update it if there are new notifications.
   useEffect(() => {
     // Retrieve seen notifications from localStorage.
-    const seenNotifications = JSON.parse(localStorage.getItem('seenNotifications')) || [];
+    const seenNotificationsJSON = localStorage.getItem('seenNotifications');
+    // Update the data structure to store both the ID and the version.
+    const seenNotifications = seenNotificationsJSON ? JSON.parse(seenNotificationsJSON) : [];
 
     // Map the notifications to add read status based on seenNotifications.
-    const updatedNotifications = notifications.map(notification => ({
-      ...notification,
-      read: seenNotifications.includes(notification.id),
-    }));
+    const updatedNotifications = notifications.map(notification => {
+      // Find if this notification was seen
+      const seenNotification = seenNotifications.find(item => item.id === notification.id);
+      
+      // Mark as read only if both the ID and the version match.
+      const isRead = seenNotification && seenNotification.version === notification.version;
+      
+      return {
+        ...notification,
+        read: isRead,
+      };
+    });
 
     // Set the updated notifications in state.
     setNotificationList(updatedNotifications);
@@ -48,10 +58,13 @@ const NotificationBell = ({ notifications }) => {
       notif.id === notification.id ? { ...notif, read: true } : notif
     );
 
-    // Save the seen notifications in localStorage.
+    // Save the seen notifications in localStorage with their version.
     const seenNotifications = updatedList
       .filter(notif => notif.read)
-      .map(notif => notif.id);
+      .map(notif => ({ 
+        id: notif.id, 
+        version: notif.version || 1 
+      }));
 
     localStorage.setItem('seenNotifications', JSON.stringify(seenNotifications));
     setNotificationList(updatedList); // Update the notification list with a read status.

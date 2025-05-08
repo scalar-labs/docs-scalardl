@@ -36,6 +36,25 @@ const notificationsList = [
   }
 ];
 
+// Helper function to generate a simple hash for notification content.
+const generateContentHash = (notification) => {
+  // Create a string representing the notification content.
+  const contentString = JSON.stringify({
+    message: notification.message,
+    url: notification.url
+  });
+
+  // Generate a simple hash.
+  let hash = 0;
+  for (let i = 0; i < contentString.length; i++) {
+    const char = contentString.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32-bit integer.
+  }
+
+  return hash.toString();
+};
+
 // Update the getNotifications function to handle both single URL and language-specific URLs, and prepend the correct base URL for relative paths.
 export const getNotifications = (language = 'en') => {
   const totalNotifications = notificationsList.length;
@@ -48,9 +67,61 @@ export const getNotifications = (language = 'en') => {
 
   const currentDomain = 'scalardl.scalar-labs.com';
 
+  // Get stored content hashes, if any.
+  let storedHashes = {};
+  let storedVersions = {};
+
+  if (typeof window !== 'undefined') {
+    try {
+      const hashesJson = localStorage.getItem('notificationContentHashes');
+      if (hashesJson) {
+        storedHashes = JSON.parse(hashesJson);
+      }
+
+      const versionsJson = localStorage.getItem('notificationVersions');
+      if (versionsJson) {
+        storedVersions = JSON.parse(versionsJson);
+      }
+    } catch (e) {
+      console.error('Error retrieving notification metadata:', e);
+    }
+  }
+
+  // Calculate current hashes and check for changes.
+  const currentHashes = {};
+  const currentVersions = {};
+
+  notificationsList.forEach((notification, index) => {
+    const id = totalNotifications - index;
+    const contentHash = generateContentHash(notification);
+    currentHashes[id] = contentHash;
+
+    // This if is for if a stored hash is stored for this notification ID.
+    if (id in storedHashes) {
+      // If the content has changed, increment the version.
+      if (storedHashes[id] !== contentHash) {
+        currentVersions[id] = (storedVersions[id] || 1) + 1;
+      } else {
+        // Otherwise, if the content hasn't changed, keep the same version.
+        currentVersions[id] = storedVersions[id] || 1;
+      }
+    } else {
+      // If this is the first tirst time seeing this notification, use the default version 1.
+      currentVersions[id] = 1;
+    }
+  });
+  
+  // Store the current hashes and versions for future comparison.
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('notificationContentHashes', JSON.stringify(currentHashes));
+    localStorage.setItem('notificationVersions', JSON.stringify(currentVersions));
+  }
+
   return notificationsList
     .map((notification, index) => {
-      // Get the appropriate URL for the language
+      const id = totalNotifications - index;
+
+      // Get the appropriate URL for the language.
       let url = typeof notification.url === 'object' 
         ? notification.url[language] || notification.url.en 
         : notification.url;
@@ -64,11 +135,13 @@ export const getNotifications = (language = 'en') => {
       const isExternal = url.startsWith('http') && !url.includes(currentDomain);
 
       return {
-        id: totalNotifications - index,
+        id: id,
         message: notification.message[language] || notification.message.en,
         url: url,
-        isExternal: isExternal, // Add this flag for the component to use.
-        unread: notification.unread
+        isExternal: isExternal,
+        unread: notification.unread,
+        // Use the dynamically determined version.
+        version: currentVersions[id] || 1
       };
     })
     .sort((a, b) => b.id - a.id);
