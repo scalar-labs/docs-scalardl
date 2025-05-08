@@ -26,7 +26,7 @@ const notificationsList = [
   {
     languages: {
       en: 'Learn how to organize your data based on the ScalarDL data model',
-      ja: 'ScalarDL データモデルに基づいたデータの整理方法を学ぼう'
+      ja: 'ScalarDL データモデルに基づいたデータの整理方法を学ぶ'
     },
     url: {
       en: 'data-modeling?utm_source=docs-site&utm_medium=notifications',
