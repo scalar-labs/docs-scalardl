@@ -2,7 +2,7 @@
 // The notifications are stored in an array of objects, each containing a message in multiple languages and URLs for those messages.
 const notificationsList = [
   {
-    languages: {
+    message: {
       en: 'Discover how to use generic contracts and functions in ScalarDL',
       ja: 'ScalarDL で汎用コントラクトおよびファンクションの使用方法を学ぶ'
     },
@@ -13,7 +13,7 @@ const notificationsList = [
     unread: true
   },
   {
-    languages: {
+    message: {
       en: 'Blog post: Migrating from Amazon QLDB to ScalarDL',
       ja: 'ブログ記事: データベースエンジニアリングの最新トレンドとベストプラクティスを学ぶ DBEM #6 のハイライト'
     },
@@ -24,7 +24,7 @@ const notificationsList = [
     unread: true
   },
   {
-    languages: {
+    message: {
       en: 'Learn how to organize your data based on the ScalarDL data model',
       ja: 'ScalarDL データモデルに基づいたデータの整理方法を学ぶ'
     },
@@ -65,7 +65,7 @@ export const getNotifications = (language = 'en') => {
 
       return {
         id: totalNotifications - index,
-        message: notification.languages[language] || notification.languages.en,
+        message: notification.message[language] || notification.message.en,
         url: url,
         isExternal: isExternal, // Add this flag for the component to use.
         unread: notification.unread
