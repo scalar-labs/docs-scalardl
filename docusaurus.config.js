@@ -5,8 +5,8 @@
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
 import {themes as prismThemes} from 'prism-react-renderer';
+import { getNotifications } from './src/data/notifications';
 
-/** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'ScalarDL Documentation',
   tagline: 'Scalable and practical byzantine-fault detection middleware for transactional database systems',
@@ -275,6 +275,12 @@ const config = {
           {
             type: 'localeDropdown',
             position: 'right',
+          },
+          // Custom notification function as a React component. Update the notification messages in the /src/data/notifications.js file.
+          {
+            type: 'custom-NotificationBell',
+            position: 'right',
+            notifications: getNotifications(),
           },
           {
             href: 'https://github.com/scalar-labs/scalardl',
