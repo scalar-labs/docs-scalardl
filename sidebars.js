@@ -588,7 +588,7 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          id: 'scalar-licensing/README',
+          id: 'scalar-licensing/index',
           label: 'Configure a Product License Key',
         },
       ]
