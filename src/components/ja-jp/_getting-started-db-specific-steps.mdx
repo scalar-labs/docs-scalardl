@@ -72,12 +72,12 @@ ScalarDL Enterprise Edition を使用している場合は、次のようにラ�
 
 1. 次のコマンドを実行して、{props.productName} をローカルで実行します。
 
-   <CodeBlock language="console">docker compose -f docker-compose-ledger-{props.shortName}.yml up -d {props.database}</CodeBlock>
+   <CodeBlock language="console">docker compose -f docker-compose-ledger-{props.shortName}.yml up -d {props.shortName}</CodeBlock>
 
 2. 次のコマンドを実行して、ScalarDL Ledger のデータベーススキーマをロードします。
 
    <CodeBlock language="console">docker compose -f docker-compose-ledger-{props.shortName}.yml up -d scalardl-ledger-schema-loader</CodeBlock>
 
-3. 次のコマンドを実行して ScalarDL Ledger を起動します。
+3. 次のコマンドを実行して ScalarDL Ledger および依存するコンポーネントを起動します。
 
    <CodeBlock language="console">docker compose -f docker-compose-ledger-{props.shortName}.yml up -d</CodeBlock>
