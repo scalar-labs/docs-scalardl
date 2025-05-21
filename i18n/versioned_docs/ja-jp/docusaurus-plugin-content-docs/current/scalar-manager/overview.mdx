@@ -10,12 +10,12 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-Scalar Manager は、Kubernetes クラスタ環境内で ScalarDB および ScalarDL の集中管理および監視ソリューションです。
+Scalar Manager は、Kubernetes クラスタ環境内で ScalarDL の集中管理および監視ソリューションです。
 これらの製品に関連する運用タスクを、グラフィカルユーザーインターフェイスに主要な機能を集約することで簡素化します。
 
 ## なぜ Scalar Manager なのか？
 
-Scalar Manager がリリースされる前は、ユーザーは ScalarDB および ScalarDL のデプロイメントを管理および監視するために、さまざまなコマンドラインツールやサードパーティソリューションを個別に使用する必要がありました。
+Scalar Manager がリリースされる前は、ユーザーは ScalarDL のデプロイメントを管理および監視するために、さまざまなコマンドラインツールやサードパーティソリューションを個別に使用する必要がありました。
 例えば、ユーザーはデプロイメントのステータスを確認するために kubectl を使用し、メトリクスの監視には Prometheus スタック、ログ分析には Loki スタックを使用し、複数のデータベース間でトランザクションの一貫性を確保するために Scalar の独自の CLI ツールを使用して Scalar 製品を一時停止していました。
 これらのツールの組み合わせは、習得の難易度が高く、統一されたインターフェースが欠けていたため、日常の管理タスクやトラブルシューティングの際に効率的なワークフローを提供できませんでした。
 
@@ -45,4 +45,4 @@ Pod ログとメトリクスは、リアルタイムまたは時系列で表示�
 ![create-pauses](images/backup-and-restore-create-pauses.png)
 ![check-pauses](images/backup-and-restore-check-pauses.png)
 
-さまざまなツールやソリューションを使用して ScalarDB および ScalarDL を管理および監視し続けることはできますが、Scalar Manager は運用効率とユーザーエクスペリエンスを向上させるよりシンプルなアプローチを提供します。
+さまざまなツールやソリューションを使用して ScalarDL を管理および監視し続けることはできますが、Scalar Manager は運用効率とユーザーエクスペリエンスを向上させるよりシンプルなアプローチを提供します。
