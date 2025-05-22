@@ -76,11 +76,11 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
           const newNodes: Node[] = [];
           let hasReplacements = false;
 
-          // Create a regex pattern to match all terms as whole words (case-insensitive).
+          // Create a regex pattern to match both exact terms and their plural forms.
           const regexPattern = terms.map(term => {
             const escapedTerm = term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-            // Match exact terms at word boundaries.
-            return `(\\b${escapedTerm}\\b)`;
+            // Match exact term or term followed by 's' or 'es' at word boundary.
+            return `(\\b${escapedTerm}(s|es)?\\b)`;
           }).join('|');
           const regex = new RegExp(regexPattern, 'gi'); // The 'i' flag is for case-insensitive matching.
 
@@ -88,35 +88,55 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
           let match: RegExpExecArray | null;
 
           while ((match = regex.exec(currentText))) {
-            const matchedText = match[0]; // The actual text as it appears in the content.
-            const matchedTerm = terms.find(term => 
-              term.toLowerCase() === matchedText.toLowerCase()
-            ) || matchedText; // Find the canonical term in the glossary.
+            const matchedText = match[0]; // The full matched text (may include plural suffix).
+            
+            // Find the base term from the glossary that matches (without plural).
+            const baseTerm = terms.find(term => 
+              matchedText.toLowerCase() === term.toLowerCase() || 
+              matchedText.toLowerCase() === `${term.toLowerCase()}s` || 
+              matchedText.toLowerCase() === `${term.toLowerCase()}es`
+            );
+            
+            if (!baseTerm) {
+              // Skip if no matching base term found.
+              continue;
+            }
 
             if (lastIndex < match.index) {
               newNodes.push(document.createTextNode(currentText.slice(lastIndex, match.index)));
             }
 
-            const isFirstMention = !processedTerms.has(matchedTerm.toLowerCase());
+            const isFirstMention = !processedTerms.has(baseTerm.toLowerCase());
             const isLink = parentElement && parentElement.tagName === 'A'; // Check if the parent is a link.
 
             if (isFirstMention && !isLink) {
               // Create a tooltip only if it's the first mention and not a link.
               const tooltipWrapper = document.createElement('span');
-              tooltipWrapper.setAttribute('data-term', matchedTerm);
+              tooltipWrapper.setAttribute('data-term', baseTerm);
               tooltipWrapper.className = 'glossary-term';
 
-              const definition = glossary[matchedTerm]; // Get definition using the canonical term.
+              const definition = glossary[baseTerm];
+              
+              // Extract the part to underline (the base term) and the suffix (if plural).
+              let textToUnderline = matchedText;
+              let suffix = '';
+              
+              if (matchedText.toLowerCase() !== baseTerm.toLowerCase()) {
+                // This is a plural form - only underline the base part.
+                const baseTermLength = baseTerm.length;
+                textToUnderline = matchedText.substring(0, baseTermLength);
+                suffix = matchedText.substring(baseTermLength);
+              }
 
               ReactDOM.render(
-                <GlossaryTooltip term={matchedTerm} definition={definition}>
-                  {matchedText}{/* No space after the term. */}
+                <GlossaryTooltip term={baseTerm} definition={definition}>
+                  {textToUnderline}{suffix && <span className="no-underline">{suffix}</span>}
                 </GlossaryTooltip>,
                 tooltipWrapper
               );
 
               newNodes.push(tooltipWrapper);
-              processedTerms.add(matchedTerm.toLowerCase()); // Mark this term as processed (case-insensitive).
+              processedTerms.add(baseTerm.toLowerCase());
             } else if (isLink) {
               // If it's a link, we skip this mention but do not mark it as processed.
               newNodes.push(document.createTextNode(matchedText));
