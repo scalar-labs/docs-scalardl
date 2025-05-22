@@ -59,7 +59,7 @@ This configuration is deprecated and will be deleted in release 5.0.0 since Ledg
 
 - **Field:** `scalar.dl.ledger.authentication.method`
 - **Description:** The authentication method for a client and servers. This field specifies the authentication method used between clients and servers.
-- **Default value:** empty (Optional)
+- **Default value:** `digital-signature` (Optional)
 
 ### `direct_asset_access.enabled`
 
@@ -393,11 +393,11 @@ You can configure several settings for clients, such as Ledger server and Audito
 - **Description:** A custom authority for TLS communication for Auditor.
 - **Default value:** empty
 
-### `authentication_method`
+### `authentication.method`
 
-- **Field:** `scalar.dl.client.authentication_method`
+- **Field:** `scalar.dl.client.authentication.method`
 - **Description:** The authentication method for a client and servers.
-- **Default value:** empty (Optional)
+- **Default value:** `digital-signature` (Optional)
 
 ### `authorization.credential`
 
