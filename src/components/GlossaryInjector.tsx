@@ -76,21 +76,28 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
           const newNodes: Node[] = [];
           let hasReplacements = false;
 
-          // Create a regex pattern to match all terms (case-sensitive).
-          const regexPattern = terms.map(term => `(${term})`).join('|');
-          const regex = new RegExp(regexPattern, 'g');
+          // Create a regex pattern to match all terms as whole words (case-insensitive).
+          const regexPattern = terms.map(term => {
+            const escapedTerm = term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+            // Match exact terms at word boundaries.
+            return `(\\b${escapedTerm}\\b)`;
+          }).join('|');
+          const regex = new RegExp(regexPattern, 'gi'); // The 'i' flag is for case-insensitive matching.
 
           let lastIndex = 0;
           let match: RegExpExecArray | null;
 
           while ((match = regex.exec(currentText))) {
-            const matchedTerm = match[0];
+            const matchedText = match[0]; // The actual text as it appears in the content.
+            const matchedTerm = terms.find(term => 
+              term.toLowerCase() === matchedText.toLowerCase()
+            ) || matchedText; // Find the canonical term in the glossary.
 
             if (lastIndex < match.index) {
               newNodes.push(document.createTextNode(currentText.slice(lastIndex, match.index)));
             }
 
-            const isFirstMention = !processedTerms.has(matchedTerm);
+            const isFirstMention = !processedTerms.has(matchedTerm.toLowerCase());
             const isLink = parentElement && parentElement.tagName === 'A'; // Check if the parent is a link.
 
             if (isFirstMention && !isLink) {
@@ -99,26 +106,26 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
               tooltipWrapper.setAttribute('data-term', matchedTerm);
               tooltipWrapper.className = 'glossary-term';
 
-              const definition = glossary[matchedTerm]; // Exact match from glossary.
+              const definition = glossary[matchedTerm]; // Get definition using the canonical term.
 
               ReactDOM.render(
                 <GlossaryTooltip term={matchedTerm} definition={definition}>
-                  {matchedTerm}
+                  {matchedText}{/* No space after the term. */}
                 </GlossaryTooltip>,
                 tooltipWrapper
               );
 
               newNodes.push(tooltipWrapper);
-              processedTerms.add(matchedTerm); // Mark this term as processed.
+              processedTerms.add(matchedTerm.toLowerCase()); // Mark this term as processed (case-insensitive).
             } else if (isLink) {
               // If it's a link, we skip this mention but do not mark it as processed.
-              newNodes.push(document.createTextNode(matchedTerm));
+              newNodes.push(document.createTextNode(matchedText));
             } else {
               // If it's not the first mention, just add the plain text.
-              newNodes.push(document.createTextNode(matchedTerm));
+              newNodes.push(document.createTextNode(matchedText));
             }
 
-            lastIndex = match.index + matchedTerm.length;
+            lastIndex = match.index + matchedText.length;
             hasReplacements = true;
           }
 
