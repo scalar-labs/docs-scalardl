@@ -62,7 +62,7 @@ Ledger サーバーでは、サービスポート設定、認証設定、TLS 設
 
 - **フィールド:** `scalar.dl.ledger.authentication.method`
 - **説明:** クライアントとサーバーの認証方法。このフィールドは、クライアントとサーバー間で使用される認証方法を指定します。
-- **デフォルト値:** 空 (オプション)
+- **デフォルト値:** `digital-signature` (オプション)
 
 ### `direct_asset_access.enabled`
 
@@ -396,11 +396,11 @@ Auditor サーバーでは、サービスポート設定、認証設定、TLS �
 - **説明:** Auditor の TLS 通信のためのカスタム権限。
 - **デフォルト値:** 空
 
-### `authentication_method`
+### `authentication.method`
 
-- **フィールド:** `scalar.dl.client.authentication_method`
+- **フィールド:** `scalar.dl.client.authentication.method`
 - **説明:** クライアントとサーバーの認証方法。
-- **デフォルト値:** 空 (オプション)
+- **デフォルト値:** `digital-signature` (オプション)
 
 ### `authorization.credential`
 

@@ -63,7 +63,7 @@ ScalarDL は、電子署名と HMAC という2つの認証方法をサポート�
 * クライアント認証
   * クライアント側のプロパティ
     * `scalar.dl.client.auditor.enabled` (Auditor を使用する場合は `true` に設定します)
-    * `scalar.dl.client.authentication_method` (`digital-signature`に設定)
+    * `scalar.dl.client.authentication.method` (`digital-signature` に設定)
     * `scalar.dl.client.entity.id` (または非推奨の `scalar.dl.client.cert_holder_id`)
       * お客様を識別するために使用します。
     * `scalar.dl.client.entity.identity.digital_signature.cert_pem` または `scalar.dl.client.entity.identity.digital_signature.cert_path` (または `scalar.dl.client.cert_pem` または `scalar.dl.client) .cert_path`、これは非推奨です。)
@@ -74,9 +74,9 @@ ScalarDL は、電子署名と HMAC という2つの認証方法をサポート�
       * リクエストの署名に使用されます。
       * 秘密鍵の取得方法については、[こちら](ca/caclient-getting-started.mdx#秘密キーと-csr-を生成する)を参照してください。
   * Ledger 側のプロパティ
-    * `scalar.dl.ledger.authentication.method` (`digital-signature`に設定)
+    * `scalar.dl.ledger.authentication.method` (`digital-signature` に設定)
   * Auditor 側のプロパティ
-    * `scalar.dl.auditor.authentication.method` (`digital-signature`に設定)
+    * `scalar.dl.auditor.authentication.method` (`digital-signature` に設定)
 * Ledger 認証
   * Ledger 側のプロパティ
     * `scalar.dl.ledger.proof.enabled` (`true` に設定)
@@ -107,7 +107,7 @@ ScalarDL は、電子署名と HMAC という2つの認証方法をサポート�
 
 * クライアント認証
   * クライアント側のプロパティ
-    * `scalar.dl.client.authentication_method` (`hmac`に設定)
+    * `scalar.dl.client.authentication.method` (`hmac` に設定)
     * `scalar.dl.client.entity.id`
         ※お客様を識別するために使用します。
     * `scalar.dl.client.entity.identity.hmac.secret_key`
@@ -115,9 +115,9 @@ ScalarDL は、電子署名と HMAC という2つの認証方法をサポート�
         * シークレットキーはランダムな長い値 (例: 32文字の長さの16進文字列) である必要があります。
     * `scalar.dl.client.entity.identity.hmac.secret_key_version`
   * Ledger 側のプロパティ
-    * `scalar.dl.ledger.authentication.method` (`hmac`に設定)
+    * `scalar.dl.ledger.authentication.method` (`hmac` に設定)
   * Auditor 側のプロパティ
-    * `scalar.dl.auditor.authentication.method` (`hmac`に設定)
+    * `scalar.dl.auditor.authentication.method` (`hmac` に設定)
 
 * Ledger と Auditor の認証
   * Ledger 側のプロパティ
