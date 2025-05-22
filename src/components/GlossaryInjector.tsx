@@ -58,6 +58,9 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
         // Check if the parent element is a Mermaid diagram.
         const isMermaidDiagram = parentElement && parentElement.closest('.docusaurus-mermaid-container'); // Adjust the selector as necessary.
 
+        // Check if the parent element is an inline code block (text in backticks).
+        const isInlineCode = parentElement && (parentElement.tagName === 'CODE' || parentElement.classList.contains('inlineCode'));
+
         // Only wrap terms in tooltips if the parent is within the target div and not in headings or tab titles.
         if (
           parentElement &&
@@ -66,55 +69,83 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
           !isTabTitle && // Skip tab titles.
           !isCodeBlock && // Skip code blocks.
           !isCard && // Skip Cards.
-          !isMermaidDiagram // Skip Mermaid diagrams.
+          !isMermaidDiagram && // Skip Mermaid diagrams.
+          !isInlineCode // Skip inline code (text in backticks).
         ) {
           let currentText = currentNode.textContent!;
           const newNodes: Node[] = [];
           let hasReplacements = false;
 
-          // Create a regex pattern to match all terms (case-sensitive).
-          const regexPattern = terms.map(term => `(${term})`).join('|');
-          const regex = new RegExp(regexPattern, 'g');
+          // Create a regex pattern to match both exact terms and their plural forms.
+          const regexPattern = terms.map(term => {
+            const escapedTerm = term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+            // Match exact term or term followed by 's' or 'es' at word boundary.
+            return `(\\b${escapedTerm}(s|es)?\\b)`;
+          }).join('|');
+          const regex = new RegExp(regexPattern, 'gi'); // The 'i' flag is for case-insensitive matching.
 
           let lastIndex = 0;
           let match: RegExpExecArray | null;
 
           while ((match = regex.exec(currentText))) {
-            const matchedTerm = match[0];
+            const matchedText = match[0]; // The full matched text (may include plural suffix).
+            
+            // Find the base term from the glossary that matches (without plural).
+            const baseTerm = terms.find(term => 
+              matchedText.toLowerCase() === term.toLowerCase() || 
+              matchedText.toLowerCase() === `${term.toLowerCase()}s` || 
+              matchedText.toLowerCase() === `${term.toLowerCase()}es`
+            );
+            
+            if (!baseTerm) {
+              // Skip if no matching base term found.
+              continue;
+            }
 
             if (lastIndex < match.index) {
               newNodes.push(document.createTextNode(currentText.slice(lastIndex, match.index)));
             }
 
-            const isFirstMention = !processedTerms.has(matchedTerm);
+            const isFirstMention = !processedTerms.has(baseTerm.toLowerCase());
             const isLink = parentElement && parentElement.tagName === 'A'; // Check if the parent is a link.
 
             if (isFirstMention && !isLink) {
               // Create a tooltip only if it's the first mention and not a link.
               const tooltipWrapper = document.createElement('span');
-              tooltipWrapper.setAttribute('data-term', matchedTerm);
+              tooltipWrapper.setAttribute('data-term', baseTerm);
               tooltipWrapper.className = 'glossary-term';
 
-              const definition = glossary[matchedTerm]; // Exact match from glossary.
+              const definition = glossary[baseTerm];
+              
+              // Extract the part to underline (the base term) and the suffix (if plural).
+              let textToUnderline = matchedText;
+              let suffix = '';
+              
+              if (matchedText.toLowerCase() !== baseTerm.toLowerCase()) {
+                // This is a plural form - only underline the base part.
+                const baseTermLength = baseTerm.length;
+                textToUnderline = matchedText.substring(0, baseTermLength);
+                suffix = matchedText.substring(baseTermLength);
+              }
 
               ReactDOM.render(
-                <GlossaryTooltip term={matchedTerm} definition={definition}>
-                  {matchedTerm}
+                <GlossaryTooltip term={baseTerm} definition={definition}>
+                  {textToUnderline}{suffix && <span className="no-underline">{suffix}</span>}
                 </GlossaryTooltip>,
                 tooltipWrapper
               );
 
               newNodes.push(tooltipWrapper);
-              processedTerms.add(matchedTerm); // Mark this term as processed.
+              processedTerms.add(baseTerm.toLowerCase());
             } else if (isLink) {
               // If it's a link, we skip this mention but do not mark it as processed.
-              newNodes.push(document.createTextNode(matchedTerm));
+              newNodes.push(document.createTextNode(matchedText));
             } else {
               // If it's not the first mention, just add the plain text.
-              newNodes.push(document.createTextNode(matchedTerm));
+              newNodes.push(document.createTextNode(matchedText));
             }
 
-            lastIndex = match.index + matchedTerm.length;
+            lastIndex = match.index + matchedText.length;
             hasReplacements = true;
           }
 
