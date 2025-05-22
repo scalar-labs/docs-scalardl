@@ -58,6 +58,9 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
         // Check if the parent element is a Mermaid diagram.
         const isMermaidDiagram = parentElement && parentElement.closest('.docusaurus-mermaid-container'); // Adjust the selector as necessary.
 
+        // Check if the parent element is an inline code block (text in backticks).
+        const isInlineCode = parentElement && (parentElement.tagName === 'CODE' || parentElement.classList.contains('inlineCode'));
+
         // Only wrap terms in tooltips if the parent is within the target div and not in headings or tab titles.
         if (
           parentElement &&
@@ -66,7 +69,8 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
           !isTabTitle && // Skip tab titles.
           !isCodeBlock && // Skip code blocks.
           !isCard && // Skip Cards.
-          !isMermaidDiagram // Skip Mermaid diagrams.
+          !isMermaidDiagram && // Skip Mermaid diagrams.
+          !isInlineCode // Skip inline code (text in backticks).
         ) {
           let currentText = currentNode.textContent!;
           const newNodes: Node[] = [];
