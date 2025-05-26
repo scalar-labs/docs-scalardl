@@ -12,7 +12,7 @@ It simplifies the operational tasks associated with these products by aggregatin
 ## Why Scalar Manager?
 
 Before Scalar Manager was released, you would need to use various command-line tools and third-party solutions individually to manage and monitor ScalarDL deployments.
-For example, `kubectl` is often used to check deployment status, the Prometheus stack for monitoring metrics, the Loki stack for log analysis, and Scalar's proprietary CLI tool for pausing Scalar products to ensure transactional consistency between multiple databases.
+For example, `kubectl` is often used to check deployment status, the Prometheus stack for monitoring metrics, the Loki stack for log analysis, and Scalar's proprietary CLI tool for pausing ScalarDL to ensure transactional consistency between multiple databases.
 This constellation of tools presented a steep learning curve and lacked a unified interface, resulting in inefficient workflows for performing routine management tasks or troubleshooting issues.
 
 Scalar Manager mitigates these pain points by aggregating essential functionalities into a single, user-friendly GUI.
@@ -24,15 +24,15 @@ At its core, Scalar Manager provides the following features.
 
 ### Centralized cluster visualization
 
-You can quickly gain real-time metrics about cluster health, pod logs, hardware usage, performance metrics like requests per second, and deep visibility into time-series data via integrated Grafana dashboards.
+You can quickly gain real-time metrics about cluster health, pod logs, hardware usage, performance metrics like requests per second, and deep visibility into time-series data via the Grafana dashboards.
 
 ![dashboard-cluster](images/dashboard-cluster.png)
 ![dashboard-pod-list](images/dashboard-pod-list.png)
 
-You can view pod logs and metrics in real time or in time series.
+With the Grafana dashboards, you can also view pod logs and metrics in real-time or in time series.
 
 ![logs](images/logs.png)
-![metrics](images/metrics.png)
+![metrics](images/metrics2.png)
 
 ### Streamlined pausing job management
 
@@ -41,4 +41,14 @@ You can execute or schedule pausing jobs to ensure transactional consistency, re
 ![create-pauses](images/backup-and-restore-create-pauses.png)
 ![check-pauses](images/backup-and-restore-check-pauses.png)
 
-Although you can continue using various tools and solutions to manage or monitor ScalarDL, Scalar Manager offers a more straightforward approach that enhances operational efficiency and user experience.
+### User management
+
+Scalar Manager includes authentication capabilities, allowing for secure access control to your deployment. The system provides user management functionalities that enable administrators to create, modify, and remove user accounts through an intuitive interface.
+
+### Authentication and authorization
+
+By using the authorization feature, administrators can define and assign specific roles to users, controlling their access permissions within the Scalar Manager environment. This control ensures that users only have access to the functionalities relevant to their responsibilities.
+
+### Integrated authentication with Grafana
+
+Scalar Manager now offers seamless authentication integration between your Grafana instance and other components of the system. This single-sign-on capability eliminates the need for multiple authentication processes, streamlining the user experience and enhancing security by reducing credential management overhead.
