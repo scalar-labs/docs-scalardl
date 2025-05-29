@@ -508,12 +508,12 @@ const sidebars = {
                   type: 'doc',
                   id: 'scalar-manager/overview',
                   label: 'Scalar Manager Overview',
-                },             
+                },
                 {
                   type: 'doc',
                   id: 'helm-charts/how-to-deploy-scalar-admin-for-kubernetes',
                   label: 'Deploy Scalar Admin for Kubernetes',
-                },    
+                },
               ]
             },
           ]
@@ -666,7 +666,6 @@ const sidebars = {
         },
       ],
     },
-    
     {
       type: 'category',
       label: '開発',
@@ -868,7 +867,6 @@ const sidebars = {
                   id: 'helm-charts/getting-started-scalar-helm-charts',
                   label: 'Scalar Helm Charts をはじめよう',
                 },
-                
                 {
                   type: 'doc',
                   id: 'helm-charts/getting-started-scalardl-auditor-tls',
