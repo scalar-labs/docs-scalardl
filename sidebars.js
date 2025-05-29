@@ -466,6 +466,11 @@ const sidebars = {
       items: [
         {
           type: 'doc',
+          id: 'manage-overview',
+          label: 'Overview',
+        },
+        {
+          type: 'doc',
           id: 'scalar-kubernetes/HowToScaleScalarDL',
           label: 'Scale',
         },
@@ -1041,6 +1046,11 @@ const sidebars = {
       label: '運用',
       collapsible: true,
       items: [
+        {
+          type: 'doc',
+          id: 'manage-overview',
+          label: '概要',
+        },
         {
           type: 'doc',
           id: 'scalar-kubernetes/HowToScaleScalarDL',
