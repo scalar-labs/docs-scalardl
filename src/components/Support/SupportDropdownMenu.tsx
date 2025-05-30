@@ -104,7 +104,7 @@ const SupportDropdownMenu: React.FC = () => {
   const handleGitHubClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     if (githubIssueUrl !== "#") {
-      window.open(githubIssueUrl, "_blank", "noopener,noreferrer");
+      window.open(githubIssueUrl, "_blank");
     } else {
       console.error("GitHub issue URL is not set correctly.");
     }

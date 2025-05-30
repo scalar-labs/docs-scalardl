@@ -22,7 +22,6 @@ export default function JavadocLink({ packageName, path, className }) {
     <a
       href={`https://javadoc.io/static/com.scalar-labs/${packageName}/${docsClassName}/${path}/${className}.html`}
       target="_blank"
-      rel="noopener noreferrer"
     >
       {className}
     </a>

@@ -98,7 +98,6 @@ const NotificationBell = ({ notifications }) => {
               className={`notification-item ${!notification.read ? 'unread' : ''}`}
               onClick={(e) => handleNotificationClick(notification, e)}
               target={notification.isExternal ? '_blank' : '_self'}
-              rel={notification.isExternal ? 'noopener noreferrer' : undefined}
             >
               {notification.message}
             </a>
