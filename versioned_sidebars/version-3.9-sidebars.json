@@ -255,7 +255,6 @@
                   "id": "helm-charts/getting-started-scalar-helm-charts",
                   "label": "Use Scalar Helm Charts"
                 },
-                
                 {
                   "type": "doc",
                   "id": "helm-charts/getting-started-scalardl-auditor-tls",
@@ -432,6 +431,11 @@
       "items": [
         {
           "type": "doc",
+          "id": "manage-overview",
+          "label": "Overview"
+        },
+        {
+          "type": "doc",
           "id": "scalar-kubernetes/HowToScaleScalarDL",
           "label": "Scale"
         },
@@ -494,7 +498,6 @@
               "id": "manage-backup-and-restore-overview",
               "label": "Back Up and Restore Databases"
             },
-            
             {
               "type": "doc",
               "id": "scalar-kubernetes/BackupNoSQL",
@@ -526,8 +529,6 @@
       "label": "Reference",
       "collapsible": true,
       "items": [
-        
-        
         {
           "type": "doc",
           "id": "scalar-licensing/index",
@@ -648,7 +649,7 @@
               "type": "doc",
               "id": "getting-started-auditor",
               "label": "ScalarDL Ledger と Auditor を通じてコントラクトを実行"
-            }            
+            }
           ]
         },
         {
@@ -711,7 +712,7 @@
               "label": "証明書を取得"
             }
           ]
-        }        
+        }
       ]
     },
     {
@@ -793,7 +794,6 @@
                   "id": "helm-charts/getting-started-scalar-helm-charts",
                   "label": "Scalar Helm Charts をはじめよう"
                 },
-                
                 {
                   "type": "doc",
                   "id": "helm-charts/getting-started-scalardl-auditor-tls",
@@ -894,7 +894,7 @@
                   "type": "doc",
                   "id": "helm-charts/how-to-deploy-scalardl-auditor",
                   "label": "Helm Chart を使用して ScalarDL Auditor をデプロイ"
-                }                
+                }
               ]
             },
             {
@@ -968,6 +968,11 @@
       "label": "運用",
       "collapsible": true,
       "items": [
+        {
+          "type": "doc",
+          "id": "manage-overview",
+          "label": "概要"
+        },
         {
           "type": "doc",
           "id": "scalar-kubernetes/HowToScaleScalarDL",
