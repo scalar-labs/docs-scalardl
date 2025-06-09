@@ -29,12 +29,11 @@ const sidebars = {
       type: 'category',
       label: 'About ScalarDL',
       collapsible: true,
+      link: {
+        type: 'doc',
+        id: 'overview',
+      },
       items: [
-        {
-          type: 'doc',
-          id: 'overview',
-          label: 'Overview',
-        },
         {
           type: 'doc',
           id: 'design',
@@ -76,12 +75,11 @@ const sidebars = {
       type: 'category',
       label: 'Quickstart',
       collapsible: true,
+      link: {
+        type: 'doc',
+        id: 'quickstart-overview',
+      },
       items: [
-        {
-          type: 'doc',
-          id: 'quickstart-overview',
-          label: 'Overview',
-        },
         {
           type: 'doc',
           id: 'getting-started',
@@ -93,31 +91,50 @@ const sidebars = {
       type: 'category',
       label: 'Develop',
       collapsible: true,
+      link: {
+        type: 'doc',
+        id: 'develop-overview',
+      },
       items: [
         {
-          type: 'doc',
-          id: 'data-modeling',
-          label: 'Model Your Data',
-        },
-        {
-          type: 'doc',
-          id: 'how-to-write-contract',
-          label: 'Write a Contract',
-        },
-        {
-          type: 'doc',
-          id: 'how-to-write-function',
-          label: 'Write a Function',
-        },
-        {
-          type: 'doc',
-          id: 'use-generic-contracts',
-          label: 'Use Generic Contracts',
+          type: 'category',
+          label: 'Write Business Logic',
+          collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'develop-write-business-logic-overview',
+          },
+          items: [
+            {
+              type: 'doc',
+              id: 'data-modeling',
+              label: 'Model Your Data',
+            },
+            {
+              type: 'doc',
+              id: 'how-to-write-contract',
+              label: 'Write a Contract',
+            },
+            {
+              type: 'doc',
+              id: 'how-to-write-function',
+              label: 'Write a Function',
+            },
+            {
+              type: 'doc',
+              id: 'use-generic-contracts',
+              label: 'Use Generic Contracts',
+            },
+          ],
         },
         {
           type: 'category',
           label: 'Write an Application',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'develop-write-an-application-overview',
+          },
           items: [
             {
               type: 'doc',
@@ -135,6 +152,10 @@ const sidebars = {
           type: 'category',
           label: 'Run an Application',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'develop-run-an-application-overview',
+          },
           items: [
             {
               type: 'doc',
@@ -147,6 +168,10 @@ const sidebars = {
           type: 'category',
           label: 'Run Sample Applications',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'develop-samples-overview',
+          },
           items: [
             {
               type: 'doc',
@@ -159,6 +184,10 @@ const sidebars = {
           type: 'category',
           label: 'Advanced Configurations and Operations',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'develop-advanced-configurations-overview',
+          },
           items: [
             {
               type: 'doc',
@@ -215,12 +244,11 @@ const sidebars = {
       type: 'category',
       label: 'Deploy',
       collapsible: true,
+      link: {
+        type: 'doc',
+        id: 'deploy-overview',
+      },
       items: [
-        {
-          type: 'doc',
-          id: 'deploy-overview',
-          label: 'Overview',
-        },
         {
           type: 'category',
           label: 'In Your Local Environment',
@@ -463,12 +491,11 @@ const sidebars = {
       type: 'category',
       label: 'Manage',
       collapsible: true,
+      link: {
+        type: 'doc',
+        id: 'manage-overview',
+      },
       items: [
-        {
-          type: 'doc',
-          id: 'manage-overview',
-          label: 'Overview',
-        },
         {
           type: 'doc',
           id: 'scalar-kubernetes/HowToScaleScalarDL',
@@ -483,12 +510,11 @@ const sidebars = {
           type: 'category',
           label: 'Monitor',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'manage-monitor-overview',
+          },
           items: [
-            {
-              type: 'doc',
-              id: 'manage-monitor-overview',
-              label: 'Overview',
-            },
             {
               type: 'doc',
               id: 'scalar-kubernetes/alerts/Envoy',
@@ -527,11 +553,15 @@ const sidebars = {
           type: 'category',
           label: 'Back Up and Restore',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'manage-backup-and-restore-overview',
+          },
           items: [
             {
               type: 'doc',
-              id: 'manage-backup-and-restore-overview',
-              label: 'Back Up and Restore Databases',
+              id: 'backup-restore',
+              label: 'Backup and Restore Data',
             },
             {
               type: 'doc',
@@ -539,21 +569,9 @@ const sidebars = {
               label: 'Back Up a NoSQL Database in Kubernetes',
             },
             {
-              type: 'category',
-              label: 'Reference',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'backup-restore',
-                  label: 'Backup and Restore Data',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/RestoreDatabase',
-                  label: 'Restore Databases in Kubernetes',
-                },
-              ],
+              type: 'doc',
+              id: 'scalar-kubernetes/RestoreDatabase',
+              label: 'Restore Databases in Kubernetes',
             },
           ],
         },
@@ -611,12 +629,11 @@ const sidebars = {
       type: 'category',
       label: 'ScalarDL について',
       collapsible: true,
+      link: {
+        type: 'doc',
+        id: 'overview',
+      },
       items: [
-        {
-          type: 'doc',
-          id: 'overview',
-          label: '概要',
-        },
         {
           type: 'doc',
           id: 'design',
@@ -658,12 +675,11 @@ const sidebars = {
       type: 'category',
       label: 'クイックスタート',
       collapsible: true,
+      link: {
+        type: 'doc',
+        id: 'quickstart-overview',
+      },
       items: [
-        {
-          type: 'doc',
-          id: 'quickstart-overview',
-          label: '概要',
-        },
         {
           type: 'doc',
           id: 'getting-started',
@@ -675,31 +691,50 @@ const sidebars = {
       type: 'category',
       label: '開発',
       collapsible: true,
+      link: {
+        type: 'doc',
+        id: 'develop-overview',
+      },
       items: [
         {
-          type: 'doc',
-          id: 'data-modeling',
-          label: 'データモデリング',
-        },
-        {
-          type: 'doc',
-          id: 'how-to-write-contract',
-          label: 'コントラクトを作成',
-        },
-        {
-          type: 'doc',
-          id: 'how-to-write-function',
-          label: 'ファンクションを作成',
-        },
-        {
-          type: 'doc',
-          id: 'use-generic-contracts',
-          label: '汎用コントラクトを使用',
+          type: 'category',
+          label: 'ビジネスロジックを作成',
+          collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'develop-write-business-logic-overview',
+          },
+          items: [
+            {
+              type: 'doc',
+              id: 'data-modeling',
+              label: 'データモデリング',
+            },
+            {
+              type: 'doc',
+              id: 'how-to-write-contract',
+              label: 'コントラクトを作成',
+            },
+            {
+              type: 'doc',
+              id: 'how-to-write-function',
+              label: 'ファンクションを作成',
+            },
+            {
+              type: 'doc',
+              id: 'use-generic-contracts',
+              label: '汎用コントラクトを使用',
+            },
+          ],
         },
         {
           type: 'category',
-          label: 'アプリケーションを書く',
+          label: 'アプリケーションを作成',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'develop-write-an-application-overview',
+          },
           items: [
             {
               type: 'doc',
@@ -717,6 +752,10 @@ const sidebars = {
           type: 'category',
           label: 'アプリケーションを実行',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'develop-run-an-application-overview',
+          },
           items: [
             {
               type: 'doc',
@@ -729,6 +768,10 @@ const sidebars = {
           type: 'category',
           label: 'サンプルアプリケーションを実行',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'develop-samples-overview',
+          },
           items: [
             {
               type: 'doc',
@@ -741,6 +784,10 @@ const sidebars = {
           type: 'category',
           label: '高度な設定と操作',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'develop-advanced-configurations-overview',
+          },
           items: [
             {
               type: 'doc',
@@ -797,12 +844,11 @@ const sidebars = {
       type: 'category',
       label: 'デプロイ',
       collapsible: true,
+      link: {
+        type: 'doc',
+        id: 'deploy-overview',
+      },
       items: [
-        {
-          type: 'doc',
-          id: 'deploy-overview',
-          label: '概要',
-        },
         {
           type: 'category',
           label: 'ローカル環境で',
@@ -1045,12 +1091,11 @@ const sidebars = {
       type: 'category',
       label: '運用',
       collapsible: true,
+      link: {
+        type: 'doc',
+        id: 'manage-overview',
+      },
       items: [
-        {
-          type: 'doc',
-          id: 'manage-overview',
-          label: '概要',
-        },
         {
           type: 'doc',
           id: 'scalar-kubernetes/HowToScaleScalarDL',
@@ -1065,12 +1110,11 @@ const sidebars = {
           type: 'category',
           label: '監視',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'manage-monitor-overview',
+          },
           items: [
-            {
-              type: 'doc',
-              id: 'manage-monitor-overview',
-              label: '概要',
-            },
             {
               type: 'doc',
               id: 'scalar-kubernetes/alerts/Envoy',
@@ -1109,11 +1153,15 @@ const sidebars = {
           type: 'category',
           label: 'バックアップと復元',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'manage-backup-and-restore-overview',
+          },
           items: [
             {
               type: 'doc',
-              id: 'manage-backup-and-restore-overview',
-              label: 'データベースのバックアップと復元',
+              id: 'backup-restore',
+              label: 'データのバックアップと復元',
             },
             {
               type: 'doc',
@@ -1121,21 +1169,9 @@ const sidebars = {
               label: 'Kubernetes 環境で NoSQL データベースをバックアップ',
             },
             {
-              type: 'category',
-              label: '詳細',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'backup-restore',
-                  label: 'データのバックアップと復元',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/RestoreDatabase',
-                  label: 'Kubernetes 環境でデータベースを復元',
-                },
-              ],
+              type: 'doc',
+              id: 'scalar-kubernetes/RestoreDatabase',
+              label: 'Kubernetes 環境でデータベースを復元',
             },
           ],
         },
