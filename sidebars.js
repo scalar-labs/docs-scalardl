@@ -560,25 +560,18 @@ const sidebars = {
           items: [
             {
               type: 'doc',
+              id: 'backup-restore',
+              label: 'Backup and Restore Data',
+            },
+            {
+              type: 'doc',
               id: 'scalar-kubernetes/BackupNoSQL',
               label: 'Back Up a NoSQL Database in Kubernetes',
             },
             {
-              type: 'category',
-              label: 'Reference',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'backup-restore',
-                  label: 'Backup and Restore Data',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/RestoreDatabase',
-                  label: 'Restore Databases in Kubernetes',
-                },
-              ],
+              type: 'doc',
+              id: 'scalar-kubernetes/RestoreDatabase',
+              label: 'Restore Databases in Kubernetes',
             },
           ],
         },
@@ -1167,25 +1160,18 @@ const sidebars = {
           items: [
             {
               type: 'doc',
+              id: 'backup-restore',
+              label: 'データのバックアップと復元',
+            },
+            {
+              type: 'doc',
               id: 'scalar-kubernetes/BackupNoSQL',
               label: 'Kubernetes 環境で NoSQL データベースをバックアップ',
             },
             {
-              type: 'category',
-              label: '詳細',
-              collapsible: true,
-              items: [
-                {
-                  type: 'doc',
-                  id: 'backup-restore',
-                  label: 'データのバックアップと復元',
-                },
-                {
-                  type: 'doc',
-                  id: 'scalar-kubernetes/RestoreDatabase',
-                  label: 'Kubernetes 環境でデータベースを復元',
-                },
-              ],
+              type: 'doc',
+              id: 'scalar-kubernetes/RestoreDatabase',
+              label: 'Kubernetes 環境でデータベースを復元',
             },
           ],
         },
