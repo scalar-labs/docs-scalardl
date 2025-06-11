@@ -7,13 +7,13 @@ ScalarDL Enterprise Edition を使用している場合は、次のようにラ�
 <details>
 <summary>ライセンスの設定についてはこちらをご覧ください</summary>
 
-1. 次のように、<code>docker-compose-ledger-{props.shortName}.yml</code> ファイルで Enterprise Edition の Docker イメージを有効にします。
+1. 次のように、<code>{props.shortName}/docker-compose-ledger.yml</code> ファイルで Enterprise Edition の Docker イメージを有効にします。
 
     - イメージを変更する前 (デフォルト設定):
 
       ```yaml
       services:
-        scalar-ledger:
+        scalardl-ledger:
           image: ghcr.io/scalar-labs/scalardl-ledger:${SCALARDL_VERSION}
           # image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
       ```
@@ -22,46 +22,45 @@ ScalarDL Enterprise Edition を使用している場合は、次のようにラ�
 
       ```yaml
       services:
-        scalar-ledger:
+        scalardl-ledger:
           # image: ghcr.io/scalar-labs/scalardl-ledger:${SCALARDL_VERSION}
           image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
       ```
 
-2. ScalarDL Ledger のライセンスキーを設定します。<code>docker-compose-ledger-{props.shortName}.yml</code> ファイルで、`<SET_YOUR_LICENSE_KEY>` をライセンスキーに置き換えます。例:
+2. ScalarDL Ledger のライセンスキーを設定します。<code>{props.shortName}/ledger.properties</code> ファイルで、`<SET_YOUR_LICENSE_KEY>` をライセンスキーに置き換えます。例:
 
-   ```yaml
-   services:
-     scalar-ledger:
-       environment:
-         - SCALAR_DL_LICENSING_LICENSE_KEY={"organization_name":"XXXXXXXX","expiration_date_time":"YYYY-MM-DDTHH:mm:SS+TIMEZONE","product_name":"ScalarDL Ledger","product_version":N,"license_type":"trial","signature":"XXXXXXXX"}
+   ```properties
+   ##### PLEASE REPLACE THIS VALUE WITH YOUR LICENSE KEY (ENTERPRISE EDITION ONLY) #####
+   scalar.dl.licensing.license_key={"organization_name":"XXXXXXXX","expiration_date_time":"YYYY-MM-DDTHH:mm:SS+TIMEZONE","product_name":"ScalarDL Ledger","product_version":N,"license_type":"trial","signature":"XXXXXXXX"}
+   ##### PLEASE REPLACE THIS VALUE WITH YOUR LICENSE KEY (ENTERPRISE EDITION ONLY) #####
    ```
 
-3. ライセンスを確認するには、<code>docker-compose-ledger-{props.shortName}.yml</code> ファイルを次のように更新します。試用版ライセンスを使用している場合は、この手順をスキップしてください。
+3. ライセンスを確認するには、<code>{props.shortName}/docker-compose-ledger.yml</code> ファイルを次のように更新します。試用版ライセンスを使用している場合は、この手順をスキップしてください。
 
     - 証明書ファイルのパスを変更する前に (デフォルト設定):
 
       ```yaml
       services:
-        scalar-ledger:
+        scalardl-ledger:
           volumes:
-            - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
-            - ./fixture/ledger.properties.tmpl:/scalar/ledger/ledger.properties.tmpl
-            - ./fixture/trial-license-cert.pem:/scalar/license-cert.pem
+            - ./ledger.properties:/scalar/ledger/ledger.properties.tmpl
+            - ../fixture/ledger-key.pem:/scalar/ledger-key.pem
+            - ../fixture/trial-license-cert.pem:/scalar/license-cert.pem
             # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
-            # - ./fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+            # - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
       ```
 
     - 証明書ファイルのパスを変更した後:
 
       ```yaml
       services:
-        scalar-ledger:
+        scalardl-ledger:
           volumes:
-            - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
-            - ./fixture/ledger.properties.tmpl:/scalar/ledger/ledger.properties.tmpl
-            # - ./fixture/trial-license-cert.pem:/scalar/license-cert.pem
+            - ./ledger.properties:/scalar/ledger/ledger.properties.tmpl
+            - ../fixture/ledger-key.pem:/scalar/ledger-key.pem
+            # - ../fixture/trial-license-cert.pem:/scalar/license-cert.pem
             # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
-            - ./fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+            - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
       ```
 
 </details>
@@ -72,12 +71,12 @@ ScalarDL Enterprise Edition を使用している場合は、次のようにラ�
 
 1. 次のコマンドを実行して、{props.productName} をローカルで実行します。
 
-   <CodeBlock language="console">docker compose -f docker-compose-ledger-{props.shortName}.yml up -d {props.shortName}</CodeBlock>
+   <CodeBlock language="console">docker compose -f {props.shortName}/docker-compose-ledger.yml up -d {props.shortName}</CodeBlock>
 
 2. 次のコマンドを実行して、ScalarDL Ledger のデータベーススキーマをロードします。
 
-   <CodeBlock language="console">docker compose -f docker-compose-ledger-{props.shortName}.yml up -d scalardl-ledger-schema-loader</CodeBlock>
+   <CodeBlock language="console">docker compose -f {props.shortName}/docker-compose-ledger.yml up -d scalardl-ledger-schema-loader</CodeBlock>
 
 3. 次のコマンドを実行して ScalarDL Ledger および依存するコンポーネントを起動します。
 
-   <CodeBlock language="console">docker compose -f docker-compose-ledger-{props.shortName}.yml up -d</CodeBlock>
+   <CodeBlock language="console">docker compose -f {props.shortName}/docker-compose-ledger.yml up -d</CodeBlock>
