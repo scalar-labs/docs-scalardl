@@ -81,61 +81,60 @@ Select your database, and follow the instructions to deploy ScalarDL Ledger with
   <details>
   <summary>See here to set up your license</summary>
 
-  1. Enable the Docker image for the Enterprise edition in the `docker-compose-ledger-cosmosdb.yml` file as follows:
+  1. Enable the Docker image for the Enterprise edition in the `cosmosdb/docker-compose-ledger.yml` file as follows:
 
      - Before changing the image (default configuration):
 
        ```yaml
        services:
-         scalar-ledger:
+         scalardl-ledger:
            image: ghcr.io/scalar-labs/scalardl-ledger:${SCALARDL_VERSION}
            # image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
        ```
 
-      - After changing the image:
+     - After changing the image:
 
        ```yaml
        services:
-         scalar-ledger:
+         scalardl-ledger:
            # image: ghcr.io/scalar-labs/scalardl-ledger:${SCALARDL_VERSION}
            image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
        ```
 
-  2. Set your license key for ScalarDL Ledger. In the `docker-compose-ledger-cosmosdb.yml` file, replace `<SET_YOUR_LICENSE_KEY>` with your license key. For example:
+  2. Set your license key for ScalarDL Ledger. In the `cosmosdb/ledger.properties` file, replace `<SET_YOUR_LICENSE_KEY>` with your license key. For example:
 
-     ```yaml
-     services:
-       scalar-ledger:
-         environment:
-           - SCALAR_DL_LICENSING_LICENSE_KEY={"organization_name":"XXXXXXXX","expiration_date_time":"YYYY-MM-DDTHH:mm:SS+TIMEZONE","product_name":"ScalarDL Ledger","product_version":N,"license_type":"trial","signature":"XXXXXXXX"}
+     ```properties
+     ##### PLEASE REPLACE THIS VALUE WITH YOUR LICENSE KEY (ENTERPRISE EDITION ONLY) #####
+     scalar.dl.licensing.license_key={"organization_name":"XXXXXXXX","expiration_date_time":"YYYY-MM-DDTHH:mm:SS+TIMEZONE","product_name":"ScalarDL Ledger","product_version":N,"license_type":"trial","signature":"XXXXXXXX"}
+     ##### PLEASE REPLACE THIS VALUE WITH YOUR LICENSE KEY (ENTERPRISE EDITION ONLY) #####
      ```
 
-  3. To check the license, update the `docker-compose-ledger-cosmosdb.yml` file as follows. If you're using a trial license, skip this step.
+  3. To check the license, update the `cosmosdb/docker-compose-ledger.yml` file as follows. If you're using a trial license, skip this step.
 
      - Before changing the certificate file path (default configuration):
 
        ```yaml
        services:
-         scalar-ledger:
+         scalardl-ledger:
            volumes:
-             - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
-             - ./fixture/ledger.properties.tmpl:/scalar/ledger/ledger.properties.tmpl
-             - ./fixture/trial-license-cert.pem:/scalar/license-cert.pem
+             - ./ledger.properties:/scalar/ledger/ledger.properties.tmpl
+             - ../fixture/ledger-key.pem:/scalar/ledger-key.pem
+             - ../fixture/trial-license-cert.pem:/scalar/license-cert.pem
              # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
-             # - ./fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+             # - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
        ```
 
      - After changing the certificate file path:
 
        ```yaml
        services:
-         scalar-ledger:
+         scalardl-ledger:
            volumes:
-             - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
-             - ./fixture/ledger.properties.tmpl:/scalar/ledger/ledger.properties.tmpl
-             # - ./fixture/trial-license-cert.pem:/scalar/license-cert.pem
+             - ./ledger.properties:/scalar/ledger/ledger.properties.tmpl
+             - ../fixture/ledger-key.pem:/scalar/ledger-key.pem
+             # - ../fixture/trial-license-cert.pem:/scalar/license-cert.pem
              # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
-             - ./fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+             - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
        ```
 
   </details>
@@ -148,26 +147,23 @@ Select your database, and follow the instructions to deploy ScalarDL Ledger with
 
      To use Azure Cosmos DB for NoSQL, you must have an Azure account. If you don't have an Azure account, visit [Create an Azure Cosmos DB account](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/quickstart-portal#create-account).
 
-     After setting up Cosmos DB for NoSQL, modify the following items in `docker-compose-ledger-cosmodb.yml` based on your configuration of Cosmos DB for NoSQL.
+     After setting up Cosmos DB for NoSQL, modify the following items in `cosmodb/ledger.properties` based on your configuration of Cosmos DB for NoSQL.
 
-     ```yaml
-     services:
-       scalar-ledger:
-         environment:
-           - SCALAR_DB_CONTACT_POINTS=<COSMOS_DB_FOR_NOSQL_URI>
-           - SCALAR_DB_PASSWORD=<COSMOS_DB_FOR_NOSQL_KEY>
+     ```properties
+     scalar.db.contact_points=<COSMOS_DB_FOR_NOSQL_URI>
+     scalar.db.password=<COSMOS_DB_FOR_NOSQL_KEY>
      ```
 
   2. Load the database schema for ScalarDL Ledger by running the following command:
 
      ```console
-     docker compose -f docker-compose-ledger-cosmosdb.yml up -d scalardl-ledger-schema-loader
+     docker compose -f cosmosdb/docker-compose-ledger.yml up -d scalardl-ledger-schema-loader
      ```
 
   3. Run ScalarDL Ledger by running the following command:
 
      ```console
-     docker compose -f docker-compose-ledger-cosmosdb.yml up -d
+     docker compose -f cosmosdb/docker-compose-ledger.yml up -d
      ```
   </TabItem>
 
