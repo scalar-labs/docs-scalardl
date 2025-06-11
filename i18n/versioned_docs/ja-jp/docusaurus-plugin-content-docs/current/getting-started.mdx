@@ -84,61 +84,60 @@ cd scalardl-samples
   <details>
   <summary>ライセンスの設定についてはこちらをご覧ください</summary>
 
-  1. 次のようにして、`docker-compose-ledger-cosmosdb.yml` ファイルで Enterprise Edition の Docker イメージを有効にします。
+  1. 次のようにして、`cosmosdb/docker-compose-ledger.yml` ファイルで Enterprise Edition の Docker イメージを有効にします。
 
      - イメージを変更する前 (デフォルト設定):
 
        ```yaml
        services:
-         scalar-ledger:
+         scalardl-ledger:
            image: ghcr.io/scalar-labs/scalardl-ledger:${SCALARDL_VERSION}
            # image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
        ```
 
-      - イメージを変更した後:
+     - イメージを変更した後:
 
        ```yaml
        services:
-         scalar-ledger:
+         scalardl-ledger:
            # image: ghcr.io/scalar-labs/scalardl-ledger:${SCALARDL_VERSION}
            image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
        ```
 
-  2. ScalarDL Ledger のライセンスキーを設定します。`docker-compose-ledger-cosmosdb.yml` ファイルで、`<SET_YOUR_LICENSE_KEY>` をライセンスキーに置き換えます。例:
+  2. ScalarDL Ledger のライセンスキーを設定します。`cosmosdb/ledger.properties` ファイルで、`<SET_YOUR_LICENSE_KEY>` をライセンスキーに置き換えます。例:
 
-     ```yaml
-     services:
-       scalar-ledger:
-         environment:
-           - SCALAR_DL_LICENSING_LICENSE_KEY={"organization_name":"XXXXXXXX","expiration_date_time":"YYYY-MM-DDTHH:mm:SS+TIMEZONE","product_name":"ScalarDL Ledger","product_version":N,"license_type":"trial","signature":"XXXXXXXX"}
+     ```properties
+     ##### PLEASE REPLACE THIS VALUE WITH YOUR LICENSE KEY (ENTERPRISE EDITION ONLY) #####
+     scalar.dl.licensing.license_key={"organization_name":"XXXXXXXX","expiration_date_time":"YYYY-MM-DDTHH:mm:SS+TIMEZONE","product_name":"ScalarDL Ledger","product_version":N,"license_type":"trial","signature":"XXXXXXXX"}
+     ##### PLEASE REPLACE THIS VALUE WITH YOUR LICENSE KEY (ENTERPRISE EDITION ONLY) #####
      ```
 
-  3. ライセンスを確認するには、`docker-compose-ledger-cosmosdb.yml` ファイルを次のように更新します。試用版ライセンスを使用している場合は、この手順をスキップしてください。
+  3. ライセンスを確認するには、`cosmosdb/docker-compose-ledger.yml` ファイルを次のように更新します。試用版ライセンスを使用している場合は、この手順をスキップしてください。
 
      - 証明書ファイルのパスを変更する前に (デフォルト設定):
 
        ```yaml
        services:
-         scalar-ledger:
+         scalardl-ledger:
            volumes:
-             - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
-             - ./fixture/ledger.properties.tmpl:/scalar/ledger/ledger.properties.tmpl
-             - ./fixture/trial-license-cert.pem:/scalar/license-cert.pem
+             - ./ledger.properties:/scalar/ledger/ledger.properties.tmpl
+             - ../fixture/ledger-key.pem:/scalar/ledger-key.pem
+             - ../fixture/trial-license-cert.pem:/scalar/license-cert.pem
              # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
-             # - ./fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+             # - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
        ```
 
      - 証明書ファイルのパスを変更した後:
 
        ```yaml
        services:
-         scalar-ledger:
+         scalardl-ledger:
            volumes:
-             - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
-             - ./fixture/ledger.properties.tmpl:/scalar/ledger/ledger.properties.tmpl
-             # - ./fixture/trial-license-cert.pem:/scalar/license-cert.pem
+             - ./ledger.properties:/scalar/ledger/ledger.properties.tmpl
+             - ../fixture/ledger-key.pem:/scalar/ledger-key.pem
+             # - ../fixture/trial-license-cert.pem:/scalar/license-cert.pem
              # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
-             - ./fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+             - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
        ```
 
   </details>
@@ -151,26 +150,23 @@ cd scalardl-samples
 
      Azure Cosmos DB for NoSQL を使用するには、Azure アカウントが必要です。Azure アカウントがない場合は、[Azure Cosmos DB アカウントを作成する](https://learn.microsoft.com/ja-jp/azure/cosmos-db/nosql/quickstart-portal#create-account)にアクセスしてください。
 
-     Cosmos DB for NoSQL をセットアップしたら、Cosmos DB for NoSQL の設定に基づいて、`docker-compose-ledger-cosmodb.yml` の次の項目を変更します。
+     Cosmos DB for NoSQL をセットアップしたら、Cosmos DB for NoSQL の設定に基づいて、`cosmodb/ledger.properties` の次の項目を変更します。
 
-     ```yaml
-     services:
-       scalar-ledger:
-         environment:
-           - SCALAR_DB_CONTACT_POINTS=<COSMOS_DB_FOR_NOSQL_URI>
-           - SCALAR_DB_PASSWORD=<COSMOS_DB_FOR_NOSQL_KEY>
+     ```properties
+     scalar.db.contact_points=<COSMOS_DB_FOR_NOSQL_URI>
+     scalar.db.password=<COSMOS_DB_FOR_NOSQL_KEY>
      ```
 
   2. 次のコマンドを実行して、ScalarDL Ledger のデータベーススキーマをロードします。
 
      ```console
-     docker compose -f docker-compose-ledger-cosmosdb.yml up -d scalardl-ledger-schema-loader
+     docker compose -f cosmodb/docker-compose-ledger.yml up -d scalardl-ledger-schema-loader
      ```
 
   3. 次のコマンドを実行して ScalarDL Ledger を実行します。
 
      ```console
-     docker compose -f docker-compose-ledger-cosmosdb.yml up -d
+     docker compose -f cosmodb/docker-compose-ledger.yml up -d
      ```
   </TabItem>
 
