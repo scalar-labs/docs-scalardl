@@ -30,8 +30,25 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
       .catch((err) => console.error('Failed to load glossary:', err));
   }, []);
 
+  // Function to check if the current page is a version index page
+  const isVersionIndexPage = () => {
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname;
+
+      // Check for various version index patterns
+      const localePrefix = '(?:/ja-jp)?'; // Matches either '/ja-jp' or nothing
+      if (path.match(new RegExp(`${localePrefix}/docs/latest/?$`)) ||
+          path.match(new RegExp(`${localePrefix}/docs/latest/index(\\.html)?`)) ||
+          path.match(new RegExp(`${localePrefix}/docs/[0-9]+\\.[0-9]+/?$`)) ||
+          path.match(new RegExp(`${localePrefix}/docs/[0-9]+\\.[0-9]+/index(\\.html)?`))) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   useEffect(() => {
-    if (Object.keys(glossary).length === 0) return;
+    if (Object.keys(glossary).length === 0 || isVersionIndexPage()) return;
 
     // Sort terms in descending order by length to prioritize multi-word terms.
     const terms = Object.keys(glossary).sort((a, b) => b.length - a.length);
@@ -89,14 +106,14 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
 
           while ((match = regex.exec(currentText))) {
             const matchedText = match[0]; // The full matched text (may include plural suffix).
-            
+
             // Find the base term from the glossary that matches (without plural).
             const baseTerm = terms.find(term => 
               matchedText.toLowerCase() === term.toLowerCase() || 
               matchedText.toLowerCase() === `${term.toLowerCase()}s` || 
               matchedText.toLowerCase() === `${term.toLowerCase()}es`
             );
-            
+
             if (!baseTerm) {
               // Skip if no matching base term found.
               continue;
@@ -116,11 +133,11 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
               tooltipWrapper.className = 'glossary-term';
 
               const definition = glossary[baseTerm];
-              
+
               // Extract the part to underline (the base term) and the suffix (if plural).
               let textToUnderline = matchedText;
               let suffix = '';
-              
+
               if (matchedText.toLowerCase() !== baseTerm.toLowerCase()) {
                 // This is a plural form - only underline the base part.
                 const baseTermLength = baseTerm.length;
