@@ -36,19 +36,11 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
       const path = window.location.pathname;
 
       // Check for various version index patterns
-      // English versions
-      if (path.match(/\/docs\/latest\/?$/) ||
-          path.match(/\/docs\/latest\/index(\.html)?/) ||
-          path.match(/\/docs\/[0-9]+\.[0-9]+\/?$/) ||
-          path.match(/\/docs\/[0-9]+\.[0-9]+\/index(\.html)?/)) {
-        return true;
-      }
-
-      // Japanese versions
-      if (path.match(/\/ja-jp\/docs\/latest\/?$/) ||
-          path.match(/\/ja-jp\/docs\/latest\/index(\.html)?/) ||
-          path.match(/\/ja-jp\/docs\/[0-9]+\.[0-9]+\/?$/) ||
-          path.match(/\/ja-jp\/docs\/[0-9]+\.[0-9]+\/index(\.html)?/)) {
+      const localePrefix = '(?:/ja-jp)?'; // Matches either '/ja-jp' or nothing
+      if (path.match(new RegExp(`${localePrefix}/docs/latest/?$`)) ||
+          path.match(new RegExp(`${localePrefix}/docs/latest/index(\\.html)?`)) ||
+          path.match(new RegExp(`${localePrefix}/docs/[0-9]+\\.[0-9]+/?$`)) ||
+          path.match(new RegExp(`${localePrefix}/docs/[0-9]+\\.[0-9]+/index(\\.html)?`))) {
         return true;
       }
     }
