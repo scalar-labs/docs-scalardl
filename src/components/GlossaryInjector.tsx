@@ -30,8 +30,33 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
       .catch((err) => console.error('Failed to load glossary:', err));
   }, []);
 
+  // Function to check if the current page is a version index page
+  const isVersionIndexPage = () => {
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname;
+
+      // Check for various version index patterns
+      // English versions
+      if (path.match(/\/docs\/latest\/?$/) ||
+          path.match(/\/docs\/latest\/index(\.html)?/) ||
+          path.match(/\/docs\/[0-9]+\.[0-9]+\/?$/) ||
+          path.match(/\/docs\/[0-9]+\.[0-9]+\/index(\.html)?/)) {
+        return true;
+      }
+
+      // Japanese versions
+      if (path.match(/\/ja-jp\/docs\/latest\/?$/) ||
+          path.match(/\/ja-jp\/docs\/latest\/index(\.html)?/) ||
+          path.match(/\/ja-jp\/docs\/[0-9]+\.[0-9]+\/?$/) ||
+          path.match(/\/ja-jp\/docs\/[0-9]+\.[0-9]+\/index(\.html)?/)) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   useEffect(() => {
-    if (Object.keys(glossary).length === 0) return;
+    if (Object.keys(glossary).length === 0 || isVersionIndexPage()) return;
 
     // Sort terms in descending order by length to prioritize multi-word terms.
     const terms = Object.keys(glossary).sort((a, b) => b.length - a.length);
