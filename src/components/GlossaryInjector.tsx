@@ -89,14 +89,14 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
 
           while ((match = regex.exec(currentText))) {
             const matchedText = match[0]; // The full matched text (may include plural suffix).
-            
+
             // Find the base term from the glossary that matches (without plural).
             const baseTerm = terms.find(term => 
               matchedText.toLowerCase() === term.toLowerCase() || 
               matchedText.toLowerCase() === `${term.toLowerCase()}s` || 
               matchedText.toLowerCase() === `${term.toLowerCase()}es`
             );
-            
+
             if (!baseTerm) {
               // Skip if no matching base term found.
               continue;
@@ -116,11 +116,11 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
               tooltipWrapper.className = 'glossary-term';
 
               const definition = glossary[baseTerm];
-              
+
               // Extract the part to underline (the base term) and the suffix (if plural).
               let textToUnderline = matchedText;
               let suffix = '';
-              
+
               if (matchedText.toLowerCase() !== baseTerm.toLowerCase()) {
                 // This is a plural form - only underline the base part.
                 const baseTermLength = baseTerm.length;
