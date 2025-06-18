@@ -1,0 +1,428 @@
+---
+tags:
+  - Community
+  - Enterprise
+  - Private Preview
+displayed_sidebar: docsEnglish
+---
+
+# Use Table-Oriented Generic Contracts
+
+Table-oriented generic contracts in ScalarDL are a type of [generic contract](use-generic-contracts.mdx) that provide a data model similar to the relational data model and a user-friendly interface for managing ledger data, enabling easy application development. This guide explains how to use table-oriented generic contracts.
+
+:::note
+
+The table-oriented generic contracts are currently in Private Preview, which means that future versions might have backward-incompatible updates.
+
+:::
+
+## Set up an environment
+
+In this section, you'll set up the environment for using the table-oriented generic contracts through the ScalarDL client tools. If you want to interact with generic contracts and functions in your applications, you can use the ScalarDL Client SDK APIs. For details, see [Write a ScalarDL Application with Generic Contracts](how-to-write-applications-with-generic-contracts.mdx). In addition, the SQL-based interface will be provided in the near future.
+
+### Install a JDK
+
+In this guide, you'll only use a Java runtime environment for seeing how generic contracts and functions work. However, it is recommended that you install one of the following Java Development Kits (JDKs), which will be required to build your own ScalarDL application outside of this guide.
+
+- [Oracle JDK](https://www.oracle.com/java/technologies/downloads/) LTS version (8, 11, or 17)
+- [OpenJDK](https://openjdk.org/install/) LTS version (8, 11, or 17)
+
+### Set up a ScalarDL environment 
+
+Set up a ScalarDL environment that meets your own requirements. If you want to deploy ScalarDL in a local test environment, you can deploy such an environment by using a sample Docker Compose configuration and Scalar Helm Chart. For details, see the following:
+
+- [Get Started with ScalarDL Ledger](getting-started.mdx)
+- [Get Started with Scalar Helm Charts](helm-charts/getting-started-scalar-helm-charts.mdx)
+
+For a production environment, ScalarDL is available as container images. For details, see [How to get the container images of Scalar products](scalar-kubernetes/HowToGetContainerImages.mdx).
+
+:::note
+
+The table-oriented generic contracts are supported in ScalarDL version 3.11 or later versions.
+
+:::
+
+### Download the necessary tools and the generic contracts
+
+Specify a ScalarDL version that is equal to or greater than 3.11.0 by running the following command. For available versions, see [Tags](https://github.com/scalar-labs/scalardl-java-client-sdk/tags).
+
+```console
+VERSION=X.Y.Z
+```
+
+Also, specify the table-oriented generic contract version by running the following command. Use the following mapping table to identify the version corresponding to the ScalarDL version. Make sure to replace the separator `.` to `_`, for example, `1_0_0` for the version `1.0.0`.
+
+| ScalarDL Version | Table-Oriented Generic Contract Version |
+|:-----------------|:----------------------------------------|
+| 3.11.0           | 1.0.0                                   |
+
+```console
+TGC_VERSION=X_Y_Z
+```
+
+Then, clone the client SDK repository and download the tools and the generic contracts by running the following commands:
+
+```console
+git clone https://github.com/scalar-labs/scalardl-java-client-sdk.git
+cd scalardl-java-client-sdk
+git checkout v$VERSION
+curl -OL https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v$VERSION/scalardl-java-client-sdk-$VERSION.zip
+unzip scalardl-java-client-sdk-$VERSION.zip
+mv scalardl-java-client-sdk-$VERSION client
+curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-generic-contracts-$VERSION.zip
+unzip scalardl-generic-contracts-$VERSION.zip
+mv scalardl-generic-contracts-$VERSION generic-contracts
+```
+
+## Register a certificate and the table-oriented generic contracts
+
+This section describes how to register a certificate and the generic contracts.
+
+### Configure the properties
+
+To interact with the ScalarDL components, you need to configure the client properties. For details, see [Configure properties](getting-started.mdx#configure-properties).
+
+### Register a certificate or secret
+
+Prepare a certificate for registration. For details, see [How to get a certificate](ca/caclient-getting-started.mdx).
+
+Then, register your certificate by using the ScalarDL client CLI as follows:
+
+```console
+client/bin/scalardl generic-contracts register-cert --properties client.properties
+```
+
+:::note
+
+You can also use HMAC authentication instead of using a certificate. For details about HMAC authentication, see [ScalarDL Authentication Guide](authentication.mdx).
+
+:::
+
+### Register the table-oriented generic contracts
+
+After registering the certificate, you can register the table-oriented generic contracts by running the following commands:
+
+```console
+client/bin/scalardl generic-contracts register-contracts --properties client.properties --contracts-file generic-contracts/conf/table-authenticity-management-contracts.toml
+```
+
+## Interact with table-oriented generic contracts
+
+Now you can execute the table-oriented generic contracts. In this section, you'll try the following functionalities through two sample tables (`employee` and `department`) that can be joined through the department IDs of employees.
+
+- [Create and show tables](#create-and-show-tables)
+- [Insert records](#insert-records)
+- [Select records](#select-records)
+- [Update records](#update-records)
+- [Get record histories](#get-record-histories)
+
+### Create and show tables
+
+You can create the samples table by running the following commands:
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Create \
+--contract-argument '{"name": "employee", "key": "id", "type": "string", "indexes": [{"key": "department", "type": "string"}]}'
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Create \
+--contract-argument '{"name": "department", "key": "id", "type": "string"}'
+```
+
+When creating a table, you need to specify the name and the primary key. You can additionally specify the secondary indexes. `string`, `number`, and `boolean` are supported as the data type of the primary key and index key.
+
+You can show the created tables by running the following commands:
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.ShowTables \
+--contract-argument '{}'
+```
+
+You should get a result like the following:
+
+```console
+Contract result:
+[ {
+  "name" : "employee",
+  "key" : "id",
+  "type" : "string",
+  "indexes" : [ {
+    "key" : "department",
+    "type" : "string"
+  } ]
+}, {
+  "name" : "department",
+  "key" : "id",
+  "type" : "string",
+  "indexes" : [ ]
+} ]
+```
+
+### Insert records
+
+Next, insert several `employee` records by running the following commands:
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Insert \
+--contract-argument '{"table": "employee", "values": {"id": "1001", "name": "Alice", "department": "sales", "salary": 654.3}}'
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Insert \
+--contract-argument '{"table": "employee", "values": {"id": "1002", "name": "Bob", "department": "sales", "salary": 543.2}}'
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Insert \
+--contract-argument '{"table": "employee", "values": {"id": "1003", "name": "Carol", "department": "engineering", "salary": 654.3}}'
+```
+
+Insert the corresponding `department` records as well by running the following commands:
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Insert \
+--contract-argument '{"table": "department", "values": {"id": "sales", "location": "Shinjuku", "phone": "000-1234"}}'
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Insert \
+--contract-argument '{"table": "department", "values": {"id": "engineering", "location": "Shibuya", "phone": "000-4321"}}'
+```
+
+### Select records
+
+Then, check the inserted records. You need to specify at least a primary key or index key to select records. For example, you can get an `employee` record by specifying the primary key by running the following commands:
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Select \
+--contract-argument '{"table": "employee", "conditions": [ {"column": "id", "value": "1001", "operator": "EQ"} ], "projections": [ "id", "name", "department" ]}'
+```
+
+You can optionally project the columns by specifying top-level fields in the JSON record object. You should get a result like the following:
+
+```console
+Contract result:
+[ {
+  "id" : "1001",
+  "name" : "Alice",
+  "department" : "sales"
+} ]
+```
+
+You can also specify an index key to select records by running the following commands:
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Select \
+--contract-argument '{"table": "employee", "conditions": [ {"column": "department", "value": "sales", "operator": "EQ"} ], "projections": [ "id", "name", "department" ]}'
+```
+
+You should get a result like the following:
+
+```console
+Contract result:
+[ {
+  "id" : "1001",
+  "name" : "Alice",
+  "department" : "sales"
+}, {
+  "id" : "1002",
+  "name" : "Bob",
+  "department" : "sales"
+} ]
+```
+
+If you want to filter records, specify additional conditions by running the following commands:
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Select \
+--contract-argument '{"table": "employee", "conditions": [ {"column": "department", "value": "sales", "operator": "EQ"}, {"column": "salary", "value": 600, "operator": "LT"} ]}'
+```
+
+For the additional filters, you can use operators: `EQ` (equal), `NE` (not equal), `LT` (less than), `LTE` (less than or equal), `GT` (greater than), `GTE` (greater than or equal), `IS_NULL`, and `IS_NOT_NULL`. You should get a result like the following:
+
+```console
+Contract result:
+[ {
+  "id" : "1002",
+  "name" : "Bob",
+  "department" : "sales",
+  "salary" : 543.2
+} ]
+```
+
+You can also join the two tables by running the following commands:
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Select \
+--contract-argument '{ "table": "employee", "joins": [ { "table": "department", "left": "employee.department", "right": "department.id" } ], "conditions": [ {"column": "employee.department", "value": "engineering", "operator": "EQ"} ] }'
+```
+
+You should get a result like the following:
+
+```console
+Contract result:
+[ {
+  "employee.id" : "1003",
+  "employee.name" : "Carol",
+  "employee.department" : "engineering",
+  "employee.salary" : 654.3,
+  "department.id" : "engineering",
+  "department.location" : "Shibuya",
+  "department.phone" : "000-4321"
+} ]
+```
+
+### Update records
+
+You can update the `employee` records by running the following commands:
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Update \
+--contract-argument '{ "table": "employee", "values": {"salary": 754.3}, "conditions": [ {"column": "department", "value": "sales", "operator": "EQ"} ] }'
+```
+
+Make sure to specify at least a primary key or an index key to update the records, in the same way as using the `Select` contract.
+
+### Get record histories
+
+You can get the update history of a record by running the following commands:
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.GetHistory \
+--contract-argument '{ "table": "employee", "key": "1003" }'
+```
+
+You should get a result like the following:
+
+```console
+Contract result:
+[ {
+  "age" : 1,
+  "values" : {
+    "id" : "1003",
+    "name" : "Carol",
+    "department" : "engineering",
+    "salary" : 754.3
+  }
+}, {
+  "age" : 0,
+  "values" : {
+    "id" : "1003",
+    "name" : "Carol",
+    "department" : "engineering",
+    "salary" : 654.3
+  }
+} ]
+```
+
+If you want to limit the number of versions (ages), specify the `limit` option by running the following commands:
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.GetHistory \
+--contract-argument '{ "table": "employee", "key": "1003", "limit": 1 }'
+```
+
+You should get the specified number of the **latest** records like the following:
+
+```console
+Contract result:
+[ {
+  "age" : 1,
+  "values" : {
+    "id" : "1003",
+    "name" : "Carol",
+    "department" : "engineering",
+    "salary" : 754.3
+  }
+} ]
+```
+
+## Validate data created by the table-oriented generic contracts
+
+In ScalarDL, you occasionally need to validate your data to make sure all the data is in a valid state. You can use the `validate-ledger` command to validate assets created by the table-oriented generic contracts. If you want to validate them in your applications, you can use the ScalarDL Client SDK APIs. For details, see [Validate your data](how-to-write-applications-with-generic-contracts.mdx#validate-your-data).
+
+You can validate the table schema by running the following commands:
+
+```console
+client/bin/scalardl generic-contracts validate-ledger --properties client.properties \
+--table-name employee
+```
+
+You should get a result like the following:
+
+```console
+{
+  "status_code" : "OK",
+  "Ledger" : {
+    "id" : "tbl_employee",
+    "age" : 0,
+    "nonce" : "26af1229-1c1f-4b89-86e2-ec011da3b313",
+    "hash" : "ZA9yFzjIg1qeHAd7Sub8uFvt2JrTb6XSzGUktPEITr0=",
+    "signature" : "MEUCIAh4Xj93J/jldqbQor7AVM4ii9+suxQrZlCFnKWWDIo0AiEAiM6Yi6GO4bQ2VZg2GnqKmOFPEANrTU4g7pjBMcaX6TQ="
+  },
+  "Auditor" : null
+}
+```
+
+You can validate the record by running the following commands:
+
+```console
+client/bin/scalardl generic-contracts validate-ledger --properties client.properties \
+--table-name employee --primary-key-column-name id --column-value '"1001"'
+```
+
+You should get a result like the following:
+
+```console
+{
+  "status_code" : "OK",
+  "Ledger" : {
+    "id" : "rec_employee_id_1001",
+    "age" : 0,
+    "nonce" : "41a18e7f-314f-4aec-8984-62bf6cd355d0",
+    "hash" : "n7KJLuC/KOzFZLnGKEs6pOQvCbl4WSF+xplOUd9MrSo=",
+    "signature" : "MEUCIEHafCsSXWWtZnDbSpAwFQk4qjW1B7cXjEgdwVF8uKQeAiEAsvzEMKyuNFozAbLC/E8FEviCMLCqo9DPRQe4tVBFwIk="
+  },
+  "Auditor" : null
+}
+```
+
+You can validate the index record by running the following commands:
+
+```console
+client/bin/scalardl generic-contracts validate-ledger --properties client.properties \
+--table-name employee --index-key-column-name department --column-value '"sales"'
+```
+
+You should get a result like the following:
+
+```console
+{
+  "status_code" : "OK",
+  "Ledger" : {
+    "id" : "idx_employee_department_sales",
+    "age" : 0,
+    "nonce" : "41a18e7f-314f-4aec-8984-62bf6cd355d0",
+    "hash" : "n7KJLuC/KOzFZLnGKEs6pOQvCbl4WSF+xplOUd9MrSo=",
+    "signature" : "MEUCIEHafCsSXWWtZnDbSpAwFQk4qjW1B7cXjEgdwVF8uKQeAiEAsvzEMKyuNFozAbLC/E8FEviCMLCqo9DPRQe4tVBFwIk="
+  },
+  "Auditor" : null
+}
+```
+
+:::note
+
+Generic contracts internally assign a dedicated asset ID to an [asset record](data-modeling.mdx#asset-record). The asset ID consists of a prefix for the asset type and keys for identification; for example, a prefix `rec_`, table name, primary key column name, and column value are used for the asset ID of a record. Therefore, you will see such raw asset IDs in the result of `validate-ledger`.
+
+:::
+
+## See also
+
+To interact with the table-oriented generic contracts in your Java applications, see the following:
+
+* [Write a ScalarDL Application with Generic Contracts](how-to-write-applications-with-generic-contracts.mdx)
+* [Javadocs for the ScalarDL Java Client SDK](https://javadoc.io/doc/com.scalar-labs/scalardl-java-client-sdk/latest/index.html)
