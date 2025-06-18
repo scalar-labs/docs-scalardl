@@ -1,0 +1,398 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+# ScalarDL クライアントコマンドリファレンス
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このページでは、ScalarDL コンポーネントと対話するためのクライアントコマンドである `scalardl` を紹介します。
+
+## コマンドの概要
+
+- **ID 情報を登録する**
+  - [`register-cert`](#register-cert): 指定された証明書を登録します。
+  - [`register-secret`](#register-secret): 指定されたシークレットを登録します。
+- **ビジネスロジックを登録する**
+  - [`register-contract`](#register-contract): 指定されたコントラクトを登録します。
+  - [`register-contracts`](#register-contracts): 指定されたコントラクトを登録します。
+  - [`register-function`](#register-function): 指定されたファンクションを登録します。
+  - [`register-functions`](#register-functions): 指定されたファンクションを登録します。
+- **登録されたビジネスロジックを実行して一覧表示する**
+  - [`execute-contract`](#register-contract): 指定されたコントラクトを実行します。
+  - [`list-contracts`](#list-contracts): 登録されたコントラクトを一覧表示します。
+- **台帳を検証します**
+  - [`validate-ledger`](#validate-ledger): 台帳内の指定されたアセットを検証します。
+- **汎用コントラクト向けにコマンドを実行します**
+  - [`generic-contracts`](#generic-contracts): 汎用コントラクトベースの構成でコマンドを実行します。
+
+## `register-cert`
+
+指定された証明書を登録します。
+
+### オプション
+
+| オプション                   | 説明                      |
+|:---------------------------|:--------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+```console
+scalardl register-cert --properties client.properties
+```
+
+## `register-secret`
+
+指定されたシークレットを登録します。
+
+### オプション
+
+| オプション                   | 説明                      |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+```console
+scalardl register-secret --properties client.properties
+```
+
+## `register-contract`
+
+指定されたコントラクトを登録します。
+
+### オプション
+
+| オプション                   | 説明                                                                            |
+|:---------------------------|:--------------------------------------------------------------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。                                                       |
+| `--contract-binary-name`   | 登録するコントラクトのバイナリ名。                                                    |
+| `--contract-class-file`    | 登録するコントラクトクラスファイル。                                                |
+| `--contract-id`            | 登録するコントラクトの ID。                                                         |
+| `--contract-properties`    | シリアル化された形式のコントラクトプロパティ。                                         |
+| `--deserialization-format` | コントラクトプロパティの逆シリアル化形式。有効な値: JSON または STRING (デフォルト: JSON) |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+```console
+scalardl register-contract --properties client.properties --contract-id StateUpdater --contract-binary-name com.org1.contract.StateUpdater --contract-class-file build/classes/java/main/com/org1/contract/StateUpdater.class
+```
+
+## `register-contracts`
+
+指定されたコントラクトを登録します。
+
+### オプション
+
+| オプション                   | 説明                                     |
+|:---------------------------|:-----------------------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。                |
+| `--contracts-file`         | TOML 形式で登録するコントラクトを含むファイル。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+```console
+scalardl register-contracts --properties client.properties --contracts-file /path/to/contracts-file
+```
+
+コントラクトファイルの例は次のとおりです。
+
+```toml
+[[contracts]]
+contract-id = "StateUpdater"
+contract-binary-name = "com.org1.contract.StateUpdater"
+contract-class-file = "build/classes/java/main/com/org1/contract/StateUpdater.class"
+
+[[contracts]]
+contract-id = "StateReader"
+contract-binary-name = "com.org1.contract.StateReader"
+contract-class-file = "build/classes/java/main/com/org1/contract/StateReader.class"
+```
+
+## `register-function`
+
+指定されたファンクションを登録します。
+
+### オプション
+
+| オプション                   | 説明                      |
+|:---------------------------|:--------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。 |
+| `--function-binary-name`   | 登録するファンクションのバイナリ名。    |
+| `--function-class-file`    | 登録するファンクションクラスファイル。 |
+| `--function-id`            | 登録するファンクションの ID。         |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+```console
+scalardl register-function --properties client.properties --function-id test-function --function-binary-name com.example.function.TestFunction --function-class-file /path/to/TestFunction.class
+```
+
+## `register-functions`
+
+指定された機能を登録します。
+
+### オプション
+
+| オプション                   | 説明                              |
+|:---------------------------|:----------------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。         |
+| `--functions-file`         | TOML 形式で登録するファンクションを含むファイル。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+```console
+scalardl register-functions --properties client.properties --functions-file /path/to/functions-file
+```
+
+ファンクションファイルの例は次のとおりです。
+
+```toml
+[[functions]]
+function-id = "TestFunction1"
+function-binary-name = "com.org1.function.TestFunction1"
+function-class-file = "build/classes/java/main/com/org1/function/TestFunction1.class"
+
+[[functions]]
+function-id = "TestFunction2"
+function-binary-name = "com.org1.function.TestFunction2"
+function-class-file = "build/classes/java/main/com/org1/function/TestFunction2.class"
+```
+
+## `execute-contract`
+
+指定されたコントラクトを実行します。
+
+### オプション
+
+| オプション                   | 説明                                                                                 |
+|:---------------------------|:------------------------------------------------------------------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。                                                           |
+| `--contract-argument`      | シリアル化された形式で実行するコントラクトの引数。                                           |
+| `--contract-id`            | 実行するコントラクトの ID。                                                             |
+| `--deserialization-format` | コントラクトおよびファンクションの引数のデシリアル化形式。有効な値: JSON または STRING (デフォルト: JSON) |
+| `--function-id`            | 実行するファンクションの ID。                                                                    |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+ファンクションなしでコントラクトを実行します。
+
+```console
+scalardl execute-contract --properties client.properties --contract-id StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}'
+```
+
+ファンクションを使用してコントラクトを実行します。
+
+```console
+scalardl execute-contract --properties client.properties --contract-id TestContract --contract-argument '{...}' --function-id TestFunction --function-argument '{...}'
+```
+
+## `list-contracts`
+
+登録されたコントラクトを一覧表示します。
+
+### オプション
+
+| オプション                   | 説明                      |
+|:---------------------------|:--------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。 |
+| `--contract-id`            | 表示するコントラクトの ID。          |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+指定されたエンティティによって登録されたすべてのコントラクトを一覧表示します。
+
+```console
+scalardl list-contracts --properties client.properties
+```
+
+指定されたコントラクトのみを表示します。
+
+```console
+scalardl list-contracts --properties client.properties --contract-id StateUpdater
+```
+
+## `validate-ledger`
+
+元帳内の指定されたアセットを検証します。
+
+### オプション
+
+| オプション                   | 説明                                                                                                                                             |
+|:---------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。                                                                                                                        |
+| `--asset-id`               | アセットの ID またはアセットの ID と経過時間。形式: 'ASSET_ID' (検証するアセットの ID)、または 'ASSET_ID,START_AGE,END_AGE' (検証するアセットの ID と経過時間)。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+すべての世代を対象にアセットを検証します。
+
+```console
+scalardl validate-ledger --properties client.properties --asset-id 'some_asset'
+```
+
+アセットを 0 から 10 までの世代のみ検証します。
+
+```console
+scalardl validate-ledger --properties client.properties --asset-id 'some_asset,0,10'
+```
+
+## `generic-contracts`
+
+汎用コントラクトベースの構成向けにコマンドを実行します。これは、`scalardl` コマンドのサブコマンドとほぼ同じです。唯一の違いは、`validate-ledger` サブコマンドで、生のアセット ID ではなく、汎用コントラクトで用いられるオブジェクト ID でアセットを指定できることです。他のサブコマンドについては、次の[サブコマンド](#サブコマンド)セクションの対応する各コマンドを参照してください。
+
+:::tip
+
+`scalardl-gc` トップレベルコマンドまたは `gc` サブコマンドを `generic-contracts` サブコマンドのエイリアスとして使用することもできます。
+
+:::
+
+### サブコマンド
+
+| サブコマンド                                                      | 説明                                      |
+|:------------------------------------------------------------|:----------------------------------------|
+| [`register-cert`](#register-cert)                           | 指定された証明書を登録します。                         |
+| [`register-secret`](#register-secret)                       | 指定されたシークレットを登録します。                      |
+| [`register-contract`](#register-contract)                   | 指定されたコントラクトを登録します。                      |
+| [`register-contracts`](#register-contracts)                 | 指定された複数のコントラクトを登録します。                   |
+| [`register-function`](#register-function)                   | 指定されたファンクションを登録します。                     |
+| [`register-functions`](#register-functions)                 | 指定された複数のファンクションを登録します。                  |
+| [`execute-contract`](#execute-contract)                     | 指定されたコントラクトを実行します。           |
+| [`list-contracts`](#list-contracts)                         | 登録されたコントラクトを一覧表示します。          |
+| [`validate-ledger`](#validate-ledger-for-generic-contracts) | 台帳内の指定されたアセットを検証します。 |
+
+### `validate-ledger` for generic contracts
+
+台帳内の指定された[アセット](data-modeling.mdx#アセット)を検証します。
+
+:::note
+
+汎用コントラクトは、オブジェクトまたはコレクションを表す[アセットレコード](data-modeling.mdx#アセットレコード)に専用のアセット ID を内部的に割り当てます。アセット ID は、アセットタイプのプレフィックスとキーで構成されます。たとえば、オブジェクトのプレフィックス `o_` とオブジェクト ID です。`validate-ledger` コマンドを実行すると、このような生のアセット ID が表示されます。
+
+:::
+
+#### Options
+
+| Option                     | Description                                 |
+|:---------------------------|:--------------------------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。                             |
+| `--object-id`              | `object.Put` コントラクトで作成されたオブジェクトの ID。        |
+| `--collection-id`          | `collection.Create` コントラクトで作成されたコレクションの ID。 |
+| `--start-age`              | アセットの検証開始世代 (オプショナル).                       |
+| `--end-age`                | アセットの検証終了世代 (オプショナル).                       |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### サブコマンドの使用例
+
+指定された証明書を登録します。使用可能なオプションについては、[`register-cert`](#register-cert)を参照してください。
+
+```console
+scalardl generic-contracts register-cert --properties client.properties
+```
+
+指定されたシークレットを登録します。使用可能なオプションについては、[`register-secret`](#register-secret)を参照してください。
+
+```console
+scalardl generic-contracts register-secret --properties client.properties
+```
+
+指定されたコントラクトを登録します。使用可能なオプションについては、[`register-contract`](#register-contract)を参照してください。
+
+```console
+scalardl generic-contracts register-contract --properties client.properties --contract-id object.Put --contract-binary-name com.scalar.dl.genericcontracts.object.Put --contract-class-file /path/to/Put.class
+```
+
+指定された複数のコントラクトを登録します。使用可能なオプションについては、[`register-contracts`](#register-contracts)を参照してください。
+
+```console
+scalardl generic-contracts register-contracts --properties client.properties --contracts-file /path/to/contracts-file
+```
+
+指定されたファンクションを登録します。使用可能なオプションについては、[`register-function`](#register-function)を参照してください。
+
+```console
+scalardl generic-contracts register-function --properties client.properties --function-id object.PutToMutableDatabase --function-binary-name com.scalar.dl.genericcontracts.object.PutToMutableDatabase --function-class-file /path/to/PutToMutableDatabase.class
+```
+
+指定された複数のファンクションを登録します。使用可能なオプションについては、[`register-functions`](#register-functions)を参照してください。
+
+```console
+scalardl generic-contracts register-functions --properties client.properties --functions-file /path/to/functions-file
+```
+
+指定されたコントラクトを実行します。使用可能なオプションについては、[`execute-contract`](#execute-contract)を参照してください。
+
+```console
+scalardl generic-contracts execute-contract --properties client.properties --contract-id object.Put --contract-argument '{"object_id": "a.txt", "hash_value": "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c", "metadata": {"note": "updated"}}'
+```
+
+登録済みのコントラクトを一覧表示します。使用可能なオプションについては、[`list-contracts`](#list-contracts)を参照してください。
+
+```console
+scalardl generic-contracts list-contracts --properties client.properties
+```
+
+すべての世代のオブジェクトを検証します。
+
+```console
+scalardl generic-contracts validate-ledger --properties client.properties --object-id 'a.txt'
+```
+
+世代 0 から 10 までのオブジェクトのみを検証します。
+
+```console
+scalardl generic-contracts validate-ledger --properties client.properties --object-id 'a.txt' --start-age 0 --end-age 10
+```
+
+すべての世代のコレクションを検証します。
+
+```console
+scalardl generic-contracts validate-ledger --properties client.properties --collection-id 'audit_set'
+```
+
+`scalardl generic-contracts` のエイリアスとして、トップレベルコマンド `scalardl-gc` を使用します。
+
+```console
+scalardl-gc validate-ledger --properties client.properties --object-id 'a.txt'
+```
+
+`scalardl generic-contracts` のエイリアスとして、サブコマンド `scalardl gc` を使用します。
+
+```console
+scalardl gc validate-ledger --properties client.properties --object-id 'a.txt'
+```
+
+## 共通ユーティリティオプション
+
+上記のすべてのコマンドで次のオプションを使用できます。
+
+| オプション              | 説明                                                |
+|:----------------------|:----------------------------------------------------|
+| `-g`, `--use-gateway` | ゲートウェイを使用するためのオプション。                      |
+| `-h`, `--help`        | コマンドのヘルプメッセージを表示します。                 |
+| `--stacktrace`        | Java スタックトレースを `stderr` ストリームに出力します。 |
