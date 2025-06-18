@@ -8,10 +8,13 @@ displayed_sidebar: docsJapanese
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
-[Scalar Manager](../scalar-manager/overview.mdx) は、Kubernetes クラスター環境内の ScalarDB および ScalarDL の集中管理および監視ソリューションであり、次のことが可能になります。
+<TranslationBanner />
 
-- ScalarDB または ScalarDL の可用性を確認します。
+[Scalar Manager](../scalar-manager/overview.mdx) は、Kubernetes クラスター環境内の ScalarDB および ScalarDL を集中管理および監視するソリューションです。これにより、次のことが可能になります。
+
+- ScalarDB または ScalarDL が利用可能な状態かを監視します。
 - ScalarDB または ScalarDL が使用するデータベースでトランザクションの一貫性のある期間を作成する一時停止ジョブをスケジュールまたは実行します。
 - Grafana ダッシュボードを介して ScalarDB または ScalarDL の時系列メトリックとログを確認します。
 
@@ -30,44 +33,50 @@ Scalar Manager をデプロイする前に、次の操作を行う必要があ�
 以下は、Kubernetes クラスターにデプロイされたコンポーネントのアーキテクチャ図です。
 
 ```
-+--------------------------------------------------------------------------------------------------+
-| +----------------------+                                                                         |
-| |    scalar-manager    |                                                                         |
-| |                      |                                                                         |
-| | +------------------+ | --------------------------(Manage)--------------------------+           |
-| | |  Scalar Manager  | |                                                             |           |
-| | +------------------+ |                                                             |           |
-| +--+-------------------+                                                             |           |
-|    |                                                                                 |           |
-| +------------------------------------+                                               |           |
-| |             loki-stack             |                                               V           |
-| |                                    |                                       +-----------------+ |
-| | +--------------+  +--------------+ | <----------------(Log)--------------- | Scalar Products | |
-| | |     Loki     |  |   Promtail   | |                                       |                 | |
-| | +--------------+  +--------------+ |                                       |  +-----------+  | |
-| +------------------------------------+                                       |  | ScalarDB  |  | |
-|    |                                                                         |  +-----------+  | |
-| +------------------------------------------------------+                     |                 | |
-| |                kube-prometheus-stack                 |                     |  +-----------+  | |
-| |                                                      |                     |  | ScalarDL  |  | |
-| | +--------------+  +--------------+  +--------------+ | -----(Monitor)----> |  +-----------+  | |
-| | |  Prometheus  |  | Alertmanager |  |   Grafana    | |                     +-----------------+ |
-| | +-------+------+  +------+-------+  +------+-------+ |                                         |
-| |         |                |                 |         |                                         |
-| |         +----------------+-----------------+         |                                         |
-| |                          |                           |                                         |
-| +--------------------------+---------------------------+                                         |
-|    |                       |                                                                     |
-|    |                       |         Kubernetes                                                  |
-+----+-----------------------+---------------------------------------------------------------------+
-     |                       |
++----------------------------------------------------------------------------------------------------------------------+
+|        +----------------------------+                                                                                |
+|        |       scalar-manager       |                                                                                |
+|        |                            |                                                                                |
+|        |    +------------------+    | ---------------------------------(Manage)--------------------------+           |
+|    +---+--->|  Scalar Manager  |    |                                                                    |           |
+|    |   |    +---+--------------+    |                                                                    |           |
+|    |   |        |                   |                                                                    |           |
+|    |   +--------+-------------------+                                                                    |           |
+|    |            |                                                                                        |           |
+|    |            +----+------------------------------------------+                                        |           |
+|    |                 |                                          |                                        |           |
+|    |        +--------+------------------------------------------+---------+                              |           |
+|    |        |        |       kube-prometheus-stack              |         |                              V           |
+|    |        |        V                                          V         |                     +-----------------+  |
+|    |        | +--------------+         +--------------+  +--------------+ | -----(Monitor)----> | Scalar Products |  |
+|    |        | |  Prometheus  | <---+   | Alertmanager |  |   Grafana    | |                     |                 |  |
+|    |        | +------+-------+     |   +--------------+  +------+-------+ |                     |  +-----------+  |  |
+|    |        |                      |                            |         |                     |  | ScalarDB  |  |  |
+|    |        |                      +----------------------------+         |                     |  +-----------+  |  |
+|    |        |                                                   |         |                     |                 |  |
+|    |        +---------------------------------------------------+---------+                     |  +-----------+  |  |
+|    |                                                            |                               |  | ScalarDL  |  |  |
+|    |                 +------------------------------------------+                   +---------- |  +-----------+  |  |
+|    |                 |                                                              |           +-----------------+  |
+|    |        +--------+---------------------------+                                  |                                |
+|    |        |        |    loki-stack             |                                  |                                |
+|    |        |        V                           |                                  |                                |
+|    |        | +--------------+  +--------------+ | <----------------(Log)-----------+                                |
+|    |        | |     Loki     |  |   Promtail   | |                                                                   |
+|    |        | +--------------+  +--------------+ |                                                                   |
+|    |        +------------------------------------+                                                                   |
+|    |                                                                                                                 |
+|    |                                Kubernetes                                                                       |
++----+-----------------------------------------------------------------------------------------------------------------+
+     |
   Expose the environment to localhost (127.0.0.1) or use a load balancer to access it
-     |                       |
+     |
   (Access the dashboard through HTTP)
-     |                       |
-+----+----+             +----+----+
-| Browser | <-(Embed)-- + Browser |
-+---------+             +---------+
+     |
++----+----+
+| Browser |
++---------+
+
 ```
 
 ## ステップ1. minikube を起動します
@@ -78,9 +87,11 @@ Scalar Manager をデプロイする前に、次の操作を行う必要があ�
 minikube start
 ```
 
-## ステップ2. Grafana を埋め込めるように `kube-prometheus-stack` をアップグレードする
+## ステップ 2. `kube-prometheus-stack` をアップグレードして、認証プロキシを使用した Grafana 認証を有効にします
 
-`kube-prometheus-stack` のカスタム値ファイル (たとえば `scalar-prometheus-custom-values.yaml`) に、次の構成を追加するか、すでに存在する場合は修正します。
+Scalar Manager にログインした後でユーザーが Grafana にアクセスできるようにするには、認証プロキシを使用した Grafana 認証を有効にする必要があります。
+
+`kube-prometheus-stack` のカスタム値ファイル (たとえば、`scalar-prometheus-custom-values.yaml`) で、次の設定を追加または修正します。
 
 ```yaml
 kubeStateMetrics:
@@ -95,13 +106,16 @@ kubelet:
 grafana:
   grafana.ini:
     users:
-      default_theme: light
-    security:
-      allow_embedding: true
-    auth.anonymous:
+      allow_sign_up: false
+      auto_assign_org: true
+      auto_assign_org_role: Editor
+    auth.proxy:
       enabled: true
-      org_name: "Main Org."
-      org_role: Editor
+      header_name: X-WEBAUTH-USER
+      header_property: username
+      auto_sign_up: true
+    server:
+      root_url: "%(protocol)s://%(domain)s:%(http_port)s/grafana"
 ```
 
 次に、次のコマンドを実行して Helm インストールをアップグレードします。
@@ -112,7 +126,7 @@ helm upgrade scalar-monitoring prometheus-community/kube-prometheus-stack -n mon
 
 ## ステップ3. 環境変数を設定する
 
-次のコマンドを実行し、山括弧内の内容を説明に従って置き換えて、Scalar Manager の環境変数を設定します。
+Scalar Manager の次の環境変数を設定し、山括弧内の内容を説明に従って置き換えます。
 
 ```console
 SCALAR_MANAGER_RELEASE_NAME=<ADD_RELEASE_NAME>
@@ -121,16 +135,16 @@ SCALAR_MANAGER_CUSTOM_VALUES_FILE=<ADD_PATH_TO_CUSTOM_VALUES_FILE>
 SCALAR_MANAGER_CHART_VERSION=<ADD_CHART_VERSION>
 ```
 
-## ステップ4. Scalar Manager のカスタム値ファイルを準備する
+## ステップ4. カスタム値ファイルを準備する
 
-次の手順に従って、Scalar Manager のカスタム値ファイルを準備します。
+Scalar Manager のカスタム値ファイルを準備します。
 
 1. `scalar-manager-custom-values.yaml` という名前の空のファイルを作成します。
-1. [Scalar Manager のカスタム値ファイルを構成する](configure-custom-values-scalar-manager.mdx)の手順に従います。
+2. [Scalar Manager のカスタム値ファイルを設定する](configure-custom-values-scalar-manager.mdx)の手順に従います。
 
-## ステップ5. `scalar-manager` をインストールしてデプロイする
+## ステップ5. デプロイする
 
-次のコマンドを実行して、`scalar-manager` Helm Chart をインストールしてデプロイします。
+次のコマンドを実行して、`scalar-manager` Helm Chart をデプロイします。
 
 ```console
 helm install ${SCALAR_MANAGER_RELEASE_NAME} scalar-labs/scalar-manager -n ${SCALAR_MANAGER_NAMESPACE} -f ${SCALAR_MANAGER_CUSTOM_VALUES_FILE} --version ${SCALAR_MANAGER_CHART_VERSION}
@@ -138,36 +152,30 @@ helm install ${SCALAR_MANAGER_RELEASE_NAME} scalar-labs/scalar-manager -n ${SCAL
 
 ## ステップ6. Scalar Manager にアクセスする
 
-Scalar Manager にアクセスする方法は、Kubernetes クラスターに使用しているツールによって異なります。
+Scalar Manager にアクセスする方法は、Kubernetes クラスターによって異なります。
 
 <Tabs groupId="kubernetes-tools" queryString>
   <TabItem value="minikube" label="minikube" default>
-    Scalar Manager のサービスリソースをローカルホスト (127.0.0.1) として公開するには、別のターミナルを開き、`minikube tunnel` コマンドを実行します。
+    Scalar Manager をローカルホスト (127.0.0.1) で公開するには、別のターミナルを開いて `minikube tunnel` コマンドを実行します。
 
     ```console
     minikube tunnel
     ```
 
-    Then, access Scalar Manager by going to http://localhost:8000.
+    次に、http://localhost:8000 で Scalar Manager にアクセスします。
   </TabItem>
   <TabItem value="other-kubernetes-clustering-tool" label="その他の Kubernetes クラスタリングツール">
-    minikube 以外の Kubernetes クラスターを使用している場合は、各 Kubernetes クラスターの方式に従って `LoadBalancer` サービスにアクセスする必要があります。たとえば、クラウドサービスプロバイダーが提供するロードバランサーを使用するか、`kubectl port-forward` コマンドを使用する必要があります。
-
-:::note
-
-Scalar Manager は Grafana の外部 IP アドレスを検出し、その IP アドレスに基づいて Grafana を埋め込もうとします。そのため、Grafana サービスタイプを `LoadBalancer` として設定し、外部 IP アドレスにブラウザーからアクセスできる必要があります。
-
-:::
+    minikube 以外の Kubernetes クラスターを使用している場合は、クラスターの説明に従って `LoadBalancer` サービスにアクセスします。たとえば、クラウドサービスプロバイダーのロードバランサーを使用するか、`kubectl port-forward` コマンドを使用します。
   </TabItem>
 </Tabs>
 
 ## 追加の詳細
 
-このセクションでは、構成とリソース検出に関する追加の詳細について説明します。
+このセクションでは、設定とリソース検出に関する追加の詳細について説明します。
 
-### Scalar Manager のデプロイメントをアップグレードする
+### Scalar Manager をアップグレードする
 
-Scalar Manager のデプロイメントをアップグレードするには、次のコマンドを実行します。
+Scalar Manager をアップグレードするには、次のコマンドを実行します。
 
 ```console
 helm upgrade ${SCALAR_MANAGER_RELEASE_NAME} scalar-labs/scalar-manager -n ${SCALAR_MANAGER_NAMESPACE} -f ${SCALAR_MANAGER_CUSTOM_VALUES_FILE} --version ${SCALAR_MANAGER_CHART_VERSION}
@@ -181,9 +189,9 @@ Scalar Manager をアンインストールするには、次のコマンドを�
 helm uninstall ${SCALAR_MANAGER_RELEASE_NAME} -n ${SCALAR_MANAGER_NAMESPACE}
 ```
 
-### オプションの Scalar Manager 構成
+### オプションの Scalar Manager 設定
 
-Scalar Manager に設定できるオプションの構成については、[オプション設定](./configure-custom-values-scalar-manager.mdx#オプション設定)を参照してください。
+Scalar Manager に設定できるオプションの設定については、[オプション設定](./configure-custom-values-scalar-manager.mdx#オプション設定)を参照してください。
 
 ### リソースの検出
 
@@ -191,8 +199,6 @@ Scalar Manager は、特定のラベルセレクターを使用して、クラ�
 
 - 依存関係
   - Prometheus サービス
-  - Loki サービス
-  - Grafana サービス
 - ターゲット
   - ScalarDB Cluster のデプロイメント
   - ScalarDL Ledger のデプロイメント
@@ -202,9 +208,9 @@ Scalar Manager は、特定のラベルセレクターを使用して、クラ�
 
 #### 依存関係
 
-Scalar Manager は、[kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) および [loki-stack](https://github.com/grafana/helm-charts/tree/main/charts/loki-stack) Helm Chart に設定されているデフォルトのラベルと値を検索します。Scalar Manager が依存関係を検出するために使用するデフォルトのラベルと値の詳細については、[`api.applicationProperties` で設定できるプロパティ](./configure-custom-values-scalar-manager.mdx#apiapplicationProperties-で設定できるプロパティ)を参照してください。
+Scalar Manager は、[kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) Helm Chart に設定されているデフォルトのラベルと値を検索します。Scalar Manager が依存関係を検出するために使用するデフォルトのラベルと値の詳細については、[`api.applicationProperties` で設定できるプロパティ](./configure-custom-values-scalar-manager.mdx#apiapplicationProperties-で設定できるプロパティ)を参照してください。
 
-また、`kube-prometheus-stack` または `loki-stack` のインストール時に値をカスタマイズした場合は、Scalar Manager のカスタム値 `api.applicationProperties` のラベルセレクターを更新する必要があります。
+また、`kube-prometheus-stack` のインストール時に値をカスタマイズした場合は、Scalar Manager のカスタム値 `api.applicationProperties` のラベルセレクターを更新する必要があります。
 
 #### ターゲット
 
