@@ -730,6 +730,11 @@ const sidebars = {
               id: 'use-generic-contracts',
               label: '汎用コントラクトを使用',
             },
+            // {
+            //   type: 'doc',
+            //   id: 'use-table-oriented-generic-contracts',
+            //   label: 'TITLE',
+            // }
           ],
         },
         {
