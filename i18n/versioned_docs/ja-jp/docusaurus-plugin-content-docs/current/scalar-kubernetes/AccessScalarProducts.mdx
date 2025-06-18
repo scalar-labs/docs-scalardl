@@ -1,0 +1,198 @@
+---
+tags:
+  - Enterprise Standard
+  - Enterprise Premium
+displayed_sidebar: docsJapanese
+---
+
+# Kubernetes クラスター環境にデプロイされた ScalarDB または ScalarDL をアプリケーションから利用できるようにする
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このドキュメントでは、Kubernetes クラスター環境にデプロイされた ScalarDB または ScalarDL をアプリケーションから利用できるようにする方法について説明します。ScalarDB または ScalarDL をアプリケーションから利用できるようにするには、`<HELM_RELEASE_NAME>-envoy` という名前の Kubernetes サービスリソース経由で Scalar Envoy を使用します。`<HELM_RELEASE_NAME>-envoy` は次のようないくつかの方法で使用できます。
+
+* ScalarDB または ScalarDL と同じ Kubernetes クラスター内から直接。
+* Kubernetes クラスターの外部からのロードバランサー経由。
+* `kubectl port-forward` コマンドを使用して踏み台サーバーから実行します (テスト目的のみ)。
+
+リソース名 `<HELM_RELEASE_NAME>-envoy` は Helm リリース名に基づいて決定されます。次のコマンドを実行すると、helm リリース名を確認できます。
+
+```console
+helm list -n ns-scalar
+```
+
+次のような結果が表示されます：
+
+```console
+NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS                                                       CHART                    APP VERSION
+scalardb                ns-scalar       1               2023-02-09 19:31:40.527130674 +0900 JST deployed                                                     scalardb-2.5.0           3.8.0
+scalardl-auditor        ns-scalar       1               2023-02-09 19:32:03.008986045 +0900 JST deployed                                                     scalardl-audit-2.5.1     3.7.1
+scalardl-ledger         ns-scalar       1               2023-02-09 19:31:53.459548418 +0900 JST deployed                                                     scalardl-4.5.1           3.7.1
+```
+
+次のコマンドを実行すると、envoy サービス名 `<HELM_RELEASE_NAME>-envoy` を確認することもできます。
+
+```console
+kubectl get service -n ns-scalar
+```
+
+次のような結果が表示されます：
+
+```console
+NAME                             TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                           AGE
+scalardb-envoy                   LoadBalancer   10.99.245.143    <pending>     60051:31110/TCP                   2m2s
+scalardb-envoy-metrics           ClusterIP      10.104.56.87     <none>        9001/TCP                          2m2s
+scalardb-headless                ClusterIP      None             <none>        60051/TCP                         2m2s
+scalardb-metrics                 ClusterIP      10.111.213.194   <none>        8080/TCP                          2m2s
+scalardl-auditor-envoy           LoadBalancer   10.111.141.43    <pending>     40051:31553/TCP,40052:31171/TCP   99s
+scalardl-auditor-envoy-metrics   ClusterIP      10.104.245.188   <none>        9001/TCP                          99s
+scalardl-auditor-headless        ClusterIP      None             <none>        40051/TCP,40053/TCP,40052/TCP     99s
+scalardl-auditor-metrics         ClusterIP      10.105.119.158   <none>        8080/TCP                          99s
+scalardl-ledger-envoy            LoadBalancer   10.96.239.167    <pending>     50051:32714/TCP,50052:30857/TCP   109s
+scalardl-ledger-envoy-metrics    ClusterIP      10.97.204.18     <none>        9001/TCP                          109s
+scalardl-ledger-headless         ClusterIP      None             <none>        50051/TCP,50053/TCP,50052/TCP     109s
+scalardl-ledger-metrics          ClusterIP      10.104.216.189   <none>        8080/TCP                          109s
+```
+
+## 同じ Kubernetes クラスター内からサービスリソースを介して、ScalarDB または ScalarDL へのアプリケーション (クライアント) リクエストを直接実行します。
+
+アプリケーション (クライアント) を ScalarDB または ScalarDL と同じ Kubernetes クラスターにデプロイする場合 (たとえば、アプリケーション [クライアント] を同じ Kubernetes クラスター内の別のノードグループまたはプールにデプロイする場合)、アプリケーションは次の方法で ScalarDB または ScalarDL にアクセスできます。Kubernetes サービスリソースを使用します。サービスリソース名 (FQDN) の形式は、`<HELM_RELEASE_NAME>-envoy.<NAMESPACE>.svc.cluster.local` です。
+
+以下は、`ns-scalar` 名前空間での ScalarDB および ScalarDL のデプロイメントの例です。
+
+* **ScalarDB Server**
+    ```console
+    scalardb-envoy.ns-scalar.svc.cluster.local
+    ```
+* **ScalarDL Ledger**
+    ```console
+    scalardl-ledger-envoy.ns-scalar.svc.cluster.local
+    ```
+* **ScalarDL Auditor**
+    ```console
+    scalardl-auditor-envoy.ns-scalar.svc.cluster.local
+    ```
+
+Kubernetes サービスリソースを使用する場合、アプリケーション (クライアント) のプロパティファイルに上記の FQDN を次のように設定する必要があります。
+
+* **ScalarDB Server のクライアントプロパティファイル**
+    ```properties
+    scalar.db.contact_points=<HELM_RELEASE_NAME>-envoy.<NAMESPACE>.svc.cluster.local
+    scalar.db.contact_port=60051
+    scalar.db.storage=grpc
+    scalar.db.transaction_manager=grpc
+    ```
+* **ScalarDL Ledger のクライアントプロパティファイル**
+    ```properties
+    scalar.dl.client.server.host=<HELM_RELEASE_NAME>-envoy.<NAMESPACE>.svc.cluster.local
+    scalar.dl.ledger.server.port=50051
+    scalar.dl.ledger.server.privileged_port=50052
+    ```
+* **ScalarDL Auditor モードが有効になっている ScalarDL Ledger のクライアントプロパティファイル**
+    ```properties
+    # Ledger
+    scalar.dl.client.server.host=<HELM_RELEASE_NAME>-envoy.<NAMESPACE>.svc.cluster.local
+    scalar.dl.ledger.server.port=50051
+    scalar.dl.ledger.server.privileged_port=50052
+
+    # Auditor
+    scalar.dl.client.auditor.enabled=true
+    scalar.dl.client.auditor.host=<HELM_RELEASE_NAME>-envoy.<NAMESPACE>.svc.cluster.local
+    scalar.dl.auditor.server.port=40051
+    scalar.dl.auditor.server.privileged_port=40052
+    ```
+
+## Kubernetes クラスターの外部からロードバランサー経由で ScalarDB または ScalarDL へのアプリケーション (クライアント) リクエストを実行します
+
+ScalarDB または ScalarDL の Kubernetes クラスターの外部の環境にアプリケーション (クライアント) をデプロイする場合 (たとえば、アプリケーション [クライアント] を別の Kubernetes クラスター、コンテナープラットフォーム、またはサーバーにデプロイする場合)、アプリケーションは ScalarDB または ScalarDL にアクセスできます。各クラウドサービスが提供するロードバランサーを利用します。
+
+カスタム値ファイルで `envoy.service.type` を `LoadBalancer` に設定することで、ロードバランサーを作成できます。カスタム値ファイルを構成した後、ロードバランサーを使用して、Kubernetes サービスリソースを通じて Scalar Envoy を使用できるようになります。注釈を使用してロードバランサーの構成を設定することもできます。
+
+カスタム値ファイルの設定方法の詳細については、[サービス設定](../helm-charts/configure-custom-values-envoy.mdx#サービス構成)を参照してください。
+
+ロードバランサを使用する場合、アプリケーション (クライアント) のプロパティファイルにロードバランサのFQDNまたはIPアドレスを以下のように設定する必要があります。
+
+* **ScalarDB Server のクライアントプロパティファイル**
+    ```properties
+    scalar.db.contact_points=<LOAD_BALANCER_FQDN_OR_IP_ADDRESS>
+    scalar.db.contact_port=60051
+    scalar.db.storage=grpc
+    scalar.db.transaction_manager=grpc
+    ```
+* **ScalarDL Ledger のクライアントプロパティファイル**
+    ```properties
+    scalar.dl.client.server.host=<LOAD_BALANCER_FQDN_OR_IP_ADDRESS>
+    scalar.dl.ledger.server.port=50051
+    scalar.dl.ledger.server.privileged_port=50052
+    ```
+* **ScalarDL Auditor モードが有効になっている ScalarDL Ledger のクライアントプロパティファイル**
+    ```properties
+    # Ledger
+    scalar.dl.client.server.host=<LOAD_BALANCER_FQDN_OR_IP_ADDRESS>
+    scalar.dl.ledger.server.port=50051
+    scalar.dl.ledger.server.privileged_port=50052
+
+    # Auditor
+    scalar.dl.client.auditor.enabled=true
+    scalar.dl.client.auditor.host=<LOAD_BALANCER_FQDN_OR_IP_ADDRESS>
+    scalar.dl.auditor.server.port=40051
+    scalar.dl.auditor.server.privileged_port=40052
+    ```
+
+ロードバランサーの具体的な実装とアクセス方法は、Kubernetes クラスターに依存します。マネージド Kubernetes クラスターを使用している場合は、クラウドサービスプロバイダーに基づいて次の公式ドキュメントを参照してください。
+
+* **Amazon Elastic Kubernetes Service (EKS)**
+  * [Network load balancing on Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/network-load-balancing.html)
+* **Azure Kubernetes Service (AKS)**
+  * [Use a public standard load balancer in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/load-balancer-standard)
+  * [Use an internal load balancer with Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/internal-lb)
+
+## 踏み台サーバーから ScalarDB または ScalarDL へのクライアントリクエストを実行します (テスト目的のみ。運用環境では推奨されません)
+
+`kubectl port-forward` コマンドを実行すると、踏み台サーバーから ScalarDB または ScalarDL へのクライアントリクエストを実行できます。ただし、ScalarDL Auditor モード環境を作成する場合、2つの Kubernetes クラスターにアクセスするには、1つの踏み台サーバーから異なる kubeconfig ファイルを使用して2つの `kubectl port-forward` コマンドを実行する必要があります。
+
+1. **(ScalarDL Auditor モードのみ)** ScalarDL Ledger の踏み台サーバーで、ScalarDL Auditor の Kubernetes クラスターにアクセスするために既存の kubeconfig ファイルを構成するか、新しい kubeconfig ファイルを追加します。管理対象の各 Kubernetes クラスターの kubeconfig ファイルを構成する方法の詳細については、[kubeconfig の構成](CreateBastionServer.mdx#kubeconfig-の構成)を参照してください。
+2. 踏み台サーバーから各サービスへのポート転送を構成します。
+   * **ScalarDB Server**
+     ```console
+     kubectl port-forward -n <NAMESPACE> svc/<RELEASE_NAME>-envoy 60051:60051
+     ```
+   * **ScalarDL Ledger**
+     ```console
+     kubectl --context <CONTEXT_IN_KUBERNETES_FOR_SCALARDL_LEDGER> port-forward -n <NAMESPACE> svc/<RELEASE_NAME>-envoy 50051:50051
+     kubectl --context <CONTEXT_IN_KUBERNETES_FOR_SCALARDL_LEDGER> port-forward -n <NAMESPACE> svc/<RELEASE_NAME>-envoy 50052:50052
+     ```
+   * **ScalarDL Auditor**
+     ```console
+     kubectl --context <CONTEXT_IN_KUBERNETES_FOR_SCALARDL_AUDITOR> port-forward -n <NAMESPACE> svc/<RELEASE_NAME>-envoy 40051:40051
+     kubectl --context <CONTEXT_IN_KUBERNETES_FOR_SCALARDL_AUDITOR> port-forward -n <NAMESPACE> svc/<RELEASE_NAME>-envoy 40052:40052
+     ```
+3. `localhost` 経由で ScalarDB または ScalarDL にアクセスするようにプロパティファイルを設定します。
+   * **ScalarDB Server のクライアントプロパティファイル**
+     ```properties
+     scalar.db.contact_points=localhost
+     scalar.db.contact_port=60051
+     scalar.db.storage=grpc
+     scalar.db.transaction_manager=grpc
+     ```
+   * **ScalarDL Ledger のクライアントプロパティファイル**
+     ```properties
+     scalar.dl.client.server.host=localhost
+     scalar.dl.ledger.server.port=50051
+     scalar.dl.ledger.server.privileged_port=50052
+     ```
+   * **ScalarDL Auditor モードが有効になっている ScalarDL Ledger のクライアントプロパティファイル**
+     ```properties
+     # Ledger
+     scalar.dl.client.server.host=localhost
+     scalar.dl.ledger.server.port=50051
+     scalar.dl.ledger.server.privileged_port=50052
+
+     # Auditor
+     scalar.dl.client.auditor.enabled=true
+     scalar.dl.client.auditor.host=localhost
+     scalar.dl.auditor.server.port=40051
+     scalar.dl.auditor.server.privileged_port=40052
+     ```
