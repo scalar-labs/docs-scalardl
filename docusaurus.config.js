@@ -79,9 +79,9 @@ const config = {
                 banner: 'none',
                 className: '3.10.1',
               },
-              "3.9": { // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
+              "3.9": {
                 label: '3.9',
-                path: '3.9', // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
+                path: '3.9',
                 banner: 'none',
                 className: '3.9.5',
               },
