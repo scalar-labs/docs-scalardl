@@ -125,6 +125,11 @@ const sidebars = {
               id: 'use-generic-contracts',
               label: 'Use Generic Contracts',
             },
+            {
+              type: 'doc',
+              id: 'use-table-oriented-generic-contracts',
+              label: 'Use Table-Oriented Generic Contracts',
+            },
           ],
         },
         {
