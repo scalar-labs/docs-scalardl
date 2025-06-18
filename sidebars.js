@@ -346,7 +346,7 @@ const sidebars = {
                 {
                   type: 'doc',
                   id: 'helm-charts/getting-started-logging',
-                  label: 'Loki Stack for Logging by Using a Helm Chart by Using a Helm Chart',
+                  label: 'Loki Stack for Logging by Using a Helm Chart',
                 },
                 {
                   type: 'doc',
