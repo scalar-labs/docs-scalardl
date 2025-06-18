@@ -5,68 +5,24 @@ tags:
 displayed_sidebar: docsEnglish
 ---
 
-# ScalarDL 3.10 Release Notes
+# ScalarDL 3.11 Release Notes
 
-This page includes a list of release notes for ScalarDL 3.10.
+This page includes a list of release notes for ScalarDL 3.11.
 
-## v3.10.1
+## v3.11.0
 
-**Release date:** April 1, 2025
-
-### Summary
-
-This release has several improvements and bug fixes.
-
-### Community edition
-
-#### Improvements
-
-- Added client-service APIs and tools for a generic-contract-based setup. ([#97](https://github.com/scalar-labs/scalardl/pull/97))
-
-#### Bug fixes
-
-- Fixed [CVE-2024-45337](https://github.com/advisories/GHSA-v778-237x-gjrc "CVE-2024-45337"). ([#107](https://github.com/scalar-labs/scalardl/pull/107))
-
-### Enterprise edition
-
-#### Improvements
-
-- Improved the lock-recovery behavior when the lock-owner transaction is aborted.
-
-## v3.10.0
-
-**Release date:** December 4, 2024
+**Release date:** June 18, 2025
 
 ### Summary
 
-This release introduces enhancements, such as generic contracts and functions, as well as various improvements, including the addition of error codes. It also includes several bug fixes. For detailed changes, see the following.
+This release introduces enhancements, such as table-oriented generic contracts, and includes several bug fixes. For detailed changes, see the following.
 
 ### Enhancements
 
-- Added generic contracts and functions.
-
-### Improvements
-
-- Added error codes for error messages.
-- Enabled implicit pre-read in mutable databases.
-- Improved ScalarDB exception handling in function execution.
-- Upgraded the ScalarDB version to 3.14.0.
-- Made executeContract with nonce deprecated.
+- Added table-oriented generic contracts. ([#108](https://github.com/scalar-labs/scalardl/pull/108), [#119](https://github.com/scalar-labs/scalardl/pull/119), [#124](https://github.com/scalar-labs/scalardl/pull/124), [#127](https://github.com/scalar-labs/scalardl/pull/127), [#138](https://github.com/scalar-labs/scalardl/pull/138), [#139](https://github.com/scalar-labs/scalardl/pull/139), [#141](https://github.com/scalar-labs/scalardl/pull/141), [#149](https://github.com/scalar-labs/scalardl/pull/149), [#150](https://github.com/scalar-labs/scalardl/pull/150), [#165](https://github.com/scalar-labs/scalardl/pull/165))
 
 ### Bug fixes
 
-- Disabled SNI host check in the Prometheus exporter.
-- Fixed a bug when handling PKCS#8-formatted private keys.
-- Fixed unexpected validation execution.
-- Fixed a bug with non-nonce transaction IDs.
-- Fixed a bug where a transaction with the JDBC transaction manager incorrectly overwrites an asset.
-- Fixed a bug that makes the Ledger service unable to execute contracts on DynamoDB.
-- Added validation that disables the group commit feature in ScalarDB from being used.
-- Fixed to run with Cosmos DB.
-- Fixed the following vulnerabilities.
-  - [CVE-2023-1428](https://github.com/advisories/GHSA-6628-q6j9-w8vg "CVE-2023-1428")
-  - [CVE-2023-32731](https://github.com/advisories/GHSA-cfgp-2977-2fmm "CVE-2023-32731")
-  - [CVE-2023-45283](https://github.com/advisories/GHSA-vvjp-q62m-2vph "CVE-2023-45283")
-  - [CVE-2023-45288](https://github.com/advisories/GHSA-4v7x-pqxf-cx7m "CVE-2023-45288")
-  - [CVE-2024-24790](https://github.com/advisories/GHSA-49gw-vxvf-fc2g "CVE-2024-24790")
-  - [CVE-2024-34156](https://github.com/advisories/GHSA-crqm-pwhx-j97f "CVE-2024-34156")
+- Fixed [CVE-2024-45337](https://github.com/advisories/GHSA-v778-237x-gjrc "CVE-2024-45337"). ([#107](https://github.com/scalar-labs/scalardl/pull/107))
+- Fixed [CVE-2025-22869](https://github.com/advisories/GHSA-hcg3-q754-cr77 "CVE-2025-22869"). ([#142](https://github.com/scalar-labs/scalardl/pull/142))
+- Fixed the parameter name for the authentication method. ([#148](https://github.com/scalar-labs/scalardl/pull/148))

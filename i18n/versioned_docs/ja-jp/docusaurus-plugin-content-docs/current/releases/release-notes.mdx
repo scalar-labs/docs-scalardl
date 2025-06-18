@@ -5,72 +5,28 @@ tags:
 displayed_sidebar: docsJapanese
 ---
 
-# ScalarDL 3.10 リリースノート
+# ScalarDL 3.11 リリースノート
 
 import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このページには、ScalarDL 3.10 のリリースノートのリストが含まれています。
+このページには、ScalarDL 3.11 のリリースノートのリストが含まれています。
 
-## v3.10.1
+## v3.11.0
 
-**発売日:** 2025年4月1日
-
-### まとめ
-
-このリリースには、いくつかの改善点とバグの修正が含まれています。
-
-### Community edition
-
-#### 改善点
-
-- 汎用コントラクトベースのセットアップ用のクライアントサービス API とツールを追加しました。([#97](https://github.com/scalar-labs/scalardl/pull/97))
-
-#### バグの修正
-
-- [CVE-2024-45337](https://github.com/advisories/GHSA-v778-237x-gjrc "CVE-2024-45337") を修正しました。([#107](https://github.com/scalar-labs/scalardl/pull/107))
-
-### Enterprise edition
-
-#### 改善点
-
-- ロック所有者のトランザクションがアボートされたときのロック回復動作を改善しました。
-
-## v3.10.0
-
-**発売日:** 2024年12月4日
+**発売日:** 2025年6月18日
 
 ### まとめ
 
-このリリースでは、汎用コントラクトやファンクションなどの機能強化、およびエラーコードの追加を含むさまざまな改善が導入されています。また、いくつかのバグ修正も含まれています。詳細な変更については、以下を参照してください。
+このリリースでは、テーブル指向の汎用コントラクトなどの機能強化が導入され、いくつかのバグ修正が含まれています。詳細な変更については、以下をご覧ください。
 
 ### 機能強化
 
-- 汎用的なコントラクトとファンクションを追加しました。
-
-### 改善点
-
-- エラーメッセージにエラーコードを追加しました。
-- 可変データベースで暗黙的な事前読み取りを有効にしました。
-- 関数実行時の ScalarDB 例外処理を改善しました。
-- ScalarDB バージョンを 3.14.0 にアップグレードしました。
-- ノンスを使用した executeContract を非推奨にしました。
+- テーブル指向の汎用コントラクトを追加しました。([#108](https://github.com/scalar-labs/scalardl/pull/108), [#119](https://github.com/scalar-labs/scalardl/pull/119), [#124](https://github.com/scalar-labs/scalardl/pull/124), [#127](https://github.com/scalar-labs/scalardl/pull/127), [#138](https://github.com/scalar-labs/scalardl/pull/138), [#139](https://github.com/scalar-labs/scalardl/pull/139), [#141](https://github.com/scalar-labs/scalardl/pull/141), [#149](https://github.com/scalar-labs/scalardl/pull/149), [#150](https://github.com/scalar-labs/scalardl/pull/150), [#165](https://github.com/scalar-labs/scalardl/pull/165))
 
 ### バグの修正
 
-- Prometheus エクスポーターの SNI ホストチェックを無効にしました。
-- PKCS#8 形式の秘密鍵を処理する際のバグを修正しました。
-- 予期しない検証実行を修正しました。
-- ノンス以外のトランザクション ID に関するバグを修正しました。
-- JDBC トランザクションマネージャーを使用したトランザクションによってアセットが誤って上書きされるバグを修正しました。
-- Ledger サービスが DynamoDB でコントラクトを実行できなくなるバグを修正しました。
-- ScalarDB のグループコミット機能の使用を無効にする検証を追加しました。
-- Cosmos DB で実行できるように修正しました。
-- 次の脆弱性を修正しました。
-  - [CVE-2023-1428](https://github.com/advisories/GHSA-6628-q6j9-w8vg "CVE-2023-1428")
-  - [CVE-2023-32731](https://github.com/advisories/GHSA-cfgp-2977-2fmm "CVE-2023-32731")
-  - [CVE-2023-45283](https://github.com/advisories/GHSA-vvjp-q62m-2vph "CVE-2023-45283")
-  - [CVE-2023-45288](https://github.com/advisories/GHSA-4v7x-pqxf-cx7m "CVE-2023-45288")
-  - [CVE-2024-24790](https://github.com/advisories/GHSA-49gw-vxvf-fc2g "CVE-2024-24790")
-  - [CVE-2024-34156](https://github.com/advisories/GHSA-crqm-pwhx-j97f "CVE-2024-34156")
+- [CVE-2024-45337](https://github.com/advisories/GHSA-v778-237x-gjrc "CVE-2024-45337")を修正しました。([#107](https://github.com/scalar-labs/scalardl/pull/107))
+- [CVE-2025-22869](https://github.com/advisories/GHSA-hcg3-q754-cr77 "CVE-2025-22869")を修正しました。([#142](https://github.com/scalar-labs/scalardl/pull/142))
+- 認証メソッドのパラメーター名を修正しました。([#148](https://github.com/scalar-labs/scalardl/pull/148))

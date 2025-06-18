@@ -74,14 +74,20 @@ const config = {
               },
               */
               current: { // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
-                label: '3.10',
+                label: '3.11',
                 path: 'latest', // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
+                banner: 'none',
+                className: '3.11.0',
+              },
+              "3.10": {
+                label: '3.10',
+                path: 'latest',
                 banner: 'none',
                 className: '3.10.1',
               },
-              "3.9": { // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
+              "3.9": {
                 label: '3.9',
-                path: '3.9', // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
+                path: '3.9',
                 banner: 'none',
                 className: '3.9.5',
               },
@@ -423,7 +429,7 @@ const config = {
       announcementBar: {
         id: 'new_version',
         content:
-          '<b>🎊ScalarDL Ledger, the ledger database middleware component of ScalarDL, is now open-sourced under Apache License 2.0! To try it out, see <a target="_self" href="https://scalardl.scalar-labs.com/docs/latest/getting-started?utm_source=docs-site&utm_medium=announcementbar">Get Started with ScalarDL Ledger</a>.</b>',
+          'Announcing the release of ScalarDL 3.11!🚀 For details on what\'s included in this new version, see the <a target="_self" href="/docs/latest/releases/release-notes?utm_source=docs-site&utm_medium=announcementbar">release notes</a>.',
           // '<b>Announcing the release of ScalarDL X.X!🚀 For details on what\'s included in this new version, see the <a target="_self" href="/docs/latest/releases/release-notes?utm_source=docs-site&utm_medium=announcementbar">release notes</a>.</b>',
         backgroundColor: '#2673BB',
         textColor: '#FFFFFF',
