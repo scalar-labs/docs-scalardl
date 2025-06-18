@@ -1,0 +1,394 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsEnglish
+---
+
+# ScalarDL Client Command Reference
+
+This page introduces `scalardl`, which is a client command for interacting with ScalarDL components.
+
+## Overview of commands
+
+- **Register identity information**
+  - [`register-cert`](#register-cert): Register a specified certificate.
+  - [`register-secret`](#register-secret): Register a specified secret.
+- **Register business logic**
+  - [`register-contract`](#register-contract): Register a specified contract.
+  - [`register-contracts`](#register-contracts): Register specified contracts.
+  - [`register-function`](#register-function): Register a specified function.
+  - [`register-functions`](#register-functions): Register specified functions.
+- **Execute and list the registered business logic**
+  - [`execute-contract`](#register-contract): Execute a specified contract.
+  - [`list-contracts`](#list-contracts): List registered contracts.
+- **Validate a ledger**
+  - [`validate-ledger`](#validate-ledger): Validate a specified asset in a ledger.
+- **Run commands for generic-contracts**
+  - [`generic-contracts`](#generic-contracts): Run commands for a generic-contracts-based setup.
+
+## `register-cert`
+
+Register a specified certificate.
+
+### Options
+
+| Option                     | Description                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | A configuration file in properties format. |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+```console
+scalardl register-cert --properties client.properties
+```
+
+## `register-secret`
+
+Register a specified secret.
+
+### Options
+
+| Option                     | Description                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | A configuration file in properties format. |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+```console
+scalardl register-secret --properties client.properties
+```
+
+## `register-contract`
+
+Register a specified contract.
+
+### Options
+
+| Option                     | Description                                                                                    |
+|:---------------------------|:-----------------------------------------------------------------------------------------------|
+| `--config`, `--properties` | A configuration file in properties format.                                                     |
+| `--contract-binary-name`   | A binary name of a contract to register.                                                       |
+| `--contract-class-file`    | A contract class file to register.                                                             |
+| `--contract-id`            | An ID of a contract to register.                                                               |
+| `--contract-properties`    | Contract properties in a serialized format.                                                  |
+| `--deserialization-format` | A deserialization format for contract properties. Valid values: JSON or STRING (default: JSON) |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+```console
+scalardl register-contract --properties client.properties --contract-id StateUpdater --contract-binary-name com.org1.contract.StateUpdater --contract-class-file build/classes/java/main/com/org1/contract/StateUpdater.class
+```
+
+## `register-contracts`
+
+Register specified contracts.
+
+### Options
+
+| Option                     | Description                                            |
+|:---------------------------|:-------------------------------------------------------|
+| `--config`, `--properties` | A configuration file in properties format.             |
+| `--contracts-file`         | A file that includes contracts to register in TOML format. |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+```console
+scalardl register-contracts --properties client.properties --contracts-file /path/to/contracts-file
+```
+
+An example of the contracts file is as follows.
+
+```toml
+[[contracts]]
+contract-id = "StateUpdater"
+contract-binary-name = "com.org1.contract.StateUpdater"
+contract-class-file = "build/classes/java/main/com/org1/contract/StateUpdater.class"
+
+[[contracts]]
+contract-id = "StateReader"
+contract-binary-name = "com.org1.contract.StateReader"
+contract-class-file = "build/classes/java/main/com/org1/contract/StateReader.class"
+```
+
+## `register-function`
+
+Register a specified function.
+
+### Options
+
+| Option                     | Description                                                                                    |
+|:---------------------------|:-----------------------------------------------------------------------------------------------|
+| `--config`, `--properties` | A configuration file in properties format.                                                     |
+| `--function-binary-name`   | A binary name of a function to register.                                                       |
+| `--function-class-file`    | A function class file to register.                                                             |
+| `--function-id`            | An ID of a function to register.                                                               |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+```console
+scalardl register-function --properties client.properties --function-id test-function --function-binary-name com.example.function.TestFunction --function-class-file /path/to/TestFunction.class
+```
+
+## `register-functions`
+
+Register specified functions.
+
+### Options
+
+| Option                     | Description                                            |
+|:---------------------------|:-------------------------------------------------------|
+| `--config`, `--properties` | A configuration file in properties format.             |
+| `--functions-file`         | A file that includes functions to register in TOML format. |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+```console
+scalardl register-functions --properties client.properties --functions-file /path/to/functions-file
+```
+
+An example of the functions file is as follows.
+
+```toml
+[[functions]]
+function-id = "TestFunction1"
+function-binary-name = "com.org1.function.TestFunction1"
+function-class-file = "build/classes/java/main/com/org1/function/TestFunction1.class"
+
+[[functions]]
+function-id = "TestFunction2"
+function-binary-name = "com.org1.function.TestFunction2"
+function-class-file = "build/classes/java/main/com/org1/function/TestFunction2.class"
+```
+
+## `execute-contract`
+
+Execute a specified contract.
+
+### Options
+
+| Option                     | Description                                                                                              |
+|:---------------------------|:---------------------------------------------------------------------------------------------------------|
+| `--config`, `--properties` | A configuration file in properties format.                                                               |
+| `--contract-argument`      | An argument for a contract to execute in a serialized format.                                            |
+| `--contract-id`            | An ID of a contract to execute.                                                                          |
+| `--deserialization-format` | A deserialization format for contract and function arguments. Valid values: JSON or STRING (default: JSON) |
+| `--function-id`            | An ID of a function to execute.                                                                          |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+Execute a contract without a function.
+
+```console
+scalardl execute-contract --properties client.properties --contract-id StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}'
+```
+
+Execute a contract with a function.
+
+```console
+scalardl execute-contract --properties client.properties --contract-id TestContract --contract-argument '{...}' --function-id TestFunction --function-argument '{...}'
+```
+
+## `list-contracts`
+
+List registered contracts.
+
+### Options
+
+| Option                     | Description                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | A configuration file in properties format. |
+| `--contract-id`            | The ID of a contract to show.               |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+List all contracts registered by the specified entity.
+
+```console
+scalardl list-contracts --properties client.properties
+```
+
+Show a specified contract only.
+
+```console
+scalardl list-contracts --properties client.properties --contract-id StateUpdater
+```
+
+## `validate-ledger`
+
+Validate a specified asset in a ledger.
+
+### Options
+
+| Option                     | Description                                                                            |
+|:---------------------------|:---------------------------------------------------------------------------------------|
+| `--config`, `--properties` | A configuration file in properties format.                                             |
+| `--asset-id`               | The ID of an asset or the ID and the ages of an asset. Format: 'ASSET_ID', the ID of an asset to validate, or 'ASSET_ID,START_AGE,END_AGE', the ID and the ages of an asset to validate. |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+Validate an asset for all ages.
+
+```console
+scalardl validate-ledger --properties client.properties --asset-id 'some_asset'
+```
+
+Validate an asset from age 0 to age 10 only.
+
+```console
+scalardl validate-ledger --properties client.properties --asset-id 'some_asset,0,10'
+```
+
+## `generic-contracts`
+
+Run commands for a generic-contracts-based setup, which are almost the same subcommands for the `scalardl` command. The only difference is in the `validate-ledger` subcommand, where you can specify assets by object IDs of the generic-contracts context instead of the raw asset IDs. For the other subcommands, see each corresponding command in the following [Subcommands](#subcommands) section.
+
+:::tip
+
+You can also use the `scalardl-gc` top-level command and the `gc` subcommand as aliases of the `generic-contracts` subcommand.
+
+:::
+
+### Subcommands
+
+| Subcommand                                                  | Description                             |
+|:------------------------------------------------------------|:----------------------------------------|
+| [`register-cert`](#register-cert)                           | Register a specified certificate.       |
+| [`register-secret`](#register-secret)                       | Register a specified secret.            |
+| [`register-contract`](#register-contract)                   | Register a specified contract.          |
+| [`register-contracts`](#register-contracts)                 | Register multiple specified contracts.  |
+| [`register-function`](#register-function)                   | Register a specified function.          |
+| [`register-functions`](#register-functions)                 | Register multiple specified functions.    |
+| [`execute-contract`](#execute-contract)                     | Execute a specified contract.           |
+| [`list-contracts`](#list-contracts)                         | List the registered contracts.          |
+| [`validate-ledger`](#validate-ledger-for-generic-contracts) | Validate a specified asset in a ledger. |
+
+### `validate-ledger` for generic contracts
+
+Validate a specified [asset](data-modeling.mdx#asset) in a ledger.
+
+:::note
+
+Generic contracts internally assign a dedicated asset ID to an [asset record](data-modeling.mdx#asset-record) that represents an object or collection. The asset ID consists of a prefix for the asset type and keys; for example, a prefix `o_` and an object ID for an object. Therefore, you will see such raw asset IDs after running the `validate-ledger` command.
+
+:::
+
+#### Options
+
+| Option                     | Description                                                          |
+|:---------------------------|:---------------------------------------------------------------------|
+| `--config`, `--properties` | A configuration file in the .properties format.                      |
+| `--object-id`              | The ID of an object created by the `object.Put` contract.            |
+| `--collection-id`          | The ID of a collection created by the `collection.Create` contract.  |
+| `--start-age`              | The validation start age of the asset (optional).                    |
+| `--end-age`                | The validation end age of the asset (optional).                      |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples for using subcommands
+
+Register a specified certificate. For available options, see [`register-cert`](#register-cert).
+
+```console
+scalardl generic-contracts register-cert --properties client.properties
+```
+
+Register a specified secret. For available options, see [`register-secret`](#register-secret).
+
+```console
+scalardl generic-contracts register-secret --properties client.properties
+```
+
+Register a specified contract. For available options, see [`register-contract`](#register-contract).
+
+```console
+scalardl generic-contracts register-contract --properties client.properties --contract-id object.Put --contract-binary-name com.scalar.dl.genericcontracts.object.Put --contract-class-file /path/to/Put.class
+```
+
+Register specified contracts. For available options, see [`register-contracts`](#register-contracts).
+
+```console
+scalardl generic-contracts register-contracts --properties client.properties --contracts-file /path/to/contracts-file
+```
+
+Register a specified function. For available options, see [`register-function`](#register-function).
+
+```console
+scalardl generic-contracts register-function --properties client.properties --function-id object.PutToMutableDatabase --function-binary-name com.scalar.dl.genericcontracts.object.PutToMutableDatabase --function-class-file /path/to/PutToMutableDatabase.class
+```
+
+Register specified functions. For available options, see [`register-functions`](#register-functions).
+
+```console
+scalardl generic-contracts register-functions --properties client.properties --functions-file /path/to/functions-file
+```
+
+Execute a specified contract. For available options, see [`execute-contract`](#execute-contract).
+
+```console
+scalardl generic-contracts execute-contract --properties client.properties --contract-id object.Put --contract-argument '{"object_id": "a.txt", "hash_value": "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c", "metadata": {"note": "updated"}}'
+```
+
+List registered contracts. For available options, see [`list-contracts`](#list-contracts).
+
+```console
+scalardl generic-contracts list-contracts --properties client.properties
+```
+
+Validate an object for all ages.
+
+```console
+scalardl generic-contracts validate-ledger --properties client.properties --object-id 'a.txt'
+```
+
+Validate an object from age 0 to age 10 only.
+
+```console
+scalardl generic-contracts validate-ledger --properties client.properties --object-id 'a.txt' --start-age 0 --end-age 10
+```
+
+Validate a collection for all ages.
+
+```console
+scalardl generic-contracts validate-ledger --properties client.properties --collection-id 'audit_set'
+```
+
+Use the top-level command `scalardl-gc` as the alias of `scalardl generic-contracts`. 
+
+```console
+scalardl-gc validate-ledger --properties client.properties --object-id 'a.txt'
+```
+
+Use the subcommand `scalardl gc` as the alias of `scalardl generic-contracts`.
+
+```console
+scalardl gc validate-ledger --properties client.properties --object-id 'a.txt'
+```
+
+## Common utility options
+
+You can use the following options in all the commands above.
+
+| Option                | Description                                 |
+|:----------------------|:--------------------------------------------|
+| `-g`, `--use-gateway` | A flag to use the gateway.                  |
+| `-h`, `--help`        | Display the help message of a command.      |
+| `--stacktrace`        | Output Java Stack Trace to `stderr` stream. |

@@ -1,0 +1,398 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsEnglish
+---
+
+# ScalarDL Ledger Error Codes
+
+This page provides a list of error codes in ScalarDL Ledger.
+
+## Error code classes and descriptions
+
+| Class             | Description                              |
+|:------------------|:-----------------------------------------|
+| `DL-LEDGER-3xxxx` | Errors for the validation error category |
+| `DL-LEDGER-4xxxx` | Errors for the user error category       |
+| `DL-LEDGER-5xxxx` | Errors for the internal error category   |
+
+## `DL-LEDGER-3xxxx` status codes
+
+The following are status codes and messages for the validation error category.
+
+### `DL-LEDGER-300001`
+
+**Message**
+
+```markdown
+Validation failed for the hash.
+```
+
+### `DL-LEDGER-301001`
+
+**Message**
+
+```markdown
+Validation failed for the previous hash.
+```
+
+### `DL-LEDGER-302001`
+
+**Message**
+
+```markdown
+Validation failed for the contract.
+```
+
+### `DL-LEDGER-303001`
+
+**Message**
+
+```markdown
+Validation failed for the output. Recomputed: %s; Stored: %s
+```
+
+### `DL-LEDGER-304001`
+
+**Message**
+
+```markdown
+Validation failed for nonce. %s contains the nonce '%s' more than once.
+```
+
+### `DL-LEDGER-305001`
+
+**Message**
+
+```markdown
+The specified asset and the asset metadata are inconsistent.
+```
+
+### `DL-LEDGER-305002`
+
+**Message**
+
+```markdown
+The asset specified by input dependencies is not found.
+```
+
+## `DL-LEDGER-4xxxx` status codes
+
+The following are status codes and messages for the user error category.
+
+### `DL-LEDGER-400001`
+
+**Message**
+
+```markdown
+The request signature can't be validated.
+```
+
+### `DL-LEDGER-400002`
+
+**Message**
+
+```markdown
+The request signature from Auditor can't be validated.
+```
+
+### `DL-LEDGER-407001`
+
+**Message**
+
+```markdown
+The specified contract class is not allowed to be executed.
+```
+
+### `DL-LEDGER-407002`
+
+**Message**
+
+```markdown
+A configuration mismatch is detected. Check the Auditor setting in the client or Ledger.
+```
+
+### `DL-LEDGER-407003`
+
+**Message**
+
+```markdown
+The Auditor signature must be included in the request when Auditor is enabled.
+```
+
+### `DL-LEDGER-407004`
+
+**Message**
+
+```markdown
+%s must be enabled to make auditing work.
+```
+
+### `DL-LEDGER-409001`
+
+**Message**
+
+```markdown
+The specified asset is not found.
+```
+
+### `DL-LEDGER-410001`
+
+**Message**
+
+```markdown
+The specified function is not found.
+```
+
+### `DL-LEDGER-411001`
+
+**Message**
+
+```markdown
+Loading the function failed. Details: %s
+```
+
+### `DL-LEDGER-412001`
+
+**Message**
+
+```markdown
+The function is not allowed to access the specified namespace.
+```
+
+### `DL-LEDGER-412002`
+
+**Message**
+
+```markdown
+The database operation in the function failed. Details: %s
+```
+
+### `DL-LEDGER-414001`
+
+**Message**
+
+```markdown
+%s must be set if HMAC authentication is used.
+```
+
+### `DL-LEDGER-414002`
+
+**Message**
+
+```markdown
+%s must be set to true if Auditor is enabled.
+```
+
+### `DL-LEDGER-414003`
+
+**Message**
+
+```markdown
+Authentication between Ledger and Auditor is not correctly configured. Set %s or set a private key with %s or %s.
+```
+
+### `DL-LEDGER-414004`
+
+**Message**
+
+```markdown
+Authentication between Ledger and Auditor is not correctly configured. Set %s if you use HMAC authentication with Auditor enabled.
+```
+
+### `DL-LEDGER-414005`
+
+**Message**
+
+```markdown
+Either %s or %s must be set if proof is enabled.
+```
+
+### `DL-LEDGER-414006`
+
+**Message**
+
+```markdown
+%s must be set to true when using the JDBC transaction manager in the Auditor mode.
+```
+
+### `DL-LEDGER-414007`
+
+**Message**
+
+```markdown
+%s must be disabled when using the Consensus Commit transaction manager for performance reasons.
+```
+
+### `DL-LEDGER-414008`
+
+**Message**
+
+```markdown
+%s must be disabled because group commit is not supported.
+```
+
+## `DL-LEDGER-5xxxx` status codes
+
+The following are status codes and messages for the internal error category.
+
+### `DL-LEDGER-500001`
+
+**Message**
+
+```markdown
+Binding the function failed. Details: %s
+```
+
+### `DL-LEDGER-500002`
+
+**Message**
+
+```markdown
+Unbinding the function failed. Details: %s
+```
+
+### `DL-LEDGER-500003`
+
+**Message**
+
+```markdown
+Getting the function failed. Details: %s
+```
+
+### `DL-LEDGER-500004`
+
+**Message**
+
+```markdown
+Starting a transaction failed. Details: %s
+```
+
+### `DL-LEDGER-500005`
+
+**Message**
+
+```markdown
+Getting the transaction state failed. Details: %s
+```
+
+### `DL-LEDGER-500006`
+
+**Message**
+
+```markdown
+Putting or committing asset records failed. Details: %s
+```
+
+### `DL-LEDGER-500007`
+
+**Message**
+
+```markdown
+Aborting the transaction failed. Details: %s
+```
+
+### `DL-LEDGER-500008`
+
+**Message**
+
+```markdown
+Retrieving the asset records failed. Details: %s
+```
+
+### `DL-LEDGER-500009`
+
+**Message**
+
+```markdown
+Retrieving the asset metadata failed. Details: %s
+```
+
+### `DL-LEDGER-500010`
+
+**Message**
+
+```markdown
+Putting the asset metadata failed. Details: %s
+```
+
+### `DL-LEDGER-500011`
+
+**Message**
+
+```markdown
+The database operation in the function failed due to a database error. Details: %s
+```
+
+### `DL-LEDGER-501001`
+
+**Message**
+
+```markdown
+The asset status is unknown. Details: %s
+```
+
+### `DL-LEDGER-502001`
+
+**Message**
+
+```markdown
+The function type or instance is not supported.
+```
+
+### `DL-LEDGER-504001`
+
+**Message**
+
+```markdown
+The transaction state has already been %s.
+```
+
+### `DL-LEDGER-504002`
+
+**Message**
+
+```markdown
+Retrieving the asset records failed due to a conflict. Details: %s
+```
+
+### `DL-LEDGER-504003`
+
+**Message**
+
+```markdown
+Putting the asset records failed due to a conflict. Details: %s
+```
+
+### `DL-LEDGER-504004`
+
+**Message**
+
+```markdown
+Committing the asset records failed due to a conflict. Details: %s
+```
+
+### `DL-LEDGER-504005`
+
+**Message**
+
+```markdown
+Retrieving the asset metadata failed due to a conflict. Details: %s
+```
+
+### `DL-LEDGER-504006`
+
+**Message**
+
+```markdown
+Putting the asset metadata failed due to a conflict. Details: %s
+```
+
+### `DL-LEDGER-504007`
+
+**Message**
+
+```markdown
+The database operation in the function failed due to a conflict. Details: %s
+```

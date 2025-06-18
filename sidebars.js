@@ -125,6 +125,11 @@ const sidebars = {
               id: 'use-generic-contracts',
               label: 'Use Generic Contracts',
             },
+            {
+              type: 'doc',
+              id: 'use-table-oriented-generic-contracts',
+              label: 'Use Table-Oriented Generic Contracts',
+            },
           ],
         },
         {
@@ -341,7 +346,7 @@ const sidebars = {
                 {
                   type: 'doc',
                   id: 'helm-charts/getting-started-logging',
-                  label: 'Loki Stack for Logging by Using a Helm Chart by Using a Helm Chart',
+                  label: 'Loki Stack for Logging by Using a Helm Chart',
                 },
                 {
                   type: 'doc',
@@ -725,6 +730,11 @@ const sidebars = {
               id: 'use-generic-contracts',
               label: '汎用コントラクトを使用',
             },
+            // {
+            //   type: 'doc',
+            //   id: 'use-table-oriented-generic-contracts',
+            //   label: 'TITLE',
+            // }
           ],
         },
         {

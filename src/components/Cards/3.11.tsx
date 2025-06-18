@@ -102,7 +102,7 @@ const CardsDevelop = [
     },
     description: (
       <Translate id="home.develop.description">
-        Load a database schema
+        Use Generic Contracts and Functions
       </Translate>
     ),
   },

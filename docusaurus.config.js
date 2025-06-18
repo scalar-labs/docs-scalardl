@@ -81,7 +81,7 @@ const config = {
               },
               "3.10": {
                 label: '3.10',
-                path: 'latest',
+                path: '3.10',
                 banner: 'none',
                 className: '3.10.1',
               },

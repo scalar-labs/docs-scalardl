@@ -1,0 +1,476 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsEnglish
+---
+
+# Generic Contracts and Functions Reference Guide
+
+This guide describes the specifications for generic contracts and functions.
+
+## List of generic contracts and functions
+
+- **Object management**
+  - [`object.Put`](#objectput-contract) contract: Put an object with the hash value of the object.
+  - [`object.PutToMutableDatabase`](#objectputtomutabledatabase-function) function: Put a mutable record in conjunction with the `object.Put` contract.
+  - [`object.Get`](#objectget-contract) contract: Get an object.
+  - [`object.Validate`](#objectvalidate-contract) contract: Validate hash values of an object.
+- **Collection management**
+  - [`collection.Create`](#collectioncreate-contract) contract: Create a collection.
+  - [`collection.Add`](#collectionadd-contract) contract: Add IDs to a collection.
+  - [`collection.Remove`](#collectionremove-contract) contract: Remove IDs from a collection.
+  - [`collection.Get`](#collectionget-contract) contract: Get a collection.
+  - [`collection.GetHistory`](#collectiongethistory-contract) contract: Get a history of collection modification.
+  - [`collection.GetCheckpointInterval`](#collectiongetcheckpointinterval-contract) contract: Get a checkpoint interval.
+
+## `object.Put` contract
+
+Put an object ID with the hash value of the object. If the object already exists, the asset record will be updated. If not, the new asset record will be added.
+
+### Inputs
+
+Specify a JSON object that has the following fields as inputs.
+
+| Field        | Description                                                  |
+|:-------------|:-------------------------------------------------------------|
+| `object_id`  | An ID of an object to put.                                   |
+| `hash_value` | A hash value of the specified object.                        |
+| `metadata`   | (Optional) A JSON object for storing additional information. |
+
+### Outputs
+
+A null value is returned if it is successful.
+
+### Examples
+
+```console
+scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id object.Put \
+--contract-argument '{"objct_id": "a.txt", "hash_value": "a3ae11", "metadata": {"note": "something"}}'
+```
+
+## `object.PutToMutableDatabase` function
+
+Put a mutable record into a ScalarDB table in conjunction with the `object.Put` contract. If the record already exists, the record will be updated. If not, the new record will be added. Calling this function is optional.
+
+### Inputs
+
+Specify a JSON object that has the following fields as inputs.
+
+| Field            | Description                                          |
+|:-----------------|:-----------------------------------------------------|
+| `namespace`      | A string value for the namespace name.                   |
+| `table`          | A string value for the table name.                       |
+| `partition_key`  | An array of JSON objects for partition key columns.  |
+| `clustering_key` | An array of JSON objects for clustering key columns. |
+| `columns`        | An array of JSON objects for regular columns.        |
+
+Each column is a JSON object that has the following fields.
+
+| Field         | Description                                                                                                                                                                                           |
+|:--------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `column_name` | A string value for the column name.                                                                                                                                                                       |
+| `value`       | A JSON value.                                                                                                                                                                                         |
+| `data_type`   | A case-insensitive string value for the [data type that is supported in ScalarDB](https://scalardb.scalar-labs.com/docs/latest/schema-loader/#data-type-mapping-between-scalardb-and-other-databases). |
+
+### Outputs
+
+A null value is returned if it is successful.
+
+### Examples
+
+```console
+scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id object.Put \
+--contract-argument '{"object_id": "a.txt", "hash_value": "a3ae11"}' \
+--function-id object.PutToMutableDatabase \
+--function-argument '{...}'
+```
+
+For the function argument, see the following JSON object example.
+
+```json
+{
+  "namespace": "myns",
+  "table": "objects",
+  "partition_key": [
+    { "column_name": "object_id", "value": "a.txt", "data_type": "TEXT" }
+  ],
+  "clustering_key": [
+    { "column_name": "version", "value": "1234aef", "data_type": "TEXT" }
+  ],
+  "columns": [
+    { "column_name": "status", "value": 3, "data_type": "INT" },
+    { "column_name": "size", "value": 10.000, "data_type": "DOUBLE" },
+    { "column_name": "timestamp", "value": 123456789, "data_type": "BIGINT" },
+    { "column_name": "comment", "value": "hash-registered", "data_type": "TEXT" }
+  ]
+}
+```
+
+## `object.Get` contract
+
+Get an object with the specified ID. If the specified object does not exist, a null value will be returned.
+
+### Inputs
+
+Specify a JSON object that has the following field as an input.
+
+| Field       | Description                     |
+|:------------|:--------------------------------|
+| `object_id` | An ID of an object to get.      |
+
+### Outputs
+
+A JSON object that has the following fields is returned.
+
+| Field        | Description                 |
+|:-------------|:----------------------------|
+| `object_id`  | An ID of the object.        |
+| `hash_value` | A hash value of the object. |
+| `metadata`   | A JSON object if any.       |
+
+### Examples
+
+```console
+scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id object.Get \
+--contract-argument '{"objct_id": "a.txt"}'
+
+Contract result:
+{
+  "object_id" : "a.txt",
+  "hash_value" : "a3ae11",
+  "metadata" : {
+    "note" : "something"
+  }
+}
+```
+
+## `object.Validate` contract
+
+Validate if the specified hash values of an object are the same as the stored hash values of the object. By default, only the specified number of hash values are validated from the latest ones. By specifying the `all` option, you can also verify if the number of given versions matches the number of versions stored in ScalarDL.
+
+### Inputs
+
+Specify a JSON object that has the following fields as inputs.
+
+| Field       | Description                                                                                                                                                                                                                                                                                         |
+|:------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `object_id` | An ID of an object to validate.                                                                                                                                                                                                                                                                     |
+| `versions`  | A list of JSON objects that describe versions to verify, with a descending order from the latest to the oldest. Each JSON object has three properties: version_id, hash_value, and metadata (optional).                                                                                                |
+| `options`   | (Optional) A json object for specifying options. Available options:<br/><li>`all`: boolean value to specify whether to verify all the ages in the ScalarDL asset and the number of ages.</li><li>`verbose`: boolean value to specify whether to show detailed information for faulty versions.</li> |
+
+### Outputs
+
+A JSON object that has the following fields is returned.
+
+| Field                          | Description                                                                                                                        |
+|:-------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------|
+| `status`                       | The status of the object, either "correct" or "faulty".                                                                            |
+| `details`                      | The detailed message for the status of the object.                                                                                 |
+| `faulty_versions`              | An array of faulty version IDs by default or JSON objects of faulty versions when the `verbose` option is specified.               |
+| `corresponding_given_versions` | An array of JSON objects of given versions that does not match the ones in ScalarDL (only when the `verbose` option is specified). |
+
+:::note
+
+Each JSON object for `faulty_versions` and `corresponding_given_versions` has the same fields for the input version.
+
+:::
+
+### Examples
+
+If all specified hash values are the same as the ones in Ledger, the following result is returned.
+
+```console
+scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id object.Validate \
+--contract-argument \
+'{"object_id": "a.txt",
+  "versions": [
+    {"version_id": "v5", "hash_value": "a3ae11", "metadata":{...}},
+    {"version_id": "v4", "hash_value": "ea21f5", "metadata":{...}},
+    {"version_id": "v3", "hash_value": "440f28", "metadata":{...}}
+  ]
+ }'
+
+Contract result:
+{
+  "status" : "correct",
+  "details" : "The status is correct.",
+  "faulty_versions" : [ ]
+}
+```
+
+If a different hash values is found, the following result is returned.
+
+```console
+scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id object.Validate \
+--contract-argument \
+'{"object_id": "a.txt",
+  "versions": [
+    {"version_id": "v5", "hash_value": "xxxx11", "metadata":{...}},
+    {"version_id": "v4", "hash_value": "ea21f5", "metadata":{...}},
+    {"version_id": "v3", "hash_value": "xxxx28", "metadata":{...}}
+  ]
+ }'
+
+Contract result:
+{
+  "status" : "faulty",
+  "details" : "A faulty version is found.",
+  "faulty_versions" : [ "v5", "v3" ]
+}
+```
+
+If the `verbose` option is specified and a different hash value and metadata are found, the following result is returned.
+
+```console
+scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id object.Validate \
+--contract-argument \
+'{"object_id": "a.txt",
+  "versions": [
+    {"version_id": "v5", "hash_value": "xxxx11", "metadata": { "note": "foo" }},
+    {"version_id": "v4", "hash_value": "ea21f5", "metadata": { "note": "bar" }},
+    {"version_id": "v3", "hash_value": "440f28", "metadata": { "note": "bug" }}
+  ],
+  "options": {"all": true}
+ }'
+
+Contract result:
+{
+  "status": "faulty",
+  "details": "A faulty version is found.",
+  "faulty_versions" : [
+    {"version_id": "v5", "hash_value": "a3ae11", "metadata": { "note": "foo" }},
+    {"version_id": "v3", "hash_value": "440f28", "metadata": { "note": "baz" }}
+  ]
+  "corresponding_given_versions" : [
+    {"version_id": "v5", "hash_value": "xxxx11", "metadata": { "note": "foo" }},
+    {"version_id": "v3", "hash_value": "440f28", "metadata": { "note": "bug" }} ]
+}
+```
+
+If the `all` option is specified and the number of given versions are different from the number of versions stored in ScalarDL, the following result is returned.
+
+```console
+scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id object.Validate \
+--contract-argument \
+'{"object_id": "a.txt",
+  "versions": [
+    {"version_id": "v5", "hash_value": "a3ae11", "metadata":{...}},
+    {"version_id": "v4", "hash_value": "ea21f5", "metadata":{...}},
+    {"version_id": "v3", "hash_value": "440f28", "metadata":{...}}
+  ],
+  "options": {"all": true}
+ }'
+
+Contract result:
+{
+  "status" : "faulty",
+  "details" : "The number of versions is mismatched.",
+  "faulty_versions" : [ ]
+}
+```
+
+## `collection.Create` contract
+
+Create a collection, which is a set of IDs. You can manage arbitrary IDs, for example, a set of object IDs to be audited, a set of collection IDs, or a set of users.
+
+### Inputs
+
+Specify a JSON object that has the following fields as inputs.
+
+| Field           | Description                      |
+|:----------------|:---------------------------------|
+| `collection_id` | An ID of a collection to create. |
+| `object_ids`    | An array of string values.       |
+
+### Outputs
+
+A null value is returned if it is successful.
+
+### Examples
+
+```console
+scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id collection.Create \
+--contract-argument '{"collection_id": "audit_set", "object_ids": ["a.txt"]}'
+```
+
+## `collection.Add` contract
+
+Add IDs to a collection. Typically, the IDs are for objects and collections managed by the generic contracts.
+
+### Inputs
+
+Specify a JSON object that has the following fields as inputs.
+
+| Field           | Description                                                                                                                                                                                             |
+|:----------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `collection_id` | An ID of a collection.                                                                                                                                                                                  |
+| `object_ids`    | An array of string values.                                                                                                                                                                              |
+| `options`       | (Optional) A JSON object for specifying options. Available options:<br/><li>`force`: A boolean value to specify whether the contract adds IDs even if the IDs exist. The default value is `false`.</li> |
+
+### Outputs
+
+A null value is returned if it is successful.
+
+### Examples
+
+```console
+scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id collection.Add \
+--contract-argument '{"collection_id": "audit_set", "object_ids": ["a.txt"], "options": {"force": true}}'
+```
+
+## `collection.Remove` contract
+
+Remove IDs from a collection. Typically, the IDs are for objects and collections managed by the generic contracts.
+
+### Inputs
+
+Specify a JSON object that has the following fields as inputs.
+
+| Field           | Description                                                                                                                                                                                                              |
+|:----------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `collection_id` | An ID of a collection to remove.                                                                                                                                                                                         |
+| `object_ids`    | An array of string values.                                                                                                                                                                                               |
+| `options`       | (Optional) A JSON object for specifying options. Available options: `force`: A boolean value to specify whether the contract continue to remove IDs even if a specified ID does not exist. The default value is `false`. |
+
+### Outputs
+
+A null value is returned if it is successful.
+
+### Examples
+
+```console
+scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id collection.Remove \
+--contract-argument '{"collection_id": "audit_set", "object_ids": ["a.txt"], "options": {"force": true}}'
+```
+
+## `collection.Get` contract
+
+Get a collection with the specified ID. If the specified collection does not exist, a null value will be returned.
+
+### Inputs
+
+Specify a JSON object that has the following field as an input.
+
+| Field           | Description                   |
+|:----------------|:------------------------------|
+| `collection_id` | An ID of a collection to get. |
+
+### Outputs
+
+A JSON object that has the following field is returned.
+
+| Field        | Description                |
+|:-------------|:---------------------------|
+| `object_ids` | An array of string values. |
+
+### Examples
+
+```console
+scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id collection.Get \
+--contract-argument '{"collection_id": "audit_set"}'
+
+Contract result:
+{"object_ids": ["a.txt", "b.txt"]}
+```
+
+## `collection.GetHistory` contract
+
+Get a modification event history of a collection with the specified ID. Possible events are `create`, `add`, and `remove`. If the specified collection does not exist, a JSON object with an empty `collection_events` array is returned.
+
+### Inputs
+
+Specify a JSON object that has the following fields as inputs.
+
+| Field           | Description                                                                                                                                                            |
+|:----------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `collection_id` | An ID of a collection to get a history.                                                                                                                                |
+| `options`       | (Optional) A JSON object for specifying options. Available options: `limit`: An integer value to specify how many latest events to get. The default is `0` (no limit). |
+
+### Outputs
+
+A JSON object that has the following fields is returned.
+
+| Field               | Description                                                                                                                                                                                                                                                                                                                                |
+|:--------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `collection_id`     | An ID of the collection.                                                                                                                                                                                                                                                                                                                   |
+| `collection_events` | A JSON object that has the following fields: `operation_type`, `object_ids`, and `age`. A value for `operation_type` can be `create`, `add`, or `remove`. `object_ids` is a set of added or removed IDs in the event, and the value is an array of string values. `age` is an asset record version, and the value is an integer number. |
+
+### Examples
+
+```console
+scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id collection.GetHistory \
+--contract-argument '{"collectionId": "audit_set", "options": {"limit": 2}}'
+
+Contract result:
+{
+  "collection_id": "audit_set",
+  "collection_events": [
+    {
+      "operation_type": "remove",
+      "object_ids": ["a.txt"],
+      "age": 5
+    },
+    {
+      "operation_type": "add",
+      "object_ids": ["a.txt", "b.txt"],
+      "age": 4
+    }
+  ]
+}
+```
+
+## `collection.GetCheckpointInterval` contract
+
+Get a checkpoint interval, which is used for efficient collection management. You don’t have to execute this contract directly because it is internally used from other generic contracts, but you can configure the checkpoint interval via contract properties when registering this contract.
+
+The checkpoint interval configures how often a snapshot of a collection is created. When adding or removing IDs in the collection, a new asset record only holds the differential data instead of the whole new set of IDs for storage efficiency. Then, when getting the collection, the differential data in the past is merged and returned. To avoid merging all the past data every time, we create a snapshot for each checkpoint age (version). The checkpoint interval is an integer number that indicates how many updates to wait since the previous checkpoint creation.
+
+### Contract properties
+
+Specify a JSON object that has the following field as a contract property if you would like to change the checkpoint interval.
+
+| Field                 | Description                                   |
+|:----------------------|:----------------------------------------------|
+| `checkpoint_interval` | An integer value for the checkpoint interval. |
+
+:::note
+
+If the `collection.GetCheckpointInterval` contract is registered and used by multiple client identities (that is `scalar.dl.client.entity.id`), you must set the same checkpoint interval when registering the contract.   
+
+:::
+
+### Inputs
+
+Specify an empty JSON object as the input.
+
+### Outputs
+
+A JSON object that has the following field is returned.
+
+| Field                 | Description                                                                                                                            |
+|:----------------------|:---------------------------------------------------------------------------------------------------------------------------------------|
+| `checkpoint_interval` | An integer value for the checkpoint interval configured by the contract properties. If you do not configure a value, the default value will be `10`. |
+
+### Examples
+
+```console
+scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id collection.GetCheckpointInterval \
+--contract-argument '{}'
+
+Contract result:
+{"checkpoint_interval": 10}
+```
