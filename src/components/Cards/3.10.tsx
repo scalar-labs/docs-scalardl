@@ -98,11 +98,11 @@ const CardsDevelop = [
     // name: 'For database engineers',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'schema-loader',
+      page: 'use-generic-contracts',
     },
     description: (
       <Translate id="home.develop.description">
-        Load a database schema
+        Use Generic Contracts and Functions
       </Translate>
     ),
   },
@@ -110,11 +110,11 @@ const CardsDevelop = [
     // name: 'For infrastructure engineers',
     // image: '<LINK_TO>.png',
     url: {
-      page: 'ca/caclient-getting-started',
+      page: 'how-to-write-applications',
     },
     description: (
       <Translate id="home.develop.description">
-        Get a certificate for the network
+        Write a ScalarDL Application in Java
       </Translate>
     ),
   },
