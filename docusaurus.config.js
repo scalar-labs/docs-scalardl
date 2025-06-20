@@ -83,13 +83,13 @@ const config = {
                 label: '3.10',
                 path: '3.10',
                 banner: 'none',
-                className: '3.10.1',
+                className: '3.10.2',
               },
               "3.9": {
                 label: '3.9',
                 path: '3.9',
                 banner: 'none',
-                className: '3.9.5',
+                className: '3.9.6',
               },
               "3.8": {
                 label: '3.8',
