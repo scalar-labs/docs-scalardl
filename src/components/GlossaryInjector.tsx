@@ -103,14 +103,15 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
 
             // For the Japanese version of the site, don't use word boundaries that don't work well with Japanese characters.
             if (isJapaneseSite) {
+              // For Japanese text, we can't use word boundaries, so just match the exact term.
               return `(${escapedTerm})`;
             }
 
             // For English site, match exact term or term followed by 's' or 'es' at word boundary.
-            return `(\\b${escapedTerm}(s|es)?\\b)`;
+            return `(\\b${escapedTerm}\\b|\\b${escapedTerm}s\\b|\\b${escapedTerm}es\\b)`;
           }).join('|');
 
-          const regex = new RegExp(regexPattern, 'gi'); // The 'i' flag is for case-insensitive matching.
+          const regex = new RegExp(regexPattern, 'gi'); // Use case-insensitive matching.
 
           let lastIndex = 0;
           let match: RegExpExecArray | null;
@@ -118,20 +119,25 @@ const GlossaryInjector: React.FC<GlossaryInjectorProps> = ({ children }) => {
           while ((match = regex.exec(currentText))) {
             const matchedText = match[0]; // The full matched text (may include plural suffix).
 
+            // For Japanese, remove any non-word characters that were captured by the regex.
+            const actualMatch = isJapaneseSite 
+              ? matchedText.replace(/^[^\p{L}\p{N}_]+|[^\p{L}\p{N}_]+$/gu, '')
+              : matchedText;
+
             // Find the base term from the glossary that matches.
             let baseTerm: string | undefined;
 
             if (isJapaneseSite) {
               // For Japanese, look for an exact match only.
               baseTerm = terms.find(term => 
-                matchedText.toLowerCase() === term.toLowerCase()
+                actualMatch === term
               );
             } else {
               // For English, check both singular and plural forms too.
               baseTerm = terms.find(term => 
-                matchedText.toLowerCase() === term.toLowerCase() || 
-                matchedText.toLowerCase() === `${term.toLowerCase()}s` || 
-                matchedText.toLowerCase() === `${term.toLowerCase()}es`
+                actualMatch.toLowerCase() === term.toLowerCase() || 
+                actualMatch.toLowerCase() === `${term.toLowerCase()}s` || 
+                actualMatch.toLowerCase() === `${term.toLowerCase()}es`
               );
             }
 
