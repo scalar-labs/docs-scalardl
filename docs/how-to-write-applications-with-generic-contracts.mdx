@@ -81,64 +81,27 @@ try {
 
 ## Validate your data
 
-In ScalarDL, you occasionally need to validate your data to make sure all the data is in a valid state. Since you can learn the basics of how ScalarDL validates your data in [Write a ScalarDL Application in Java](how-to-write-applications.mdx#validate-your-data), this section mainly describes the differences between the `validateLedger` method in the regular `ClientService` and the `validateLedger` or asset validation methods in `GenericContractClientService`.
+In ScalarDL, you occasionally need to validate your data to make sure all the data is in a valid state. Since you can learn the basics of how ScalarDL validates your data in [Write a ScalarDL Application in Java](how-to-write-applications.mdx#validate-your-data), this section mainly describes differences between the `validateLedger` method in the regular `ClientService` and the `validateLedger` method in `GenericContractClientService`.
 
-When validating assets created by generic contracts, you need to specify the type of the asset and a list of keys to identify the asset or use wrapper methods prepared for each asset type.
-
-:::note
-
-Generic contracts internally assign a dedicated asset ID to an [asset record](data-modeling.mdx#asset-record) that represents an object of each authenticity management. The asset ID consists of a prefix for the asset type and keys; for example, a prefix `o_` and an object ID for `AssetType.OBJECT`. Therefore, you will see such raw asset IDs in `AssetProof` in `LedgerValidationResult`.
-
-:::
-
-### Object and collection authenticity management
-
-Generic contracts for object and collection authenticity management create two types of assets: an object (`AssetType.OBJECT`) and a collection (`AssetType.COLLECTION`). For keys, you can specify the object ID or collection ID.
+When validating assets created by generic contracts, you need to specify the type of the asset and a list of keys to identify the asset. Currently, generic contracts create two types of assets: an object (`AssetType.OBJECT`) and a collection (`AssetType.COLLECTION`). For keys, you can specify the object ID or collection ID.
 
 An example code for validating an object is as follows:
 
 ```java
   GenericContractClientService service = ...
   try {
-    LedgerValidationResult result =
-        service.validateLedger(AssetType.OBJECT, ImmutableList.of("an_object_ID"));
+    LedgerValidationResult result = service.validateLedger(AssetType.OBJECT, ImmutableList.of("an_object_ID"));
     // You can also specify age range.
-    // LedgerValidationResult result =
-    //     service.validateLedger(
-    //         AssetType.OBJECT, ImmutableList.of("an_object_ID"), startAge, endAge);
+    // LedgerValidationResult result = service.validateLedger(AssetType.OBJECT, ImmutableList.of("an_object_ID"), startAge, endAge);
   } catch (ClientException e) {
   }
 ```
 
-You can also use the `validateObject()` and `validateCollection()` methods as follows:
+:::note
 
-```java
-  GenericContractClientService service = ...
-  try {
-    LedgerValidationResult objectResult = service.validateObject("an_object_ID");
-    LedgerValidationResult collectionResult = service.validateCollection("a_collection_ID");
-  } catch (ClientException e) {
-  }
-```
+Generic contracts internally assign a dedicated asset ID to an [asset record](data-modeling.mdx#asset-record) that represents an object or a collection. The asset ID consists of a prefix for the asset type and keys; for example, a prefix `o_` and an object ID for `AssetType.OBJECT`. Therefore, you will see such raw asset IDs in `AssetProof` in `LedgerValidationResult`.
 
-### Table authenticity management
-
-Generic contracts for table authenticity management (table-oriented generic contracts) create three types of assets: a table schema (`AssetType.TABLE`), a record (`AssetType.RECORD`), and an index record (`AssetType.INDEX`). For the table schema, you must specify a table name as a key. For the record and index record, you must specify a table name, a primary or index key column name, and the value.
-
-In table-oriented generic contracts, JSON string, number, and boolean values can be specified as primary and index keys, and they are internally converted to a string when being used as asset IDs based on certain rules. You can use the `validateTableSchema()`, `validateRecord()`, and  `validateIndexRecord()` methods to validate a table schema, record, and index record without worrying about the rules as follows:
-
-```java
-  GenericContractClientService service = ...
-  try {
-    LedgerValidationResult tableResult = service.validateTableSchema("a_table_name");
-    LedgerValidationResult recordResult =
-        service.validateRecord(
-            "a_table_name", "a_primary_key_column_name", TextNode.valueOf("a_value"));
-    LedgerValidationResult indexResult =
-        service.validateIndexRecord("a_table_name", "an_index_key_column_name", IntNode.valueOf(1));
-  } catch (ClientException e) {
-  }
-```
+:::
 
 ## Use other languages
 
