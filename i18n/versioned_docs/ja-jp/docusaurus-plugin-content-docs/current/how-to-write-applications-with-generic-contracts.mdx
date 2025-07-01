@@ -84,19 +84,7 @@ try {
 
 ## データを検証する
 
-ScalarDL では、すべてのデータが有効な状態であることを確認するために、適宜データを検証する必要があります。ScalarDL がデータを検証する方法の基本は [Java で ScalarDL アプリケーションを作成する](how-to-write-applications.mdx#データを検証する)で学習できるので、このセクションでは主に、通常の `ClientService` の `validateLedger` メソッドと `GenericContractClientService` の `validateLedger` メソッドまたはアセット検証メソッドの違いについて説明します。
-
-汎用コントラクトによって作成されたアセットを検証する場合、アセットのタイプと、アセットを識別するためのキーのリストを指定するか、各アセットタイプ用に準備されたラッパーメソッドを使用する必要があります。
-
-:::note
-
-汎用コントラクトは、各真正性管理のオブジェクトを表す[アセットレコード](data-modeling.mdx#アセットレコード)に専用のアセット ID を内部的に割り当てます。アセット ID は、アセットタイプのプレフィックスとキーで構成されます。たとえば、`AssetType.OBJECT` の場合、プレフィックス `o_` とオブジェクト ID です。そのため、`LedgerValidationResult` の `AssetProof` にそのような生のアセット ID が表示されます。
-
-:::
-
-### オブジェクトおよびコレクションの真正性管理
-
-オブジェクトおよびコレクションの真正性管理用の汎用コントラクトは、オブジェクト (`AssetType.OBJECT`) とコレクション (`AssetType.COLLECTION`) の2種類のアセットを作成します。キーには、オブジェクト ID またはコレクション ID を指定できます。
+ScalarDL では、すべてのデータが有効な状態であることを確認するために、適宜データを検証する必要があります。ScalarDL がデータを検証する方法の基本は [Java で ScalarDL アプリケーションを作成する](how-to-write-applications.mdx#データを検証する)で学習できるので、このセクションでは主に、通常の `ClientService` の `validateLedger` メソッドと `GenericContractClientService` の `validateLedger` メソッドの違いについて説明します。
 
 汎用コントラクトによって作成されたアセットを検証する場合、アセットのタイプと、アセットを識別するためのキーのリストを指定する必要があります。現在、汎用コントラクトは、オブジェクト (`AssetType.OBJECT`) とコレクション (`AssetType.COLLECTION`) の2種類のアセットを作成します。キーには、オブジェクト ID またはコレクション ID を指定できます。
 
@@ -105,33 +93,18 @@ ScalarDL では、すべてのデータが有効な状態であることを確�
 ```java
   GenericContractClientService service = ...
   try {
-    LedgerValidationResult result =
-        service.validateLedger(AssetType.OBJECT, ImmutableList.of("an_object_ID"));
-    // LedgerValidationResult result =
-    //     service.validateLedger(
-    //         AssetType.OBJECT, ImmutableList.of("an_object_ID"), startAge, endAge);
+    LedgerValidationResult result = service.validateLedger(AssetType.OBJECT, ImmutableList.of("an_object_ID"));
+    // You can also specify age range.
+    // LedgerValidationResult result = service.validateLedger(AssetType.OBJECT, ImmutableList.of("an_object_ID"), startAge, endAge);
   } catch (ClientException e) {
   }
 ```
 
-### テーブルの真正性管理
+:::note
 
-テーブルの真正性管理用の汎用コントラクト（テーブル指向の汎用コントラクト）は、テーブルスキーマ (`AssetType.TABLE`)、レコード (`AssetType.RECORD`)、およびインデックスレコード (`AssetType.INDEX`) の3種類のアセットを作成します。テーブルスキーマの場合、キーとしてテーブル名を指定する必要があります。レコードおよびインデックスレコードの場合、テーブル名、プライマリキーまたはインデックスキーの列名、および値を指定する必要があります。
+汎用コントラクトは、オブジェクトまたはコレクションを表す[アセットレコード](data-modeling.mdx#アセットレコード)に専用のアセット ID を内部的に割り当てます。アセット ID は、アセットタイプのプレフィックスとキーで構成されます。たとえば、`AssetType.OBJECT` のアセット ID にはプレフィックス `o_` とオブジェクト ID が用いられます。`LedgerValidationResult` の `AssetProof` には、そうした生のアセット ID が表示されます。
 
-テーブル指向の汎用コントラクトでは、JSON 文字列、数値、およびブール値をプライマリキーおよびインデックスキーとして指定でき、特定のルールに基づいてアセット ID として使用される際に内部的に文字列に変換されます。次のように、`validateTableSchema()`、`validateRecord()`、および`validateIndexRecord()`メソッドを使用して、そのルールを気にせずにテーブルスキーマ、レコード、およびインデックスレコードを検証できます：
-
-```java
-  GenericContractClientService service = ...
-  try {
-    LedgerValidationResult tableResult = service.validateTableSchema("a_table_name");
-    LedgerValidationResult recordResult =
-        service.validateRecord(
-            "a_table_name", "a_primary_key_column_name", TextNode.valueOf("a_value"));
-    LedgerValidationResult indexResult =
-        service.validateIndexRecord("a_table_name", "an_index_key_column_name", IntNode.valueOf(1));
-  } catch (ClientException e) {
-  }
-```
+:::
 
 ## 他の言語を使用する
 
