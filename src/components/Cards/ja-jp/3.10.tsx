@@ -11,297 +11,217 @@ import React from 'react';
 import clsx from 'clsx';
 import Translate from '@docusaurus/Translate';
 import Link from '@docusaurus/Link';
+import LiteYouTubeEmbed from 'react-lite-youtube-embed';
+import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBook } from '@fortawesome/free-solid-svg-icons';
 
-const CardsAbout = [
+const new_content = [
   {
-    // name: '',
-    // image: '<LINK_TO>.png',
-    url: {
-      page: 'overview',
-    },
-    description: (
-      <Translate id="home.about.description">
-        概要
-      </Translate>
-    ),
-  },
-  {
-    // name: '',
-    // image: '<LINK_TO>.png',
-    url: {
-      page: 'requirements',
-    },
-    description: (
-      <Translate id="home.about.description">
-        要件
-      </Translate>
-    ),
-  },
-]
-
-const CardsGettingStarted = [
-  {
-    // name: '',
-    // image: '<LINK_TO>.png',
-    url: {
-      page: 'getting-started',
-    },
-    description: (
-      <Translate id="home.gettingStarted.description">
-        ScalarDL Ledger をはじめよう
-      </Translate>
-    ),
-  },
-  {
-    // name: '',
-    // image: '<LINK_TO>.png',
-    url: {
-      page: 'getting-started-auditor',
-    },
-    description: (
-      <Translate id="home.gettingStarted.description">
-        ScalarDL Auditor をはじめよう
-      </Translate>
-    ),
-  },
-]
-
-const CardsSamples = [
-  {
-    // name: '',
-    // image: '<LINK_TO>.png',
-    url: {
-      page: 'installation-with-docker',
-    },
-    description: (
-      <Translate id="home.samples.description">
-        ローカル環境に ScalarDL をインストールする
-      </Translate>
-    ),
-  },
-  {
-    // name: '',
-    // image: '<LINK_TO>.png',
-    url: {
-      page: 'applications/simple-bank-account',
-    },
-    description: (
-      <Translate id="home.samples.description">
-        銀行口座申請を実行する
-      </Translate>
-    ),
-  },
-]
-
-const CardsDevelop = [
-  {
-    // name: 'For database engineers',
-    // image: '<LINK_TO>.png',
-    url: {
-      page: 'use-generic-contracts',
-    },
-    description: (
-      <Translate id="home.develop.description">
-        汎用コントラクトおよびファンクションの使用
-      </Translate>
-    ),
-  },
-  {
-    // name: 'For infrastructure engineers',
-    // image: '<LINK_TO>.png',
-    url: {
-      page: 'how-to-write-applications',
-    },
-    description: (
-      <Translate id="home.develop.description">
-        Java で ScalarDL アプリケーションを書く
-      </Translate>
-    ),
-  },
-]
-
-const CardsDeploy = [
-  {
-    // name: '',
-    // image: '<LINK_TO>.png',
-    url: {
-      page: 'scalar-kubernetes/SetupDatabaseForAWS',
-    },
-    description: (
-      <Translate id="home.deploy.description">
-        AWS でデータベースをセットアップする
-      </Translate>
-    ),
-  },
-  {
-    // name: '',
-    // image: '<LINK_TO>.png',
-    url: {
-      page: 'scalar-kubernetes/ProductionChecklistForScalarDLLedger',
-    },
-    description: (
-      <Translate id="home.deploy.description">
-        ScalarDL Ledger の本番環境チェックリスト
-      </Translate>
-    ),
-  },
-]
-
-const CardsManage = [
-  {
-    // name: '',
-    // image: '<LINK_TO>.png',
-    url: {
-      page: 'scalar-kubernetes/K8sMonitorGuide',
-    },
-    description: (
-      <Translate id="home.manage.description">
-        Kubernetes クラスター上の ScalarDLの監視
-      </Translate>
-    ),
-  },
-  {
-    // name: '',
-    // image: '<LINK_TO>.png',
-    url: {
-      page: 'scalar-kubernetes/BackupRestoreGuide',
-    },
-    description: (
-      <Translate id="home.manage.description">
-        Kubernetes 環境でデータをバックアップおよび復元する
-      </Translate>
-    ),
-  },
-]
-
-const CardsReference = [
-  {
-    // name: '',
-    // image: '<LINK_TO>.png',
-    url: {
-      page: 'compatibility',
-    },
-    description: (
-      <Translate id="home.reference.description">
-        互換性マトリックス
-      </Translate>
-    ),
-  },
-  {
-    // name: '',
-    // image: '<LINK_TO>.png',
-    url: {
-      page: 'scalardl-benchmarks',
-    },
-    description: (
-      <Translate id="home.reference.description">
-        ベンチマークツール
-      </Translate>
-    ),
-  },
+    name: '新着コンテンツ',
+    categoryLinks: [
+      // To add a link, use the format ['link1', 'link2']
+      // To add a label, use the format ['label1', 'label2']
+      {
+        cell: 0, // First cell
+        links: ['use-generic-contracts'],
+        labels: ['汎用コントラクトを使用']
+      },
+      {
+        cell: 1, // Second cell
+        links: ['how-to-write-applications-with-generic-contracts'],
+        labels: ['汎用コントラクトを用いたアプリケーションを作成']
+      },
+      {
+        cell: 2, // Third cell
+        links: ['generic-contracts-reference'],
+        labels: ['汎用コントラクトおよびファンクションのリファレンスガイド']
+      }
+    ]
+  }
 ];
 
-interface Props {
-  // name: string;
-  // image: string;
-  url: {
-    page?: string;
-  };
-  description: JSX.Element;
-}
+const categories = [
+  {
+    name: 'ScalarDL について',
+    categoryLinks: [
+      // To add a link, use the format ['link1', 'link2']
+      // To add a label, use the format ['label1', 'label2']
+      {
+        cell: 0, // First cell
+        links: ['overview'],
+        labels: ['ScalarDL の概要']
+      },
+      {
+        cell: 1, // Second cell
+        links: ['design'],
+        labels: ['設計']
+      },
+      {
+        cell: 2, // Third cell
+        links: ['requirements'],
+        labels: ['要件']
+      }
+    ]
+  },
+  {
+    name: 'クイックスタート',
+    categoryLinks: [
+      // To add a link, use the format ['link1', 'link2']
+      // To add a label, use the format ['label1', 'label2']
+      {
+        cell: 0, // First cell
+        links: ['quickstart-overview'],
+        labels: ['クイックスタートの概要']
+      },
+      {
+        cell: 1, // Second cell
+        links: ['getting-started'],
+        labels: ['ScalarDL Ledger をはじめよう']
+      },
+      {
+        cell: 2, // Third cell
+        links: [''],
+        labels: ['']
+      }
+    ]
+  },
+  {
+    name: '開発',
+    categoryLinks: [
+      // To add a link, use the format ['link1', 'link2']
+      // To add a label, use the format ['label1', 'label2']
+      {
+        cell: 0, // First cell
+        links: ['develop-overview'],
+        labels: ['開発の概要']
+      },
+      {
+        cell: 1, // Second cell
+        links: ['how-to-write-contract'],
+        labels: ['コントラクトを作成']
+      },
+      {
+        cell: 2, // Third cell
+        links: ['how-to-write-applications'],
+        labels: ['Java で ScalarDL アプリケーションを書く']
+      }
+    ]
+  },
+  {
+    name: 'デプロイ',
+    categoryLinks: [
+      // To add a link, use the format ['link1', 'link2']
+      // To add a label, use the format ['label1', 'label2']
+      {
+        cell: 0, // First cell
+        links: ['deploy-overview'],
+        labels: ['デプロイの概要']
+      },
+      {
+        cell: 1, // Second cell
+        links: ['helm-charts/getting-started-scalardl-auditor'],
+        labels: ['Helm Charts を使用してローカルに ScalarDL Ledger と Auditor をデプロイする']
+      },
+      {
+        cell: 2, // Third cell
+        links: ['scalar-kubernetes/ManualDeploymentGuideScalarDLAuditorOnEKS'],
+        labels: ['ScalarDL Ledger と ScalarDL Auditor を Amazon Elastic Kubernetes Service (EKS) にデプロイする']
+      }
+    ]
+  },
+  {
+    name: '管理',
+    categoryLinks: [
+      // To add a link, use the format ['link1', 'link2']
+      // To add a label, use the format ['label1', 'label2']
+      {
+        cell: 0, // First cell
+        links: ['manage-overview'],
+        labels: ['管理の概要']
+      },
+      {
+        cell: 1, // Second cell
+        links: ['scalar-kubernetes/HowToScaleScalarDL'],
+        labels: ['ScalarDL をスケーリングする方法']
+      },
+      {
+        cell: 2, // Third cell
+        links: ['scalar-kubernetes/HowToUpgradeScalarDL'],
+        labels: ['ScalarDL のアップグレード方法']
+      }
+    ]
+  }
+];
 
-function Card({ /* name, image,*/ url, description }: Props) {
+const CategoryGrid = () => {
   return (
-    <div className="col col--6 margin-bottom--lg">
-      <div className={clsx('card')}>
-        <div className={clsx('card__image')}>
-          {/* <Link to={url.page}>
-            <img src={image}></img>}
-          </Link> */}
+    <div className="grid-container">
+      {/* Hero section */}
+      <div className="hero-section">
+        <div className="hero-text">
+          <h1>ScalarDL</h1>
+          <p>ScalarDL is middleware for realizing a tamper-evident database system by detecting arbitrary faults (that is, Byzantine faults), such as data tampering and malicious attacks, in transactional database systems. It achieves such detection in a scalable and practical way like no other with its novel consensus algorithm.</p>
+          {/* <span className="hero-text-additional">
+            <p>PLACEHOLDER TEXT</p>
+          </span> */}
         </div>
-        <Link to={url.page}>
-          <div className="card__body">
-            {/* <h3>{name}</h3> */}
-            <p>{description}</p>
-          </div>
-        </Link>
-        {/* <div className="card__footer">
-          <div className="button-group button-group--block">
-            <Link className="button button--secondary" to={url.page}>
-              <Translate id="button.readMore">Read more</Translate>
-            </Link>
-          </div>
-        </div> */}
+        <div className="youtube-embed">
+          <LiteYouTubeEmbed id="-i1tqeI3FKs" title="ScalarDB Explainer" poster="maxresdefault" />
+        </div>
+      </div>
+
+      {/* New content table */}
+      <div className="category-table">
+        {new_content.map((doc, i) => (
+          <React.Fragment key={i}>
+            <div className="category-label">
+              {/* <FontAwesomeIcon icon={faBook} className="new-content-icon" />
+              &nbsp;{doc.name}*/}
+              {doc.name}
+            </div>
+            {doc.categoryLinks.map((categoryLinkCell, j) => (
+              <div key={j} className="category-cell-multiple-links">
+                {categoryLinkCell.links.map((cellLink, k) => (
+                  cellLink ? (
+                    <Link key={`${j}-${k}`} className="category-cell-link" to={cellLink}>
+                      {categoryLinkCell.labels[k]}
+                    </Link>
+                  ) : (
+                    <span key={`${j}-${k}`} className="new-content-cell">
+                      {categoryLinkCell.labels[k]}
+                    </span>
+                  )
+                ))}
+              </div>
+            ))}
+          </React.Fragment>
+        ))}
+
+      {/* Category table */}
+        {categories.map((cat, i) => (
+          <React.Fragment key={i}>
+            <div className="category-label">{cat.name}</div>
+            {cat.categoryLinks.map((categoryLinkCell, j) => (
+              <div key={j} className="category-cell-multiple-links">
+                {categoryLinkCell.links.map((cellLink, k) => (
+                  cellLink ? (
+                    <Link key={`${j}-${k}`} className="category-cell-link" to={cellLink}>
+                      {categoryLinkCell.labels[k]}
+                    </Link>
+                  ) : (
+                    <span key={`${j}-${k}`} className="category-cell">
+                      {categoryLinkCell.labels[k]}
+                    </span>
+                  )
+                ))}
+              </div>
+            ))}
+          </React.Fragment>
+        ))}
       </div>
     </div>
   );
-}
+};
 
-export function CardRowAbout(): JSX.Element {
-  return (
-    <div className="row">
-      {CardsAbout.map((special) => (
-        <Card key={special.name} {...special} />
-      ))}
-    </div>
-  );
-}
-
-export function CardRowGettingStarted(): JSX.Element {
-  return (
-    <div className="row">
-      {CardsGettingStarted.map((special) => (
-        <Card key={special.name} {...special} />
-      ))}
-    </div>
-  );
-}
-
-export function CardRowSamples(): JSX.Element {
-  return (
-    <div className="row">
-      {CardsSamples.map((special) => (
-        <Card key={special.name} {...special} />
-      ))}
-    </div>
-  );
-}
-
-export function CardRowDevelop(): JSX.Element {
-  return (
-    <div className="row">
-      {CardsDevelop.map((special) => (
-        <Card key={special.name} {...special} />
-      ))}
-    </div>
-  );
-}
-
-export function CardRowDeploy(): JSX.Element {
-  return (
-    <div className="row">
-      {CardsDeploy.map((special) => (
-        <Card key={special.name} {...special} />
-      ))}
-    </div>
-  );
-}
-
-export function CardRowManage(): JSX.Element {
-  return (
-    <div className="row">
-      {CardsManage.map((special) => (
-        <Card key={special.name} {...special} />
-      ))}
-    </div>
-  );
-}
-export function CardRowReference(): JSX.Element {
-  return (
-    <div className="row">
-      {CardsReference.map((special) => (
-        <Card key={special.name} {...special} />
-      ))}
-    </div>
-  );
-}
+export default CategoryGrid;
