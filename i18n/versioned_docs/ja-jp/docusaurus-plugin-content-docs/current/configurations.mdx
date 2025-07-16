@@ -61,7 +61,7 @@ Ledger サーバーでは、サービスポート設定、認証設定、TLS 設
 ### `authentication.method`
 
 - **フィールド:** `scalar.dl.ledger.authentication.method`
-- **説明:** クライアントとサーバーの認証方法。このフィールドは、クライアントとサーバー間で使用される認証方法を指定します。
+- **説明:** クライアントと Ledger サーバーの認証方法。`digital-signature` または `hmac` を指定できます。
 - **デフォルト値:** `digital-signature` (オプション)
 
 ### `direct_asset_access.enabled`
@@ -191,13 +191,13 @@ Auditor サーバーでは、サービスポート設定、認証設定、TLS �
 ### `authentication.hmac.cipher_key`
 
 - **フィールド:** `scalar.dl.auditor.authentication.hmac.cipher_key`
-- **説明:** クライアントエンティティの HMAC 秘密鍵を暗号化および復号するために使用される暗号鍵。これは、`scalar.dl.auditor.authentication.method` が "hmac" に設定されている場合にのみ使用されます。
+- **説明:** クライアントエンティティの HMAC 秘密鍵を暗号化および復号するために使用される暗号鍵。これは、`scalar.dl.auditor.authentication.method` が `hmac` に設定されている場合にのみ使用されます。
 - **デフォルト値:** 空 (オプション)
 
 ### `authentication.method`
 
 - **フィールド:** `scalar.dl.auditor.authentication.method`
-- **説明:** クライアントと Auditor サーバーの認証方法。これは、クライアントの設定と一致している必要があります。
+- **説明:** クライアントと Auditor サーバーの認証方法。`digital-signature` または `hmac` を指定できます。これは、Ledger の設定と一致している必要があります。
 - **デフォルト値:** `digital-signature` (オプション)
 
 ### `authorization.credential`
@@ -206,11 +206,71 @@ Auditor サーバーでは、サービスポート設定、認証設定、TLS �
 - **説明:** 認可資格情報 (例: ベアラートークン)。
 - **デフォルト値:** 空 (オプション)
 
+### `cert_holder_id` (非推奨)
+
+- **フィールド:** `scalar.dl.auditor.cert_holder_id`
+- **説明:** 証明書のホルダー ID。このフィールドは、Auditor の証明書ホルダーを識別するために使用されます。
+- **デフォルト値:** `auditor`
+
+:::note
+
+この設定は非推奨であり、Ledger-Auditor 認証が HMAC のみを使用するようになるため、リリース 5.0.0 で削除されます。認証の詳細については、[ScalarDL 認証ガイド](./authentication.mdx)を参照してください。
+
+:::
+
+### `cert_version` (非推奨)
+
+- **フィールド:** `scalar.dl.auditor.cert_version`
+- **説明:** 証明書のバージョン。このフィールドは、Auditor 証明書のバージョンを指定します。
+- **デフォルト値:** `1`
+
+:::note
+
+この設定は非推奨であり、Ledger-Auditor 認証が HMAC のみを使用するようになるため、リリース 5.0.0 で削除されます。認証の詳細については、[ScalarDL 認証ガイド](./authentication.mdx)を参照してください。
+
+:::
+
 ### `grpc.deadline_duration_millis`
 
 - **フィールド:** `scalar.dl.auditor.grpc.deadline_duration_millis`
 - **説明:** 各 gRPC リクエストの期限期間 (ミリ秒)。
 - **デフォルト値:** 空 (オプション)
+
+### `grpc.max_inbound_message_size`
+
+- **フィールド:** `scalar.dl.auditor.grpc.max_inbound_message_size`
+- **説明:** 単一の gRPC フレームに許可される最大メッセージサイズ。この制限より大きな受信メッセージが受信された場合、処理されず、RPC は `RESOURCE_EXHAUSTED` で失敗します。
+- **デフォルト値:** 空 (オプション)
+
+### `grpc.max_inbound_metadata_size`
+
+- **フィールド:** `scalar.dl.auditor.grpc.max_inbound_metadata_size`
+- **説明:** 受信が許可されるメタデータの最大サイズ。これは、HTTP/2 の SETTINGS_MAX_HEADER_LIST_SIZE で定義されているように、エントリのオーバーヘッドを含む累積サイズです。
+- **デフォルト値:** `8 KiB` (オプション)
+
+### `ledger.cert_holder_id` (非推奨)
+
+- **フィールド:** `scalar.dl.auditor.ledger.cert_holder_id`
+- **説明:** Ledger の証明書のホルダー ID。このフィールドは、Ledger の証明書ホルダーを識別するために使用されます。
+- **デフォルト値:** `ledger`
+
+:::note
+
+この設定は非推奨であり、Ledger-Auditor 認証が HMAC のみを使用するようになるため、リリース 5.0.0 で削除されます。認証の詳細については、[ScalarDL 認証ガイド](./authentication.mdx)を参照してください。
+
+:::
+
+### `ledger.cert_version` (非推奨)
+
+- **フィールド:** `scalar.dl.auditor.ledger.cert_version`
+- **説明:** 証明書のバージョン。このフィールドは、Ledger 証明書のバージョンを指定します。
+- **デフォルト値:** `1`
+
+:::note
+
+この設定は非推奨であり、Ledger-Auditor 認証が HMAC のみを使用するようになるため、リリース 5.0.0 で削除されます。認証の詳細については、[ScalarDL 認証ガイド](./authentication.mdx)を参照してください。
+
+:::
 
 ### `ledger.host`
 
@@ -241,6 +301,18 @@ Auditor サーバーでは、サービスポート設定、認証設定、TLS �
 - **フィールド:** `scalar.dl.auditor.namespace`
 - **説明:** Auditor テーブルの名前空間。
 - **デフォルト値:** `auditor` (オプション)
+
+### `private_key_path`
+
+- **フィールド:** `scalar.dl.auditor.private_key_path`
+- **説明:** PEM 形式の秘密鍵ファイルのパス。これまたは `scalar.dl.auditor.private_key_pem` は、デジタル署名で証明を署名するために使用されます。`scalar.dl.auditor.servers.authentication.hmac.secret_key` が空の場合、署名は Auditor から対応する証明を認証するために Ledger によっても使用されます。
+- **デフォルト値:** 空 (オプション)
+
+### `private_key_pem`
+
+- **フィールド:** `scalar.dl.auditor.private_key_pem`
+- **説明:** PEM エンコードされた秘密鍵データ。これまたは `scalar.dl.auditor.private_key_path` は、デジタル署名で証明を署名するために使用されます。`scalar.dl.auditor.servers.authentication.hmac.secret_key` が空の場合、署名は Auditor から対応する証明を認証するために Ledger によっても使用されます。
+- **デフォルト値:** 空 (オプション)
 
 ### `server.admin_port`
 
@@ -284,17 +356,17 @@ Auditor サーバーでは、サービスポート設定、認証設定、TLS �
 - **説明:** Prometheus エクスポーターポート。
 - **デフォルト値:** `8080`
 
-### `server.tls.enabled`
-
-- **フィールド:** `scalar.dl.auditor.server.tls.enabled`
-- **説明:** クライアントとサーバー間の TLS 通信を有効にするオプション。
-- **デフォルト値:** `false`
-
 ### `server.tls.cert_chain_path`
 
 - **フィールド:** `scalar.dl.auditor.server.tls.cert_chain_path`
 - **説明:** TLS 通信に使用される証明書チェーンファイルのパス。
 - **デフォルト値:** 空
+
+### `server.tls.enabled`
+
+- **フィールド:** `scalar.dl.auditor.server.tls.enabled`
+- **説明:** クライアントとサーバー間の TLS 通信を有効にするオプション。
+- **デフォルト値:** `false`
 
 ### `server.tls.private_key_path`
 
@@ -308,12 +380,6 @@ Auditor サーバーでは、サービスポート設定、認証設定、TLS �
 - **説明:** Ledger と Auditor サーバー間のメッセージ認証のための HMAC の秘密鍵。
 - **デフォルト値:** 空 (オプション)
 
-### `tls.enabled`
-
-- **フィールド:** `scalar.dl.auditor.tls.enabled`
-- **説明:** TLS 通信を有効にするオプション。
-- **デフォルト値:** `false`
-
 ### `tls.ca_root_cert_path`
 
 - **フィールド:** `scalar.dl.auditor.tls.ca_root_cert_path`
@@ -325,6 +391,12 @@ Auditor サーバーでは、サービスポート設定、認証設定、TLS �
 - **フィールド:** `scalar.dl.auditor.tls.ca_root_cert_pem`
 - **説明:** TLS 通信のための PEM エンコードされたカスタム CA ルート証明書。
 - **デフォルト値:** 空
+
+### `tls.enabled`
+
+- **フィールド:** `scalar.dl.auditor.tls.enabled`
+- **説明:** TLS 通信を有効にするオプション。
+- **デフォルト値:** `false`
 
 ### `tls.override_authority`
 
@@ -399,7 +471,7 @@ Auditor サーバーでは、サービスポート設定、認証設定、TLS �
 ### `authentication.method`
 
 - **フィールド:** `scalar.dl.client.authentication.method`
-- **説明:** クライアントとサーバーの認証方法。
+- **説明:** クライアントと Ledger/Auditor サーバーの認証方法。`digital-signature` または `hmac` を指定できます。これは、Ledger/Auditor の設定と一致している必要があります。
 - **デフォルト値:** `digital-signature` (オプション)
 
 ### `authorization.credential`
@@ -408,10 +480,88 @@ Auditor サーバーでは、サービスポート設定、認証設定、TLS �
 - **説明:** Ledger の認可資格情報。
 - **デフォルト値:** 空 (オプション)
 
+### `cert_holder_id` (非推奨)
+
+- **フィールド:** `scalar.dl.client.cert_holder_id`
+- **説明:** 証明書のホルダー ID。このフィールドは、クライアントの証明書ホルダーを識別するために使用されます。
+- **デフォルト値:** 空
+
+:::note
+
+この設定は非推奨であり、リリース 5.0.0 で削除されます。代わりに `scalar.dl.client.entity.id` を使用してください。両方の設定が指定された場合、`scalar.dl.client.entity.id` が使用されます。
+
+:::
+
+### `cert_path` (非推奨)
+
+- **フィールド:** `scalar.dl.client.cert_path`
+- **説明:** PEM 形式の証明書ファイルのパス。このフィールドは、クライアント証明書ファイルのパスを指定します。
+- **デフォルト値:** 空
+
+:::note
+
+この設定は非推奨であり、リリース 5.0.0 で削除されます。代わりに `scalar.dl.client.entity.identity.digital_signature.cert_path` を使用してください。
+
+:::
+
+### `cert_pem` (非推奨)
+
+- **フィールド:** `scalar.dl.client.cert_pem`
+- **説明:** PEM エンコードされた証明書データ。このフィールドは、クライアントの PEM エンコードされた証明書データを指定します。
+- **デフォルト値:** 空
+
+:::note
+
+この設定は非推奨であり、リリース 5.0.0 で削除されます。代わりに `scalar.dl.client.entity.identity.digital_signature.cert_pem` を使用してください。
+
+:::
+
+### `cert_version` (非推奨)
+
+- **フィールド:** `scalar.dl.client.cert_version`
+- **説明:** 証明書のバージョン。このフィールドは、クライアント証明書のバージョンを指定します。
+- **デフォルト値:** `1`
+
+:::note
+
+この設定は非推奨であり、リリース 5.0.0 で削除されます。代わりに `scalar.dl.client.entity.identity.digital_signature.cert_version` を使用してください。
+
+:::
+
 ### `entity.id`
 
 - **フィールド:** `scalar.dl.client.entity.id`
 - **説明:** リクエスターの一意の ID (例: ユーザーまたはデバイス)。
+- **デフォルト値:** 空
+
+### `entity.identity.digital_signature.cert_path`
+
+- **フィールド:** `scalar.dl.client.entity.identity.digital_signature.cert_path`
+- **説明:** PEM 形式の証明書ファイルのパス。`scalar.dl.client.entity.identity.digital_signature.cert_pem` が空の場合に必要です。
+- **デフォルト値:** 空
+
+### `entity.identity.digital_signature.cert_pem`
+
+- **フィールド:** `scalar.dl.client.entity.identity.digital_signature.cert_pem`
+- **説明:** PEM エンコードされた証明書データ。`scalar.dl.client.entity.identity.digital_signature.cert_path` が空の場合に必要です。
+- **デフォルト値:** 空
+
+### `entity.identity.digital_signature.cert_version`
+
+- **フィールド:** `scalar.dl.client.entity.identity.digital_signature.cert_version`
+- **説明:** 証明書のバージョン。
+- **デフォルト値:** `1` (オプション)
+
+### `entity.identity.digital_signature.private_key_path`
+
+- **フィールド:** `scalar.dl.client.entity.identity.digital_signature.private_key_path`
+- **説明:** 指定された証明書に対応する PEM 形式の秘密鍵ファイルのパス。`scalar.dl.client.entity.identity.digital_signature.private_key_pem` が空の場合に必要です。
+- **デフォルト値:** 空
+
+### `entity.identity.digital_signature.private_key_pem`
+
+- **フィールド:** `scalar.dl.client.entity.identity.digital_signature.private_key_pem`
+- **説明:** PEM エンコードされた秘密鍵データ。`scalar.dl.client.entity.identity.digital_signature.private_key_path` が空の場合に必要です。
 - **デフォルト値:** 空
 
 ### `entity.identity.hmac.secret_key`
@@ -449,6 +599,30 @@ Auditor サーバーでは、サービスポート設定、認証設定、TLS �
 - **フィールド:** `scalar.dl.client.mode`
 - **説明:** クライアントモード (CLIENT または INTERMEDIARY)。
 - **デフォルト値:** 空 (オプション)
+
+### `private_key_path` (非推奨)
+
+- **フィールド:** `scalar.dl.client.private_key_path`
+- **説明:** PEM 形式の秘密鍵ファイルのパス。このフィールドは、クライアント秘密鍵ファイルのパスを指定します。
+- **デフォルト値:** 空
+
+:::note
+
+この設定は非推奨であり、リリース 5.0.0 で削除されます。代わりに `scalar.dl.client.entity.identity.digital_signature.private_key_path` を使用してください。
+
+:::
+
+### `private_key_pem` (非推奨)
+
+- **フィールド:** `scalar.dl.client.private_key_pem`
+- **説明:** PEM エンコードされた秘密鍵データ。このフィールドは、クライアントの PEM エンコードされた秘密鍵データを指定します。
+- **デフォルト値:** 空
+
+:::note
+
+この設定は非推奨であり、リリース 5.0.0 で削除されます。代わりに `scalar.dl.client.entity.identity.digital_signature.private_key_pem` を使用してください。
+
+:::
 
 ### `server.host`
 
