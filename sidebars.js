@@ -164,6 +164,11 @@ const sidebars = {
           items: [
             {
               type: 'doc',
+              id: 'how-to-run-applications',
+              label: 'Run a ScalarDL Application through ScalarDL Ledger',
+            },
+            {
+              type: 'doc',
               id: 'getting-started-auditor',
               label: 'Run a Contract Through ScalarDL Ledger and Auditor',
             },
