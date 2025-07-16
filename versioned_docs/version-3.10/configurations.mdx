@@ -58,7 +58,7 @@ This configuration is deprecated and will be deleted in release 5.0.0 since Ledg
 ### `authentication.method`
 
 - **Field:** `scalar.dl.ledger.authentication.method`
-- **Description:** The authentication method for a client and servers. This field specifies the authentication method used between clients and servers.
+- **Description:** The authentication method for clients and Ledger servers. `digital-signature` or `hmac` can be specified.
 - **Default value:** `digital-signature` (Optional)
 
 ### `direct_asset_access.enabled`
@@ -188,13 +188,13 @@ You can configure several settings for the Auditor server, such as service port 
 ### `authentication.hmac.cipher_key`
 
 - **Field:** `scalar.dl.auditor.authentication.hmac.cipher_key`
-- **Description:** A cipher key used to encrypt and decrypt the HMAC secret keys of client entities. This is used only when `scalar.dl.auditor.authentication.method` is set to "hmac".
+- **Description:** A cipher key used to encrypt and decrypt the HMAC secret keys of client entities. This is used only when `scalar.dl.auditor.authentication.method` is set to `hmac`.
 - **Default value:** empty (Optional)
 
 ### `authentication.method`
 
 - **Field:** `scalar.dl.auditor.authentication.method`
-- **Description:** The authentication method for a client and Auditor servers. This must be consistent with the client configuration.
+The authentication method for clients and Auditor servers. `digital-signature` or `hmac` can be specified. This must be consistent with the Ledger configuration.
 - **Default value:** `digital-signature` (Optional)
 
 ### `authorization.credential`
@@ -203,11 +203,71 @@ You can configure several settings for the Auditor server, such as service port 
 - **Description:** An authorization credential (e.g., Bearer token).
 - **Default value:** empty (Optional)
 
+### `cert_holder_id` (Deprecated)
+
+- **Field:** `scalar.dl.auditor.cert_holder_id`
+- **Description:** The holder ID of a certificate. This field is used to identify the certificate holder for the Auditor.
+- **Default value:** `auditor`
+
+:::note
+
+This configuration is deprecated and will be deleted in release 5.0.0 since Ledger-Auditor authentication will use HMAC only. For more details about authentication, see the [ScalarDL Authentication Guide](./authentication.mdx).
+
+:::
+
+### `cert_version` (Deprecated)
+
+- **Field:** `scalar.dl.auditor.cert_version`
+- **Description:** The version of the certificate. This field specifies the version of the Auditor certificate.
+- **Default value:** `1`
+
+:::note
+
+This configuration is deprecated and will be deleted in release 5.0.0 since Ledger-Auditor authentication will use HMAC only. For more details about authentication, see the [ScalarDL Authentication Guide](./authentication.mdx).
+
+:::
+
 ### `grpc.deadline_duration_millis`
 
 - **Field:** `scalar.dl.auditor.grpc.deadline_duration_millis`
 - **Description:** Deadline duration in milliseconds for each gRPC request.
 - **Default value:** empty (Optional)
+
+### `grpc.max_inbound_message_size`
+
+- **Field:** `scalar.dl.auditor.grpc.max_inbound_message_size`
+- **Description:** The maximum message size allowed for a single gRPC frame. If an inbound message larger than this limit is received, it will not be processed, and the RPC will fail with `RESOURCE_EXHAUSTED`.
+- **Default value:** empty (Optional)
+
+### `grpc.max_inbound_metadata_size`
+
+- **Field:** `scalar.dl.auditor.grpc.max_inbound_metadata_size`
+- **Description:** The maximum size of metadata allowed to be received. This is cumulative size of the entries with some overhead, as defined for HTTP/2's SETTINGS_MAX_HEADER_LIST_SIZE.
+- **Default value:** `8 KiB` (Optional)
+
+### `ledger.cert_holder_id` (Deprecated)
+
+- **Field:** `scalar.dl.auditor.ledger.cert_holder_id`
+- **Description:** The holder ID of the certificate of Ledger. This field is used to identify the certificate holder for the Ledger.
+- **Default value:** `ledger`
+
+:::note
+
+This configuration is deprecated and will be deleted in release 5.0.0 since Ledger-Auditor authentication will use HMAC only. For more details about authentication, see the [ScalarDL Authentication Guide](./authentication.mdx).
+
+:::
+
+### `ledger.cert_version` (Deprecated)
+
+- **Field:** `scalar.dl.auditor.ledger.cert_version`
+- **Description:** The version of the certificate. This field specifies the version of the Ledger certificate.
+- **Default value:** `1`
+
+:::note
+
+This configuration is deprecated and will be deleted in release 5.0.0 since Ledger-Auditor authentication will use HMAC only. For more details about authentication, see the [ScalarDL Authentication Guide](./authentication.mdx).
+
+:::
 
 ### `ledger.host`
 
@@ -238,6 +298,18 @@ You can configure several settings for the Auditor server, such as service port 
 - **Field:** `scalar.dl.auditor.namespace`
 - **Description:** Namespace of auditor tables.
 - **Default value:** `auditor` (Optional)
+
+### `private_key_path`
+
+- **Field:** `scalar.dl.auditor.private_key_path`
+- **Description:** The path to the private key file in PEM format. This or `scalar.dl.auditor.private_key_pem` is used to sign certificates with a digital signature. When `scalar.dl.auditor.servers.authentication.hmac.secret_key` is empty, the signature is also used by Ledger to authenticate the corresponding certificate from Auditor.
+- **Default value:** empty (Optional)
+
+### `private_key_pem`
+
+- **Field:** `scalar.dl.auditor.private_key_pem`
+- **Description:** PEM-encoded private key data. This or `scalar.dl.auditor.private_key_path` is used to sign certificates with a digital signature. When `scalar.dl.auditor.servers.authentication.hmac.secret_key` is empty, the signature is also used by Ledger to authenticate the corresponding certificate from Auditor.
+- **Default value:** empty (Optional)
 
 ### `server.admin_port`
 
@@ -281,17 +353,17 @@ You can configure several settings for the Auditor server, such as service port 
 - **Description:** Prometheus exporter port.
 - **Default value:** `8080`
 
-### `server.tls.enabled`
-
-- **Field:** `scalar.dl.auditor.server.tls.enabled`
-- **Description:** A flag to enable TLS communication between clients and servers.
-- **Default value:** `false`
-
 ### `server.tls.cert_chain_path`
 
 - **Field:** `scalar.dl.auditor.server.tls.cert_chain_path`
 - **Description:** Path to the certificate chain file used for TLS communication.
 - **Default value:** empty
+
+### `server.tls.enabled`
+
+- **Field:** `scalar.dl.auditor.server.tls.enabled`
+- **Description:** A flag to enable TLS communication between clients and servers.
+- **Default value:** `false`
 
 ### `server.tls.private_key_path`
 
@@ -305,12 +377,6 @@ You can configure several settings for the Auditor server, such as service port 
 - **Description:** A secret key of HMAC for the authentication of messages between Ledger and Auditor servers.
 - **Default value:** empty (Optional)
 
-### `tls.enabled`
-
-- **Field:** `scalar.dl.auditor.tls.enabled`
-- **Description:** A flag to enable TLS communication.
-- **Default value:** `false`
-
 ### `tls.ca_root_cert_path`
 
 - **Field:** `scalar.dl.auditor.tls.ca_root_cert_path`
@@ -322,6 +388,12 @@ You can configure several settings for the Auditor server, such as service port 
 - **Field:** `scalar.dl.auditor.tls.ca_root_cert_pem`
 - **Description:** PEM-encoded custom CA root certificate for TLS communication.
 - **Default value:** empty
+
+### `tls.enabled`
+
+- **Field:** `scalar.dl.auditor.tls.enabled`
+- **Description:** A flag to enable TLS communication.
+- **Default value:** `false`
 
 ### `tls.override_authority`
 
@@ -396,7 +468,7 @@ You can configure several settings for clients, such as Ledger server and Audito
 ### `authentication.method`
 
 - **Field:** `scalar.dl.client.authentication.method`
-- **Description:** The authentication method for a client and servers.
+- **Description:** The authentication method for clients and Ledger/Auditor servers. `digital-signature` or `hmac` can be specified. This must be consistent with the Ledger/Auditor configuration.
 - **Default value:** `digital-signature` (Optional)
 
 ### `authorization.credential`
@@ -405,10 +477,88 @@ You can configure several settings for clients, such as Ledger server and Audito
 - **Description:** An authorization credential for Ledger.
 - **Default value:** empty (Optional)
 
+### `cert_holder_id` (Deprecated)
+
+- **Field:** `scalar.dl.client.cert_holder_id`
+- **Description:** The holder ID of a certificate. This field is used to identify the certificate holder for the client.
+- **Default value:** empty
+
+:::note
+
+This configuration is deprecated and will be deleted in release 5.0.0. Use `scalar.dl.client.entity.id` instead. If both configurations are specified, `scalar.dl.client.entity.id` will be used.
+
+:::
+
+### `cert_path` (Deprecated)
+
+- **Field:** `scalar.dl.client.cert_path`
+- **Description:** The path of a certificate file in PEM format. This field specifies the path to the client certificate file.
+- **Default value:** empty
+
+:::note
+
+This configuration is deprecated and will be deleted in release 5.0.0. Use `scalar.dl.client.entity.identity.digital_signature.cert_path` instead.
+
+:::
+
+### `cert_pem` (Deprecated)
+
+- **Field:** `scalar.dl.client.cert_pem`
+- **Description:** PEM-encoded certificate data. This field specifies the PEM-encoded certificate data for the client.
+- **Default value:** empty
+
+:::note
+
+This configuration is deprecated and will be deleted in release 5.0.0. Use `scalar.dl.client.entity.identity.digital_signature.cert_pem` instead.
+
+:::
+
+### `cert_version` (Deprecated)
+
+- **Field:** `scalar.dl.client.cert_version`
+- **Description:** The version of the certificate. This field specifies the version of the client certificate.
+- **Default value:** `1`
+
+:::note
+
+This configuration is deprecated and will be deleted in release 5.0.0. Use `scalar.dl.client.entity.identity.digital_signature.cert_version` instead.
+
+:::
+
 ### `entity.id`
 
 - **Field:** `scalar.dl.client.entity.id`
 - **Description:** A unique ID of a requester (e.g., a user or a device).
+- **Default value:** empty
+
+### `entity.identity.digital_signature.cert_path`
+
+- **Field:** `scalar.dl.client.entity.identity.digital_signature.cert_path`
+- **Description:** The path of a certificate file in PEM format, which is required if `scalar.dl.client.entity.identity.digital_signature.cert_pem` is empty.
+- **Default value:** empty
+
+### `entity.identity.digital_signature.cert_pem`
+
+- **Field:** `scalar.dl.client.entity.identity.digital_signature.cert_pem`
+- **Description:** PEM-encoded certificate data. Required if `scalar.dl.client.entity.identity.digital_signature.cert_path` is empty.
+- **Default value:** empty
+
+### `entity.identity.digital_signature.cert_version`
+
+- **Field:** `scalar.dl.client.entity.identity.digital_signature.cert_version`
+- **Description:** The version of the certificate.
+- **Default value:** `1` (Optional)
+
+### `entity.identity.digital_signature.private_key_path`
+
+- **Field:** `scalar.dl.client.entity.identity.digital_signature.private_key_path`
+- **Description:** The path of a private key file in PEM format, which corresponds to the specified certificate. Required if `scalar.dl.client.entity.identity.digital_signature.private_key_pem` is empty.
+- **Default value:** empty
+
+### `entity.identity.digital_signature.private_key_pem`
+
+- **Field:** `scalar.dl.client.entity.identity.digital_signature.private_key_pem`
+- **Description:** PEM-encoded private key data. Required if `scalar.dl.client.entity.identity.digital_signature.private_key_path` is empty.
 - **Default value:** empty
 
 ### `entity.identity.hmac.secret_key`
@@ -446,6 +596,30 @@ You can configure several settings for clients, such as Ledger server and Audito
 - **Field:** `scalar.dl.client.mode`
 - **Description:** A client mode (CLIENT or INTERMEDIARY).
 - **Default value:** empty (Optional)
+
+### `private_key_path` (Deprecated)
+
+- **Field:** `scalar.dl.client.private_key_path`
+- **Description:** The path of a private key file in PEM format. This field specifies the path to the client private key file.
+- **Default value:** empty
+
+:::note
+
+This configuration is deprecated and will be deleted in release 5.0.0. Use `scalar.dl.client.entity.identity.digital_signature.private_key_path` instead.
+
+:::
+
+### `private_key_pem` (Deprecated)
+
+- **Field:** `scalar.dl.client.private_key_pem`
+- **Description:** PEM-encoded private key data. This field specifies the PEM-encoded private key data for the client.
+- **Default value:** empty
+
+:::note
+
+This configuration is deprecated and will be deleted in release 5.0.0. Use `scalar.dl.client.entity.identity.digital_signature.private_key_pem` instead.
+
+:::
 
 ### `server.host`
 
