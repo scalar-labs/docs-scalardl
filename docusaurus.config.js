@@ -436,7 +436,7 @@ const config = {
         isCloseable: false,
       },
       zoom: {
-        selector: '.markdown :not(em) > img',
+        selector: '.markdown :not(em) > img:not(.youtube-embed img)',
         background: {
           light: 'rgb(255, 255, 255)',
           dark: 'rgb(50, 50, 50)'
