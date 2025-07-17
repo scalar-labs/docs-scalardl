@@ -34,8 +34,8 @@ const recentFeatures = [
       },
       {
         cell: 2, // Third cell
-        links: ['generic-contracts-reference'],
-        labels: ['Generic Contracts and Functions Reference Guide']
+        links: ['scalardl-command-reference'],
+        labels: ['ScalarDL Client Command Reference']
       }
     ]
   }

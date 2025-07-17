@@ -34,8 +34,8 @@ const recentFeatures = [
       },
       {
         cell: 2, // Third cell
-        links: ['generic-contracts-reference'],
-        labels: ['汎用コントラクトおよびファンクションのリファレンスガイド']
+        links: ['scalardl-command-reference'],
+        labels: ['ScalarDL クライアントコマンドリファレンス']
       }
     ]
   }
