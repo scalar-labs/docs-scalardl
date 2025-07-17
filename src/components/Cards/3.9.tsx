@@ -34,8 +34,8 @@ const recentFeatures = [
       },
       {
         cell: 2, // Third cell
-        links: [''],
-        labels: ['']
+        links: ['scalar-kubernetes/AwsMarketplaceGuide?products=scalardl-ledger'],
+        labels: ['Install ScalarDL through AWS Marketplace']
       }
     ]
   }

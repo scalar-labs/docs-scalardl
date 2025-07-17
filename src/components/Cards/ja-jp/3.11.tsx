@@ -29,13 +29,13 @@ const recentFeatures = [
       },
       {
         cell: 1, // Second cell
-        links: [''],
-        labels: ['']
+        links: ['use-generic-contracts'],
+        labels: ['汎用コントラクトを使用']
       },
       {
         cell: 2, // Third cell
-        links: [''],
-        labels: ['']
+        links: ['how-to-write-applications-with-generic-contracts'],
+        labels: ['汎用コントラクトを用いたアプリケーションを作成']
       }
     ]
   }

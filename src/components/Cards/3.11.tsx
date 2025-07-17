@@ -29,13 +29,13 @@ const recentFeatures = [
       },
       {
         cell: 1, // Second cell
-        links: [''],
-        labels: ['']
+        links: ['use-generic-contracts'],
+        labels: ['Use Generic Contracts and Functions']
       },
       {
         cell: 2, // Third cell
-        links: [''],
-        labels: ['']
+        links: ['how-to-write-applications-with-generic-contracts'],
+        labels: ['Write a ScalarDL Application with Generic Contracts']
       }
     ]
   }
