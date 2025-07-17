@@ -145,6 +145,11 @@ table, pre, code, img, iframe { /* Fix for common elements that might cause over
   padding: 1rem;
 }
 
+.youtube-embed a {
+  display: block;
+  line-height: 0;
+}
+
 .link {
   background-color: #f0f0f0;
   border-radius: 5px;
