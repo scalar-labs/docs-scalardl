@@ -168,7 +168,9 @@ const CategoryGrid = () => {
           </span> */}
         </div>
         <div className="youtube-embed">
-          <LiteYouTubeEmbed id="-i1tqeI3FKs" title="ScalarDB Explainer" poster="maxresdefault" />
+          <a href="https://speakerdeck.com/scalar/scalar-dl-technical-overview" target="_blank">
+            <img src="/img/scalardl-presentation-overview.png" title="ScalarDL presentation overview" />
+          </a>
         </div>
       </div>
 
