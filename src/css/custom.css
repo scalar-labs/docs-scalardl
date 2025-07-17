@@ -252,7 +252,7 @@ table, pre, code, img, iframe { /* Fix for common elements that might cause over
     margin-top: 1.25rem;
   }
 
-  .category-cell, .new-content-cell {
+  .category-cell, .recent-features-cell {
     width: 100%;
     margin-bottom: 0.5rem;
   }
@@ -280,7 +280,7 @@ table, pre, code, img, iframe { /* Fix for common elements that might cause over
   }
 }
 
-.new-content-icon {
+.recent-features-icon {
   color: #78C740;
   /* Fix for FontAwesome icon FOUC. */
   width: 1em !important;
