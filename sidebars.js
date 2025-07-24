@@ -774,6 +774,11 @@ const sidebars = {
           items: [
             {
               type: 'doc',
+              id: 'how-to-run-applications',
+              label: 'ScalarDL Ledger を介して ScalarDL アプリケーションを実行',
+            },
+            {
+              type: 'doc',
               id: 'getting-started-auditor',
               label: 'ScalarDL Ledger と Auditor を通じてコントラクトを実行',
             },
