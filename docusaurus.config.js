@@ -9,7 +9,7 @@ import { getNotifications } from './src/data/notifications';
 
 const config = {
   title: 'ScalarDL Documentation',
-  tagline: 'Scalable and practical byzantine-fault detection middleware for transactional database systems',
+  tagline: 'Scalable and practical Byzantine-fault detection middleware for transactional database systems',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -174,6 +174,21 @@ const config = {
       },
     ],
     require.resolve('docusaurus-plugin-image-zoom'),
+    [
+      'docusaurus-plugin-llms',
+      {
+        generateLLMsTxt: true,
+        generateLLMsFullTxt: true,
+        docsDir: 'docs',
+        version: 'latest',
+        title: 'ScalarDL Documentation',
+        description: 'Scalable and practical Byzantine-fault detection middleware for transactional database systems',
+        // Content cleaning options
+        excludeImports: true, // This configuration currently option doesn't seem to work as expected. I don't think it's a major issue, but we should upgrade the plugin when a new version is available to see if the issue is fixed.
+        removeDuplicateHeadings: true, // This configuration currently option doesn't seem to work as expected. I don't think it's a major issue, but we should upgrade the plugin when a new version is available to see if the issue is fixed.
+        includeUnmatchedLast: true,
+      },
+    ],
     [
       '@docusaurus/plugin-pwa',
       {
