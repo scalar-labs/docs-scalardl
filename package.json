@@ -33,6 +33,7 @@
     "clsx": "^2.0.0",
     "docusaurus-lunr-search": "^3.3.2",
     "docusaurus-plugin-image-zoom": "^2.0.0",
+    "docusaurus-plugin-llms": "^0.1.5",
     "prism-react-renderer": "^2.3.0",
     "react": "^18.0.0",
     "react-cookie-consent": "9.0.0",
