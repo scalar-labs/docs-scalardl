@@ -26,7 +26,7 @@ You must disable Auditor since you'll be running your applications through only 
 
 :::note
 
-If you are using the scalardl-samples environment, see the ledger.properties file for the corresponding storage.
+If you are using the `scalardl-samples` environment, see the `ledger.properties` file for the corresponding storage.
 
 :::
 
@@ -49,27 +49,39 @@ For details about the configurations, see the following:
 - [Client configurations](configurations.mdx#client-configurations)
 - [Ledger configurations](configurations.mdx#ledger-configurations)
 
-### Decide which database to use
+### Configure your database
 
-Ledger uses ScalarDB to interact with databases, which enables you to run ScalarDL on top of various databases. So, you need to decide on a database that ScalarDB supports based on your applications' requirements. For databases and their versions that ScalarDB supports, see [Requirements](requirements.mdx#databases).
+Ledger uses ScalarDB to interact with databases, which enables you to run ScalarDL on top of various databases. So, you need to decide on a database that ScalarDB supports based on your applications' requirements and configure several ScalarDB parameters.
 
-You can configure a database as follows:
+For details about the ScalarDB parameters, see also [ScalarDB Configurations](https://scalardb.scalar-labs.com/docs/latest/configurations/).
+
+#### Underlying database
+
+You can configure which database to use as follows:
 
 - In the Ledger configuration, set `scalar.db.storage`, `scalar.db.contact_points`, `scalar.db.username`, and `scalar.db.password` to the appropriate values based on the database that you'll be using.
 
-For details about the above configurations, see [ScalarDB Configurations](https://scalardb.scalar-labs.com/docs/latest/configurations/).
+For databases and their versions that ScalarDB supports, see [Requirements](requirements.mdx#databases).
 
-### Decide which isolation level to use
+:::warning
+
+If your applications read and write a table through the Function feature, and the table is also directly accessed from ScalarDB applications, you need to properly configure the database chosen here. Specifically, both ScalarDL and ScalarDB applications must refer to the same Coordinator table to guarantee consistency.
+
+:::
+
+#### Isolation level
 
 Ledger relies on the [Consensus Commit](https://scalardb.scalar-labs.com/docs/latest/consensus-commit/) transaction manager of ScalarDB to manage transactions. The transaction manager is responsible for guaranteeing the isolation property of transactions, which is crucial for ensuring the consistency and correctness of transactions.
 
-You can configure the isolation level of Ledger. If you are unsure about which isolation level to use, use `SERIALIZABLE`.
+You can configure the isolation level of Ledger as follows. If you are unsure about which isolation level to use, use `SERIALIZABLE`.
 
-
-You can configure the isolation level as follows:
 - In the Ledger configuration, set `scalar.db.consensus_commit.isolation_level` to an isolation level of your choice. The default value is `SNAPSHOT`.
 
-For details about the above configurations, see [ScalarDB Configurations](https://scalardb.scalar-labs.com/docs/latest/configurations/).
+#### Limitations
+
+While ScalarDL leverages ScalarDB, the following ScalarDB feature is not compatible with the consistency guarantee mechanism of ScalarDL:
+
+- [Group commit for the Coordinator table](https://scalardb.scalar-labs.com/docs/latest/api-guide/#group-commit-for-the-coordinator-table) (`scalar.db.consensus_commit.coordinator.group_commit.enabled` must be `false`.)
 
 ### Decide which other configurations to use
 
