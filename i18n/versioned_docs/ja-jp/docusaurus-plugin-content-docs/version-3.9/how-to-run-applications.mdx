@@ -26,7 +26,7 @@ Ledger のみでアプリケーションを実行する場合は Auditor を無�
 
 :::note
 
-scalardl-samples 環境を利用している場合は、対応するストレージの ledger.properties ファイルを参照してください。
+`scalardl-samples` 環境を利用している場合は、対応するストレージの `ledger.properties` ファイルを参照してください。
 
 :::
 
@@ -49,26 +49,33 @@ scalardl-samples 環境を利用している場合は、対応するストレー
 - [クライアントの設定](configurations.mdx#クライアントの設定)
 - [Ledger の設定](configurations.mdx#ledger-の設定)
 
-### 利用するデータベースの決定
+### データベース設定の決定
 
-Ledger は ScalarDB を利用してデータベースを操作します。ScalarDB がサポートする様々なデータベース上で ScalarDL を実行できます。アプリケーション要件に応じて利用するデータベースを決定してください。対応データベースとバージョンは[要件](requirements.mdx#データベース)を参照してください。
+Ledger は ScalarDB を利用してデータベースを操作します。ScalarDB がサポートする様々なデータベース上で ScalarDL を実行できます。アプリケーション要件に応じて利用するデータベースを決定し、いくつかの ScalarDB パラメータを設定してください。
 
-データベースの設定方法:
+ScalarDB パラメータの詳細については、[ScalarDB の設定](https://scalardb.scalar-labs.com/ja-jp/docs/latest/configurations/)も参照してください。
+
+#### 下位のデータベース
+
+使用するデータベースの設定方法:
 
 - Ledger の設定で `scalar.db.storage`, `scalar.db.contact_points`, `scalar.db.username`, `scalar.db.password` を利用するデータベースに合わせて設定します。
 
-詳細は [ScalarDB の設定](https://scalardb.scalar-labs.com/ja-jp/docs/latest/configurations/)を参照してください。
+対応データベースとバージョンは[要件](requirements.mdx#データベース)を参照してください。
 
-### 分離レベルの決定
+:::warning
+
+アプリケーションが Function 機能を介してテーブルを読み書きし、そのテーブルが ScalarDB アプリケーションからも直接アクセスされる場合は、ここで選択したデータベースを適切に設定する必要があります。具体的には、一貫性を保証するために、ScalarDL アプリケーションと ScalarDB アプリケーションの両方が同じ Coordinator テーブルを参照する必要があります。
+
+:::
+
+#### 分離レベル
 
 Ledger は ScalarDB の [Consensus Commit](https://scalardb.scalar-labs.com/ja-jp/docs/latest/consensus-commit/) トランザクションマネージャを利用してトランザクションを管理します。トランザクションマネージャは、トランザクションの分離性を保証し、整合性・正確性を担保します。
 
-Ledger の分離レベルは設定可能です。どの分離レベルを使うべきかわからない場合は `SERIALIZABLE` を推奨します。
+Ledger の分離レベルは以下のように設定できます。どの分離レベルを使うべきかわからない場合は、`SERIALIZABLE` を使用してください。
 
-分離レベルの設定方法:
 - Ledger の設定で `scalar.db.consensus_commit.isolation_level` に希望する分離レベルを設定します。デフォルト値は `SNAPSHOT` です。
-
-詳細は [ScalarDB の設定](https://scalardb.scalar-labs.com/ja-jp/docs/latest/configurations/)を参照してください。
 
 ### その他の設定
 
