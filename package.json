@@ -5,13 +5,14 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
-    "build": "docusaurus build 2>&1 | tee brokenLinks.log && node scripts/filter-broken-link-warnings.js && node scripts/generate-glossary-json.js",
+    "build": "docusaurus build 2>&1 | tee brokenLinks.log && node scripts/filter-broken-link-warnings.js && node scripts/generate-glossary-json.js && npm run generate-llms-full",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
-    "write-heading-ids": "docusaurus write-heading-ids"
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "generate-llms-full": "python3 scripts/generate-llms-full.py"
   },
   "dependencies": {
     "@docusaurus/core": "^3.7.0",
