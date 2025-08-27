@@ -1,0 +1,106 @@
+import CodeBlock from '@theme/CodeBlock';
+
+<h3>Set up your license</h3>
+
+You need a commercial license to use ScalarDL Auditor. Set up your license as follows.
+
+1. Enable the Docker image for the Enterprise edition in the <code>{props.shortName}/docker-compose-ledger.yml</code> file as follows:
+
+   - Before changing the image (default configuration):
+
+     ```yaml
+     # docker-compose-ledger.yml
+     services:
+       scalardl-ledger:
+         image: ghcr.io/scalar-labs/scalardl-ledger:${SCALARDL_VERSION}
+         # image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
+     ```
+
+   - After changing the image:
+
+     ```yaml
+     # docker-compose-ledger.yml
+     services:
+       scalardl-ledger:
+         # image: ghcr.io/scalar-labs/scalardl-ledger:${SCALARDL_VERSION}
+         image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
+     ```
+
+2. Set your license key for ScalarDL Ledger and Auditor. In the <code>{props.shortName}/ledger.properties</code> and <code>{props.shortName}/auditor.properties</code> files, replace `<SET_YOUR_LICENSE_KEY>` with your license key. For example:
+
+   ```properties
+   ##### PLEASE REPLACE THIS VALUE WITH YOUR LICENSE KEY (ENTERPRISE EDITION ONLY) #####
+   scalar.dl.licensing.license_key={"organization_name":"XXXXXXXX","expiration_date_time":"YYYY-MM-DDTHH:mm:SS+TIMEZONE","product_name":"ScalarDL Ledger","product_version":N,"license_type":"trial","signature":"XXXXXXXX"}
+   ##### PLEASE REPLACE THIS VALUE WITH YOUR LICENSE KEY (ENTERPRISE EDITION ONLY) #####
+   ```
+
+3. To check the license, update the <code>{props.shortName}/docker-compose-ledger.yml</code> and <code>{props.shortName}/docker-compose-auditor.yml</code> files as follows. If you're using a trial license, skip this step.
+
+   - Before changing the certificate file path (default configuration):
+
+     ```yaml
+     # docker-compose-ledger.yml
+     services:
+       scalardl-ledger:
+         volumes:
+           - ./ledger.properties:/scalar/ledger/ledger.properties.tmpl
+           - ../fixture/ledger-key.pem:/scalar/ledger-key.pem
+           - ../fixture/trial-license-cert.pem:/scalar/license-cert.pem
+           # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+           # - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+     ```
+
+     ```yaml
+     # docker-compose-auditor.yml
+     services:
+       scalardl-auditor:
+         volumes:
+           - ./auditor.properties:/scalar/auditor/auditor.properties.tmpl
+           - ../fixture/auditor-key.pem:/scalar/auditor-key.pem
+           - ../fixture/trial-license-cert.pem:/scalar/license-cert.pem
+           # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+           # - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+     ```
+
+   - After changing the certificate file path:
+
+     ```yaml
+     # docker-compose-ledger.yml
+     services:
+       scalardl-ledger:
+         volumes:
+           - ./ledger.properties:/scalar/ledger/ledger.properties.tmpl
+           - ../fixture/ledger-key.pem:/scalar/ledger-key.pem
+           # - ../fixture/trial-license-cert.pem:/scalar/license-cert.pem
+           # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+           - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+     ```
+
+     ```yaml
+     # docker-compose-auditor.yml
+     services:
+       scalardl-auditor:
+         volumes:
+           - ./auditor.properties:/scalar/auditor/auditor.properties.tmpl
+           - ../fixture/auditor-key.pem:/scalar/auditor-key.pem
+           # - ../fixture/trial-license-cert.pem:/scalar/license-cert.pem
+           # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+           - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+     ```
+
+<h3>Start up ScalarDL</h3>
+
+You can start using ScalarDL Ledger and Auditor by following the steps below:
+
+1. Run {props.productName} locally by running the following command:
+
+   <CodeBlock language="console">docker compose -f {props.shortName}/docker-compose-auditor.yml up -d {props.shortName}</CodeBlock>
+
+2. Load the database schema for ScalarDL Ledger and Auditor by running the following command:
+
+   <CodeBlock language="console">docker compose -f {props.shortName}/docker-compose-auditor.yml up -d scalardl-ledger-schema-loader
+   docker compose -f {props.shortName}/docker-compose-auditor.yml up -d scalardl-auditor-schema-loader</CodeBlock>
+
+3. Run ScalarDL Ledger, Auditor, and its dependent components by running the following command:
+
+   <CodeBlock language="console">docker compose -f {props.shortName}/docker-compose-auditor.yml up -d</CodeBlock>
