@@ -38,7 +38,7 @@ Ledger のみでアプリケーションを実行する場合は Auditor を無�
 
 クライアントの認証方式として、電子署名または HMAC のいずれかを選択する必要があります。電子署名方式は認証に加えて否認防止も提供しますが遅く、HMAC 方式は認証のみですが高速です。
 
-認証方式の設定方法:
+認証方法は以下のように設定できます。クライアントと Ledger の両方で同じ方法（`digital-signature` または `hmac`）を設定する必要があります。
 
 - クライアントの設定で `scalar.dl.client.authentication.method` を `digital-signature` または `hmac` に設定します。
 - Ledger の設定で `scalar.dl.ledger.authentication.method` を `digital-signature` または `hmac` に設定します。
@@ -61,7 +61,7 @@ ScalarDB パラメータの詳細については、[ScalarDB の設定](https://
 
 - Ledger の設定で `scalar.db.storage`, `scalar.db.contact_points`, `scalar.db.username`, `scalar.db.password` を利用するデータベースに合わせて設定します。
 
-対応データベースとバージョンは[要件](requirements.mdx#データベース)を参照してください。
+ScalarDB を介して ScalarDL でサポートされるデータベースとそのバージョンについては、[要件](requirements.mdx#データベース)を参照してください。
 
 :::warning
 
@@ -85,14 +85,14 @@ ScalarDL は ScalarDB を活用していますが、以下の ScalarDB 機能は
 
 ### その他の設定
 
-Ledger には TLS や gRPC などの設定を追加で設定可能です。詳細は以下を参照してください。
+クライアントと Ledger には TLS や gRPC などの設定を追加で設定可能です。詳細は以下を参照してください。
 
 - [クライアントの設定](configurations.mdx#クライアントの設定)
 - [Ledger の設定](configurations.mdx#ledger-の設定)
 
 ## Ledger の起動
 
-Ledger とクライアントの設定後、Ledger を起動します。ScalarDB がサポートする任意のデータベースで起動可能です。対応データベースとバージョンは[要件](requirements.mdx#データベース)を参照してください。
+Ledger とクライアントの設定後、Ledger を起動します。
 
 Docker Compose を使ったローカルでの Ledger 起動方法は [データベースを選択して ScalarDL を起動します](getting-started#データベースを選択して-scalardl-を起動します)を参照してください。ローカルまたはクラウドベースの Kubernetes 環境での起動方法は [ローカル Kubernetes 環境に ScalarDL をデプロイする](deploy-local-environment-overview.mdx)または[クラウドベースの Kubernetes 環境に ScalarDL をデプロイする](deploy-managed-kubernetes-environment-overview.mdx)を参照してください。
 
