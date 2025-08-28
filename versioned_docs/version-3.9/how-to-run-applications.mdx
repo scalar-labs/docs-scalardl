@@ -38,7 +38,7 @@ For details about the configurations, see the following:
 
 You must decide which authentication method to use for clients: digital signature or HMAC. As a simple comparison, the digital-signature method provides non-repudiation in addition to authentication but is slow, whereas the HMAC method provides only authentication but is fast.
 
-You can configure an authentication method as follows:
+You can configure an authentication method as follows. The same method (`digital-signature` or `hmac`) must be configured in both the client and Ledger.
 
 - In the client configuration, set `scalar.dl.client.authentication.method` to `digital-signature` or `hmac` (depending on which method you choose).
 - In the Ledger configuration, set `scalar.dl.ledger.authentication.method` to `digital-signature` or `hmac` (depending on which method you choose).
@@ -61,7 +61,7 @@ You can configure which database to use as follows:
 
 - In the Ledger configuration, set `scalar.db.storage`, `scalar.db.contact_points`, `scalar.db.username`, and `scalar.db.password` to the appropriate values based on the database that you'll be using.
 
-For databases and their versions that ScalarDB supports, see [Requirements](requirements.mdx#databases).
+For databases and their versions supported by ScalarDL via ScalarDB, see [Requirements](requirements.mdx#databases).
 
 :::warning
 
@@ -79,14 +79,14 @@ You can configure the isolation level of Ledger as follows. If you are unsure ab
 
 ### Decide which other configurations to use
 
-You can also apply other configurations, such as TLS and gRPC configurations, for Ledger. For details about the configurations, see the following:
+You can also apply other configurations, such as TLS and gRPC configurations, for the client and Ledger. For details about the configurations, see the following:
 
 - [Client configurations](configurations.mdx#client-configurations)
 - [Ledger configurations](configurations.mdx#ledger-configurations)
 
 ## Start Ledger
 
-After configuring Ledger and the client, you need to start up Ledger. You can start up Ledger with your preferred database that ScalarDB supports. For databases and their versions that ScalarDB supports, see [Requirements](requirements.mdx#databases).
+After configuring Ledger and the client, you need to start up Ledger.
 
 For details on how to locally start up Ledger by using Docker Compose, see [Start up ScalarDL with your preferred database](getting-started.mdx#start-up-scalardl-with-your-preferred-database). For how to start up Ledger in local or cloud-based Kubernetes environments, see [Deploy ScalarDL in your local Kubernetes environment](deploy-local-environment-overview.mdx) or [Deploy ScalarDL in a cloud-based Kubernetes environment](deploy-managed-kubernetes-environment-overview.mdx), respectively.
 
