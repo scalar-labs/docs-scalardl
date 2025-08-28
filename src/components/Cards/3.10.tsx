@@ -99,13 +99,13 @@ const categories = [
       },
       {
         cell: 1, // Second cell
-        links: ['how-to-write-applications'],
-        labels: ['Write a ScalarDL Application in Java']
+        links: ['how-to-write-contract'],
+        labels: ['Write a Contract']
       },
       {
         cell: 2, // Third cell
-        links: [''],
-        labels: ['']
+        links: ['how-to-write-applications'],
+        labels: ['Write a ScalarDL Application in Java']
       }
     ]
   },
