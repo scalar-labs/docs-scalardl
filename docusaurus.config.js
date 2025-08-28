@@ -154,6 +154,10 @@ const config = {
             from: '/docs/3.10/getting-started-auditor',
           },
           {
+            to: '/docs/3.9/how-to-run-applications-with-auditor',
+            from: '/docs/3.9/getting-started-auditor',
+          },
+          {
             to: '/docs/latest/releases/release-support-policy',
             from: '/docs/releases/release-support-policy',
           },
