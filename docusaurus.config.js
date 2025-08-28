@@ -150,6 +150,10 @@ const config = {
             from: ['/', '/docs'],
           },
           {
+            to: '/docs/latest/how-to-run-applications-with-auditor',
+            from: '/docs/latest/getting-started-auditor',
+          },
+          {
             to: '/docs/latest/releases/release-support-policy',
             from: '/docs/releases/release-support-policy',
           },
