@@ -82,8 +82,8 @@ const categories = [
       },
       {
         cell: 2, // Third cell
-        links: ['getting-started-auditor'],
-        labels: ['Getting Started with ScalarDL Auditor']
+        links: [''],
+        labels: ['']
       }
     ]
   },

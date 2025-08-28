@@ -162,7 +162,7 @@ const CategoryGrid = () => {
       <div className="hero-section">
         <div className="hero-text">
           <h1>ScalarDL</h1>
-          <p>ScalarDL is middleware for realizing a tamper-evident database system by detecting arbitrary faults (that is, Byzantine faults), such as data tampering and malicious attacks, in transactional database systems. It achieves such detection in a scalable and practical way like no other with its novel consensus algorithm.</p>
+            <p>ScalarDL は、トランザクション型データベースシステムにおけるデータ改ざんや悪意のある攻撃などの任意の障害（ビザンチン故障）を検出することで、改ざん検知型データベースシステムを実現するミドルウェアです。独自のコンセンサスアルゴリズムにより、他に類を見ないスケーラブルかつ実用的な方法で障害検出を可能にします。</p>
           {/* <span className="hero-text-additional">
             <p>PLACEHOLDER TEXT</p>
           </span> */}
