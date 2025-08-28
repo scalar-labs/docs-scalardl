@@ -68,6 +68,10 @@ Select your database, and follow the instructions to deploy ScalarDL Ledger with
   <DbSpecificSteps productName="Oracle Database" shortName="oracle" />
   </TabItem>
 
+  <TabItem value="sqlserver" label="SQL Server">
+  <DbSpecificSteps productName="SQL Server" shortName="sqlserver" />
+  </TabItem>
+
   <TabItem value="dynamodb" label="DynamoDB">
   <DbSpecificSteps productName="DynamoDB" shortName="dynamodb" />
   </TabItem>
@@ -324,7 +328,7 @@ client/bin/scalardl validate-ledger --properties client.properties --asset-id="s
 What the validation does is depending on how you set up and configure ScalarDL.
 Briefly speaking, if only ScalarDL Ledger is used, the validation traverses assets to see if the assets can be recomputed and have a valid hash-chain structure.
 With ScalarDL Ledger and Auditor, the validation checks discrepancies (i.e., Byzantine faults) between the states of Ledger and Auditor without centralized coordination.
-Please read [Getting Started with ScalarDL Auditor](getting-started-auditor.mdx) for more details about the validation with Auditor.
+For more details about the validation with Auditor, see [Validate your data](how-to-write-applications.mdx#validate-your-data) and [Run a ScalarDL Application Through ScalarDL Ledger and Auditor](how-to-run-applications-with-auditor.mdx).
 
 ## Create your own contracts
 

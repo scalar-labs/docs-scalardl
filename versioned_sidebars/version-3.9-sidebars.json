@@ -135,7 +135,7 @@
             {
               "type": "doc",
               "id": "getting-started-auditor",
-              "label": "Run a Contract Through ScalarDL Ledger and Auditor"
+              "label": "Run a ScalarDL Application through ScalarDL Ledger and Auditor"
             }
           ]
         },
