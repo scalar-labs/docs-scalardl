@@ -65,7 +65,7 @@ ScalarDB Cluster を `direct-kubernetes` モードで使用する場合は、次
       name: scalardb-cluster-client-sa
   roleRef:
     kind: Role
-    name: scalardb-cluster-role
+    name: scalardb-cluster-client-role
     apiGroup: rbac.authorization.k8s.io
   ```
 * ServiceAccount
