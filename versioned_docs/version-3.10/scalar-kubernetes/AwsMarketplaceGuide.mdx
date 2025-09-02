@@ -19,6 +19,7 @@ Scalar products (ScalarDB, ScalarDL, and their tools) are available in the AWS M
 - A BYOL option is provided in the following public container repositories outside of the AWS Marketplace. If you don't have a license key, please [contact us](https://www.scalar-labs.com/contact-us).
   - [ScalarDB Cluster Enterprise Standard](https://github.com/orgs/scalar-labs/packages/container/package/scalardb-cluster-node-byol-standard)
   - [ScalarDB Cluster Enterprise Premium](https://github.com/orgs/scalar-labs/packages/container/package/scalardb-cluster-node-byol-premium)
+  - [ScalarDB Analytics Server](https://github.com/scalar-labs/scalardb-analytics/pkgs/container/scalardb-analytics-server-byol)
   - [ScalarDL Ledger](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-ledger-byol)
   - [ScalarDL Auditor](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-auditor-byol)
 
@@ -43,6 +44,11 @@ Scalar products (ScalarDB, ScalarDL, and their tools) are available in the AWS M
            | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-djqw3zk6dwyk6) | [ScalarDB Cluster](https://aws.amazon.com/marketplace/pp/prodview-alcwrmw6v4cfy)             |
          </TabItem>
        </Tabs>
+     </TabItem>
+     <TabItem value="scalardb-analytics-server" label="ScalarDB Analytics server">
+       | PAYG                                                                                       |
+       |:-------------------------------------------------------------------------------------------|
+       | [ScalarDB Analytics Server](https://aws.amazon.com/marketplace/pp/prodview-53ik57autkmci)  |
      </TabItem>
      <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
        | PAYG                                                                             | BYOL (Deprecated)                                                                |
@@ -141,6 +147,27 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
          </TabItem>
        </Tabs>
      </TabItem>
+     <TabItem value="scalardb-analytics-server" label="ScalarDB Analytics server">
+       <h3>ScalarDB Analytics server</h3>
+
+       In the `scalardb-analytics-server-custom-values.yaml` file:
+
+       ```yaml
+       scalarDbAnalyticsServer:
+         image:
+           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-analytics-server-aws-payg"
+         serviceAccount:
+           serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
+           automountServiceAccountToken: true
+       ```
+
+     :::note
+
+     For more details on the configurations, see [Configure a Custom Values File for ScalarDB Analytics Server](../helm-charts/configure-custom-values-scalardb-analytics-server.mdx).
+
+     :::
+
+     </TabItem>
      <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
        <h3>ScalarDL Ledger</h3>
 
@@ -223,30 +250,37 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
          </TabItem>
        </Tabs>
      </TabItem>
+     <TabItem value="scalardb-analytics-server" label="ScalarDB Analytics server">
+       <h3>ScalarDB Analytics server</h3>
+
+       ```console
+       helm install scalardb-analytics-server scalar-labs/scalardb-analytics-server -f scalardb-analytics-server-custom-values.yaml
+       ```
+     </TabItem>
      <TabItem value="scalardl-ledger" label="ScalarDL Ledger">
        <h3>ScalarDL Ledger</h3>
 
        ```console
-       helm install scalardl-ledger scalar-labs/scalardl -f ./scalardl-ledger-custom-values.yaml
+       helm install scalardl-ledger scalar-labs/scalardl -f scalardl-ledger-custom-values.yaml
        ```
 
        <h3>ScalarDL Schema Loader for Ledger</h3>
 
        ```console
-       helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-ledger-custom-values.yaml
+       helm install schema-loader scalar-labs/schema-loading -f schema-loader-ledger-custom-values.yaml
        ```
      </TabItem>
      <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
        <h3>ScalarDL Auditor</h3>
 
        ```console
-       helm install scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
+       helm install scalardl-auditor scalar-labs/scalardl-audit -f scalardl-auditor-custom-values.yaml
        ```
 
        <h3>ScalarDL Schema Loader for Auditor</h3>
 
        ```console
-       helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-auditor-custom-values.yaml
+       helm install schema-loader scalar-labs/schema-loading -f schema-loader-auditor-custom-values.yaml
        ```
      </TabItem>
    </Tabs>
@@ -343,26 +377,26 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
        <h3>ScalarDL Ledger</h3>
 
        ```console
-       helm install scalardl-ledger scalar-labs/scalardl -f ./scalardl-ledger-custom-values.yaml
+       helm install scalardl-ledger scalar-labs/scalardl -f scalardl-ledger-custom-values.yaml
        ```
 
        <h3>ScalarDL Schema Loader for Ledger</h3>
 
        ```console
-       helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-ledger-custom-values.yaml
+       helm install schema-loader scalar-labs/schema-loading -f schema-loader-ledger-custom-values.yaml
        ```
      </TabItem>
      <TabItem value="scalardl-auditor" label="ScalarDL Auditor">
        <h3>ScalarDL Auditor</h3>
 
        ```console
-       helm install scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
+       helm install scalardl-auditor scalar-labs/scalardl-audit -f scalardl-auditor-custom-values.yaml
        ```
 
        <h3>ScalarDL Schema Loader for Auditor</h3>
 
        ```console
-       helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-auditor-custom-values.yaml
+       helm install schema-loader scalar-labs/schema-loading -f schema-loader-auditor-custom-values.yaml
        ```
      </TabItem>
    </Tabs>
