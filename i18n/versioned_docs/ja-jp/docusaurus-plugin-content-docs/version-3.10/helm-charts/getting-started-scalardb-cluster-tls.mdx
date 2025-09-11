@@ -330,8 +330,8 @@ ScalarDB Cluster は、バックエンドデータベースとして何らかの
          scalar.db.cluster.tls.override_authority=cluster.scalardb.example.com
 
          ### License key configurations
-         scalar.dl.licensing.license_key=${env:SCALAR_DB_CLUSTER_LICENSE_KEY}
-         scalar.dl.licensing.license_check_cert_pem=${env:SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM}
+         scalar.db.cluster.node.licensing.license_key=${env:SCALAR_DB_CLUSTER_LICENSE_KEY}
+         scalar.db.cluster.node.licensing.license_check_cert_pem=${env:SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM}
 
        tls:
          enabled: true
