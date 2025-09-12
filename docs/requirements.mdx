@@ -197,6 +197,26 @@ The following list shows the versions of ScalarDB used in ScalarDL internally. T
 
 :::
 
+## Required ports
+
+ScalarDL requires the following ports to be accessible. These default port numbers can be configured as needed:
+
+- **ScalarDL Ledger**
+  - 50051 (normal request)
+  - 50052 (privileged request)
+  - 50053 (pause request)
+  - 8080 (metrics)
+- **ScalarDL Auditor**
+  - 40051 (normal request)
+  - 40052 (privileged request)
+  - 40053 (pause request)
+  - 8080 (metrics)
+- **ScalarDL Gateway**
+  - 30051 (normal request)
+  - 30052 (privileged request)
+  - 30053 (pause request)
+  - 8080 (metrics)
+
 ## Kubernetes
 
 ScalarDL is provided as a Pod on the Kubernetes platform in production environments. ScalarDL supports the following platforms and tools.
