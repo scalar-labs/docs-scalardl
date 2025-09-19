@@ -1,12 +1,12 @@
 import CodeBlock from '@theme/CodeBlock';
 
-<h3>Set up your license</h3>
+<h3>ライセンスを設定する</h3>
 
-You need a commercial license to use ScalarDL Auditor. Set up your license as follows.
+ScalarDL Auditor を使用するには商用ライセンスが必要です。以下の手順でライセンスを設定してください。
 
-1. Enable the container image for the Enterprise edition in the <code>{props.shortName}/docker-compose-ledger.yml</code> file as follows:
+1. <code>{props.shortName}/docker-compose-ledger.yml</code> ファイルで Enterprise エディションのコンテナイメージを有効にします:
 
-   - Before changing the image (default configuration):
+   - イメージを変更する前 (デフォルト設定):
 
      ```yaml
      # docker-compose-ledger.yml
@@ -16,7 +16,7 @@ You need a commercial license to use ScalarDL Auditor. Set up your license as fo
          # image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
      ```
 
-   - After changing the image:
+   - イメージを変更した後:
 
      ```yaml
      # docker-compose-ledger.yml
@@ -26,7 +26,7 @@ You need a commercial license to use ScalarDL Auditor. Set up your license as fo
          image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
      ```
 
-2. Set your license key for ScalarDL Ledger and Auditor. In the <code>{props.shortName}/ledger.properties</code> and <code>{props.shortName}/auditor.properties</code> files, replace `<SET_YOUR_LICENSE_KEY>` with your license key. For example:
+2. ScalarDL Ledger と Auditor のライセンスキーを設定します。<code>{props.shortName}/ledger.properties</code> と <code>{props.shortName}/auditor.properties</code> ファイルで、`<SET_YOUR_LICENSE_KEY>` をライセンスキーに置き換えます。例:
 
    ```properties
    ##### PLEASE REPLACE THIS VALUE WITH YOUR LICENSE KEY (ENTERPRISE EDITION ONLY) #####
@@ -34,9 +34,9 @@ You need a commercial license to use ScalarDL Auditor. Set up your license as fo
    ##### PLEASE REPLACE THIS VALUE WITH YOUR LICENSE KEY (ENTERPRISE EDITION ONLY) #####
    ```
 
-3. To validate the license by using a certificate, update the <code>{props.shortName}/docker-compose-ledger.yml</code> and <code>{props.shortName}/docker-compose-auditor.yml</code> files as follows. If you're using a trial license, skip this step.
+3. 証明書を利用してライセンスを検証するには、<code>{props.shortName}/docker-compose-ledger.yml</code> と <code>{props.shortName}/docker-compose-auditor.yml</code> ファイルを以下のように更新します。試用ライセンスを使用している場合は、このステップをスキップしてください。
 
-   - Before changing the certificate file path (default configuration):
+   - 証明書ファイルパスを変更する前 (デフォルト設定):
 
      ```yaml
      # docker-compose-ledger.yml
@@ -62,7 +62,7 @@ You need a commercial license to use ScalarDL Auditor. Set up your license as fo
            # - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
      ```
 
-   - After changing the certificate file path:
+   - 証明書ファイルパスを変更した後:
 
      ```yaml
      # docker-compose-ledger.yml
@@ -88,19 +88,19 @@ You need a commercial license to use ScalarDL Auditor. Set up your license as fo
            - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
      ```
 
-<h3>Start up ScalarDL</h3>
+<h3>ScalarDL を起動する</h3>
 
-You can start using ScalarDL Ledger and Auditor by following the steps below:
+以下の手順に従って ScalarDL Ledger と Auditor の使用を開始できます:
 
-1. Run {props.productName} locally by running the following command:
+1. 以下のコマンドを実行して {props.productName} をローカルで実行します:
 
    <CodeBlock language="console">docker compose -f {props.shortName}/docker-compose-auditor.yml up -d {props.shortName}</CodeBlock>
 
-2. Load the database schema for ScalarDL Ledger and Auditor by running the following command:
+2. 以下のコマンドを実行して ScalarDL Ledger と Auditor のデータベーススキーマを読み込みます:
 
    <CodeBlock language="console">docker compose -f {props.shortName}/docker-compose-auditor.yml up -d scalardl-ledger-schema-loader
    docker compose -f {props.shortName}/docker-compose-auditor.yml up -d scalardl-auditor-schema-loader</CodeBlock>
 
-3. Run ScalarDL Ledger, Auditor, and its dependent components by running the following command:
+3. 以下のコマンドを実行して ScalarDL Ledger、Auditor、およびその依存コンポーネントを起動します:
 
    <CodeBlock language="console">docker compose -f {props.shortName}/docker-compose-auditor.yml up -d</CodeBlock>
