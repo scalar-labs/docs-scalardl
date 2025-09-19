@@ -71,6 +71,10 @@ cd scalardl-samples
   <DbSpecificSteps productName="Oracle Database" shortName="oracle" />
   </TabItem>
 
+  <TabItem value="sqlserver" label="SQL Server">
+  <DbSpecificSteps productName="SQL Server" shortName="sqlserver" />
+  </TabItem>
+
   <TabItem value="dynamodb" label="DynamoDB">
   <DbSpecificSteps productName="DynamoDB" shortName="dynamodb" />
   </TabItem>
@@ -323,7 +327,7 @@ client/bin/scalardl execute-contract --properties client.properties --contract-i
 client/bin/scalardl validate-ledger --properties client.properties --asset-id="some_asset"
 ```
 
-検証が何を行うかは、ScalarDL の設定方法によって異なります。簡単に言うと、ScalarDL Ledger のみを使用する場合、検証はアセットを走査して、アセットが再計算可能で、有効なハッシュチェーン構造を持っているかどうかを確認します。ScalarDL Ledger と Auditor を使用する場合、検証は Ledger と Auditor の状態間の矛盾 (つまり、ビザンチン故障) を中央集権的な調整なしでチェックします。Auditor による検証の詳細については、[ScalarDL Auditor の使用を開始する](getting-started-auditor.mdx)をお読みください。
+検証が何を行うかは、ScalarDL の設定方法によって異なります。簡単に言うと、ScalarDL Ledger のみを使用する場合、検証はアセットを走査して、アセットが再計算可能で、有効なハッシュチェーン構造を持っているかどうかを確認します。ScalarDL Ledger と Auditor を使用する場合、検証は Ledger と Auditor の状態間の矛盾 (つまり、ビザンチン故障) を中央集権的な調整なしでチェックします。Auditor による検証の詳細については、[データを検証する](how-to-write-applications.mdx#データを検証する)と[ScalarDL Ledger と Auditor を介して ScalarDL アプリケーションを実行する](how-to-run-applications-with-auditor.mdx)を参照してください。
 
 ## 独自のコントラクトを作成するか、汎用コントラクトを使用する
 
