@@ -25,18 +25,18 @@ const recentFeatures = [
       // To add a label, use the format ['label1', 'label2'].
       {
         cell: 0, // First cell
-        links: ['use-table-oriented-generic-contracts'],
-        labels: ['Use Table-Oriented Generic Contracts']
+        links: ['getting-started-hashstore'],
+        labels: ['Use ScalarDL HashStore']
       },
       {
         cell: 1, // Second cell
-        links: ['use-generic-contracts'],
-        labels: ['Use Generic Contracts and Functions']
+        links: ['getting-started-tablestore'],
+        labels: ['Use ScalarDL TableStore']
       },
       {
         cell: 2, // Third cell
-        links: ['how-to-write-applications-with-generic-contracts'],
-        labels: ['Write a ScalarDL Application with Generic Contracts']
+        links: ['use-table-oriented-generic-contracts'],
+        labels: ['Use Table-Oriented Generic Contracts']
       }
     ]
   }
