@@ -110,7 +110,7 @@ You can also apply other configurations, such as TLS and gRPC configurations, fo
 
 After configuring Ledger, Auditor, and the client, you need to start up Ledger and Auditor.
 
-This guide uses a Docker container–based environment in `scalardl-samples` to locally start up Ledger and Auditor. If you have not finished cloning the repository, see [Prerequisites](getting-started.mdx#prerequisites) and [Clone the ScalarDL samples repository](getting-started.mdx#clone-the-scalardl-samples-repository).
+This guide uses a container-based environment in `scalardl-samples` to locally start up Ledger and Auditor. If you have not finished cloning the repository, see [Prerequisites](getting-started.mdx#prerequisites) and [Clone the ScalarDL samples repository](getting-started.mdx#clone-the-scalardl-samples-repository).
 
 For details on how to locally start up Ledger and Auditor in local or cloud-based Kubernetes environments, see [Deploy ScalarDL in your local Kubernetes environment](deploy-local-environment-overview.mdx) or [Deploy ScalarDL in a cloud-based Kubernetes environment](deploy-managed-kubernetes-environment-overview.mdx), respectively.
 
@@ -145,7 +145,7 @@ Select your database, and follow the instructions to deploy ScalarDL Ledger and 
 
 You need a commercial license to use ScalarDL Auditor. Set up your license as follows.
 
-1. Enable the Docker image for the Enterprise edition in the `cosmosdb/docker-compose-ledger.yml` file as follows:
+1. Enable the container image for the Enterprise edition in the `cosmosdb/docker-compose-ledger.yml` file as follows:
 
     - Before changing the image (default configuration):
 
@@ -175,7 +175,7 @@ You need a commercial license to use ScalarDL Auditor. Set up your license as fo
    ##### PLEASE REPLACE THIS VALUE WITH YOUR LICENSE KEY (ENTERPRISE EDITION ONLY) #####
    ```
 
-3. To check the license, update the `cosmosdb/docker-compose-ledger.yml` and `cosmosdb/docker-compose-auditor.yml` files as follows. If you're using a trial license, skip this step.
+3. To validate the license by using a certificate, update the `cosmosdb/docker-compose-ledger.yml` and `cosmosdb/docker-compose-auditor.yml` files as follows. If you're using a trial license, skip this step.
 
     - Before changing the certificate file path (default configuration):
 
