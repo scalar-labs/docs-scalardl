@@ -1,0 +1,597 @@
+---
+tags:
+  - Enterprise Standard
+  - Enterprise Premium
+displayed_sidebar: docsEnglish
+---
+
+# Getting Started with Helm Charts (ScalarDB Cluster with TLS by Using cert-manager)
+
+This tutorial explains how to get started with ScalarDB Cluster with TLS configurations by using Helm Charts and cert-manager on a Kubernetes cluster in a test environment. Before starting, you should already have a Mac or Linux environment for testing. In addition, although this tutorial mentions using **minikube**, the steps described should work in any Kubernetes cluster.
+
+## Requirements
+
+* You need to have a license key (trial license or commercial license) for ScalarDB Cluster. If you don't have a license key, please [contact us](https://www.scalar-labs.com/contact).
+* You need to use ScalarDB Cluster 3.12 or later, which supports TLS.
+
+## What you'll create
+
+In this tutorial, you'll deploy the following components on a Kubernetes cluster in the following way:
+
+```
++----------------------------------------------------------------------------------------------------------------------------------------------------+
+| [Kubernetes Cluster]                                                                                                                               |
+|                                            [Pod]                                                      [Pod]                           [Pod]        |
+|                                                                                                                                                    |
+|                                          +-------+                                          +------------------------+                             |
+|                                    +---> | Envoy | ---+                               +---> | ScalarDB Cluster node  | ---+                        |
+|    [Pod]                           |     +-------+    |                               |     +------------------------+    |                        |
+|                                    |                  |                               |                                   |                        |
+|  +-----------+      +---------+    |     +-------+    |     +--------------------+    |     +------------------------+    |     +---------------+  |
+|  |  Client   | ---> | Service | ---+---> | Envoy | ---+---> |  Service           | ---+---> | ScalarDB Cluster node  | ---+---> |  PostgreSQL   |  |
+|  | (SQL CLI) |      | (Envoy) |    |     +-------+    |     | (ScalarDB Cluster) |    |     +------------------------+    |     | (For Ledger)  |  |
+|  +-----------+      +---------+    |                  |     +--------------------+    |                                   |     +---------------+  |
+|                                    |     +-------+    |                               |     +------------------------+    |                        |
+|                                    +---> | Envoy | ---+                               +---> | ScalarDB Cluster node  | ---+                        |
+|                                          +-------+                                          +------------------------+                             |
+|                                                                                                                                                    |
+|  +----------------------------------------------------------------------------------+    +---------------------+                                   |
+|  | cert-manager (create private key and certificate for Envoy and ScalarDB Cluster) |    | Issuer (Private CA) |                                   |
+|  +----------------------------------------------------------------------------------+    +---------------------+                                   |
+|                                                                                                                                                    |
++----------------------------------------------------------------------------------------------------------------------------------------------------+
+```
+
+cert-manager automatically creates the following private key and certificate files for TLS connections.
+
+```
+                                                           +----------------------+
+                                                     +---> | For Scalar Envoy     |
+                                                     |     +----------------------+
+                                                     |     | tls.key              |
+                                                     |     | tls.crt              |
++-------------------------+                          |     +----------------------+
+| Issuer (Self-signed CA) | ---(Sign certificates)---+
++-------------------------+                          |     +----------------------+
+| tls.key                 |                          +---> | For ScalarDB Cluster |
+| tls.crt                 |                                +----------------------+
+| ca.crt                  |                                | tls.key              |
++-------------------------+                                | tls.crt              |
+                                                           +----------------------+
+```
+
+Scalar Helm Charts automatically mount each private key and certificate file for Envoy and ScalarDB Cluster as follows to enable TLS in each connection. You'll manually mount a root CA certificate file on the client.
+
+```
++-------------------------------------+                            +------------------------------------------------+      +--------------------------------+
+| Client                              | ---(CRUD/SQL requests)---> | Envoy for ScalarDB Cluster                     | ---> | ScalarDB Cluster nodes         |
++-------------------------------------+                            +------------------------------------------------+      +--------------------------------+
+| ca.crt (to verify tls.crt of Envoy) |                            | tls.key                                        |      | tls.key                        |
++-------------------------------------+                            | tls.crt                                        |      | tls.crt                        |
+                                                                   | ca.crt (to verify tls.crt of ScalarDB Cluster) |      | ca.crt (to check health)       |
+                                                                   +------------------------------------------------+      +--------------------------------+
+```
+
+The following connections exist amongst the ScalarDB Cluster–related components:
+
+* **`Client - Envoy for ScalarDB Cluster`:** When you execute a CRUD API or SQL API function, the client accesses Envoy for ScalarDB Cluster.
+* **`Envoy for ScalarDB Cluster - ScalarDB Cluster`:** Envoy works as an L7 (gRPC) load balancer in front of ScalarDB Cluster.
+* **`ScalarDB Cluster node - ScalarDB Cluster node`:** A ScalarDB Cluster node accesses other ScalarDB Cluster nodes. In other words, the cluster's internal communications exist amongst all ScalarDB Cluster nodes.
+
+## Step 1. Start a Kubernetes cluster and install tools
+
+You need to prepare a Kubernetes cluster and install some tools (`kubectl`, `helm`, `cfssl`, and `cfssljson`). For more details on how to install them, see [Getting Started with Scalar Helm Charts](getting-started-scalar-helm-charts.mdx).
+
+## Step 2. Start the PostgreSQL containers
+
+ScalarDB Cluster must use some type of database system as a backend database. In this tutorial, you'll use PostgreSQL.
+
+You can deploy PostgreSQL on the Kubernetes cluster as follows:
+
+1. Add the Bitnami helm repository.
+
+   ```console
+   helm repo add bitnami https://charts.bitnami.com/bitnami
+   ```
+
+1. Deploy PostgreSQL for ScalarDB Cluster.
+
+   ```console
+   helm install postgresql-scalardb-cluster bitnami/postgresql \
+     --set auth.postgresPassword=postgres \
+     --set primary.persistence.enabled=false \
+     -n default
+   ```
+
+1. Check if the PostgreSQL containers are running.
+
+   ```console
+   kubectl get pod -n default
+   ```
+
+   [Command execution result]
+
+   ```console
+   NAME                            READY   STATUS    RESTARTS   AGE
+   postgresql-scalardb-cluster-0   1/1     Running   0          34s
+   ```
+
+## Step 3. Create a working directory
+
+You'll create some configuration files locally. Be sure to create a working directory for those files.
+
+1. Create a working directory.
+
+   ```console
+   mkdir -p ${HOME}/scalardb-cluster-test/
+   ```
+
+
+## Step 4. Deploy cert-manager and issuer resource
+
+This tutorial uses cert-manager to issue and manage your private keys and certificates. You can deploy cert-manager on the Kubernetes cluster as follows:
+
+1. Add the Jetstack helm repository.
+
+   ```console
+   helm repo add jetstack https://charts.jetstack.io
+   ```
+
+1. Deploy cert-manager.
+
+   ```console
+   helm install cert-manager jetstack/cert-manager \
+     --create-namespace \
+     --set installCRDs=true \
+     -n cert-manager
+   ```
+
+1. Check if the cert-manager containers are running.
+
+   ```console
+   kubectl get pod -n cert-manager
+   ```
+
+   [Command execution result]
+
+   ```console
+   NAME                                      READY   STATUS    RESTARTS   AGE
+   cert-manager-6dc66985d4-6lvtt             1/1     Running   0          26s
+   cert-manager-cainjector-c7d4dbdd9-xlrpn   1/1     Running   0          26s
+   cert-manager-webhook-847d7676c9-ckcz2     1/1     Running   0          26s
+   ```
+
+1. Change the working directory to `${HOME}/scalardb-cluster-test/`.
+
+   ```console
+   cd ${HOME}/scalardb-cluster-test/
+   ```
+
+1. Create a custom values file for the private CA (`private-ca-custom-values.yaml`).
+
+     ```console
+     cat << 'EOF' > ${HOME}/scalardb-cluster-test/private-ca-custom-values.yaml
+     apiVersion: cert-manager.io/v1
+     kind: Issuer
+     metadata:
+       name: self-signed-issuer
+     spec:
+       selfSigned: {}
+     ---
+     apiVersion: cert-manager.io/v1
+     kind: Certificate
+     metadata:
+       name: self-signed-ca-cert
+     spec:
+       isCA: true
+       commonName: self-signed-ca
+       secretName: self-signed-ca-cert-secret
+       privateKey:
+         algorithm: ECDSA
+         size: 256
+       issuerRef:
+         name: self-signed-issuer
+         kind: Issuer
+         group: cert-manager.io
+     ---
+     apiVersion: cert-manager.io/v1
+     kind: Issuer
+     metadata:
+       name: self-signed-ca
+     spec:
+       ca:
+         secretName: self-signed-ca-cert-secret
+     EOF
+     ```
+
+1. Deploy a self-signed CA.
+
+   ```console
+   kubectl apply -f ./private-ca-custom-values.yaml
+   ```
+
+1. Check if the issuer resources are `True`.
+
+   ```console
+   kubectl get issuer
+   ```
+
+   [Command execution result]
+
+   ```console
+   NAME                 READY   AGE
+   self-signed-ca      True    6s
+   self-signed-issuer   True    6s
+   ```
+
+## Step 5. Deploy ScalarDB Cluster on the Kubernetes cluster by using Helm Charts
+
+1. Add the Scalar Helm Charts repository.
+
+   ```console
+   helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
+   ```
+
+1. Set your license key and certificate as environment variables. If you don't have a license key, please [contact us](https://www.scalar-labs.com/contact). For details about the value of `<CERT_PEM_FOR_YOUR_LICENSE_KEY>`, see [How to Configure a Product License Key](https://scalardb.scalar-labs.com/docs/latest/scalar-licensing/).
+
+   ```console
+   SCALAR_DB_CLUSTER_LICENSE_KEY='<YOUR_LICENSE_KEY>'
+   SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM='<CERT_PEM_FOR_YOUR_LICENSE_KEY>'
+   ```
+
+1. Create a custom values file for ScalarDB Cluster (`scalardb-cluster-custom-values.yaml`).
+
+     ```console
+     cat << 'EOF' > ${HOME}/scalardb-cluster-test/scalardb-cluster-custom-values.yaml
+     envoy:
+
+       enabled: true
+
+       tls:
+         downstream:
+           enabled: true
+           certManager:
+             enabled: true
+             issuerRef:
+               name: self-signed-ca
+             dnsNames:
+               - envoy.scalar.example.com
+         upstream:
+           enabled: true
+           overrideAuthority: "cluster.scalardb.example.com"
+
+     scalardbCluster:
+
+       image:
+         repository: "ghcr.io/scalar-labs/scalardb-cluster-node-byol-premium"
+
+       scalardbClusterNodeProperties: |
+         ### Necessary configurations for deployment on Kuberetes
+         scalar.db.cluster.membership.type=KUBERNETES
+         scalar.db.cluster.membership.kubernetes.endpoint.namespace_name=${env:SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAMESPACE_NAME}
+         scalar.db.cluster.membership.kubernetes.endpoint.name=${env:SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME}
+
+         ### Storage configurations
+         scalar.db.contact_points=jdbc:postgresql://postgresql-scalardb-cluster.default.svc.cluster.local:5432/postgres
+         scalar.db.username=${env:SCALAR_DB_CLUSTER_POSTGRES_USERNAME}
+         scalar.db.password=${env:SCALAR_DB_CLUSTER_POSTGRES_PASSWORD}
+         scalar.db.storage=jdbc
+
+         ### SQL configurations
+         scalar.db.sql.enabled=true
+
+         ### Auth configurations
+         scalar.db.cluster.auth.enabled=true
+         scalar.db.cross_partition_scan.enabled=true
+
+         ### TLS configurations
+         scalar.db.cluster.tls.enabled=true
+         scalar.db.cluster.tls.ca_root_cert_path=/tls/scalardb-cluster/certs/ca.crt
+         scalar.db.cluster.node.tls.cert_chain_path=/tls/scalardb-cluster/certs/tls.crt
+         scalar.db.cluster.node.tls.private_key_path=/tls/scalardb-cluster/certs/tls.key
+         scalar.db.cluster.tls.override_authority=cluster.scalardb.example.com
+
+         ### License key configurations
+         scalar.db.cluster.node.licensing.license_key=${env:SCALAR_DB_CLUSTER_LICENSE_KEY}
+         scalar.db.cluster.node.licensing.license_check_cert_pem=${env:SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM}
+
+       tls:
+         enabled: true
+         overrideAuthority: "cluster.scalardb.example.com"
+         certManager:
+           enabled: true
+           issuerRef:
+             name: self-signed-ca
+           dnsNames:
+             - cluster.scalardb.example.com
+
+       secretName: "scalardb-credentials-secret"
+     EOF
+     ```
+
+1. Create a secret resource named `scalardb-credentials-secret` that includes credentials and license keys.
+
+   ```console
+   kubectl create secret generic scalardb-credentials-secret \
+   --from-literal=SCALAR_DB_CLUSTER_POSTGRES_USERNAME=postgres \
+   --from-literal=SCALAR_DB_CLUSTER_POSTGRES_PASSWORD=postgres \
+   --from-literal=SCALAR_DB_CLUSTER_LICENSE_KEY="${SCALAR_DB_CLUSTER_LICENSE_KEY}" \
+   --from-file=SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM=<(echo ${SCALAR_DB_CLUSTER_LICENSE_CHECK_CERT_PEM} | sed 's/\\n/\
+   /g') \
+   -n default
+   ```
+
+1. Set the chart version of ScalarDB Cluster.
+
+   ```console
+   SCALAR_DB_CLUSTER_VERSION=3.12.2
+   SCALAR_DB_CLUSTER_CHART_VERSION=$(helm search repo scalar-labs/scalardb-cluster -l | grep -F "${SCALAR_DB_CLUSTER_VERSION}" | awk '{print $2}' | sort --version-sort -r | head -n 1)
+   ```
+
+1. Deploy ScalarDB Cluster.
+
+   ```console
+   helm install scalardb-cluster scalar-labs/scalardb-cluster -f ${HOME}/scalardb-cluster-test/scalardb-cluster-custom-values.yaml --version ${SCALAR_DB_CLUSTER_CHART_VERSION} -n default
+   ```
+
+1. Check if the ScalarDB Cluster pods are deployed.
+
+   ```console
+   kubectl get pod -n default
+   ```
+
+   [Command execution result]
+
+   ```console
+   NAME                                     READY   STATUS    RESTARTS   AGE
+   postgresql-scalardb-cluster-0            1/1     Running   0          4m30s
+   scalardb-cluster-envoy-7cc948dfb-4rb8l   1/1     Running   0          18s
+   scalardb-cluster-envoy-7cc948dfb-hwt96   1/1     Running   0          18s
+   scalardb-cluster-envoy-7cc948dfb-rzbrx   1/1     Running   0          18s
+   scalardb-cluster-node-7c6959c79d-445kj   1/1     Running   0          18s
+   scalardb-cluster-node-7c6959c79d-4z54q   1/1     Running   0          18s
+   scalardb-cluster-node-7c6959c79d-vcv96   1/1     Running   0          18s
+   ```
+   
+   If the ScalarDB Cluster pods are deployed properly, the `STATUS` column for those pods will be displayed as `Running`.
+
+1. Check if the ScalarDB Cluster services are deployed.
+
+   ```console
+   kubectl get svc -n default
+   ```
+
+   [Command execution result]
+
+   ```console
+   NAME                             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)     AGE
+   kubernetes                       ClusterIP   10.96.0.1       <none>        443/TCP     7h34m
+   postgresql-scalardb-cluster      ClusterIP   10.96.92.27     <none>        5432/TCP    4m52s
+   postgresql-scalardb-cluster-hl   ClusterIP   None            <none>        5432/TCP    4m52s
+   scalardb-cluster-envoy           ClusterIP   10.96.250.175   <none>        60053/TCP   40s
+   scalardb-cluster-envoy-metrics   ClusterIP   10.96.40.197    <none>        9001/TCP    40s
+   scalardb-cluster-headless        ClusterIP   None            <none>        60053/TCP   40s
+   scalardb-cluster-metrics         ClusterIP   10.96.199.135   <none>        9080/TCP    40s
+   ```
+
+   If the ScalarDB Cluster services are deployed properly, you can see private IP addresses in the `CLUSTER-IP` column.
+
+:::note
+
+The `CLUSTER-IP` values for `postgresql-scalardb-cluster-hl` and `scalardb-cluster-headless` are `None` since they have no IP addresses.
+
+:::
+
+## Step 6. Start a client container
+
+You'll use the CA certificate file in a client container. Therefore, you'll need to create a secret resource and mount it to the client container.
+
+1. Create a secret resource named `client-ca-cert`.
+
+   ```console
+   kubectl create secret generic client-ca-cert --from-file=ca.crt=<(kubectl get secret self-signed-ca-cert-secret -o "jsonpath={.data['ca\.crt']}" | base64 -d) -n default
+   ```
+
+1. Create a manifest file for a client pod (`scalardb-cluster-client-pod.yaml`).
+
+   ```console
+   cat << 'EOF' > ${HOME}/scalardb-cluster-test/scalardb-cluster-client-pod.yaml
+   apiVersion: v1
+   kind: Pod
+   metadata:
+     name: "scalardb-cluster-client"
+   spec:
+     containers:
+       - name: scalardb-cluster-client
+         image: eclipse-temurin:8-jre-jammy
+         command: ['sleep']
+         args: ['inf']
+         env:
+           - name: SCALAR_DB_CLUSTER_VERSION
+             value: SCALAR_DB_CLUSTER_CLIENT_POD_SCALAR_DB_CLUSTER_VERSION
+         volumeMounts:
+           - name: "client-ca-cert"
+             mountPath: "/certs/"
+             readOnly: true
+     volumes:
+       - name: "client-ca-cert"
+         secret:
+           secretName: "client-ca-cert"
+     restartPolicy: Never
+   EOF
+   ```
+
+1. Set the ScalarDB Cluster version in the manifest file.
+
+   ```console
+   sed -i s/SCALAR_DB_CLUSTER_CLIENT_POD_SCALAR_DB_CLUSTER_VERSION/${SCALAR_DB_CLUSTER_VERSION}/ ${HOME}/scalardb-cluster-test/scalardb-cluster-client-pod.yaml
+   ```
+
+1. Deploy the client pod.
+
+   ```console
+   kubectl apply -f ${HOME}/scalardb-cluster-test/scalardb-cluster-client-pod.yaml -n default
+   ```
+
+1. Check if the client container is running.
+
+   ```console
+   kubectl get pod scalardb-cluster-client -n default
+   ```
+
+   [Command execution result]
+
+   ```console
+   NAME                      READY   STATUS    RESTARTS   AGE
+   scalardb-cluster-client   1/1     Running   0          26s
+   ```
+
+## Step 7. Run the ScalarDB Cluster SQL CLI in the client container
+
+1. Run bash in the client container.
+
+   ```console
+   kubectl exec -it scalardb-cluster-client -n default -- bash
+   ```
+   
+   The commands in the following steps must be run in the client container.
+
+1. Download the ScalarDB Cluster SQL CLI from [Releases](https://github.com/scalar-labs/scalardb/releases).
+
+   ```console
+   curl -OL https://github.com/scalar-labs/scalardb/releases/download/v${SCALAR_DB_CLUSTER_VERSION}/scalardb-cluster-sql-cli-${SCALAR_DB_CLUSTER_VERSION}-all.jar
+   ```
+
+1. Create a `database.properties` file and add configurations.
+
+   ```console
+   cat << 'EOF' > /database.properties
+   # ScalarDB Cluster configurations
+   scalar.db.sql.connection_mode=cluster
+   scalar.db.sql.cluster_mode.contact_points=indirect:scalardb-cluster-envoy.default.svc.cluster.local
+
+   # Auth configurations
+   scalar.db.cluster.auth.enabled=true
+   scalar.db.sql.cluster_mode.username=admin
+   scalar.db.sql.cluster_mode.password=admin
+
+   # TLS configurations
+   scalar.db.cluster.tls.enabled=true
+   scalar.db.cluster.tls.ca_root_cert_path=/certs/ca.crt
+   scalar.db.cluster.tls.override_authority=envoy.scalar.example.com
+   EOF
+   ```
+
+1. Run the ScalarDB Cluster SQL CLI.
+
+   ```console
+   java -jar /scalardb-cluster-sql-cli-${SCALAR_DB_CLUSTER_VERSION}-all.jar --config /database.properties
+   ```
+
+1. Create a sample namespace named `ns`.
+
+   ```sql
+   CREATE NAMESPACE ns;
+   ```
+
+1. Create a sample table named `tbl` under the namespace `ns`.
+
+   ```sql
+   CREATE TABLE ns.tbl (a INT, b INT, c INT, PRIMARY KEY(a, b));
+   ```
+
+1. Insert sample records.
+
+   ```sql
+   INSERT INTO ns.tbl VALUES (1,2,3), (4,5,6), (7,8,9);
+   ```
+
+1. Select the sample records that you inserted.
+
+   ```sql
+   SELECT * FROM ns.tbl;
+   ```
+
+   [Command execution result]
+
+   ```sql
+   0: scalardb> SELECT * FROM ns.tbl;
+   +---+---+---+
+   | a | b | c |
+   +---+---+---+
+   | 7 | 8 | 9 |
+   | 1 | 2 | 3 |
+   | 4 | 5 | 6 |
+   +---+---+---+
+   3 rows selected (0.059 seconds)
+   ```
+
+1. Press `Ctrl + D` to exit from ScalarDB Cluster SQL CLI.
+
+   ```console
+   ^D
+   ```
+
+1. Exit from the client container.
+
+   ```console
+   exit
+   ```
+
+## Step 8. Delete all resources
+
+After completing the ScalarDB Cluster tests on the Kubernetes cluster, remove all resources.
+
+1. Uninstall ScalarDB Cluster and PostgreSQL.
+
+   ```console
+   helm uninstall -n default scalardb-cluster postgresql-scalardb-cluster
+   ```
+
+1. Remove the self-signed CA.
+
+   ```
+   kubectl delete -f ./private-ca-custom-values.yaml
+   ```
+
+1. Uninstall cert-manager.
+
+   ```console
+   helm uninstall -n cert-manager cert-manager
+   ```
+
+1. Remove the client container.
+
+   ```
+   kubectl delete pod scalardb-cluster-client --grace-period 0 -n default
+   ```
+
+1. Remove the secret resources.
+
+   ```
+   kubectl delete secrets scalardb-credentials-secret self-signed-ca-cert-secret scalardb-cluster-envoy-tls-cert scalardb-cluster-tls-cert client-ca-cert
+   ```
+
+1. Remove the namespace `cert-manager`.
+
+   ```
+   kubectl delete ns cert-manager
+   ```
+
+1. Remove the working directory and the sample configuration files.
+
+   ```console
+   cd ${HOME}
+   ```
+
+   ```console
+   rm -rf ${HOME}/scalardb-cluster-test/
+   ```
+
+## Further reading
+
+You can see how to get started with monitoring or logging for Scalar products in the following tutorials:
+
+* [Getting Started with Helm Charts (Monitoring using Prometheus Operator)](getting-started-monitoring.mdx)
+* [Getting Started with Helm Charts (Logging using Loki Stack)](getting-started-logging.mdx)
+* [Getting Started with Helm Charts (Scalar Manager)](getting-started-scalar-manager.mdx)

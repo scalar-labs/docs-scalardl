@@ -1,0 +1,45 @@
+---
+tags:
+  - Community
+displayed_sidebar: docsJapanese
+---
+
+# ScalarDB Analytics with PostgreSQL の導入方法
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このドキュメントでは、Scalar Helm Chart を使用して ScalarDB Analytics with PostgreSQL をデプロイする方法について説明します。ScalarDB Analytics with PostgreSQL のカスタム値ファイルの詳細については、[ScalarDB Analytics with PostgreSQL のカスタム値ファイルの構成](configure-custom-values-scalardb-analytics-postgresql.mdx)を参照してください。
+
+## シークレットリソースを準備する
+
+`ScalarDB Analytics with PostgreSQL` をデプロイする前に、キー `superuser-password` を使用して、PostgreSQL のスーパーユーザーパスワードを含むシークレットリソース `scalardb-analytics-postgresql-superuser-password` を作成する必要があります。Scalar Helm Chart は、このシークレットリソースをマウントし、`POSTGRES_PASSWORD` 環境変数を `superuser-password` キーの値に設定します。
+
+```console
+kubectl create secret generic scalardb-analytics-postgresql-superuser-password --from-literal=superuser-password=<POSTGRESQL_PASSWORD> -n <NAMESPACE>
+```
+
+## ScalarDB Analytics with PostgreSQLをデプロイする
+
+ScalarDB Analytics with PostgreSQL をデプロイするには、次のコマンドを実行します。山かっこ内の内容を説明どおりに置き換えます。
+
+```console
+helm install <RELEASE_NAME> scalar-labs/scalardb-analytics-postgresql -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDB_ANALYTICS_WITH_POSTGRESQL> --version <CHART_VERSION>
+```
+
+## ScalarDB Analytics with PostgreSQL 展開をアップグレードする
+
+ScalarDB Analytics with PostgreSQL デプロイメントをアップグレードするには、次のコマンドを実行します。山括弧内の内容は説明どおりに置き換えてください。
+
+```console
+helm upgrade <RELEASE_NAME> scalar-labs/scalardb-analytics-postgresql -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDB_ANALYTICS_WITH_POSTGRESQL> --version <CHART_VERSION>
+```
+
+## ScalarDB Analytics with PostgreSQL デプロイメントを削除する
+
+ScalarDB Analytics with PostgreSQL デプロイメントを削除するには、次のコマンドを実行して、山括弧内の内容を説明どおりに置き換えます。
+
+```console
+helm uninstall <RELEASE_NAME> -n <NAMESPACE>
+```

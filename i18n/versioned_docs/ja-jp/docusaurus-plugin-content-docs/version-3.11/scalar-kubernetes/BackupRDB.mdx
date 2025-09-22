@@ -1,0 +1,21 @@
+---
+tags:
+  - Enterprise Standard
+  - Enterprise Premium
+displayed_sidebar: docsJapanese
+---
+
+# Kubernetes 環境で RDB をバックアップする
+
+このガイドでは、ScalarDB または ScalarDL が Kubernetes 環境で使用する単一のリレーショナルデータベース (RDB) のバックアップを作成する方法について説明します。このガイドは、クラウドサービスプロバイダーの管理されたデータベースを使用していることを前提としていることに注意してください。
+
+[Multi-storage Transactions](https://scalardb.scalar-labs.com/docs/latest/multi-storage-transactions/) または [Two-phase Commit Transactions](https://scalardb.scalar-labs.com/docs/latest/two-phase-commit-transactions/) 機能が使用する RDB が2つ以上ある場合は、代わりに [Kubernetes 環境で NoSQL データベースをバックアップする](BackupNoSQL.mdx)の手順に従う必要があります。
+
+## バックアップを実行する
+
+バックアップを実行するには、管理されたデータベースで使用できる自動バックアップ機能を有効にする必要があります。この機能を有効にすると、追加のバックアップ操作を実行する必要がなくなります。各管理データベースのバックアップ構成の詳細については、次のガイドを参照してください。
+
+* [AWS での ScalarDB/ScalarDL デプロイメント用のデータベースのセットアップ](SetupDatabaseForAWS.mdx)
+* [Azure 上で ScalarDB/ScalarDL デプロイメント用のデータベースをセットアップする](SetupDatabaseForAzure.mdx)
+
+マネージド RDB はトランザクションの観点からバックアップデータの一貫性を保つため、マネージド RDB のポイントインタイムリカバリ (PITR) 機能を使用して、バックアップデータを任意の時点に復元できます。

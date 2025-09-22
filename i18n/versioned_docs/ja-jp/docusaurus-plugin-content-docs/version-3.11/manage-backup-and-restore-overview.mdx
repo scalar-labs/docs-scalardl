@@ -1,0 +1,54 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+# データベースのバックアップと復元
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このガイドでは、ScalarDL が ScalarDB を介して使用するデータベースをバックアップおよび復元する方法について説明します。
+
+:::note
+
+ScalarDL は、バックエンドデータベースにアクセスするために内部で ScalarDB を使用します。そのため、ScalarDL をバックアップおよび復元する場合は、ScalarDB によって管理されるデータベースをバックアップおよび復元する必要があります。
+
+:::
+
+## データベースのバックアップと復元の基本ガイドライン
+
+バックアップを実行する前に、[ScalarDL でデータをバックアップおよび復元する方法に関するガイド](backup-restore.mdx)を必ずお読みください。
+
+## Kubernetes 環境で ScalarDB を使用する場合のデータベースのバックアップ
+
+Kubernetes 環境でデータベースをバックアップする方法の詳細については、[Kubernetes 環境で NoSQL データベースをバックアップする](scalar-kubernetes/BackupNoSQL.mdx)を参照してください。
+
+## Kubernetes 環境で ScalarDB を使用する場合にデータベースを復元する
+
+Kubernetes 環境でデータベースを復元する方法の詳細については、[Kubernetes 環境でデータベースを復元する](scalar-kubernetes/RestoreDatabase.mdx)を参照してください。
+
+# Back Up and Restore Databases
+
+This guide explains how to back up and restore databases that are used by ScalarDL through ScalarDB.
+
+:::note
+
+ScalarDL uses ScalarDB in its internal to access backend databases. So, you must back up and restore databases that are managed by ScalarDB if you want to back up and restore ScalarDL.
+
+:::
+
+## Basic guidelines to back up and restore databases
+
+Before performing a backup, be sure to read [A Guide on How to Backup and Restore Data in ScalarDL](backup-restore.mdx).
+
+## Back up databases when using ScalarDB in a Kubernetes environment
+
+For details on how to back up databases in a Kubernetes environment, see [Back up a NoSQL database in a Kubernetes environment](scalar-kubernetes/BackupNoSQL.mdx).
+
+## Restore databases when using ScalarDB in a Kubernetes environment
+
+For details on how to restore databases in a Kubernetes environment, see [Restore databases in a Kubernetes environment](scalar-kubernetes/RestoreDatabase.mdx).
