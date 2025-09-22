@@ -165,7 +165,7 @@ const sidebars = {
             {
               type: 'doc',
               id: 'how-to-run-applications',
-              label: 'Run a ScalarDL Application through ScalarDL Ledger',
+              label: 'Run a ScalarDL Application Through ScalarDL Ledger',
             },
             {
               type: 'doc',
