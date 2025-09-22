@@ -169,8 +169,8 @@ const sidebars = {
             },
             {
               type: 'doc',
-              id: 'getting-started-auditor',
-              label: 'Run a ScalarDL Application through ScalarDL Ledger and Auditor',
+              id: 'how-to-run-applications-with-auditor',
+              label: 'Run a ScalarDL Application Through ScalarDL Ledger and Auditor',
             },
           ]
         },
@@ -776,11 +776,6 @@ const sidebars = {
               type: 'doc',
               id: 'how-to-run-applications',
               label: 'ScalarDL Ledger を介して ScalarDL アプリケーションを実行',
-            },
-            {
-              type: 'doc',
-              id: 'getting-started-auditor',
-              label: 'ScalarDL Ledger と Auditor を通じてコントラクトを実行',
             },
           ]
         },
