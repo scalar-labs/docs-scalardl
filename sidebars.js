@@ -85,6 +85,16 @@ const sidebars = {
           id: 'getting-started',
           label: 'Run a Contract Through ScalarDL Ledger',
         },
+        {
+          type: 'doc',
+          id: 'getting-started-hashstore',
+          label: 'Use ScalarDL HashStore',
+        },
+        {
+          type: 'doc',
+          id: 'getting-started-tablestore',
+          label: 'Use ScalarDL TableStore',
+        },
       ],
     },
     {
@@ -245,6 +255,11 @@ const sidebars = {
               type: 'doc',
               id: 'ca/caclient-getting-started',
               label: 'Get a Certificate',
+            },
+            {
+              type: 'doc',
+              id: 'sql-grammar',
+              label: 'ScalarDL TableStore SQL Grammar',
             },
           ],
         },
