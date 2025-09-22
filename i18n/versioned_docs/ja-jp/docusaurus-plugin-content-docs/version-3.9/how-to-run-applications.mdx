@@ -11,18 +11,18 @@ import JavadocLink from "/src/theme/JavadocLink.js";
 
 このガイドでは、ScalarDL Ledger を介して ScalarDL アプリケーションを実行する方法を説明します。このドキュメントは、すでに [ScalarDL Ledger をはじめよう](getting-started.mdx)チュートリアルを試し、[Java で ScalarDL アプリケーションを書く](how-to-write-applications.mdx)ガイドを参考にして Client SDK を使った ScalarDL アプリケーションを作成済みであることを前提としています。
 
-## 設定内容の決定
+## 設定する
 
 Ledger および Ledger と通信するクライアントの設定を行う必要があります。
 
 以下の重要なオプションを決定し、設定してください。
 
-### Auditor の無効化
+### Auditor を無効化にする
 
 Ledger のみでアプリケーションを実行する場合は Auditor を無効化する必要があります。Auditor の無効化は、クライアントと Ledger の設定で以下のように行います。
 
-- クライアントの設定で `scalar.dl.client.auditor.enabled` を `false` に設定します。（デフォルト値が `false` のため、省略可能です）
-- Ledger の設定で `scalar.dl.ledger.auditor.enabled` を `false` に設定します。（デフォルト値が `false` のため、省略可能です）
+- クライアントの設定で `scalar.dl.client.auditor.enabled` を `false` に設定します。 (デフォルト値が `false` のため、省略可能です)
+- Ledger の設定で `scalar.dl.ledger.auditor.enabled` を `false` に設定します。 (デフォルト値が `false` のため、省略可能です)
 
 :::note
 
@@ -31,14 +31,15 @@ Ledger のみでアプリケーションを実行する場合は Auditor を無�
 :::
 
 設定の詳細は以下を参照してください。
+
 - [クライアントの設定](configurations.mdx#クライアントの設定)
 - [Ledger の設定](configurations.mdx#ledger-の設定)
 
-### 認証方式の決定
+### 認証方式を決定する
 
 クライアントの認証方式として、電子署名または HMAC のいずれかを選択する必要があります。電子署名方式は認証に加えて否認防止も提供しますが遅く、HMAC 方式は認証のみですが高速です。
 
-認証方法は以下のように設定できます。クライアントと Ledger の両方で同じ方法（`digital-signature` または `hmac`）を設定する必要があります。
+認証方法は以下のように設定できます。クライアントと Ledger の両方で同じ方法 (`digital-signature` または `hmac`) を設定する必要があります。
 
 - クライアントの設定で `scalar.dl.client.authentication.method` を `digital-signature` または `hmac` に設定します。
 - Ledger の設定で `scalar.dl.ledger.authentication.method` を `digital-signature` または `hmac` に設定します。
@@ -46,10 +47,11 @@ Ledger のみでアプリケーションを実行する場合は Auditor を無�
 また、秘密情報の準備も必要です。電子署名方式の場合は証明書と秘密鍵、HMAC 方式の場合はシークレットキーを用意してください。ScalarDL の認証について詳しくは [ScalarDL 認証ガイド](./authentication.mdx)を参照してください。
 
 設定の詳細は以下を参照してください。
+
 - [クライアントの設定](configurations.mdx#クライアントの設定)
 - [Ledger の設定](configurations.mdx#ledger-の設定)
 
-### データベース設定の決定
+### データベース設定を決定する
 
 Ledger は ScalarDB を利用してデータベースを操作します。ScalarDB がサポートする様々なデータベース上で ScalarDL を実行できます。アプリケーション要件に応じて利用するデータベースを決定し、いくつかの ScalarDB パラメータを設定してください。
 
@@ -84,17 +86,17 @@ Ledger の分離レベルは以下のように設定できます。どの分離�
 - [クライアントの設定](configurations.mdx#クライアントの設定)
 - [Ledger の設定](configurations.mdx#ledger-の設定)
 
-## Ledger の起動
+## Ledger を起動する
 
 Ledger とクライアントの設定後、Ledger を起動します。
 
 Docker Compose を使ったローカルでの Ledger 起動方法は [データベースを選択して ScalarDL を起動します](getting-started#データベースを選択して-scalardl-を起動します)を参照してください。ローカルまたはクラウドベースの Kubernetes 環境での起動方法は [ローカル Kubernetes 環境に ScalarDL をデプロイする](deploy-local-environment-overview.mdx)または[クラウドベースの Kubernetes 環境に ScalarDL をデプロイする](deploy-managed-kubernetes-environment-overview.mdx)を参照してください。
 
-## Client SDK のダウンロード
+## Client SDK をダウンロードする
 
 ScalarDL コマンドを実行する場合は Client SDK をダウンロードしてください。手順は [Client SDK のダウンロード](getting-started.mdx#client-sdk-をダウンロードする)を参照してください。
 
-## クライアントから証明書または秘密鍵の登録
+## クライアントから証明書またはシークレットキーを登録する
 
 電子署名認証方式の場合、以下のコマンドで証明書を Ledger に登録できます。詳細は [ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx#register-cert)を参照してください。
 
@@ -110,7 +112,7 @@ scalardl register-secret --properties <CLIENT_PROPERTIES_FILE>
 
 また、<JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を利用して [ScalarDL Java Client SDK](how-to-write-applications.mdx#scalardl-client-sdk-を使用する) から証明書や秘密鍵の登録も可能です。
 
-## クライアントからコントラクトやファンクションの登録
+## クライアントからコントラクトやファンクションを登録する
 
 以下のコマンドでコントラクトを Ledger に登録できます。詳細は [ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx#register-contract)を参照してください。
 
@@ -126,6 +128,6 @@ scalardl register-function --properties <CLIENT_PROPERTIES_FILE> --function-id <
 
 また、<JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を利用して [ScalarDL Java Client SDK](how-to-write-applications.mdx#scalardl-client-sdk-を使用する) からコントラクトやファンクションの登録も可能です。
 
-## アプリケーションの実行
+## アプリケーションを実行する
 
 クライアントからコントラクトやファンクションの登録が完了したら、ScalarDL アプリケーションを実行できます。
