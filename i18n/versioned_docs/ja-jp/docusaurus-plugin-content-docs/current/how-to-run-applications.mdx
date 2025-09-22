@@ -84,6 +84,7 @@ Ledger の分離レベルは以下のように設定できます。どの分離�
 ScalarDL は ScalarDB を活用していますが、以下の ScalarDB 機能は ScalarDL の一貫性保証メカニズムと互換性がありません。
 
 - [Coordinator テーブルのグループコミット](https://scalardb.scalar-labs.com/ja-jp/docs/latest/api-guide#coordinator-テーブルのグループコミット) (`scalar.db.consensus_commit.coordinator.group_commit.enabled` は `false` である必要があります)
+- [パフォーマンス関連の設定](https://scalardb.scalar-labs.com/ja-jp/docs/latest/configurations#パフォーマンス関連の設定)における Coordinator テーブルへの書き込み省略最適化 (`scalar.db.consensus_commit.coordinator.write_omission_on_read_only.enabled` は `false` である必要があります)
 
 ### その他の設定を決定する
 
