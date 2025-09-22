@@ -744,6 +744,11 @@
               "type": "doc",
               "id": "how-to-run-applications",
               "label": "ScalarDL Ledger を介して ScalarDL アプリケーションを実行"
+            },
+            {
+              "type": "doc",
+              "id": "how-to-run-applications-with-auditor",
+              "label": "ScalarDL Ledger と Auditor を介して ScalarDL アプリケーションを実行"
             }
           ]
         },
