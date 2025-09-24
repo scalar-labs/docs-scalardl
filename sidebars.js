@@ -88,12 +88,12 @@ const sidebars = {
         {
           type: 'doc',
           id: 'getting-started-hashstore',
-          label: 'Use ScalarDL HashStore',
+          label: 'Try Using ScalarDL HashStore',
         },
         {
           type: 'doc',
           id: 'getting-started-tablestore',
-          label: 'Use ScalarDL TableStore',
+          label: 'Try Using ScalarDL TableStore',
         },
       ],
     },
