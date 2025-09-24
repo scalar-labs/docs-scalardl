@@ -1,0 +1,400 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsEnglish
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import JavadocLink from "/src/theme/JavadocLink.js";
+import StartupLedger from '/src/components/en-us/_getting-started-startup-ledger.mdx';
+
+# Get Started with ScalarDL TableStore
+
+ScalarDL TableStore is a high-level abstraction on top of the low-level ledger abstraction. It offers an [SQL interface](sql-grammar.mdx) instead of primitive CRUD interfaces like get and put, enabling you to build versatile, tamper-evident applications with the familiar data model and commands quickly and easily.
+
+This getting started tutorial explains how to configure TableStore on your preferred database and manage tables and records in a tamper-evident manner.
+
+## What is ScalarDL TableStore?
+
+TableStore provides table-based data management through an [SQL interface](sql-grammar.mdx). You can create tables in a flexible schemaless manner, perform SQL operations like SELECT, INSERT, and UPDATE, and maintain complete audit trails of all data modifications.
+
+<StartupLedger />
+
+## Download the Client SDK
+
+Next, you'll use the TableStore client tools. Specify a version that is the same as the deployed ScalarDL version and is used for downloading the tools by running the following command:
+
+```console
+VERSION=$(grep SCALARDL_VERSION .env | awk -F= '{print $2}')
+```
+
+Then, download the tools by running the following command:
+
+```console
+curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-tablestore-java-client-sdk-$VERSION.zip
+unzip scalardl-tablestore-java-client-sdk-$VERSION.zip
+mv scalardl-tablestore-java-client-sdk-$VERSION client
+```
+
+## Configure the client properties
+
+Before interacting with TableStore, you need to configure the client. To create a configuration file with the minimum required properties for the client, run the following command:
+
+```console
+cat << 'EOF' > client.properties
+# A host name for ScalarDL Ledger.
+scalar.dl.client.server.host=localhost
+
+# An ID for the certificate holder. This must be configured for each private key and must be unique in the system.
+scalar.dl.client.cert_holder_id=foo
+
+# A path to the certificate file.
+scalar.dl.client.cert_path=./fixture/client.pem
+
+# A path to the private key file. 
+scalar.dl.client.private_key_path=./fixture/client-key.pem
+EOF
+```
+
+You can use `localhost` for the ScalarDL Ledger host name in this tutorial. For the private key and certificate, you can use the ones provided in the [`fixture` directory of the `scalardl-samples` repository](https://github.com/scalar-labs/scalardl-samples/tree/master/fixture) (`client-key.pem` and `client.pem`, respectively). For the certificate holder, any unique ID can be specified.
+
+:::warning
+
+Do not use the sample private key and certificate in production environments. For details about getting your own certificate, see [How to Get a Certificate](ca/caclient-getting-started.mdx).
+
+:::
+
+## Bootstrap
+
+Next, you can bootstrap TableStore by running the following command:
+
+```console
+client/bin/scalardl-tablestore bootstrap --properties client.properties
+```
+
+The bootstrap command internally registers identity information (a certificate or secret) and predefined contracts necessary to use TableStore.
+
+## Interact with TableStore
+
+Now you can execute SQL statements with TableStore. In this section, you'll try the following functionalities through two sample tables (`employee` and `department`) that can be joined through the department IDs of employees:
+
+- [Create and show tables](#create-and-show-tables)
+- [Insert records](#insert-records)
+- [Select records](#select-records)
+- [Update records](#update-records)
+- [Get record histories](#get-record-histories)
+
+### Create and show tables
+
+You can create the sample table by running the following commands:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "CREATE TABLE employee (id STRING PRIMARY KEY, department STRING)"
+```
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "CREATE TABLE department (id STRING PRIMARY KEY)"
+```
+
+When creating a table, you need to specify the name and the primary key. You can create secondary indexes by specifying additional columns. Because ScalarDL TableStore treats a JSON object as a record in tables, you don't have to specify a strict schema when creating a table.
+
+You can show the created tables by running the following command:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "SELECT * FROM information_schema.tables"
+```
+
+You should get a result like the following:
+
+```console
+Result:
+[ {
+  "name" : "employee",
+  "key" : "id",
+  "type" : "string",
+  "indexes" : [ {
+    "key" : "department",
+    "type" : "string"
+  } ]
+}, {
+  "name" : "department",
+  "key" : "id",
+  "type" : "string",
+  "indexes" : [ ]
+} ]
+```
+
+### Insert records
+
+Next, insert several `employee` records by running the following commands:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "INSERT INTO employee VALUES {'id': '1001', 'name': 'Alice', 'department': 'sales', 'salary': 654.3}"
+```
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "INSERT INTO employee VALUES {'id': '1002', 'name': 'Bob', 'department': 'sales', 'salary': 543.2}"
+```
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "INSERT INTO employee VALUES {'id': '1003', 'name': 'Carol', 'department': 'engineering', 'salary': 654.3}"
+```
+
+Insert the corresponding `department` records as well by running the following commands:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "INSERT INTO department VALUES {'id': 'sales', 'location': 'Shinjuku', 'phone': '000-1234'}"
+```
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "INSERT INTO department VALUES {'id': 'engineering', 'location': 'Shibuya', 'phone': '000-4321'}"
+```
+
+### Select records
+
+Then, check the inserted records. You need to specify at least a primary key or index key to select records. For example, you can get an `employee` record by specifying the primary key by running the following command:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "SELECT id, name, department FROM employee WHERE id = '1001'"
+```
+
+You can optionally project the columns by specifying top-level fields in the JSON record object. You should get a result like the following:
+
+```console
+Result:
+[ {
+  "id" : "1001",
+  "name" : "Alice",
+  "department" : "sales"
+} ]
+```
+
+You can also specify an index key to select records by running the following command:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "SELECT id, name, department FROM employee WHERE department = 'sales'"
+```
+
+You should get a result like the following:
+
+```console
+Result:
+[ {
+  "id" : "1001",
+  "name" : "Alice",
+  "department" : "sales"
+}, {
+  "id" : "1002",
+  "name" : "Bob",
+  "department" : "sales"
+} ]
+```
+
+If you want to filter records, specify additional conditions by running the following command:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "SELECT id, name, department FROM employee WHERE department = 'sales' AND salary < 600"
+```
+
+You should get a result like the following:
+
+```console
+Result:
+[ {
+  "id" : "1002",
+  "name" : "Bob",
+  "department" : "sales",
+  "salary" : 543.2
+} ]
+```
+
+You can also join the two tables by running the following command:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "SELECT * FROM employee JOIN department ON employee.department = department.id WHERE employee.department = 'engineering'"
+```
+
+You should get a result like the following:
+
+```console
+Result:
+[ {
+  "employee.id" : "1003",
+  "employee.name" : "Carol",
+  "employee.department" : "engineering",
+  "employee.salary" : 654.3,
+  "department.id" : "engineering",
+  "department.location" : "Shibuya",
+  "department.phone" : "000-4321"
+} ]
+```
+
+### Update records
+
+You can update the `employee` records by running the following command:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "UPDATE employee SET salary = 754.3 WHERE department = 'engineering'"
+```
+
+Make sure to specify at least a primary key or an index key to update the records, in the same way as using the `SELECT` statement.
+
+### Get record histories
+
+You can get the update history of a record by running the following command:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "SELECT history() FROM employee WHERE id = '1003'"
+```
+
+You should get a result like the following:
+
+```console
+Result:
+[ {
+  "age" : 1,
+  "values" : {
+    "id" : "1003",
+    "name" : "Carol",
+    "department" : "engineering",
+    "salary" : 754.3
+  }
+}, {
+  "age" : 0,
+  "values" : {
+    "id" : "1003",
+    "name" : "Carol",
+    "department" : "engineering",
+    "salary" : 654.3
+  }
+} ]
+```
+
+If you want to limit the number of versions (ages), specify the `LIMIT` clause by running the following command:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "SELECT history() FROM employee WHERE id = '1003' LIMIT 1"
+```
+
+You should get the specified number of the **latest** records like the following:
+
+```console
+Result:
+[ {
+  "age" : 1,
+  "values" : {
+    "id" : "1003",
+    "name" : "Carol",
+    "department" : "engineering",
+    "salary" : 754.3
+  }
+} ]
+```
+
+## Validate data managed by TableStore
+
+In ScalarDL, you occasionally need to validate your data to make sure all the data is in a valid state. You can use the `validate-ledger` command to validate data managed by TableStore.
+
+You can validate the table schema by running the following command:
+
+```console
+client/bin/scalardl-tablestore validate-ledger --properties client.properties \
+--table-name employee
+```
+
+You should get a result like the following:
+
+```console
+{
+  "status_code" : "OK",
+  "Ledger" : {
+    "id" : "tbl_employee",
+    "age" : 0,
+    "nonce" : "26af1229-1c1f-4b89-86e2-ec011da3b313",
+    "hash" : "ZA9yFzjIg1qeHAd7Sub8uFvt2JrTb6XSzGUktPEITr0=",
+    "signature" : "MEUCIAh4Xj93J/jldqbQor7AVM4ii9+suxQrZlCFnKWWDIo0AiEAiM6Yi6GO4bQ2VZg2GnqKmOFPEANrTU4g7pjBMcaX6TQ="
+  },
+  "Auditor" : null
+}
+```
+
+You can validate the record by running the following command:
+
+```console
+client/bin/scalardl-tablestore validate-ledger --properties client.properties \
+--table-name employee --primary-key-column-name id --column-value '"1001"'
+```
+
+:::note
+
+The `--column-value` option expects a JSON value; thus, you need to put double quotes for a string value.
+
+:::
+
+You should get a result like the following:
+
+```console
+{
+  "status_code" : "OK",
+  "Ledger" : {
+    "id" : "rec_employee_id_1001",
+    "age" : 0,
+    "nonce" : "41a18e7f-314f-4aec-8984-62bf6cd355d0",
+    "hash" : "n7KJLuC/KOzFZLnGKEs6pOQvCbl4WSF+xplOUd9MrSo=",
+    "signature" : "MEUCIEHafCsSXWWtZnDbSpAwFQk4qjW1B7cXjEgdwVF8uKQeAiEAsvzEMKyuNFozAbLC/E8FEviCMLCqo9DPRQe4tVBFwIk="
+  },
+  "Auditor" : null
+}
+```
+
+You can validate the index record by running the following command:
+
+```console
+client/bin/scalardl-tablestore validate-ledger --properties client.properties \
+--table-name employee --index-key-column-name department --column-value '"sales"'
+```
+
+You should get a result like the following:
+
+```console
+{
+  "status_code" : "OK",
+  "Ledger" : {
+    "id" : "idx_employee_department_sales",
+    "age" : 0,
+    "nonce" : "41a18e7f-314f-4aec-8984-62bf6cd355d0",
+    "hash" : "n7KJLuC/KOzFZLnGKEs6pOQvCbl4WSF+xplOUd9MrSo=",
+    "signature" : "MEUCIEHafCsSXWWtZnDbSpAwFQk4qjW1B7cXjEgdwVF8uKQeAiEAsvzEMKyuNFozAbLC/E8FEviCMLCqo9DPRQe4tVBFwIk="
+  },
+  "Auditor" : null
+}
+```
+
+:::note
+
+ScalarDL TableStore internally assigns a dedicated asset ID to an [asset record](data-modeling.mdx#asset-record), which is an object in the primitive data model of ScalarDL. The asset ID consists of a prefix for the asset type and keys for identification; for example, a prefix `rec_`, table name, primary key column name, and column value are used for the asset ID of a record. You will see such raw asset IDs in the result of `validate-ledger`.
+
+:::
+
+## See also
+
+To interact with ScalarDL TableStore in your Java applications, see the following:
+
+* [Javadocs for the ScalarDL TableStore Java Client SDK](https://javadoc.io/doc/com.scalar-labs/scalardl-tablestore-java-client-sdk/latest/index.html)
+
+## References
+
+* [ScalarDL TableStore SQL Grammar](sql-grammar.mdx)

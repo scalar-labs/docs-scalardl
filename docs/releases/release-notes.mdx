@@ -5,24 +5,33 @@ tags:
 displayed_sidebar: docsEnglish
 ---
 
-# ScalarDL 3.11 Release Notes
+# ScalarDL 3.12 Release Notes
 
-This page includes a list of release notes for ScalarDL 3.11.
+This page includes a list of release notes for ScalarDL 3.12.
 
-## v3.11.0
+## v3.12.0
 
-**Release date:** June 18, 2025
+**Release date:** September 22, 2026
 
 ### Summary
 
-This release introduces enhancements, such as table-oriented generic contracts, and includes several bug fixes. For detailed changes, see the following.
+This release introduces several enhancements, such as ScalarDL HashStore and TableStore, and includes several improvements and bug fixes. For detailed changes, see the following.
 
 ### Enhancements
 
-- Added table-oriented generic contracts. ([#108](https://github.com/scalar-labs/scalardl/pull/108), [#119](https://github.com/scalar-labs/scalardl/pull/119), [#124](https://github.com/scalar-labs/scalardl/pull/124), [#127](https://github.com/scalar-labs/scalardl/pull/127), [#138](https://github.com/scalar-labs/scalardl/pull/138), [#139](https://github.com/scalar-labs/scalardl/pull/139), [#141](https://github.com/scalar-labs/scalardl/pull/141), [#149](https://github.com/scalar-labs/scalardl/pull/149), [#150](https://github.com/scalar-labs/scalardl/pull/150), [#165](https://github.com/scalar-labs/scalardl/pull/165))
+- Added ScalarDL HashStore. ([#255](https://github.com/scalar-labs/scalardl/pull/255), [#256](https://github.com/scalar-labs/scalardl/pull/256), [#260](https://github.com/scalar-labs/scalardl/pull/260), [#261](https://github.com/scalar-labs/scalardl/pull/261))
+- Added ScalarDL TableStore. ([#180](https://github.com/scalar-labs/scalardl/pull/180), [#192](https://github.com/scalar-labs/scalardl/pull/192), [#220](https://github.com/scalar-labs/scalardl/pull/220), [#221](https://github.com/scalar-labs/scalardl/pull/221), [#239](https://github.com/scalar-labs/scalardl/pull/239), [#246](https://github.com/scalar-labs/scalardl/pull/246), [#260](https://github.com/scalar-labs/scalardl/pull/260), [#261](https://github.com/scalar-labs/scalardl/pull/261))
+
+### Improvements
+
+- Supported time-related data types in the generic function. ([#200](https://github.com/scalar-labs/scalardl/pull/200))
+- Bundled the ValidateLedger contract into the client. ([#254](https://github.com/scalar-labs/scalardl/pull/254), [#260](https://github.com/scalar-labs/scalardl/pull/260))
+- Disabled the coordinator write omission in ScalarDB. ([#203](https://github.com/scalar-labs/scalardl/pull/203))
 
 ### Bug fixes
 
-- Fixed [CVE-2024-45337](https://github.com/advisories/GHSA-v778-237x-gjrc "CVE-2024-45337"). ([#107](https://github.com/scalar-labs/scalardl/pull/107))
-- Fixed [CVE-2025-22869](https://github.com/advisories/GHSA-hcg3-q754-cr77 "CVE-2025-22869"). ([#142](https://github.com/scalar-labs/scalardl/pull/142))
-- Fixed the parameter name for the authentication method. ([#148](https://github.com/scalar-labs/scalardl/pull/148))
+- Fixed the state management behavior for read-only transactions. ([#181](https://github.com/scalar-labs/scalardl/pull/181))
+- Fixed certificate and secret key version check and messages. ([#202](https://github.com/scalar-labs/scalardl/pull/202))
+- Fixed Ledger and Auditor configuration validations for correct authentication settings. ([#222](https://github.com/scalar-labs/scalardl/pull/222))
+- Fixed `IS NULL` and `IS NOT NULL` conditions handling in table-oriented generic contracts. ([#238](https://github.com/scalar-labs/scalardl/pull/238))
+- Fixed [CVE-2025-22874](https://github.com/advisories/GHSA-6f52-wpx2-hvf2 "CVE-2025-22874"). ([#262](https://github.com/scalar-labs/scalardl/pull/262))

@@ -1,0 +1,432 @@
+---
+tags:
+  - Community
+  - Enterprise
+  - Private Preview
+displayed_sidebar: docsJapanese
+---
+
+# テーブル指向汎用コントラクトの使用
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+ScalarDL のテーブル指向汎用コントラクトは、[汎用コントラクト](use-generic-contracts.mdx)の一種で、リレーショナルデータモデルに似たデータモデルと台帳データを管理するためのユーザーフレンドリーなインターフェースを提供し、容易なアプリケーション開発を可能にします。このガイドでは、テーブル指向汎用コントラクトの使用方法について説明します。
+
+:::note
+
+テーブル指向汎用コントラクトは現在プライベートプレビュー段階にあり、将来のバージョンでは下位互換性のない更新がある可能性があります。
+
+:::
+
+## 環境のセットアップ
+
+このセクションでは、ScalarDL クライアントツールを通じてテーブル指向汎用コントラクトを使用するための環境をセットアップします。アプリケーションで汎用コントラクトを操作したい場合は、ScalarDL Client SDK API を使用できます。詳細は、[汎用コントラクトを用いた ScalarDL アプリケーションを書く](how-to-write-applications-with-generic-contracts.mdx)を参照してください。さらに、SQL ベースのインターフェースも近い将来提供される予定です。
+
+### JDKのインストール
+
+このガイドでは、汎用コントラクトの動作を確認するために Java ランタイム環境のみを使用します。ただし、このガイド以外で独自の ScalarDL アプリケーションを構築するには、次の Java Development Kit (JDK) のいずれかをインストールすることをお勧めします。
+
+- [Oracle JDK](https://www.oracle.com/java/technologies/downloads/) LTS バージョン (8、11、または17)
+- [OpenJDK](https://openjdk.org/install/) LTS バージョン (8、11、または17)
+
+### ScalarDL 環境のセットアップ
+
+要件に合った ScalarDL 環境をセットアップします。ローカルテスト環境に ScalarDL をデプロイしたい場合は、サンプルの Docker Compose 設定や Scalar Helm Chart を使用してデプロイできます。詳細については、以下を参照してください:
+
+- [ScalarDL Ledger をはじめよう](getting-started.mdx)
+- [Scalar Helm Charts をはじめよう](helm-charts/getting-started-scalar-helm-charts.mdx)
+
+本番環境では、ScalarDL はコンテナイメージとして利用可能です。詳細については、[Scalar 製品のコンテナイメージの取得方法](scalar-kubernetes/HowToGetContainerImages.mdx)を参照してください。
+
+:::note
+
+テーブル指向汎用コントラクトは、ScalarDL のバージョン 3.11 以降でサポートされています。
+
+:::
+
+### 必要なツールと汎用コントラクトのダウンロード
+
+以下のコマンドを実行して、3.11.0 以上の ScalarDL バージョンを指定します。利用可能なバージョンについては、[タグ](https://github.com/scalar-labs/scalardl-java-client-sdk/tags)を参照してください。
+
+```console
+VERSION=X.Y.Z
+```
+
+また、以下のコマンドを実行して、テーブル指向汎用コントラクトのバージョンを指定します。ScalarDL バージョンに対応するバージョンを特定するには、以下のマッピング表を使用してください。セパレータ `.` を `_` に置き換えることを忘れないでください。例えば、バージョン `1.0.0` の場合は `1_0_0` となります。
+
+| ScalarDL バージョン | テーブル指向汎用コントラクトバージョン |
+|:------------------|:--------------------------------|
+| 3.11.0            | 1.0.0                           |
+
+```console
+TGC_VERSION=X_Y_Z
+```
+
+次に、クライアント SDK リポジトリをクローンし、以下のコマンドを実行してツールと汎用コントラクトをダウンロードします:
+
+```console
+git clone https://github.com/scalar-labs/scalardl-java-client-sdk.git
+cd scalardl-java-client-sdk
+git checkout v$VERSION
+curl -OL https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v$VERSION/scalardl-java-client-sdk-$VERSION.zip
+unzip scalardl-java-client-sdk-$VERSION.zip
+mv scalardl-java-client-sdk-$VERSION client
+curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-generic-contracts-$VERSION.zip
+unzip scalardl-generic-contracts-$VERSION.zip
+mv scalardl-generic-contracts-$VERSION generic-contracts
+```
+
+## 証明書とテーブル指向汎用コントラクトの登録
+
+このセクションでは、証明書と汎用コントラクトを登録する方法について説明します。
+
+### プロパティの設定
+
+ScalarDL コンポーネントと対話するには、クライアントプロパティを設定する必要があります。詳細は、[プロパティを設定する](getting-started.mdx#クライアントプロパティを設定する)を参照してください。
+
+### 証明書またはシークレットの登録
+
+登録用の証明書を準備します。詳細は、[証明書の取得方法](ca/caclient-getting-started.mdx)を参照してください。
+
+次に、以下のように ScalarDL クライアント CLI を使用して証明書を登録します。
+
+```console
+client/bin/scalardl generic-contracts register-cert --properties client.properties
+```
+
+:::note
+
+証明書の代わりに HMAC 認証を使用することもできます。HMAC 認証の詳細については、[ScalarDL 認証ガイド](authentication.mdx)を参照してください。
+
+:::
+
+### テーブル指向汎用コントラクトの登録
+
+証明書を登録した後、以下のコマンドを実行してテーブル指向汎用コントラクトを登録できます。
+
+```console
+client/bin/scalardl generic-contracts register-contracts --properties client.properties --contracts-file generic-contracts/conf/table-authenticity-management-contracts.toml
+```
+
+## テーブル指向汎用コントラクトとの対話
+
+これで、テーブル指向汎用コントラクトを実行できます。このセクションでは、部門のIDを介して結合できる2つのサンプルテーブル (`employee` と `department`) を通じて、次の機能を試します。
+
+- [テーブルの作成と表示](#テーブルの作成と表示)
+- [レコードの挿入](#レコードの挿入)
+- [レコードの選択](#レコードの選択)
+- [レコードの更新](#レコードの更新)
+- [レコード履歴の取得](#レコード履歴の取得)
+
+### テーブルの作成と表示
+
+次のコマンドを実行してサンプルテーブルを作成できます。
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Create \
+--contract-argument '{"name": "employee", "key": "id", "type": "string", "indexes": [{"key": "department", "type": "string"}]}'
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Create \
+--contract-argument '{"name": "department", "key": "id", "type": "string"}'
+```
+
+テーブルを作成する際には、名前と主キーを指定する必要があります。追加でセカンダリインデックスを指定することもできます。主キーおよびインデックスキーのデータ型として、`string`、`number`、`boolean` がサポートされています。
+
+次のコマンドを実行して、作成したテーブルを表示できます。
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.ShowTables \
+--contract-argument '{}'
+```
+
+次のような結果が得られるはずです。
+
+```console
+Contract result:
+[ {
+  "name" : "employee",
+  "key" : "id",
+  "type" : "string",
+  "indexes" : [ {
+    "key" : "department",
+    "type" : "string"
+  } ]
+}, {
+  "name" : "department",
+  "key" : "id",
+  "type" : "string",
+  "indexes" : [ ]
+} ]
+```
+
+### レコードの挿入
+
+次に、以下のコマンドを実行していくつかの `employee` レコードを挿入します。
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Insert \
+--contract-argument '{"table": "employee", "values": {"id": "1001", "name": "Alice", "department": "sales", "salary": 654.3}}'
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Insert \
+--contract-argument '{"table": "employee", "values": {"id": "1002", "name": "Bob", "department": "sales", "salary": 543.2}}'
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Insert \
+--contract-argument '{"table": "employee", "values": {"id": "1003", "name": "Carol", "department": "engineering", "salary": 654.3}}'
+```
+
+次のコマンドを実行して、対応する `department` レコードも挿入します。
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Insert \
+--contract-argument '{"table": "department", "values": {"id": "sales", "location": "Shinjuku", "phone": "000-1234"}}'
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Insert \
+--contract-argument '{"table": "department", "values": {"id": "engineering", "location": "Shibuya", "phone": "000-4321"}}'
+```
+
+### レコードの選択
+
+次に、挿入したレコードを確認します。レコードを選択するには、少なくとも主キーまたはインデックスキーを指定する必要があります。例えば、次のコマンドを実行して主キーを指定することで、`employee` レコードを取得できます。
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Select \
+--contract-argument '{"table": "employee", "conditions": [ {"column": "id", "value": "1001", "operator": "EQ"} ], "projections": [ "id", "name", "department" ]}'
+```
+
+オプションで、JSON レコードオブジェクトのトップレベルフィールドを指定することで、列を投影することもできます。次のような結果が得られるはずです。
+
+```console
+Contract result:
+[ {
+  "id" : "1001",
+  "name" : "Alice",
+  "department" : "sales"
+} ]
+```
+
+次のコマンドを実行してインデックスキーを指定することで、レコードを選択することもできます。
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Select \
+--contract-argument '{"table": "employee", "conditions": [ {"column": "department", "value": "sales", "operator": "EQ"} ], "projections": [ "id", "name", "department" ]}'
+```
+
+次のような結果が得られるはずです。
+
+```console
+Contract result:
+[ {
+  "id" : "1001",
+  "name" : "Alice",
+  "department" : "sales"
+}, {
+  "id" : "1002",
+  "name" : "Bob",
+  "department" : "sales"
+} ]
+```
+
+レコードをフィルタリングしたい場合は、次のコマンドを実行して追加の条件を指定します。
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Select \
+--contract-argument '{"table": "employee", "conditions": [ {"column": "department", "value": "sales", "operator": "EQ"}, {"column": "salary", "value": 600, "operator": "LT"} ]}'
+```
+
+追加のフィルタリングには、次の演算子を使用できます: `EQ` (等しい)、`NE` (等しくない)、`LT` (より小さい)、`LTE` (以下)、`GT` (より大きい)、`GTE` (以上)、`IS_NULL`、および `IS_NOT_NULL`。次のような結果が得られるはずです。
+
+```console
+Contract result:
+[ {
+  "id" : "1002",
+  "name" : "Bob",
+  "department" : "sales",
+  "salary" : 543.2
+} ]
+```
+
+次のコマンドを実行して2つのテーブルを結合することもできます。
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Select \
+--contract-argument '{ "table": "employee", "joins": [ { "table": "department", "left": "employee.department", "right": "department.id" } ], "conditions": [ {"column": "employee.department", "value": "engineering", "operator": "EQ"} ] }'
+```
+
+次のような結果が得られるはずです。
+
+```console
+Contract result:
+[ {
+  "employee.id" : "1003",
+  "employee.name" : "Carol",
+  "employee.department" : "engineering",
+  "employee.salary" : 654.3,
+  "department.id" : "engineering",
+  "department.location" : "Shibuya",
+  "department.phone" : "000-4321"
+} ]
+```
+
+### レコードの更新
+
+次のコマンドを実行して `employee` レコードを更新できます。
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.Update \
+--contract-argument '{ "table": "employee", "values": {"salary": 754.3}, "conditions": [ {"column": "department", "value": "sales", "operator": "EQ"} ] }'
+```
+
+`Select` コントラクトを使用する場合と同様に、レコードを更新するには少なくとも主キーまたはインデックスキーを指定する必要があります。
+
+### レコード履歴の取得
+
+次のコマンドを実行してレコードの更新履歴を取得できます。
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.GetHistory \
+--contract-argument '{ "table": "employee", "key": "1003" }'
+```
+
+次のような結果が得られるはずです。
+
+```console
+Contract result:
+[ {
+  "age" : 1,
+  "values" : {
+    "id" : "1003",
+    "name" : "Carol",
+    "department" : "engineering",
+    "salary" : 754.3
+  }
+}, {
+  "age" : 0,
+  "values" : {
+    "id" : "1003",
+    "name" : "Carol",
+    "department" : "engineering",
+    "salary" : 654.3
+  }
+} ]
+```
+
+取得するバージョン (世代) の数を制限したい場合は、次のコマンドを実行して `limit` オプションを指定します。
+
+```console
+client/bin/scalardl generic-contracts execute-contract --properties client.properties \
+--contract-id table.v${TGC_VERSION}.GetHistory \
+--contract-argument '{ "table": "employee", "key": "1003", "limit": 1 }'
+```
+
+指定した数の**最新**レコードが得られるはずです。
+
+```console
+Contract result:
+[ {
+  "age" : 1,
+  "values" : {
+    "id" : "1003",
+    "name" : "Carol",
+    "department" : "engineering",
+    "salary" : 754.3
+  }
+} ]
+```
+
+## テーブル指向汎用コントラクトによって作成されたデータの検証
+
+ScalarDL では、データがすべて有効な状態にあることを確認するために、時折データを検証する必要があります。`validate-ledger` コマンドを使用して、テーブル指向汎用コントラクトによって作成されたアセットを検証できます。アプリケーションでそれらを検証したい場合は、ScalarDL Client SDK API を使用できます。詳細は、[データを検証する](how-to-write-applications-with-generic-contracts.mdx#データを検証する)を参照してください。
+
+次のコマンドを実行してテーブルスキーマを検証できます。
+
+```console
+client/bin/scalardl generic-contracts validate-ledger --properties client.properties \
+--table-name employee
+```
+
+次のような結果が得られるはずです。
+
+```console
+{
+  "status_code" : "OK",
+  "Ledger" : {
+    "id" : "tbl_employee",
+    "age" : 0,
+    "nonce" : "26af1229-1c1f-4b89-86e2-ec011da3b313",
+    "hash" : "ZA9yFzjIg1qeHAd7Sub8uFvt2JrTb6XSzGUktPEITr0=",
+    "signature" : "MEUCIAh4Xj93J/jldqbQor7AVM4ii9+suxQrZlCFnKWWDIo0AiEAiM6Yi6GO4bQ2VZg2GnqKmOFPEANrTU4g7pjBMcaX6TQ="
+  },
+  "Auditor" : null
+}
+```
+
+次のコマンドを実行してレコードを検証できます。
+
+```console
+client/bin/scalardl generic-contracts validate-ledger --properties client.properties \
+--table-name employee --primary-key-column-name id --column-value '"1001"'
+```
+
+次のような結果が得られるはずです。
+
+```console
+{
+  "status_code" : "OK",
+  "Ledger" : {
+    "id" : "rec_employee_id_1001",
+    "age" : 0,
+    "nonce" : "41a18e7f-314f-4aec-8984-62bf6cd355d0",
+    "hash" : "n7KJLuC/KOzFZLnGKEs6pOQvCbl4WSF+xplOUd9MrSo=",
+    "signature" : "MEUCIEHafCsSXWWtZnDbSpAwFQk4qjW1B7cXjEgdwVF8uKQeAiEAsvzEMKyuNFozAbLC/E8FEviCMLCqo9DPRQe4tVBFwIk="
+  },
+  "Auditor" : null
+}
+```
+
+次のコマンドを実行してインデックスレコードを検証できます。
+
+```console
+client/bin/scalardl generic-contracts validate-ledger --properties client.properties \
+--table-name employee --index-key-column-name department --column-value '"sales"'
+```
+
+次のような結果が得られるはずです。
+
+```console
+{
+  "status_code" : "OK",
+  "Ledger" : {
+    "id" : "idx_employee_department_sales",
+    "age" : 0,
+    "nonce" : "41a18e7f-314f-4aec-8984-62bf6cd355d0",
+    "hash" : "n7KJLuC/KOzFZLnGKEs6pOQvCbl4WSF+xplOUd9MrSo=",
+    "signature" : "MEUCIEHafCsSXWWtZnDbSpAwFQk4qjW1B7cXjEgdwVF8uKQeAiEAsvzEMKyuNFozAbLC/E8FEviCMLCqo9DPRQe4tVBFwIk="
+  },
+  "Auditor" : null
+}
+```
+
+:::note
+
+汎用コントラクトは、内部的にテーブル指向汎用コントラクトによって作成されたアセットに専用のアセット ID を割り当てます。アセット ID は、アセットタイプのプレフィックスと識別用のキーで設定されています。例えば、レコードのアセット ID には、`rec_` というプレフィックス、テーブル名、主キー列名、および列値が使用されます。したがって、`validate-ledger` の結果には、そのような生のアセット ID が表示されます。
+
+:::
+
+## 参照
+
+Java アプリケーションでテーブル指向汎用コントラクトと対話するには、次を参照してください。
+
+* [汎用コントラクトを用いた ScalarDL アプリケーションを書く](how-to-write-applications-with-generic-contracts.mdx)
+* [ScalarDL Java Client SDK の Javadocs](https://javadoc.io/doc/com.scalar-labs/scalardl-java-client-sdk/latest/index.html)

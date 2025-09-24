@@ -1,0 +1,60 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+# ScalarDL 互換性マトリックス
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このドキュメントでは、ScalarDL Ledger および Auditor と ScalarDL Java Client SDK との互換性、および ScalarDL と ScalarDB Cluster との互換性を示します。
+
+:::note
+
+バージョンは `x.y.z` として表されます。`x` はメジャーバージョン、`y` はマイナーバージョン、`z` はパッチバージョンを表します。この形式は[セマンティックバージョニング](https://semver.org/)に従います。
+
+:::
+
+## ScalarDL と Client SDK の互換性
+
+| ScalarDL Ledger/Auditor バージョン | ScalarDL Java Client SDK バージョン |
+|:------------------------------|:-------------------------------|
+| 3.11                          | 3.8 - 3.11                     |
+| 3.10                          | 3.8 - 3.10                     |
+| 3.9                           | 3.8 - 3.9                      |
+| 3.8                           | 3.8                            |
+
+:::note
+
+- クライアントツール ([ScalarDL Client Command](./scalardl-command-reference.mdx) および [ScalarDL Schema Loader](./schema-loader.mdx)) は、ScalarDL Java Client SDK と同じものとみなすことができます。つまり、クライアントツールには ScalarDL Java Client SDK と同じ互換性ルールを適用できます。
+- ScalarDL の新しいデプロイメントを作成する場合は、ScalarDL のバージョンと同じバージョンの ScalarDL Schema Loader を使用することをお勧めします。
+- ScalarDL のマイナーバージョンまたはパッチバージョンをアップグレードする場合、基本的に既存のスキーマを更新する必要はありません。つまり、基本的に、ScalarDL のマイナーバージョンまたはパッチバージョンをアップグレードするときに、ScalarDL Schema Loader を再実行する必要はありません。
+- ScalarDL が新しいマイナーバージョンで提供する新しい機能を使用する場合は、同じバージョンまたはそれ以降のバージョンのクライアントツールの利用、もしくは既存のスキーマの再作成 (または更新) が必要となる場合があります。詳細については、各機能の関連ドキュメントを参照してください。
+
+:::
+
+### バージョンスキューポリシー
+
+- ScalarDL と Client SDK の **メジャー** バージョンが異なる場合、互換性がなく、**サポートされません**。
+- ScalarDL と Client SDK の **メジャー** バージョンが同じで、**マイナー** バージョンが異なる場合、ScalarDL のバージョンは Client SDK のバージョン以上である必要があります。例:
+  - **サポート対象:** ScalarDL 3.9 と Client SDK 3.8 の組み合わせ
+  - **サポート対象外:** ScalarDL 3.8 と Client SDK 3.9 の組み合わせ
+- **メジャー** バージョンと **マイナー** バージョンが同じ場合は、ScalarDL と Client SDK 間で異なる **パッチ** バージョンを使用できます。例:
+  - **サポート対象:** ScalarDL 3.9.2 と Client SDK 3.9.0 の組み合わせ
+  - **サポート対象:** ScalarDL 3.9.0 Client SDK 3.9.2 の組み合わせ
+
+## ScalarDL と ScalarDB Cluster の互換性
+
+ScalarDL と一緒に ScalarDB Cluster を使用する場合は、次のバージョンの組み合わせを使用できます。
+
+| ScalarDL バージョン | ScalarDB Cluster バージョン                       |
+|:---------------|:---------------------------------------------|
+| 3.11           | 3.15 以降のマイナー (3.X) バージョン (例: 3.15、3.16、3.17) |
+| 3.10           | 3.14 以降のマイナー (3.X) バージョン (例: 3.14、3.15、3.16) |
+| 3.9            | 3.12 以降のマイナー (3.X) バージョン (例: 3.12、3.13、3.14) |
+| 3.8.2          | 3.12 以降のマイナー (3.X) バージョン (例: 3.12、3.13、3.14) |
+| 3.8.0 - 3.8.1  | 3.8 以降のマイナー (3.X) バージョン (例: 3.8、3.9、3.10)    |

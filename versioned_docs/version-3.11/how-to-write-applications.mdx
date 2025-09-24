@@ -1,0 +1,156 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsEnglish
+---
+
+# Write a ScalarDL Application in Java
+
+import JavadocLink from "/src/theme/JavadocLink.js";
+
+This document explains how to write ScalarDL applications. You will learn how to integrate ScalarDL into your applications, handle errors, and validate your data.
+
+## Use the ScalarDL Client SDK
+
+You have two options to interact with ScalarDL: using [commands](scalardl-command-reference.mdx) as shown in the [getting started guide](getting-started.mdx) or using the [Java Client SDK](https://github.com/scalar-labs/scalardl-java-client-sdk).
+Using commands is convenient because you don't need to write applications. However, they invoke a process for each execution, which is slow, so they are mainly for quickly testing your contracts. Instead, using the Client SDK is usually recommended when you write ScalarDL-based applications because it is more efficient.
+
+The Client SDK is available on [Maven Central](https://search.maven.org/search?q=a:scalardl-java-client-sdk). You can install it in your application by using a build tool such as Gradle. For example in Gradle, you can add the following dependency to `build.gradle`, replacing `VERSION` with the version of ScalarDL that you want to use.
+
+```gradle
+dependencies {
+    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '<VERSION>'
+}
+```
+
+The Client SDK APIs are provided by a service class called <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" />. The following is a code snippet that shows how to use `ClientService` to execute a contract.
+
+```java
+  // ClientServiceFactory should always be reused.
+  ClientServiceFactory factory = new ClientServiceFactory();
+
+  // ClientServiceFactory creates a new ClientService object in every create method call
+  // but reuses the internal objects and connections as much as possible for better performance and resource usage.
+  ClientService service = factory.create(new ClientConfig(new File(properties));
+  try {
+    // create an application-specific argument that matches your contract
+    JsonNode jsonArgument = ...;
+    ContractExecutionResult result = service.executeContract(contractId, jsonArgument);
+    result.getContractResult().ifPresent(System.out::println);
+  } catch (ClientException e) {
+    System.err.println(e.getStatusCode());
+    System.err.println(e.getMessage());
+  }
+
+  factory.close();
+```
+
+You should always use `ClientServiceFactory` to create `ClientService` objects. `ClientServiceFactory` caches objects that are required to create `ClientService` and reuses them on the basis of the given configurations, so `ClientServiceFactory` object should always be reused.
+
+`ClientService` is a thread-safe client that interacts with ScalarDL components, like Ledger and Auditor, to register certificates, register contracts, execute contracts, and validate data. When you execute a contract, you need to specify the corresponding argument type of the contract. For example, if your contract extends `JacksonBasedContract`, you need to pass the `JsonNode` argument when you execute the contract.
+
+For more information, please take a look at [Javadoc](https://javadoc.io/doc/com.scalar-labs/scalardl-java-client-sdk/latest/index.html).
+
+## Handle errors
+
+If an error occurs in your application, the Client SDK will return an exception with a status code and an error message with an error code. You should check the status code and the error code to identify the cause of the error.
+
+### Implement error handling
+
+The SDK throws <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/exception" className="ClientException" /> when an error occurs. You can handle errors by catching the exception as follows:
+
+```java
+ClientService clientService = ...;
+try {
+    // interact with ScalarDL through a ClientService object
+} catch (ClientException) {
+    // e.getStatusCode() returns the status of the error
+}
+```
+
+### Status codes
+
+Status codes explain what kind of status request you ended up with. The status codes in ScalarDL are grouped into five classes, which are similar to HTTP status codes:
+
+- Successful statuses (200-299)
+    - The 2xx class of status code indicates that the request has succeeded.
+- Validation errors (300-399)
+    - The 3xx class of status code indicates that an asset record in the database is in an invalid state and possibly tampered.
+- User errors (400-499)
+    - The 4xx class of status code indicates that the server cannot or will not process the request due to an issue that is perceived to be a client error, like when a signature or key pair is invalid, an execution error occurs inside a contract, or a contract is not found.
+- Server errors (500-599)
+    - The 5xx class of status code indicates that the server, either on the Ledger side or the Auditor side, encountered an unexpected condition that prevented it from fulfilling the request.
+- Client errors (600-699)
+    - The 6xx class of status code indicates that the client encountered an unexpected condition that prevented it from fulfilling the request.
+
+For more details, see <JavadocLink packageName="scalardl-common" path="com/scalar/dl/ledger/service" className="StatusCode" />.
+
+### Error codes
+
+Error codes explain more details about an error that a request encountered. For details about error codes, see the following:
+
+- [ScalarDL Client Error Codes](scalardl-client-status-codes.mdx)
+- [ScalarDL Ledger Error Codes](scalardl-ledger-status-codes.mdx)
+- [ScalarDL Auditor Error Codes](scalardl-auditor-status-codes.mdx)
+- [ScalarDL Common Error Codes](scalardl-common-status-codes.mdx)
+
+## Validate your data
+
+In ScalarDL, you occasionally need to validate your data to make sure all the data is in a valid state. A valid state varies depending on how you set up and configure ScalarDL. 
+
+When using only Ledger, the valid state means that the hash-chain structure where data is stored is valid. So, if a malicious user alters a part of the data, the alteration can be detected by the structural validation. However, if a malicious user alters the Ledger program itself, the alteration may not be able to be detected since, for example, the structural validation code can also be altered.
+
+When using Ledger and Auditor, the valid state means that the data in Ledger and Auditor are not discrepant. So, even if a malicious user alters the Ledger program, the alteration is detected as long as Auditor is correct and the alteration affects the data or the output. Auditor checks for discrepancies for referenced and generated states of Ledger and Auditor in every execution; thus, those states are guaranteed to be correct at the time of execution.
+
+Due to this difference, what the validation does differs depending on whether you use Auditor. When using only Ledger, the validation traverses assets to see if the assets can be re-computed and have a valid hash-chain structure. When using Ledger and Auditor, the validation checks for discrepancies between the states of Ledger and Auditor without centralized coordination.
+
+Also, what and when to validate can be different. When using only Ledger, you should validate assets whenever you want them to be trustworthy since they are not validated without explicit validation. When using Ledger and Auditor, you should validate when you want to use assets that have not been read recently since assets that are read or written by contract execution are validated at execution time.
+
+You can do validation by using the `validateLedger` method as follows:
+
+```java
+  ClientService service = ...
+  try {
+    LedgerValidationResult result = service.validateLedger(assetId);
+    // You can also specify age range.
+    // LedgerValidationResult result = service.validateLedger(assetId, startAge, endAge);
+  } catch (ClientException e) {
+  }
+```
+
+When using only Ledger, you can enhance the detection capability by using information called Asset Proof. When using Ledger and Auditor, you do not need to use Asset Proof explicitly, but Auditor internally uses it to achieve the Byzantine-fault detection feature. For more details about Auditor, see [ScalarDL Design](design.mdx).
+
+### What is Asset Proof?
+
+Asset Proof in ScalarDL is a set of information about an asset record and used as evidence of the existence of the asset record. It is composed of the following items:
+
+- ID of an asset record
+- Age of the asset record
+- Nonce of the execution request that creates the asset record
+- Input (a list of the \<ID, age\> pairs referenced) to create the asset record
+- A cryptographic hash of the asset record
+- A cryptographic hash of the previous age's asset record, if any
+- The digital signature of the above entries
+
+#### Benefits of Asset Proof
+
+Since Asset Proof is evidence at the time of execution by Ledger, it is difficult for Ledger to tamper data after the evidence is created because the Asset Proofs and Ledger states would be diverged. Thus, making use of Asset Proof appropriately could reduce the risk of data tampering.
+
+#### How to access Asset Proof from your applications
+
+You can get <JavadocLink packageName="scalardl-common" path="com/scalar/dl/ledger/asset" className="AssetProof" /> from the result <JavadocLink packageName="scalardl-common" path="com/scalar/dl/ledger/model" className="ContractExecutionResult" /> of the `executeContract` method of the Client SDK. An Asset Proof can be validated if it is not tampered and it is from Ledger by verifying the signature.
+
+Storing Asset Proofs outside of a domain in which Ledger runs is recommended. This is so that malicious activities in one domain can be detected by the other domain. Storing Asset Proofs in cloud storages for ease of management is also worth considering.
+
+The Asset Proofs obtained in execution can be used when you do `validateLedger`. `validateLedger` also returns the Asset Proof of a specified asset record after doing Ledger-side validation. Then, the client can check if the Asset Proof is the same as the one that was previously returned from Ledger.
+
+## Use other languages
+
+To interact with ScalarDL in languages other than Java, you can use ScalarDL Gateway.
+
+:::note
+
+Documentation for ScalarDL Gateway is currently being created and will be ready in the near future.
+
+:::

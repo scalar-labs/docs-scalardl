@@ -1,0 +1,144 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+# 汎用コントラクトを用いた ScalarDL アプリケーションを書く
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+import JavadocLink from "/src/theme/JavadocLink.js";
+
+<TranslationBanner />
+
+このドキュメントでは、汎用コントラクトを使用した ScalarDL アプリケーションを作成する方法について説明します。ScalarDL で汎用コントラクトを使用する際に、アプリケーションで ScalarDL と対話し、エラーを処理し、データを検証する方法を学びます。
+
+## ScalarDL Client SDK で汎用コントラクトを使用する
+
+汎用コントラクトを使用する際、ScalarDL と対話するには、次の2つのオプションがあります。
+
+- [汎用コントラクトおよびファンクションの使用](use-generic-contracts.mdx)に示されているように、[コマンド](scalardl-command-reference.mdx)を使用する
+- [Java Client SDK](https://github.com/scalar-labs/scalardl-java-client-sdk) を使用する
+
+コマンドを使用すると、アプリケーションを作成する必要がないため便利です。ただし、コマンドは実行ごとにプロセスを呼び出すため、時間がかかります。そのため、コマンドは主に汎用コントラクトをすばやくテストするために使用されます。ScalarDL ベースのアプリケーションを作成する場合は、より効率的な Client SDK を使用することをお勧めします。
+
+Client SDK は [Maven Central](https://search.maven.org/search?q=a:scalardl-java-client-sdk) で入手できます。Gradle などのビルドツールを使用して、アプリケーションにインストールできます。たとえば、Gradle では、次のように `build.gradle` に依存関係を追加できます。`VERSION` は使用する ScalarDL のバージョンに置き換えてください。
+
+```gradle
+dependencies {
+    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '<VERSION>'
+}
+```
+
+汎用コントラクト用の Client SDK API は、<JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="GenericContractClientService" /> というサービスクラスによって提供されます。以下は、`GenericContractClientService` を使用してコントラクトを実行する方法を示したコードスニペットです。
+
+```java
+  // ClientServiceFactory should always be reused.
+  ClientServiceFactory factory = new ClientServiceFactory();
+
+  // ClientServiceFactory creates a new GenericContractClientService object in every create method call
+  // but reuses the internal objects and connections as much as possible for better performance and resource usage.
+  GenericContractClientService service = factory.createForGenericContracts(new ClientConfig(new File(properties));
+  try {
+    // create an application-specific argument that matches the generic contract specification
+    JsonNode jsonArgument = ...;
+    ContractExecutionResult result = service.executeContract(contractId, jsonArgument);
+    result.getContractResult().ifPresent(System.out::println);
+  } catch (ClientException e) {
+    System.err.println(e.getStatusCode());
+    System.err.println(e.getMessage());
+  }
+
+  factory.close();
+```
+
+`GenericContractClientService` オブジェクトを作成するには、常に `ClientServiceFactory` を使用する必要があります。`ClientServiceFactory` は、`GenericContractClientService` の作成に必要なオブジェクトをキャッシュし、指定された設定に基づいてそれらを再利用するため、`ClientServiceFactory` オブジェクトは常に再利用する必要があります。
+
+`GenericContractClientService` は、Ledger や Auditor などの ScalarDL コンポーネントと対話して、証明書の登録、コントラクトの登録、コントラクトの実行、データの検証を行うスレッドセーフなクライアントです。汎用コントラクトを実行する場合は、`JsonNode` 引数を指定する必要があります。入力引数の仕様の詳細については、[汎用コントラクトおよびファンクションのリファレンスガイド](generic-contracts-reference.mdx)を参照してください。
+
+:::warning
+
+カスタマイズしたコントラクトを `GenericContractClientService` 経由で登録および実行しないでください。適切なアセット管理が保証されないため、汎用コントラクトとカスタマイズしたコントラクトを一緒に使用することはサポートされていません。
+
+:::
+
+`ClientServiceFactory` および `GenericContractClientService` の詳細については、[`scalardl-java-client-sdk` Javadoc](https://javadoc.io/doc/com.scalar-labs/scalardl-java-client-sdk/latest/index.html) を参照してください。
+
+## エラーを処理する
+
+アプリケーションでエラーが発生した場合、Client SDK はステータスコードを含む例外と、エラーコードを含むエラーメッセージを返します。エラーの原因を特定するには、ステータスコードとエラーコードを確認する必要があります。ステータスコードとエラーコードの詳細については、[ステータスコード](how-to-write-applications.mdx#ステータスコード)および[エラーコード](how-to-write-applications.mdx#エラーコード)を参照してください。
+
+### エラー処理を実装する
+
+SDK は、エラーが発生すると <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/exception" className="ClientException" /> をスローします。次のように例外をキャッチすることで、エラーを処理できます。
+
+```java
+GenericContractClientService clientService = ...;
+try {
+    // interact with ScalarDL through a ClientService object
+} catch (ClientException) {
+    // e.getStatusCode() returns the status of the error
+}
+```
+
+## データを検証する
+
+ScalarDL では、すべてのデータが有効な状態であることを確認するために、適宜データを検証する必要があります。ScalarDL がデータを検証する方法の基本は [Java で ScalarDL アプリケーションを作成する](how-to-write-applications.mdx#データを検証する)で学習できるので、このセクションでは主に、通常の `ClientService` の `validateLedger` メソッドと `GenericContractClientService` の `validateLedger` メソッドまたはアセット検証メソッドの違いについて説明します。
+
+汎用コントラクトによって作成されたアセットを検証する場合、アセットのタイプと、アセットを識別するためのキーのリストを指定するか、各アセットタイプ用に準備されたラッパーメソッドを使用する必要があります。
+
+:::note
+
+汎用コントラクトは、各真正性管理のオブジェクトを表す[アセットレコード](data-modeling.mdx#アセットレコード)に専用のアセット ID を内部的に割り当てます。アセット ID は、アセットタイプのプレフィックスとキーで構成されます。たとえば、`AssetType.OBJECT` の場合、プレフィックス `o_` とオブジェクト ID です。そのため、`LedgerValidationResult` の `AssetProof` にそのような生のアセット ID が表示されます。
+
+:::
+
+### オブジェクトおよびコレクションの真正性管理
+
+オブジェクトおよびコレクションの真正性管理用の汎用コントラクトは、オブジェクト (`AssetType.OBJECT`) とコレクション (`AssetType.COLLECTION`) の2種類のアセットを作成します。キーには、オブジェクト ID またはコレクション ID を指定できます。
+
+汎用コントラクトによって作成されたアセットを検証する場合、アセットのタイプと、アセットを識別するためのキーのリストを指定する必要があります。現在、汎用コントラクトは、オブジェクト (`AssetType.OBJECT`) とコレクション (`AssetType.COLLECTION`) の2種類のアセットを作成します。キーには、オブジェクト ID またはコレクション ID を指定できます。
+
+オブジェクトを検証するためのサンプルコードは次のとおりです。
+
+```java
+  GenericContractClientService service = ...
+  try {
+    LedgerValidationResult result =
+        service.validateLedger(AssetType.OBJECT, ImmutableList.of("an_object_ID"));
+    // LedgerValidationResult result =
+    //     service.validateLedger(
+    //         AssetType.OBJECT, ImmutableList.of("an_object_ID"), startAge, endAge);
+  } catch (ClientException e) {
+  }
+```
+
+### テーブルの真正性管理
+
+テーブルの真正性管理用の汎用コントラクト（テーブル指向の汎用コントラクト）は、テーブルスキーマ (`AssetType.TABLE`)、レコード (`AssetType.RECORD`)、およびインデックスレコード (`AssetType.INDEX`) の3種類のアセットを作成します。テーブルスキーマの場合、キーとしてテーブル名を指定する必要があります。レコードおよびインデックスレコードの場合、テーブル名、プライマリキーまたはインデックスキーの列名、および値を指定する必要があります。
+
+テーブル指向の汎用コントラクトでは、JSON 文字列、数値、およびブール値をプライマリキーおよびインデックスキーとして指定でき、特定のルールに基づいてアセット ID として使用される際に内部的に文字列に変換されます。次のように、`validateTableSchema()`、`validateRecord()`、および`validateIndexRecord()`メソッドを使用して、そのルールを気にせずにテーブルスキーマ、レコード、およびインデックスレコードを検証できます：
+
+```java
+  GenericContractClientService service = ...
+  try {
+    LedgerValidationResult tableResult = service.validateTableSchema("a_table_name");
+    LedgerValidationResult recordResult =
+        service.validateRecord(
+            "a_table_name", "a_primary_key_column_name", TextNode.valueOf("a_value"));
+    LedgerValidationResult indexResult =
+        service.validateIndexRecord("a_table_name", "an_index_key_column_name", IntNode.valueOf(1));
+  } catch (ClientException e) {
+  }
+```
+
+## 他の言語を使用する
+
+Java 以外の言語で ScalarDL を操作するには、ScalarDL Gateway を使用できます。
+
+:::note
+
+ScalarDL Gateway のドキュメントは現在作成中であり、近い将来に準備が整う予定です。
+
+:::

@@ -103,6 +103,7 @@ Because Auditor does not rely on the Consensus Commit transaction manager, you d
 While ScalarDL leverages ScalarDB, the following ScalarDB features are not compatible with the consistency guarantee mechanism of ScalarDL:
 
 - [Group commit for the Coordinator table](https://scalardb.scalar-labs.com/docs/latest/api-guide/#group-commit-for-the-coordinator-table) (`scalar.db.consensus_commit.coordinator.group_commit.enabled` must be `false`.)
+- Coordinator write omission optimization in [Performance-related configurations](https://scalardb.scalar-labs.com/docs/latest/configurations#performance-related-configurations) (`scalar.db.consensus_commit.coordinator.write_omission_on_read_only.enabled` must be `false`.)
 
 ### Decide which other configurations to use
 

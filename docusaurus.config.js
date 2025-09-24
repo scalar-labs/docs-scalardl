@@ -74,8 +74,14 @@ const config = {
               },
               */
               current: { // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
-                label: '3.11',
+                label: '3.12',
                 path: 'latest', // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
+                banner: 'none',
+                className: '3.12.0',
+              },
+              "3.11": { // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
+                label: '3.11',
+                path: '3.11',
                 banner: 'none',
                 className: '3.11.0',
               },
@@ -152,6 +158,10 @@ const config = {
           {
             to: '/docs/latest/how-to-run-applications-with-auditor',
             from: '/docs/latest/getting-started-auditor',
+          },
+          {
+            to: '/docs/3.11/how-to-run-applications-with-auditor',
+            from: '/docs/3.11/getting-started-auditor',
           },
           {
             to: '/docs/3.10/how-to-run-applications-with-auditor',

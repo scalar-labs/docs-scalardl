@@ -5,28 +5,37 @@ tags:
 displayed_sidebar: docsJapanese
 ---
 
-# ScalarDL 3.11 リリースノート
+# ScalarDL 3.12 リリースノート
 
 import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このページには、ScalarDL 3.11 のリリースノートのリストが含まれています。
+このページには、ScalarDL 3.12 のリリースノートのリストが含まれています。
 
-## v3.11.0
+## v3.12.0
 
-**発売日:** 2025年6月18日
+**発売日:** 2026年9月22日
 
 ### まとめ
 
-このリリースでは、テーブル指向の汎用コントラクトなどの機能強化が導入され、いくつかのバグ修正が含まれています。詳細な変更については、以下をご覧ください。
+このリリースでは、ScalarDL HashStore や TableStore などの機能強化が導入され、いくつかの改善点とバグ修正が含まれています。詳細な変更については、以下をご覧ください。
 
 ### 機能強化
 
-- テーブル指向の汎用コントラクトを追加しました。([#108](https://github.com/scalar-labs/scalardl/pull/108), [#119](https://github.com/scalar-labs/scalardl/pull/119), [#124](https://github.com/scalar-labs/scalardl/pull/124), [#127](https://github.com/scalar-labs/scalardl/pull/127), [#138](https://github.com/scalar-labs/scalardl/pull/138), [#139](https://github.com/scalar-labs/scalardl/pull/139), [#141](https://github.com/scalar-labs/scalardl/pull/141), [#149](https://github.com/scalar-labs/scalardl/pull/149), [#150](https://github.com/scalar-labs/scalardl/pull/150), [#165](https://github.com/scalar-labs/scalardl/pull/165))
+- ScalarDL HashStore を追加しました。([#255](https://github.com/scalar-labs/scalardl/pull/255), [#256](https://github.com/scalar-labs/scalardl/pull/256), [#260](https://github.com/scalar-labs/scalardl/pull/260), [#261](https://github.com/scalar-labs/scalardl/pull/261))
+- ScalarDL TableStore を追加しました。([#180](https://github.com/scalar-labs/scalardl/pull/180), [#192](https://github.com/scalar-labs/scalardl/pull/192), [#220](https://github.com/scalar-labs/scalardl/pull/220), [#221](https://github.com/scalar-labs/scalardl/pull/221), [#239](https://github.com/scalar-labs/scalardl/pull/239), [#246](https://github.com/scalar-labs/scalardl/pull/246), [#260](https://github.com/scalar-labs/scalardl/pull/260), [#261](https://github.com/scalar-labs/scalardl/pull/261))
+
+### 改善点
+
+- 汎用関数で時間関連のデータ型をサポートしました。([#200](https://github.com/scalar-labs/scalardl/pull/200))
+- ValidateLedger コントラクトをクライアントにバンドルしました。([#254](https://github.com/scalar-labs/scalardl/pull/254), [#260](https://github.com/scalar-labs/scalardl/pull/260))
+- ScalarDB でコーディネーター書き込み省略を無効にしました。([#203](https://github.com/scalar-labs/scalardl/pull/203))
 
 ### バグの修正
 
-- [CVE-2024-45337](https://github.com/advisories/GHSA-v778-237x-gjrc "CVE-2024-45337")を修正しました。([#107](https://github.com/scalar-labs/scalardl/pull/107))
-- [CVE-2025-22869](https://github.com/advisories/GHSA-hcg3-q754-cr77 "CVE-2025-22869")を修正しました。([#142](https://github.com/scalar-labs/scalardl/pull/142))
-- 認証メソッドのパラメーター名を修正しました。([#148](https://github.com/scalar-labs/scalardl/pull/148))
+- 読み取り専用トランザクションの状態管理動作を修正しました。([#181](https://github.com/scalar-labs/scalardl/pull/181))
+- 証明書と秘密鍵のバージョンチェックとメッセージを修正しました。([#202](https://github.com/scalar-labs/scalardl/pull/202))
+- 正しい認証設定のための Ledger と Auditor の設定検証を修正しました。([#222](https://github.com/scalar-labs/scalardl/pull/222))
+- テーブル指向の汎用コントラクトでの `IS NULL` と `IS NOT NULL` 条件の処理を修正しました。([#238](https://github.com/scalar-labs/scalardl/pull/238))
+- [CVE-2025-22874](https://github.com/advisories/GHSA-6f52-wpx2-hvf2 "CVE-2025-22874")を修正しました。([#262](https://github.com/scalar-labs/scalardl/pull/262))

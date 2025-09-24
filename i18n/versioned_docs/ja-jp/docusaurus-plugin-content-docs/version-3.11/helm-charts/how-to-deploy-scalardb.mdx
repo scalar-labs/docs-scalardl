@@ -1,0 +1,41 @@
+---
+tags:
+  - Enterprise Standard
+  - Enterprise Premium
+  - Deprecated
+displayed_sidebar: docsJapanese
+---
+
+# [非推奨] ScalarDB Server をデプロイする方法
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+:::note
+
+ScalarDB Server は非推奨になりました。代わりに [ScalarDB Cluster](how-to-deploy-scalardb-cluster.mdx) を使用してください。
+
+:::
+
+このドキュメントでは、Scalar Helm Chart を使用して ScalarDB Server をデプロイする方法について説明します。カスタム値ファイルを準備する必要があります。ScalarDB Server のカスタム値ファイルの詳細については、次のドキュメントを参照してください。
+
+* [[非推奨] ScalarDB Server のカスタム値ファイルを構成する](configure-custom-values-scalardb.mdx)
+
+## ScalarDB Server をデプロイする
+
+```console
+helm install <RELEASE_NAME> scalar-labs/scalardb -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDB_SERVER> --version <CHART_VERSION>
+```
+
+## ScalarDB Server のデプロイメントをアップグレードする
+
+```console
+helm upgrade <RELEASE_NAME> scalar-labs/scalardb -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDB_SERVER> --version <CHART_VERSION>
+```
+
+## ScalarDB Server のデプロイメントを削除します
+
+```console
+helm uninstall <RELEASE_NAME> -n <NAMESPACE>
+```

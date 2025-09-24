@@ -1,0 +1,286 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsEnglish
+---
+
+# ScalarDL TableStore SQL Grammar
+
+This page provides a list of commands supported in ScalarDL TableStore SQL.
+
+:::note
+
+ScalarDL TableStore SQL is a [PartiQL-based](https://partiql.org/) language and is not fully compatible with standard SQL.
+
+:::
+
+- DDL
+  - [CREATE TABLE](#create-table)
+- DML
+  - [SELECT](#select)
+  - [INSERT](#insert)
+  - [UPDATE](#update)
+- Others
+  - [Show tables](#show-tables)
+  - [Show record histories](#show-record-histories)
+- Literal
+  - [String](#string)
+  - [Number](#number)
+  - [Boolean](#boolean)
+
+## DDL
+
+Data Definition Language (DDL) commands are used to define and modify the structure of database objects such as tables.
+
+### CREATE TABLE
+
+The `CREATE TABLE` command creates a table.
+
+#### Grammar
+
+```sql
+CREATE TABLE <table name> (
+  <primary key column name> data_type PRIMARY KEY [, <index key column name> data_type,] ...
+)
+
+data_type: BOOLEAN | INT | BIGINT | FLOAT | DOUBLE PRECISION | STRING
+```
+
+#### Notes
+
+- You don't have to specify a strict schema when creating a table, but you must specify a primary key column at least.
+- You can create secondary indexes by specifying index key columns.
+- ScalarDL TableStore handles all numeric data types (`INT`, `BIGINT`, `FLOAT`, and `DOUBLE PRECISION`) as the `NUMBER` data type in the JSON format without distinguishing them.
+
+#### Examples
+
+An example of `CREATE TABLE` is as follows:
+
+```sql
+-- Create a table with a primary key ("c1") and index keys ("c2", "c3", and "c4").
+CREATE TABLE tbl (
+  c1 INT PRIMARY KEY,
+  c2 STRING,
+  c3 FLOAT,
+  c4 BIGINT
+);
+```
+
+## DML
+
+Data Manipulation Language (DML) commands are used to query and modify data in tables.
+
+### SELECT
+
+The `SELECT` command retrieves records in tables managed by TableStore.
+
+#### Grammar
+
+```sql
+SELECT projection [, projection] ...
+  FROM <table name> [AS <alias>] [join_specification [join_specification] ...]
+  WHERE predicate [AND predicate ...]
+
+projection: * | identifier
+join_specification: JOIN <table name> [AS <alias>] ON join_predicate
+join_predicate: identifier = identifier
+predicate: identifier operator <literal> | identifier IS [NOT] NULL
+identifier: [<table name>.]<column name> | [alias.]<column name>
+operator: = | <> | != | > | >= | < | <=
+```
+
+##### Notes
+
+- For the `SELECT` clause, you can specify top-level fields in the JSON record object as projection columns.
+- For the `JOIN` clause, the `join_predicate`s must include either a primary-key column or index-key column from the right table.
+- For the `WHERE` clause, you can specify predicates for any columns, but you must include at least one predicate for a primary key column or index key column with the equality condition or `IS NULL` condition.
+
+#### Examples
+
+If you have the following table with the primary and index keys, for example:
+
+```sql
+CREATE TABLE tbl (
+  c1 INT PRIMARY KEY,
+  c2 STRING,
+  c3 FLOAT,
+  c4 BIGINT
+);
+```
+
+Examples of `SELECT` are as follows:
+
+```sql
+-- With a primary key
+SELECT * FROM tbl WHERE c1 = 10;
+
+-- With a primary key and predicates for non-primary-key columns
+SELECT * FROM tbl WHERE c1 = 10 AND c2 = 'aaa' AND c3 = 1.23 AND c4 < 100;
+
+-- With projections and a primary key
+SELECT c1, c2, c3, c5 FROM tbl WHERE c1 = 10;
+
+-- With an equality predicate for an indexed column
+SELECT * FROM tbl WHERE c4 = 100;
+
+-- With an equality predicate for an indexed column and predicates for non-key columns
+SELECT * FROM tbl WHERE c4 = 100 AND c5 = false;
+
+-- With IS NULL predicates
+SELECT * FROM tbl WHERE c2 IS NULL AND c3 IS NOT NULL;
+
+-- With JOIN clause
+SELECT * FROM tbl1 as t1 JOIN tbl2 as t2 on t1.c2=t2.id WHERE t1.c1=1;
+```
+
+### INSERT
+
+The `INSERT` command inserts a new record into the specified table. If the target record already exists, an exception will be thrown. In ScalarDL TableStore, a record is represented by a JSON object. You can also specify the JSON object by using the PartiQL struct format.
+
+#### Grammar
+
+```sql
+INSERT INTO <table name> VALUES record_specification
+
+record_specification: `<JSON object>` | <PartiQL struct>
+```
+
+##### Notes
+
+You must include a primary key column in the record to be inserted.
+
+#### Examples
+
+Examples of `INSERT` are as follows:
+
+```sql
+-- Insert a record using the JSON format
+INSERT INTO tbl VALUES `{"c1": 10, "c2": "aaa", "c3": 1.23, "c4": 100, "c5": true}`;
+
+-- Insert a record using the PartiQL struct format
+INSERT INTO tbl VALUES {'c1': 10, 'c2': 'aaa', 'c3': 1.23, 'c4': 100, 'c5': true};
+```
+
+### UPDATE
+
+The `UPDATE` command updates existing records in the specified table. You can specify conditions in the `WHERE` clause to filter records, the same as the `SELECT` command. Still, you must include at least one predicate for a primary key column or index key column with the equality condition or `IS NULL` condition.
+
+#### Grammar
+
+```sql
+UPDATE <table name>
+  SET <column name> = <literal> [, <column name> = <literal>] ...
+  WHERE predicate [AND predicate ...]
+
+predicate: <column name> operator <literal> | <column name> IS [NOT] NULL
+operator: = | <> | != | > | >= | < | <=
+```
+
+##### Notes
+
+- For the `SET` clause, if the specified column does not exist in the records, then it is newly added in the JSON object of the records.
+- For the `WHERE` clause, you can specify predicates for any columns, but you must include at least one predicate for a primary key column or index key column with the equality condition or `IS NULL` condition.
+
+#### Examples
+
+If you have the following table, for example:
+
+```sql
+CREATE TABLE ns.tbl (
+  c1 INT PRIMARY KEY,
+  c2 STRING,
+  c3 FLOAT,
+  c4 BIGINT
+);
+```
+
+Examples of `UPDATE` with the full primary key specified are as follows:
+
+```sql
+-- Update a record with a primary key predicate
+UPDATE tbl SET c4 = 200, c5 = false WHERE c1 = 10;
+
+-- Update a record with an index key predicate
+UPDATE tbl SET c4 = 200, c5 = false WHERE c2 = 'aaa';
+
+-- Update a record with a primary key and a non-key predicate
+UPDATE tbl SET c4 = 200, c5 = false WHERE c1 = 10 AND c5 = true;
+```
+
+## Others
+
+### Show tables
+
+You can show tables managed by TableStore by querying the `information_schema.tables` table.
+
+#### Grammar
+
+```sql
+SELECT *
+  FROM information_schema.tables
+  [WHERE table_name = <table name>]  
+```
+
+#### Examples
+
+Examples of querying the `information_schema.tables` table are as follows:
+
+```sql
+-- Show all tables in tables managed by TableStore.
+SELECT * FROM information_schema.tables;
+
+-- Show only the specified table
+SELECT * FROM information_schema.tables WHERE table_name = 'tbl';
+```
+
+### Show record histories
+
+You can show a history of the specified record by using the `history()` function.
+
+#### Grammar
+
+```sql
+SELECT history()
+  FROM <table name>
+  WHERE predicate
+  [LIMIT <limit>]
+
+predicate: <column name> = <literal>
+```
+
+#### Notes
+
+- You must specify a primary key in the `WHERE` clause.
+- The command returns the records sorted from latest to oldest.
+- With the `LIMIT` clause, the command returns the most recent `<limit>` rows sorted from latest to oldest.
+
+#### Examples
+
+Examples of showing a history of the specified record are as follows:
+
+```sql
+-- Show a history of the specified record
+SELECT history() FROM tbl WHERE c1 = 10;
+
+-- Show a history of the specified record with limit
+SELECT history() FROM tbl WHERE c1 = 10 LIMIT 10;
+```
+
+## Literal
+
+Literal refers to a fixed data value used when writing SQL-like statements. For example, `1`, `'abc'`, `1.23`, and `true` are literals.
+
+### String
+
+A string literal is a sequence of characters enclosed in single quotes `'`, such as `'abc'` and `'abc def'`.
+
+### Number
+
+Number literals include exact-value (`INTEGER` and `BIGINT`) and approximate-value (`FLOAT` and `DOUBLE PRECISION`) literals:
+- An exact-value literal is a sequence of digits, such as `123` and `-5`.
+- An approximate-value literal is a sequence of digits with a decimal point, such as `4.754` and `-1.2`. 
+
+### Boolean
+
+Boolean literals are either `true` or `false` to represent boolean values.
