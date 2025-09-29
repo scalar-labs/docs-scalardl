@@ -8,13 +8,174 @@ displayed_sidebar: docsEnglish
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import JavadocLink from "/src/theme/JavadocLink.js";
-import StartupLedger from '/src/components/en-us/_getting-started-startup-ledger.mdx';
+import DbSpecificSteps from '/src/components/en-us/_getting-started-db-specific-steps.mdx';
 
 # Get Started with ScalarDL Ledger
 
 This getting started tutorial explains how to configure ScalarDL on your preferred database and illustrates the process of creating a simple application where the historical states of data are traced.
 
-<StartupLedger />
+## Prerequisites
+
+- One of the following Java Development Kits (JDKs):
+  - **[Oracle JDK](https://www.oracle.com/java/):** 8, 11, 17, or 21 (LTS versions)
+  - **[OpenJDK](https://openjdk.org/) ([Eclipse Temurin](https://adoptium.net/temurin/), [Amazon Corretto](https://aws.amazon.com/corretto/), or [Microsoft Build of OpenJDK](https://learn.microsoft.com/en-us/java/openjdk/)):** 8, 11, 17, or 21 (LTS versions)
+- [Docker](https://www.docker.com/get-started/) 20.10 or later with [Docker Compose](https://docs.docker.com/compose/install/) v2.20.0 or later
+
+:::warning
+
+Since ScalarDL is built with JDK 8, contracts must be a JDK 8–compatible binary. If you use a version other than JDK 8, you must configure your build tool to build the JDK 8–compatible binary. There are several ways to specify binary compatibility, including using the `--release 8` option for javac or setting Gradle or Maven configurations to use the JDK 8 toolchain. The following shows the configuration for Gradle:
+
+```gradle
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+}
+```
+
+For more details about the Gradle and Maven configurations, see [Toolchains for JVM projects for Gradle](https://docs.gradle.org/current/userguide/toolchains.html) and [Guide to Using Toolchains for Maven](https://maven.apache.org/guides/mini/guide-using-toolchains.html).
+
+:::
+
+## Clone the ScalarDL samples repository
+
+Open **Terminal**, then clone the ScalarDL samples repository by running the following command:
+
+```console
+git clone https://github.com/scalar-labs/scalardl-samples
+```
+
+Then, go to the directory that contains the sample configuration by running the following command:
+
+```console
+cd scalardl-samples
+```
+
+## Start up ScalarDL with your preferred database
+
+Select your database, and follow the instructions to deploy ScalarDL Ledger with it. For a list of databases that ScalarDL supports, see [Databases](requirements.mdx#databases).
+
+<Tabs groupId="databases" queryString>
+  <TabItem value="mysql" label="MySQL" default>
+  <DbSpecificSteps productName="MySQL" shortName="mysql" />
+  </TabItem>
+
+  <TabItem value="postgres" label="PostgreSQL">
+  <DbSpecificSteps productName="PostgreSQL" shortName="postgres" />
+  </TabItem>
+
+  <TabItem value="oracle" label="Oracle Database">
+  <DbSpecificSteps productName="Oracle Database" shortName="oracle" />
+  </TabItem>
+
+  <TabItem value="sqlserver" label="SQL Server">
+  <DbSpecificSteps productName="SQL Server" shortName="sqlserver" />
+  </TabItem>
+
+  <TabItem value="dynamodb" label="DynamoDB">
+  <DbSpecificSteps productName="DynamoDB" shortName="dynamodb" />
+  </TabItem>
+
+  <TabItem value="cosmosdb" label="Cosmos DB for NoSQL">
+
+  <h3>Set up your license (Enterprise edition only)</h3>
+
+  If you're using the ScalarDL Enterprise edition, set up your license as follows. If you're using the Community edition, skip to the next section to start up ScalarDL.
+
+  <details>
+  <summary>See here to set up your license</summary>
+
+  1. Enable the Docker image for the Enterprise edition in the `cosmosdb/docker-compose-ledger.yml` file as follows:
+
+     - Before changing the image (default configuration):
+
+       ```yaml
+       services:
+         scalardl-ledger:
+           image: ghcr.io/scalar-labs/scalardl-ledger:${SCALARDL_VERSION}
+           # image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
+       ```
+
+     - After changing the image:
+
+       ```yaml
+       services:
+         scalardl-ledger:
+           # image: ghcr.io/scalar-labs/scalardl-ledger:${SCALARDL_VERSION}
+           image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
+       ```
+
+  2. Set your license key for ScalarDL Ledger. In the `cosmosdb/ledger.properties` file, replace `<SET_YOUR_LICENSE_KEY>` with your license key. For example:
+
+     ```properties
+     ##### PLEASE REPLACE THIS VALUE WITH YOUR LICENSE KEY (ENTERPRISE EDITION ONLY) #####
+     scalar.dl.licensing.license_key={"organization_name":"XXXXXXXX","expiration_date_time":"YYYY-MM-DDTHH:mm:SS+TIMEZONE","product_name":"ScalarDL Ledger","product_version":N,"license_type":"trial","signature":"XXXXXXXX"}
+     ##### PLEASE REPLACE THIS VALUE WITH YOUR LICENSE KEY (ENTERPRISE EDITION ONLY) #####
+     ```
+
+  3. To check the license, update the `cosmosdb/docker-compose-ledger.yml` file as follows. If you're using a trial license, skip this step.
+
+     - Before changing the certificate file path (default configuration):
+
+       ```yaml
+       services:
+         scalardl-ledger:
+           volumes:
+             - ./ledger.properties:/scalar/ledger/ledger.properties.tmpl
+             - ../fixture/ledger-key.pem:/scalar/ledger-key.pem
+             - ../fixture/trial-license-cert.pem:/scalar/license-cert.pem
+             # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+             # - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+       ```
+
+     - After changing the certificate file path:
+
+       ```yaml
+       services:
+         scalardl-ledger:
+           volumes:
+             - ./ledger.properties:/scalar/ledger/ledger.properties.tmpl
+             - ../fixture/ledger-key.pem:/scalar/ledger-key.pem
+             # - ../fixture/trial-license-cert.pem:/scalar/license-cert.pem
+             # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+             - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+       ```
+
+  </details>
+
+  <h3>Start up ScalarDL</h3>
+
+  You can start using ScalarDL Ledger by following the steps below:
+
+  1. Configure Cosmos DB for NoSQL.
+
+     To use Azure Cosmos DB for NoSQL, you must have an Azure account. If you don't have an Azure account, visit [Create an Azure Cosmos DB account](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/quickstart-portal#create-account).
+
+     After setting up Cosmos DB for NoSQL, modify the following items in `cosmodb/ledger.properties` based on your configuration of Cosmos DB for NoSQL.
+
+     ```properties
+     scalar.db.contact_points=<COSMOS_DB_FOR_NOSQL_URI>
+     scalar.db.password=<COSMOS_DB_FOR_NOSQL_KEY>
+     ```
+
+  2. Load the database schema for ScalarDL Ledger by running the following command:
+
+     ```console
+     docker compose -f cosmosdb/docker-compose-ledger.yml up -d scalardl-ledger-schema-loader
+     ```
+
+  3. Run ScalarDL Ledger by running the following command:
+
+     ```console
+     docker compose -f cosmosdb/docker-compose-ledger.yml up -d
+     ```
+  </TabItem>
+
+  <TabItem value="cassandra" label="Cassandra">
+  <DbSpecificSteps productName="Cassandra" shortName="cassandra" />
+  </TabItem>
+
+</Tabs>
 
 ## Download the Client SDK
 
