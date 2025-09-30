@@ -98,9 +98,9 @@ const config = {
                 className: '3.9.6',
               },
               "3.8": {
-                label: '3.8',
+                label: '3.8 (unsupported)',
                 path: '3.8',
-                banner: 'none',
+                banner: 'unmaintained',
                 className: '3.8.5',
               },
               "3.7": {
