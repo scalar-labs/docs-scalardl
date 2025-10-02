@@ -1,6 +1,6 @@
 {
   "version.label": {
-    "message": "3.4 (サポートされていない)",
+    "message": "3.4 (サポート外)",
     "description": "The label for version 3.4"
   },
   "sidebar.docs.category.Getting Started": {
