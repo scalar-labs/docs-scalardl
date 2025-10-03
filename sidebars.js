@@ -82,11 +82,6 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          id: 'getting-started',
-          label: 'Use Ledger',
-        },
-        {
-          type: 'doc',
           id: 'getting-started-hashstore',
           label: 'Use HashStore',
         },
@@ -94,6 +89,11 @@ const sidebars = {
           type: 'doc',
           id: 'getting-started-tablestore',
           label: 'Use TableStore',
+        },
+        {
+          type: 'doc',
+          id: 'getting-started',
+          label: 'Use Ledger',
         },
       ],
     },
