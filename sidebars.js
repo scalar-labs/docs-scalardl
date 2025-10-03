@@ -708,7 +708,7 @@ const sidebars = {
         {
           type: 'doc',
           id: 'getting-started',
-          label: 'ScalarDL Ledger を通じてコントラクトを実行',
+          label: 'Ledger を使用',
         },
       ],
     },
