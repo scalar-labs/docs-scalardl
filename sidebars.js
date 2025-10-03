@@ -83,17 +83,17 @@ const sidebars = {
         {
           type: 'doc',
           id: 'getting-started',
-          label: 'Run a Contract Through ScalarDL Ledger',
+          label: 'Use Ledger',
         },
         {
           type: 'doc',
           id: 'getting-started-hashstore',
-          label: 'Try Using ScalarDL HashStore',
+          label: 'Use HashStore',
         },
         {
           type: 'doc',
           id: 'getting-started-tablestore',
-          label: 'Try Using ScalarDL TableStore',
+          label: 'Use TableStore',
         },
       ],
     },
