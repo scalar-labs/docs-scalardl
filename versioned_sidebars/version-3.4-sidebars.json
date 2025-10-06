@@ -7,6 +7,7 @@
     },
     {
       "type": "category",
+      "key": "getting-started-en-us-3.4-1",
       "label": "Getting Started",
       "collapsible": true,
       "items": [
@@ -54,6 +55,7 @@
       "items": [
         {
           "type": "category",
+          "key": "scalar-kubernetes-en-us-3.4-1",
           "label": "Scalar Kubernetes",
           "collapsible": true,
           "items": [
@@ -118,6 +120,7 @@
           "items": [
             {
               "type": "category",
+              "key": "getting-started-en-us-3.4-2",
               "label": "Getting Started",
               "collapsible": true,
               "items": [
@@ -160,6 +163,7 @@
       "items": [
         {
           "type": "category",
+          "key": "scalar-kubernetes-en-us-3.4-2",
           "label": "Scalar Kubernetes",
           "collapsible": true,
           "items": [
@@ -200,6 +204,7 @@
     },
     {
       "type": "category",
+      "key": "reference-en-us-3.4-1",
       "label": "Reference",
       "collapsible": true,
       "items": [
