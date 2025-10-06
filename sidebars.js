@@ -82,18 +82,18 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          id: 'getting-started',
-          label: 'Run a Contract Through ScalarDL Ledger',
-        },
-        {
-          type: 'doc',
           id: 'getting-started-hashstore',
-          label: 'Try Using ScalarDL HashStore',
+          label: 'Use HashStore',
         },
         {
           type: 'doc',
           id: 'getting-started-tablestore',
-          label: 'Try Using ScalarDL TableStore',
+          label: 'Use TableStore',
+        },
+        {
+          type: 'doc',
+          id: 'getting-started',
+          label: 'Use Ledger',
         },
       ],
     },
@@ -708,7 +708,7 @@ const sidebars = {
         {
           type: 'doc',
           id: 'getting-started',
-          label: 'ScalarDL Ledger を通じてコントラクトを実行',
+          label: 'Ledger を使用',
         },
       ],
     },

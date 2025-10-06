@@ -63,7 +63,7 @@
         {
           "type": "doc",
           "id": "getting-started",
-          "label": "Run a Contract Through ScalarDL Ledger"
+          "label": "Use Ledger"
         }
       ]
     },
@@ -671,7 +671,7 @@
         {
           "type": "doc",
           "id": "getting-started",
-          "label": "ScalarDL Ledger を通じてコントラクトを実行"
+          "label": "Ledger を使用"
         }
       ]
     },
