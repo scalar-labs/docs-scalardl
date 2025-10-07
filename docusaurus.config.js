@@ -475,6 +475,11 @@ const config = {
         textColor: '#FFFFFF',
         isCloseable: false,
       },
+      colorMode: {
+        defaultMode: 'light',
+        disableSwitch: false,
+        respectPrefersColorScheme: true,
+      },
       zoom: {
         selector: '.markdown :not(em) > img:not(.youtube-embed img)',
         background: {
