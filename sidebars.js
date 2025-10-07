@@ -223,7 +223,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          key: 'reference-en-us-current-1',
+          key: 'reference-en-us-3.12-1',
           label: 'Reference',
           collapsible: true,
           items: [
@@ -321,7 +321,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          key: 'reference-en-us-current-2',
+          key: 'reference-en-us-3.12-2',
           label: 'Reference',
           collapsible: true,
           items: [
@@ -554,7 +554,7 @@ const sidebars = {
             },
             {
               type: 'category',
-              key: 'reference-en-us-current-3',
+              key: 'reference-en-us-3.12-3',
               label: 'Reference',
               collapsible: true,
               items: [
@@ -634,7 +634,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      key: 'reference-en-us-current-4',
+      key: 'reference-en-us-3.12-4',
       label: 'Reference',
       collapsible: true,
       items: [
@@ -842,7 +842,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          key: 'reference-ja-jp-current-1',
+          key: 'reference-ja-jp-3.12-1',
           label: '詳細',
           collapsible: true,
           items: [
@@ -935,7 +935,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          key: 'reference-ja-jp-current-2',
+          key: 'reference-ja-jp-3.12-2',
           label: '詳細',
           collapsible: true,
           items: [
@@ -1168,7 +1168,7 @@ const sidebars = {
             },
             {
               type: 'category',
-              key: 'reference-ja-jp-current-3',
+              key: 'reference-ja-jp-3.12-3',
               label: '詳細',
               collapsible: true,
               items: [
@@ -1248,7 +1248,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      key: 'reference-ja-jp-current-4',
+      key: 'reference-ja-jp-3.12-4',
       label: '詳細',
       collapsible: true,
       items: [
