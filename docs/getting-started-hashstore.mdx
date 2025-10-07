@@ -154,11 +154,11 @@ Result:
 
 If you want to validate the object's authenticity, first recalculate the hash value, for example, by using the `sha256sum` command, for each version of the object that you want to validate.
 
-Then, execute the `compare-object-versions` command with the recalculated hash values with the version IDs in descending order. You can specify any number of versions. The version IDs are only used for identifying which hash values are faulty in the output, so any string values can be used. If there is no version management in your object or file storage, use an empty string for the version ID.
+Then, execute the `compare-object-versions` command with the recalculated hash values with the version IDs in descending order. You can specify any number of versions. The version IDs are only used for showing which hash values are different from the original values in the output, so any string values can be used as long as the values are uniquely identifiable.
 
 :::note
 
-If you cannot get an older version in your file system, you can specify the hash value of the current version.
+If you cannot get the hash value of the older version of the `a.txt` file in your environment, specify only the current version instead.
 
 :::
 
@@ -211,15 +211,13 @@ This validation process confirms if the data outside ScalarDL has not been chang
 
 Since ScalarDL manages data (called "assets") in a tamper-evident and append-only manner, you are not able to update data in place, and you need to model your data in a somewhat inflexible manner. To mitigate these limitations, you can use ScalarDB in conjunction with ScalarDL. Specifically, you can issue operations to ScalarDL in parallel with issuing ScalarDB's mutation operations to ScalarDB-managed databases.
 
-For example, in object authenticity management, the `put-object` command (and the corresponding API) provides the `--put-to-mutable` option, for putting an arbitrary record into a ScalarDB table when putting an object hash value. One primary use case for the option is reflecting an object state in ScalarDL to an object management table in ScalarDB.
+For example, in object authenticity management, the `put-object` command (and the corresponding API) provides the `--put-to-mutable` option, for putting an arbitrary record into a ScalarDB table when putting an object hash value. One primary use case for the option is managing object status (whether the hash value of the object is stored correctly in ScalarDL) on the ScalarDB side, allowing for identifying target objects flexibly and efficiently by using ScalarDB APIs. In such a case, you would:
 
-Think about a situation where you would like to store hash values of updated objects in ScalarDL asynchronously for performance and failure recovery reasons. In such a case, you would:
-
-1. Create a table (for example, `objects`) in ScalarDB to manage if the hash value of an object version has already been registered.
+1. Create a table (for example, `objects`) in ScalarDB to manage whether the hash value of an object version has already been registered.
 1. List and put target objects in the `objects` table with a hash-value-not-registered status.
 1. Update the state in the `objects` table after the hash value is successfully registered to ScalarDL.
 
-The third step above can be done in an ACID manner by executing the following command with the `--put-to-mutable` option:
+The third step above must be done in an ACID manner by executing the following command with the `--put-to-mutable` option:
 
 ```console
 client/bin/scalardl-hashstore put-object --properties client.properties \
@@ -251,7 +249,9 @@ For the argument of the `--put-to-mutable` option, you need to specify a namespa
 
 ## Manage collection authenticity
 
-As an example of collection authenticity management, think about managing an audit set, which is a collection of objects that must be validated by using the `compare-object-versions` command in an auditing process. If a system cannot guarantee that the audit set has not been changed unexpectedly, a malicious user may be able to change an object fraudulently and remove it from the audit set to avoid being revealed as a fraud. Therefore, managing the audit set is an important and major use case of collection authenticity management.
+Collection authenticity management allows you to manage the authenticity of a set. For example, when you use a file storage and manage the authenticity of the files by using the `compare-object-versions` command, you may also want to do the same for folders or sets of objects that must be validated in an auditing process. Collection management covers these use cases and protects the audit sets.
+
+If a system cannot guarantee that an audit set has not been changed unexpectedly, a malicious user may be able to change an object fraudulently and remove it from the audit set to avoid being revealed as a fraud. Therefore, managing the audit set is an important and major use case of collection authenticity management.
 
 You can create a collection for an audit set by running the following command:
 
