@@ -13,6 +13,38 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 このページには、ScalarDL 3.11 のリリースノートのリストが含まれています。
 
+## v3.11.1
+
+**発売日:** 2025年10月8日
+
+### まとめ
+
+このリリースには、いくつかの改善、バグ修正、および脆弱性の修正が含まれています。
+
+### Community edition
+
+#### 改善点
+
+- 汎用関数で時間関連のデータ型をサポートしました。([#200](https://github.com/scalar-labs/scalardl/pull/200))
+
+#### バグの修正
+
+- 読み取り専用トランザクションの状態管理動作を修正しました。([#181](https://github.com/scalar-labs/scalardl/pull/181))
+- 証明書と秘密鍵のバージョンチェックとメッセージを修正しました。([#202](https://github.com/scalar-labs/scalardl/pull/202))
+- 正しい認証設定のための Ledger 設定検証を修正しました。([#222](https://github.com/scalar-labs/scalardl/pull/222))
+- テーブル指向の汎用コントラクトでの `IS NULL` と `IS NOT NULL` 条件の処理を修正しました。([#238](https://github.com/scalar-labs/scalardl/pull/238))
+- [CVE-2025-22874](https://github.com/advisories/GHSA-6f52-wpx2-hvf2 "CVE-2025-22874") を修正しました。([#262](https://github.com/scalar-labs/scalardl/pull/262))
+- [CVE-2025-49146](https://github.com/advisories/GHSA-hq9p-pm7w-8p54 "CVE-2025-49146") を修正しました。([#286](https://github.com/scalar-labs/scalardl/pull/286))
+
+### Enterprise edition
+
+#### バグの修正
+
+- 正しい認証設定のための Auditor 設定検証を修正しました。
+- 重複した読み取りロックを修正しました。
+- [CVE-2025-22874](https://github.com/advisories/GHSA-6f52-wpx2-hvf2 "CVE-2025-22874") を修正しました。
+- [CVE-2025-49146](https://github.com/advisories/GHSA-hq9p-pm7w-8p54 "CVE-2025-49146") を修正しました。
+
 ## v3.11.0
 
 **発売日:** 2025年6月18日
