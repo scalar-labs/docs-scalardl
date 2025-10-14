@@ -3,12 +3,23 @@
 const notificationsList = [
   {
     message: {
-      en: 'Discover how to use generic contracts and functions in ScalarDL',
-      ja: 'ScalarDL で汎用コントラクトおよびファンクションの使用方法を学ぶ'
+      en: 'Learn how to use ScalarDL HashStore manage objects and collections in a tamper-evident manner',
+      ja: 'ScalarDL HashStore を使用して、オブジェクトとコレクションを改ざん検知可能な方法で管理する方法を学ぶ'
     },
     url: {
-      en: 'use-generic-contracts?utm_source=docs-site&utm_medium=notifications',
-      ja: 'use-generic-contracts?utm_source=docs-site&utm_medium=notifications'
+      en: 'getting-started-hashstore?utm_source=docs-site&utm_medium=notifications',
+      ja: 'getting-started-hashstore?utm_source=docs-site&utm_medium=notifications'
+    },
+    unread: true
+  },
+  {
+    message: {
+      en: 'Learn how to use ScalarDL TableStore to manage tables and records in a tamper-evident manner',
+      ja: 'ScalarDL TableStore を使用して、テーブルとレコードを改ざん検知可能な方法で管理する方法を学ぶ'
+    },
+    url: {
+      en: 'getting-started-tablestore?utm_source=docs-site&utm_medium=notifications',
+      ja: 'getting-started-tablestore?utm_source=docs-site&utm_medium=notifications'
     },
     unread: true
   },
@@ -20,17 +31,6 @@ const notificationsList = [
     url: {
       en: 'https://medium.com/scalar-engineering/migrating-from-amazon-qldb-to-scalardl-ad6ffacbf598?utm_source=docs-site&utm_medium=notifications',
       ja: 'https://medium.com/scalar-engineering-ja/database-engineering-meetup-%E7%AC%AC6%E5%9B%9E-dbem-6-%E3%82%92%E9%96%8B%E5%82%AC%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F-fccde39d2926?utm_source=docs-site&utm_medium=notifications'
-    },
-    unread: true
-  },
-  {
-    message: {
-      en: 'Learn how to organize your data based on the ScalarDL data model',
-      ja: 'ScalarDL データモデルに基づいたデータの整理方法を学ぶ'
-    },
-    url: {
-      en: 'data-modeling?utm_source=docs-site&utm_medium=notifications',
-      ja: 'data-modeling?utm_source=docs-site&utm_medium=notifications'
     },
     unread: true
   }
