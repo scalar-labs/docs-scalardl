@@ -3,7 +3,7 @@
 const notificationsList = [
   {
     message: {
-      en: 'Learn how to use ScalarDL HashStore manage objects and collections in a tamper-evident manner',
+      en: 'Learn how to use ScalarDL HashStore to manage objects and collections in a tamper-evident manner',
       ja: 'ScalarDL HashStore を使用して、オブジェクトとコレクションを改ざん検知可能な方法で管理する方法を学ぶ'
     },
     url: {
