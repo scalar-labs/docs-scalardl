@@ -26,11 +26,11 @@ const notificationsList = [
   {
     message: {
       en: 'Blog post: Migrating from Amazon QLDB to ScalarDL',
-      ja: 'ブログ記事: データベースエンジニアリングの最新トレンドとベストプラクティスを学ぶ DBEM #6 のハイライト'
+      ja: 'ブログ記事: データベースエンジニアリングの最新トレンドとベストプラクティスを学ぶ DBEM #7 のハイライト'
     },
     url: {
       en: 'https://medium.com/scalar-engineering/migrating-from-amazon-qldb-to-scalardl-ad6ffacbf598?utm_source=docs-site&utm_medium=notifications',
-      ja: 'https://medium.com/scalar-engineering-ja/database-engineering-meetup-%E7%AC%AC6%E5%9B%9E-dbem-6-%E3%82%92%E9%96%8B%E5%82%AC%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F-fccde39d2926?utm_source=docs-site&utm_medium=notifications'
+      ja: 'https://medium.com/scalar-engineering-ja/database-engineering-meetup-%E7%AC%AC7%E5%9B%9E-dbem-7-%E3%82%92%E9%96%8B%E5%82%AC%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F-bf2e3f027948?utm_source=docs-site&utm_medium=notifications'
     },
     unread: true
   }
