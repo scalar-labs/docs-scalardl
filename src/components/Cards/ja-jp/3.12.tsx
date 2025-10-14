@@ -77,13 +77,13 @@ const categories = [
       },
       {
         cell: 1, // Second cell
-        links: ['getting-started'],
-        labels: ['ScalarDL Ledger をはじめよう']
+        links: ['getting-started-hashstore'],
+        labels: ['ScalarDL HashStore を使用']
       },
       {
         cell: 2, // Third cell
-        links: [''],
-        labels: ['']
+        links: ['getting-started-tablestore'],
+        labels: ['ScalarDL TableStore を使用']
       }
     ]
   },
