@@ -35,8 +35,8 @@ const recentFeatures = [
       },
       {
         cell: 2, // Third cell
-        links: ['use-table-oriented-generic-contracts'],
-        labels: ['Use Table-Oriented Generic Contracts']
+        links: ['sql-grammar'],
+        labels: ['ScalarDL TableStore SQL Grammar']
       }
     ]
   }
@@ -77,13 +77,13 @@ const categories = [
       },
       {
         cell: 1, // Second cell
-        links: ['getting-started'],
-        labels: ['Getting Started with ScalarDL Ledger']
+        links: ['getting-started-hashstore'],
+        labels: ['Use ScalarDL HashStore']
       },
       {
         cell: 2, // Third cell
-        links: [''],
-        labels: ['']
+        links: ['getting-started-tablestore'],
+        labels: ['Use ScalarDL TableStore']
       }
     ]
   },
@@ -99,8 +99,8 @@ const categories = [
       },
       {
         cell: 1, // Second cell
-        links: ['use-generic-contracts'],
-        labels: ['Use Generic Contracts and Functions']
+        links: ['data-modeling'],
+        labels: ['Model Your Data']
       },
       {
         cell: 2, // Third cell

@@ -25,18 +25,18 @@ const recentFeatures = [
       // To add a label, use the format ['label1', 'label2'].
       {
         cell: 0, // First cell
-        links: ['use-table-oriented-generic-contracts'],
-        labels: ['テーブル指向汎用コントラクトの使用']
+        links: ['getting-started-hashstore'],
+        labels: ['ScalarDL HashStore を使用']
       },
       {
         cell: 1, // Second cell
-        links: ['use-generic-contracts'],
-        labels: ['汎用コントラクトを使用']
+        links: ['getting-started-tablestore'],
+        labels: ['ScalarDL TableStore を使用']
       },
       {
         cell: 2, // Third cell
-        links: ['how-to-write-applications-with-generic-contracts'],
-        labels: ['汎用コントラクトを用いたアプリケーションを作成']
+        links: ['sql-grammar'],
+        labels: ['ScalarDL TableStore SQL 文法']
       }
     ]
   }
@@ -77,13 +77,13 @@ const categories = [
       },
       {
         cell: 1, // Second cell
-        links: ['getting-started'],
-        labels: ['ScalarDL Ledger をはじめよう']
+        links: ['getting-started-hashstore'],
+        labels: ['ScalarDL HashStore を使用']
       },
       {
         cell: 2, // Third cell
-        links: [''],
-        labels: ['']
+        links: ['getting-started-tablestore'],
+        labels: ['ScalarDL TableStore を使用']
       }
     ]
   },
@@ -99,8 +99,8 @@ const categories = [
       },
       {
         cell: 1, // Second cell
-        links: ['use-generic-contracts'],
-        labels: ['汎用コントラクトを使用']
+        links: ['data-modeling'],
+        labels: ['データをモデル化する']
       },
       {
         cell: 2, // Third cell
