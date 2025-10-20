@@ -188,7 +188,7 @@
         },
         {
           "type": "category",
-          "key": "reference-en-us-3.10-1",
+          "key": "develop-reference-en-us-3.10",
           "label": "Reference",
           "collapsible": true,
           "items": [
@@ -281,7 +281,7 @@
         },
         {
           "type": "category",
-          "key": "reference-en-us-3.10-2",
+          "key": "deploy-reference-en-us-3.10",
           "label": "Reference",
           "collapsible": true,
           "items": [
@@ -514,7 +514,7 @@
             },
             {
               "type": "category",
-              "key": "reference-en-us-3.10-3",
+              "key": "manage-monitor-reference-en-us-3.10",
               "label": "Reference",
               "collapsible": true,
               "items": [
@@ -594,7 +594,7 @@
     },
     {
       "type": "category",
-      "key": "reference-en-us-3.10-4",
+      "key": "reference-en-us-3.10",
       "label": "Reference",
       "collapsible": true,
       "items": [
@@ -795,7 +795,7 @@
         },
         {
           "type": "category",
-          "key": "reference-ja-jp-3.10-1",
+          "key": "develop-reference-ja-jp-3.10",
           "label": "詳細",
           "collapsible": true,
           "items": [
@@ -888,7 +888,7 @@
         },
         {
           "type": "category",
-          "key": "reference-ja-jp-3.10-2",
+          "key": "deploy-reference-ja-jp-3.10",
           "label": "詳細",
           "collapsible": true,
           "items": [
@@ -1121,7 +1121,7 @@
             },
             {
               "type": "category",
-              "key": "reference-ja-jp-3.10-3",
+              "key": "manage-monitor-reference-ja-jp-3.10",
               "label": "詳細",
               "collapsible": true,
               "items": [
@@ -1201,7 +1201,7 @@
     },
     {
       "type": "category",
-      "key": "reference-ja-jp-3.10-4",
+      "key": "reference-ja-jp-3.10",
       "label": "詳細",
       "collapsible": true,
       "items": [

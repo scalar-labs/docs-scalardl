@@ -223,7 +223,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          key: 'reference-en-us-3.12-1',
+          key: 'develop-reference-en-us-3.12',
           label: 'Reference',
           collapsible: true,
           items: [
@@ -321,7 +321,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          key: 'reference-en-us-3.12-2',
+          key: 'deploy-reference-en-us-3.12',
           label: 'Reference',
           collapsible: true,
           items: [
@@ -554,7 +554,7 @@ const sidebars = {
             },
             {
               type: 'category',
-              key: 'reference-en-us-3.12-3',
+              key: 'manage-monitor-reference-en-us-3.12',
               label: 'Reference',
               collapsible: true,
               items: [
@@ -634,7 +634,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      key: 'reference-en-us-3.12-4',
+      key: 'reference-en-us-3.12',
       label: 'Reference',
       collapsible: true,
       items: [
@@ -842,7 +842,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          key: 'reference-ja-jp-3.12-1',
+          key: 'develop-reference-ja-jp-3.12',
           label: '詳細',
           collapsible: true,
           items: [
@@ -935,7 +935,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          key: 'reference-ja-jp-3.12-2',
+          key: 'deploy-reference-ja-jp-3.12',
           label: '詳細',
           collapsible: true,
           items: [
@@ -1168,7 +1168,7 @@ const sidebars = {
             },
             {
               type: 'category',
-              key: 'reference-ja-jp-3.12-3',
+              key: 'manage-monitor-reference-ja-jp-3.12',
               label: '詳細',
               collapsible: true,
               items: [
@@ -1248,7 +1248,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      key: 'reference-ja-jp-3.12-4',
+      key: 'reference-ja-jp-3.12',
       label: '詳細',
       collapsible: true,
       items: [
