@@ -687,6 +687,16 @@ const sidebars = {
       items: [
         {
           type: 'doc',
+          id: 'getting-started-hashstore',
+          label: 'HashStore を使用',
+        },
+        {
+          type: 'doc',
+          id: 'getting-started-tablestore',
+          label: 'TableStore を使用',
+        },
+        {
+          type: 'doc',
           id: 'getting-started',
           label: 'Ledger を使用',
         },
@@ -830,6 +840,11 @@ const sidebars = {
               type: 'doc',
               id: 'ca/caclient-getting-started',
               label: '証明書を取得',
+            },
+            {
+              type: 'doc',
+              id: 'sql-grammar',
+              label: 'ScalarDL TableStore SQL の文法',
             },
           ],
         },
