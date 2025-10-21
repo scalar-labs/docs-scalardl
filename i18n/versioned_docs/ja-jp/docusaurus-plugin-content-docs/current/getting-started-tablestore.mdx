@@ -1,0 +1,403 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import JavadocLink from "/src/theme/JavadocLink.js";
+import StartupLedger from '/src/components/ja-jp/_getting-started-startup-ledger.mdx';
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+# ScalarDL TableStore をはじめよう
+
+<TranslationBanner />
+
+ScalarDL TableStore は、低レベルの台帳抽象化の上に構築された高レベルの抽象化です。get や put などのプリミティブ CRUD インターフェースではなく [SQL インターフェース](sql-grammar.mdx)を提供し、馴染みのあるデータモデルとコマンドで多用途の改ざん検知可能なアプリケーションを迅速かつ簡単に構築できます。
+
+このスタートガイドでは、お好みのデータベースで TableStore を設定し、改ざん検知可能な方法でテーブルとレコードを管理する方法について説明します。
+
+## ScalarDL TableStore とは？
+
+TableStore は [SQL インターフェース](sql-grammar.mdx)を通じてテーブルベースのデータ管理を提供します。柔軟なスキーマレス方式でテーブルを作成し、SELECT、INSERT、UPDATE などの SQL 操作を実行し、すべてのデータ変更の完全な監査証跡を維持できます。また、インデックス機能も提供し、プライマリキーだけでなくインデックスキーでもレコードを選択できます。
+
+<StartupLedger />
+
+## Client SDK のダウンロード
+
+次に、TableStore クライアントツールを使用します。デプロイされた ScalarDL バージョンと同じバージョンを指定して、ツールをダウンロードするために次のコマンドを実行します:
+
+```console
+VERSION=$(grep SCALARDL_VERSION .env | awk -F= '{print $2}')
+```
+
+次に、以下のコマンドを実行してツールをダウンロードします:
+
+```console
+curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-tablestore-java-client-sdk-$VERSION.zip
+unzip scalardl-tablestore-java-client-sdk-$VERSION.zip
+mv scalardl-tablestore-java-client-sdk-$VERSION client
+```
+
+## クライアントプロパティの設定
+
+TableStore と対話する前に、クライアントを設定する必要があります。クライアントに必要な最小限のプロパティを含む設定ファイルを作成するには、以下のコマンドを実行します:
+
+```console
+cat << 'EOF' > client.properties
+# A host name for ScalarDL Ledger.
+scalar.dl.client.server.host=localhost
+
+# An ID for the certificate holder. This must be configured for each private key and must be unique in the system.
+scalar.dl.client.cert_holder_id=foo
+
+# A path to the certificate file.
+scalar.dl.client.cert_path=./fixture/client.pem
+
+# A path to the private key file. 
+scalar.dl.client.private_key_path=./fixture/client-key.pem
+EOF
+```
+
+このチュートリアルでは、ScalarDL Ledger のホスト名に `localhost` を使用できます。秘密鍵と証明書については、[`scalardl-samples` リポジトリの `fixture` ディレクトリ](https://github.com/scalar-labs/scalardl-samples/tree/master/fixture)で提供されているもの (それぞれ `client-key.pem` と `client.pem`) を使用できます。証明書ホルダーには、任意の一意の ID を指定できます。
+
+:::warning
+
+本番環境では、サンプルの秘密鍵と証明書を使用しないでください。独自の証明書を取得する方法の詳細については、[証明書の取得方法](ca/caclient-getting-started.mdx)を参照してください。
+
+:::
+
+## ブートストラップ
+
+次に、以下のコマンドを実行して TableStore をブートストラップできます:
+
+```console
+client/bin/scalardl-tablestore bootstrap --properties client.properties
+```
+
+ブートストラップコマンドは、内部的にアイデンティティ情報 (証明書またはシークレット) と TableStore を使用するために必要な事前定義されたコントラクトを登録します。
+
+## TableStore との対話
+
+これで TableStore で SQL ステートメントを実行できます。このセクションでは、従業員の部署 ID を通じて結合できる2つのサンプルテーブル (`employee` と `department`) を使用して、以下の機能を試します:
+
+- [テーブルの作成と表示](#テーブルの作成と表示)
+- [レコードの挿入](#レコードの挿入)
+- [レコードの選択](#レコードの選択)
+- [レコードの更新](#レコードの更新)
+- [レコード履歴の取得](#レコード履歴の取得)
+
+### テーブルの作成と表示
+
+以下のコマンドを実行して、サンプルテーブルを作成できます:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "CREATE TABLE employee (id STRING PRIMARY KEY, department STRING)"
+```
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "CREATE TABLE department (id STRING PRIMARY KEY)"
+```
+
+テーブルを作成する際は、名前とプライマリキーを指定する必要があります。追加のカラムを指定することで、セカンダリインデックスを作成できます。ScalarDL TableStore は JSON オブジェクトをテーブル内のレコードとして扱うため、テーブルを作成する際に厳密なスキーマを指定する必要はありません。
+
+以下のコマンドを実行して、作成されたテーブルを表示できます:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "SELECT * FROM information_schema.tables"
+```
+
+以下のような結果が得られるはずです:
+
+```console
+Result:
+[ {
+  "name" : "employee",
+  "key" : "id",
+  "type" : "string",
+  "indexes" : [ {
+    "key" : "department",
+    "type" : "string"
+  } ]
+}, {
+  "name" : "department",
+  "key" : "id",
+  "type" : "string",
+  "indexes" : [ ]
+} ]
+```
+
+### レコードの挿入
+
+次に、以下のコマンドを実行して、複数の `employee` レコードを挿入します:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "INSERT INTO employee VALUES {'id': '1001', 'name': 'Alice', 'department': 'sales', 'salary': 654.3}"
+```
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "INSERT INTO employee VALUES {'id': '1002', 'name': 'Bob', 'department': 'sales', 'salary': 543.2}"
+```
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "INSERT INTO employee VALUES {'id': '1003', 'name': 'Carol', 'department': 'engineering', 'salary': 654.3}"
+```
+
+また、以下のコマンドを実行して、対応する `department` レコードも挿入します:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "INSERT INTO department VALUES {'id': 'sales', 'location': 'Shinjuku', 'phone': '000-1234'}"
+```
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "INSERT INTO department VALUES {'id': 'engineering', 'location': 'Shibuya', 'phone': '000-4321'}"
+```
+
+### レコードの選択
+
+次に、挿入されたレコードを確認します。レコードを選択するには、少なくともプライマリキーまたはインデックスキーを指定する必要があります。例えば、以下のコマンドを実行して、プライマリキーを指定して `employee` レコードを取得できます:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "SELECT id, name, department FROM employee WHERE id = '1001'"
+```
+
+JSON レコードオブジェクトの最上位フィールドを指定することで、カラムを任意にプロジェクションできます。以下のような結果が得られるはずです:
+
+```console
+Result:
+[ {
+  "id" : "1001",
+  "name" : "Alice",
+  "department" : "sales"
+} ]
+```
+
+以下のコマンドを実行して、インデックスキーを指定してレコードを選択することもできます:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "SELECT id, name, department FROM employee WHERE department = 'sales'"
+```
+
+以下のような結果が得られるはずです:
+
+```console
+Result:
+[ {
+  "id" : "1001",
+  "name" : "Alice",
+  "department" : "sales"
+}, {
+  "id" : "1002",
+  "name" : "Bob",
+  "department" : "sales"
+} ]
+```
+
+レコードをフィルタリングしたい場合は、以下のコマンドを実行して追加の条件を指定します:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "SELECT id, name, department FROM employee WHERE department = 'sales' AND salary < 600"
+```
+
+以下のような結果が得られるはずです:
+
+```console
+Result:
+[ {
+  "id" : "1002",
+  "name" : "Bob",
+  "department" : "sales",
+  "salary" : 543.2
+} ]
+```
+
+以下のコマンドを実行して、2つのテーブルを結合することもできます:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "SELECT * FROM employee JOIN department ON employee.department = department.id WHERE employee.department = 'engineering'"
+```
+
+以下のような結果が得られるはずです:
+
+```console
+Result:
+[ {
+  "employee.id" : "1003",
+  "employee.name" : "Carol",
+  "employee.department" : "engineering",
+  "employee.salary" : 654.3,
+  "department.id" : "engineering",
+  "department.location" : "Shibuya",
+  "department.phone" : "000-4321"
+} ]
+```
+
+### レコードの更新
+
+以下のコマンドを実行して、`employee` レコードを更新できます:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "UPDATE employee SET salary = 754.3 WHERE department = 'engineering'"
+```
+
+`SELECT` ステートメントの使用と同様に、レコードを更新するには少なくともプライマリキーまたはインデックスキーを指定するようにしてください。
+
+### レコード履歴の取得
+
+以下のコマンドを実行して、レコードの更新履歴を取得できます:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "SELECT history() FROM employee WHERE id = '1003'"
+```
+
+以下のような結果が得られるはずです:
+
+```console
+Result:
+[ {
+  "age" : 1,
+  "values" : {
+    "id" : "1003",
+    "name" : "Carol",
+    "department" : "engineering",
+    "salary" : 754.3
+  }
+}, {
+  "age" : 0,
+  "values" : {
+    "id" : "1003",
+    "name" : "Carol",
+    "department" : "engineering",
+    "salary" : 654.3
+  }
+} ]
+```
+
+バージョン数 (age) を制限したい場合は、以下のコマンドを実行して `LIMIT` 句を指定します:
+
+```console
+client/bin/scalardl-tablestore execute-statement --properties client.properties \
+--statement "SELECT history() FROM employee WHERE id = '1003' LIMIT 1"
+```
+
+以下のように、指定された数の**最新**レコードが得られるはずです:
+
+```console
+Result:
+[ {
+  "age" : 1,
+  "values" : {
+    "id" : "1003",
+    "name" : "Carol",
+    "department" : "engineering",
+    "salary" : 754.3
+  }
+} ]
+```
+
+## TableStore で管理されるデータの検証
+
+ScalarDL では、すべてのデータが有効な状態にあることを確認するために、時々データを検証する必要があります。TableStore で管理されるデータを検証するには、`validate-ledger` コマンドを使用できます。
+
+以下のコマンドを実行して、テーブルスキーマを検証できます:
+
+```console
+client/bin/scalardl-tablestore validate-ledger --properties client.properties \
+--table-name employee
+```
+
+以下のような結果が得られるはずです:
+
+```console
+{
+  "status_code" : "OK",
+  "Ledger" : {
+    "id" : "tbl_employee",
+    "age" : 0,
+    "nonce" : "26af1229-1c1f-4b89-86e2-ec011da3b313",
+    "hash" : "ZA9yFzjIg1qeHAd7Sub8uFvt2JrTb6XSzGUktPEITr0=",
+    "signature" : "MEUCIAh4Xj93J/jldqbQor7AVM4ii9+suxQrZlCFnKWWDIo0AiEAiM6Yi6GO4bQ2VZg2GnqKmOFPEANrTU4g7pjBMcaX6TQ="
+  },
+  "Auditor" : null
+}
+```
+
+以下のコマンドを実行して、レコードを検証できます:
+
+```console
+client/bin/scalardl-tablestore validate-ledger --properties client.properties \
+--table-name employee --primary-key-column-name id --column-value '"1001"'
+```
+
+:::note
+
+`--column-value` オプションは JSON 値を期待するため、文字列値には二重引用符を付ける必要があります。
+
+:::
+
+以下のような結果が得られるはずです:
+
+```console
+{
+  "status_code" : "OK",
+  "Ledger" : {
+    "id" : "rec_employee_id_1001",
+    "age" : 0,
+    "nonce" : "41a18e7f-314f-4aec-8984-62bf6cd355d0",
+    "hash" : "n7KJLuC/KOzFZLnGKEs6pOQvCbl4WSF+xplOUd9MrSo=",
+    "signature" : "MEUCIEHafCsSXWWtZnDbSpAwFQk4qjW1B7cXjEgdwVF8uKQeAiEAsvzEMKyuNFozAbLC/E8FEviCMLCqo9DPRQe4tVBFwIk="
+  },
+  "Auditor" : null
+}
+```
+
+以下のコマンドを実行して、インデックスレコードを検証できます:
+
+```console
+client/bin/scalardl-tablestore validate-ledger --properties client.properties \
+--table-name employee --index-key-column-name department --column-value '"sales"'
+```
+
+以下のような結果が得られるはずです:
+
+```console
+{
+  "status_code" : "OK",
+  "Ledger" : {
+    "id" : "idx_employee_department_sales",
+    "age" : 0,
+    "nonce" : "41a18e7f-314f-4aec-8984-62bf6cd355d0",
+    "hash" : "n7KJLuC/KOzFZLnGKEs6pOQvCbl4WSF+xplOUd9MrSo=",
+    "signature" : "MEUCIEHafCsSXWWtZnDbSpAwFQk4qjW1B7cXjEgdwVF8uKQeAiEAsvzEMKyuNFozAbLC/E8FEviCMLCqo9DPRQe4tVBFwIk="
+  },
+  "Auditor" : null
+}
+```
+
+:::note
+
+ScalarDL TableStore は、ScalarDL のプリミティブデータモデルのオブジェクトである[アセットレコード](data-modeling.mdx#アセットレコード)に専用のアセット ID を内部的に割り当てます。アセット ID は、アセットタイプのプレフィックスと識別のためのキーで構成されます。例えば、レコードのアセット ID には、プレフィックス `rec_`、テーブル名、プライマリキーカラム名、およびカラム値が使用されます。`validate-ledger` の結果では、このような生のアセット ID が表示されます。
+
+:::
+
+## 参照
+
+Java アプリケーションで ScalarDL TableStore と対話するには、以下を参照してください:
+
+* [ScalarDL TableStore Java Client SDK の Javadocs](https://javadoc.io/doc/com.scalar-labs/scalardl-tablestore-java-client-sdk/latest/index.html)
+
+## リファレンス
+
+* [ScalarDL TableStore SQL 文法](sql-grammar.mdx)
