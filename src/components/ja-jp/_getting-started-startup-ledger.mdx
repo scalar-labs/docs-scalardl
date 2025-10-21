@@ -1,0 +1,167 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import JavadocLink from "/src/theme/JavadocLink.js";
+import DbSpecificSteps from '/src/components/ja-jp/_getting-started-db-specific-steps.mdx';
+
+## 前提条件
+
+- 以下のいずれかの Java Development Kit (JDK):
+  - **[Oracle JDK](https://www.oracle.com/java/):** 8、11、17、または 21 (LTS バージョン)
+  - **[OpenJDK](https://openjdk.org/) ([Eclipse Temurin](https://adoptium.net/temurin/)、[Amazon Corretto](https://aws.amazon.com/corretto/)、または [Microsoft Build of OpenJDK](https://learn.microsoft.com/ja-jp/java/openjdk/)):** 8、11、17、または 21 (LTS バージョン)
+- [Docker](https://www.docker.com/get-started/) 20.10以降と[Docker Compose](https://docs.docker.com/compose/install/) v2.20.0以降
+
+:::warning
+
+ScalarDL は JDK 8 でビルドされているため、コントラクトは JDK 8 互換のバイナリである必要があります。JDK 8 以外のバージョンを使用する場合は、JDK 8 互換のバイナリをビルドするようにビルドツールを設定する必要があります。バイナリ互換性を指定する方法はいくつかあり、javac の `--release 8` オプションを使用するか、JDK 8 ツールチェーンを使用するように Gradle または Maven の設定を行う方法があります。以下は Gradle の設定例です:
+
+```gradle
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+}
+```
+
+Gradle と Maven の設定の詳細については、[Toolchains for JVM projects for Gradle](https://docs.gradle.org/current/userguide/toolchains.html) と [Guide to Using Toolchains for Maven](https://maven.apache.org/guides/mini/guide-using-toolchains.html) を参照してください。
+
+:::
+
+## ScalarDL サンプルリポジトリをクローンする
+
+**ターミナル**を開き、次のコマンドを実行して ScalarDL サンプルリポジトリをクローンします:
+
+```console
+git clone https://github.com/scalar-labs/scalardl-samples
+```
+
+次に、以下のコマンドを実行して、サンプル設定を含むディレクトリに移動します:
+
+```console
+cd scalardl-samples
+```
+
+## お使いのデータベースで ScalarDL を起動する
+
+データベースを選択し、コマンドに従って ScalarDL Ledger をデプロイしてください。ScalarDL がサポートするデータベースの一覧については、[データベース](./requirements#databases)を参照してください。
+
+<Tabs groupId="databases" queryString>
+  <TabItem value="mysql" label="MySQL" default>
+  <DbSpecificSteps productName="MySQL" shortName="mysql" />
+  </TabItem>
+
+  <TabItem value="postgres" label="PostgreSQL">
+  <DbSpecificSteps productName="PostgreSQL" shortName="postgres" />
+  </TabItem>
+
+  <TabItem value="oracle" label="Oracle Database">
+  <DbSpecificSteps productName="Oracle Database" shortName="oracle" />
+  </TabItem>
+
+  <TabItem value="sqlserver" label="SQL Server">
+  <DbSpecificSteps productName="SQL Server" shortName="sqlserver" />
+  </TabItem>
+
+  <TabItem value="dynamodb" label="DynamoDB">
+  <DbSpecificSteps productName="DynamoDB" shortName="dynamodb" />
+  </TabItem>
+
+  <TabItem value="cosmosdb" label="Cosmos DB for NoSQL">
+
+  <h3>ライセンスを設定する (Enterprise Edition のみ)</h3>
+
+  ScalarDL Enterprise Edition を使用している場合は、以下の手順でライセンスを設定してください。Community Edition を使用している場合は、次のセクションに進んで ScalarDL を起動してください。
+
+  <details>
+  <summary>ライセンスを設定するにはこちらをご覧ください</summary>
+
+  1. 次のように `cosmosdb/docker-compose-ledger.yml` ファイルで Enterprise Edition 用の Docker イメージを有効にします:
+
+     - イメージ変更前 (デフォルト設定):
+
+       ```yaml
+       services:
+         scalardl-ledger:
+           image: ghcr.io/scalar-labs/scalardl-ledger:${SCALARDL_VERSION}
+           # image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
+       ```
+
+     - イメージ変更後:
+
+       ```yaml
+       services:
+         scalardl-ledger:
+           # image: ghcr.io/scalar-labs/scalardl-ledger:${SCALARDL_VERSION}
+           image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
+       ```
+
+  2. ScalarDL Ledger のライセンスキーを設定します。`cosmosdb/ledger.properties` ファイル内の `<SET_YOUR_LICENSE_KEY>` をライセンスキーに置き換えます。例:
+
+     ```properties
+     ##### PLEASE REPLACE THIS VALUE WITH YOUR LICENSE KEY (ENTERPRISE EDITION ONLY) #####
+     scalar.dl.licensing.license_key={"organization_name":"XXXXXXXX","expiration_date_time":"YYYY-MM-DDTHH:mm:SS+TIMEZONE","product_name":"ScalarDL Ledger","product_version":N,"license_type":"trial","signature":"XXXXXXXX"}
+     ##### PLEASE REPLACE THIS VALUE WITH YOUR LICENSE KEY (ENTERPRISE EDITION ONLY) #####
+     ```
+
+  3. ライセンスを確認するには、次のように `cosmosdb/docker-compose-ledger.yml` ファイルを更新します。トライアルライセンスを使用している場合は、この手順をスキップしてください。
+
+     - 証明書ファイルパス変更前 (デフォルト設定):
+
+       ```yaml
+       services:
+         scalardl-ledger:
+           volumes:
+             - ./ledger.properties:/scalar/ledger/ledger.properties.tmpl
+             - ../fixture/ledger-key.pem:/scalar/ledger-key.pem
+             - ../fixture/trial-license-cert.pem:/scalar/license-cert.pem
+             # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+             # - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+       ```
+
+     - 証明書ファイルパス変更後:
+
+       ```yaml
+       services:
+         scalardl-ledger:
+           volumes:
+             - ./ledger.properties:/scalar/ledger/ledger.properties.tmpl
+             - ../fixture/ledger-key.pem:/scalar/ledger-key.pem
+             # - ../fixture/trial-license-cert.pem:/scalar/license-cert.pem
+             # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+             - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+       ```
+
+  </details>
+
+  <h3>ScalarDL を起動する</h3>
+
+  以下の手順で ScalarDL Ledger を起動できます:
+
+  1. Cosmos DB for NoSQL を設定します。
+
+     Azure Cosmos DB for NoSQL を使用するには、Azure アカウントが必要です。Azure アカウントをお持ちでない場合は、[Azure Cosmos DB アカウントの作成](https://learn.microsoft.com/ja-jp/azure/cosmos-db/nosql/quickstart-portal#create-account)をご覧ください。
+
+     Cosmos DB for NoSQL の設定後、Cosmos DB for NoSQL の設定に基づいて `cosmodb/ledger.properties` 内の以下の項目を変更します。
+
+     ```properties
+     scalar.db.contact_points=<COSMOS_DB_FOR_NOSQL_URI>
+     scalar.db.password=<COSMOS_DB_FOR_NOSQL_KEY>
+     ```
+
+  2. 次のコマンドを実行して、ScalarDL Ledger 用のデータベーススキーマをロードします:
+
+     ```console
+     docker compose -f cosmosdb/docker-compose-ledger.yml up -d scalardl-ledger-schema-loader
+     ```
+
+  3. 次のコマンドを実行して、ScalarDL Ledgerを実行します:
+
+     ```console
+     docker compose -f cosmosdb/docker-compose-ledger.yml up -d
+     ```
+  </TabItem>
+
+  <TabItem value="cassandra" label="Cassandra">
+  <DbSpecificSteps productName="Cassandra" shortName="cassandra" />
+  </TabItem>
+
+</Tabs>
