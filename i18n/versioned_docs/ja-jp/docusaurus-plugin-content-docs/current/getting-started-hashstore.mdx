@@ -1,0 +1,385 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import JavadocLink from "/src/theme/JavadocLink.js";
+import StartupLedger from '/src/components/ja-jp/_getting-started-startup-ledger.mdx';
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+# ScalarDL HashStore をはじめよう
+
+<TranslationBanner />
+
+ScalarDL HashStore は、低レベルの台帳抽象化の上に構築された高レベルの抽象化です。デジタル証拠保全専用に設計されており、オブジェクト真正性管理とコレクション真正性管理の2つの機能を提供します。HashStore を使用することで、[コントラクト](design.mdx#コントラクト)を記述することなく、不変な方法でオブジェクトのハッシュ値とオブジェクトのコレクションを管理し、真正性管理アプリケーションを迅速かつ簡単に開発できます。
+
+このスタートガイドでは、お好みのデータベースで ScalarDL HashStore を設定し、改ざん検知可能な方法でオブジェクトとコレクションを管理する方法について説明します。
+
+## ScalarDL HashStore とは？
+
+HashStore は、オブジェクト真正性管理とコレクション真正性管理の2つの機能を提供します。オブジェクト真正性管理では、ファイル、監査ログ、さらにはファイルまたはオブジェクトストレージ内のディレクトリなど、あらゆる種類のオブジェクトの真正性を管理できます。コレクション真正性管理では、コレクション内に存在するオブジェクトを管理できます。例えば、監査プロセスで検証が必要なオブジェクトのコレクションを作成できます。
+
+HashStore がこれらの機能をどのように実現するかについては、下記の[オブジェクト真正性の管理](#オブジェクト真正性の管理)と[コレクション真正性の管理](#コレクション真正性の管理)の例を参照してください。
+
+<StartupLedger />
+
+## Client SDK のダウンロード
+
+次に、ScalarDL HashStore クライアントツールを使用します。デプロイされた ScalarDL バージョンと同じバージョンを指定して、ツールをダウンロードするために次のコマンドを実行します:
+
+```console
+VERSION=$(grep SCALARDL_VERSION .env | awk -F= '{print $2}')
+```
+
+次に、以下のコマンドを実行してツールをダウンロードします:
+
+```console
+curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-hashstore-java-client-sdk-$VERSION.zip
+unzip scalardl-hashstore-java-client-sdk-$VERSION.zip
+mv scalardl-hashstore-java-client-sdk-$VERSION client
+```
+
+## クライアントプロパティの設定
+
+ScalarDL HashStore と対話する前に、クライアントを設定する必要があります。クライアントに必要な最小限のプロパティを含む設定ファイルを作成するには、以下のコマンドを実行します:
+
+```console
+cat << 'EOF' > client.properties
+# A host name for ScalarDL Ledger.
+scalar.dl.client.server.host=localhost
+
+# An ID for the certificate holder. This must be configured for each private key and must be unique in the system.
+scalar.dl.client.cert_holder_id=foo
+
+# A path to the certificate file.
+scalar.dl.client.cert_path=./fixture/client.pem
+
+# A path to the private key file. 
+scalar.dl.client.private_key_path=./fixture/client-key.pem
+EOF
+```
+
+このチュートリアルでは、ScalarDL Ledger のホスト名に `localhost` を使用できます。秘密鍵と証明書については、[`scalardl-samples` リポジトリの `fixture` ディレクトリ](https://github.com/scalar-labs/scalardl-samples/tree/master/fixture)で提供されているもの (それぞれ `client-key.pem` と `client.pem`) を使用できます。証明書ホルダーには、任意の一意の ID を指定できます。
+
+:::warning
+
+本番環境では、サンプルの秘密鍵と証明書を使用しないでください。独自の証明書を取得する方法の詳細については、[証明書の取得方法](ca/caclient-getting-started.mdx)を参照してください。
+
+:::
+
+## ブートストラップ
+
+次に、以下のコマンドを実行して HashStore をブートストラップできます:
+
+```console
+client/bin/scalardl-hashstore bootstrap --properties client.properties
+```
+
+ブートストラップコマンドは、内部的にアイデンティティ情報 (証明書またはシークレット) と HashStore を使用するために必要な事前定義されたコントラクトを登録します。
+
+## オブジェクト真正性の管理
+
+HashStore のオブジェクト真正性管理では、`put-object` コマンドを使用してオブジェクトのハッシュ値を格納できます。以下の例のように、対象のオブジェクト ID とオブジェクトのハッシュ値を指定します。オブジェクト ID は、オブジェクトまたはファイルを識別する一意の ID である必要があります。例えば、オブジェクトのキーやファイルパスなどです。`metadata` オプションを使用して、オブジェクトに関連付けられた任意のメタデータを格納することもできます。
+
+まず、ファイルのハッシュ値を取得して、改ざん検知可能な台帳に格納します。
+
+:::note
+
+`sha256sum` コマンドは Linux 環境でのみ利用可能です。macOS 環境と Windows 環境では、それぞれ `shasum` と `certutil` が利用可能です。同じ SHA256 ハッシュ値を取得する方法の詳細については、これらのコマンドの使用方法を参照してください。
+
+:::
+
+```console
+echo "Alice created this file." > a.txt
+sha256sum a.txt
+```
+
+以下のハッシュ値が取得できるはずです:
+
+```console
+5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0  a.txt
+```
+
+以下のコマンドを実行して、ハッシュ値を格納できます:
+
+```console
+client/bin/scalardl-hashstore put-object --properties client.properties \
+--object-id a.txt \
+--hash 5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0 \
+--metadata '{"note": "created"}'
+```
+
+オブジェクトが更新された場合、同じ方法で新しいハッシュ値を格納できます。例えば、以下では下記のコマンドが実行されたと仮定します:
+
+```console
+echo "Alice updated this file." >> a.txt
+sha256sum a.txt
+```
+
+ハッシュ値として以下の結果が取得できるはずです:
+
+```console
+b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c  a.txt
+```
+
+次に、以下のようにハッシュ値を更新できます:
+
+```console
+client/bin/scalardl-hashstore put-object --properties client.properties \
+--object-id a.txt \
+--hash b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c \
+--metadata '{"note": "updated"}'
+```
+
+以下のコマンドを実行して、オブジェクトの最新ステータスを取得することもできます:
+
+```console
+client/bin/scalardl-hashstore get-object --properties client.properties \
+--object-id a.txt
+```
+
+以下のような結果が得られるはずです:
+
+```console
+Result:
+{
+  "object_id" : "a.txt",
+  "hash_value" : "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c",
+  "metadata" : {
+    "note" : "updated"
+  }
+}
+```
+
+オブジェクトの真正性を検証したい場合は、まず検証したいオブジェクトの各バージョンについて、例えば `sha256sum` コマンドを使用して、ハッシュ値を再計算します。
+
+次に、再計算されたハッシュ値とバージョン ID を降順で指定して `compare-object-versions` コマンドを実行します。任意の数のバージョンを指定できます。バージョン ID は、出力で元の値と異なるハッシュ値を表示するためにのみ使用されるため、値が一意に識別できる限り、任意の文字列値を使用できます。
+
+:::note
+
+使用中の環境で `a.txt` ファイルの古いバージョンのハッシュ値を取得できない場合は、代わりに現在のバージョンのみを指定してください。
+
+:::
+
+```console
+client/bin/scalardl-hashstore compare-object-versions --properties client.properties \
+--object-id a.txt \
+--versions '[{"version_id": "v2", "hash_value": "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c"}, {"version_id": "v1", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0"}]}'
+```
+
+オブジェクトの再計算されたハッシュ値が台帳にあるものと同じ場合、以下の結果が表示されるはずです。
+
+```console
+Result:
+{
+  "status" : "correct",
+  "details" : "The status is correct.",
+  "faulty_versions" : [ ]
+}
+```
+
+誰かがファイル `a.txt` を以下のように改ざんしたとします:
+
+```txt
+Bob created this file.
+Alice updated this file
+```
+
+最新バージョンのハッシュ値は `1f75d715648a3b4b3a33ecd7428a3e7139d9357da7d38735c23bf38618ecf9c7` になります。以下のコマンドを実行して検証を実行できます:
+
+```console
+client/bin/scalardl-hashstore compare-object-versions --properties client.properties \
+--object-id a.txt \
+--versions '[{"version_id": "v2", "hash_value": "1f75d715648a3b4b3a33ecd7428a3e7139d9357da7d38735c23bf38618ecf9c7"}, {"version_id": "v1", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0"}]}'
+```
+
+以下のような結果が得られるはずです:
+
+```console
+Result:
+{
+  "status" : "faulty",
+  "details" : "A faulty version is found.",
+  "faulty_versions" : [ "v2" ]
+}
+```
+
+この検証プロセスは、データのハッシュ値と ScalarDL に保存されている対応するハッシュ値を比較することで、ScalarDL 外部のデータが変更されていないことを確認します。ScalarDL 内のデータ (この場合はハッシュ値) が改ざんされていないかどうかを検証するには、`validate-ledger` コマンドを使用できます。詳細については、[HashStore で管理されるデータの検証](#hashstore-で管理されるデータの検証)を参照してください。
+
+### ScalarDL Ledger と ScalarDB テーブル間でのオブジェクト状態の同期
+
+ScalarDL はデータ (「アセット」と呼ばれる) を改ざん検知可能な追記専用の方式で管理するため、データをその場で更新することはできず、やや柔軟性に欠ける方式でデータをモデル化する必要があります。これらの制限を軽減するために、ScalarDB を ScalarDL と併用できます。具体的には、ScalarDB 管理データベースへの ScalarDB の変更操作と並行して、ScalarDL への操作を実行できます。
+
+例えば、オブジェクト真正性管理では、`put-object` コマンド (および対応する API) は `--put-to-mutable` オプションを提供し、オブジェクトハッシュ値を格納する際に ScalarDB テーブルに任意のレコードを格納できます。このオプションの主要な使用例の1つは、ScalarDB 側でオブジェクトステータス (オブジェクトのハッシュ値が ScalarDL に正しく保存されているかどうか) を管理し、ScalarDB API を使用して対象オブジェクトを柔軟かつ効率的に識別できるようにすることです。このような場合、以下を行います:
+
+1. ScalarDB にテーブル (例: `objects`) を作成して、オブジェクトバージョンのハッシュ値が既に登録されているかどうかを管理します。
+1. `objects` テーブル内のハッシュ値未登録状態の対象オブジェクトをリストアップし、それらのオブジェクトのハッシュ値を格納します。
+1. ハッシュ値が ScalarDL に正常に登録された後、`objects` テーブルの状態を更新します。
+
+上記の3番目の手順は、`--put-to-mutable` オプションを使用して以下のコマンドを実行することで ACID 方式で実行する必要があります:
+
+```console
+client/bin/scalardl-hashstore put-object --properties client.properties \
+--object-id a.txt \
+--hash 5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0 \
+--put-to-mutable '{...}'
+```
+
+`--put-to-mutable` オプションの引数には、ScalarDB テーブルスキーマに応じて、名前空間名、テーブル名、パーティションキー、クラスタリングキー (存在する場合)、およびカラムを指定する必要があります。例は以下の通りです。
+
+```json
+{
+  "namespace": "myns",
+  "table": "objects",
+  "partition_key": [
+    { "column_name": "object_id", "value": "a.txt", "data_type": "TEXT" }
+  ],
+  "clustering_key": [
+    { "column_name": "version", "value": "1234aef", "data_type": "TEXT" }
+  ],
+  "columns": [
+    { "column_name": "status", "value": 3, "data_type": "INT" },
+    { "column_name": "size", "value": 10.000, "data_type": "DOUBLE" },
+    { "column_name": "timestamp", "value": 123456789, "data_type": "BIGINT" },
+    { "column_name": "comment", "value": "hash-registered", "data_type": "TEXT" }
+  ]
+}
+```
+
+## コレクション真正性の管理
+
+コレクション真正性管理では、集合の真正性を管理できます。例えば、ファイルストレージを使用して `compare-object-versions` コマンドを使用してファイルの真正性を管理する場合、監査プロセスで検証が必要なフォルダやオブジェクトの集合 (監査セット) についても真正性管理を行いたい場合があります。コレクション管理はこれらの使用例をカバーし、監査セットを保護します。
+
+システムが監査セットが予期せず変更されていないことを保証できない場合、悪意のあるユーザーがオブジェクトを不正に変更し、不正が発覚することを避けるために監査セットからそれを除去することができる可能性があります。したがって、監査セットの管理は、コレクション真正性管理の重要で主要な使用例です。
+
+以下のコマンドを実行して、監査セット用のコレクションを作成できます:
+
+```console
+client/bin/scalardl-hashstore create-collection --properties client.properties \
+--collection-id audit_set --object-ids a.txt --object-ids b.txt
+```
+
+コレクション ID は、コレクションを識別する一意の ID である必要があります。`--object-ids` オプションを使用して、オブジェクト ID のセットを指定できます。オブジェクト ID は単なる文字列値なので、任意の ID を指定できます。例えば、監査セットを階層的に表現するためにコレクション ID を格納できます。
+
+以下のコマンドを実行して、コレクションにオブジェクトを追加することもできます:
+
+```console
+client/bin/scalardl-hashstore add-to-collection --properties client.properties \
+--collection-id audit_set --object-ids c.txt --object-ids d.txt
+```
+
+また、以下のコマンドを実行して、コレクションからオブジェクトを削除できます:
+
+```console
+client/bin/scalardl-hashstore remove-from-collection --properties client.properties \
+--collection-id audit_set --object-ids a.txt
+```
+
+以下のコマンドを実行して、コレクションの最新ステータスを取得できます:
+
+```console
+client/bin/scalardl-hashstore get-collection --properties client.properties \
+--collection-id audit_set
+```
+
+以下のような結果が得られるはずです:
+
+```console
+Result:
+{"object_ids": ["d.txt", "c.txt", "b.txt"]}
+```
+
+監査セットが予期せず変更されていないことを確認するには、以下のコマンドを実行して監査セットの更新履歴を確認できます:
+
+```console
+client/bin/scalardl-hashstore get-collection-history --properties client.properties \
+--collection-id audit_set
+```
+
+以下のような結果が得られるはずです:
+
+```console
+Result:
+{
+  "collection_id" : "audit_set",
+  "collection_events" : [ {
+    "operation_type" : "remove",
+    "age" : 2,
+    "object_ids" : [ "a.txt" ]
+  }, {
+    "operation_type" : "add",
+    "age" : 1,
+    "object_ids" : [ "c.txt", "d.txt" ]
+  }, {
+    "operation_type" : "create",
+    "age" : 0,
+    "object_ids" : [ "a.txt", "b.txt" ]
+  } ]
+}
+```
+
+## HashStore で管理されるデータの検証
+
+ScalarDL では、すべてのデータが有効な状態にあることを確認するために、時々データを検証する必要があります。HashStore で管理されるデータを検証するには、`validate-ledger` コマンドを使用できます。
+
+以下のコマンドを実行して、オブジェクトを検証できます:
+
+```console
+client/bin/scalardl-hashstore validate-ledger --properties client.properties \
+--object-id a.txt
+```
+
+以下のような結果が得られるはずです:
+
+```console
+{
+  "status_code" : "OK",
+  "Ledger" : {
+    "id" : "o_a.txt",
+    "age" : 2,
+    "nonce" : "8182ce3f-620d-4b8d-8718-19fc2666e060",
+    "hash" : "8wLsztcUHRBSfdu4vCLfmWeAuS4T8UUoz+9QkqDl7Xc=",
+    "signature" : "MEYCIQC83aBqEiBtyGW0UHa7AlJeLWho/wOnL1U5AzTbDMb7ngIhAOkgyVQtEYjtCD4FBZuuqAWuIOIW9Gnbd/djkxnet53a"
+  },
+  "Auditor" : null
+}
+```
+
+以下のコマンドを実行して、コレクションを検証できます:
+
+```console
+client/bin/scalardl-hashstore validate-ledger --properties client.properties \
+--collection-id audit_set
+```
+
+以下のような結果が得られるはずです:
+
+```console
+{
+  "status_code" : "OK",
+  "Ledger" : {
+    "id" : "c_audit_set",
+    "age" : 2,
+    "nonce" : "cd99fb75-1bde-4be3-af03-b43bd05f85eb",
+    "hash" : "9Mw+Z4BQkDeLyd+su3WAi2Pes89AKU9kdZmy5Bgtj6c=",
+    "signature" : "MEUCIAcG5di+Tn+VK35J2ZlzembZXxO4DV9cv/9zS1kMdimHAiEAnR3nqQ5I8UzQ+n99Uew6rZQ1DGZWIJzhcmJ9U3axXBs="
+  },
+  "Auditor" : null
+}
+```
+
+:::note
+
+ScalarDL HashStore は、ScalarDL のプリミティブデータモデルのオブジェクトである[アセットレコード](data-modeling.mdx#アセットレコード)に専用のアセット ID を内部的に割り当てます。アセット ID は、アセットタイプのプレフィックスと識別のためのキーで構成されます。例えば、コレクションのアセット ID には、プレフィックス `c_` とコレクション ID が使用されます。`validate-ledger` の結果では、このような生のアセット ID が表示されます。
+
+:::
+
+## 参照
+
+Java アプリケーションで ScalarDL HashStore と対話するには、以下を参照してください:
+
+* [ScalarDL HashStore Java Client SDK の Javadocs](https://javadoc.io/doc/com.scalar-labs/scalardl-hashstore-java-client-sdk/latest/index.html)
