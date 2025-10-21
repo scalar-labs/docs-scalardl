@@ -187,7 +187,7 @@ operator: = | <> | != | > | >= | < | <=
 If you have the following table, for example:
 
 ```sql
-CREATE TABLE ns.tbl (
+CREATE TABLE tbl (
   c1 INT PRIMARY KEY,
   c2 STRING,
   c3 FLOAT,
@@ -210,6 +210,8 @@ UPDATE tbl SET c4 = 200, c5 = false WHERE c1 = 10 AND c5 = true;
 
 ## Others
 
+This section covers additional commands and functions that extend beyond the standard DDL and DML categories.
+
 ### Show tables
 
 You can show tables managed by TableStore by querying the `information_schema.tables` table.
@@ -219,7 +221,7 @@ You can show tables managed by TableStore by querying the `information_schema.ta
 ```sql
 SELECT *
   FROM information_schema.tables
-  [WHERE table_name = <table name>]  
+  [WHERE table_name = <table name>]
 ```
 
 #### Examples
@@ -269,7 +271,7 @@ SELECT history() FROM tbl WHERE c1 = 10 LIMIT 10;
 
 ## Literal
 
-Literal refers to a fixed data value used when writing SQL-like statements. For example, `1`, `'abc'`, `1.23`, and `true` are literals.
+Literal refers to a fixed data value used when writing SQL statements. For example, `1`, `'abc'`, `1.23`, and `true` are literals.
 
 ### String
 
@@ -278,8 +280,9 @@ A string literal is a sequence of characters enclosed in single quotes `'`, such
 ### Number
 
 Number literals include exact-value (`INTEGER` and `BIGINT`) and approximate-value (`FLOAT` and `DOUBLE PRECISION`) literals:
+
 - An exact-value literal is a sequence of digits, such as `123` and `-5`.
-- An approximate-value literal is a sequence of digits with a decimal point, such as `4.754` and `-1.2`. 
+- An approximate-value literal is a sequence of digits with a decimal point, such as `4.754` and `-1.2`.
 
 ### Boolean
 
