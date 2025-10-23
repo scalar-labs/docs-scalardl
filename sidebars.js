@@ -130,16 +130,6 @@ const sidebars = {
               id: 'how-to-write-function',
               label: 'Write a Function',
             },
-            {
-              type: 'doc',
-              id: 'use-generic-contracts',
-              label: 'Use Generic Contracts',
-            },
-            {
-              type: 'doc',
-              id: 'use-table-oriented-generic-contracts',
-              label: 'Use Table-Oriented Generic Contracts',
-            },
           ],
         },
         {
@@ -155,11 +145,6 @@ const sidebars = {
               type: 'doc',
               id: 'how-to-write-applications',
               label: 'Write an Application in Java',
-            },
-            {
-              type: 'doc',
-              id: 'how-to-write-applications-with-generic-contracts',
-              label: 'Write an Application with Generic Contracts',
             },
           ]
         },
@@ -246,11 +231,6 @@ const sidebars = {
               type: 'doc',
               id: 'schema-loader',
               label: 'ScalarDL Schema Loader',
-            },
-            {
-              type: 'doc',
-              id: 'generic-contracts-reference',
-              label: 'Generic Contracts',
             },
             {
               type: 'doc',
@@ -711,6 +691,16 @@ const sidebars = {
       items: [
         {
           type: 'doc',
+          id: 'getting-started-hashstore',
+          label: 'HashStore を使用',
+        },
+        {
+          type: 'doc',
+          id: 'getting-started-tablestore',
+          label: 'TableStore を使用',
+        },
+        {
+          type: 'doc',
           id: 'getting-started',
           label: 'Ledger を使用',
         },
@@ -749,16 +739,6 @@ const sidebars = {
               id: 'how-to-write-function',
               label: 'ファンクションを作成',
             },
-            {
-              type: 'doc',
-              id: 'use-generic-contracts',
-              label: '汎用コントラクトを使用',
-            },
-            {
-              type: 'doc',
-              id: 'use-table-oriented-generic-contracts',
-              label: 'テーブル指向汎用コントラクトの使用',
-            }
           ],
         },
         {
@@ -774,11 +754,6 @@ const sidebars = {
               type: 'doc',
               id: 'how-to-write-applications',
               label: 'Java でアプリケーションを書く',
-            },
-            {
-              type: 'doc',
-              id: 'how-to-write-applications-with-generic-contracts',
-              label: '汎用コントラクトを用いたアプリケーションを作成',
             },
           ]
         },
@@ -868,13 +843,13 @@ const sidebars = {
             },
             {
               type: 'doc',
-              id: 'generic-contracts-reference',
-              label: '汎用コントラクト',
+              id: 'ca/caclient-getting-started',
+              label: '証明書を取得',
             },
             {
               type: 'doc',
-              id: 'ca/caclient-getting-started',
-              label: '証明書を取得',
+              id: 'sql-grammar',
+              label: 'ScalarDL TableStore SQL の文法',
             },
           ],
         },

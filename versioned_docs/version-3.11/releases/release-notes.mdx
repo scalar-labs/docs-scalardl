@@ -9,6 +9,38 @@ displayed_sidebar: docsEnglish
 
 This page includes a list of release notes for ScalarDL 3.11.
 
+## v3.11.1
+
+**Release date:** October 8, 2025
+
+### Summary
+
+This release has several improvements, bug fixes, and vulnerability fixes.
+
+### Community edition
+
+#### Improvements
+
+- Supported time-related data types in the generic function. ([#200](https://github.com/scalar-labs/scalardl/pull/200))
+
+#### Bug fixes
+
+- Fixed the state management behavior for read-only transactions. ([#181](https://github.com/scalar-labs/scalardl/pull/181))
+- Fixed certificate and secret key version check and messages. ([#202](https://github.com/scalar-labs/scalardl/pull/202))
+- Fixed Ledger configuration validation for correct authentication settings. ([#222](https://github.com/scalar-labs/scalardl/pull/222))
+- Fixed `IS NULL` and `IS NOT NULL` conditions handling in table-oriented generic contracts. ([#238](https://github.com/scalar-labs/scalardl/pull/238))
+- Fixed [CVE-2025-22874](https://github.com/advisories/GHSA-6f52-wpx2-hvf2 "CVE-2025-22874"). ([#262](https://github.com/scalar-labs/scalardl/pull/262))
+- Fixed [CVE-2025-49146](https://github.com/advisories/GHSA-hq9p-pm7w-8p54 "CVE-2025-49146"). ([#286](https://github.com/scalar-labs/scalardl/pull/286))
+
+### Enterprise edition
+
+#### Bug fixes
+
+- Fixed Auditor configuration validation for correct authentication settings.
+- Fixed duplicated read lock.
+- Fixed [CVE-2025-22874](https://github.com/advisories/GHSA-6f52-wpx2-hvf2 "CVE-2025-22874").
+- Fixed [CVE-2025-49146](https://github.com/advisories/GHSA-hq9p-pm7w-8p54 "CVE-2025-49146").
+
 ## v3.11.0
 
 **Release date:** June 18, 2025

@@ -16,6 +16,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 ## 証明書の要件
 
 * 秘密鍵と証明書ファイルのアルゴリズムとしては `RSA` または `ECDSA` のみ使用可能です。
+* ScalarDB Analytics server の場合は、gRPC のデフォルト設定に基づき、秘密鍵の形式として `PKCS #8` を使用する必要があります。
 
 ## サンプルの秘密鍵と証明書ファイルを作成する手順の例
 

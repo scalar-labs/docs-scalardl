@@ -13,6 +13,31 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 このページには、ScalarDL 3.9 のリリースノートのリストが含まれています。
 
+## v3.9.7
+
+**発売日:** 2025年10月8日
+
+### まとめ
+
+このリリースには、いくつかのバグ修正と脆弱性の修正が含まれています。
+
+### Community edition
+
+#### バグの修正
+
+- 読み取り専用トランザクションの状態管理動作を修正しました。([#181](https://github.com/scalar-labs/scalardl/pull/181))
+- 証明書と秘密鍵のバージョンチェックとメッセージを修正しました。([#202](https://github.com/scalar-labs/scalardl/pull/202))
+- 正しい認証設定のための Ledger 設定検証を修正しました。([#222](https://github.com/scalar-labs/scalardl/pull/222))
+- [CVE-2025-22874](https://github.com/advisories/GHSA-6f52-wpx2-hvf2 "CVE-2025-22874") を修正しました。([#262](https://github.com/scalar-labs/scalardl/pull/262))
+
+### Enterprise edition
+
+#### バグの修正
+
+- 正しい認証設定のための Auditor 設定検証を修正しました。
+- 重複した読み取りロックを修正しました。
+- [CVE-2025-22874](https://github.com/advisories/GHSA-6f52-wpx2-hvf2 "CVE-2025-22874") を修正しました。
+
 ## v3.9.6
 
 **発売日:** 2025年6月20日

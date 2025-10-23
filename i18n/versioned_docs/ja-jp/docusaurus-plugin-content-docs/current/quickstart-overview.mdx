@@ -11,6 +11,16 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このカテゴリでは、Java Client SDK を使用して ScalarDL Ledger を通じて基本的なコントラクトを実行する方法についてのクイックスタートチュートリアルに従うことができます。
+このカテゴリでは、ScalarDL の使い始め方に関するクイックスタートチュートリアルに従うことができます。
 
-開始するには、[ScalarDL Ledger を通じてコントラクトを実行する](getting-started.mdx)を参照してください。
+ScalarDL は、台帳との簡単でシームレスな対話のための2つの抽象化されたデータストアを提供します: HashStore と TableStore です。
+
+* HashStore は、オブジェクトとコレクションの真正性を保証するためのインターフェースを提供し、証拠保全などのアプリケーションに最適です。
+* TableStore は、テーブルの真正性を検証するための SQL 互換インターフェースを提供し、開発者が馴染みのあるデータモデルとインターフェースで多用途な改ざん防止アプリケーションを構築できます。
+
+開始するには、以下のガイドを参照してください:
+
+* [ScalarDL HashStore をはじめよう](getting-started-hashstore.mdx)
+* [ScalarDL TableStore をはじめよう](getting-started-tablestore.mdx)
+
+ScalarDL には、台帳とのよりカスタマイズされた対話のためのプリミティブインターフェースも含まれています。このアプローチを調べるには、[ScalarDL Ledger をはじめよう](getting-started.mdx)を参照してください。
