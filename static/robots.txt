@@ -1,8 +1,0 @@
-User-agent: *
-Disallow: /docs/3.*/
-Disallow: /docs/4.*/
-Allow: /docs/latest/
-
-Disallow: /ja-jp/docs/3.*/
-Disallow: /ja-jp/docs/4.*/
-Allow: /ja-jp/docs/latest/
