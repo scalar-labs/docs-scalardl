@@ -1,7 +1,7 @@
 {
   "version.label": {
     "message": "3.10",
-    "description": "The label for version current"
+    "description": "The label for version 3.10"
   },
   "sidebar.docs.category.About ScalarDL": {
     "message": "ScalarDL について",
