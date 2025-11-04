@@ -168,11 +168,20 @@ You can run the benchmark several times by using the `--except-pre` option after
 
 ## Common parameters
 
-| Name           | Description                                             | Default   |
-|:---------------|:--------------------------------------------------------|:----------|
-| `concurrency`  | Number of threads for benchmarking.                     | `1`       |
-| `run_for_sec`  | Duration of benchmark (in seconds).                     | `60`      |
-| `ramp_for_sec` | Duration of ramp-up time before benchmark (in seconds). | `0`       |
+### `concurrency`
+
+- **Description:** Number of worker threads that concurrently execute benchmark transactions against the database. This parameter controls the level of parallelism during the actual benchmark execution phase. Increasing this value simulates more concurrent client accesses and higher workload intensity.
+- **Default value:** `1`
+
+### `run_for_sec`
+
+- **Description:** Duration of the benchmark execution phase (in seconds). This parameter defines how long the benchmark will run and submit transactions to the database.
+- **Default value:** `60`
+
+### `ramp_for_sec`
+
+- **Description:** Duration of the ramp-up period before the benchmark measurement phase begins (in seconds). During this warm-up period, the system executes transactions but does not record performance metrics. This allows the system to reach a steady state before collecting benchmark results.
+- **Default value:** `0`
 
 ## Workload-specific parameters
 
@@ -180,27 +189,67 @@ Select a workload to see its available parameters.
 
 <Tabs groupId="benchmarks" queryString>
   <TabItem value="SmallBank" label="SmallBank" default>
-    | Name               | Description                                         | Default   |
-    |:-------------------|:----------------------------------------------------|:----------|
-    | `num_accounts`     | Number of bank accounts for benchmarking.           | `100000`  |
-    | `load_concurrency` | Number of threads for loading.                      | `1`       |
-    | `load_batch_size`  | Number of accounts in a single loading transaction. | `1`       |
+    ### `num_accounts`
+
+    - **Description:** Number of bank accounts to create for the benchmark workload. This parameter determines the size of the dataset and affects the working-set size.
+    - **Default value:** `100000`
+
+    ### `load_concurrency`
+
+    - **Description:** Number of parallel threads used to load initial benchmark data into the database. This parameter controls how fast the data-loading phase completes. Increasing this value can significantly reduce data-loading time for large datasets. This is separate from the `concurrency` parameter used during benchmark execution.
+    - **Default value:** `1`
+
+    ### `load_batch_size`
+
+    - **Description:** Number of accounts to insert within a single transaction during the initial data-loading phase. Larger batch sizes can improve loading performance by reducing the number of transactions, but may increase the execution time of each transaction.
+    - **Default value:** `1`
   </TabItem>
   <TabItem value="TPC-C" label="TPC-C">
-    | Name               | Description                                           | Default   |
-    |:-------------------|:------------------------------------------------------|:----------|
-    | `num_warehouses`   | Number of warehouses (scale factor) for benchmarking. | `1`       |
-    | `rate_payment`     | Percentage of Payment transaction.                    | `50`      |
-    | `load_concurrency` | Number of threads for loading.                        | `1`       |
+    ### `num_warehouses`
+
+    - **Description:** Number of warehouses to create for the TPC-C benchmark workload. This value is the scale factor that determines the dataset size. Increasing this value creates a larger working set and enables various enterprise-scale testing.
+    - **Default value:** `1`
+
+    ### `rate_payment`
+
+    - **Description:** Percentage of Payment transactions in the transaction mix, with the remainder being New-Order transactions. For example, a value of `50` means 50% of transactions will be Payment transactions and 50% will be New-Order transactions.
+    - **Default value:** `50`
+
+    ### `load_concurrency`
+
+    - **Description:** Number of parallel threads used to load initial benchmark data into the database. This parameter controls how fast the data-loading phase completes. Increasing this value can significantly reduce data-loading time, especially for larger numbers of warehouses. This is separate from the `concurrency` parameter used during benchmark execution.
+    - **Default value:** `1`
   </TabItem>
   <TabItem value="YCSB" label="YCSB">
-    | Name               | Description                                        | Default   |
-    |:-------------------|:---------------------------------------------------|:----------|
-    | `record_count`     | Number of records for benchmarking.                | `1000`    |
-    | `payload_size`     | Payload size (in bytes) of each record.            | `1000`    |
-    | `ops_per_tx`       | Number of operations in a single transaction       | `2`       |
-    | `workload`         | Workload type (A, C, or F).                        | `A`       |
-    | `load_concurrency` | Number of threads for loading.                     | `1`       |
-    | `load_batch_size`  | Number of records in a single loading transaction. | `1`       |
+    ### `record_count`
+
+    - **Description:** Number of records to create for the YCSB benchmark workload. This parameter determines the size of the dataset and affects the working-set size during benchmark execution.
+    - **Default value:** `1000`
+
+    ### `payload_size`
+
+    - **Description:** Size of the payload data (in bytes) for each record. This parameter controls the amount of data stored per record and affects database storage, memory usage, and I/O characteristics.
+    - **Default value:** `1000`
+
+    ### `ops_per_tx`
+
+    - **Description:** Number of read or write operations to execute within a single transaction. This parameter affects transaction size and execution time. Higher values create longer-running transactions.
+    - **Default value:** `2`
+
+    ### `workload`
+
+    - **Description:** YCSB workload type that defines the operation mix: **A** (50% reads, 50% read-modify-write operations), **C** (100% reads), or **F** (100% read-modify-write operations). Note that the workload A in this benchmark uses read-modify-write operations instead of pure blind writes because ScalarDL prohibits the blind writes. Each workload type simulates different application access patterns.
+
+    - **Default value:** `A`
+
+    ### `load_concurrency`
+
+    - **Description:** Number of parallel threads used to load initial benchmark data into the database. This parameter controls how fast the data-loading phase completes. Increasing this value can significantly reduce data-loading time for large datasets. This is separate from the `concurrency` parameter used during benchmark execution.
+    - **Default value:** `1`
+
+    ### `load_batch_size`
+
+    - **Description:** Number of records to insert within a single transaction during the initial data-loading phase. Larger batch sizes can improve loading performance by reducing the number of transactions, but may increase the execution time of each transaction.
+    - **Default value:** `1`
   </TabItem>
 </Tabs>
