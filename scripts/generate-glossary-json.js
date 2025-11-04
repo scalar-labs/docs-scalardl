@@ -23,6 +23,12 @@ const generateGlossaryJson = (glossaryFilePath, outputJsonPath) => {
     }
   });
 
+  // Ensure the output directory exists
+  const outputDir = path.dirname(outputJsonPath);
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true });
+  }
+
   fs.writeFileSync(outputJsonPath, JSON.stringify(glossary, null, 2));
   console.log(`${outputJsonPath} generated successfully.`);
 };

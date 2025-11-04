@@ -17,6 +17,7 @@
     },
     {
       "type": "category",
+      "key": "getting-started-en-us-3.7",
       "label": "Getting Started",
       "collapsible": true,
       "items": [
@@ -62,6 +63,7 @@
       "items": [
         {
           "type": "category",
+          "key": "deploy-scalar-kubernetes-en-us-3.7",
           "label": "Scalar Kubernetes",
           "collapsible": true,
           "items": [
@@ -136,6 +138,7 @@
           "items": [
             {
               "type": "category",
+              "key": "deploy-helm-charts-getting-started-en-us-3.7",
               "label": "Getting Started",
               "collapsible": true,
               "items": [
@@ -180,6 +183,7 @@
       "items": [
         {
           "type": "category",
+          "key": "manage-scalar-kubernetes-en-us-3.7",
           "label": "Scalar Kubernetes",
           "collapsible": true,
           "items": [
@@ -221,6 +225,7 @@
     },
     {
       "type": "category",
+      "key": "reference-en-us-3.7",
       "label": "Reference",
       "collapsible": true,
       "items": [

@@ -193,6 +193,7 @@
         },
         {
           "type": "category",
+          "key": "develop-reference-en-us-3.11",
           "label": "Reference",
           "collapsible": true,
           "items": [
@@ -285,6 +286,7 @@
         },
         {
           "type": "category",
+          "key": "deploy-reference-en-us-3.11",
           "label": "Reference",
           "collapsible": true,
           "items": [
@@ -517,6 +519,7 @@
             },
             {
               "type": "category",
+              "key": "manage-monitor-reference-en-us-3.11",
               "label": "Reference",
               "collapsible": true,
               "items": [
@@ -596,6 +599,7 @@
     },
     {
       "type": "category",
+      "key": "reference-en-us-3.11",
       "label": "Reference",
       "collapsible": true,
       "items": [
@@ -801,6 +805,7 @@
         },
         {
           "type": "category",
+          "key": "develop-reference-ja-jp-3.11",
           "label": "詳細",
           "collapsible": true,
           "items": [
@@ -893,6 +898,7 @@
         },
         {
           "type": "category",
+          "key": "deploy-reference-ja-jp-3.11",
           "label": "詳細",
           "collapsible": true,
           "items": [
@@ -1125,6 +1131,7 @@
             },
             {
               "type": "category",
+              "key": "manage-monitor-reference-ja-jp-3.11",
               "label": "詳細",
               "collapsible": true,
               "items": [
@@ -1204,6 +1211,7 @@
     },
     {
       "type": "category",
+      "key": "reference-ja-jp-3.11",
       "label": "詳細",
       "collapsible": true,
       "items": [
