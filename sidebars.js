@@ -143,6 +143,16 @@ const sidebars = {
           items: [
             {
               type: 'doc',
+              id: 'how-to-write-applications-with-hashstore',
+              label: 'Write an Application with HashStore',
+            },
+            {
+              type: 'doc',
+              id: 'how-to-write-applications-with-tablestore',
+              label: 'Write an Application with TableStore',
+            },
+            {
+              type: 'doc',
               id: 'how-to-write-applications',
               label: 'Write an Application in Java',
             },
@@ -756,6 +766,16 @@ const sidebars = {
             id: 'develop-write-an-application-overview',
           },
           items: [
+            // {
+            //   type: 'doc',
+            //   id: 'how-to-write-applications-with-hashstore',
+            //   label: 'HashStore を使用したアプリケーションを書く',
+            // },
+            // {
+            //   type: 'doc',
+            //   id: 'how-to-write-applications-with-tablestore',
+            //   label: 'TableStore を使用したアプリケーションを書く',
+            // },
             {
               type: 'doc',
               id: 'how-to-write-applications',
