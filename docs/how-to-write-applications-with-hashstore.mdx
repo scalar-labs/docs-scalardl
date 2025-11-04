@@ -1,0 +1,112 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsEnglish
+---
+
+# Write a ScalarDL Application with HashStore
+
+import JavadocLink from "/src/theme/JavadocLink.js";
+
+This document explains how to write ScalarDL applications with HashStore. You will learn how to interact with ScalarDL HashStore in your applications, handle errors, and validate your data.
+
+## Use the ScalarDL HashStore Client SDK
+
+You have two options to interact with ScalarDL HashStore:
+
+- Using [commands](scalardl-hashstore-command-reference.mdx), as shown in [Get Started with ScalarDL HashStore](getting-started-hashstore.mdx)
+- Using the [HashStore Java Client SDK](https://javadoc.io/doc/com.scalar-labs/scalardl-hashstore-java-client-sdk/)
+
+Using commands is a convenient way to try HashStore without writing an application. For building HashStore-based applications, however, the HashStore Client SDK is recommended, as it runs more efficiently without launching a separate process for each operation.
+
+The HashStore Client SDK is available on [Maven Central](https://central.sonatype.com/artifact/com.scalar-labs/scalardl-hashstore-java-client-sdk). You can install it in your application by using a build tool such as Gradle. For example, in Gradle, you can add the following dependency to `build.gradle`, replacing `VERSION` with the version of ScalarDL that you want to use.
+
+```gradle
+dependencies {
+    implementation group: 'com.scalar-labs', name: 'scalardl-hashstore-java-client-sdk', version: '<VERSION>'
+}
+```
+
+The Client SDK APIs for HashStore are provided by a service class called <JavadocLink packageName="scalardl-hashstore-java-client-sdk" path="com/scalar/dl/hashstore/client/service" className="HashStoreClientService" />. The following is a code snippet that shows how to use `HashStoreClientService` to manage objects and collections. `HashStoreClientService` provides the same functionalities as the HashStore client commands shown in [Get Started with ScalarDL HashStore](getting-started-hashstore.mdx).
+
+```java
+  // HashStoreClientServiceFactory should always be reused.
+  HashStoreClientServiceFactory factory = new HashStoreClientServiceFactory();
+
+  // HashStoreClientServiceFactory creates a new HashStoreClientService object in every create
+  // method call but reuses the internal objects and connections as much as possible for better
+  // performance and resource usage.
+  HashStoreClientService service = factory.create(new ClientConfig(new File(properties)));
+  try {
+    // put the hash value of an object with metadata.
+    String objectId = ...;
+    String hash = ...;
+    JsonNode metadata = ...;
+    ExecutionResult result = service.putObject(objectId, hash, metadata);
+  } catch (ClientException e) {
+    System.err.println(e.getStatusCode());
+    System.err.println(e.getMessage());
+  }
+
+  factory.close();
+```
+
+:::note
+
+You should always use `HashStoreClientServiceFactory` to create `HashStoreClientService` objects. `HashStoreClientServiceFactory` caches objects that are required to create `HashStoreClientService` and reuses them on the basis of the given configurations, so the `HashStoreClientServiceFactory` object should always be reused.
+
+:::
+
+For more information about `HashStoreClientServiceFactory` and `HashStoreClientService`, see the [`scalardl-hashstore-java-client-sdk` Javadoc](https://javadoc.io/doc/com.scalar-labs/scalardl-hashstore-java-client-sdk/latest/index.html).
+
+## Handle errors
+
+If an error occurs in your application, the Client SDK will return an exception with a status code and an error message with an error code. You should check the status code and the error code to identify the cause of the error. For details about the status code and the error codes, see [Status codes](how-to-write-applications.mdx#status-codes) and [Error codes](how-to-write-applications.mdx#error-codes).
+
+### Implement error handling
+
+The SDK throws <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/exception" className="ClientException" /> when an error occurs. You can handle errors by catching the exception as follows:
+
+```java
+HashStoreClientService service = ...;
+try {
+    // interact with ScalarDL HashStore through a HashStoreClientService object
+} catch (ClientException e) {
+    // e.getStatusCode() returns the status of the error
+}
+```
+
+## Validate your data
+
+In ScalarDL, you occasionally need to validate your data to make sure all the data is in a valid state. Since you can learn the basics of how ScalarDL validates your data in [Write a ScalarDL Application in Java](how-to-write-applications.mdx#validate-your-data), this section mainly describes how you can perform the validation in HashStore.
+
+When validating [assets](data-modeling.mdx#asset) (objects and collections here) in HashStore, you only need to specify an object ID or a collection ID. An example code for validating an object is as follows:
+
+```java
+  HashStoreClientService service = ...
+  try {
+    LedgerValidationResult result = service.validateObject("an_object_ID");
+    // You can also specify age range.
+    // LedgerValidationResult result = service.validateObject("an_object_ID", startAge, endAge);
+  } catch (ClientException e) {
+  }
+```
+
+An example code for validating a collection is as follows:
+
+```java
+  HashStoreClientService service = ...
+  try {
+    LedgerValidationResult result = service.validateCollection("a_collection_ID");
+    // You can also specify age range.
+    // LedgerValidationResult result = service.validateCollection("a_collection_ID", startAge, endAge);
+  } catch (ClientException e) {
+  }
+```
+
+:::note
+
+HashStore internally assigns a dedicated asset ID to an asset that represents an object or a collection. The asset ID consists of a prefix to show the asset type and a key; for example, a prefix `o_` and an object ID for objects, and a prefix `c_` and a collection ID for collections are used. You will see such raw asset IDs in `AssetProof` in `LedgerValidationResult`.
+
+:::
