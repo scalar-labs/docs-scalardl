@@ -1,0 +1,315 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsEnglish
+---
+
+# ScalarDL HashStore Command Reference
+
+This page introduces `scalardl-hashstore`, which is a client command for interacting with ScalarDL HashStore.
+
+## Overview of commands
+
+- **Bootstrap HashStore**
+  - [`bootstrap`](#bootstrap): Bootstrap by registering identity and predefined contracts required to use HashStore.
+- **Manage objects**
+  - [`get-object`](#get-object): Get an object from HashStore.
+  - [`put-object`](#put-object): Put an object to HashStore.
+  - [`compare-object-versions`](#compare-object-versions): Compare object versions.
+- **Manage collections**
+  - [`create-collection`](#create-collection): Create a new collection.
+  - [`get-collection`](#get-collection): Get a collection from HashStore.
+  - [`add-to-collection`](#add-to-collection): Add objects to a collection.
+  - [`remove-from-collection`](#remove-from-collection): Remove objects from a collection.
+  - [`get-collection-history`](#get-collection-history): Get the history of a collection.
+- **Validate the ledger**
+  - [`validate-ledger`](#validate-ledger): Validate a specified object or collection in HashStore.
+
+## `bootstrap`
+
+Bootstrap by registering identity and predefined contracts required to use HashStore.
+
+### Options
+
+| Option                     | Description                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | A configuration file in the .properties format. |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+```console
+scalardl-hashstore bootstrap --properties client.properties
+```
+
+## `get-object`
+
+Get an object from HashStore.
+
+### Options
+
+| Option                     | Description                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | A configuration file in the .properties format. |
+| `--object-id`              | The ID of the object to retrieve.          |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+```console
+scalardl-hashstore get-object --properties client.properties --object-id foo
+```
+
+## `put-object`
+
+Put an object to HashStore.
+
+### Options
+
+| Option                     | Description                                                 |
+|:---------------------------|:------------------------------------------------------------|
+| `--config`, `--properties` | A configuration file in the .properties format.                  |
+| `--object-id`              | The ID of the object to store.                              |
+| `--hash`                   | The hash value of the object.                               |
+| `--metadata`               | Optional metadata as a JSON string.                           |
+| `--put-to-mutable`         | Optional Put operation for a mutable database as a JSON string. |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+Put an object with a hash value.
+
+```console
+scalardl-hashstore put-object --properties client.properties --object-id foo --hash b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c
+```
+
+Put an object with metadata.
+
+```console
+scalardl-hashstore put-object --properties client.properties --object-id foo --hash b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c --metadata '{"note": "updated"}'
+```
+
+## `compare-object-versions`
+
+Compare object versions.
+
+### Options
+
+| Option                     | Description                                                   |
+|:---------------------------|:--------------------------------------------------------------|
+| `--config`, `--properties` | A configuration file in the .properties format.                    |
+| `--object-id`              | The ID of the object to compare versions.                     |
+| `--versions`               | Object versions to compare as a JSON array.                     |
+| `--all`                    | Compare all versions including stored versions in the ledger. |
+| `--verbose`                | Show detailed validation information.                         |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+Compare the latest versions specified in the arguments.
+
+```console
+scalardl-hashstore compare-object-versions --properties client.properties --object-id foo --versions '[{"version_id": "v1", "hash_value": "hash1"}, {"version_id": "v2", "hash_value": "hash2", "metadata": {"note": "updated"}}]'
+```
+
+Compare all versions stored in HashStore.
+
+```console
+scalardl-hashstore compare-object-versions --properties client.properties --object-id foo --versions '[{"version_id": "v1", "hash_value": "hash1"}, {"version_id": "v2", "hash_value": "hash2", "metadata": {"note": "updated"}}]' --all
+```
+
+Compare with the verbose output.
+
+```console
+scalardl-hashstore compare-object-versions --properties client.properties --object-id foo --versions '[{"version_id": "v1", "hash_value": "hash1"}]' --verbose
+```
+
+## `create-collection`
+
+Create a new collection.
+
+### Options
+
+| Option                     | Description                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | A configuration file in the .properties format. |
+| `--collection-id`          | The ID of the collection to create.        |
+| `--object-ids`             | Object IDs to include in the collection.   |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+Create an empty collection.
+
+```console
+scalardl-hashstore create-collection --properties client.properties --collection-id audit_set
+```
+
+Create a collection with initial objects.
+
+```console
+scalardl-hashstore create-collection --properties client.properties --collection-id audit_set --object-ids object1 --object-ids object2
+```
+
+## `get-collection`
+
+Get a collection from HashStore.
+
+### Options
+
+| Option                     | Description                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | A configuration file in the .properties format. |
+| `--collection-id`          | The ID of the collection to retrieve.      |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+```console
+scalardl-hashstore get-collection --properties client.properties --collection-id audit_set
+```
+
+## `add-to-collection`
+
+Add objects to a collection.
+
+### Options
+
+| Option                     | Description                                                         |
+|:---------------------------|:--------------------------------------------------------------------|
+| `--config`, `--properties` | A configuration file in the .properties format.                          |
+| `--collection-id`          | The ID of the collection.                                           |
+| `--object-ids`             | Object IDs to add to the collection.                                |
+| `--force`                  | Skip validation for duplicate object IDs already in the collection. |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+Add objects to a collection.
+
+```console
+scalardl-hashstore add-to-collection --properties client.properties --collection-id audit_set --object-ids object3 --object-ids object4
+```
+
+Add an object with the force flag.
+
+```console
+scalardl-hashstore add-to-collection --properties client.properties --collection-id audit_set --object-ids object3 --force
+```
+
+## `remove-from-collection`
+
+Remove objects from a collection.
+
+### Options
+
+| Option                     | Description                                                    |
+|:---------------------------|:---------------------------------------------------------------|
+| `--config`, `--properties` | A configuration file in the .properties format.                     |
+| `--collection-id`          | The ID of the collection.                                      |
+| `--object-ids`             | Object IDs to remove from the collection.                      |
+| `--force`                  | Skip validation for object IDs that are not in the collection. |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+Remove objects from a collection.
+
+```console
+scalardl-hashstore remove-from-collection --properties client.properties --collection-id audit_set --object-ids object1 --object-ids object2
+```
+
+Remove an object with the force flag.
+
+```console
+scalardl-hashstore remove-from-collection --properties client.properties --collection-id audit_set --object-ids object1 --force
+```
+
+## `get-collection-history`
+
+Get the history of a collection.
+
+### Options
+
+| Option                     | Description                                         |
+|:---------------------------|:----------------------------------------------------|
+| `--config`, `--properties` | A configuration file in the .properties format.          |
+| `--collection-id`          | The ID of the collection.                           |
+| `--limit`                  | Maximum number of recent history entries to return. |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+Get all histories of a collection.
+
+```console
+scalardl-hashstore get-collection-history --properties client.properties --collection-id audit_set
+```
+
+Get the limited history of a collection.
+
+```console
+scalardl-hashstore get-collection-history --properties client.properties --collection-id audit_set --limit 10
+```
+
+## `validate-ledger`
+
+Validate a specified object or collection in HashStore.
+
+### Options
+
+| Option                     | Description                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | A configuration file in the .properties format. |
+| `--object-id`              | The ID of the object to validate.          |
+| `--collection-id`          | The ID of the collection to validate.      |
+| `--start-age`              | The start age for validation range.        |
+| `--end-age`                | The end age for validation range.          |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+Validate an object for all ages.
+
+```console
+scalardl-hashstore validate-ledger --properties client.properties --object-id foo
+```
+
+Validate an object from age 0 to age 10 only.
+
+```console
+scalardl-hashstore validate-ledger --properties client.properties --object-id foo --start-age 0 --end-age 10
+```
+
+Validate a collection for all ages.
+
+```console
+scalardl-hashstore validate-ledger --properties client.properties --collection-id audit_set
+```
+
+Validate a collection from age 0 to age 5 only.
+
+```console
+scalardl-hashstore validate-ledger --properties client.properties --collection-id audit_set --start-age 0 --end-age 5
+```
+
+## Common utility options
+
+You can use the following options in all the commands above.
+
+| Option                | Description                                 |
+|:----------------------|:--------------------------------------------|
+| `-g`, `--use-gateway` | A flag to use the gateway.                  |
+| `-h`, `--help`        | Display the help message of a command.      |
+| `--stacktrace`        | Output the Java stack trace to the `stderr` stream. |
