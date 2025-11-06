@@ -78,12 +78,12 @@ const categories = [
       {
         cell: 1, // Second cell
         links: ['getting-started-hashstore'],
-        labels: ['ScalarDL HashStore を使用']
+        labels: ['ScalarDL HashStore 抽象化を使用']
       },
       {
         cell: 2, // Third cell
         links: ['getting-started-tablestore'],
-        labels: ['ScalarDL TableStore を使用']
+        labels: ['ScalarDL TableStore 抽象化を使用']
       }
     ]
   },
@@ -105,7 +105,7 @@ const categories = [
       {
         cell: 2, // Third cell
         links: ['how-to-write-applications'],
-        labels: ['Java で ScalarDL アプリケーションを書く']
+        labels: ['Ledger 抽象化を使用して ScalarDL アプリケーションを書く']
       }
     ]
   },

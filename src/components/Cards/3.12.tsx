@@ -78,12 +78,12 @@ const categories = [
       {
         cell: 1, // Second cell
         links: ['getting-started-hashstore'],
-        labels: ['Use ScalarDL HashStore']
+        labels: ['Use ScalarDL HashStore Abstraction']
       },
       {
         cell: 2, // Third cell
         links: ['getting-started-tablestore'],
-        labels: ['Use ScalarDL TableStore']
+        labels: ['Use ScalarDL TableStore Abstraction']
       }
     ]
   },
@@ -105,7 +105,7 @@ const categories = [
       {
         cell: 2, // Third cell
         links: ['how-to-write-applications'],
-        labels: ['Write a ScalarDL Application in Java']
+        labels: ['Write a ScalarDL Application with Ledger Abstraction']
       }
     ]
   },
