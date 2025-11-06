@@ -26,12 +26,12 @@ const recentFeatures = [
       {
         cell: 0, // First cell
         links: ['getting-started-hashstore'],
-        labels: ['Use ScalarDL HashStore']
+        labels: ['Use ScalarDL HashStore Abstraction']
       },
       {
         cell: 1, // Second cell
         links: ['getting-started-tablestore'],
-        labels: ['Use ScalarDL TableStore']
+        labels: ['Use ScalarDL TableStore Abstraction']
       },
       {
         cell: 2, // Third cell
