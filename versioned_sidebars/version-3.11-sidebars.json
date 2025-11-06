@@ -63,7 +63,7 @@
         {
           "type": "doc",
           "id": "getting-started",
-          "label": "Use Ledger"
+          "label": "Use Ledger Abstraction"
         }
       ]
     },
@@ -675,7 +675,7 @@
         {
           "type": "doc",
           "id": "getting-started",
-          "label": "Ledger を使用"
+          "label": "Ledger 抽象化を使用"
         }
       ]
     },

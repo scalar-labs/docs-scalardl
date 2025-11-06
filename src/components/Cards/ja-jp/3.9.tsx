@@ -78,7 +78,7 @@ const categories = [
       {
         cell: 1, // Second cell
         links: ['getting-started'],
-        labels: ['ScalarDL Ledger をはじめよう']
+        labels: ['ScalarDL Ledger 抽象化をはじめよう']
       },
       {
         cell: 2, // Third cell

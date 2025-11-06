@@ -78,7 +78,7 @@ const categories = [
       {
         cell: 1, // Second cell
         links: ['getting-started'],
-        labels: ['Getting Started with ScalarDL Ledger']
+        labels: ['Getting Started with ScalarDL Ledger Abstraction']
       },
       {
         cell: 2, // Third cell
