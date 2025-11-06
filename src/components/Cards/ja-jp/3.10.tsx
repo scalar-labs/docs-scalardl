@@ -105,7 +105,7 @@ const categories = [
       {
         cell: 2, // Third cell
         links: ['how-to-write-applications'],
-        labels: ['Java で ScalarDL アプリケーションを書く']
+        labels: ['Ledger 抽象化を使用して ScalarDL アプリケーションを書く']
       }
     ]
   },

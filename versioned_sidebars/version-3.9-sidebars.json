@@ -114,7 +114,7 @@
             {
               "type": "doc",
               "id": "how-to-write-applications",
-              "label": "Write an Application in Java"
+              "label": "Write an Application with Ledger Abstraction"
             }
           ]
         },
@@ -680,7 +680,7 @@
             {
               "type": "doc",
               "id": "how-to-write-applications",
-              "label": "Java でアプリケーションを書く"
+              "label": "Ledger 抽象化を使用したアプリケーションを書く"
             }
           ]
         },
