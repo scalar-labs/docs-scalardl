@@ -773,17 +773,17 @@ const sidebars = {
             // {
             //   type: 'doc',
             //   id: 'how-to-write-applications-with-hashstore',
-            //   label: 'HashStore 抽象化を使用したアプリケーションを書く',
+            //   label: 'HashStore 抽象化を使用してアプリケーションを書く',
             // },
             // {
             //   type: 'doc',
             //   id: 'how-to-write-applications-with-tablestore',
-            //   label: 'TableStore 抽象化を使用したアプリケーションを書く',
+            //   label: 'TableStore 抽象化を使用してアプリケーションを書く',
             // },
             {
               type: 'doc',
               id: 'how-to-write-applications',
-              label: 'Ledger 抽象化を使用したアプリケーションを書く',
+              label: 'Ledger 抽象化を使用してアプリケーションを書く',
             },
           ]
         },
