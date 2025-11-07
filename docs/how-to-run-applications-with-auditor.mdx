@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 import JavadocLink from "/src/theme/JavadocLink.js";
 import DbSpecificSteps from '/src/components/en-us/_getting-started-auditor-db-specific-steps.mdx';
 
-This guide explains how to run a ScalarDL application through ScalarDL Ledger and Auditor. This document assumes that you have already tried the [Get Started with ScalarDL Ledger](getting-started.mdx) tutorial and created your application that integrates ScalarDL by using the Client SDK by referring to the [Write a ScalarDL Application in Java](how-to-write-applications.mdx) guide.
+This guide explains how to run a ScalarDL application through ScalarDL Ledger and Auditor. This document assumes that you have already tried one of the [Quickstart](quickstart-overview.mdx) tutorials and created your application that integrates ScalarDL by using client SDKs by referring to the [Write an Application](develop-write-an-application-overview.mdx) guides.
 
 ## What is ScalarDL Auditor?
 
@@ -271,35 +271,20 @@ You can start using ScalarDL Ledger and Auditor by following the steps below:
 
 </Tabs>
 
-## Download the Client SDK
+## Set up authentication between Ledger and Auditor (digital signature authentication only)
 
-If you need to run ScalarDL commands, you need to download the Client SDK. For instructions, see [Download the Client SDK](getting-started.mdx#download-the-client-sdk).
+When using digital signature authentication, you need to register the Ledger certificate and the Auditor certificate with each other. If you are using HMAC authentication, skip this step.
 
-## Register a certificate or a secret key
-
-Select your authentication method chosen in [Decide on an authentication method](#decide-on-an-authentication-method), and follow the instructions to configure the authentication.
-
-<Tabs groupId="authentication" queryString>
-  <TabItem value="digital-signature" label="Digital signature">
-
-For the digital-signature authentication method, you need to register the following certificates:
-
-- Register clients' certificates to Ledger and Auditor
-- Register Ledger's certificate to Auditor.
-- Register Auditor's certificate to Ledger.
-
-You can register these certificates by using the `register-cert` command. For details about this command, see the [ScalarDL Client Command Reference](scalardl-command-reference.mdx#register-cert). 
+To register the Ledger and Auditor certificates, you need to run the client commands, which are included in the Client SDK. To get the Client SDK, see [Download the Client SDK](getting-started.mdx#download-the-client-sdk). After downloading it, run the following commands:
 
 ```console
-scalardl register-cert --properties <CLIENT_PROPERTIES_FILE>
 scalardl register-cert --properties <LEDGER_AS_CLIENT_PROPERTIES_FILE>
 scalardl register-cert --properties <AUDITOR_AS_CLIENT_PROPERTIES_FILE>
 ```
 
-Specifically, in the `scalardl-samples` environment, register the certificates by running the command located at `client/bin/scalardl` with the sample property files found in `../fixture/` as follows.
+Specifically, in the `scalardl-samples` environment, you can register the certificates by running the following commands with the sample property files found in `../fixture/`:
 
 ```console
-client/bin/scalardl register-cert --properties ../fixture/client.properties
 client/bin/scalardl register-cert --properties ../fixture/ledger.as.client.properties
 client/bin/scalardl register-cert --properties ../fixture/auditor.as.client.properties
 ```
@@ -310,31 +295,65 @@ Do not use the sample private key and certificate in production environments. Fo
 
 :::
 
-You can also register certificates by using <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> in the [ScalarDL Java Client SDK](how-to-write-applications.mdx#use-the-scalardl-client-sdk).
+## Set up clients for the HashStore, TableStore, or Ledger abstractions
 
-  </TabItem>
-  <TabItem value="hmac" label="HMAC">
+Depending on the abstraction that your application is based on (specifically, HashStore, TableStore, or Ledger), the setup instructions are different. Select an abstraction and follow the instructions.
 
-For the HMAC authentication method, you can register a secret key by using the `register-secret` command. For details about this command, see the [ScalarDL Client Command Reference](scalardl-command-reference.mdx#register-secret).
+<Tabs groupId="abstractions" queryString>
+
+<TabItem value="hashstore" label="HashStore" default>
+
+<h3>Bootstrap HashStore clients</h3>
+
+When creating `HashStoreClientService` in your application, the client certificate or secret key and the necessary contracts for using HashStore are automatically registered based on the configuration in `ClientConfig`. Thus, you don't have to manually bootstrap HashStore. If you would like to do it manually, for example, for testing purposes, download the HashStore Client SDK by following [Download the Client SDK](getting-started-hashstore.mdx#download-the-client-sdk) and run the following command.
 
 ```console
-scalardl register-secret --properties <CLIENT_PROPERTIES_FILE>
+scalardl-hashstore bootstrap --properties <CLIENT_PROPERTIES_FILE>
 ```
 
-You can also register secrets by using <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> of [the ScalarDL Java Client SDK](how-to-write-applications.mdx#use-the-scalardl-client-sdk).
+</TabItem>
 
-  </TabItem>
-</Tabs>
+<TabItem value="tablestore" label="TableStore">
 
-## Register contracts and functions
+<h3>Bootstrap TableStore clients</h3>
 
-You can register contracts by using the `register-contract` command. For details about this command, see the [ScalarDL Client Command Reference](scalardl-command-reference.mdx#register-contract).
+When creating `TableStoreClientService` in your application, the client certificate or secret key and the necessary contracts for using HashStore are automatically registered based on the configuration in `ClientConfig`. Thus, you don't have to manually bootstrap TableStore. If you would like to do it manually, for example, for testing purposes, download the TableStore Client SDK by following [Download the Client SDK](getting-started-tablestore.mdx#download-the-client-sdk) and run the following command.
+
+```console
+scalardl-tablestore bootstrap --properties <CLIENT_PROPERTIES_FILE>
+```
+
+</TabItem>
+
+<TabItem value="ledger" label="Ledger">
+
+<h3>Bootstrap Ledger clients</h3>
+
+Register the client identity and system contracts by running the following `bootstrap` command:
+
+```console
+scalardl bootstrap --properties <CLIENT_PROPERTIES_FILE>
+```
+
+Specifically, in the `scalardl-samples` environment, you can use the command located at `client/bin/scalardl` with the sample property files found in `../fixture/` as follows.
+
+```console
+client/bin/scalardl bootstrap --properties ../fixture/client.properties
+```
+
+The bootstrap command registers the client certificate or secret key based on the authentication configuration done in [Decide on an authentication method](#decide-on-an-authentication-method).
+
+You can also bootstrap by using <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> in the [ScalarDL Java Client SDK](how-to-write-applications.mdx#use-the-scalardl-client-sdk).
+
+<h3>Register contracts and functions</h3>
+
+You can register contracts by using the `register-contract` command.
 
 ```console
 scalardl register-contract --properties <CLIENT_PROPERTIES_FILE> --contract-id <CONTRACT_ID> --contract-binary-name <CONTRACT_BINARY_NAME> --contract-class-file <CONTRACT_CLASS_FILE>
 ```
 
-You can register functions by using the `register-function` command. For details about this command, see the [ScalarDL Client Command Reference](scalardl-command-reference.mdx#register-function).
+You can register functions by using the `register-function` command.
 
 ```console
 scalardl register-function --properties <CLIENT_PROPERTIES_FILE> --function-id <FUNCTION_ID> --function-binary-name <FUNCTION_BINARY_NAME> --function-class-file <FUNCTION_CLASS_FILE>
@@ -342,33 +361,18 @@ scalardl register-function --properties <CLIENT_PROPERTIES_FILE> --function-id <
 
 You can also register contracts and functions by using <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> in the [ScalarDL Java Client SDK](how-to-write-applications.mdx#use-the-scalardl-client-sdk).
 
-If you are using generic contracts, see [Register the generic contracts and functions](use-generic-contracts.mdx#register-the-generic-contracts-and-functions) to register contracts and functions.
+</TabItem>
 
-## Run an application
+</Tabs>
 
-Now that you have registered contracts and functions from a client, you can now run your application that integrates ScalarDL.
+## Run your application
 
-## Validate your data in your application
+Now that you have registered the necessary identities and contracts, you can run your application that integrates ScalarDL.
 
-You can validate your data by using a `ClientService` API described in [Validate your data](how-to-write-applications.mdx#validate-your-data) or by using a client CLI command. For both cases, you need to build and register the [ValidateLedger](https://github.com/scalar-labs/scalardl-java-client-sdk/blob/master/src/main/java/com/scalar/dl/client/contract/ValidateLedger.java) contract before validation, because it internally uses contract execution when using ScalarDL Auditor.
+## See also
 
-You can build the validation contract by running the following command in the ScalarDL Java Client SDK repository. Make sure to check out a specific version like `v3.11.0`.
+For details about each command, see the following command references:
 
-```console
-git clone https://github.com/scalar-labs/scalardl-java-client-sdk.git
-cd scalardl-java-client-sdk/
-git checkout <SCALARDL_VERSION>
-./gradlew assemble
-```
-
-Running the commands above will generate `build/classes/java/main/com/scalar/dl/client/contract/ValidateLedger.class`. Then, you can register it by using the `register-contract` command. `validate-ledger` is the default contract ID that the client specifies when doing validation. If you want to change it, set `scalar.dl.client.auditor.linearizable_validation.contract_id` to your own validation contract ID in the client configuration.
-
-```console
-scalardl register-contract --properties <CLIENT_PROPERTIES_FILE> --contract-id validate-ledger --contract-binary-name com.scalar.dl.client.contract.ValidateLedger --contract-class-file <PATH_TO_VALIDATE_LEDGER_CLASS>
-```
-
-You can validate your data by running the `validate-ledger` command. For details about this command, see [ScalarDL Client Command Reference](scalardl-command-reference.mdx#validate-ledger).
-
-```console
-scalardl validate-ledger --properties <CLIENT_PROPERTIES_FILE> --asset-id="<ASSET_ID>"
-```
+- [ScalarDL Client Command Reference](scalardl-command-reference.mdx)
+- [ScalarDL HashStore Command Reference](scalardl-hashstore-command-reference.mdx)
+- [ScalarDL TableStore Command Reference](scalardl-tablestore-command-reference.mdx)

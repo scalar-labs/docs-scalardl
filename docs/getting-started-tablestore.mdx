@@ -35,7 +35,7 @@ Then, download the tools by running the following command:
 ```console
 curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-tablestore-java-client-sdk-$VERSION.zip
 unzip scalardl-tablestore-java-client-sdk-$VERSION.zip
-mv scalardl-tablestore-java-client-sdk-$VERSION client
+mv scalardl-tablestore-java-client-sdk-$VERSION tablestore
 ```
 
 ## Configure the client properties
@@ -71,7 +71,7 @@ Do not use the sample private key and certificate in production environments. Fo
 Next, you can bootstrap TableStore by running the following command:
 
 ```console
-client/bin/scalardl-tablestore bootstrap --properties client.properties
+tablestore/bin/scalardl-tablestore bootstrap --properties client.properties
 ```
 
 The bootstrap command internally registers identity information (a certificate or secret) and predefined contracts necessary to use TableStore.
@@ -91,11 +91,11 @@ Now you can execute SQL statements with TableStore. In this section, you'll try 
 You can create the sample table by running the following commands:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "CREATE TABLE employee (id STRING PRIMARY KEY, department STRING)"
 ```
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "CREATE TABLE department (id STRING PRIMARY KEY)"
 ```
 
@@ -104,7 +104,7 @@ When creating a table, you need to specify the name and the primary key. You can
 You can show the created tables by running the following command:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "SELECT * FROM information_schema.tables"
 ```
 
@@ -133,26 +133,26 @@ Result:
 Next, insert several `employee` records by running the following commands:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "INSERT INTO employee VALUES {'id': '1001', 'name': 'Alice', 'department': 'sales', 'salary': 654.3}"
 ```
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "INSERT INTO employee VALUES {'id': '1002', 'name': 'Bob', 'department': 'sales', 'salary': 543.2}"
 ```
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "INSERT INTO employee VALUES {'id': '1003', 'name': 'Carol', 'department': 'engineering', 'salary': 654.3}"
 ```
 
 Insert the corresponding `department` records as well by running the following commands:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "INSERT INTO department VALUES {'id': 'sales', 'location': 'Shinjuku', 'phone': '000-1234'}"
 ```
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "INSERT INTO department VALUES {'id': 'engineering', 'location': 'Shibuya', 'phone': '000-4321'}"
 ```
 
@@ -161,7 +161,7 @@ client/bin/scalardl-tablestore execute-statement --properties client.properties 
 Then, check the inserted records. You need to specify at least a primary key or index key to select records. For example, you can get an `employee` record by specifying the primary key by running the following command:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "SELECT id, name, department FROM employee WHERE id = '1001'"
 ```
 
@@ -179,7 +179,7 @@ Result:
 You can also specify an index key to select records by running the following command:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "SELECT id, name, department FROM employee WHERE department = 'sales'"
 ```
 
@@ -201,7 +201,7 @@ Result:
 If you want to filter records, specify additional conditions by running the following command:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "SELECT id, name, department FROM employee WHERE department = 'sales' AND salary < 600"
 ```
 
@@ -220,7 +220,7 @@ Result:
 You can also join the two tables by running the following command:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "SELECT * FROM employee JOIN department ON employee.department = department.id WHERE employee.department = 'engineering'"
 ```
 
@@ -244,7 +244,7 @@ Result:
 You can update the `employee` records by running the following command:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "UPDATE employee SET salary = 754.3 WHERE department = 'engineering'"
 ```
 
@@ -255,7 +255,7 @@ Make sure to specify at least a primary key or an index key to update the record
 You can get the update history of a record by running the following command:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "SELECT history() FROM employee WHERE id = '1003'"
 ```
 
@@ -285,7 +285,7 @@ Result:
 If you want to limit the number of versions (ages), specify the `LIMIT` clause by running the following command:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "SELECT history() FROM employee WHERE id = '1003' LIMIT 1"
 ```
 
@@ -311,7 +311,7 @@ In ScalarDL, you occasionally need to validate your data to make sure all the da
 You can validate the table schema by running the following command:
 
 ```console
-client/bin/scalardl-tablestore validate-ledger --properties client.properties \
+tablestore/bin/scalardl-tablestore validate-ledger --properties client.properties \
 --table-name employee
 ```
 
@@ -334,7 +334,7 @@ You should get a result like the following:
 You can validate the record by running the following command:
 
 ```console
-client/bin/scalardl-tablestore validate-ledger --properties client.properties \
+tablestore/bin/scalardl-tablestore validate-ledger --properties client.properties \
 --table-name employee --primary-key-column-name id --column-value '"1001"'
 ```
 
@@ -363,7 +363,7 @@ You should get a result like the following:
 You can validate the index record by running the following command:
 
 ```console
-client/bin/scalardl-tablestore validate-ledger --properties client.properties \
+tablestore/bin/scalardl-tablestore validate-ledger --properties client.properties \
 --table-name employee --index-key-column-name department --column-value '"sales"'
 ```
 
