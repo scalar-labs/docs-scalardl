@@ -37,7 +37,7 @@ Then, download the tools by running the following command:
 ```console
 curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-hashstore-java-client-sdk-$VERSION.zip
 unzip scalardl-hashstore-java-client-sdk-$VERSION.zip
-mv scalardl-hashstore-java-client-sdk-$VERSION client
+mv scalardl-hashstore-java-client-sdk-$VERSION hashstore
 ```
 
 ## Configure the client properties
@@ -73,7 +73,7 @@ Do not use the sample private key and certificate in production environments. Fo
 Next, you can bootstrap HashStore by running the following command:
 
 ```console
-client/bin/scalardl-hashstore bootstrap --properties client.properties
+hashstore/bin/scalardl-hashstore bootstrap --properties client.properties
 ```
 
 The bootstrap command internally registers identity information (a certificate or secret) and predefined contracts necessary to use HashStore.
@@ -104,7 +104,7 @@ You should get the following hash value:
 You can put the hash value by running the following command:
 
 ```console
-client/bin/scalardl-hashstore put-object --properties client.properties \
+hashstore/bin/scalardl-hashstore put-object --properties client.properties \
 --object-id a.txt \
 --hash 5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0 \
 --metadata '{"note": "created"}'
@@ -126,7 +126,7 @@ b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c  a.txt
 You can then update the hash value as follows:
 
 ```console
-client/bin/scalardl-hashstore put-object --properties client.properties \
+hashstore/bin/scalardl-hashstore put-object --properties client.properties \
 --object-id a.txt \
 --hash b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c \
 --metadata '{"note": "updated"}'
@@ -135,7 +135,7 @@ client/bin/scalardl-hashstore put-object --properties client.properties \
 You can also get the latest status of the object by running the following command:
 
 ```console
-client/bin/scalardl-hashstore get-object --properties client.properties \
+hashstore/bin/scalardl-hashstore get-object --properties client.properties \
 --object-id a.txt
 ```
 
@@ -163,7 +163,7 @@ If you cannot get the hash value of the older version of the `a.txt` file in you
 :::
 
 ```console
-client/bin/scalardl-hashstore compare-object-versions --properties client.properties \
+hashstore/bin/scalardl-hashstore compare-object-versions --properties client.properties \
 --object-id a.txt \
 --versions '[{"version_id": "v2", "hash_value": "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c"}, {"version_id": "v1", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0"}]}'
 ```
@@ -189,7 +189,7 @@ Alice updated this file
 Now the hash value of the latest version is `1f75d715648a3b4b3a33ecd7428a3e7139d9357da7d38735c23bf38618ecf9c7`. You can execute validation by running the following command:
 
 ```console
-client/bin/scalardl-hashstore compare-object-versions --properties client.properties \
+hashstore/bin/scalardl-hashstore compare-object-versions --properties client.properties \
 --object-id a.txt \
 --versions '[{"version_id": "v2", "hash_value": "1f75d715648a3b4b3a33ecd7428a3e7139d9357da7d38735c23bf38618ecf9c7"}, {"version_id": "v1", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0"}]}'
 ```
@@ -220,7 +220,7 @@ For example, in object authenticity management, the `put-object` command (and th
 The third step above must be done in an ACID manner by executing the following command with the `--put-to-mutable` option:
 
 ```console
-client/bin/scalardl-hashstore put-object --properties client.properties \
+hashstore/bin/scalardl-hashstore put-object --properties client.properties \
 --object-id a.txt \
 --hash 5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0 \
 --put-to-mutable '{...}'
@@ -256,7 +256,7 @@ If a system cannot guarantee that an audit set has not been changed unexpectedly
 You can create a collection for an audit set by running the following command:
 
 ```console
-client/bin/scalardl-hashstore create-collection --properties client.properties \
+hashstore/bin/scalardl-hashstore create-collection --properties client.properties \
 --collection-id audit_set --object-ids a.txt --object-ids b.txt
 ```
 
@@ -265,21 +265,21 @@ The collection ID must be a unique ID that identifies the collection. You can sp
 You can also add objects to the collection by running the following command:
 
 ```console
-client/bin/scalardl-hashstore add-to-collection --properties client.properties \
+hashstore/bin/scalardl-hashstore add-to-collection --properties client.properties \
 --collection-id audit_set --object-ids c.txt --object-ids d.txt
 ```
 
 And you can remove objects from the collection by running the following command:
 
 ```console
-client/bin/scalardl-hashstore remove-from-collection --properties client.properties \
+hashstore/bin/scalardl-hashstore remove-from-collection --properties client.properties \
 --collection-id audit_set --object-ids a.txt
 ```
 
 You can get the latest status of the collection by running the following command:
 
 ```console
-client/bin/scalardl-hashstore get-collection --properties client.properties \
+hashstore/bin/scalardl-hashstore get-collection --properties client.properties \
 --collection-id audit_set
 ```
 
@@ -293,7 +293,7 @@ Result:
 To confirm that the audit set has not been changed unexpectedly, you can check the update history of the audit set by running the following command:
 
 ```console
-client/bin/scalardl-hashstore get-collection-history --properties client.properties \
+hashstore/bin/scalardl-hashstore get-collection-history --properties client.properties \
 --collection-id audit_set
 ```
 
@@ -326,7 +326,7 @@ In ScalarDL, you occasionally need to validate your data to make sure all the da
 You can validate an object by running the following command:
 
 ```console
-client/bin/scalardl-hashstore validate-ledger --properties client.properties \
+hashstore/bin/scalardl-hashstore validate-ledger --properties client.properties \
 --object-id a.txt
 ```
 
@@ -349,7 +349,7 @@ You should get a result like the following:
 You can validate a collection by running the following command:
 
 ```console
-client/bin/scalardl-hashstore validate-ledger --properties client.properties \
+hashstore/bin/scalardl-hashstore validate-ledger --properties client.properties \
 --collection-id audit_set
 ```
 
