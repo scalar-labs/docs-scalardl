@@ -78,7 +78,7 @@ const categories = [
       {
         cell: 1, // Second cell
         links: ['getting-started'],
-        labels: ['Getting Started with ScalarDL Ledger']
+        labels: ['Getting Started with ScalarDL Ledger Abstraction']
       },
       {
         cell: 2, // Third cell
@@ -105,7 +105,7 @@ const categories = [
       {
         cell: 2, // Third cell
         links: ['how-to-write-applications'],
-        labels: ['Write a ScalarDL Application in Java']
+        labels: ['Write a ScalarDL Application with Ledger Abstraction']
       }
     ]
   },
