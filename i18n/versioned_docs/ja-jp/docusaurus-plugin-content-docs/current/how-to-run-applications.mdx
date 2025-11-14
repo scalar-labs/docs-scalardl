@@ -7,137 +7,179 @@ displayed_sidebar: docsJapanese
 
 # ScalarDL Ledger を介して ScalarDL アプリケーションを実行する
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 import JavadocLink from "/src/theme/JavadocLink.js";
 import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このガイドでは、ScalarDL Ledger を介して ScalarDL アプリケーションを実行する方法を説明します。このドキュメントは、すでに [ScalarDL Ledger をはじめよう](getting-started.mdx)チュートリアルを試し、[Java で ScalarDL アプリケーションを書く](how-to-write-applications.mdx)ガイドを参考にして Client SDK を使った ScalarDL アプリケーションを作成済みであることを前提としています。
+このガイドでは、ScalarDL Ledger を介して ScalarDL アプリケーションを実行する方法を説明します。このドキュメントは、すでに[クイックスタート](quickstart-overview.mdx)チュートリアルのいずれかを試し、[アプリケーションを書く](develop-write-an-application-overview.mdx)ガイドを参考にしてクライアント SDK を使用して ScalarDL を統合したアプリケーションを作成済みであることを前提としています。
 
-## 設定する
+## 設定を決定する
 
-Ledger および Ledger と通信するクライアントの設定を行う必要があります。
+Ledger を介して ScalarDL アプリケーションを実行する前に、まず Ledger および Ledger と相互作用するクライアントを設定する必要があります。
 
-以下の重要なオプションを決定し、設定してください。
+以下に説明するとおり、設定する必要がある重要なオプションと決定事項がいくつかあります。
 
-### Auditor を無効化にする
+### Auditor を無効化する
 
-Ledger のみでアプリケーションを実行する場合は Auditor を無効化する必要があります。Auditor の無効化は、クライアントと Ledger の設定で以下のように行います。
+Ledger のみを介してアプリケーションを実行するため、Auditor を無効化する必要があります。Auditor の無効化は、以下のようにクライアントと Ledger の設定で行う必要があります。
 
-- クライアントの設定で `scalar.dl.client.auditor.enabled` を `false` に設定します。 (デフォルト値が `false` のため、省略可能です)
-- Ledger の設定で `scalar.dl.ledger.auditor.enabled` を `false` に設定します。 (デフォルト値が `false` のため、省略可能です)
+- クライアントの設定で `scalar.dl.client.auditor.enabled` を `false` に設定します。（`false` がデフォルト値のため、このプロパティを省略することもできます。）
+- Ledger の設定で `scalar.dl.ledger.auditor.enabled` を `false` に設定します。（`false` がデフォルト値のため、このプロパティを省略することもできます。）
 
 :::note
 
-`scalardl-samples` 環境を利用している場合は、対応するストレージの `ledger.properties` ファイルを参照してください。
+`scalardl-samples` 環境を使用している場合は、対応するストレージの `ledger.properties` ファイルを参照してください。
 
 :::
 
-設定の詳細は以下を参照してください。
+設定の詳細については、以下を参照してください：
 
-- [クライアントの設定](configurations.mdx#クライアントの設定)
-- [Ledger の設定](configurations.mdx#ledger-の設定)
+- [クライアントの設定](configurations.mdx#client-configurations)
+- [Ledger の設定](configurations.mdx#ledger-configurations)
 
 ### 認証方式を決定する
 
-クライアントの認証方式として、電子署名または HMAC のいずれかを選択する必要があります。電子署名方式は認証に加えて否認防止も提供しますが遅く、HMAC 方式は認証のみですが高速です。
+クライアントの認証方式として、電子署名または HMAC のいずれかを選択する必要があります。簡単に比較すると、電子署名方式は認証に加えて否認防止も提供しますが低速であり、HMAC 方式は認証のみを提供しますが高速です。
 
-認証方法は以下のように設定できます。クライアントと Ledger の両方で同じ方法 (`digital-signature` または `hmac`) を設定する必要があります。
+認証方式は以下のように設定できます。クライアントと Ledger の両方で同じ方式（`digital-signature` または `hmac`）を設定する必要があります。
 
-- クライアントの設定で `scalar.dl.client.authentication.method` を `digital-signature` または `hmac` に設定します。
-- Ledger の設定で `scalar.dl.ledger.authentication.method` を `digital-signature` または `hmac` に設定します。
+- クライアントの設定で、`scalar.dl.client.authentication.method` を `digital-signature` または `hmac`（選択した方式に応じて）に設定します。
+- Ledger の設定で、`scalar.dl.ledger.authentication.method` を `digital-signature` または `hmac`（選択した方式に応じて）に設定します。
 
-また、秘密情報の準備も必要です。電子署名方式の場合は証明書と秘密鍵、HMAC 方式の場合はシークレットキーを用意してください。ScalarDL の認証について詳しくは [ScalarDL 認証ガイド](./authentication.mdx)を参照してください。
+また、秘密情報を準備する必要があります。電子署名方式を使用する場合は証明書と秘密鍵を準備する必要があります。HMAC 方式を使用する場合は、シークレットキーを準備する必要があります。ScalarDL の認証についてより詳しくは、[ScalarDL 認証ガイド](./authentication.mdx)をご覧ください。
 
-設定の詳細は以下を参照してください。
+設定の詳細については、以下を参照してください：
 
-- [クライアントの設定](configurations.mdx#クライアントの設定)
-- [Ledger の設定](configurations.mdx#ledger-の設定)
+- [クライアントの設定](configurations.mdx#client-configurations)
+- [Ledger の設定](configurations.mdx#ledger-configurations)
 
-### データベース設定を決定する
+### データベースの設定
 
-Ledger は ScalarDB を利用してデータベースを操作します。ScalarDB がサポートする様々なデータベース上で ScalarDL を実行できます。アプリケーション要件に応じて利用するデータベースを決定し、いくつかの ScalarDB パラメータを設定してください。
+Ledger は ScalarDB を使用してデータベースとやり取りするため、ScalarDB がサポートするさまざまなデータベース上で ScalarDL を実行できます。そのため、アプリケーションの要件に基づいて ScalarDB がサポートするデータベースを決定し、いくつかの ScalarDB パラメータを設定する必要があります。
 
 ScalarDB パラメータの詳細については、[ScalarDB の設定](https://scalardb.scalar-labs.com/ja-jp/docs/latest/configurations/)も参照してください。
 
-#### 下位のデータベース
+#### 基盤データベース
 
-使用するデータベースの設定方法:
+使用するデータベースは以下のように設定できます：
 
-- Ledger の設定で `scalar.db.storage`, `scalar.db.contact_points`, `scalar.db.username`, `scalar.db.password` を利用するデータベースに合わせて設定します。
+- Ledger の設定で、使用するデータベースに基づいて `scalar.db.storage`、`scalar.db.contact_points`、`scalar.db.username`、および `scalar.db.password` を適切な値に設定します。
 
-ScalarDB を介して ScalarDL でサポートされるデータベースとそのバージョンについては、[要件](requirements.mdx#データベース)を参照してください。
+ScalarDB を介して ScalarDL でサポートされるデータベースとそのバージョンについては、[要件](requirements.mdx#databases)を参照してください。
 
 :::warning
 
-アプリケーションが Function 機能を介してテーブルを読み書きし、そのテーブルが ScalarDB アプリケーションからも直接アクセスされる場合は、ここで選択したデータベースを適切に設定する必要があります。具体的には、一貫性を保証するために、ScalarDL アプリケーションと ScalarDB アプリケーションの両方が同じ Coordinator テーブルを参照する必要があります。
+Function 機能を介してアプリケーションがテーブルの読み書きを行い、そのテーブルが ScalarDB アプリケーションからも直接アクセスされる場合は、ここで選択したデータベースを適切に設定する必要があります。具体的には、一貫性を保証するために、ScalarDL アプリケーションと ScalarDB アプリケーションの両方が同じ Coordinator テーブルを参照する必要があります。
 
 :::
 
 #### 分離レベル
 
-Ledger は ScalarDB の [Consensus Commit](https://scalardb.scalar-labs.com/ja-jp/docs/latest/consensus-commit/) トランザクションマネージャを利用してトランザクションを管理します。トランザクションマネージャは、トランザクションの分離性を保証し、整合性・正確性を担保します。
+Ledger は、トランザクションを管理するために ScalarDB の [Consensus Commit](https://scalardb.scalar-labs.com/ja-jp/docs/latest/consensus-commit/) トランザクションマネージャに依存しています。トランザクションマネージャは、トランザクションの整合性と正確性を保証するために重要な、トランザクションの分離プロパティを保証する責任があります。
 
-Ledger の分離レベルは以下のように設定できます。どの分離レベルを使うべきかわからない場合は、`SERIALIZABLE` を使用してください。
+Ledger の分離レベルは以下のように設定できます。どの分離レベルを使用するかわからない場合は、`SERIALIZABLE` を使用してください。
 
-- Ledger の設定で `scalar.db.consensus_commit.isolation_level` に希望する分離レベルを設定します。デフォルト値は `SNAPSHOT` です。
+- Ledger の設定で、`scalar.db.consensus_commit.isolation_level` を選択した分離レベルに設定します。デフォルト値は `SNAPSHOT` です。
 
 #### 制限事項
 
-ScalarDL は ScalarDB を活用していますが、以下の ScalarDB 機能は ScalarDL の一貫性保証メカニズムと互換性がありません。
+ScalarDL は ScalarDB を活用していますが、以下の ScalarDB 機能は ScalarDL の整合性保証メカニズムと互換性がありません：
 
-- [Coordinator テーブルのグループコミット](https://scalardb.scalar-labs.com/ja-jp/docs/latest/api-guide#coordinator-テーブルのグループコミット) (`scalar.db.consensus_commit.coordinator.group_commit.enabled` は `false` である必要があります)
-- [パフォーマンス関連の設定](https://scalardb.scalar-labs.com/ja-jp/docs/latest/configurations#パフォーマンス関連の設定)における Coordinator テーブルへの書き込み省略最適化 (`scalar.db.consensus_commit.coordinator.write_omission_on_read_only.enabled` は `false` である必要があります)
+- [Coordinator テーブルのグループコミット](https://scalardb.scalar-labs.com/ja-jp/docs/latest/api-guide/#group-commit-for-the-coordinator-table)（`scalar.db.consensus_commit.coordinator.group_commit.enabled` は `false` である必要があります。）
+- [パフォーマンス関連の設定](https://scalardb.scalar-labs.com/ja-jp/docs/latest/configurations#performance-related-configurations)における Coordinator 書き込み省略最適化（`scalar.db.consensus_commit.coordinator.write_omission_on_read_only.enabled` は `false` である必要があります。）
 
 ### その他の設定を決定する
 
-クライアントと Ledger には TLS や gRPC などの設定を追加で設定可能です。詳細は以下を参照してください。
+クライアントと Ledger には、TLS や gRPC 設定などの他の設定も適用できます。設定の詳細については、以下を参照してください：
 
-- [クライアントの設定](configurations.mdx#クライアントの設定)
-- [Ledger の設定](configurations.mdx#ledger-の設定)
+- [クライアントの設定](configurations.mdx#client-configurations)
+- [Ledger の設定](configurations.mdx#ledger-configurations)
 
 ## Ledger を起動する
 
-Ledger とクライアントの設定後、Ledger を起動します。
+Ledger とクライアントを設定した後、Ledger を起動する必要があります。
 
-Docker Compose を使ったローカルでの Ledger 起動方法は [データベースを選択して ScalarDL を起動します](getting-started.mdx#データベースを選択して-scalardl-を起動します)を参照してください。ローカルまたはクラウドベースの Kubernetes 環境での起動方法は [ローカル Kubernetes 環境に ScalarDL をデプロイする](deploy-local-environment-overview.mdx)または[クラウドベースの Kubernetes 環境に ScalarDL をデプロイする](deploy-managed-kubernetes-environment-overview.mdx)を参照してください。
+Docker Compose を使用して Ledger をローカルで起動する方法の詳細については、[お好みのデータベースで ScalarDL を起動する](getting-started.mdx#start-up-scalardl-with-your-preferred-database)を参照してください。ローカルまたはクラウドベースの Kubernetes 環境で Ledger を起動する方法については、それぞれ [ローカル Kubernetes 環境に ScalarDL をデプロイする](deploy-local-environment-overview.mdx)または[クラウドベース Kubernetes 環境に ScalarDL をデプロイする](deploy-managed-kubernetes-environment-overview.mdx)を参照してください。
 
-## Client SDK をダウンロードする
+## HashStore、TableStore、または Ledger 抽象化のクライアントを設定する
 
-ScalarDL コマンドを実行する場合は Client SDK をダウンロードしてください。手順は [Client SDK のダウンロード](getting-started.mdx#client-sdk-をダウンロードする)を参照してください。
+アプリケーションが基づく抽象化（具体的には、HashStore、TableStore、または Ledger）に応じて、設定手順が異なります。抽象化を選択して、手順に従ってください。
 
-## クライアントから証明書またはシークレットキーを登録する
+<Tabs groupId="abstractions" queryString>
 
-電子署名認証方式の場合、以下のコマンドで証明書を Ledger に登録できます。詳細は [ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx#register-cert)を参照してください。
+<TabItem value="hashstore" label="HashStore" default>
 
-```shell
-scalardl register-cert --properties <CLIENT_PROPERTIES_FILE>
+<h3>HashStore クライアントをブートストラップする</h3>
+
+アプリケーションで `HashStoreClientService` を作成する際、クライアント証明書またはシークレットキーと HashStore を使用するために必要なコントラクトが、`ClientConfig` の設定に基づいて自動的に登録されます。したがって、HashStore クライアントを手動でブートストラップする必要はありません。テスト目的などで手動で実行したい場合は、[Client SDK をダウンロードする](getting-started-hashstore.mdx#download-the-client-sdk)に従って HashStore Client SDK をダウンロードし、以下のコマンドを実行してください。
+
+```console
+scalardl-hashstore bootstrap --properties <CLIENT_PROPERTIES_FILE>
 ```
 
-HMAC 認証方式の場合、以下のコマンドでシークレットキーを Ledger に登録できます。詳細は [ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx#register-secret)を参照してください。
+</TabItem>
 
-```shell
-scalardl register-secret --properties <CLIENT_PROPERTIES_FILE>
+<TabItem value="tablestore" label="TableStore">
+
+<h3>TableStore クライアントをブートストラップする</h3>
+
+アプリケーションで `TableStoreClientService` を作成する際、クライアント証明書またはシークレットキーと TableStore を使用するために必要なコントラクトが、`ClientConfig` の設定に基づいて自動的に登録されます。したがって、TableStore クライアントを手動でブートストラップする必要はありません。テスト目的などで手動で実行したい場合は、[Client SDK をダウンロードする](getting-started-tablestore.mdx#download-the-client-sdk)に従って TableStore Client SDK をダウンロードし、以下のコマンドを実行してください。
+
+```console
+scalardl-tablestore bootstrap --properties <CLIENT_PROPERTIES_FILE>
 ```
 
-また、<JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を利用して [ScalarDL Java Client SDK](how-to-write-applications.mdx#scalardl-client-sdk-を使用する) から証明書や秘密鍵の登録も可能です。
+</TabItem>
 
-## クライアントからコントラクトやファンクションを登録する
+<TabItem value="ledger" label="Ledger">
 
-以下のコマンドでコントラクトを Ledger に登録できます。詳細は [ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx#register-contract)を参照してください。
+<h3>クライアントコマンドをダウンロードする</h3>
 
-```shell
+Ledger クライアントを設定する際には、Client SDK に含まれるクライアントコマンドを実行する必要があります。Client SDK を取得するには、[Client SDK をダウンロードする](getting-started.mdx#download-the-client-sdk)を参照してください。
+
+<h3>Ledger クライアントをブートストラップする</h3>
+
+以下の `bootstrap` コマンドを実行して、クライアント ID とシステムコントラクトを登録します：
+
+```console
+scalardl bootstrap --properties <CLIENT_PROPERTIES_FILE>
+```
+
+ブートストラップコマンドは、[認証方式を決定する](#認証方式を決定する)で行った認証設定に基づいて、クライアント証明書またはシークレットキーを登録します。
+
+[ScalarDL Java Client SDK](how-to-write-applications.mdx#use-the-scalardl-client-sdk) の <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を使用してブートストラップすることもできます。
+
+<h3>コントラクトと関数を登録する</h3>
+
+`register-contract` コマンドを使用してコントラクトを登録できます。
+
+```console
 scalardl register-contract --properties <CLIENT_PROPERTIES_FILE> --contract-id <CONTRACT_ID> --contract-binary-name <CONTRACT_BINARY_NAME> --contract-class-file <CONTRACT_CLASS_FILE>
 ```
 
-ファンクションは以下のコマンドで Ledger に登録できます。詳細は [ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx#register-function)を参照してください。
+`register-function` コマンドを使用して関数を登録できます。
 
-```shell
+```console
 scalardl register-function --properties <CLIENT_PROPERTIES_FILE> --function-id <FUNCTION_ID> --function-binary-name <FUNCTION_BINARY_NAME> --function-class-file <FUNCTION_CLASS_FILE>
 ```
 
-また、<JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を利用して [ScalarDL Java Client SDK](how-to-write-applications.mdx#scalardl-client-sdk-を使用する) からコントラクトやファンクションの登録も可能です。
+[ScalarDL Java Client SDK](how-to-write-applications.mdx#use-the-scalardl-client-sdk) の <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を使用してコントラクトと関数を登録することもできます。
+
+</TabItem>
+
+</Tabs>
 
 ## アプリケーションを実行する
 
-クライアントからコントラクトやファンクションの登録が完了したら、ScalarDL アプリケーションを実行できます。
+必要な ID とコントラクトを登録したので、ScalarDL を統合したアプリケーションを実行できます。
+
+## 参照
+
+各コマンドの詳細については、以下のコマンドリファレンスを参照してください：
+
+- [ScalarDL Client コマンドリファレンス](scalardl-command-reference.mdx)
+- [ScalarDL HashStore コマンドリファレンス](scalardl-hashstore-command-reference.mdx)
+- [ScalarDL TableStore コマンドリファレンス](scalardl-tablestore-command-reference.mdx)

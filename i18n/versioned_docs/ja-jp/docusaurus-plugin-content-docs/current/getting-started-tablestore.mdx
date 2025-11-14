@@ -38,7 +38,7 @@ VERSION=$(grep SCALARDL_VERSION .env | awk -F= '{print $2}')
 ```console
 curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-tablestore-java-client-sdk-$VERSION.zip
 unzip scalardl-tablestore-java-client-sdk-$VERSION.zip
-mv scalardl-tablestore-java-client-sdk-$VERSION client
+mv scalardl-tablestore-java-client-sdk-$VERSION tablestore
 ```
 
 ## クライアントプロパティの設定
@@ -74,7 +74,7 @@ EOF
 次に、以下のコマンドを実行して TableStore をブートストラップできます:
 
 ```console
-client/bin/scalardl-tablestore bootstrap --properties client.properties
+tablestore/bin/scalardl-tablestore bootstrap --properties client.properties
 ```
 
 ブートストラップコマンドは、内部的にアイデンティティ情報 (証明書またはシークレット) と TableStore を使用するために必要な事前定義されたコントラクトを登録します。
@@ -94,11 +94,11 @@ client/bin/scalardl-tablestore bootstrap --properties client.properties
 以下のコマンドを実行して、サンプルテーブルを作成できます:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "CREATE TABLE employee (id STRING PRIMARY KEY, department STRING)"
 ```
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "CREATE TABLE department (id STRING PRIMARY KEY)"
 ```
 
@@ -107,7 +107,7 @@ client/bin/scalardl-tablestore execute-statement --properties client.properties 
 以下のコマンドを実行して、作成されたテーブルを表示できます:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "SELECT * FROM information_schema.tables"
 ```
 
@@ -136,26 +136,26 @@ Result:
 次に、以下のコマンドを実行して、複数の `employee` レコードを挿入します:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "INSERT INTO employee VALUES {'id': '1001', 'name': 'Alice', 'department': 'sales', 'salary': 654.3}"
 ```
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "INSERT INTO employee VALUES {'id': '1002', 'name': 'Bob', 'department': 'sales', 'salary': 543.2}"
 ```
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "INSERT INTO employee VALUES {'id': '1003', 'name': 'Carol', 'department': 'engineering', 'salary': 654.3}"
 ```
 
 また、以下のコマンドを実行して、対応する `department` レコードも挿入します:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "INSERT INTO department VALUES {'id': 'sales', 'location': 'Shinjuku', 'phone': '000-1234'}"
 ```
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "INSERT INTO department VALUES {'id': 'engineering', 'location': 'Shibuya', 'phone': '000-4321'}"
 ```
 
@@ -164,7 +164,7 @@ client/bin/scalardl-tablestore execute-statement --properties client.properties 
 次に、挿入されたレコードを確認します。レコードを選択するには、少なくともプライマリキーまたはインデックスキーを指定する必要があります。例えば、以下のコマンドを実行して、プライマリキーを指定して `employee` レコードを取得できます:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "SELECT id, name, department FROM employee WHERE id = '1001'"
 ```
 
@@ -182,7 +182,7 @@ Result:
 以下のコマンドを実行して、インデックスキーを指定してレコードを選択することもできます:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "SELECT id, name, department FROM employee WHERE department = 'sales'"
 ```
 
@@ -204,7 +204,7 @@ Result:
 レコードをフィルタリングしたい場合は、以下のコマンドを実行して追加の条件を指定します:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "SELECT id, name, department FROM employee WHERE department = 'sales' AND salary < 600"
 ```
 
@@ -223,7 +223,7 @@ Result:
 以下のコマンドを実行して、2つのテーブルを結合することもできます:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "SELECT * FROM employee JOIN department ON employee.department = department.id WHERE employee.department = 'engineering'"
 ```
 
@@ -247,7 +247,7 @@ Result:
 以下のコマンドを実行して、`employee` レコードを更新できます:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "UPDATE employee SET salary = 754.3 WHERE department = 'engineering'"
 ```
 
@@ -258,7 +258,7 @@ client/bin/scalardl-tablestore execute-statement --properties client.properties 
 以下のコマンドを実行して、レコードの更新履歴を取得できます:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "SELECT history() FROM employee WHERE id = '1003'"
 ```
 
@@ -288,7 +288,7 @@ Result:
 バージョン数 (age) を制限したい場合は、以下のコマンドを実行して `LIMIT` 句を指定します:
 
 ```console
-client/bin/scalardl-tablestore execute-statement --properties client.properties \
+tablestore/bin/scalardl-tablestore execute-statement --properties client.properties \
 --statement "SELECT history() FROM employee WHERE id = '1003' LIMIT 1"
 ```
 
@@ -314,7 +314,7 @@ ScalarDL では、すべてのデータが有効な状態にあることを確�
 以下のコマンドを実行して、テーブルスキーマを検証できます:
 
 ```console
-client/bin/scalardl-tablestore validate-ledger --properties client.properties \
+tablestore/bin/scalardl-tablestore validate-ledger --properties client.properties \
 --table-name employee
 ```
 
@@ -337,7 +337,7 @@ client/bin/scalardl-tablestore validate-ledger --properties client.properties \
 以下のコマンドを実行して、レコードを検証できます:
 
 ```console
-client/bin/scalardl-tablestore validate-ledger --properties client.properties \
+tablestore/bin/scalardl-tablestore validate-ledger --properties client.properties \
 --table-name employee --primary-key-column-name id --column-value '"1001"'
 ```
 
@@ -366,7 +366,7 @@ client/bin/scalardl-tablestore validate-ledger --properties client.properties \
 以下のコマンドを実行して、インデックスレコードを検証できます:
 
 ```console
-client/bin/scalardl-tablestore validate-ledger --properties client.properties \
+tablestore/bin/scalardl-tablestore validate-ledger --properties client.properties \
 --table-name employee --index-key-column-name department --column-value '"sales"'
 ```
 
