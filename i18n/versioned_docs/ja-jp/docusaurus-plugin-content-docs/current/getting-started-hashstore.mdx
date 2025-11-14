@@ -40,7 +40,7 @@ VERSION=$(grep SCALARDL_VERSION .env | awk -F= '{print $2}')
 ```console
 curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-hashstore-java-client-sdk-$VERSION.zip
 unzip scalardl-hashstore-java-client-sdk-$VERSION.zip
-mv scalardl-hashstore-java-client-sdk-$VERSION client
+mv scalardl-hashstore-java-client-sdk-$VERSION hashstore
 ```
 
 ## クライアントプロパティの設定
@@ -76,7 +76,7 @@ EOF
 次に、以下のコマンドを実行して HashStore をブートストラップできます:
 
 ```console
-client/bin/scalardl-hashstore bootstrap --properties client.properties
+hashstore/bin/scalardl-hashstore bootstrap --properties client.properties
 ```
 
 ブートストラップコマンドは、内部的にアイデンティティ情報 (証明書またはシークレット) と HashStore を使用するために必要な事前定義されたコントラクトを登録します。
@@ -107,7 +107,7 @@ sha256sum a.txt
 以下のコマンドを実行して、ハッシュ値を格納できます:
 
 ```console
-client/bin/scalardl-hashstore put-object --properties client.properties \
+hashstore/bin/scalardl-hashstore put-object --properties client.properties \
 --object-id a.txt \
 --hash 5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0 \
 --metadata '{"note": "created"}'
@@ -129,7 +129,7 @@ b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c  a.txt
 次に、以下のようにハッシュ値を更新できます:
 
 ```console
-client/bin/scalardl-hashstore put-object --properties client.properties \
+hashstore/bin/scalardl-hashstore put-object --properties client.properties \
 --object-id a.txt \
 --hash b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c \
 --metadata '{"note": "updated"}'
@@ -138,7 +138,7 @@ client/bin/scalardl-hashstore put-object --properties client.properties \
 以下のコマンドを実行して、オブジェクトの最新ステータスを取得することもできます:
 
 ```console
-client/bin/scalardl-hashstore get-object --properties client.properties \
+hashstore/bin/scalardl-hashstore get-object --properties client.properties \
 --object-id a.txt
 ```
 
@@ -166,7 +166,7 @@ Result:
 :::
 
 ```console
-client/bin/scalardl-hashstore compare-object-versions --properties client.properties \
+hashstore/bin/scalardl-hashstore compare-object-versions --properties client.properties \
 --object-id a.txt \
 --versions '[{"version_id": "v2", "hash_value": "b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c"}, {"version_id": "v1", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0"}]}'
 ```
@@ -192,7 +192,7 @@ Alice updated this file
 最新バージョンのハッシュ値は `1f75d715648a3b4b3a33ecd7428a3e7139d9357da7d38735c23bf38618ecf9c7` になります。以下のコマンドを実行して検証を実行できます:
 
 ```console
-client/bin/scalardl-hashstore compare-object-versions --properties client.properties \
+hashstore/bin/scalardl-hashstore compare-object-versions --properties client.properties \
 --object-id a.txt \
 --versions '[{"version_id": "v2", "hash_value": "1f75d715648a3b4b3a33ecd7428a3e7139d9357da7d38735c23bf38618ecf9c7"}, {"version_id": "v1", "hash_value": "5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0"}]}'
 ```
@@ -223,7 +223,7 @@ ScalarDL はデータ (「アセット」と呼ばれる) を改ざん検知可�
 上記の3番目の手順は、`--put-to-mutable` オプションを使用して以下のコマンドを実行することで ACID 方式で実行する必要があります:
 
 ```console
-client/bin/scalardl-hashstore put-object --properties client.properties \
+hashstore/bin/scalardl-hashstore put-object --properties client.properties \
 --object-id a.txt \
 --hash 5c7440fb2273a247f78aadefbc511c680a84e7d44004abfaedef2b145151dab0 \
 --put-to-mutable '{...}'
@@ -259,7 +259,7 @@ client/bin/scalardl-hashstore put-object --properties client.properties \
 以下のコマンドを実行して、監査セット用のコレクションを作成できます:
 
 ```console
-client/bin/scalardl-hashstore create-collection --properties client.properties \
+hashstore/bin/scalardl-hashstore create-collection --properties client.properties \
 --collection-id audit_set --object-ids a.txt --object-ids b.txt
 ```
 
@@ -268,21 +268,21 @@ client/bin/scalardl-hashstore create-collection --properties client.properties \
 以下のコマンドを実行して、コレクションにオブジェクトを追加することもできます:
 
 ```console
-client/bin/scalardl-hashstore add-to-collection --properties client.properties \
+hashstore/bin/scalardl-hashstore add-to-collection --properties client.properties \
 --collection-id audit_set --object-ids c.txt --object-ids d.txt
 ```
 
 また、以下のコマンドを実行して、コレクションからオブジェクトを削除できます:
 
 ```console
-client/bin/scalardl-hashstore remove-from-collection --properties client.properties \
+hashstore/bin/scalardl-hashstore remove-from-collection --properties client.properties \
 --collection-id audit_set --object-ids a.txt
 ```
 
 以下のコマンドを実行して、コレクションの最新ステータスを取得できます:
 
 ```console
-client/bin/scalardl-hashstore get-collection --properties client.properties \
+hashstore/bin/scalardl-hashstore get-collection --properties client.properties \
 --collection-id audit_set
 ```
 
@@ -296,7 +296,7 @@ Result:
 監査セットが予期せず変更されていないことを確認するには、以下のコマンドを実行して監査セットの更新履歴を確認できます:
 
 ```console
-client/bin/scalardl-hashstore get-collection-history --properties client.properties \
+hashstore/bin/scalardl-hashstore get-collection-history --properties client.properties \
 --collection-id audit_set
 ```
 
@@ -329,7 +329,7 @@ ScalarDL では、すべてのデータが有効な状態にあることを確�
 以下のコマンドを実行して、オブジェクトを検証できます:
 
 ```console
-client/bin/scalardl-hashstore validate-ledger --properties client.properties \
+hashstore/bin/scalardl-hashstore validate-ledger --properties client.properties \
 --object-id a.txt
 ```
 
@@ -352,7 +352,7 @@ client/bin/scalardl-hashstore validate-ledger --properties client.properties \
 以下のコマンドを実行して、コレクションを検証できます:
 
 ```console
-client/bin/scalardl-hashstore validate-ledger --properties client.properties \
+hashstore/bin/scalardl-hashstore validate-ledger --properties client.properties \
 --collection-id audit_set
 ```
 
