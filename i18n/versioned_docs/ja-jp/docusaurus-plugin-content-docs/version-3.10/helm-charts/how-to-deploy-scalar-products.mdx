@@ -55,14 +55,17 @@ ScalarDB/ScalarDLのバックエンドストレージとしてデータベース
 
 特に商用ライセンス製品を使用する場合は、Scalar 製品のコンテナイメージを取得する必要があります。Scalar 製品のコンテナリポジトリの詳細については、[Scalar 製品のコンテナイメージを取得する方法](../scalar-kubernetes/HowToGetContainerImages.mdx)を参照してください。
 
-ScalarDB Analytics with PostgreSQL などの OSS 製品を使用する場合は、パブリックコンテナリポジトリからコンテナイメージを取得できます。
+次の製品のいずれかを公開コンテナリポジトリから使用している場合、Scalar Helm Chart のデフォルト設定で公開コンテナリポジトリからコンテナイメージを取得できます:
+
+* Scalar Envoy (ScalarDB Cluster、ScalarDL Ledger、または ScalarDL Auditor と一緒にデプロイ)
+* ScalarDL Schema Loader
+* Scalar Admin for Kubernetes
 
 ## Scalar 製品をデプロイする
 
 各製品の導入方法の詳細については、次のドキュメントを参照してください。
 
 * [ScalarDB Cluster](how-to-deploy-scalardb-cluster.mdx)
-* [ScalarDB Analytics with PostgreSQL](how-to-deploy-scalardb-analytics-postgresql.mdx)
 * [ScalarDL Ledger](how-to-deploy-scalardl-ledger.mdx)
 * [ScalarDL Auditor](how-to-deploy-scalardl-auditor.mdx)
 * [Scalar Admin for Kubernetes](how-to-deploy-scalar-admin-for-kubernetes.mdx)
