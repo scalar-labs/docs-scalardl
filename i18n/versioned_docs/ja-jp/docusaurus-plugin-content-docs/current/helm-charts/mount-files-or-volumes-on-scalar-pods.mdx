@@ -7,7 +7,7 @@ displayed_sidebar: docsJapanese
 
 # Scalar 製品ポッドにファイルまたはボリュームをマウントします
 
-ScalarDB Server、ScalarDB Cluster、ScalarDB Analytics with PostgreSQL、または ScalarDL Helm Charts (ScalarDL Ledger および ScalarDL Auditor) を使用する場合、Scalar 製品ポッドに任意のファイルまたはボリュームをマウントできます。
+ScalarDB Server、ScalarDB Cluster、または ScalarDL Helm Charts (ScalarDL Ledger および ScalarDL Auditor) を使用する場合、Scalar 製品ポッドに任意のファイルまたはボリュームをマウントできます。
 
 ## ScalarDL Helm Charts のポッドに秘密鍵ファイルと証明書ファイルをマウントする
 
@@ -114,7 +114,6 @@ ScalarDL Auditor を実行するには、秘密鍵ファイルと証明書ファ
 * キー
   * `scalardb.extraVolumes` / `scalardb.extraVolumeMounts` (ScalarDB Server)
   * `scalardbCluster.extraVolumes` / `scalardbCluster.extraVolumeMounts` (ScalarDB Cluster)
-  * `scalardbAnalyticsPostgreSQL.extraVolumes` / `scalardbAnalyticsPostgreSQL.extraVolumeMounts` (ScalarDB Analytics with PostgreSQL)
   * `ledger.extraVolumes` / `ledger.extraVolumeMounts` (ScalarDL Ledger)
   * `auditor.extraVolumes` / `auditor.extraVolumeMounts` (ScalarDL Auditor)
 
