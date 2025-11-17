@@ -240,7 +240,7 @@ const sidebars = {
             {
               type: 'doc',
               id: 'scalardl-hashstore-command-reference',
-              label: 'Hashstore Commands',
+              label: 'HashStore Commands',
             },
             {
               type: 'doc',
@@ -869,7 +869,7 @@ const sidebars = {
             {
               type: 'doc',
               id: 'scalardl-hashstore-command-reference',
-              label: 'Hashstore コマンドリファレンス',
+              label: 'HashStore コマンドリファレンス',
             },
             {
               type: 'doc',
