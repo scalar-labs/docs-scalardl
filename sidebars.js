@@ -83,17 +83,17 @@ const sidebars = {
         {
           type: 'doc',
           id: 'getting-started-hashstore',
-          label: 'Use HashStore Abstraction',
+          label: 'Use HashStore',
         },
         {
           type: 'doc',
           id: 'getting-started-tablestore',
-          label: 'Use TableStore Abstraction',
+          label: 'Use TableStore',
         },
         {
           type: 'doc',
           id: 'getting-started',
-          label: 'Use Ledger Abstraction',
+          label: 'Use Ledger',
         },
       ],
     },
@@ -144,17 +144,17 @@ const sidebars = {
             {
               type: 'doc',
               id: 'how-to-write-applications-with-hashstore',
-              label: 'Write an Application with HashStore Abstraction',
+              label: 'Write an Application with HashStore',
             },
             {
               type: 'doc',
               id: 'how-to-write-applications-with-tablestore',
-              label: 'Write an Application with TableStore Abstraction',
+              label: 'Write an Application with TableStore',
             },
             {
               type: 'doc',
               id: 'how-to-write-applications',
-              label: 'Write an Application with Ledger Abstraction',
+              label: 'Write an Application with Ledger',
             },
           ]
         },
@@ -712,17 +712,17 @@ const sidebars = {
         {
           type: 'doc',
           id: 'getting-started-hashstore',
-          label: 'HashStore 抽象化を使用',
+          label: 'HashStore を使用',
         },
         {
           type: 'doc',
           id: 'getting-started-tablestore',
-          label: 'TableStore 抽象化を使用',
+          label: 'TableStore を使用',
         },
         {
           type: 'doc',
           id: 'getting-started',
-          label: 'Ledger 抽象化を使用',
+          label: 'Ledger を使用',
         },
       ],
     },
@@ -773,17 +773,17 @@ const sidebars = {
             // {
             //   type: 'doc',
             //   id: 'how-to-write-applications-with-hashstore',
-            //   label: 'HashStore 抽象化を使用してアプリケーションを書く',
+            //   label: 'HashStore を使用してアプリケーションを書く',
             // },
             // {
             //   type: 'doc',
             //   id: 'how-to-write-applications-with-tablestore',
-            //   label: 'TableStore 抽象化を使用してアプリケーションを書く',
+            //   label: 'TableStore を使用してアプリケーションを書く',
             // },
             {
               type: 'doc',
               id: 'how-to-write-applications',
-              label: 'Ledger 抽象化を使用してアプリケーションを書く',
+              label: 'Ledger を使用してアプリケーションを書く',
             },
           ]
         },

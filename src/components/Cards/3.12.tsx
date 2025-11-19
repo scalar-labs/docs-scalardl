@@ -26,12 +26,12 @@ const recentFeatures = [
       {
         cell: 0, // First cell
         links: ['getting-started-hashstore'],
-        labels: ['Use ScalarDL HashStore Abstraction']
+        labels: ['Get Started with ScalarDL HashStore']
       },
       {
         cell: 1, // Second cell
         links: ['getting-started-tablestore'],
-        labels: ['Use ScalarDL TableStore Abstraction']
+        labels: ['Get Started with ScalarDL TableStore']
       },
       {
         cell: 2, // Third cell
@@ -78,12 +78,12 @@ const categories = [
       {
         cell: 1, // Second cell
         links: ['getting-started-hashstore'],
-        labels: ['Use ScalarDL HashStore Abstraction']
+        labels: ['Get Started with ScalarDL HashStore']
       },
       {
         cell: 2, // Third cell
         links: ['getting-started-tablestore'],
-        labels: ['Use ScalarDL TableStore Abstraction']
+        labels: ['Get Started with ScalarDL TableStore']
       }
     ]
   },
@@ -105,7 +105,7 @@ const categories = [
       {
         cell: 2, // Third cell
         links: ['how-to-write-applications'],
-        labels: ['Write a ScalarDL Application with Ledger Abstraction']
+        labels: ['Write a ScalarDL Application with the Ledger Abstraction']
       }
     ]
   },

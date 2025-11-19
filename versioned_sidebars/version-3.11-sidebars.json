@@ -63,7 +63,7 @@
         {
           "type": "doc",
           "id": "getting-started",
-          "label": "Use Ledger Abstraction"
+          "label": "Use Ledger"
         }
       ]
     },
@@ -124,7 +124,7 @@
             {
               "type": "doc",
               "id": "how-to-write-applications",
-              "label": "Write an Application with Ledger Abstraction"
+              "label": "Write an Application with Ledger"
             },
             {
               "type": "doc",
@@ -675,7 +675,7 @@
         {
           "type": "doc",
           "id": "getting-started",
-          "label": "Ledger 抽象化を使用"
+          "label": "Ledger を使用"
         }
       ]
     },
@@ -736,7 +736,7 @@
             {
               "type": "doc",
               "id": "how-to-write-applications",
-              "label": "Ledger 抽象化を使用してアプリケーションを書く"
+              "label": "Ledger を使用してアプリケーションを書く"
             },
             {
               "type": "doc",
