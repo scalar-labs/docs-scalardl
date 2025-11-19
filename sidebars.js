@@ -240,7 +240,7 @@ const sidebars = {
             {
               type: 'doc',
               id: 'scalardl-hashstore-command-reference',
-              label: 'Hashstore Commands',
+              label: 'HashStore Commands',
             },
             {
               type: 'doc',
@@ -866,16 +866,16 @@ const sidebars = {
               id: 'scalardl-command-reference',
               label: 'クライアントコマンドリファレンス',
             },
-            // {
-            //   type: 'doc',
-            //   id: 'scalardl-hashstore-command-reference',
-            //   label: 'Hashstore コマンドリファレンス',
-            // },
-            // {
-            //   type: 'doc',
-            //   id: 'scalardl-tablestore-command-reference',
-            //   label: 'TableStore コマンドリファレンス',
-            // },
+            {
+              type: 'doc',
+              id: 'scalardl-hashstore-command-reference',
+              label: 'HashStore コマンドリファレンス',
+            },
+            {
+              type: 'doc',
+              id: 'scalardl-tablestore-command-reference',
+              label: 'TableStore コマンドリファレンス',
+            },
             {
               type: 'doc',
               id: 'schema-loader',

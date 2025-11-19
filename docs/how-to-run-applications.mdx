@@ -7,9 +7,11 @@ displayed_sidebar: docsEnglish
 
 # Run a ScalarDL Application Through ScalarDL Ledger
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 import JavadocLink from "/src/theme/JavadocLink.js";
 
-This guide explains how to run a ScalarDL application through ScalarDL Ledger. This document assumes that you have already tried the [Get Started with ScalarDL Ledger](getting-started.mdx) tutorial and created your application that integrates ScalarDL by using the Client SDK by referring to the [Write a ScalarDL Application in Java](how-to-write-applications.mdx) guide.
+This guide explains how to run a ScalarDL application through ScalarDL Ledger. This document assumes that you have already tried one of the [Quickstart](quickstart-overview.mdx) tutorials and created your application that integrates ScalarDL by using client SDKs by referring to the [Write an Application](develop-write-an-application-overview.mdx) guides.
 
 ## Decide on configurations
 
@@ -35,7 +37,7 @@ For details about the configurations, see the following:
 - [Client configurations](configurations.mdx#client-configurations)
 - [Ledger configurations](configurations.mdx#ledger-configurations)
 
-### Decide on which authentication method to use
+### Decide on an authentication method
 
 You must decide which authentication method to use for clients: digital signature or HMAC. As a simple comparison, the digital-signature method provides non-repudiation in addition to authentication but is slow, whereas the HMAC method provides only authentication but is fast.
 
@@ -99,42 +101,82 @@ After configuring Ledger and the client, you need to start up Ledger.
 
 For details on how to locally start up Ledger by using Docker Compose, see [Start up ScalarDL with your preferred database](getting-started.mdx#start-up-scalardl-with-your-preferred-database). For how to start up Ledger in local or cloud-based Kubernetes environments, see [Deploy ScalarDL in your local Kubernetes environment](deploy-local-environment-overview.mdx) or [Deploy ScalarDL in a cloud-based Kubernetes environment](deploy-managed-kubernetes-environment-overview.mdx), respectively.
 
-## Download the Client SDK
+## Set up clients for the HashStore, TableStore, or Ledger abstractions
 
-If you need to run ScalarDL commands, you need to download the Client SDK. For instructions, see [Download the Client SDK](getting-started.mdx#download-the-client-sdk).
+Depending on the abstraction that your application is based on (specifically, HashStore, TableStore, or Ledger), the setup instructions are different. Select an abstraction and follow the instructions.
 
-## Register a certificate or a secret key from a client
+<Tabs groupId="abstractions" queryString>
 
-For the digital-signature authentication method, you can register a certificate with Ledger by using the following command. For details about the command, see the [ScalarDL Client Command Reference](scalardl-command-reference.mdx#register-cert).
+<TabItem value="hashstore" label="HashStore" default>
 
-```shell
-scalardl register-cert --properties <CLIENT_PROPERTIES_FILE>
+<h3>Bootstrap HashStore clients</h3>
+
+When creating `HashStoreClientService` in your application, the client certificate or secret key and the necessary contracts for using HashStore are automatically registered based on the configuration in `ClientConfig`. Thus, you don't have to manually bootstrap HashStore clients. If you would like to do it manually, for example, for testing purposes, download the HashStore Client SDK by following [Download the Client SDK](getting-started-hashstore.mdx#download-the-client-sdk) and run the following command.
+
+```console
+scalardl-hashstore bootstrap --properties <CLIENT_PROPERTIES_FILE>
 ```
 
-For the HMAC authentication method, you can register a secret key with Ledger by using the following command. For details about the command, see the [ScalarDL Client Command Reference](scalardl-command-reference.mdx#register-secret).
+</TabItem>
 
-```shell
-scalardl register-secret --properties <CLIENT_PROPERTIES_FILE>
+<TabItem value="tablestore" label="TableStore">
+
+<h3>Bootstrap TableStore clients</h3>
+
+When creating `TableStoreClientService` in your application, the client certificate or secret key and the necessary contracts for using TableStore are automatically registered based on the configuration in `ClientConfig`. Thus, you don't have to manually bootstrap TableStore clients. If you would like to do it manually, for example, for testing purposes, download the TableStore Client SDK by following [Download the Client SDK](getting-started-tablestore.mdx#download-the-client-sdk) and run the following command.
+
+```console
+scalardl-tablestore bootstrap --properties <CLIENT_PROPERTIES_FILE>
 ```
 
-You can also register certificates and secrets by using <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> in the [ScalarDL Java Client SDK](how-to-write-applications.mdx#use-the-scalardl-client-sdk).
+</TabItem>
 
-## Register contracts and functions from a client
+<TabItem value="ledger" label="Ledger">
 
-You can register contracts with Ledger by using the following command. For details about the command, see the [ScalarDL Client Command Reference](scalardl-command-reference.mdx#register-contract).
+<h3>Download the client commands</h3>
 
-```shell
+When you set up Ledger clients, you need to run the client commands, which are included in the Client SDK. To get the Client SDK, see [Download the Client SDK](getting-started.mdx#download-the-client-sdk).
+
+<h3>Bootstrap Ledger clients</h3>
+
+Register the client identity and system contracts by running the following `bootstrap` command:
+
+```console
+scalardl bootstrap --properties <CLIENT_PROPERTIES_FILE>
+```
+
+The bootstrap command registers the client certificate or secret key based on the authentication configuration done in [Decide on an authentication method](#decide-on-an-authentication-method).
+
+You can also bootstrap by using <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> in the [ScalarDL Java Client SDK](how-to-write-applications.mdx#use-the-scalardl-client-sdk).
+
+<h3>Register contracts and functions</h3>
+
+You can register contracts by using the `register-contract` command.
+
+```console
 scalardl register-contract --properties <CLIENT_PROPERTIES_FILE> --contract-id <CONTRACT_ID> --contract-binary-name <CONTRACT_BINARY_NAME> --contract-class-file <CONTRACT_CLASS_FILE>
 ```
 
-You can register functions with Ledger by using the following command. For details about the command, see the [ScalarDL Client Command Reference](scalardl-command-reference.mdx#register-function).
+You can register functions by using the `register-function` command.
 
-```shell
+```console
 scalardl register-function --properties <CLIENT_PROPERTIES_FILE> --function-id <FUNCTION_ID> --function-binary-name <FUNCTION_BINARY_NAME> --function-class-file <FUNCTION_CLASS_FILE>
 ```
 
-You can also register contracts and functions with Ledger by using <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> in the [ScalarDL Java Client SDK](how-to-write-applications.mdx#use-the-scalardl-client-sdk).
+You can also register contracts and functions by using <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> in the [ScalarDL Java Client SDK](how-to-write-applications.mdx#use-the-scalardl-client-sdk).
+
+</TabItem>
+
+</Tabs>
 
 ## Run your application
 
-Now that you have registered contracts and functions from a client, you can now run your application that integrates ScalarDL.
+Now that you have registered the necessary identities and contracts, you can run your application that integrates ScalarDL.
+
+## See also
+
+For details about each command, see the following command references:
+
+- [ScalarDL Client Command Reference](scalardl-command-reference.mdx)
+- [ScalarDL HashStore Command Reference](scalardl-hashstore-command-reference.mdx)
+- [ScalarDL TableStore Command Reference](scalardl-tablestore-command-reference.mdx)
