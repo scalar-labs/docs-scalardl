@@ -770,16 +770,16 @@ const sidebars = {
             id: 'develop-write-an-application-overview',
           },
           items: [
-            // {
-            //   type: 'doc',
-            //   id: 'how-to-write-applications-with-hashstore',
-            //   label: 'HashStore を使用してアプリケーションを書く',
-            // },
-            // {
-            //   type: 'doc',
-            //   id: 'how-to-write-applications-with-tablestore',
-            //   label: 'TableStore を使用してアプリケーションを書く',
-            // },
+            {
+              type: 'doc',
+              id: 'how-to-write-applications-with-hashstore',
+              label: 'HashStore を使用してアプリケーションを書く',
+            },
+            {
+              type: 'doc',
+              id: 'how-to-write-applications-with-tablestore',
+              label: 'TableStore を使用してアプリケーションを書く',
+            },
             {
               type: 'doc',
               id: 'how-to-write-applications',
