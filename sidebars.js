@@ -154,7 +154,7 @@ const sidebars = {
             {
               type: 'doc',
               id: 'how-to-write-applications',
-              label: 'Write an Application in Java',
+              label: 'Write an Application with Ledger',
             },
           ]
         },
@@ -770,20 +770,20 @@ const sidebars = {
             id: 'develop-write-an-application-overview',
           },
           items: [
-            // {
-            //   type: 'doc',
-            //   id: 'how-to-write-applications-with-hashstore',
-            //   label: 'HashStore を使用したアプリケーションを書く',
-            // },
-            // {
-            //   type: 'doc',
-            //   id: 'how-to-write-applications-with-tablestore',
-            //   label: 'TableStore を使用したアプリケーションを書く',
-            // },
+            {
+              type: 'doc',
+              id: 'how-to-write-applications-with-hashstore',
+              label: 'HashStore を使用してアプリケーションを書く',
+            },
+            {
+              type: 'doc',
+              id: 'how-to-write-applications-with-tablestore',
+              label: 'TableStore を使用してアプリケーションを書く',
+            },
             {
               type: 'doc',
               id: 'how-to-write-applications',
-              label: 'Java でアプリケーションを書く',
+              label: 'Ledger を使用してアプリケーションを書く',
             },
           ]
         },

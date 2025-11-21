@@ -119,7 +119,7 @@
             {
               "type": "doc",
               "id": "how-to-write-applications",
-              "label": "Write an Application in Java"
+              "label": "Write an Application with Ledger"
             },
             {
               "type": "doc",
@@ -726,7 +726,7 @@
             {
               "type": "doc",
               "id": "how-to-write-applications",
-              "label": "Java でアプリケーションを書く"
+              "label": "Ledger を使用してアプリケーションを書く"
             },
             {
               "type": "doc",
