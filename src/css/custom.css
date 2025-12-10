@@ -52,7 +52,7 @@
   background: var(--ifm-menu-link-sublist-icon) 50% / 1.25rem 1.25rem;
 }
 
-.version-out-of-support, .version-out-of-support a {
+.version-out-of-maintenance-support, .version-out-of-maintenance-support a, .version-out-of-support, .version-out-of-support a {
   background-color: #9CA3AF;
   color: #1c1e21;
   opacity: 85%;
