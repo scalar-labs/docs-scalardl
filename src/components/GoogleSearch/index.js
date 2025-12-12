@@ -5,6 +5,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 export default function GoogleSearch() {
   const [searchQuery, setSearchQuery] = useState('');
   const location = useLocation();
+  const { siteConfig } = useDocusaurusContext();
 
   // Extract version from the current URL path
   const getCurrentVersion = useCallback(() => {
@@ -16,7 +17,7 @@ export default function GoogleSearch() {
     }
 
     // Check for versioned docs (for example, /docs/3.15/, /docs/3.14/, etc.)
-    const versionMatch = path.match(/\/docs\/(\d+\.\d+)\//);
+    const versionMatch = path.match(/(?:\/ja-jp)?\/docs\/(\d+\.\d+)\//);
     if (versionMatch) {
       return versionMatch[1];
     }
@@ -46,21 +47,22 @@ export default function GoogleSearch() {
     const currentLanguage = getCurrentLanguage();
 
     // Use different site URLs based on language
+    const hostname = new URL(siteConfig.url).hostname;
     const siteUrl = currentLanguage === 'ja-jp'
-      ? 'site%3Ascalardl.scalar-labs.com/ja-jp/docs'
-      : 'site%3Ascalardl.scalar-labs.com/docs';
+      ? `site%3A${hostname}/ja-jp/docs`
+      : `site%3A${hostname}/docs`;
 
     const versionPath = currentVersion === 'latest' ? 'latest' : currentVersion;
     const googleSearchUrl = `https://www.google.com/search?q=${siteUrl}/${versionPath}+${encodeURIComponent(searchQuery.trim())}`;
 
     window.open(googleSearchUrl, '_blank', 'noopener,noreferrer');
-  }, [searchQuery, getCurrentVersion, getCurrentLanguage]);
+  }, [searchQuery, getCurrentVersion, getCurrentLanguage, siteConfig.url]);
 
   const handleInputChange = useCallback((e) => {
     setSearchQuery(e.target.value);
   }, []);
 
-  const handleKeyPress = useCallback((e) => {
+  const handleKeyDown = useCallback((e) => {
     if (e.key === 'Enter') {
       handleSearch(e);
     }
@@ -101,7 +103,7 @@ export default function GoogleSearch() {
             placeholder={getPlaceholderText()}
             value={searchQuery}
             onChange={handleInputChange}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyDown}
             className="googleSearchInput"
             aria-label="Search documentation with Google"
           />
