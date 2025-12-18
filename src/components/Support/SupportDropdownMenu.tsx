@@ -8,7 +8,6 @@ const AssistantModal = lazy(() => import("./AssistantModal"));
 const SupportDropdownMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [storedUrl, setStoredUrl] = useState<string | null>(null);
   const [githubIssueUrl, setGithubIssueUrl] = useState<string>("#");
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
@@ -19,14 +18,6 @@ const SupportDropdownMenu: React.FC = () => {
 
   // Detect the language based on the URL path.
   const isJapanese: boolean = location.pathname.startsWith("/ja-jp");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const currentUrl = `https://scalardl.scalar-labs.com${location.pathname}`;
-      localStorage.setItem("currentUrl", currentUrl);
-      setStoredUrl(currentUrl);
-    }
-  }, [location]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -95,8 +86,7 @@ const SupportDropdownMenu: React.FC = () => {
   const handleSupportClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     if (typeof window !== "undefined") {
-      const finalUrl = storedUrl || `https://scalardl.scalar-labs.com${location.pathname}`;
-      const reportUrl = `https://support.scalar-labs.com/hc/ja/requests/new?ticket_form_id=8641483507983&tf_11847415366927=${encodeURIComponent(finalUrl)}`;
+      const reportUrl = `https://support.scalar-labs.com/hc/ja/requests/new?ticket_form_id=8641483507983`;
       window.open(reportUrl, "_blank");
     }
   };
