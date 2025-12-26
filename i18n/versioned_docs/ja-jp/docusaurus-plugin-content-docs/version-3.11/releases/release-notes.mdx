@@ -13,13 +13,31 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 このページには、ScalarDL 3.11 のリリースノートのリストが含まれています。
 
+## v3.11.2
+
+**発売日:** 2025年12月26日
+
+### まとめ
+
+このリリースには、いくつかのバグ修正および脆弱性の修正が含まれています。
+
+### Community と Enterprise editions
+
+#### バグの修正
+
+- PutToMutable 関数での FLOAT および BLOB データ型の処理に関するバグを修正しました。([#297](https://github.com/scalar-labs/scalardl/pull/297))
+- デジタル署名でクライアントが誤って設定された場合の NullPointerException を修正しました。([#302](https://github.com/scalar-labs/scalardl/pull/302))
+- ステータスコードの処理を修正しました。([#323](https://github.com/scalar-labs/scalardl/pull/323))
+- [CVE-2025-47907](https://github.com/advisories/GHSA-j5pm-7495-qmr3 "CVE-2025-47907") と [CVE-2025-58183](https://github.com/advisories/GHSA-9gcr-gp5f-jw27 "CVE-2025-58183") を修正しました。([#364](https://github.com/scalar-labs/scalardl/pull/364))
+- [CVE-2025-55163](https://github.com/advisories/GHSA-prj3-ccx8-p6x4 "CVE-2025-55163") を修正しました。([#366](https://github.com/scalar-labs/scalardl/pull/366))
+
 ## v3.11.1
 
 **発売日:** 2025年10月8日
 
 ### まとめ
 
-このリリースには、いくつかの改善、バグ修正、および脆弱性の修正が含まれています。
+このリリースには、いくつかのバグ修正および脆弱性の修正が含まれています。
 
 ### Community edition
 
