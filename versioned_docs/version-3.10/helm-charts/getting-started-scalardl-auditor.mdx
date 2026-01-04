@@ -485,7 +485,6 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
          scalar.db.password={{ default .Env.SCALAR_DL_AUDITOR_POSTGRES_PASSWORD "" }}
          scalar.db.storage=jdbc
          scalar.dl.auditor.ledger.host=scalardl-ledger-envoy.default.svc.cluster.local
-         scalar.dl.auditor.cert_path=/keys/certificate
          scalar.dl.auditor.private_key_path=/keys/private-key
        secretName: "auditor-credentials-secret"
        extraVolumes:
@@ -522,7 +521,6 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
          scalar.db.password={{ default .Env.SCALAR_DL_AUDITOR_POSTGRES_PASSWORD "" }}
          scalar.db.storage=jdbc
          scalar.dl.auditor.ledger.host=scalardl-ledger-envoy.default.svc.cluster.local
-         scalar.dl.auditor.cert_path=/keys/certificate
          scalar.dl.auditor.private_key_path=/keys/private-key
        secretName: "auditor-credentials-secret"
        extraVolumes:
