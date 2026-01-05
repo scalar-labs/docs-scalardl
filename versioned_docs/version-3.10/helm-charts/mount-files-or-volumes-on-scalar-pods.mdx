@@ -9,9 +9,9 @@ displayed_sidebar: docsEnglish
 
 You can mount any files or volumes on Scalar product pods when you use ScalarDB Server, ScalarDB Cluster, or ScalarDL Helm Charts (ScalarDL Ledger and ScalarDL Auditor).
 
-## Mount key and certificate files on a pod in ScalarDL Helm Charts
+## Mount a private key file on a pod in ScalarDL Helm Charts
 
-You must mount the key and certificate files to run ScalarDL Auditor.
+You must mount the private key file to run ScalarDL Auditor.
 
 * Configuration example
     * ScalarDL Ledger
@@ -29,10 +29,9 @@ You must mount the key and certificate files to run ScalarDL Auditor.
         auditorProperties: |
           ...
           scalar.dl.auditor.private_key_path=/keys/private-key
-          scalar.dl.auditor.cert_path=/keys/certificate
       ```
 
-In this example, you need to mount a **private-key** and a **certificate** file under the `/keys` directory in the container. And, you need to mount files named `private-key` and `certificate`. You can use `extraVolumes` and `extraVolumeMounts` to mount these files.
+In this example, you need to mount a **private-key** file under the `/keys` directory in the container. And, you need to mount a file named `private-key`. You can use `extraVolumes` and `extraVolumeMounts` to mount this file.
 
 1. Set `extraVolumes` and `extraVolumeMounts` in the custom values file using the same syntax of Kubernetes manifest. You need to specify the directory name to the key `mountPath`.
    * Example
@@ -61,7 +60,7 @@ In this example, you need to mount a **private-key** and a **certificate** file 
                 readOnly: true
           ```
 
-1. Create a `Secret` resource that includes key and certificate files.  
+1. Create a `Secret` resource that includes a private key file.
 
    You need to specify the file name as keys of `Secret`.
 
@@ -69,18 +68,17 @@ In this example, you need to mount a **private-key** and a **certificate** file 
        * ScalarDL Ledger
          ```console
          kubectl create secret generic ledger-keys \
-           --from-file=tls.key=./ledger-key.pem
+           --from-file=private-key=./ledger-key.pem
          ```
        * ScalarDL Auditor
          ```console
          kubectl create secret generic auditor-keys \
-           --from-file=tls.key=./auditor-key.pem \
-           --from-file=certificate=./auditor-cert.pem
+           --from-file=private-key=./auditor-key.pem
          ```
 
 1. Deploy Scalar products with the above custom values file.  
 
-   After deploying Scalar products, key and certificate files are mounted under the `/keys` directory as follows.
+   After deploying Scalar products, the private key file is mounted under the `/keys` directory as follows.
 
    * Example
        * ScalarDL Ledger
@@ -104,7 +102,6 @@ In this example, you need to mount a **private-key** and a **certificate** file 
 
          ```console
          total 0
-         lrwxrwxrwx 1 root root 18 Jun 27 03:16 certificate -> ..data/certificate
          lrwxrwxrwx 1 root root 18 Jun 27 03:16 private-key -> ..data/private-key
          ```
 
