@@ -53,16 +53,15 @@ auditor:
     scalar.db.storage=cassandra
     scalar.dl.auditor.ledger.host=<Host name to access ScalarDL Ledger pods>
     scalar.dl.auditor.private_key_path=/keys/auditor-key-file
-    scalar.dl.auditor.cert_path=/keys/auditor-cert-file
 ```
 
-### キー/証明書の構成
+### 秘密鍵の構成
 
-秘密鍵ファイルを `scalar.dl.auditor.private_key_path` に設定し、証明書ファイルを `scalar.dl.auditor.cert_path` に設定する必要があります。
+秘密鍵ファイルを `scalar.dl.auditor.private_key_path` に設定する必要があります。
 
-秘密鍵ファイルと証明書ファイルも ScalarDL Auditor ポッドにマウントする必要があります。
+秘密鍵ファイルを ScalarDL Auditor ポッドにマウントする必要があります。
 
-秘密鍵ファイルと証明書ファイルをマウントする方法の詳細については、[ScalarDL Helm Charts のポッドに秘密鍵ファイルと証明書ファイルをマウントする](mount-files-or-volumes-on-scalar-pods.mdx#scalardl-helm-charts-のポッドにキーファイルと証明書ファイルをマウントする)を参照してください。
+秘密鍵ファイルをマウントする方法の詳細については、[ScalarDL Helm Charts のポッドに秘密鍵ファイルをマウントする](mount-files-or-volumes-on-scalar-pods.mdx#scalardl-helm-charts-のポッドに秘密鍵ファイルをマウントする)を参照してください。
 
 ## オプションの構成
 
