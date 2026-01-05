@@ -9,9 +9,9 @@ displayed_sidebar: docsJapanese
 
 ScalarDB Server、ScalarDB Cluster、または ScalarDL Helm Charts (ScalarDL Ledger および ScalarDL Auditor) を使用する場合、Scalar 製品ポッドに任意のファイルまたはボリュームをマウントできます。
 
-## ScalarDL Helm Charts のポッドに秘密鍵ファイルと証明書ファイルをマウントする
+## ScalarDL Helm Charts のポッドに秘密鍵ファイルをマウントする
 
-ScalarDL Auditor を実行するには、秘密鍵ファイルと証明書ファイルをマウントする必要があります。
+ScalarDL Auditor を実行するには、秘密鍵ファイルをマウントする必要があります。
 
 * 構成例
     * ScalarDL Ledger
@@ -29,10 +29,9 @@ ScalarDL Auditor を実行するには、秘密鍵ファイルと証明書ファ
         auditorProperties: |
           ...
           scalar.dl.auditor.private_key_path=/keys/private-key
-          scalar.dl.auditor.cert_path=/keys/certificate
       ```
 
-この例では、**秘密鍵** ファイルと **証明書** ファイルをコンテナ内の `/keys` ディレクトリにマウントする必要があります。そして、`private-key` と `certificate` という名前のファイルをマウントする必要があります。これらのファイルをマウントするには、`extraVolumes` および `extraVolumeMounts` を使用できます。
+この例では、**秘密鍵** ファイルをコンテナ内の `/keys` ディレクトリにマウントする必要があります。そして、`private-key` という名前のファイルをマウントする必要があります。このファイルをマウントするには、`extraVolumes` および `extraVolumeMounts` を使用できます。
 
 1. Kubernetes マニフェストと同じ構文を使用して、カスタム値ファイルに `extraVolumes` と `extraVolumeMounts` を設定します。`mountPath` キーにディレクトリ名を指定する必要があります。
    * 例
@@ -61,7 +60,7 @@ ScalarDL Auditor を実行するには、秘密鍵ファイルと証明書ファ
                 readOnly: true
           ```
 
-1. キーと証明書ファイルを含む `Secret` リソースを作成します。
+1. 秘密鍵ファイルを含む `Secret` リソースを作成します。
 
    Secret のキーにはファイル名を指定する必要があります。
 
@@ -69,18 +68,17 @@ ScalarDL Auditor を実行するには、秘密鍵ファイルと証明書ファ
        * ScalarDL Ledger
          ```console
          kubectl create secret generic ledger-keys \
-           --from-file=tls.key=./ledger-key.pem
+           --from-file=private-key=./ledger-key.pem
          ```
        * ScalarDL Auditor
          ```console
          kubectl create secret generic auditor-keys \
-           --from-file=tls.key=./auditor-key.pem \
-           --from-file=certificate=./auditor-cert.pem
+           --from-file=private-key=./auditor-key.pem
          ```
 
 1. 上記のカスタム値ファイルを使用して Scalar 製品をデプロイします。
 
-   Scalar 製品を展開した後、次のように秘密鍵ファイルと証明書ファイルが `/keys` ディレクトリにマウントされます。
+   Scalar 製品を展開した後、次のように秘密鍵ファイルが `/keys` ディレクトリにマウントされます。
 
    * 例
        * ScalarDL Ledger
@@ -103,7 +101,6 @@ ScalarDL Auditor を実行するには、秘密鍵ファイルと証明書ファ
 
          ```console
          total 0
-         lrwxrwxrwx 1 root root 18 Jun 27 03:16 certificate -> ..data/certificate
          lrwxrwxrwx 1 root root 18 Jun 27 03:16 private-key -> ..data/private-key
          ```
 
