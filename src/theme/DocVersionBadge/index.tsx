@@ -10,6 +10,7 @@ import clsx from 'clsx';
 import Translate from '@docusaurus/Translate';
 import {ThemeClassNames} from '@docusaurus/theme-common';
 import {useDocsVersion, useDoc} from '@docusaurus/plugin-content-docs/client';
+import {useLocation} from '@docusaurus/router';
 import type {Props} from '@theme/DocVersionBadge';
 import TagsListInline from '@theme/TagsListInline';
 // Import the original mapper
@@ -27,8 +28,18 @@ export default function DocVersionBadge({
 
   const {metadata} = useDoc();
   const {tags} = metadata;
+  const location = useLocation();
 
   const versionMetadata = useDocsVersion();
+
+  // Detect current language and version, then construct the proper features URL
+  const versionMatch = location.pathname.match(/\/(ja-jp\/)?docs\/([^/]+)(\/.*)?/);
+  const isJapanese = versionMatch && versionMatch[1] === 'ja-jp/';
+  const currentVersion = versionMatch ? versionMatch[2] : 'latest';
+
+  const featuresUrl = isJapanese
+    ? `/ja-jp/docs/${currentVersion}/features`
+    : `/docs/${currentVersion}/features`;
 
   // Normalize and deduplicate Enterprise tags.
   const normalizedTags = Array.from(
@@ -67,7 +78,7 @@ export default function DocVersionBadge({
           )}>
           <div className="col">
             <TagsListInline tags={normalizedTags} />
-            <a href="https://scalar-labs.com/pricing/" target="_blank" className="fa-solid fa-circle-question tooltip"><FontAwesomeIcon icon={faCircleQuestion} size="lg" /><span className="tooltiptext">Features and pricing</span></a>
+            <a href={featuresUrl} className="fa-solid fa-circle-question tooltip"><FontAwesomeIcon icon={faCircleQuestion} size="lg" /><span className="tooltiptext">Features</span></a>
           </div>
         </div>
       </span>
