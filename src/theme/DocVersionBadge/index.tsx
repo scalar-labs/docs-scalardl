@@ -32,10 +32,10 @@ export default function DocVersionBadge({
 
   const versionMetadata = useDocsVersion();
 
-  // Detect current language and version, then construct the proper features URL
-  const versionMatch = location.pathname.match(/\/(ja-jp\/)?docs\/([^/]+)(\/.*)?/);
-  const isJapanese = versionMatch && versionMatch[1] === 'ja-jp/';
-  const currentVersion = versionMatch ? versionMatch[2] : 'latest';
+  // Detect current language and version, then construct the proper features URL.
+  const isJapanese = location.pathname.startsWith('/ja-jp/');
+  const versionMatch = location.pathname.match(/docs\/([^/]+)/);
+  const currentVersion = versionMatch ? versionMatch[1] : 'latest';
 
   const featuresUrl = isJapanese
     ? `/ja-jp/docs/${currentVersion}/features`
