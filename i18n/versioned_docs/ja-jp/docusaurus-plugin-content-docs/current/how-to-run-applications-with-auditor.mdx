@@ -278,35 +278,20 @@ ScalarDL Auditor を使用するには商用ライセンスが必要です。以
 
 </Tabs>
 
-## Client SDK をダウンロードする
+## Ledger と Auditor 間の認証を設定する (電子署名認証のみ)
 
-ScalarDL コマンドを実行する場合は Client SDK をダウンロードしてください。手順については、[Client SDK のダウンロード](getting-started.mdx#client-sdk-をダウンロードする)を参照してください。
+電子署名認証を使用する場合、Ledger の証明書と Auditor の証明書を互いに登録する必要があります。HMAC 認証を使用している場合は、この手順をスキップしてください。
 
-## クライアントから証明書またはシークレットキーを登録する
-
-[認証方式を決定する](#認証方式を決定する)で選択した認証方法を選択し、コマンドに従って認証を設定してください。
-
-<Tabs groupId="authentication" queryString>
-  <TabItem value="digital-signature" label="電子署名">
-
-電子署名認証方式の場合、以下の証明書を登録する必要があります:
-
-- クライアントの証明書を Ledger と Auditor に登録する
-- Ledger の証明書を Auditor に登録する
-- Auditor の証明書を Ledger に登録する
-
-これらの証明書は `register-cert` コマンドを使用して登録できます。このコマンドの詳細については、[ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx#register-cert)を参照してください。
+Ledger と Auditor の証明書を登録するには、Client SDK に含まれるクライアントコマンドを実行する必要があります。Client SDK を取得するには、[Client SDK をダウンロードする](getting-started.mdx#client-sdk-をダウンロードする)を参照してください。ダウンロード後、以下のコマンドを実行します:
 
 ```console
-scalardl register-cert --properties <CLIENT_PROPERTIES_FILE>
 scalardl register-cert --properties <LEDGER_AS_CLIENT_PROPERTIES_FILE>
 scalardl register-cert --properties <AUDITOR_AS_CLIENT_PROPERTIES_FILE>
 ```
 
-具体的には、`scalardl-samples` 環境では、`../fixture/` にあるサンプルプロパティファイルを使用して `client/bin/scalardl` にあるコマンドを実行し、以下のように証明書を登録します。
+具体的には、`scalardl-samples` 環境では、`../fixture/` にあるサンプルプロパティファイルを使用して以下のコマンドで証明書を登録できます:
 
 ```console
-client/bin/scalardl register-cert --properties ../fixture/client.properties
 client/bin/scalardl register-cert --properties ../fixture/ledger.as.client.properties
 client/bin/scalardl register-cert --properties ../fixture/auditor.as.client.properties
 ```
@@ -317,31 +302,65 @@ client/bin/scalardl register-cert --properties ../fixture/auditor.as.client.prop
 
 :::
 
-[ScalarDL Java Client SDK](how-to-write-applications.mdx#scalardl-client-sdk-を使用する) の <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を使用して証明書を登録することもできます。
+## HashStore、TableStore、または Ledger 抽象化のクライアントを設定する
 
-  </TabItem>
-  <TabItem value="hmac" label="HMAC">
+アプリケーションが基づく抽象化 (具体的には、HashStore、TableStore、または Ledger) に応じて、設定手順が異なります。抽象化を選択して、手順に従ってください。
 
-HMAC 認証方式の場合、`register-secret` コマンドを使用してシークレットキーを登録できます。このコマンドの詳細については、[ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx#register-secret)を参照してください。
+<Tabs groupId="abstractions" queryString>
+
+<TabItem value="hashstore" label="HashStore" default>
+
+<h3>HashStore クライアントをブートストラップする</h3>
+
+アプリケーションで `HashStoreClientService` を作成する際、クライアント証明書またはシークレットキーと HashStore を使用するために必要なコントラクトが、`ClientConfig` の設定に基づいて自動的に登録されます。したがって、HashStore を手動でブートストラップする必要はありません。テスト目的などで手動で実行したい場合は、[Client SDK をダウンロードする](getting-started-hashstore.mdx#client-sdk-のダウンロード)に従って HashStore Client SDK をダウンロードし、以下のコマンドを実行してください。
 
 ```console
-scalardl register-secret --properties <CLIENT_PROPERTIES_FILE>
+scalardl-hashstore bootstrap --properties <CLIENT_PROPERTIES_FILE>
 ```
 
-[ScalarDL Java Client SDK](how-to-write-applications.mdx#scalardl-client-sdk-を使用する) の <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を使用して秘密情報を登録することもできます。
+</TabItem>
 
-  </TabItem>
-</Tabs>
+<TabItem value="tablestore" label="TableStore">
 
-## クライアントからコントラクトとファンクションを登録する
+<h3>TableStore クライアントをブートストラップする</h3>
 
-以下のコマンドでコントラクトを登録できます。このコマンドの詳細については、[ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx#register-contract)を参照してください。
+アプリケーションで `TableStoreClientService` を作成する際、クライアント証明書またはシークレットキーと TableStore を使用するために必要なコントラクトが、`ClientConfig` の設定に基づいて自動的に登録されます。したがって、TableStore を手動でブートストラップする必要はありません。テスト目的などで手動で実行したい場合は、[Client SDK をダウンロードする](getting-started-tablestore.mdx#client-sdk-のダウンロード)に従って TableStore Client SDK をダウンロードし、以下のコマンドを実行してください。
+
+```console
+scalardl-tablestore bootstrap --properties <CLIENT_PROPERTIES_FILE>
+```
+
+</TabItem>
+
+<TabItem value="ledger" label="Ledger">
+
+<h3>Ledger クライアントをブートストラップする</h3>
+
+以下の `bootstrap` コマンドを実行して、クライアント ID とシステムコントラクトを登録します:
+
+```console
+scalardl bootstrap --properties <CLIENT_PROPERTIES_FILE>
+```
+
+具体的には、`scalardl-samples` 環境では、`../fixture/` にあるサンプルプロパティファイルを使用して `client/bin/scalardl` にあるコマンドを以下のように実行できます。
+
+```console
+client/bin/scalardl bootstrap --properties ../fixture/client.properties
+```
+
+bootstrap コマンドは、[認証方式を決定する](#認証方式を決定する)で行った認証設定に基づいて、クライアント証明書またはシークレットキーを登録します。
+
+[ScalarDL Java Client SDK](how-to-write-applications.mdx#scalardl-client-sdk-を使用する) の <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を使用してブートストラップすることもできます。
+
+<h3>コントラクトとファンクションを登録する</h3>
+
+`register-contract` コマンドを使用してコントラクトを登録できます。
 
 ```console
 scalardl register-contract --properties <CLIENT_PROPERTIES_FILE> --contract-id <CONTRACT_ID> --contract-binary-name <CONTRACT_BINARY_NAME> --contract-class-file <CONTRACT_CLASS_FILE>
 ```
 
-ファンクションは以下のコマンドで登録できます。このコマンドの詳細については、[ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx#register-function)を参照してください。
+`register-function` コマンドを使用してファンクションを登録できます。
 
 ```console
 scalardl register-function --properties <CLIENT_PROPERTIES_FILE> --function-id <FUNCTION_ID> --function-binary-name <FUNCTION_BINARY_NAME> --function-class-file <FUNCTION_CLASS_FILE>
@@ -349,33 +368,18 @@ scalardl register-function --properties <CLIENT_PROPERTIES_FILE> --function-id <
 
 [ScalarDL Java Client SDK](how-to-write-applications.mdx#scalardl-client-sdk-を使用する) の <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を使用してコントラクトとファンクションを登録することもできます。
 
-汎用コントラクトを使用している場合は、[汎用コントラクトおよびファンクションの使用](use-generic-contracts.mdx#汎用コントラクトおよびファンクションを登録する)を参照してコントラクトとファンクションを登録してください。
+</TabItem>
+
+</Tabs>
 
 ## アプリケーションを実行する
 
-クライアントからコントラクトとファンクションの登録が完了したら、ScalarDL アプリケーションを実行できます。
+必要な ID とコントラクトの登録が完了したら、ScalarDL を統合したアプリケーションを実行できます。
 
-## アプリケーションでデータを検証する
+## 参照
 
-[データを検証する](how-to-write-applications.mdx#データを検証する)で説明されている `ClientService` API を使用するか、クライアント CLI コマンドを使用してデータを検証できます。どちらの場合も、ScalarDL Auditor を使用する際は内部的にコントラクト実行を使用するため、検証前に [ValidateLedger](https://github.com/scalar-labs/scalardl-java-client-sdk/blob/master/src/main/java/com/scalar/dl/client/contract/ValidateLedger.java) コントラクトをビルドして登録する必要があります。
+各コマンドの詳細については、以下のコマンドリファレンスを参照してください:
 
-ScalarDL Java Client SDK リポジトリで以下のコマンドを実行して検証コントラクトをビルドできます。`v3.11.0` などの特定のバージョンをチェックアウトしてください。
-
-```console
-git clone https://github.com/scalar-labs/scalardl-java-client-sdk.git
-cd scalardl-java-client-sdk/
-git checkout <SCALARDL_VERSION>
-./gradlew assemble
-```
-
-上記のコマンドを実行すると、`build/classes/java/main/com/scalar/dl/client/contract/ValidateLedger.class` が生成されます。その後、`register-contract` コマンドを使用して登録できます。`validate-ledger` は、クライアントが検証を行う際に指定するデフォルトのコントラクト ID です。これを変更したい場合は、クライアント設定で `scalar.dl.client.auditor.linearizable_validation.contract_id` を独自の検証コントラクト ID に設定してください。
-
-```console
-scalardl register-contract --properties <CLIENT_PROPERTIES_FILE> --contract-id validate-ledger --contract-binary-name com.scalar.dl.client.contract.ValidateLedger --contract-class-file <PATH_TO_VALIDATE_LEDGER_CLASS>
-```
-
-`validate-ledger` コマンドを実行してデータを検証できます。このコマンドの詳細については、[ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx#validate-ledger)を参照してください。
-
-```console
-scalardl validate-ledger --properties <CLIENT_PROPERTIES_FILE> --asset-id="<ASSET_ID>"
-```
+- [ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx)
+- [ScalarDL HashStore コマンドリファレンス](scalardl-hashstore-command-reference.mdx)
+- [ScalarDL TableStore コマンドリファレンス](scalardl-tablestore-command-reference.mdx)
