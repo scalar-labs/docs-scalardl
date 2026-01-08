@@ -282,11 +282,11 @@ scalardl register-cert --properties <LEDGER_AS_CLIENT_PROPERTIES_FILE>
 scalardl register-cert --properties <AUDITOR_AS_CLIENT_PROPERTIES_FILE>
 ```
 
-Specifically, in the `scalardl-samples` environment, you can register the certificates by running the following commands with the sample property files found in `../fixture/`:
+Specifically, in the `scalardl-samples` environment, you can register the certificates by running the following commands with the sample property files found in `./fixture/`:
 
 ```console
-client/bin/scalardl register-cert --properties ../fixture/ledger.as.client.properties
-client/bin/scalardl register-cert --properties ../fixture/auditor.as.client.properties
+client/bin/scalardl register-cert --properties ./fixture/ledger.as.client.properties
+client/bin/scalardl register-cert --properties ./fixture/auditor.as.client.properties
 ```
 
 :::warning
@@ -335,10 +335,10 @@ Register the client identity and system contracts by running the following `boot
 scalardl bootstrap --properties <CLIENT_PROPERTIES_FILE>
 ```
 
-Specifically, in the `scalardl-samples` environment, you can use the command located at `client/bin/scalardl` with the sample property files found in `../fixture/` as follows.
+Specifically, in the `scalardl-samples` environment, you can use the command located at `client/bin/scalardl` with the sample property files found in `./fixture/` as follows.
 
 ```console
-client/bin/scalardl bootstrap --properties ../fixture/client.properties
+client/bin/scalardl bootstrap --properties ./fixture/client.properties
 ```
 
 The bootstrap command registers the client certificate or secret key based on the authentication configuration done in [Decide on an authentication method](#decide-on-an-authentication-method).
