@@ -182,7 +182,7 @@ cd scalardl-samples
 
 ## Client SDK をダウンロードする
 
-次に、[`scalardl-java-client-sdk`](https://github.com/scalar-labs/scalardl-java-client-sdk) リポジトリ内の ScalarDL クライアントツールとサンプルを使用して ScalarDL と対話します。
+次に、ScalarDL クライアントツールとサンプルを使用して ScalarDL と対話します。
 
 次のコマンドを実行して、デプロイされた ScalarDL バージョンと同じバージョンを指定し、ツールのダウンロードに使用します。
 
@@ -190,13 +190,10 @@ cd scalardl-samples
 VERSION=$(grep SCALARDL_VERSION .env | awk -F= '{print $2}')
 ```
 
-次に、以下のコマンドを実行してリポジトリをクローンし、ツールをダウンロードします。
+次に、以下のコマンドを実行してツールをダウンロードします。
 
 ```console
-git clone https://github.com/scalar-labs/scalardl-java-client-sdk.git
-cd scalardl-java-client-sdk
-git checkout v$VERSION
-curl -OL https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v$VERSION/scalardl-java-client-sdk-$VERSION.zip
+curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-java-client-sdk-$VERSION.zip
 unzip scalardl-java-client-sdk-$VERSION.zip
 mv scalardl-java-client-sdk-$VERSION client
 ```
@@ -214,10 +211,10 @@ scalar.dl.client.server.host=localhost
 scalar.dl.client.cert_holder_id=foo
 
 # A path to the certificate file.
-scalar.dl.client.cert_path=../fixture/client.pem
+scalar.dl.client.cert_path=./fixture/client.pem
 
 # A path to the private key file.
-scalar.dl.client.private_key_path=../fixture/client-key.pem
+scalar.dl.client.private_key_path=./fixture/client-key.pem
 EOF
 ```
 
@@ -243,7 +240,7 @@ client/bin/scalardl register-cert --properties client.properties
 
 ScalarDL は、単一のビジネスロジックを実装する Java プログラムであるコントラクトを通じて操作できます。このチュートリアルでは、アセットを作成し、それにいくつかの状態を関連付ける基本的なコントラクトの例を使用して、コントラクトがどのように作成、ビルドされ、機能するかを確認できます。
 
-以下に、サンプルコントラクト [StateUpdater.java](https://github.com/scalar-labs/scalardl-java-client-sdk/blob/master/src/main/java/com/org1/contract/StateUpdater.java) を示します。コントラクトは、定義済みの基本コントラクトクラス (<JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="JacksonBasedContract" /> クラスなど) を拡張し、`invoke` メソッドをオーバーライドする Java クラスです。ビジネスロジックは `invoke` メソッドに実装されています。
+以下に、サンプルコントラクト [StateUpdater.java](https://github.com/scalar-labs/scalardl-samples/blob/master/src/main/java/com/org1/contract/StateUpdater.java) を示します。コントラクトは、定義済みの基本コントラクトクラス (<JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="JacksonBasedContract" /> クラスなど) を拡張し、`invoke` メソッドをオーバーライドする Java クラスです。ビジネスロジックは `invoke` メソッドに実装されています。
 
 具体的には、`invoke` メソッドは引数からクライアント定義のアセット ID (`asset_id`) と状態 (`state`) を抽出し、指定された状態がアセットの現在の状態と異なる場合は、アセット ID を台帳内の状態に関連付けます。
 
