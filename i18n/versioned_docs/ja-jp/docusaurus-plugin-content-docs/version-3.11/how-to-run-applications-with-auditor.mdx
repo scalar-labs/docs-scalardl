@@ -303,12 +303,12 @@ scalardl register-cert --properties <LEDGER_AS_CLIENT_PROPERTIES_FILE>
 scalardl register-cert --properties <AUDITOR_AS_CLIENT_PROPERTIES_FILE>
 ```
 
-具体的には、`scalardl-samples` 環境では、`../fixture/` にあるサンプルプロパティファイルを使用して `client/bin/scalardl` にあるコマンドを実行し、以下のように証明書を登録します。
+具体的には、`scalardl-samples` 環境では、`./fixture/` にあるサンプルプロパティファイルを使用して以下のコマンドで証明書を登録できます:
 
 ```console
-client/bin/scalardl register-cert --properties ../fixture/client.properties
-client/bin/scalardl register-cert --properties ../fixture/ledger.as.client.properties
-client/bin/scalardl register-cert --properties ../fixture/auditor.as.client.properties
+client/bin/scalardl register-cert --properties ./fixture/client.properties
+client/bin/scalardl register-cert --properties ./fixture/ledger.as.client.properties
+client/bin/scalardl register-cert --properties ./fixture/auditor.as.client.properties
 ```
 
 :::warning
