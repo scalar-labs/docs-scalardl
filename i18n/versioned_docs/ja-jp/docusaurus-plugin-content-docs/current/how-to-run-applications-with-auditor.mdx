@@ -289,11 +289,11 @@ scalardl register-cert --properties <LEDGER_AS_CLIENT_PROPERTIES_FILE>
 scalardl register-cert --properties <AUDITOR_AS_CLIENT_PROPERTIES_FILE>
 ```
 
-具体的には、`scalardl-samples` 環境では、`../fixture/` にあるサンプルプロパティファイルを使用して以下のコマンドで証明書を登録できます:
+具体的には、`scalardl-samples` 環境では、`./fixture/` にあるサンプルプロパティファイルを使用して以下のコマンドで証明書を登録できます:
 
 ```console
-client/bin/scalardl register-cert --properties ../fixture/ledger.as.client.properties
-client/bin/scalardl register-cert --properties ../fixture/auditor.as.client.properties
+client/bin/scalardl register-cert --properties ./fixture/ledger.as.client.properties
+client/bin/scalardl register-cert --properties ./fixture/auditor.as.client.properties
 ```
 
 :::warning
@@ -342,10 +342,10 @@ scalardl-tablestore bootstrap --properties <CLIENT_PROPERTIES_FILE>
 scalardl bootstrap --properties <CLIENT_PROPERTIES_FILE>
 ```
 
-具体的には、`scalardl-samples` 環境では、`../fixture/` にあるサンプルプロパティファイルを使用して `client/bin/scalardl` にあるコマンドを以下のように実行できます。
+具体的には、`scalardl-samples` 環境では、`./fixture/` にあるサンプルプロパティファイルを使用して `client/bin/scalardl` にあるコマンドを以下のように実行できます。
 
 ```console
-client/bin/scalardl bootstrap --properties ../fixture/client.properties
+client/bin/scalardl bootstrap --properties ./fixture/client.properties
 ```
 
 bootstrap コマンドは、[認証方式を決定する](#認証方式を決定する)で行った認証設定に基づいて、クライアント証明書またはシークレットキーを登録します。

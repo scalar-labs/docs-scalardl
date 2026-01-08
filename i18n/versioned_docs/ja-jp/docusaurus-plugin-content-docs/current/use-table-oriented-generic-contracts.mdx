@@ -48,7 +48,7 @@ ScalarDL のテーブル指向汎用コントラクトは、[汎用コントラ�
 
 ### 必要なツールと汎用コントラクトのダウンロード
 
-以下のコマンドを実行して、3.11.0 以上の ScalarDL バージョンを指定します。利用可能なバージョンについては、[タグ](https://github.com/scalar-labs/scalardl-java-client-sdk/tags)を参照してください。
+以下のコマンドを実行して、3.11.0 以上の ScalarDL バージョンを指定します。利用可能なバージョンについては、[タグ](https://github.com/scalar-labs/scalardl/tags)を参照してください。
 
 ```console
 VERSION=X.Y.Z
@@ -64,13 +64,10 @@ VERSION=X.Y.Z
 TGC_VERSION=X_Y_Z
 ```
 
-次に、クライアント SDK リポジトリをクローンし、以下のコマンドを実行してツールと汎用コントラクトをダウンロードします:
+次に、以下のコマンドを実行してツールと汎用コントラクトをダウンロードします:
 
 ```console
-git clone https://github.com/scalar-labs/scalardl-java-client-sdk.git
-cd scalardl-java-client-sdk
-git checkout v$VERSION
-curl -OL https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v$VERSION/scalardl-java-client-sdk-$VERSION.zip
+curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-java-client-sdk-$VERSION.zip
 unzip scalardl-java-client-sdk-$VERSION.zip
 mv scalardl-java-client-sdk-$VERSION client
 curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-generic-contracts-$VERSION.zip
