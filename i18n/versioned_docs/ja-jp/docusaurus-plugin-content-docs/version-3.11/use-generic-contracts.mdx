@@ -59,19 +59,16 @@ ScalarDL のコントラクトは、台帳データベースのアセットレ�
 
 ### 必要なツールと汎用コントラクトをダウンロードします
 
-次のコマンドを実行して、3.10.1 以上のバージョンを指定します。使用可能なバージョンについては、[Tags](https://github.com/scalar-labs/scalardl-java-client-sdk/tags) を参照してください。
+次のコマンドを実行して、3.10.1 以上のバージョンを指定します。使用可能なバージョンについては、[Tags](https://github.com/scalar-labs/scalardl/tags) を参照してください。
 
 ```console
 VERSION=X.Y.Z
 ```
 
-次のコマンドを実行して、ScalarDL Java Client SDK リポジトリをクローンし、ツールと汎用コントラクトをダウンロードします:
+次のコマンドを実行して、ツールと汎用コントラクトをダウンロードします:
 
 ```console
-git clone https://github.com/scalar-labs/scalardl-java-client-sdk.git
-cd scalardl-java-client-sdk
-git checkout v$VERSION
-curl -OL https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v$VERSION/scalardl-java-client-sdk-$VERSION.zip
+curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-java-client-sdk-$VERSION.zip
 unzip scalardl-java-client-sdk-$VERSION.zip
 mv scalardl-java-client-sdk-$VERSION client
 curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-generic-contracts-$VERSION.zip
