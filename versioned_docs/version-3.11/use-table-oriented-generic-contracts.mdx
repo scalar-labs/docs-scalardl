@@ -44,7 +44,7 @@ The table-oriented generic contracts are supported in ScalarDL version 3.11 or l
 
 ### Download the necessary tools and the generic contracts
 
-Specify a ScalarDL version that is equal to or greater than 3.11.0 by running the following command. For available versions, see [Tags](https://github.com/scalar-labs/scalardl-java-client-sdk/tags).
+Specify a ScalarDL version that is equal to or greater than 3.11.0 by running the following command. For available versions, see [Tags](https://github.com/scalar-labs/scalardl/tags).
 
 ```console
 VERSION=X.Y.Z
@@ -60,13 +60,10 @@ Also, specify the table-oriented generic contract version by running the followi
 TGC_VERSION=X_Y_Z
 ```
 
-Then, clone the client SDK repository and download the tools and the generic contracts by running the following commands:
+Then, download the tools and the generic contracts by running the following commands:
 
 ```console
-git clone https://github.com/scalar-labs/scalardl-java-client-sdk.git
-cd scalardl-java-client-sdk
-git checkout v$VERSION
-curl -OL https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v$VERSION/scalardl-java-client-sdk-$VERSION.zip
+curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-java-client-sdk-$VERSION.zip
 unzip scalardl-java-client-sdk-$VERSION.zip
 mv scalardl-java-client-sdk-$VERSION client
 curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-generic-contracts-$VERSION.zip

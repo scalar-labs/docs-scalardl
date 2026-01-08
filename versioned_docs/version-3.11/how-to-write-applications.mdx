@@ -13,10 +13,10 @@ This document explains how to write ScalarDL applications. You will learn how to
 
 ## Use the ScalarDL Client SDK
 
-You have two options to interact with ScalarDL: using [commands](scalardl-command-reference.mdx) as shown in the [getting started guide](getting-started.mdx) or using the [Java Client SDK](https://github.com/scalar-labs/scalardl-java-client-sdk).
-Using commands is convenient because you don't need to write applications. However, they invoke a process for each execution, which is slow, so they are mainly for quickly testing your contracts. Instead, using the Client SDK is usually recommended when you write ScalarDL-based applications because it is more efficient.
+You have two options to interact with ScalarDL: using [commands](scalardl-command-reference.mdx) as shown in the [getting started guide](getting-started.mdx) or using the [Java Client SDK](https://javadoc.io/doc/com.scalar-labs/scalardl-java-client-sdk/latest/index.html).
+Using commands is convenient because you don't need to write applications. However, they invoke a process for each execution, which is slow, so they are mainly for quickly testing your contracts. Instead, using the Java Client SDK is usually recommended when you write ScalarDL-based applications because it is more efficient.
 
-The Client SDK is available on [Maven Central](https://search.maven.org/search?q=a:scalardl-java-client-sdk). You can install it in your application by using a build tool such as Gradle. For example in Gradle, you can add the following dependency to `build.gradle`, replacing `VERSION` with the version of ScalarDL that you want to use.
+The Java Client SDK is available on [Maven Central](https://search.maven.org/search?q=a:scalardl-java-client-sdk). You can install it in your application by using a build tool such as Gradle. For example, in Gradle, you can add the following dependency to `build.gradle`, replacing `VERSION` with the version of ScalarDL that you want to use.
 
 ```gradle
 dependencies {
@@ -24,7 +24,7 @@ dependencies {
 }
 ```
 
-The Client SDK APIs are provided by a service class called <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" />. The following is a code snippet that shows how to use `ClientService` to execute a contract.
+The Java Client SDK APIs are provided by a service class called <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" />. The following is a code snippet that shows how to use `ClientService` to execute a contract.
 
 ```java
   // ClientServiceFactory should always be reused.
