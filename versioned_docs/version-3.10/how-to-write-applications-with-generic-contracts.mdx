@@ -16,11 +16,11 @@ This document explains how to write ScalarDL applications with generic contracts
 You have two options to interact with ScalarDL when using generic contracts:
 
 - Using [commands](scalardl-command-reference.mdx), as shown in [Use Generic Contracts and Functions](use-generic-contracts.mdx)
-- Using the [Java Client SDK](https://github.com/scalar-labs/scalardl-java-client-sdk)
+- Using the [Java Client SDK](https://javadoc.io/doc/com.scalar-labs/scalardl-java-client-sdk/latest/index.html)
 
 Using commands is convenient because you don't need to write applications. However, they invoke a process for each execution, which is slow, so they are mainly for quickly testing generic contracts. Instead, using the Client SDK is usually recommended when you write ScalarDL-based applications because it is more efficient.
 
-The Client SDK is available on [Maven Central](https://search.maven.org/search?q=a:scalardl-java-client-sdk). You can install it in your application by using a build tool such as Gradle. For example in Gradle, you can add the following dependency to `build.gradle`, replacing `VERSION` with the version of ScalarDL that you want to use.
+The Client SDK is available on [Maven Central](https://search.maven.org/search?q=a:scalardl-java-client-sdk). You can install it in your application by using a build tool such as Gradle. For example, in Gradle, you can add the following dependency to `build.gradle`, replacing `VERSION` with the version of ScalarDL that you want to use.
 
 ```gradle
 dependencies {
