@@ -18,7 +18,7 @@ This getting started tutorial explains how to configure ScalarDL on your preferr
 
 ## Download the Client SDK
 
-Next, you'll use the ScalarDL client tools and samples in the [`scalardl-java-client-sdk`](https://github.com/scalar-labs/scalardl-java-client-sdk) repository to interact with ScalarDL.
+Next, you'll use the ScalarDL client tools and samples to interact with ScalarDL.
 
 Specify a version that is the same as the deployed ScalarDL version and is used for downloading the tools by running the following command:
 
@@ -26,13 +26,10 @@ Specify a version that is the same as the deployed ScalarDL version and is used 
 VERSION=$(grep SCALARDL_VERSION .env | awk -F= '{print $2}')
 ```
 
-Then, clone the repo and download the tools by running the following command:
+Then, download the tools by running the following command:
 
 ```console
-git clone https://github.com/scalar-labs/scalardl-java-client-sdk.git
-cd scalardl-java-client-sdk
-git checkout v$VERSION
-curl -OL https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v$VERSION/scalardl-java-client-sdk-$VERSION.zip
+curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-java-client-sdk-$VERSION.zip
 unzip scalardl-java-client-sdk-$VERSION.zip
 mv scalardl-java-client-sdk-$VERSION client
 ```
@@ -50,10 +47,10 @@ scalar.dl.client.server.host=localhost
 scalar.dl.client.cert_holder_id=foo
 
 # A path to the certificate file.
-scalar.dl.client.cert_path=../fixture/client.pem
+scalar.dl.client.cert_path=./fixture/client.pem
 
 # A path to the private key file. 
-scalar.dl.client.private_key_path=../fixture/client-key.pem
+scalar.dl.client.private_key_path=./fixture/client-key.pem
 EOF
 ```
 
@@ -80,7 +77,7 @@ Note that you can only add new certs and cannot update existing certs in place f
 
 You can interact with ScalarDL through a contract, which is a Java program that implements single business logic. In this tutorial, you can see how a contract is written, built, and works by using a basic contract example, which creates an asset and associates some states with it.
 
-Below, you can see a sample contract, [StateUpdater.java](https://github.com/scalar-labs/scalardl-java-client-sdk/blob/master/src/main/java/com/org1/contract/StateUpdater.java). A contract is simply a Java class that extends the predefined base contract classes (such as <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="JacksonBasedContract" /> class) and overrides the `invoke` method. The business logic is implemented in the `invoke` method.
+Below, you can see a sample contract, [StateUpdater.java](https://github.com/scalar-labs/scalardl-samples/blob/master/src/main/java/com/org1/contract/StateUpdater.java). A contract is simply a Java class that extends the predefined base contract classes (such as <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="JacksonBasedContract" /> class) and overrides the `invoke` method. The business logic is implemented in the `invoke` method.
 
 Specifically, the `invoke` method will extract a client-defined asset ID (`asset_id`) and state (`state`) from the argument, and then associate the asset ID with the state in the ledger if the given state is different from the asset's current state.
 
