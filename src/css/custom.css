@@ -501,7 +501,7 @@ html[data-theme="dark"] .tooltip-glossary {
   }
 }
 
-/* Support button and dropdown */
+/* Support button and dropdown - Bottom-right corner with back-to-top interaction */
 .supportDropdown {
   display: inline-block;
   position: relative;
@@ -509,26 +509,28 @@ html[data-theme="dark"] .tooltip-glossary {
 
 .supportDropdownContent {
   background-color: #f9f9f9;
+  /* border: 2px solid #d0d7de !important; */
   border-radius: 8px;
   box-shadow: var(--ifm-global-shadow-md);
   color: var(--ifm-color-emphasis-700);
   font-size: 14px;
   min-width: 303px;
   opacity: 0;
-  overflow: hidden;
+  overflow: visible !important;
   padding: 8px 0px;
   position: absolute;
+  bottom: calc(100% + 8px);
   right: 0;
-  transform: translateY(-10px);
+  transform: translateY(10px);
   transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-  visibility: hidden;
-  z-index: 1;
+  pointer-events: none;
+  z-index: 1010;
 }
 
-.supportDropdown:hover .supportDropdownContent {
-  visibility: visible;
+.supportDropdown.open .supportDropdownContent {
   opacity: 1;
   transform: translateY(0);
+  pointer-events: all;
 }
 
 .supportDropdownContent {
@@ -537,28 +539,32 @@ html[data-theme="dark"] .tooltip-glossary {
 
 .supportDropBtn {
   align-items: center;
-  background-color: inherit;
+  background: var(--ifm-color-primary);
   border: 0;
-  border-radius: var(--ifm-badge-border-radius);
-  color: var(--ifm-navbar-link-color);
+  border-radius: 50%;
+  color: white;
   cursor: pointer;
   display: flex;
   font-family: var(--ifm-font-family-base);
-  font-size: 14.5px;
-  font-weight: var(--ifm-font-weight-semibold);
-  justify-content: space-between;
-  min-width: 145px;
-  padding: 6px 0;
-  text-align: left;
+  font-size: 24px;
+  font-weight: bold;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  transition: all 0.3s ease;
   z-index: 1;
 }
 
-.supportDropBtn svg { /* Keep dropdown open when moving the mouse between text and icon. */
-  pointer-events: none;
+.supportDropBtn:focus {
+  outline: none;
 }
 
-.supportDropdown:hover .supportDropBtn {
-  color: var(--ifm-color-primary);
+.supportDropBtn__icon,
+.supportDropBtn__text,
+.supportDropBtn__arrow {
+  display: none;
 }
 
 @media (max-width: 996px) {
@@ -567,7 +573,8 @@ html[data-theme="dark"] .tooltip-glossary {
   }
   .supportDropdownContent {
     font-size: 15px;
-    left: 0;
+    right: 0;
+    left: auto;
     min-width: 320px;
   }
 }
@@ -587,9 +594,9 @@ html[data-theme="dark"] .tooltip-glossary {
 }
 
 html[data-theme="dark"] .supportDropBtn {
-  background-color: inherit;
+  background: var(--ifm-color-primary);
   border: 0;
-  color: #f9f9f9;
+  color: white;
 }
 
 html[data-theme="dark"] .supportDropdownContent {

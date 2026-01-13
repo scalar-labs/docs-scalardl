@@ -1,20 +1,31 @@
 import React, { useState, useEffect, useRef, lazy, Suspense, MouseEvent } from "react";
-import { useDoc } from "@docusaurus/plugin-content-docs/client";
 import { useLocation } from "@docusaurus/router";
 
 // Lazy-load AssistantModal.
 const AssistantModal = lazy(() => import("./AssistantModal"));
 
+// Safe hook to use Doc context when available
+function useSafeDoc() {
+  try {
+    const { useDoc } = require('@docusaurus/plugin-content-docs/client');
+    return useDoc();
+  } catch (error) {
+    // Return default values when useDoc is not available (like when rendered outside of a Docusaurus doc page context)
+    return { metadata: { title: "Documentation page" } };
+  }
+}
+
 const SupportDropdownMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [githubIssueUrl, setGithubIssueUrl] = useState<string>("#");
+  const [showBackToTop, setShowBackToTop] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
 
-  // Get document metadata from Docusaurus.
-  const { metadata } = useDoc();
-  const docTitle: string = metadata?.title || "Issue with documentation page";
+  // Get document metadata from Docusaurus safely.
+  const { metadata } = useSafeDoc();
+  const docTitle: string = metadata?.title || "Documentation page";
 
   // Detect the language based on the URL path.
   const isJapanese: boolean = location.pathname.startsWith("/ja-jp");
@@ -69,6 +80,49 @@ const SupportDropdownMenu: React.FC = () => {
     }
   }, [isJapanese, docTitle]);
 
+  // Handle scroll to detect when back-to-top button is actually visible
+  useEffect(() => {
+    let throttleTimeout: NodeJS.Timeout | null = null;
+
+    const handleScroll = () => {
+      // Use scroll position as primary check (300px threshold same as Docusaurus)
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const shouldShowBackToTop = scrollTop > 300;
+
+      // Double-check with DOM element visibility as secondary validation
+      // ⚠️ FRAGILE DEPENDENCY WARNING ⚠️
+      // The selector below is tightly coupled to Docusaurus's BackToTopButton implementation.
+      // This aria-label may change without notice in future Docusaurus updates, especially for internationalization support. If this breaks, the support button may overlap with the back-to-top button. Consider swizzling BackToTopButton for more control or finding a more stable class-based selector if available.
+      const backToTopButton = document.querySelector('button[aria-label="Scroll back to top"]');
+      const isBackToTopInDOM = backToTopButton &&
+        window.getComputedStyle(backToTopButton).display !== 'none' &&
+        window.getComputedStyle(backToTopButton).visibility !== 'hidden' &&
+        window.getComputedStyle(backToTopButton).opacity !== '0';
+
+      // Use scroll position as primary indicator for faster response
+      setShowBackToTop(shouldShowBackToTop && !!isBackToTopInDOM);
+    };
+
+    const throttledHandleScroll = () => {
+      if (throttleTimeout) return;
+
+      throttleTimeout = setTimeout(() => {
+        handleScroll();
+        throttleTimeout = null;
+      }, 16); // ~60fps throttling
+    };
+
+    // Check immediately and on scroll with throttling for performance
+    handleScroll();
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', throttledHandleScroll);
+      if (throttleTimeout) {
+        clearTimeout(throttleTimeout);
+      }
+    };
+  }, []);
+
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
   };
@@ -117,12 +171,19 @@ const SupportDropdownMenu: React.FC = () => {
   }, [isOpen]);
 
   return (
-    <div className="supportDropdown" ref={dropdownRef}>
-      <button className="supportDropBtn" onMouseOver={toggleDropdown}>
-        {isJapanese ? "何かお困りですか?" : "Need some help?"}
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-          <path fill="currentColor" d="m12 16l-6-6h12z" />
-        </svg>
+    <div
+      className={`supportDropdown ${isOpen ? 'open' : ''}`}
+      ref={dropdownRef}
+      style={{
+        position: 'fixed',
+        bottom: showBackToTop ? '80px' : '20px', // Move up when back-to-top is visible
+        right: '20px',
+        transition: 'bottom 0.3s ease',
+        zIndex: 1000
+      }}
+    >
+      <button className="supportDropBtn" onClick={toggleDropdown}>
+        ?
       </button>
 
       <div className="supportDropdownContent">

@@ -1,4 +1,3 @@
-import SupportDropdownMenu from '../../../components/Support/SupportDropdownMenu';
 import React from 'react';
 import clsx from 'clsx';
 import { useWindowSize } from '@docusaurus/theme-common';
@@ -48,12 +47,6 @@ const DocItemLayout: React.FC<DocItemLayoutProps> = ({ children }) => {
   const hideTOC = frontMatter.hide_table_of_contents;
   const windowSize = useWindowSize();
 
-  // Check if the current page is the home page or a version homepage.
-  const isHomePage = metadata.permalink === '/docs/latest/' || 
-                     /^\/docs\/\d+\.\d+\/$/.test(metadata.permalink) || 
-                     metadata.permalink === '/ja-jp/docs/latest/' || 
-                     /^\/ja-jp\/docs\/\d+\.\d+\/$/.test(metadata.permalink);
-
   return (
     <div className="row">
       <div className={clsx('col', !docTOC.hidden && styles.docItemCol)}>
@@ -63,11 +56,6 @@ const DocItemLayout: React.FC<DocItemLayoutProps> = ({ children }) => {
           <article>
             <DocBreadcrumbs />
             <DocVersionBadge />
-            {windowSize === 'mobile' && !isHomePage && (
-              <div style={{ display: 'flex', justifyContent: 'left', marginBottom: '1rem' }}>
-                <SupportDropdownMenu />
-              </div>
-            )}
             {docTOC.mobile}
             <DocItemContent>{children}</DocItemContent>
             <DocItemFooter />
@@ -79,11 +67,6 @@ const DocItemLayout: React.FC<DocItemLayoutProps> = ({ children }) => {
       {!hideTOC && windowSize !== 'mobile' && (
         <div className="col col--3" style={{ position: "relative" }}>
           <div style={{ position: "sticky", top: "80px", zIndex: 1 }}>
-            {!isHomePage && (
-              <div style={{ display: 'flex', justifyContent: 'flex-start', padding: '0px 17px', right: '0' }}>
-                <SupportDropdownMenu />
-              </div>
-            )}
             {docTOC.desktop}
           </div>
         </div>

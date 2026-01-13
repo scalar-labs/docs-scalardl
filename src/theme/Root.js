@@ -1,11 +1,23 @@
 import React, { useEffect } from 'react';
 import Clarity from '@microsoft/clarity';
 import CookieConsent from "react-cookie-consent";
+import SupportDropdownMenu from '../components/Support/SupportDropdownMenu';
+import { useLocation } from '@docusaurus/router';
 
 // Initialize Clarity with the given project ID
 const projectId = "p90xsfjq8f";
 
 export default function Root({ children }) {
+  const location = useLocation();
+
+  // Check if the current page is the home page or a version homepage using pathname
+  const { pathname } = location;
+  // Checks for site root (like '/', '/ja-jp/') or docs root (like '/docs/', '/ja-jp/docs/')
+  const isRootPage = /^\/(ja-jp\/)?(docs\/)?$/.test(pathname);
+  // Checks for version homepages (like '/docs/latest/', '/ja-jp/docs/3.12/')
+  const isVersionHomepage = /^\/(ja-jp\/)?docs\/(\d+\.\d+|latest)\/$/.test(pathname);
+  const isHomePage = isRootPage || isVersionHomepage;
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       // Initialize Clarity only on the client-side
@@ -31,6 +43,8 @@ export default function Root({ children }) {
   return (
     <>
       {children}
+      {/* Support button with dynamic positioning */}
+      {!isHomePage && <SupportDropdownMenu />}
       <div>
         <CookieConsent
           location="bottom"
