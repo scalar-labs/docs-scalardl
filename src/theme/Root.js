@@ -11,13 +11,12 @@ export default function Root({ children }) {
   const location = useLocation();
 
   // Check if the current page is the home page or a version homepage using pathname
-  const isHomePage = location.pathname === '/docs/latest/' ||
-                     /^\/docs\/\d+\.\d+\/$/.test(location.pathname) ||
-                     location.pathname === '/ja-jp/docs/latest/' ||
-                     /^\/ja-jp\/docs\/\d+\.\d+\/$/.test(location.pathname) ||
-                     location.pathname === '/' ||
-                     location.pathname === '/docs/' ||
-                     location.pathname === '/ja-jp/';
+  const { pathname } = location;
+  // Checks for site root (like '/', '/ja-jp/') or docs root (like '/docs/', '/ja-jp/docs/')
+  const isRootPage = /^\/(ja-jp\/)?(docs\/)?$/.test(pathname);
+  // Checks for version homepages (like '/docs/latest/', '/ja-jp/docs/3.12/')
+  const isVersionHomepage = /^\/(ja-jp\/)?docs\/(\d+\.\d+|latest)\/$/.test(pathname);
+  const isHomePage = isRootPage || isVersionHomepage;
 
   useEffect(() => {
     if (typeof window !== "undefined") {

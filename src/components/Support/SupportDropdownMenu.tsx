@@ -10,7 +10,7 @@ function useSafeDoc() {
     const { useDoc } = require('@docusaurus/plugin-content-docs/client');
     return useDoc();
   } catch (error) {
-    // Return default values when useDoc is not available (e.g., when used in sidebar)
+    // Return default values when useDoc is not available (like when rendered outside of a Docusaurus doc page context)
     return { metadata: { title: "Documentation page" } };
   }
 }
@@ -82,12 +82,17 @@ const SupportDropdownMenu: React.FC = () => {
 
   // Handle scroll to detect when back-to-top button is actually visible
   useEffect(() => {
+    let throttleTimeout: NodeJS.Timeout | null = null;
+
     const handleScroll = () => {
       // Use scroll position as primary check (300px threshold same as Docusaurus)
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const shouldShowBackToTop = scrollTop > 300;
 
       // Double-check with DOM element visibility as secondary validation
+      // ⚠️ FRAGILE DEPENDENCY WARNING ⚠️
+      // The selector below is tightly coupled to Docusaurus's BackToTopButton implementation.
+      // This aria-label may change without notice in future Docusaurus updates, especially for internationalization support. If this breaks, the support button may overlap with the back-to-top button. Consider swizzling BackToTopButton for more control or finding a more stable class-based selector if available.
       const backToTopButton = document.querySelector('button[aria-label="Scroll back to top"]');
       const isBackToTopInDOM = backToTopButton &&
         window.getComputedStyle(backToTopButton).display !== 'none' &&
@@ -98,10 +103,24 @@ const SupportDropdownMenu: React.FC = () => {
       setShowBackToTop(shouldShowBackToTop && !!isBackToTopInDOM);
     };
 
+    const throttledHandleScroll = () => {
+      if (throttleTimeout) return;
+
+      throttleTimeout = setTimeout(() => {
+        handleScroll();
+        throttleTimeout = null;
+      }, 16); // ~60fps throttling
+    };
+
     // Check immediately and on scroll with throttling for performance
     handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', throttledHandleScroll);
+      if (throttleTimeout) {
+        clearTimeout(throttleTimeout);
+      }
+    };
   }, []);
 
   const toggleDropdown = () => {

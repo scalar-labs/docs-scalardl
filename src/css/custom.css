@@ -524,7 +524,7 @@ html[data-theme="dark"] .tooltip-glossary {
   transform: translateY(10px);
   transition: opacity 0.3s ease-out, transform 0.3s ease-out;
   pointer-events: none;
-  z-index: 9999999 !important;
+  z-index: 1010;
 }
 
 .supportDropdown.open .supportDropdownContent {
