@@ -97,32 +97,6 @@ const config = {
                 banner: 'none',
                 className: '3.9.7',
               },
-              "3.8": {
-                label: '3.8 (unsupported)',
-                path: '3.8',
-                banner: 'unmaintained',
-                className: '3.8.5',
-              },
-              "3.7": {
-                label: '3.7 (unsupported)',
-                path: '3.7',
-                banner: 'unmaintained',
-              },
-              "3.6": {
-                label: '3.6 (unsupported)',
-                path: '3.6',
-                banner: 'unmaintained',
-              },
-              "3.5": {
-                label: '3.5 (unsupported)',
-                path: '3.5',
-                banner: 'unmaintained',
-              },
-              "3.4": {
-                label: '3.4 (unsupported)',
-                path: '3.4',
-                banner: 'unmaintained',
-              },
             },
           },
           googleTagManager: {
