@@ -3,23 +3,6 @@ const path = require("path");
 
 // Paths
 const logFile = "brokenLinks.log";
-const unsupportedVersionsFile = path.join(process.cwd(), "src", "pages");
-
-// Read unsupported versions from the MDX file.
-let unsupportedVersions = [];
-try {
-  const mdxContent = fs.readFileSync(unsupportedVersionsFile, "utf8");
-  // Extract unsupported version numbers (like 3.7, 3.6, etc.).
-  unsupportedVersions = Array.from(mdxContent.matchAll(/ScalarDL (\d+\.\d+)/g), match => match[1]);
-} catch (err) {
-  console.error("Error reading unsupported versions file:", err);
-  process.exit(1);
-}
-
-if (unsupportedVersions.length === 0) {
-  console.log("No unsupported versions found. Exiting.");
-  process.exit(0);
-}
 
 // Define the prefixes to filter for broken links.
 const prefixes = [
@@ -37,8 +20,7 @@ fs.readFile(logFile, "utf8", (err, data) => {
   const filteredLines = data
     .split("\n")
     .filter((line) =>
-      prefixes.some((prefix) => line.startsWith(prefix)) &&
-      !unsupportedVersions.some((version) => line.includes(`/docs/${version}/`)) // Exclude unsupported versions.
+      prefixes.some((prefix) => line.startsWith(prefix))
     );
 
   // Overwrite the log file with filtered lines.
