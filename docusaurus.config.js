@@ -153,10 +153,6 @@ const config = {
             to: '/docs/latest/helm-charts/getting-started-scalar-manager',
             from: '/docs/latest/helm-charts/how-to-deploy-scalar-manager',
           },
-          {
-            to: '/docs/3.8/helm-charts/getting-started-scalar-manager',
-            from: '/docs/3.8/helm-charts/how-to-deploy-scalar-manager',
-          },
         ],
         createRedirects(existingPath) {
           if (existingPath.includes('/ja-jp/docs')) {
