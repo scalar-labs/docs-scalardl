@@ -3,7 +3,7 @@ const path = require("path");
 
 // Paths
 const logFile = "brokenLinks.log";
-const unsupportedVersionsFile = path.join(process.cwd(), "src", "pages", "unsupported-versions.mdx");
+const unsupportedVersionsFile = path.join(process.cwd(), "src", "pages");
 
 // Read unsupported versions from the MDX file.
 let unsupportedVersions = [];
