@@ -11,6 +11,8 @@ This page introduces `scalardl`, which is a client command for interacting with 
 
 ## Overview of commands
 
+- **Bootstrap a client**
+  - [`bootstrap`](#bootstrap): Bootstrap a client by registering the identity information and system contracts.
 - **Register identity information**
   - [`register-cert`](#register-cert): Register a specified certificate.
   - [`register-secret`](#register-secret): Register a specified secret.
@@ -26,6 +28,29 @@ This page introduces `scalardl`, which is a client command for interacting with 
   - [`validate-ledger`](#validate-ledger): Validate a specified asset in a ledger.
 - **Run commands for generic-contracts**
   - [`generic-contracts`](#generic-contracts): Run commands for a generic-contracts-based setup.
+
+## `bootstrap`
+
+Bootstrap a client by registering the identity information and system contracts. This command performs the following:
+
+1. Registers a certificate or secret based on the authentication method configured in the properties file.
+2. Registers the `ValidateLedger` contract if Auditor is enabled.
+
+If the identity information or the contract is already registered, the command skips the registration and continues without error.
+
+### Options
+
+| Option                     | Description                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | A configuration file in properties format. |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+```console
+scalardl bootstrap --properties client.properties
+```
 
 ## `register-cert`
 
