@@ -165,28 +165,33 @@ client/bin/scalardl validate-ledger --properties client.properties --asset-id="s
 
 検証が何を行うかは、ScalarDL の設定方法によって異なります。簡単に言うと、ScalarDL Ledger のみを使用する場合、検証はアセットを走査して、アセットが再計算可能で、有効なハッシュチェーン構造を持っているかどうかを確認します。ScalarDL Ledger と Auditor を使用する場合、検証は Ledger と Auditor の状態間の矛盾 (つまり、ビザンチン故障) を中央集権的な調整なしでチェックします。Auditor による検証の詳細については、[データを検証する](how-to-write-applications.mdx#データを検証する)と[ScalarDL Ledger と Auditor を介して ScalarDL アプリケーションを実行する](how-to-run-applications-with-auditor.mdx)を参照してください。
 
-## 独自のコントラクトを作成するか、汎用コントラクトを使用する
+## 独自のコントラクトを作成するか、定義済みのコントラクトを使用する
 
 コントラクトを準備するには、独自のコントラクトを作成するか、定義済みのコントラクトを使用するかの2つのオプションがあります。
 
 上で説明したように、コントラクトを作成するには、定義済みの基本コントラクトクラスを拡張し、必要に応じて `invoke` メソッドをオーバーライドする必要があります。詳細については、[適切なコントラクトを作成する方法に関するガイド](how-to-write-contract.mdx)を参照してください。
 
-定義済みのコントラクトは汎用コントラクトと呼ばれ、一般的なユースケースの基本機能を提供します。詳細については、[汎用コントラクトおよびファンクションの使用](use-generic-contracts.mdx)を参照してください。
+一般的なユースケース向けの定義済みコントラクトは、HashStore および TableStore という抽象化されたデータストアを通じて利用できます。
 
-## 参考文献
+* HashStore は、オブジェクトとコレクションの真正性を保証するためのインターフェースを提供し、証拠保全などのアプリケーションに最適です。
+* TableStore は、テーブルの真正性を検証するための SQL 互換インターフェースを提供し、開発者が馴染みのあるデータモデルとインターフェースで多用途な改ざん防止アプリケーションを構築できます。
+
+詳細については、[ScalarDL HashStore をはじめよう](getting-started-hashstore.mdx)と[ScalarDL TableStore をはじめよう](getting-started-tablestore.mdx)を参照してください。
+
+## 参照
 
 独自のコントラクトを作成するには、以下を参照してください。
 
 * [適切なコントラクトを作成する方法に関するガイド](how-to-write-contract.mdx)
 
-汎用コントラクトを使用するには、以下を参照してください。
-
-* [汎用コントラクトおよびファンクションの使用](use-generic-contracts.mdx)
-* [Generic Contracts and Functions Reference Guide](generic-contracts-reference.mdx)
-
 Java アプリケーションで ScalarDL コンポーネントを操作するには、以下を参照してください。
 
 * [Java で ScalarDL アプリケーションを書く](how-to-write-applications.mdx)
+
+独自のコントラクトを作成する代わりに、抽象化されたデータストアを使用して台帳と簡単かつシームレスに対話するには、以下を参照してください。
+
+* [ScalarDL HashStore をはじめよう](getting-started-hashstore.mdx)
+* [ScalarDL TableStore をはじめよう](getting-started-tablestore.mdx)
 
 ScalarDL の基礎をより深く理解するには、以下を参照してください。
 
