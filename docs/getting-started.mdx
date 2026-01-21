@@ -166,13 +166,18 @@ Briefly speaking, if only ScalarDL Ledger is used, the validation traverses asse
 With ScalarDL Ledger and Auditor, the validation checks discrepancies (i.e., Byzantine faults) between the states of Ledger and Auditor without centralized coordination.
 For more details about the validation with Auditor, see [Validate your data](how-to-write-applications.mdx#validate-your-data) and [Run a ScalarDL Application Through ScalarDL Ledger and Auditor](how-to-run-applications-with-auditor.mdx).
 
-## Create your own contracts or use generic contracts
+## Create your own contracts or use predefined contracts
 
 There are two options for preparing contracts: creating your own or using predefined ones.
 
 As explained above, what you need to do to create your contracts is to extend the predefined base contract classes and override the `invoke` method as you like. For details, see [A Guide on How to Write a Good Contract](how-to-write-contract.mdx).
 
-Predefined ones are called generic contracts and provide basic functionalities for common use cases. For details, see [Use Generic Contracts and Functions](use-generic-contracts.mdx).
+Predefined contracts for common use cases are available through two abstracted data stores: HashStore and TableStore.
+
+* HashStore provides interfaces for ensuring the authenticity of objects and collections, making it ideal for chain-of-custody and similar applications.
+* TableStore offers an SQL-compatible interface for verifying table authenticity, enabling developers to build versatile, tamper-evident applications with familiar data models and interfaces.
+
+For details, see [Get Started with ScalarDL HashStore](getting-started-hashstore.mdx) and [Get Started with ScalarDL TableStore](getting-started-tablestore.mdx).
 
 ## See also
 
@@ -180,14 +185,14 @@ To write your own contracts, see the following:
 
 * [A Guide on How to Write a Good Contract](how-to-write-contract.mdx)
 
-To use generic contracts, see the following:
-
-* [Use Generic Contracts and Functions](use-generic-contracts.mdx)
-* [Generic Contracts and Functions Reference Guide](generic-contracts-reference.mdx)
-
 To interact with ScalarDL components in your Java applications, see the following:
 
 * [Write a ScalarDL Application in Java](how-to-write-applications.mdx)
+
+To use abstracted data stores for easy Ledger interaction without writing your own contracts, see the following:
+
+* [Get Started with ScalarDL HashStore](getting-started-hashstore.mdx)
+* [Get Started with ScalarDL TableStore](getting-started-tablestore.mdx)
 
 To better understand the foundation of ScalarDL, see the following:
 
