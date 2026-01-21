@@ -15,6 +15,8 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ## コマンドの概要
 
+- **クライアントをブートストラップする**
+  - [`bootstrap`](#bootstrap): ID 情報とシステムコントラクトを登録してクライアントをブートストラップします。
 - **ID 情報を登録する**
   - [`register-cert`](#register-cert): 指定された証明書を登録します。
   - [`register-secret`](#register-secret): 指定されたシークレットを登録します。
@@ -30,6 +32,29 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
   - [`validate-ledger`](#validate-ledger): 台帳内の指定されたアセットを検証します。
 - **汎用コントラクト向けにコマンドを実行します**
   - [`generic-contracts`](#generic-contracts): 汎用コントラクトベースの構成でコマンドを実行します。
+
+## `bootstrap`
+
+ID 情報とシステムコントラクトを登録してクライアントをブートストラップします。このコマンドは以下を実行します。
+
+1. プロパティファイルで設定された認証方式に基づいて、証明書またはシークレットを登録します。
+2. Auditor が有効な場合、`ValidateLedger` コントラクトを登録します。
+
+ID 情報またはコントラクトがすでに登録されている場合は、登録をスキップしてエラーなしで続行します。
+
+### オプション
+
+| オプション                   | 説明                      |
+|:---------------------------|:--------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+```console
+scalardl bootstrap --properties client.properties
+```
 
 ## `register-cert`
 
