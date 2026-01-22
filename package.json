@@ -40,7 +40,7 @@
     "react-cookie-consent": "9.0.0",
     "react-dom": "^18.0.0",
     "react-lite-youtube-embed": "^2.4.0",
-    "@typebot.io/react": "0.3.47"
+    "@typebot.io/react": "0.9.18"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.9.2",
