@@ -1,4 +1,0 @@
-{
-  "driver":"sqlite3",
-  "data_source":"certstore_development.db"
-}

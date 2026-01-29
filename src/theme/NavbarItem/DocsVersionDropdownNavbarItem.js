@@ -65,7 +65,7 @@ export default function DocsVersionDropdownNavbarItem({
         id: 'navbar.unsupportedVersions',
         message: 'Unsupported Versions',
       }),
-      to: '/unsupported-versions',
+      to: 'https://docs-archive.scalar-labs.com/?products=scalardl',
     },
   ];
 
