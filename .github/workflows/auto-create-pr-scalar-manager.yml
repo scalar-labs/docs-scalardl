@@ -13,6 +13,7 @@ jobs:
       - name: Create pull request
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.SYNC_DOCS_PAT }}
           script: |
             const { repo, owner } = context.repo;
             const result = await github.rest.pulls.create({
