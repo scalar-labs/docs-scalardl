@@ -1,0 +1,110 @@
+---
+tags:
+  - Enterprise Option
+displayed_sidebar: docsJapanese
+---
+
+# Scalar Manager メトリクスリファレンス
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このドキュメントでは、Scalar Manager で Grafana を通じて利用可能なすべてのメトリクスの説明リストを提供し、ScalarDB および ScalarDL デプロイメントのパフォーマンス、ヘルス、運用状況の監視に役立てます。
+
+## メトリクスの理解
+
+具体的なメトリクスを調べる前に、どのように測定されるかを理解することが重要です:
+
+- **レートメトリクス (毎秒):** これらのメトリクスは操作の頻度を測定し、特定の操作が毎秒何回発生するかを示します。
+- **実行時間メトリクス (パーセンタイル):** これらのメトリクスは操作の完了にかかる時間を測定し、パーセンタイル (p50、p90、p99) として表示されます。実行時間はミリ秒で測定されます。例えば:
+  - **p50 (中央値):** 操作の 50% がこの時間より短時間で完了
+  - **p90:** 操作の 90% がこの時間より短時間で完了
+  - **p99:** 操作の 99% がこの時間より短時間で完了
+
+高いパーセンタイル値 (特に p99) は、平均的なパフォーマンスが許容範囲内であってもユーザーエクスペリエンスに影響を与える可能性のある最悪ケースのパフォーマンスシナリオを特定するのに役立ちます。
+
+以下の表では、関連するレートと実行時間のメトリクスが明確性のためにグループ化されています。
+
+## 総リクエスト数
+
+| メトリクス                              | 説明                                             |
+|-------------------------------------|---------------------------------------------------------|
+| **Success Requests per one second** | 毎秒処理される成功リクエスト数。 |
+| **Failure Requests per one second** | 毎秒の失敗リクエスト数。               |
+| **Create table per one second / execution time (percentile)**       | 毎秒のテーブル作成操作数とその実行にかかる時間をパーセンタイルで測定。      |
+| **Drop table per one second / execution time (percentile)**         | 毎秒のテーブル削除操作数とその実行にかかる時間をパーセンタイルで測定。          |
+| **Truncate table per one second / execution time (percentile)**     | 毎秒のテーブルトランケート操作数とその実行にかかる時間をパーセンタイルで測定。      |
+| **Get table metadata per one second / execution time (percentile)** | 毎秒のメタデータ取得操作数とその取得にかかる時間をパーセンタイルで測定。 |
+
+## 分散トランザクションサービス
+
+| メトリクス | 説明 |
+|--------|-------------|
+| **Transaction begin per one second / execution time (percentile)** | 毎秒のトランザクション開始操作数とその開始にかかる時間をパーセンタイルで測定。 |
+| **Transaction get per one second / execution time (percentile)** | 毎秒のトランザクション内データ取得操作数とその実行にかかる時間をパーセンタイルで測定。 |
+| **Transaction scan per one second / execution time (percentile)** | 毎秒のトランザクション内スキャン (範囲読み取り) 操作数とその実行にかかる時間をパーセンタイルで測定。 |
+| **Transaction put per one second / execution time (percentile)** | 毎秒のトランザクション内データ書き込み操作数とその実行にかかる時間をパーセンタイルで測定。 |
+| **Transaction delete per one second / execution time (percentile)** | 毎秒のトランザクション内データ削除操作数とその実行にかかる時間をパーセンタイルで測定。 |
+| **Transaction mutate per one second / execution time (percentile)** | 毎秒のトランザクション内バッチ変更操作数とその実行にかかる時間をパーセンタイルで測定。 |
+| **Transaction commit per one second / execution time (percentile)** | 毎秒のトランザクションコミット操作数とその実行にかかる時間をパーセンタイルで測定。 |
+| **Transaction rollback per one second / execution time (percentile)** | 毎秒のトランザクションロールバック操作数とその実行にかかる時間をパーセンタイルで測定。 |
+
+## 2フェーズコミットトランザクションサービス
+
+| メトリクス | 説明 |
+|--------|-------------|
+| **Transaction begin per one second / execution time (percentile)** | 毎秒の 2PC トランザクション開始操作数とその開始にかかる時間をパーセンタイルで測定。 |
+| **Transaction join per one second / execution time (percentile)** | 毎秒のトランザクション参加操作数とその実行にかかる時間をパーセンタイルで測定。 |
+| **Transaction get per one second / execution time (percentile)** | 毎秒の 2PC トランザクション内データ取得操作数とその実行にかかる時間をパーセンタイルで測定。 |
+| **Transaction scan per one second / execution time (percentile)** | 毎秒の 2PC トランザクション内スキャン操作数とその実行にかかる時間をパーセンタイルで測定。 |
+| **Transaction put per one second / execution time (percentile)** | 毎秒の 2PC トランザクション内データ書き込み操作数とその実行にかかる時間をパーセンタイルで測定。 |
+| **Transaction delete per one second / execution time (percentile)** | 毎秒の 2PC トランザクション内データ削除操作数とその実行にかかる時間をパーセンタイルで測定。 |
+| **Transaction mutate per one second / execution time (percentile)** | 毎秒の 2PC トランザクション内バッチ変更操作数とその実行にかかる時間をパーセンタイルで測定。 |
+| **Transaction prepare per one second / execution time (percentile)** | 毎秒のトランザクション準備操作数とその実行にかかる時間をパーセンタイルで測定。 |
+| **Transaction validate per one second / execution time (percentile)** | 毎秒のトランザクション検証操作数とその実行にかかる時間をパーセンタイルで測定。 |
+| **Transaction commit per one second / execution time (percentile)** | 毎秒の 2PC トランザクションコミット操作数とその実行にかかる時間をパーセンタイルで測定。 |
+| **Transaction rollback per one second / execution time (percentile)** | 毎秒の 2PC トランザクションロールバック操作数とその実行にかかる時間をパーセンタイルで測定。 |
+
+## GraphQL サービス
+
+| メトリクス | 説明 |
+|--------|-------------|
+| **Success/Failure HTTP Requests per one second** | 毎秒の GraphQL サービスへの成功および失敗 HTTP リクエスト数。 |
+| **Success/Failure GraphQL Queries per one second** | 毎秒実行される成功および失敗 GraphQL クエリ数。 |
+| **GraphQL execution time (percentile)** | GraphQL クエリの実行にかかる時間をパーセンタイルで測定。 |
+
+## SQL 総リクエスト数
+
+| メトリクス                                          | 説明                                                        |
+|-------------------------------------------------|--------------------------------------------------------------------|
+| **Success/Failure SQL Requests per one second** | 毎秒処理される成功および失敗 SQL リクエスト数。 |
+
+## SQL 分散トランザクションサービス
+
+| メトリクス                                                                | 説明                                                                                                           |
+|-----------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| **Transaction begin per one second / execution time (percentile)**    | 毎秒の SQL トランザクション開始操作数とその開始にかかる時間をパーセンタイルで測定。      |
+| **Transaction execute per one second / execution time (percentile)**  | 毎秒の SQL 文実行操作数とその実行にかかる時間をパーセンタイルで測定。  |
+| **Transaction commit per one second / execution time (percentile)**  | 毎秒の SQL トランザクションコミット操作数とその実行にかかる時間をパーセンタイルで測定。    |
+| **Transaction rollback per one second / execution time (percentile)** | 毎秒の SQL トランザクションロールバック操作数とその実行にかかる時間をパーセンタイルで測定。 |
+
+## SQL 2フェーズコミットトランザクションサービス
+
+| メトリクス                                                                | 説明                                                                                                                                  |
+|-----------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| **Transaction begin per one second / execution time (percentile)**    | 毎秒の SQL 2PC トランザクション開始操作数とその開始にかかる時間をパーセンタイルで測定。                         |
+| **Transaction join per one second / execution time (percentile)**     | 毎秒の SQL トランザクション参加操作数とその実行にかかる時間をパーセンタイルで測定。                            |
+| **Transaction execute per one second / execution time (percentile)**  | 毎秒の 2PC トランザクション内 SQL 文実行操作数とその実行にかかる時間をパーセンタイルで測定。 |
+| **Transaction prepare per one second / execution time (percentile)**  | 毎秒の SQL トランザクション準備操作数とその実行にかかる時間をパーセンタイルで測定。                         |
+| **Transaction validate per one second / execution time (percentile)** | 毎秒の SQL トランザクション検証操作数とその実行にかかる時間をパーセンタイルで測定。                      |
+| **Transaction commit per one second / execution time (percentile)**   | 毎秒の SQL 2PC トランザクションコミット操作数とその実行にかかる時間をパーセンタイルで測定。                      |
+| **Transaction rollback per one second / execution time (percentile)** | 毎秒の SQL 2PC トランザクションロールバック操作数とその実行にかかる時間をパーセンタイルで測定。                    |
+
+## SQL メタデータサービス
+
+| メトリクス                                                                            | 説明                                                                                                                 |
+|-----------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| **Get namespace metadata per one second / execution time (percentile)**           | 毎秒のネームスペースメタデータ取得操作数とその取得にかかる時間をパーセンタイルで測定。  |
+| **Get table metadata per one second / execution time (percentile)**               | 毎秒の SQL テーブルメタデータ取得操作数とその取得にかかる時間をパーセンタイルで測定。  |
+| **List table metadata in namespace per one second / execution time (percentile)** | 毎秒のネームスペース内のすべてのテーブルを一覧表示する操作数とその一覧表示にかかる時間をパーセンタイルで測定。 |
