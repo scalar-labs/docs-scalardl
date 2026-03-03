@@ -1,0 +1,106 @@
+---
+tags:
+  - Enterprise Option
+displayed_sidebar: docsEnglish
+---
+
+# Scalar Manager Metrics Reference
+
+This document provides a list of explanations for all metrics available in Scalar Manager, via Grafana, to help you monitor the performance, health, and operational status of your ScalarDB and ScalarDL deployments.
+
+## Understanding the metrics
+
+Before exploring the specific metrics, it's important to understand how they are measured:
+
+- **Rate metrics (per one second):** These metrics measure the frequency of operations, indicating how many times a specific operation occurs each second.
+- **Execution time metrics (percentile):** These metrics measure how long operations take to complete, presented as percentiles (p50, p90, p99). Execution times are measured in milliseconds. For example:
+  - **p50 (median):** 50% of operations complete faster than this time
+  - **p90:** 90% of operations complete faster than this time
+  - **p99:** 99% of operations complete faster than this time
+
+Higher percentile values (especially p99) help identify worst-case performance scenarios that might affect user experience even when average performance seems acceptable.
+
+In the tables below, related rate and execution time metrics are grouped together for clarity.
+
+## Total Requests
+
+| Metric                              | Description                                             |
+|-------------------------------------|---------------------------------------------------------|
+| **Success Requests per one second** | The number of successful requests processed per second. |
+| **Failure Requests per one second** | The number of failed requests per second.               |
+| **Create table per one second / execution time (percentile)**       | Number of table creation operations per second and the time taken to execute them, measured in percentiles.      |
+| **Drop table per one second / execution time (percentile)**         | Number of table drop operations per second and the time taken to execute them, measured in percentiles.          |
+| **Truncate table per one second / execution time (percentile)**     | Number of table truncate operations per second and the time taken to execute them, measured in percentiles.      |
+| **Get table metadata per one second / execution time (percentile)** | Number of metadata retrieval operations per second and the time taken to retrieve them, measured in percentiles. |
+
+## Distributed Transaction Service
+
+| Metric | Description |
+|--------|-------------|
+| **Transaction begin per one second / execution time (percentile)** | Number of transaction start operations per second and the time taken to start them, measured in percentiles. |
+| **Transaction get per one second / execution time (percentile)** | Number of data retrieval operations within transactions per second and the time taken to execute them, measured in percentiles. |
+| **Transaction scan per one second / execution time (percentile)** | Number of scan (range read) operations within transactions per second and the time taken to execute them, measured in percentiles. |
+| **Transaction put per one second / execution time (percentile)** | Number of data write operations within transactions per second and the time taken to execute them, measured in percentiles. |
+| **Transaction delete per one second / execution time (percentile)** | Number of data deletion operations within transactions per second and the time taken to execute them, measured in percentiles. |
+| **Transaction mutate per one second / execution time (percentile)** | Number of batch mutation operations within transactions per second and the time taken to execute them, measured in percentiles. |
+| **Transaction commit per one second / execution time (percentile)** | Number of transaction commit operations per second and the time taken to execute them, measured in percentiles. |
+| **Transaction rollback per one second / execution time (percentile)** | Number of transaction rollback operations per second and the time taken to execute them, measured in percentiles. |
+
+## Two Phase Commit Transaction Service
+
+| Metric | Description |
+|--------|-------------|
+| **Transaction begin per one second / execution time (percentile)** | Number of 2PC transaction start operations per second and the time taken to start them, measured in percentiles. |
+| **Transaction join per one second / execution time (percentile)** | Number of transaction join operations per second and the time taken to execute them, measured in percentiles. |
+| **Transaction get per one second / execution time (percentile)** | Number of data retrieval operations within 2PC transactions per second and the time taken to execute them, measured in percentiles. |
+| **Transaction scan per one second / execution time (percentile)** | Number of scan operations within 2PC transactions per second and the time taken to execute them, measured in percentiles. |
+| **Transaction put per one second / execution time (percentile)** | Number of data write operations within 2PC transactions per second and the time taken to execute them, measured in percentiles. |
+| **Transaction delete per one second / execution time (percentile)** | Number of data deletion operations within 2PC transactions per second and the time taken to execute them, measured in percentiles. |
+| **Transaction mutate per one second / execution time (percentile)** | Number of batch mutation operations within 2PC transactions per second and the time taken to execute them, measured in percentiles. |
+| **Transaction prepare per one second / execution time (percentile)** | Number of transaction prepare operations per second and the time taken to execute them, measured in percentiles. |
+| **Transaction validate per one second / execution time (percentile)** | Number of transaction validation operations per second and the time taken to execute them, measured in percentiles. |
+| **Transaction commit per one second / execution time (percentile)** | Number of 2PC transaction commit operations per second and the time taken to execute them, measured in percentiles. |
+| **Transaction rollback per one second / execution time (percentile)** | Number of 2PC transaction rollback operations per second and the time taken to execute them, measured in percentiles. |
+
+## GraphQL Service
+
+| Metric | Description |
+|--------|-------------|
+| **Success/Failure HTTP Requests per one second** | Number of successful and failed HTTP requests to the GraphQL service per second. |
+| **Success/Failure GraphQL Queries per one second** | Number of successful and failed GraphQL queries executed per second. |
+| **GraphQL execution time (percentile)** | Time taken to execute GraphQL queries, measured in percentiles. |
+
+## SQL Total Requests
+
+| Metric                                          | Description                                                        |
+|-------------------------------------------------|--------------------------------------------------------------------|
+| **Success/Failure SQL Requests per one second** | Number of successful and failed SQL requests processed per second. |
+
+## SQL Distributed Transaction Service
+
+| Metric                                                                | Description                                                                                                           |
+|-----------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| **Transaction begin per one second / execution time (percentile)**    | Number of SQL transaction start operations per second and the time taken to start them, measured in percentiles.      |
+| **Transaction execute per one second / execution time (percentile)**  | Number of SQL statement execution operations per second and the time taken to execute them, measured in percentiles.  |
+| **Transaction commit per one second / execution time (percentile)**  | Number of SQL transaction commit operations per second and the time taken to execute them, measured in percentiles.    |
+| **Transaction rollback per one second / execution time (percentile)** | Number of SQL transaction rollback operations per second and the time taken to execute them, measured in percentiles. |
+
+## SQL Two Phase Commit Transaction Service
+
+| Metric                                                                | Description                                                                                                                                  |
+|-----------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| **Transaction begin per one second / execution time (percentile)**    | Number of SQL 2PC transaction start operations per second and the time taken to start them, measured in percentiles.                         |
+| **Transaction join per one second / execution time (percentile)**     | Number of SQL transaction join operations per second and the time taken to execute them, measured in percentiles.                            |
+| **Transaction execute per one second / execution time (percentile)**  | Number of SQL statement execution operations within 2PC transactions per second and the time taken to execute them, measured in percentiles. |
+| **Transaction prepare per one second / execution time (percentile)**  | Number of SQL transaction prepare operations per second and the time taken to execute them, measured in percentiles.                         |
+| **Transaction validate per one second / execution time (percentile)** | Number of SQL transaction validation operations per second and the time taken to execute them, measured in percentiles.                      |
+| **Transaction commit per one second / execution time (percentile)**   | Number of SQL 2PC transaction commit operations per second and the time taken to execute them, measured in percentiles.                      |
+| **Transaction rollback per one second / execution time (percentile)** | Number of SQL 2PC transaction rollback operations per second and the time taken to execute them, measured in percentiles.                    |
+
+## SQL Metadata Service
+
+| Metric                                                                            | Description                                                                                                                 |
+|-----------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| **Get namespace metadata per one second / execution time (percentile)**           | Number of namespace metadata retrieval operations per second and the time taken to retrieve them, measured in percentiles.  |
+| **Get table metadata per one second / execution time (percentile)**               | Number of SQL table metadata retrieval operations per second and the time taken to retrieve them, measured in percentiles.  |
+| **List table metadata in namespace per one second / execution time (percentile)** | Number of operations listing all tables in a namespace per second and the time taken to list them, measured in percentiles. |
