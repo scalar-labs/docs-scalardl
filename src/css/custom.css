@@ -761,83 +761,279 @@ html[data-theme="dark"] .notification-dropdown {
   }
 }
 
-/* Google Search styles */
-.googleSearchContainer {
+/* Google AI Mode Search styles */
+.googleAiModeContainer {
   display: flex;
   align-items: center;
 }
 
-.googleSearchForm {
+.googleAiModeButton {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: var(--ifm-color-primary);
   display: flex;
   align-items: center;
-}
-
-.googleSearchInputWrapper {
-  display: flex;
-  align-items: center;
-  position: relative;
-  background: var(--ifm-color-emphasis-200);
-  border: 1px solid var(--ifm-color-emphasis-300);
+  justify-content: center;
+  transition: all 0.15s ease-in-out;
   border-radius: 0.375rem;
-  padding: 0;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  width: 160.27px;
-  min-width: 140px;
+  position: relative;
 }
 
-.googleSearchInputWrapper:focus-within {
+.googleAiModeButton:hover {
+  background-color: var(--ifm-color-emphasis-200);
+  transform: scale(1.05);
+}
+
+.googleAiModeButton:focus {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
+.googleAiModeIcon {
+  width: 25px;
+  height: 25px;
+  transition: transform 0.15s ease-in-out;
+}
+
+.googleAiModeButton:hover .googleAiModeIcon {
+  transform: rotate(15deg);
+}
+
+/* Modal styles */
+.googleAiModeModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 3.5rem;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.googleAiModeModalContent {
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  max-width: 800px;
+  width: 90%;
+  max-height: 90%;
+  border: 1px solid var(--ifm-color-emphasis-400);
+  animation: slideIn 0.15s ease-out;
+}
+
+/* Dark mode modal styling */
+html[data-theme="dark"] .googleAiModeModalContent {
+  background: #2b2b2b;
+  border: 1px solid #4a4a4a;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.googleAiModeModalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 1.5rem 1rem;
+}
+
+.googleAiModeModalTitleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.googleAiModeModalIcon {
+  color: var(--ifm-color-primary);
+  flex-shrink: 0;
+}
+
+.googleAiModeModalTitle {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ifm-font-color-base);
+}
+
+.googleAiModeModalClose {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: var(--ifm-color-emphasis-600);
+  border-radius: 0.375rem;
+  transition: all 0.15s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.googleAiModeModalClose:hover {
+  background-color: var(--ifm-color-emphasis-200);
+  color: var(--ifm-font-color-base);
+}
+
+.googleAiModeModalForm {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.googleAiModeModalInputWrapper {
+  position: relative;
+}
+
+.googleAiModeModalInput {
+  width: calc(100% - 4rem);
+  border: 2px solid var(--ifm-color-emphasis-300);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.4rem;
+  color: var(--ifm-font-color-base);
+  background: #ffffff;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  box-sizing: border-box;
+  font-family: inherit;
+  height: 4.5rem;
+  max-height: 10rem;
+  overflow: hidden;
+  resize: none;
+  padding: 0.9rem 1rem 1.2rem 1rem;
+  scroll-padding-top: 0.85rem;
+  scroll-padding-bottom: 1rem;
+}
+
+/* Dark mode input styling */
+html[data-theme="dark"] .googleAiModeModalInput {
+  background: #1f1f1f;
+  border-color: var(--ifm-color-emphasis-400);
+}
+
+.googleAiModeModalSubmitIcon {
+  position: absolute;
+  right: 0;
+  bottom: 0.4rem;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 0.375rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #6b7280;
+  transition: all 0.15s ease-in-out;
+}
+
+.googleAiModeModalSubmitIcon:hover:not(:disabled) {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.googleAiModeModalSubmitIcon:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: #9ca3af;
+}
+
+/* Dark mode submit icon styling */
+html[data-theme="dark"] .googleAiModeModalSubmitIcon {
+  background: #374151;
+  color: #9ca3af;
+}
+
+html[data-theme="dark"] .googleAiModeModalSubmitIcon:hover:not(:disabled) {
+  background: #4b5563;
+  color: #d1d5db;
+}
+
+.googleAiModeModalInput:focus {
+  outline: none;
   border-color: var(--ifm-color-primary);
   box-shadow: 0 0 0 0.2rem rgba(var(--ifm-color-primary-rgb), 0.25);
 }
 
-.googleSearchInput {
-  background: transparent;
-  border: none;
-  outline: none;
-  padding: .375rem .5rem .375rem 0;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: var(--ifm-font-color-base);
-  flex: 1;
-  width: 100%;
-}
-
-.googleSearchInput::placeholder {
+.googleAiModeModalInput::placeholder {
   color: var(--ifm-color-emphasis-600);
 }
 
-.googleSearchButton {
-  background: none;
-  border: none;
-  padding: 0.375rem 0.5rem;
-  cursor: pointer;
-  color: var(--ifm-color-emphasis-700);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.15s ease-in-out;
-  flex-shrink: 0;
+.googleAiModeModalPoweredBy {
+  font-size: 0.875rem;
+  color: var(--ifm-color-emphasis-600);
+  margin-top: 0.5rem;
 }
 
-.googleSearchButton:hover:not(:disabled) {
+.googleAiModeLink {
   color: var(--ifm-color-primary);
+  text-decoration: none;
+  transition: color 0.15s ease-in-out;
 }
 
-.googleSearchButton:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.googleAiModeLink:hover {
+  color: var(--ifm-color-primary-dark);
+  text-decoration: underline;
 }
 
-.googleSearchIcon {
-  width: 20px;
-  height: 20px;
-}
-
-/* Hide Google search when Algolia search becomes icon-only */
+/* Hide Google AI Mode search when Algolia search becomes icon-only */
 /* Docusaurus typically switches Algolia to icon at 997px breakpoint */
 @media (max-width: 996px) {
-  .googleSearchContainer {
+  .googleAiModeContainer {
     display: none;
+  }
+}
+
+/* Mobile modal adjustments */
+@media (max-width: 768px) {
+  .googleAiModeModalContent {
+    width: 95%;
+    margin: 1rem;
+  }
+
+  .googleAiModeModalHeader {
+    padding: 1rem 1rem 0.75rem;
+  }
+
+  .googleAiModeModalForm {
+    padding: 0 1rem 1rem;
+  }
+
+  .googleAiModeModalInput {
+    padding: 0.25rem 3.5rem 0.25rem 1rem;
+    font-size: 16px; /* Prevent zoom on iOS */
+    height: 3rem;
+    line-height: 2.5rem;
+  }
+
+  .googleAiModeModalSubmitIcon {
+    right: 0.5rem;
+    bottom: 0.5rem;
   }
 }
 
