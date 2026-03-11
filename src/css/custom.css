@@ -929,6 +929,23 @@ html[data-theme="dark"] .googleAiModeModalContent {
   scroll-padding-bottom: 1rem;
 }
 
+.googleAiModeLegalNotice {
+  font-size: 0.85rem;
+  color: var(--ifm-color-content-secondary, #666);
+  margin: 0 1.5rem 1rem 1.5rem;
+  line-height: 1.5;
+  border-radius: 6px;
+}
+
+.googleAiModeLegalNotice strong {
+  color: #111;
+  font-weight: 600;
+}
+
+html[data-theme='dark'] .googleAiModeLegalNotice strong {
+  color: #fff;
+}
+
 /* Google AI Mode prewritten query box styles */
 .googleAiModePrewrittenGrid {
   display: grid;
@@ -946,7 +963,7 @@ html[data-theme="dark"] .googleAiModeModalContent {
   background: var(--ifm-background-surface-color);
   cursor: pointer;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   box-shadow: 0 1px 3px rgba(0,0,0,0.03);
   transition: box-shadow 0.15s;
   color: inherit;
