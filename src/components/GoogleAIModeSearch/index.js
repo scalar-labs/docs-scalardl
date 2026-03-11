@@ -3,10 +3,15 @@ import { useLocation } from '@docusaurus/router';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 export default function GoogleAIModeSearch() {
+
+  // Place hooks at the top
+  const { siteConfig } = useDocusaurusContext();
+  const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const location = useLocation();
-  const { siteConfig } = useDocusaurusContext();
+
+  // Get pre-written queries from Docusaurus config
+  const prewrittenQueries = siteConfig?.customFields?.prewrittenQueries || [];
 
   // Extract version from the current URL path
   const getCurrentVersion = useCallback(() => {
@@ -39,6 +44,27 @@ export default function GoogleAIModeSearch() {
     // Default to English
     return 'en-us';
   }, [location.pathname]);
+
+  // Handler for clicking a pre-written query box
+  const handlePrewrittenQueryClick = useCallback((query) => {
+    // Track prewritten query clicks in Google Analytics
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'search', {
+        search_term: query,
+        source: 'google_ai_mode_predefined'
+      });
+    }
+    const currentVersion = getCurrentVersion();
+    const currentLanguage = getCurrentLanguage();
+    const hostname = new URL(siteConfig.url).hostname;
+    const siteUrl = currentLanguage === 'ja-jp'
+      ? `site%3A${hostname}/ja-jp/docs`
+      : `site%3A${hostname}/docs`;
+    const versionPath = currentVersion === 'latest' ? 'latest' : currentVersion;
+    const encodedQuery = encodeURIComponent(query.trim());
+    const googleAiModeUrl = `https://www.google.com/search?q=${siteUrl}/${versionPath}+${encodedQuery}&udm=50`;
+    window.open(googleAiModeUrl, '_blank', 'noopener,noreferrer');
+  }, [getCurrentVersion, getCurrentLanguage, siteConfig.url]);
 
   const openModal = useCallback(() => {
     setIsModalOpen(true);
@@ -196,6 +222,19 @@ export default function GoogleAIModeSearch() {
                   />
                 </svg>
               </button>
+            </div>
+            {/* Pre-written Query Grid inside modal */}
+            <div className="googleAiModePrewrittenGrid">
+              {prewrittenQueries.map((query, idx) => (
+                <button
+                  key={idx}
+                  className="googleAiModePrewrittenBox"
+                  onClick={() => handlePrewrittenQueryClick(query)}
+                  aria-label={`Search: ${query}`}
+                >
+                  {query}
+                </button>
+              ))}
             </div>
             <form onSubmit={handleSearch} className="googleAiModeModalForm">
               <div className="googleAiModeModalInputWrapper">

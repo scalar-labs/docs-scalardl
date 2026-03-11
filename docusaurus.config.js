@@ -8,6 +8,15 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import { getNotifications } from './src/data/notifications';
 
 const config = {
+  customFields: {
+    // These pre-written queries are used in the Google AI Mode feature. Update these queries as needed when new features are added or when you want to highlight specific features in the Google AI Mode. For more information, see /src/components/GoogleAIModeSearch/index.js.
+    prewrittenQueries: [
+      'What is ScalarDL and how does it work?',
+      'How does ScalarDL manage assets and data?',
+      'How do I develop applications with ScalarDL?',
+      'How do I configure and deploy ScalarDL?',
+    ],
+  },
   title: 'ScalarDL Documentation',
   tagline: 'Scalable and practical Byzantine-fault detection middleware for transactional database systems',
   favicon: 'img/favicon.ico',

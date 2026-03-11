@@ -929,6 +929,39 @@ html[data-theme="dark"] .googleAiModeModalContent {
   scroll-padding-bottom: 1rem;
 }
 
+/* Google AI Mode prewritten query box styles */
+.googleAiModePrewrittenGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 1.5rem 1rem 1.5rem;
+}
+
+.googleAiModePrewrittenBox {
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  background: var(--ifm-background-surface-color);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  transition: box-shadow 0.15s;
+  color: inherit;
+}
+
+.googleAiModePrewrittenBox:hover, .googleAiModePrewrittenBox:focus {
+  box-shadow: 0 4px 16px rgba(38, 115, 187, 0.18), 0 2px 8px rgba(0,0,0,0.08);
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+  background: var(--ifm-background-surface-color);
+  color: inherit;
+  filter: brightness(0.97);
+  transition: box-shadow 0.15s, outline 0.15s, background 0.15s, color 0.15s, filter 0.15s;
+}
+
 /* Dark mode input styling */
 html[data-theme="dark"] .googleAiModeModalInput {
   background: #1f1f1f;
