@@ -830,6 +830,21 @@ html[data-theme='dark'] .ask-ai-button:focus {
   }
 }
 
+@keyframes fadeUpOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+}
+
+.googleAiModeModalContent.fade-up-out {
+  animation: fadeUpOut 0.2s ease-in forwards;
+}
+
 .googleAiModeModalContent {
   background: #ffffff;
   border-radius: 1rem;

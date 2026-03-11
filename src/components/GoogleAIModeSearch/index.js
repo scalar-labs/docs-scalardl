@@ -8,6 +8,7 @@ export default function GoogleAIModeSearch() {
   const { siteConfig } = useDocusaurusContext();
   const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   // Extract version from the current URL path
@@ -84,9 +85,12 @@ export default function GoogleAIModeSearch() {
   }, []);
 
   const closeModal = useCallback(() => {
-    setIsModalOpen(false);
-    // Clear text only on explicit close (X button or Escape)
-    setSearchQuery('');
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsModalOpen(false);
+      setIsClosing(false);
+      setSearchQuery('');
+    }, 200); // Match fadeUpOut duration
   }, []);
 
   const handleSearch = useCallback((e) => {
@@ -149,11 +153,10 @@ export default function GoogleAIModeSearch() {
   }, [handleSearch, closeModal]);
 
   const handleModalClick = useCallback((e) => {
-    // Close modal if clicking outside the modal content (but preserve text)
     if (e.target === e.currentTarget) {
-      setIsModalOpen(false);
+      closeModal();
     }
-  }, []);
+  }, [closeModal]);
 
   // Get localized placeholder text
   const getPlaceholderText = useCallback(() => {
@@ -204,8 +207,11 @@ export default function GoogleAIModeSearch() {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="googleAiModeModal" onClick={handleModalClick}>
-          <div className="googleAiModeModalContent">
+        <div
+          className="googleAiModeModal"
+          onClick={handleModalClick}
+        >
+          <div className={`googleAiModeModalContent${isClosing ? ' fade-up-out' : ''}`}>
             <div className="googleAiModeModalHeader">
               <div className="googleAiModeModalTitleWrapper">
                 <img 
