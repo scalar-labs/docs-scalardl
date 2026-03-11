@@ -16,6 +16,12 @@ const config = {
       'How do I develop applications with ScalarDL?',
       'How do I configure and deploy ScalarDL?',
     ],
+    prewrittenQueriesJa: [
+      'ScalarDL とは何ですか？どのように動作しますか？',
+      'ScalarDL はアセットやデータをどう管理しますか？',
+      'ScalarDL でアプリケーションをどう開発しますか？',
+      'ScalarDL をどのように設定してデプロイできますか？',
+    ],
   },
   title: 'ScalarDL Documentation',
   tagline: 'Scalable and practical Byzantine-fault detection middleware for transactional database systems',
