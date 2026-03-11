@@ -761,44 +761,47 @@ html[data-theme="dark"] .notification-dropdown {
   }
 }
 
+/* Ask AI button styles */
+.ask-ai-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+  background: #fff;
+  border-radius: 4px;
+  padding: 0.5rem 0 0.5rem 0;
+  width: 100px;
+  font-weight: 550;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  box-shadow: none;
+  outline: none;
+  gap: 0.2rem;
+}
+
+.ask-ai-button:hover, .ask-ai-button:focus {
+  background: var(--ifm-color-primary);
+  border: 2px solid var(--ifm-color-primary);
+  color: #fff;
+}
+
+html[data-theme='dark'] .ask-ai-button {
+  background: var(--ifm-color-primary);
+  border: 2px solid var(--ifm-color-primary);
+  color: #fff;
+}
+
+html[data-theme='dark'] .ask-ai-button:hover,
+html[data-theme='dark'] .ask-ai-button:focus {
+  border: 2px solid var(--docsearch-hit-color);
+}
+
 /* Google AI Mode Search styles */
 .googleAiModeContainer {
   display: flex;
   align-items: center;
-}
-
-.googleAiModeButton {
-  background: none;
-  border: none;
-  padding: 0.5rem;
-  cursor: pointer;
-  color: var(--ifm-color-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.15s ease-in-out;
-  border-radius: 0.375rem;
-  position: relative;
-}
-
-.googleAiModeButton:hover {
-  background-color: var(--ifm-color-emphasis-200);
-  transform: scale(1.05);
-}
-
-.googleAiModeButton:focus {
-  outline: 2px solid var(--ifm-color-primary);
-  outline-offset: 2px;
-}
-
-.googleAiModeIcon {
-  width: 25px;
-  height: 25px;
-  transition: transform 0.15s ease-in-out;
-}
-
-.googleAiModeButton:hover .googleAiModeIcon {
-  transform: rotate(15deg);
 }
 
 /* Modal styles */
@@ -877,7 +880,7 @@ html[data-theme="dark"] .googleAiModeModalContent {
 .googleAiModeModalTitle {
   margin: 0;
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: var(--ifm-font-weight-semibold);
   color: var(--ifm-font-color-base);
 }
 
@@ -935,15 +938,6 @@ html[data-theme="dark"] .googleAiModeModalContent {
   margin: 0 1.5rem 1rem 1.5rem;
   line-height: 1.5;
   border-radius: 6px;
-}
-
-.googleAiModeLegalNotice strong {
-  color: #111;
-  font-weight: 600;
-}
-
-html[data-theme='dark'] .googleAiModeLegalNotice strong {
-  color: #fff;
 }
 
 /* Google AI Mode prewritten query box styles */
@@ -1126,4 +1120,10 @@ html[data-theme="dark"] .googleAiModeModalSubmitIcon:hover:not(:disabled) {
 
 .DocSearch-Button-Key {
   padding: 0;
+}
+
+@media (max-width: 996px) {
+  .ask-ai-button {
+    display: none !important;
+  }
 }

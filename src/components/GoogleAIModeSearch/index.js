@@ -180,29 +180,27 @@ export default function GoogleAIModeSearch() {
 
   return (
     <>
-      {/* Google AI Mode Search Icon */}
-      <div className="googleAiModeContainer">
-        <button
-          onClick={openModal}
-          className="googleAiModeButton"
-          aria-label="Search with Google AI Mode"
-          title="Search with Google AI Mode"
-        >
-          <svg 
-            className="googleAiModeIcon"
-            height="24"
-            width="24"
-            aria-hidden="true"
-            viewBox="0 0 471 471"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path 
-              fill="currentColor" 
-              d="M235.5 471C235.5 438.423 229.22 407.807 216.66 379.155C204.492 350.503 187.811 325.579 166.616 304.384C145.421 283.189 120.498 266.508 91.845 254.34C63.1925 241.78 32.5775 235.5 0 235.5C32.5775 235.5 63.1925 229.416 91.845 217.249C120.498 204.689 145.421 187.811 166.616 166.616C187.811 145.421 204.492 120.497 216.66 91.845C229.22 63.1925 235.5 32.5775 235.5 0C235.5 32.5775 241.584 63.1925 253.751 91.845C266.311 120.497 283.189 145.421 304.384 166.616C325.579 187.811 350.503 204.689 379.155 217.249C407.807 229.416 438.423 235.5 471 235.5C438.423 235.5 407.807 241.78 379.155 254.340C350.503 266.508 325.579 283.189 304.384 304.384C283.189 325.579 266.311 350.503 253.751 379.155C241.584 407.807 235.5 438.423 235.5 471Z"
-            />
-          </svg>
-        </button>
-      </div>
+      {/* Scalar blue Ask AI button with sparkle icon */}
+      <button
+        type="button"
+        className="ask-ai-button"
+        onClick={openModal}
+        aria-label="Ask AI with Google"
+      >
+        {/* Sparkle SVG icon */}
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <g clip-path="url(#clip0_1177_865)">
+            <path d="M3.00004 14.6666V11.3333M3.00004 4.66665V1.33331M1.33337 2.99998H4.66671M1.33337 13H4.66671M8.66671 1.99998L7.51059 5.00589C7.32258 5.49471 7.22858 5.73912 7.08239 5.9447C6.95283 6.12691 6.79364 6.28611 6.61143 6.41567C6.40584 6.56185 6.16143 6.65585 5.67261 6.84386L2.66671 7.99998L5.67262 9.1561C6.16144 9.34411 6.40585 9.43811 6.61143 9.58429C6.79364 9.71385 6.95283 9.87305 7.08239 10.0553C7.22858 10.2608 7.32258 10.5053 7.51059 10.9941L8.66671 14L9.82283 10.9941C10.0108 10.5053 10.1048 10.2608 10.251 10.0553C10.3806 9.87305 10.5398 9.71385 10.722 9.58429C10.9276 9.43811 11.172 9.34411 11.6608 9.1561L14.6667 7.99998L11.6608 6.84386C11.172 6.65585 10.9276 6.56185 10.722 6.41567C10.5398 6.28611 10.3806 6.12691 10.251 5.9447C10.1048 5.73912 10.0108 5.49471 9.82283 5.00589L8.66671 1.99998Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            </path>
+          </g>
+          <defs>
+            <clipPath id="clip0_1177_865">
+              <rect width="16" height="16" fill="white"></rect>
+            </clipPath>
+          </defs>
+        </svg>
+        <span>Ask AI</span>
+      </button>
 
       {/* Modal */}
       {isModalOpen && (
