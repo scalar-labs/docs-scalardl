@@ -436,14 +436,14 @@ html[data-theme="dark"] a[class^='fa-solid fa-circle-question'] {
   }
 }
 
-/* Tooltip container */
+/* Edition tag bar: Question-mark icon tooltip container */
 .tooltip {
   position: relative;
   display: inline-block;
   /* border-bottom: 1px dotted black; */ /* If you want dots under the hoverable text */
 }
 
-/* Tooltip text */
+/* Question-mark icon tooltip text */
 .tooltip .tooltiptext {
   background-color: #6c6c6c;
   border-radius: 5px;
@@ -460,7 +460,7 @@ html[data-theme="dark"] a[class^='fa-solid fa-circle-question'] {
   left: 125%;
 }
 
-/* Show the tooltip text when you mouse over the tooltip container */
+/* Show the Question-mark icon tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
