@@ -246,9 +246,9 @@ export default function GoogleAIModeSearch() {
             </div>
             {/* Pre-written Query Grid inside modal */}
             <div className="googleAiModePrewrittenGrid">
-              {prewrittenQueries.map((query, idx) => (
+              {prewrittenQueries.map((query) => (
                 <button
-                  key={idx}
+                  key={query}
                   className="googleAiModePrewrittenBox"
                   onClick={() => handlePrewrittenQueryClick(query)}
                   aria-label={`Search: ${query}`}
