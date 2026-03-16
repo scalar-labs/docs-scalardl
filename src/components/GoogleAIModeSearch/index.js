@@ -1,8 +1,15 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { useLocation } from '@docusaurus/router';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
+// Magic number constants
+const MAX_TEXTAREA_HEIGHT_PX = 160;
+const TEXTAREA_RESIZE_TIMEOUT_MS = 50;
+const MODAL_CLOSE_TIMEOUT_MS = 200;
+const TEXTAREA_INITIAL_HEIGHT_PX = 60;
+
 export default function GoogleAIModeSearch() {
+  const textareaRef = useRef(null);
 
   // Place hooks at the top
   const { siteConfig } = useDocusaurusContext();
@@ -48,8 +55,6 @@ export default function GoogleAIModeSearch() {
         source: 'google_ai_mode_predefined'
       });
     }
-    const currentVersion = getCurrentVersion();
-    const currentLanguage = getCurrentLanguage();
     const hostname = new URL(siteConfig.url).hostname;
     const siteUrl = currentLanguage === 'ja-jp'
       ? `site%3A${hostname}/ja-jp/docs`
@@ -59,29 +64,28 @@ export default function GoogleAIModeSearch() {
     const googleDomain = currentLanguage === 'ja-jp' ? 'https://www.google.co.jp' : 'https://www.google.com';
     const googleAiModeUrl = `${googleDomain}/search?q=${siteUrl}/${versionPath}+${encodedQuery}&udm=50`;
     window.open(googleAiModeUrl, '_blank', 'noopener,noreferrer');
-  }, [getCurrentVersion, getCurrentLanguage, siteConfig.url]);
+  }, [currentVersion, currentLanguage, siteConfig.url]);
 
   const openModal = useCallback(() => {
     setIsModalOpen(true);
     // Don't reset search query - keep existing text
     // Resize textarea to fit existing content when opening
     setTimeout(() => {
-      const textarea = document.querySelector('.googleAiModeModalInput');
+      const textarea = textareaRef.current;
       if (textarea) {
         textarea.style.height = 'auto';
         // Force reflow to ensure content is rendered
         textarea.offsetHeight;
-        const newHeight = Math.min(textarea.scrollHeight, 160); // Max height of 10rem (160px)
+        const newHeight = Math.min(textarea.scrollHeight, MAX_TEXTAREA_HEIGHT_PX);
         textarea.style.height = newHeight + 'px';
-
         // Show scrollbar when content exceeds max height
-        if (textarea.scrollHeight > 160) {
+        if (textarea.scrollHeight > MAX_TEXTAREA_HEIGHT_PX) {
           textarea.style.overflowY = 'auto';
         } else {
           textarea.style.overflowY = 'hidden';
         }
       }
-    }, 50); // Increased timeout for better rendering
+    }, TEXTAREA_RESIZE_TIMEOUT_MS);
   }, []);
 
   const closeModal = useCallback(() => {
@@ -90,15 +94,12 @@ export default function GoogleAIModeSearch() {
       setIsModalOpen(false);
       setIsClosing(false);
       setSearchQuery('');
-    }, 200); // Match fadeUpOut duration
+    }, MODAL_CLOSE_TIMEOUT_MS);
   }, []);
 
   const handleSearch = useCallback((e) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
-
-    const currentVersion = getCurrentVersion();
-    const currentLanguage = getCurrentLanguage();
 
     // Use different site URLs based on language
     const hostname = new URL(siteConfig.url).hostname;
@@ -125,22 +126,23 @@ export default function GoogleAIModeSearch() {
 
     // Open Google AI Mode (keep modal open)
     window.open(googleAiModeUrl, '_blank', 'noopener,noreferrer');
-  }, [searchQuery, getCurrentVersion, getCurrentLanguage, siteConfig.url]);
+  }, [searchQuery, currentVersion, currentLanguage, siteConfig.url]);
 
   const handleInputChange = useCallback((e) => {
     setSearchQuery(e.target.value);
 
     // Auto-resize textarea
-    const textarea = e.target;
-    textarea.style.height = '60px';
-    const newHeight = Math.min(textarea.scrollHeight, 160); // Max height of 10rem (160px)
-    textarea.style.height = newHeight + 'px';
-
-    // Show scrollbar when content exceeds max height
-    if (textarea.scrollHeight > 160) {
-      textarea.style.overflowY = 'auto';
-    } else {
-      textarea.style.overflowY = 'hidden';
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = `${TEXTAREA_INITIAL_HEIGHT_PX}px`;
+      const newHeight = Math.min(textarea.scrollHeight, MAX_TEXTAREA_HEIGHT_PX);
+      textarea.style.height = newHeight + 'px';
+      // Show scrollbar when content exceeds max height
+      if (textarea.scrollHeight > MAX_TEXTAREA_HEIGHT_PX) {
+        textarea.style.overflowY = 'auto';
+      } else {
+        textarea.style.overflowY = 'hidden';
+      }
     }
   }, []);
 
@@ -160,11 +162,10 @@ export default function GoogleAIModeSearch() {
 
   // Get localized placeholder text
   const getPlaceholderText = useCallback(() => {
-    const currentLanguage = getCurrentLanguage();
     return currentLanguage === 'ja-jp'
       ? 'ScalarDL について聞いてみる...'
       : 'Ask a question about ScalarDL...';
-  }, [getCurrentLanguage]);
+  }, [currentLanguage]);
 
   // Localized modal text
   const modalTitle = currentLanguage === 'ja-jp' ? 'AI に質問する' : 'Ask AI';
@@ -259,6 +260,7 @@ export default function GoogleAIModeSearch() {
             <form onSubmit={handleSearch} className="googleAiModeModalForm">
               <div className="googleAiModeModalInputWrapper">
                 <textarea
+                  ref={textareaRef}
                   placeholder={getPlaceholderText()}
                   value={searchQuery}
                   onChange={handleInputChange}
