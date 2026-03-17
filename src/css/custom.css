@@ -775,8 +775,8 @@ html[data-theme="dark"] .notification-dropdown {
   align-items: center;
   justify-content: center;
   border: 2px solid var(--ifm-color-primary);
-  color: var(--ifm-color-primary);
-  background: #fff;
+  color: white;
+  background-color: var(--ifm-color-primary);
   border-radius: 4px;
   padding: 0.5rem 0 0.5rem 0;
   width: 100px;
@@ -792,18 +792,20 @@ html[data-theme="dark"] .notification-dropdown {
 .ask-ai-button:hover, .ask-ai-button:focus {
   background: var(--ifm-color-primary);
   border: 2px solid var(--ifm-color-primary);
-  color: #fff;
+  color: white;
+  opacity: 88%;
 }
 
-html[data-theme='dark'] .ask-ai-button {
-  background: var(--ifm-color-primary);
-  border: 2px solid var(--ifm-color-primary);
-  color: #fff;
+@media (max-width: 996px) {
+  .ask-ai-button {
+    display: none !important;
+  }
 }
 
 html[data-theme='dark'] .ask-ai-button:hover,
 html[data-theme='dark'] .ask-ai-button:focus {
-  border: 2px solid var(--docsearch-hit-color);
+  background: var(--ifm-color-primary);
+  opacity: 88%;
 }
 
 /* Google AI Mode Search styles */
@@ -861,8 +863,6 @@ html[data-theme="dark"] .googleAiModeModalContent {
   border: 1px solid #4a4a4a;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
 }
-
-
 
 .googleAiModeModalHeader {
   display: flex;
@@ -1125,10 +1125,4 @@ html[data-theme="dark"] .googleAiModeModalSubmitIcon:hover:not(:disabled) {
 
 .DocSearch-Button-Key {
   padding: 0;
-}
-
-@media (max-width: 996px) {
-  .ask-ai-button {
-    display: none !important;
-  }
 }
