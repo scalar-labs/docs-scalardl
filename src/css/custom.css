@@ -775,8 +775,8 @@ html[data-theme="dark"] .notification-dropdown {
   align-items: center;
   justify-content: center;
   border: 2px solid var(--ifm-color-primary);
-  color: white;
-  background-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+  background-color: white;
   border-radius: 4px;
   padding: 0.5rem 0 0.5rem 0;
   width: 100px;
@@ -790,10 +790,8 @@ html[data-theme="dark"] .notification-dropdown {
 }
 
 .ask-ai-button:hover, .ask-ai-button:focus {
-  background: var(--ifm-color-primary);
-  border: 2px solid var(--ifm-color-primary);
-  color: white;
-  opacity: 88%;
+  background-color: rgba(38, 115, 187, 0.12);
+  border-color: var(--ifm-color-primary);
 }
 
 @media (max-width: 996px) {
