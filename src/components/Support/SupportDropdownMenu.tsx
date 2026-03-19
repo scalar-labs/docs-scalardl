@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useRef, lazy, Suspense, MouseEvent } from "react";
+import React, { useState, useEffect, useRef, MouseEvent } from "react";
 import { useLocation } from "@docusaurus/router";
 
-// Lazy-load AssistantModal.
-const AssistantModal = lazy(() => import("./AssistantModal"));
 
 // Safe hook to use Doc context when available
 function useSafeDoc() {
@@ -17,7 +15,6 @@ function useSafeDoc() {
 
 const SupportDropdownMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [githubIssueUrl, setGithubIssueUrl] = useState<string>("#");
   const [showBackToTop, setShowBackToTop] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -127,11 +124,6 @@ const SupportDropdownMenu: React.FC = () => {
     setIsOpen((prev) => !prev);
   };
 
-  const openModal = (event: MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    setIsModalOpen(true);
-    setIsOpen(false);
-  };
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -194,22 +186,11 @@ const SupportDropdownMenu: React.FC = () => {
           </a>
         </div>
         <hr />
-        <a href="#" onClick={openModal}>
-          <b>{isJapanese ? "AI に聞く (試験運用中)" : "Ask AI (experimental)"}</b><br />
-          {isJapanese ? "Scalar Membership Programにご参加の方のみご利用いただけます。" : "Available only to members of the Scalar Membership Program."}
-        </a>
-        <hr />
         <a href="#" onClick={handleGitHubClick}>
           <b>{isJapanese ? "ドキュメントの問題を報告" : "Report doc issue"}</b><br />
           {isJapanese ? "このページについて何かお気づきの点がありましたら、こちらから報告いただけます。" : "If you have any feedback about this page, please submit an issue."}
         </a>
       </div>
-
-      {isModalOpen && (
-        <Suspense fallback={<div>Loading...</div>}>
-          <AssistantModal isOpen={isModalOpen} onClose={closeModal} />
-        </Suspense>
-      )}
     </div>
   );
 };

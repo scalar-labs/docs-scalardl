@@ -119,6 +119,22 @@ const config = {
     ],
   ],
 
+  customFields: {
+    // These pre-written queries are used in the Google AI Mode feature. Update these queries as needed when new features are added or when you want to highlight specific features in the Google AI Mode. For more information, see /src/components/GoogleAIModeSearch/index.js.
+    prewrittenQueries: [
+      'What is ScalarDL and how does it work?',
+      'How does ScalarDL manage assets and data?',
+      'How do I develop applications with ScalarDL?',
+      'How do I deploy ScalarDL?',
+    ],
+    prewrittenQueriesJa: [
+      'ScalarDL とは何ですか？どのように動作しますか？',
+      'ScalarDL はアセットやデータをどう管理しますか？',
+      'ScalarDL でアプリケーションをどう開発しますか？',
+      'ScalarDL をどのようにデプロイできますか？',
+    ],
+  },
+
   plugins: [
     [
       '@docusaurus/plugin-client-redirects',
