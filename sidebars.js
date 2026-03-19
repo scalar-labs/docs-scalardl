@@ -639,9 +639,25 @@ const sidebars = {
       collapsible: true,
       items: [
         {
-          type: 'doc',
-          id: 'scalar-licensing/index',
-          label: 'Configure a Product License Key',
+            type: 'category',
+            label: 'Configure a License Key',
+            collapsible: true,
+            link: {
+              type: 'doc',
+              id: 'scalar-licensing/index',
+            },
+            items: [
+              {
+                type: 'doc',
+                id: 'scalar-licensing/commercial',
+                label: 'Configure a Commercial License Key',
+              },
+              {
+                type: 'doc',
+                id: 'scalar-licensing/trial',
+                label: 'Configure a Trial License Key',
+              },
+            ],
         },
       ]
     },
