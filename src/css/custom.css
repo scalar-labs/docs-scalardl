@@ -769,6 +769,32 @@ html[data-theme="dark"] .notification-dropdown {
   }
 }
 
+/* Trial CTA button in navbar */
+.navbar__link--cta {
+  align-items: center;
+  background-color: var(--ifm-color-primary);
+  border: 2px solid var(--ifm-color-primary);
+  border-radius: var(--ifm-global-radius);
+  box-shadow: none;
+  color: white;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 1rem;
+  font-weight: 600;
+  justify-content: center;
+  margin-left: 0.75rem;
+  outline: none;
+  padding: 0.25rem 0.5rem;
+  text-decoration: none !important;
+  transition: 0.15s all ease-in-out;
+}
+
+/* Hover effect */
+.navbar__link--cta:hover, .navbar__link--cta:focus {
+  color: white;
+  opacity: 88%;
+}
+
 /* Ask AI button styles */
 .ask-ai-button {
   display: inline-flex;
