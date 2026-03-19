@@ -147,7 +147,7 @@ export default function GoogleAIModeSearch() {
   }, [autoResizeTextarea]);
 
   const handleKeyDown = useCallback((e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey && !isComposingRef.current) {
       handleSearch(e);
     } else if (e.key === 'Escape') {
       closeModal();
