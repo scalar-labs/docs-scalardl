@@ -9,15 +9,16 @@ type Props = WrapperProps<typeof SearchType>;
 
 export default function SearchWrapper(props: Props): ReactNode {
   const {pathname} = useLocation();
-  const match = pathname.match(/^\/docs\/(latest|\d+\.\d+)\b/);
-  const version = match ? match[1] : 'latest';
+  const match = pathname.match(/^(\/[a-z]{2}-[a-z]{2})?\/docs\/(latest|\d+\.\d+)\b/);
+  const locale = match?.[1] ?? '';
+  const version = match?.[2] ?? 'latest';
 
   return (
     <>
       <Search {...props} />
       <GoogleAIModeSearch />
       <div>
-        <a href={`/docs/${version}/scalar-licensing/trial`} className="navbar__link--cta">Try now</a>
+        <a href={`${locale}/docs/${version}/scalar-licensing/trial`} className="navbar__link--cta">Try now</a>
       </div>
     </>
   );
