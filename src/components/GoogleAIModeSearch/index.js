@@ -11,6 +11,7 @@ const TEXTAREA_INITIAL_HEIGHT_PX = 60;
 
 export default function GoogleAIModeSearch() {
   const textareaRef = useRef(null);
+  const isComposingRef = useRef(false);
 
   // Place hooks at the top
   const { siteConfig } = useDocusaurusContext();
@@ -146,7 +147,7 @@ export default function GoogleAIModeSearch() {
   }, [autoResizeTextarea]);
 
   const handleKeyDown = useCallback((e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey && !isComposingRef.current) {
       handleSearch(e);
     } else if (e.key === 'Escape') {
       closeModal();
@@ -264,6 +265,8 @@ export default function GoogleAIModeSearch() {
                   value={searchQuery}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}
+                  onCompositionStart={() => { isComposingRef.current = true; }}
+                  onCompositionEnd={() => { isComposingRef.current = false; }}
                   className="googleAiModeModalInput"
                   aria-label="Search documentation with Google AI"
                   autoFocus
