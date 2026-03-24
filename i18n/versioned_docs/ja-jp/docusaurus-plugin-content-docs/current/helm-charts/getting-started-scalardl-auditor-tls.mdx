@@ -459,6 +459,13 @@ Helm Chart を使用して、Kubernetes クラスターに2つの ScalarDL Schem
 
 ## ステップ6. Helm Chart を使用して Kubernetes クラスターに ScalarDL Ledger と ScalarDL Auditor をデプロイする
 
+1. ライセンスキーと証明書を環境変数に設定します。ライセンスキーをお持ちでない場合は、[お問い合わせ](https://www.scalar-labs.com/contact)してください。`<CERT_PEM_FOR_YOUR_SCALAR_DL_LEDGER_LICENSE_KEY>` および `<CERT_PEM_FOR_YOUR_SCALAR_DL_AUDITOR_LICENSE_KEY>` の値の詳細については、[ライセンスキーの設定方法](../scalar-licensing/index.mdx)を参照してください。
+
+   ```console
+   SCALAR_DL_LICENSE_KEY=<YOUR_LICENSE_KEY>
+   SCALAR_DL_LICENSE_CHECK_CERT_PEM=<CERT_PEM_FOR_YOUR_LICENSE_KEY>
+   ```
+
 1. ScalarDL Ledger のカスタム値ファイル (`scalardl-ledger-custom-values.yaml`) を作成します。
 
      ```console
@@ -571,13 +578,6 @@ Helm Chart を使用して、Kubernetes クラスターに2つの ScalarDL Schem
        secretName: "auditor-credentials-secret"
      EOF
      ```
-
-1. ライセンスキーと証明書を環境変数に設定します。ライセンスキーをお持ちでない場合は、[お問い合わせ](https://www.scalar-labs.com/contact)してください。
-
-   ```console
-   SCALAR_DL_LICENSE_KEY=<YOUR_LICENSE_KEY>
-   SCALAR_DL_LICENSE_CHECK_CERT_PEM=<CERT_PEM_FOR_YOUR_LICENSE_KEY>
-   ```
 
 1. 資格情報とライセンスキーを含むシークレットリソース `ledger-credentials-secret` を作成します。
 
