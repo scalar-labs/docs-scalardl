@@ -10,22 +10,6 @@ import DbSpecificSteps from '/src/components/en-us/_getting-started-db-specific-
   - **[OpenJDK](https://openjdk.org/) ([Eclipse Temurin](https://adoptium.net/temurin/), [Amazon Corretto](https://aws.amazon.com/corretto/), or [Microsoft Build of OpenJDK](https://learn.microsoft.com/en-us/java/openjdk/)):** 8, 11, 17, or 21 (LTS versions)
 - [Docker](https://www.docker.com/get-started/) 20.10 or later with [Docker Compose](https://docs.docker.com/compose/install/) v2.20.0 or later
 
-:::warning
-
-Since ScalarDL is built with JDK 8, contracts must be a JDK 8–compatible binary. If you use a version other than JDK 8, you must configure your build tool to build the JDK 8–compatible binary. There are several ways to specify binary compatibility, including using the `--release 8` option for javac or setting Gradle or Maven configurations to use the JDK 8 toolchain. The following shows the configuration for Gradle:
-
-```gradle
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(8))
-    }
-}
-```
-
-For more details about the Gradle and Maven configurations, see [Toolchains for JVM projects for Gradle](https://docs.gradle.org/current/userguide/toolchains.html) and [Guide to Using Toolchains for Maven](https://maven.apache.org/guides/mini/guide-using-toolchains.html).
-
-:::
-
 ## Clone the ScalarDL samples repository
 
 Open **Terminal**, then clone the ScalarDL samples repository by running the following command:
