@@ -774,7 +774,7 @@ html[data-theme="dark"] .notification-dropdown {
   align-items: center;
   background-color: var(--ifm-color-primary);
   border: 2px solid var(--ifm-color-primary);
-  border-radius: var(--ifm-global-radius);
+  border-radius: 2px;
   box-shadow: none;
   color: white;
   cursor: pointer;
@@ -803,7 +803,7 @@ html[data-theme="dark"] .notification-dropdown {
   border: 2px solid var(--ifm-color-primary);
   color: var(--ifm-color-primary);
   background-color: white;
-  border-radius: 4px;
+  border-radius: 2px;
   padding: 0.5rem 0 0.5rem 0;
   width: 100px;
   font-weight: 550;
@@ -824,6 +824,12 @@ html[data-theme="dark"] .notification-dropdown {
   .ask-ai-button {
     display: none !important;
   }
+}
+
+html[data-theme='dark'] .ask-ai-button {
+  background-color: var(--ifm-background-color);
+  color: white;
+  border-color: var(--ifm-color-primary);
 }
 
 html[data-theme='dark'] .ask-ai-button:hover,
