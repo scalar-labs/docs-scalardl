@@ -659,12 +659,12 @@ const sidebars = {
             },
           ],
         },
-        {
-          type: "doc",
-          id: "learning-paths",
-          label: "ScalarDL Learning Paths",
-        },
-      ]
+      ],
+    },
+    {
+      type: "doc",
+      id: "learning-paths",
+      label: "ScalarDL Learning Paths",
     },
   ],
 
@@ -1309,12 +1309,12 @@ const sidebars = {
             },
           ],
         },
-        {
-          type: "doc",
-          id: "learning-paths",
-          label: "ScalarDL 学習パス",
-        },
-      ]
+      ],
+    },
+    {
+      type: "doc",
+      id: "learning-paths",
+      label: "ScalarDL 学習パス",
     },
   ],
 };

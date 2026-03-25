@@ -623,13 +623,13 @@
               "label": "Configure a Trial License Key"
             }
           ]
-        },
-        {
-          "type": "doc",
-          "id": "learning-paths",
-          "label": "ScalarDL Learning Paths"
         }
       ]
+    },
+    {
+      "type": "doc",
+      "id": "learning-paths",
+      "label": "ScalarDL Learning Paths"
     }
   ],
   "docsJapanese": [
@@ -1256,13 +1256,13 @@
               "label": "試用ライセンスキーの設定"
             }
           ]
-        },
-        {
-          "type": "doc",
-          "id": "learning-paths",
-          "label": "ScalarDL 学習パス"
         }
       ]
+    },
+    {
+      "type": "doc",
+      "id": "learning-paths",
+      "label": "ScalarDL 学習パス"
     }
   ]
 }
