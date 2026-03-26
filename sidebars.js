@@ -35,9 +35,9 @@ const sidebars = {
       },
       items: [
         {
-          type: "doc",
-          id: "learning-paths",
-          label: "Learning Paths",
+          type: 'doc',
+          id: 'learning-paths',
+          label: 'Learning Paths',
         },
         {
           type: 'doc',
@@ -685,9 +685,9 @@ const sidebars = {
       },
       items: [
         {
-          type: "doc",
-          id: "learning-paths",
-          label: "学習パス",
+          type: 'doc',
+          id: 'learning-paths',
+          label: '学習パス',
         },
         {
           type: 'doc',
