@@ -1,0 +1,115 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+# HashStore 抽象化を使用して ScalarDL アプリケーションを書く
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+import JavadocLink from "/src/theme/JavadocLink.js";
+
+このドキュメントでは、HashStore 抽象化を使用して ScalarDL アプリケーションを作成する方法について説明します。アプリケーションで ScalarDL HashStore を使用する方法、エラーを処理する方法、データを検証する方法について学習します。
+
+## ScalarDL HashStore Client SDK の使用
+
+ScalarDL HashStore を使用するには、次の2つのオプションがあります:
+
+- [Get Started with ScalarDL HashStore](getting-started-hashstore.mdx) で示されているように[コマンド](scalardl-hashstore-command-reference.mdx)を使用する
+- [HashStore Java Client SDK](https://javadoc.io/doc/com.scalar-labs/scalardl-hashstore-java-client-sdk/) を使用する
+
+コマンドの使用は、アプリケーションを作成せずに HashStore を試す便利な方法です。ただし、HashStore ベースのアプリケーションを構築する場合は、各操作で個別のプロセスを起動することなく、より効率的に動作する HashStore Client SDK が推奨されます。
+
+HashStore Client SDK は [Maven Central](https://central.sonatype.com/artifact/com.scalar-labs/scalardl-hashstore-java-client-sdk) で利用できます。Gradle などのビルドツールを使用して、アプリケーションにインストールできます。たとえば、Gradle では、次の依存関係を `build.gradle` に追加できます。`VERSION` は使用したい ScalarDL のバージョンに置き換えてください。
+
+```gradle
+dependencies {
+    implementation group: 'com.scalar-labs', name: 'scalardl-hashstore-java-client-sdk', version: '<VERSION>'
+}
+```
+
+HashStore の Client SDK API は、<JavadocLink packageName="scalardl-hashstore-java-client-sdk" path="com/scalar/dl/hashstore/client/service" className="HashStoreClientService" /> というサービスクラスによって提供されます。以下は、`HashStoreClientService` を使用してオブジェクトとコレクションを管理する方法を示すコードスニペットです。`HashStoreClientService` は、[ScalarDL HashStore をはじめよう](getting-started-hashstore.mdx)で示された HashStore クライアントコマンドと同じ機能を提供します。
+
+```java
+  // HashStoreClientServiceFactory は常に再利用する必要があります。
+  HashStoreClientServiceFactory factory = new HashStoreClientServiceFactory();
+
+  // HashStoreClientServiceFactory は create メソッドの呼び出しごとに新しい HashStoreClientService オブジェクトを作成しますが、
+  // パフォーマンスとリソース使用量を向上させるために、内部オブジェクトと接続をできるだけ再利用します。
+  HashStoreClientService service = factory.create(new ClientConfig(new File(properties)));
+  try {
+    // メタデータと共にオブジェクトのハッシュ値を格納します。
+    String objectId = ...;
+    String hash = ...;
+    JsonNode metadata = ...;
+    ExecutionResult result = service.putObject(objectId, hash, metadata);
+  } catch (ClientException e) {
+    System.err.println(e.getStatusCode());
+    System.err.println(e.getMessage());
+  }
+
+  factory.close();
+```
+
+:::note
+
+`HashStoreClientService` オブジェクトを作成するには、常に `HashStoreClientServiceFactory` を使用する必要があります。`HashStoreClientServiceFactory` は `HashStoreClientService` の作成に必要なオブジェクトをキャッシュし、指定された設定に基づいてそれらを再利用するため、`HashStoreClientServiceFactory` オブジェクトは常に再利用する必要があります。
+
+:::
+
+`HashStoreClientServiceFactory` と `HashStoreClientService` の詳細については、[`scalardl-hashstore-java-client-sdk` Javadoc](https://javadoc.io/doc/com.scalar-labs/scalardl-hashstore-java-client-sdk/latest/index.html) を参照してください。
+
+## エラーの処理
+
+アプリケーションでエラーが発生した場合、Client SDK はステータスコードとエラーコードを含むエラーメッセージを持つ例外を返します。エラーの原因を特定するには、ステータスコードとエラーコードを確認する必要があります。ステータスコードとエラーコードの詳細については、[ステータスコード](how-to-write-applications.mdx#ステータスコード)と[エラーコード](how-to-write-applications.mdx#エラーコード)を参照してください。
+
+### エラー処理の実装
+
+エラーが発生すると、SDK は <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/exception" className="ClientException" /> をスローします。次のように例外をキャッチしてエラーを処理できます:
+
+```java
+HashStoreClientService service = ...;
+try {
+    // HashStoreClientService オブジェクトを通じて ScalarDL HashStore とやり取りする
+} catch (ClientException e) {
+    // e.getStatusCode() はエラーのステータスを返す
+}
+```
+
+## データの検証
+
+ScalarDL では、すべてのデータが有効な状態であることを確認するために、データを検証する必要があることがあります。ScalarDL がデータを検証する方法の基本については [Java で ScalarDL アプリケーションを書く](how-to-write-applications.mdx#データを検証する)で学習できるため、このセクションでは主に HashStore で検証を実行する方法について説明します。
+
+HashStore で [アセット](data-modeling.mdx#アセット) (ここではオブジェクトとコレクション) を検証する場合、オブジェクト ID またはコレクション ID のみを指定する必要があります。オブジェクトを検証するコード例は次のとおりです:
+
+```java
+  HashStoreClientService service = ...
+  try {
+    LedgerValidationResult result = service.validateObject("an_object_ID");
+    // 世代範囲を指定することもできます。
+    // LedgerValidationResult result = service.validateObject("an_object_ID", startAge, endAge);
+  } catch (ClientException e) {
+  }
+```
+
+コレクションを検証するコード例は次のとおりです:
+
+```java
+  HashStoreClientService service = ...
+  try {
+    LedgerValidationResult result = service.validateCollection("a_collection_ID");
+    // 世代範囲を指定することもできます。
+    // LedgerValidationResult result = service.validateCollection("a_collection_ID", startAge, endAge);
+  } catch (ClientException e) {
+  }
+```
+
+:::note
+
+HashStore は内部的に、オブジェクトまたはコレクションを表すアセットに専用のアセット ID を割り当てます。アセット ID は、アセットタイプを示すプレフィックスとキーで構成されます。たとえば、オブジェクトにはプレフィックス `o_` とオブジェクト ID が、コレクションにはプレフィックス `c_` とコレクション ID が使用されます。これらの生のアセット ID は、`LedgerValidationResult` の `AssetProof` で確認できます。
+
+:::

@@ -1,0 +1,378 @@
+---
+tags:
+  - Enterprise
+displayed_sidebar: docsEnglish
+---
+
+# Run a ScalarDL Application Through ScalarDL Ledger and Auditor
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import JavadocLink from "/src/theme/JavadocLink.js";
+import DbSpecificSteps from '/src/components/en-us/_getting-started-auditor-db-specific-steps.mdx';
+
+This guide explains how to run a ScalarDL application through ScalarDL Ledger and Auditor. This document assumes that you have already tried one of the [Quickstart](quickstart-overview.mdx) tutorials and created your application that integrates ScalarDL by using client SDKs by referring to the [Write an Application](develop-write-an-application-overview.mdx) guides.
+
+## What is ScalarDL Auditor?
+
+ScalarDL Auditor is a component that manages the identical states of Ledger to help clients detect Byzantine faults. Using Auditor is beneficial from a security perspective, but it requires extra processing costs. Therefore, please carefully consider if it is necessary for your use case.
+
+:::note
+
+To make Byzantine fault detection work properly, Ledger and Auditor should be deployed and managed in different administrative domains. However, for the sake of simplicity in this guide, you'll use a simple configuration in the `scalardl-samples` environment, where both Ledger and Auditor are placed on the same network and managed within the same administrative domain.
+
+:::
+
+## Decide on configurations
+
+Before running ScalarDL applications through Ledger and Auditor, you first need to configure Ledger, Auditor, and the client that interacts with ScalarDL.
+
+There are several important options that you must set and decisions to make as described below.
+
+### Enable Auditor
+
+You must enable Auditor since you'll be running applications through Ledger and Auditor. Enabling Auditor has to be done in the configurations for the clients and Ledger as follows.
+
+- In the client configuration, set `scalar.dl.client.auditor.enabled` to `true`.
+- In the Ledger configuration, set `scalar.dl.ledger.auditor.enabled` to `true`.
+
+Then, you must enable [Asset Proof](how-to-write-applications.mdx#what-is-asset-proof) in the Ledger configuration by setting `scalar.dl.ledger.proof.enabled` to `true` since ScalarDL uses Asset Proofs to check for consistency between Ledger and Auditor. You also need to configure a proper private key or secret key in the Ledger and Auditor configurations to sign the Asset Proofs, depending on the authentication method chosen in the [Decide on an authentication method](#decide-on-an-authentication-method) section.
+
+:::note
+
+If you are using the `scalardl-samples` environment, see the `ledger.properties` and `auditor.properties` files for the corresponding storage.
+
+:::
+ 
+For details about the configurations, see the following:
+
+- [Client configurations](configurations.mdx#client-configurations)
+- [Ledger configurations](configurations.mdx#ledger-configurations)
+- [Auditor configurations](configurations.mdx#auditor-configurations)
+
+### Decide on an authentication method
+
+You must decide which authentication method to use for clients: digital signature or HMAC. As a simple comparison, the digital-signature method provides non-repudiation in addition to authentication but is slow, whereas the HMAC method provides only authentication but is fast.
+
+You can configure an authentication method as follows. The same method (`digital-signature` or `hmac`) must be configured across the client, Ledger, and Auditor.
+
+- In the client configuration, set `scalar.dl.client.authentication.method` to `digital-signature` or `hmac` (depending on which method you choose).
+- In the Ledger configuration, set `scalar.dl.ledger.authentication.method` to `digital-signature` or `hmac` (depending on which method you choose).
+- In the Auditor configuration, set `scalar.dl.auditor.authentication.method` to `digital-signature` or `hmac` (depending on which method you choose).
+
+You also need to prepare some secret information. If you're using the digital-signature method, you need to prepare a certificate and a private key. If you're using the HMAC method, you need to prepare a secret key. For more details about authentication in ScalarDL, see the [ScalarDL Authentication Guide](./authentication.mdx).
+
+For details about the configurations, see the following:
+
+- [Client configurations](configurations.mdx#client-configurations)
+- [Ledger configurations](configurations.mdx#ledger-configurations)
+- [Auditor configurations](configurations.mdx#auditor-configurations)
+
+### Configure your database
+
+Both Ledger and Auditor use ScalarDB to interact with databases, which enables you to run ScalarDL on top of various databases. So, you need to decide on a database that ScalarDB supports based on your applications' requirements and configure several ScalarDB parameters.
+
+For details about the ScalarDB parameters, see [ScalarDB Configurations](https://scalardb.scalar-labs.com/docs/latest/configurations/).
+
+#### Underlying database
+
+You can configure which database to use in the Ledger and Auditor configurations by setting `scalar.db.storage`, `scalar.db.contact_points`, `scalar.db.username`, and `scalar.db.password` to the appropriate values based on the database that you'll be using.
+
+For databases and their versions supported by ScalarDL via ScalarDB, see [Requirements](requirements.mdx#databases).
+
+:::warning
+
+If your applications read and write a table through the Function feature, and the table is also directly accessed from ScalarDB applications, you need to properly configure the database chosen here. Specifically, both ScalarDL and ScalarDB applications must refer to the same Coordinator table to guarantee consistency.
+
+:::
+
+#### Isolation level
+
+Ledger relies on the [Consensus Commit](https://scalardb.scalar-labs.com/docs/latest/consensus-commit/) transaction manager of ScalarDB to manage transactions. The transaction manager is responsible for guaranteeing the isolation property of transactions, which is crucial for ensuring the consistency and correctness of transactions.
+
+You can configure the isolation level for Ledger in the Ledger configuration by setting `scalar.db.consensus_commit.isolation_level` to an isolation level of your choice. The default value is `SNAPSHOT`, but if you are unsure about which isolation level to use, use `SERIALIZABLE`.
+
+:::note
+
+Because Auditor does not rely on the Consensus Commit transaction manager, you do not have to configure the transaction manager or the isolation level for Auditor.
+
+:::
+
+#### Limitations
+
+While ScalarDL leverages ScalarDB, the following ScalarDB features are not compatible with the consistency guarantee mechanism of ScalarDL:
+
+- [Group commit for the Coordinator table](https://scalardb.scalar-labs.com/docs/latest/api-guide/#group-commit-for-the-coordinator-table) (`scalar.db.consensus_commit.coordinator.group_commit.enabled` must be `false`.)
+- Coordinator write omission optimization in [Performance-related configurations](https://scalardb.scalar-labs.com/docs/latest/configurations#performance-related-configurations) (`scalar.db.consensus_commit.coordinator.write_omission_on_read_only.enabled` must be `false`.)
+
+### Decide which other configurations to use
+
+You can also apply other configurations, such as TLS and gRPC configurations, for the client, Ledger, and Auditor. For details about the configurations, see the following:
+
+- [Client configurations](configurations.mdx#client-configurations)
+- [Ledger configurations](configurations.mdx#ledger-configurations)
+- [Auditor configurations](configurations.mdx#auditor-configurations)
+
+## Start Ledger and Auditor
+
+After configuring Ledger, Auditor, and the client, you need to start up Ledger and Auditor.
+
+This guide uses a container-based environment in `scalardl-samples` to locally start up Ledger and Auditor. If you have not finished cloning the repository, see [Prerequisites](getting-started.mdx#prerequisites) and [Clone the ScalarDL samples repository](getting-started.mdx#clone-the-scalardl-samples-repository).
+
+For details on how to locally start up Ledger and Auditor in local or cloud-based Kubernetes environments, see [Deploy ScalarDL in your local Kubernetes environment](deploy-local-environment-overview.mdx) or [Deploy ScalarDL in a cloud-based Kubernetes environment](deploy-managed-kubernetes-environment-overview.mdx), respectively.
+
+### Select database
+
+Select your database, and follow the instructions to deploy ScalarDL Ledger and Auditor.
+
+<Tabs groupId="databases" queryString>
+  <TabItem value="mysql" label="MySQL" default>
+  <DbSpecificSteps productName="MySQL" shortName="mysql" />
+  </TabItem>
+
+  <TabItem value="postgres" label="PostgreSQL">
+  <DbSpecificSteps productName="PostgreSQL" shortName="postgres" />
+  </TabItem>
+
+  <TabItem value="oracle" label="Oracle Database">
+  <DbSpecificSteps productName="Oracle Database" shortName="oracle" />
+  </TabItem>
+
+  <TabItem value="sqlserver" label="SQL Server">
+  <DbSpecificSteps productName="SQL Server" shortName="sqlserver" />
+  </TabItem>
+
+  <TabItem value="dynamodb" label="DynamoDB">
+  <DbSpecificSteps productName="DynamoDB" shortName="dynamodb" />
+  </TabItem>
+
+  <TabItem value="cosmosdb" label="Cosmos DB for NoSQL">
+
+<h3>Set up your license</h3>
+
+You need a commercial license to use ScalarDL Auditor. Set up your license as follows.
+
+1. Enable the container image for the Enterprise edition in the `cosmosdb/docker-compose-ledger.yml` file as follows:
+
+    - Before changing the image (default configuration):
+
+      ```yaml
+      # docker-compose-ledger.yml
+      services:
+        scalardl-ledger:
+          image: ghcr.io/scalar-labs/scalardl-ledger:${SCALARDL_VERSION}
+          # image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
+      ```
+
+   - After changing the image:
+
+     ```yaml
+     # docker-compose-ledger.yml
+     services:
+       scalardl-ledger:
+         # image: ghcr.io/scalar-labs/scalardl-ledger:${SCALARDL_VERSION}
+         image: ghcr.io/scalar-labs/scalardl-ledger-byol:${SCALARDL_VERSION}
+     ```
+
+2. Set your license key for ScalarDL Ledger and Auditor. In the `cosmosdb/ledger.properties` and `cosmosdb/auditor.properties` files, replace `<SET_YOUR_LICENSE_KEY>` with your license key. For example:
+
+   ```properties
+   ##### PLEASE REPLACE THIS VALUE WITH YOUR LICENSE KEY (ENTERPRISE EDITION ONLY) #####
+   scalar.dl.licensing.license_key={"organization_name":"XXXXXXXX","expiration_date_time":"YYYY-MM-DDTHH:mm:SS+TIMEZONE","product_name":"ScalarDL Ledger","product_version":N,"license_type":"trial","signature":"XXXXXXXX"}
+   ##### PLEASE REPLACE THIS VALUE WITH YOUR LICENSE KEY (ENTERPRISE EDITION ONLY) #####
+   ```
+
+3. To validate the license by using a certificate, update the `cosmosdb/docker-compose-ledger.yml` and `cosmosdb/docker-compose-auditor.yml` files as follows. If you're using a trial license, skip this step.
+
+    - Before changing the certificate file path (default configuration):
+
+      ```yaml
+      # docker-compose-ledger.yml
+      services:
+        scalardl-ledger:
+          volumes:
+            - ./ledger.properties:/scalar/ledger/ledger.properties.tmpl
+            - ../fixture/ledger-key.pem:/scalar/ledger-key.pem
+            - ../fixture/trial-license-cert.pem:/scalar/license-cert.pem
+            # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+            # - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+      ```
+
+      ```yaml
+      # docker-compose-auditor.yml
+      services:
+        scalardl-auditor:
+          volumes:
+            - ./auditor.properties:/scalar/auditor/auditor.properties.tmpl
+            - ../fixture/auditor-key.pem:/scalar/auditor-key.pem
+            - ../fixture/trial-license-cert.pem:/scalar/license-cert.pem
+            # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+            # - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+      ```
+
+    - After changing the certificate file path:
+
+      ```yaml
+      # docker-compose-ledger.yml
+      services:
+        scalardl-ledger:
+          volumes:
+            - ./ledger.properties:/scalar/ledger/ledger.properties.tmpl
+            - ../fixture/ledger-key.pem:/scalar/ledger-key.pem
+            # - ../fixture/trial-license-cert.pem:/scalar/license-cert.pem
+            # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+            - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+      ```
+
+      ```yaml
+      # docker-compose-auditor.yml
+      services:
+        scalardl-auditor:
+          volumes:
+            - ./auditor.properties:/scalar/auditor/auditor.properties.tmpl
+            - ../fixture/auditor-key.pem:/scalar/auditor-key.pem
+            # - ../fixture/trial-license-cert.pem:/scalar/license-cert.pem
+            # If you have a commercial license key, you must use `commercial-license-cert.pem` instead of `trial-license-cert.pem`.
+            - ../fixture/commercial-license-cert.pem:/scalar/license-cert.pem
+      ```
+
+<h3>Start up ScalarDL</h3>
+
+You can start using ScalarDL Ledger and Auditor by following the steps below:
+
+1. Configure Cosmos DB for NoSQL.
+
+   To use Azure Cosmos DB for NoSQL, you must have an Azure account. If you don't have an Azure account, visit [Create an Azure Cosmos DB account](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/quickstart-portal#create-account).
+
+   After setting up Cosmos DB for NoSQL, modify the following items in `cosmodb/ledger.properties` and `cosmodb/auditor.properties` based on your configuration of Cosmos DB for NoSQL.
+
+   ```properties
+   scalar.db.contact_points=<COSMOS_DB_FOR_NOSQL_URI>
+   scalar.db.password=<COSMOS_DB_FOR_NOSQL_KEY>
+   ```
+
+2. Load the database schema for ScalarDL Ledger and Auditor by running the following command:
+
+   ```console
+   docker compose -f cosmosdb/docker-compose-auditor.yml up -d scalardl-ledger-schema-loader
+   docker compose -f cosmosdb/docker-compose-auditor.yml up -d scalardl-auditor-schema-loader
+   ```
+
+3. Run ScalarDL Ledger, Auditor, and its dependent components by running the following command:
+
+   ```console
+   docker compose -f cosmosdb/docker-compose-auditor.yml up -d
+   ```
+  </TabItem>
+
+  <TabItem value="cassandra" label="Cassandra">
+  <DbSpecificSteps productName="Cassandra" shortName="cassandra" />
+  </TabItem>
+
+</Tabs>
+
+## Set up authentication between Ledger and Auditor (digital signature authentication only)
+
+When using digital signature authentication, you need to register the Ledger certificate and the Auditor certificate with each other. If you are using HMAC authentication, skip this step.
+
+To register the Ledger and Auditor certificates, you need to run the client commands, which are included in the Client SDK. To get the Client SDK, see [Download the Client SDK](getting-started.mdx#download-the-client-sdk). After downloading it, run the following commands:
+
+```console
+scalardl register-cert --properties <LEDGER_AS_CLIENT_PROPERTIES_FILE>
+scalardl register-cert --properties <AUDITOR_AS_CLIENT_PROPERTIES_FILE>
+```
+
+Specifically, in the `scalardl-samples` environment, you can register the certificates by running the following commands with the sample property files found in `./fixture/`:
+
+```console
+client/bin/scalardl register-cert --properties ./fixture/ledger.as.client.properties
+client/bin/scalardl register-cert --properties ./fixture/auditor.as.client.properties
+```
+
+:::warning
+
+Do not use the sample private key and certificate in production environments. For details about getting your own certificate, see [How to Get a Certificate](ca/caclient-getting-started.mdx).
+
+:::
+
+## Set up clients for the HashStore, TableStore, or Ledger abstractions
+
+Depending on the abstraction that your application is based on (specifically, HashStore, TableStore, or Ledger), the setup instructions are different. Select an abstraction and follow the instructions.
+
+<Tabs groupId="abstractions" queryString>
+
+<TabItem value="hashstore" label="HashStore" default>
+
+<h3>Bootstrap HashStore clients</h3>
+
+When creating `HashStoreClientService` in your application, the client certificate or secret key and the necessary contracts for using HashStore are automatically registered based on the configuration in `ClientConfig`. Thus, you don't have to manually bootstrap HashStore. If you would like to do it manually, for example, for testing purposes, download the HashStore Client SDK by following [Download the Client SDK](getting-started-hashstore.mdx#download-the-client-sdk) and run the following command.
+
+```console
+scalardl-hashstore bootstrap --properties <CLIENT_PROPERTIES_FILE>
+```
+
+</TabItem>
+
+<TabItem value="tablestore" label="TableStore">
+
+<h3>Bootstrap TableStore clients</h3>
+
+When creating `TableStoreClientService` in your application, the client certificate or secret key and the necessary contracts for using TableStore are automatically registered based on the configuration in `ClientConfig`. Thus, you don't have to manually bootstrap TableStore. If you would like to do it manually, for example, for testing purposes, download the TableStore Client SDK by following [Download the Client SDK](getting-started-tablestore.mdx#download-the-client-sdk) and run the following command.
+
+```console
+scalardl-tablestore bootstrap --properties <CLIENT_PROPERTIES_FILE>
+```
+
+</TabItem>
+
+<TabItem value="ledger" label="Ledger">
+
+<h3>Bootstrap Ledger clients</h3>
+
+Register the client identity and system contracts by running the following `bootstrap` command:
+
+```console
+scalardl bootstrap --properties <CLIENT_PROPERTIES_FILE>
+```
+
+Specifically, in the `scalardl-samples` environment, you can use the command located at `client/bin/scalardl` with the sample property files found in `./fixture/` as follows.
+
+```console
+client/bin/scalardl bootstrap --properties ./fixture/client.properties
+```
+
+The bootstrap command registers the client certificate or secret key based on the authentication configuration done in [Decide on an authentication method](#decide-on-an-authentication-method).
+
+You can also bootstrap by using <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> in the [ScalarDL Java Client SDK](how-to-write-applications.mdx#use-the-scalardl-client-sdk).
+
+<h3>Register contracts and functions</h3>
+
+You can register contracts by using the `register-contract` command.
+
+```console
+scalardl register-contract --properties <CLIENT_PROPERTIES_FILE> --contract-id <CONTRACT_ID> --contract-binary-name <CONTRACT_BINARY_NAME> --contract-class-file <CONTRACT_CLASS_FILE>
+```
+
+You can register functions by using the `register-function` command.
+
+```console
+scalardl register-function --properties <CLIENT_PROPERTIES_FILE> --function-id <FUNCTION_ID> --function-binary-name <FUNCTION_BINARY_NAME> --function-class-file <FUNCTION_CLASS_FILE>
+```
+
+You can also register contracts and functions by using <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> in the [ScalarDL Java Client SDK](how-to-write-applications.mdx#use-the-scalardl-client-sdk).
+
+</TabItem>
+
+</Tabs>
+
+## Run your application
+
+Now that you have registered the necessary identities and contracts, you can run your application that integrates ScalarDL.
+
+## See also
+
+For details about each command, see the following command references:
+
+- [ScalarDL Client Command Reference](scalardl-command-reference.mdx)
+- [ScalarDL HashStore Command Reference](scalardl-hashstore-command-reference.mdx)
+- [ScalarDL TableStore Command Reference](scalardl-tablestore-command-reference.mdx)
