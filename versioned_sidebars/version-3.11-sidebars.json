@@ -16,6 +16,11 @@
       "items": [
         {
           "type": "doc",
+          "id": "learning-paths",
+          "label": "Learning Paths"
+        },
+        {
+          "type": "doc",
           "id": "design",
           "label": "Design"
         },
@@ -625,11 +630,6 @@
           ]
         }
       ]
-    },
-    {
-      "type": "doc",
-      "id": "learning-paths",
-      "label": "ScalarDL Learning Paths"
     }
   ],
   "docsJapanese": [
@@ -647,6 +647,11 @@
         "id": "overview"
       },
       "items": [
+        {
+          "type": "doc",
+          "id": "learning-paths",
+          "label": "学習パス"
+        },
         {
           "type": "doc",
           "id": "design",
@@ -1258,11 +1263,6 @@
           ]
         }
       ]
-    },
-    {
-      "type": "doc",
-      "id": "learning-paths",
-      "label": "ScalarDL 学習パス"
     }
   ]
 }

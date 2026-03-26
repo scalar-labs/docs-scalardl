@@ -16,6 +16,11 @@
       "items": [
         {
           "type": "doc",
+          "id": "learning-paths",
+          "label": "Learning Paths"
+        },
+        {
+          "type": "doc",
           "id": "design",
           "label": "Design"
         },
@@ -638,11 +643,6 @@
               "label": "Configure a Trial License Key"
             }
           ]
-        },
-        {
-          "type": "doc",
-          "id": "learning-paths",
-          "label": "ScalarDL Learning Paths"
         }
       ]
     }
@@ -662,6 +662,11 @@
         "id": "overview"
       },
       "items": [
+        {
+          "type": "doc",
+          "id": "learning-paths",
+          "label": "学習パス"
+        },
         {
           "type": "doc",
           "id": "design",
@@ -1288,11 +1293,6 @@
           ]
         }
       ]
-    },
-    {
-      "type": "doc",
-      "id": "learning-paths",
-      "label": "ScalarDL 学習パス"
     }
   ]
 }

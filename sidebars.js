@@ -36,6 +36,11 @@ const sidebars = {
       items: [
         {
           type: 'doc',
+          id: 'learning-paths',
+          label: 'Learning Paths',
+        },
+        {
+          type: 'doc',
           id: 'design',
           label: 'Design',
         },
@@ -661,11 +666,6 @@ const sidebars = {
         },
       ],
     },
-    {
-      type: "doc",
-      id: "learning-paths",
-      label: "ScalarDL Learning Paths",
-    },
   ],
 
   // Japanese sidebar nav
@@ -684,6 +684,11 @@ const sidebars = {
         id: 'overview',
       },
       items: [
+        {
+          type: 'doc',
+          id: 'learning-paths',
+          label: '学習パス',
+        },
         {
           type: 'doc',
           id: 'design',
@@ -1310,11 +1315,6 @@ const sidebars = {
           ],
         },
       ],
-    },
-    {
-      type: "doc",
-      id: "learning-paths",
-      label: "ScalarDL 学習パス",
     },
   ],
 };
