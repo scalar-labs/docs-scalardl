@@ -25,12 +25,12 @@ const notificationsList = [
   },
   {
     message: {
-      en: 'Blog post: Migrating from Amazon QLDB to ScalarDL',
-      ja: 'ブログ記事: データベースエンジニアリングの最新トレンドとベストプラクティスを学ぶ DBEM #7 のハイライト'
+      en: 'Blog post: Simplifying tamper-evident applications by using ScalarDL HashStore and TableStore',
+      ja: 'ブログ記事: ScalarDL HashStore と TableStore を使用した改ざん検知アプリケーションの簡素化'
     },
     url: {
-      en: 'https://medium.com/scalar-engineering/migrating-from-amazon-qldb-to-scalardl-ad6ffacbf598?utm_source=docs-site&utm_medium=notifications',
-      ja: 'https://medium.com/scalar-engineering-ja/database-engineering-meetup-%E7%AC%AC7%E5%9B%9E-dbem-7-%E3%82%92%E9%96%8B%E5%82%AC%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F-bf2e3f027948?utm_source=docs-site&utm_medium=notifications'
+      en: 'https://medium.com/scalar-engineering/simplifying-tamper-evident-applications-by-using-scalardl-hashstore-and-tablestore-b6bdf0f60400?utm_source=docs-site&utm_medium=notifications',
+      ja: 'https://medium.com/scalar-engineering-ja/scalardl-hashstore-%E3%81%A8-tablestore-%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%97%E3%81%9F%E6%94%B9%E3%81%96%E3%82%93%E6%A4%9C%E7%9F%A5%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E7%B0%A1%E7%B4%A0%E5%8C%96-9ad3fb4a4c05?utm_source=docs-site&utm_medium=notifications'
     },
     unread: true
   }
