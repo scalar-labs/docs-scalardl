@@ -74,8 +74,14 @@ const config = {
               },
               */
               current: { // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
-                label: '3.12',
+                label: '3.13',
                 path: 'latest', // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
+                banner: 'none',
+                className: '3.13.0',
+              },
+              "3.12": { // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
+                label: '3.12',
+                path: '3.12', // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
                 banner: 'none',
                 className: '3.12.2',
               },
@@ -146,8 +152,8 @@ const config = {
             from: ['/', '/docs'],
           },
           {
-            to: '/docs/latest/how-to-run-applications-with-auditor',
-            from: '/docs/latest/getting-started-auditor',
+            to: '/docs/3.12/how-to-run-applications-with-auditor',
+            from: '/docs/3.12/getting-started-auditor',
           },
           {
             to: '/docs/3.11/how-to-run-applications-with-auditor',
@@ -166,8 +172,8 @@ const config = {
             from: '/docs/releases/release-support-policy',
           },
           {
-            to: '/docs/latest/helm-charts/getting-started-scalar-manager',
-            from: '/docs/latest/helm-charts/how-to-deploy-scalar-manager',
+            to: '/docs/3.12/helm-charts/getting-started-scalar-manager',
+            from: '/docs/3.12/helm-charts/how-to-deploy-scalar-manager',
           },
         ],
         createRedirects(existingPath) {
