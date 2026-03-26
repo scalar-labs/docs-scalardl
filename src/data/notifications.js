@@ -3,22 +3,22 @@
 const notificationsList = [
   {
     message: {
-      en: 'Learn how to use ScalarDL HashStore to manage objects and collections in a tamper-evident manner',
+      en: 'Find out about how to manage namespaces in ScalarDL 3.13',
       ja: 'ScalarDL HashStore を使用して、オブジェクトとコレクションを改ざん検知可能な方法で管理する方法を学ぶ'
     },
     url: {
-      en: 'getting-started-hashstore?utm_source=docs-site&utm_medium=notifications',
+      en: 'managed-namespaces?utm_source=docs-site&utm_medium=notifications',
       ja: 'getting-started-hashstore?utm_source=docs-site&utm_medium=notifications'
     },
     unread: true
   },
   {
     message: {
-      en: 'Learn how to use ScalarDL TableStore to manage tables and records in a tamper-evident manner',
+      en: 'Learn how to use restricted namespaces in ScalarDL 3.13',
       ja: 'ScalarDL TableStore を使用して、テーブルとレコードを改ざん検知可能な方法で管理する方法を学ぶ'
     },
     url: {
-      en: 'getting-started-tablestore?utm_source=docs-site&utm_medium=notifications',
+      en: 'use-restricted-namespaces?utm_source=docs-site&utm_medium=notifications',
       ja: 'getting-started-tablestore?utm_source=docs-site&utm_medium=notifications'
     },
     unread: true
