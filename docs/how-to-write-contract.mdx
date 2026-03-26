@@ -197,6 +197,44 @@ public class StateUpdater extends JacksonBasedContract {
 }
 ```
 
+### Manage assets with a namespace
+
+:::warning
+
+The namespace feature is currently in Public Preview. The feature and related documentation are subject to change.
+
+:::
+
+By default, contracts read and write assets in the pre-configured default namespace, but you can create other namespaces and manage assets in each namespace. For details on how to create namespaces, see [ScalarDL Client Command Reference](scalardl-command-reference.mdx).
+
+The following shows an example of a namespace-aware `StateUpdaterReader` contract. The `get` and `put` APIs can access a specific namespace by specifying the namespace. When using the `scan` API, you can specify the namespace in the <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/database" className="AssetFilter" /> class.
+
+```java
+public class NamespaceAwareStateUpdaterReader extends JacksonBasedContract {
+
+  @Nullable
+  @Override
+  public JsonNode invoke(
+      Ledger<JsonNode> ledger, JsonNode argument, @Nullable JsonNode properties) {
+    if (!argument.has("namespace") || !argument.has("asset_id") || !argument.has("state")) {
+      throw new ContractContextException("please set namespace, asset_id, and state in the argument");
+    }
+
+    String namespace = argument.get("namespace").asText();
+    String assetId = argument.get("asset_id").asText();
+    int state = argument.get("state").asInt();
+
+    Optional<Asset<JsonNode>> asset = ledger.get(namespace, assetId);
+
+    if (!asset.isPresent() || asset.get().data().get("state").asInt() != state) {
+      ledger.put(namespace, assetId, getObjectMapper().createObjectNode().put("state", state));
+    }
+
+    return invoke("state-reader", ledger, argument);
+  }
+}
+```
+
 ## Summary
 
 Here are the best practices for writing good contracts for ScalarDL.

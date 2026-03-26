@@ -195,6 +195,44 @@ public class StateUpdater extends JacksonBasedContract {
 }
 ```
 
+### 名前空間でアセットを管理する
+
+:::warning
+
+名前空間機能は現在パブリックプレビュー中です。この機能と関連ドキュメントは変更される可能性があります。
+
+:::
+
+デフォルトでは、コントラクトは事前設定されたデフォルト名前空間でアセットを読み書きしますが、他の名前空間を作成して各名前空間でアセットを管理することができます。名前空間の作成方法の詳細については、[ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx)を参照してください。
+
+以下は、名前空間を認識する `StateUpdaterReader` コントラクトの例を示しています。`get` と `put` API では、名前空間を指定することで特定の名前空間にアクセスできます。`scan` API を使用する場合は、<JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/database" className="AssetFilter" /> クラスで名前空間を指定できます。
+
+```java
+public class NamespaceAwareStateUpdaterReader extends JacksonBasedContract {
+
+  @Nullable
+  @Override
+  public JsonNode invoke(
+      Ledger<JsonNode> ledger, JsonNode argument, @Nullable JsonNode properties) {
+    if (!argument.has("namespace") || !argument.has("asset_id") || !argument.has("state")) {
+      throw new ContractContextException("please set namespace, asset_id, and state in the argument");
+    }
+
+    String namespace = argument.get("namespace").asText();
+    String assetId = argument.get("asset_id").asText();
+    int state = argument.get("state").asInt();
+
+    Optional<Asset<JsonNode>> asset = ledger.get(namespace, assetId);
+
+    if (!asset.isPresent() || asset.get().data().get("state").asInt() != state) {
+      ledger.put(namespace, assetId, getObjectMapper().createObjectNode().put("state", state));
+    }
+
+    return invoke("state-reader", ledger, argument);
+  }
+}
+```
+
 ## まとめ
 
 ScalarDL の適切なコントラクトを作成するためのベストプラクティスを次に示します。

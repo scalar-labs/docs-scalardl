@@ -9,6 +9,29 @@ displayed_sidebar: docsEnglish
 
 This page includes a list of release notes for ScalarDL 3.11.
 
+## v3.11.3
+
+**Release date:** March 26, 2026
+
+### Summary
+
+This release includes several bug fixes and vulnerability fixes.
+
+### Community and Enterprise editions
+
+#### Bug fixes
+
+- Fixed the parameter name for the client entity ID. ([#376](https://github.com/scalar-labs/scalardl/pull/376))
+- Fixed a bug where users cannot register a custom ValidateLedger contract after bootstrapping. ([#404](https://github.com/scalar-labs/scalardl/pull/404))
+- Fixed [CVE-2025-61726](https://github.com/advisories/GHSA-gm9r-q53w-2gh4 "CVE-2025-61726"), [CVE-2025-61728](https://github.com/advisories/GHSA-g9q4-qjx4-2v7q "CVE-2025-61728"), [CVE-2025-61729](https://github.com/advisories/GHSA-7c64-f9jr-v9h2 "CVE-2025-61729") and [CVE-2025-68121](https://github.com/advisories/GHSA-h355-32pf-p2xm "CVE-2025-68121"). ([#472](https://github.com/scalar-labs/scalardl/pull/472))
+
+### Enterprise edition
+
+#### Bug fixes
+
+- Fixed Gateway exception handling.
+- Fixed a SLF4J version conflict in BYOL Docker images.
+
 ## v3.11.2
 
 **Release date:** December 26, 2025
@@ -69,10 +92,10 @@ This release introduces enhancements, such as table-oriented generic contracts, 
 
 ### Enhancements
 
-- Added table-oriented generic contracts. ([#108](https://github.com/scalar-labs/scalardl/pull/108), [#119](https://github.com/scalar-labs/scalardl/pull/119), [#124](https://github.com/scalar-labs/scalardl/pull/124), [#127](https://github.com/scalar-labs/scalardl/pull/127), [#138](https://github.com/scalar-labs/scalardl/pull/138), [#139](https://github.com/scalar-labs/scalardl/pull/139), [#141](https://github.com/scalar-labs/scalardl/pull/141), [#149](https://github.com/scalar-labs/scalardl/pull/149), [#150](https://github.com/scalar-labs/scalardl/pull/150), [#165](https://github.com/scalar-labs/scalardl/pull/165))
+- Added table-oriented generic contracts. ([#108](https://github.com/scalar-labs/scalardl/pull/108), [#119](https://github.com/scalar-labs/scalardl/pull/119), [#124](https://github.com/scalar-labs/scalardl/pull/124), [#127](https://github.com/scalar-labs/scalardl/pull/127), [#138](https://github.com/scalar-labs/scalardl/pull/138), [#139](https://github.com/scalar-labs/scalardl/pull/139), [#141](https://github.com/scalar-labs/scalardl/pull/141), [#149](https://github.com/scalar-labs/scalardl/pull/149), [#150](https://github.com/scalar-labs/scalardl/pull/150), [#165](https://github.com/scalar-labs/scalardl/pull/165))
 
 ### Bug fixes
 
-- Fixed [CVE-2024-45337](https://github.com/advisories/GHSA-v778-237x-gjrc "CVE-2024-45337"). ([#107](https://github.com/scalar-labs/scalardl/pull/107))
-- Fixed [CVE-2025-22869](https://github.com/advisories/GHSA-hcg3-q754-cr77 "CVE-2025-22869"). ([#142](https://github.com/scalar-labs/scalardl/pull/142))
+- Fixed [CVE-2024-45337](https://github.com/advisories/GHSA-v778-237x-gjrc "CVE-2024-45337"). ([#107](https://github.com/scalar-labs/scalardl/pull/107))
+- Fixed [CVE-2025-22869](https://github.com/advisories/GHSA-hcg3-q754-cr77 "CVE-2025-22869"). ([#142](https://github.com/scalar-labs/scalardl/pull/142))
 - Fixed the parameter name for the authentication method. ([#148](https://github.com/scalar-labs/scalardl/pull/148))

@@ -84,7 +84,7 @@ Status codes explain what kind of status request you ended up with. The status c
 - Client errors (600-699)
     - The 6xx class of status code indicates that the client encountered an unexpected condition that prevented it from fulfilling the request.
 
-For more details, see <JavadocLink packageName="scalardl-common" path="com/scalar/dl/ledger/service" className="StatusCode" />.
+For more details, see <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/service" className="StatusCode" />.
 
 ### Error codes
 
@@ -139,7 +139,7 @@ Since Asset Proof is evidence at the time of execution by Ledger, it is difficul
 
 #### How to access Asset Proof from your applications
 
-You can get <JavadocLink packageName="scalardl-common" path="com/scalar/dl/ledger/asset" className="AssetProof" /> from the result <JavadocLink packageName="scalardl-common" path="com/scalar/dl/ledger/model" className="ContractExecutionResult" /> of the `executeContract` method of the Client SDK. An Asset Proof can be validated if it is not tampered and it is from Ledger by verifying the signature.
+You can get <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/proof" className="AssetProof" /> from the result <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/model" className="ContractExecutionResult" /> of the `executeContract` method of the Client SDK. An Asset Proof can be validated if it is not tampered and it is from Ledger by verifying the signature.
 
 Storing Asset Proofs outside of a domain in which Ledger runs is recommended. This is so that malicious activities in one domain can be detected by the other domain. Storing Asset Proofs in cloud storages for ease of management is also worth considering.
 

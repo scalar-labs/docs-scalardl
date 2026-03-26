@@ -5,75 +5,49 @@ tags:
 displayed_sidebar: docsJapanese
 ---
 
-# ScalarDL 3.12 リリースノート
+# ScalarDL 3.13 リリースノート
 
 import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このページには、ScalarDL 3.12 のリリースノートのリストが含まれています。
+このページには、ScalarDL 3.13 のリリースノートのリストが含まれています。
 
-## v3.12.2
+## v3.13.0
 
-**発売日:** 2025年12月26日
+**発売日:** 2026年3月25日
 
 ### まとめ
 
-このリリースには、いくつかのバグ修正および脆弱性の修正が含まれています。
+このリリースでは、名前空間機能に関連するいくつかの機能強化が導入され、いくつかの改善点とバグの修正が含まれています。詳細な変更については、以下を参照してください。
 
 ### Community と Enterprise editions
 
-#### バグの修正
+### 機能強化
 
-- PutToMutable 関数での FLOAT および BLOB データ型の処理に関するバグを修正しました。([#297](https://github.com/scalar-labs/scalardl/pull/297))
-- デジタル署名でクライアントが誤って設定された場合の NullPointerException を修正しました。([#302](https://github.com/scalar-labs/scalardl/pull/302))
-- ステータスコードの処理を修正しました。([#323](https://github.com/scalar-labs/scalardl/pull/323))
-- [CVE-2025-47907](https://github.com/advisories/GHSA-j5pm-7495-qmr3 "CVE-2025-47907") と [CVE-2025-58183](https://github.com/advisories/GHSA-9gcr-gp5f-jw27 "CVE-2025-58183") を修正しました。([#364](https://github.com/scalar-labs/scalardl/pull/364))
-- [CVE-2025-55163](https://github.com/advisories/GHSA-prj3-ccx8-p6x4 "CVE-2025-55163") を修正しました。([#365](https://github.com/scalar-labs/scalardl/pull/365))
+- 名前空間管理機能のサポートを追加しました。 ([#322](https://github.com/scalar-labs/scalardl/pull/322), [#345](https://github.com/scalar-labs/scalardl/pull/345), [#387](https://github.com/scalar-labs/scalardl/pull/387), [#392](https://github.com/scalar-labs/scalardl/pull/392))
+- 名前空間対応のコントラクト実行のサポートを追加しました。 ([#357](https://github.com/scalar-labs/scalardl/pull/357))
+- 分離された名前空間のサポートを追加しました。 ([#430](https://github.com/scalar-labs/scalardl/pull/430))
 
-## v3.12.1
+### 改善点
 
-**発売日:** 2025年10月8日
+- サーバー側の Java バージョンを Java 21 にアップグレードしました。 ([#395](https://github.com/scalar-labs/scalardl/pull/395))
 
-### まとめ
+### バグの修正
 
-このリリースには、いくつかのバグ修正が含まれています。
-
-### Community edition
-
-#### バグの修正
-
-- JSON Schema Validator のリポジトリとバージョンを修正しました。([#277](https://github.com/scalar-labs/scalardl/pull/277))
+- JSON スキーマバリデータのリポジトリとバージョンを修正しました。 ([#277](https://github.com/scalar-labs/scalardl/pull/277))
+- PutToMutable 関数で FLOAT および BLOB データ型を処理するバグを修正しました。 ([#297](https://github.com/scalar-labs/scalardl/pull/297))
+- クライアントが電子署名で誤って設定されている場合の NullPointerException を修正しました。 ([#302](https://github.com/scalar-labs/scalardl/pull/302))
+- ステータスコードの処理を修正しました。 ([#323](https://github.com/scalar-labs/scalardl/pull/323))
+- クライアントエンティティIDのパラメータ名を修正しました。 ([#376](https://github.com/scalar-labs/scalardl/pull/376))
+- ブートストラップ後にカスタム ValidateLedger コントラクトを登録できないバグを修正しました。 ([#404](https://github.com/scalar-labs/scalardl/pull/404))
+- [CVE-2025-47907](https://github.com/advisories/GHSA-j5pm-7495-qmr3 "CVE-2025-47907") および [CVE-2025-58183](https://github.com/advisories/GHSA-9gcr-gp5f-jw27 "CVE-2025-58183") を修正しました。 ([#364](https://github.com/scalar-labs/scalardl/pull/364))
+- [CVE-2025-61726](https://github.com/advisories/GHSA-gm9r-q53w-2gh4 "CVE-2025-61726"), [CVE-2025-61728](https://github.com/advisories/GHSA-g9q4-qjx4-2v7q "CVE-2025-61728"), [CVE-2025-61729](https://github.com/advisories/GHSA-7c64-f9jr-v9h2 "CVE-2025-61729") および [CVE-2025-68121](https://github.com/advisories/GHSA-h355-32pf-p2xm "CVE-2025-68121") を修正しました。 ([#472](https://github.com/scalar-labs/scalardl/pull/472))
 
 ### Enterprise edition
 
 #### バグの修正
 
 - 重複した読み取りロックを修正しました。
-
-## v3.12.0
-
-**発売日:** 2025年9月22日
-
-### まとめ
-
-このリリースでは、ScalarDL HashStore や TableStore などの機能強化が導入され、いくつかの改善点とバグ修正が含まれています。詳細な変更については、以下をご覧ください。
-
-### 機能強化
-
-- ScalarDL HashStore を追加しました。([#255](https://github.com/scalar-labs/scalardl/pull/255), [#256](https://github.com/scalar-labs/scalardl/pull/256), [#260](https://github.com/scalar-labs/scalardl/pull/260), [#261](https://github.com/scalar-labs/scalardl/pull/261))
-- ScalarDL TableStore を追加しました。([#180](https://github.com/scalar-labs/scalardl/pull/180), [#192](https://github.com/scalar-labs/scalardl/pull/192), [#220](https://github.com/scalar-labs/scalardl/pull/220), [#221](https://github.com/scalar-labs/scalardl/pull/221), [#239](https://github.com/scalar-labs/scalardl/pull/239), [#246](https://github.com/scalar-labs/scalardl/pull/246), [#260](https://github.com/scalar-labs/scalardl/pull/260), [#261](https://github.com/scalar-labs/scalardl/pull/261))
-
-### 改善点
-
-- 汎用関数で時間関連のデータ型をサポートしました。([#200](https://github.com/scalar-labs/scalardl/pull/200))
-- ValidateLedger コントラクトをクライアントにバンドルしました。([#254](https://github.com/scalar-labs/scalardl/pull/254), [#260](https://github.com/scalar-labs/scalardl/pull/260))
-- ScalarDB でコーディネーター書き込み省略を無効にしました。([#203](https://github.com/scalar-labs/scalardl/pull/203))
-
-### バグの修正
-
-- 読み取り専用トランザクションの状態管理動作を修正しました。([#181](https://github.com/scalar-labs/scalardl/pull/181))
-- 証明書と秘密鍵のバージョンチェックとメッセージを修正しました。([#202](https://github.com/scalar-labs/scalardl/pull/202))
-- 正しい認証設定のための Ledger と Auditor の設定検証を修正しました。([#222](https://github.com/scalar-labs/scalardl/pull/222))
-- テーブル指向の汎用コントラクトでの `IS NULL` と `IS NOT NULL` 条件の処理を修正しました。([#238](https://github.com/scalar-labs/scalardl/pull/238))
-- [CVE-2025-22874](https://github.com/advisories/GHSA-6f52-wpx2-hvf2 "CVE-2025-22874")を修正しました。([#262](https://github.com/scalar-labs/scalardl/pull/262))
+- ゲートウェイの例外処理を修正しました。
+- BYOL Docker イメージでの SLF4J バージョンの競合を修正しました。

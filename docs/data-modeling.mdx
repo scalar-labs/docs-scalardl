@@ -27,6 +27,18 @@ The ScalarDL data model has several objects.
 
 The ledger in ScalarDL is abstracted as a set of assets.
 
+#### Namespace
+
+:::warning
+
+The namespace feature is currently in Public Preview. The feature and related documentation are subject to change.
+
+:::
+
+A namespace is a logical grouping of assets within the ledger. Each namespace has a unique name and isolates the assets it contains from those in other namespaces.
+
+ScalarDL provides a pre-configured default namespace named `default`. By default, assets are stored in and retrieved from this default namespace. You can also create other namespaces to organize assets based on your application requirements, such as separating assets by tenant, time period, or backend storage with different cost characteristics.
+
 #### Asset
 
 An asset can be arbitrary data but is more compatible to being viewed as a historical series of data. For example, assets can range from the tangible (real estate and hardware) to the intangible (contracts, intellectual property, and even audit trail logs as shown in the above diagram).
@@ -67,7 +79,7 @@ You can get the latest asset record by specifying an asset ID.
 
 #### Scan asset records of an asset
 
-You can scan multiple records of an asset (in other words, histories of an asset) by specifying an asset ID and age. Specifically, the asset ID and age can be specified in the `AssetFilter` class. For details about the specification, see the <JavadocLink packageName="scalardl-common" path="com/scalar/dl/ledger/database" className="AssetFilter" /> page in the Javadoc.
+You can scan multiple records of an asset (in other words, histories of an asset) by specifying an asset ID and age. Specifically, the asset ID and age can be specified in the `AssetFilter` class. For details about the specification, see the <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/database" className="AssetFilter" /> page in the Javadoc.
 
 ### How to locate mutable records
 

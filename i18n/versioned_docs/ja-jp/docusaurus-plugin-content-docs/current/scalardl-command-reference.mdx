@@ -28,6 +28,10 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 - **登録されたビジネスロジックを実行して一覧表示する**
   - [`execute-contract`](#execute-contract): 指定されたコントラクトを実行します。
   - [`list-contracts`](#list-contracts): 登録されたコントラクトを一覧表示します。
+- **名前空間を管理する**
+  - [`create-namespace`](#create-namespace): 名前空間を作成します。
+  - [`list-namespaces`](#list-namespaces): 名前空間を一覧表示します。
+  - [`drop-namespace`](#drop-namespace): 名前空間を削除します。
 - **台帳を検証します**
   - [`validate-ledger`](#validate-ledger): 台帳内の指定されたアセットを検証します。
 - **汎用コントラクト向けにコマンドを実行します**
@@ -257,6 +261,89 @@ scalardl list-contracts --properties client.properties
 
 ```console
 scalardl list-contracts --properties client.properties --contract-id StateUpdater
+```
+
+## `create-namespace`
+
+:::warning
+
+名前空間機能は現在パブリックプレビュー中です。この機能と関連ドキュメントは変更される可能性があります。
+
+:::
+
+名前空間を作成します。名前空間名は英字で始まり、英数字とアンダースコアのみを含むことができます (パターン: `[a-zA-Z][a-zA-Z0-9_]*`)。デフォルトの名前空間である `default` は予約されており、作成または削除することはできません。
+
+### オプション
+
+| オプション                   | 説明                      |
+|:---------------------------|:--------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。 |
+| `--namespace`              | 作成する名前空間の名前。      |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用可能です。
+
+### 例
+
+```console
+scalardl create-namespace --properties client.properties --namespace my_namespace
+```
+
+## `list-namespaces`
+
+:::warning
+
+名前空間機能は現在パブリックプレビュー中です。この機能と関連ドキュメントは変更される可能性があります。
+
+:::
+
+名前空間を一覧表示します。
+
+### オプション
+
+| オプション                   | 説明                                     |
+|:---------------------------|:-----------------------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。                |
+| `--pattern`                | 名前空間をフィルタリングするパターン（部分一致）。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用可能です。
+
+### 例
+
+すべての名前空間を一覧表示します。
+
+```console
+scalardl list-namespaces --properties client.properties
+```
+
+指定されたパターンにマッチする名前空間を一覧表示します。
+
+```console
+scalardl list-namespaces --properties client.properties --pattern my_
+```
+
+## `drop-namespace`
+
+:::warning
+
+名前空間機能は現在パブリックプレビュー中です。この機能と関連ドキュメントは変更される可能性があります。
+
+:::
+
+名前空間を削除します。このコマンドは、確認のために名前空間名を入力する必要があります。
+
+### オプション
+
+| オプション                   | 説明                      |
+|:---------------------------|:--------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。 |
+| `--namespace`              | 削除する名前空間の名前。      |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用可能です。
+
+### 例
+
+```console
+scalardl drop-namespace --properties client.properties --namespace my_namespace
 ```
 
 ## `validate-ledger`
