@@ -13,6 +13,29 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 このページには、ScalarDL 3.10 のリリースノートのリストが含まれています。
 
+## v3.10.5
+
+**発売日:** 2026年03月26日
+
+### まとめ
+
+このリリースには、いくつかのバグ修正および脆弱性の修正が含まれています。
+
+### Community と Enterprise editions
+
+#### バグの修正
+
+- クライアントエンティティ ID のパラメータ名を修正しました。([#376](https://github.com/scalar-labs/scalardl/pull/376))
+- ブートストラップ後にカスタム ValidateLedger コントラクトを登録できないバグを修正しました。([#404](https://github.com/scalar-labs/scalardl/pull/404))
+- [CVE-2025-61726](https://github.com/advisories/GHSA-gm9r-q53w-2gh4 "CVE-2025-61726")、[CVE-2025-61728](https://github.com/advisories/GHSA-g9q4-qjx4-2v7q "CVE-2025-61728")、[CVE-2025-61729](https://github.com/advisories/GHSA-7c64-f9jr-v9h2 "CVE-2025-61729")、および [CVE-2025-68121](https://github.com/advisories/GHSA-h355-32pf-p2xm "CVE-2025-68121") を修正しました。([#472](https://github.com/scalar-labs/scalardl/pull/472))
+
+### Enterprise edition
+
+#### バグの修正
+
+- Gateway の例外処理を修正しました。
+- BYOL Docker イメージでの SLF4J バージョンの競合を修正しました。
+
 ## v3.10.4
 
 **発売日:** 2025年12月26日
