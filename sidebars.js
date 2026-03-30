@@ -216,6 +216,16 @@ const sidebars = {
             },
             {
               type: 'doc',
+              id: 'manage-namespaces',
+              label: 'Manage Namespaces',
+            },
+            {
+              type: 'doc',
+              id: 'use-restricted-namespaces',
+              label: 'Use Restricted Namespaces',
+            },
+            {
+              type: 'doc',
               id: 'scalardl-benchmarks/README',
               label: 'Run Benchmarks',
             },
@@ -863,6 +873,16 @@ const sidebars = {
               type: 'doc',
               id: 'authentication',
               label: '認証',
+            },
+            {
+              type: 'doc',
+              id: 'manage-namespaces',
+              label: '名前空間を管理',
+            },
+            {
+              type: 'doc',
+              id: 'use-restricted-namespaces',
+              label: '制限名前空間を使用',
             },
             {
               type: 'doc',
