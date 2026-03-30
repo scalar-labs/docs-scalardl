@@ -26,14 +26,14 @@ Namespaces allow you to logically group and isolate resources within a Ledger. E
 
 By default, all resources are stored in a namespace called `default`. You can create additional namespaces to separate resources for different use cases, such as multi-tenancy, data lifecycle management, or cost optimization.
 
-There are two primary use cases for namespaces:
+There are two access models for namespaces:
 
-- **Cross-namespace use case:** A single application accesses assets across multiple namespaces.
-- **Multi-tenant use case:** Multiple independent applications each have exclusive access to assets within their own namespace.
+- **Cross-namespace access model:** A single application accesses assets across multiple namespaces.
+- **Restricted-namespace access model:** Multiple independent applications each have exclusive access to assets within their own namespace.
 
-## Cross-namespace use case
+## Cross-namespace access model
 
-The cross-namespace use case is suitable for scenarios such as the following:
+The cross-namespace access model is suitable for use cases such as the following:
 
 - **Efficient data lifecycle management:** Separate data into namespaces by time period (for example, 1 year), and then bulk-delete data by namespace after the legally required retention period (for example, 10 years) has passed.
 - **Cost optimization through storage tiering:** Prepare namespaces on multiple storage systems with different performance characteristics and costs, and store data in different namespaces based on access frequency and importance.
@@ -42,21 +42,21 @@ To perform cross-namespace data access, implement contracts by using namespace-a
 
 For details on developing namespace-aware contracts, see [Manage assets with a namespace](how-to-write-contract.mdx#manage-assets-with-a-namespace).
 
-## Multi-tenant use case
+## Restricted-namespace access model
 
-The multi-tenant use case is suitable for scenarios such as the following:
+The restricted-namespace access model is suitable for use cases such as the following:
 
 - **SaaS applications:** Host multiple customers running the same application on a shared ScalarDL cluster while ensuring each customer's data and contracts are completely isolated from one another.
 - **Infrastructure consolidation:** Run multiple independent applications from different departments or business units on a single cluster, reducing infrastructure costs while maintaining secure isolation between each application's data and contracts.
 
-ScalarDL supports these scenarios through isolated namespaces, where each namespace is independently managed and inaccessible from other namespaces. To set up an isolated namespace, first create a namespace, and then register the certificates or secrets of tenant clients that will use each namespace. Then, register contracts and functions for their application through the registered clients. Only clients registered in a namespace can register and execute contracts and functions or validate assets within that namespace.
+ScalarDL supports these scenarios through restricted namespaces, where each namespace is independently managed and inaccessible from other namespaces. To set up a restricted namespace, first create a namespace, and then register the certificates or secrets of tenant clients that will use each namespace. Then, register contracts and functions for their application through the registered clients. Only clients registered in a namespace can register and execute contracts and functions or validate assets within that namespace.
 
-Unlike contracts registered in the `default` namespace, contracts registered in isolated namespaces have only a local access scope and cannot access assets in other namespaces.
+Unlike contracts registered in the `default` namespace, contracts registered in restricted namespaces have only a local access scope and cannot access assets in other namespaces.
 
-For details on isolated namespaces, see [Use Isolated Namespaces](use-isolated-namespaces.mdx).
+For details on restricted namespaces, see [Use Restricted Namespaces](use-restricted-namespaces.mdx).
 
 ## See also
 
 - [A Guide on How to Write a Good Contract](how-to-write-contract.mdx)
-- [Use Isolated Namespaces](use-isolated-namespaces.mdx)
+- [Use Restricted Namespaces](use-restricted-namespaces.mdx)
 - [ScalarDL Client Command Reference](scalardl-command-reference.mdx)
