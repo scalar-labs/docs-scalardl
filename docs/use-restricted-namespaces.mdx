@@ -7,7 +7,7 @@ displayed_sidebar: docsEnglish
 
 import StartupLedger from '/src/components/en-us/_getting-started-startup-ledger.mdx';
 
-# Use Isolated Namespaces
+# Use Restricted Namespaces
 
 :::warning
 
@@ -15,15 +15,15 @@ The namespace feature is currently in Public Preview. The feature and related do
 
 :::
 
-This document explains how to set up and use isolated namespaces in a multi-tenant deployment of ScalarDL.
+This document explains how to set up and use restricted namespaces in a multi-tenant deployment of ScalarDL.
 
-## What are isolated namespaces?
+## What are restricted namespaces?
 
-Isolated namespaces allow you to host multiple tenants on a single ScalarDL cluster while ensuring strict data isolation between them. Each tenant operates within its own namespace and can only access assets within that namespace.
+Restricted namespaces allow you to host multiple tenants on a single ScalarDL cluster while ensuring strict data isolation between them. Each tenant operates within its own namespace and can only access assets within that namespace.
 
 ### Security model
 
-The isolated namespace feature relies on port-based access control:
+The restricted namespace feature relies on port-based access control:
 
 - **Privileged port:** Used by administrators for namespace management and credential registration. Only administrators should have access to this port.
 - **Non-privileged port:** Used by tenant clients for contract registration and execution. Tenants access this port with their credentials registered to their specific namespace.
@@ -111,6 +111,8 @@ This sample uses the same `client.pem` as the administrator client for simplicit
 :::
 
 ## Use a tenant namespace
+
+This section explains how to set up the tenant client to interact with its assigned namespace.
 
 ### Configure the tenant client
 
