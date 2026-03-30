@@ -10,22 +10,6 @@ import DbSpecificSteps from '/src/components/ja-jp/_getting-started-db-specific-
   - **[OpenJDK](https://openjdk.org/) ([Eclipse Temurin](https://adoptium.net/temurin/)、[Amazon Corretto](https://aws.amazon.com/corretto/)、または [Microsoft Build of OpenJDK](https://learn.microsoft.com/ja-jp/java/openjdk/)):** 8、11、17、または 21 (LTS バージョン)
 - [Docker](https://www.docker.com/get-started/) 20.10以降と[Docker Compose](https://docs.docker.com/compose/install/) v2.20.0以降
 
-:::warning
-
-ScalarDL は JDK 8 でビルドされているため、コントラクトは JDK 8 互換のバイナリである必要があります。JDK 8 以外のバージョンを使用する場合は、JDK 8 互換のバイナリをビルドするようにビルドツールを設定する必要があります。バイナリ互換性を指定する方法はいくつかあり、javac の `--release 8` オプションを使用するか、JDK 8 ツールチェーンを使用するように Gradle または Maven の設定を行う方法があります。以下は Gradle の設定例です:
-
-```gradle
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(8))
-    }
-}
-```
-
-Gradle と Maven の設定の詳細については、[Toolchains for JVM projects for Gradle](https://docs.gradle.org/current/userguide/toolchains.html) と [Guide to Using Toolchains for Maven](https://maven.apache.org/guides/mini/guide-using-toolchains.html) を参照してください。
-
-:::
-
 ## ScalarDL サンプルリポジトリをクローンする
 
 **ターミナル**を開き、次のコマンドを実行して ScalarDL サンプルリポジトリをクローンします:
