@@ -24,19 +24,19 @@ const recentFeatures = [
       // To add a link, use the format ['link1', 'link2']. Links should be relative to the docs directory and not be anchor links.
       // To add a label, use the format ['label1', 'label2'].
       {
-        cell: 0, // First cell
+        cell: 0, // Third cell
+        links: ['manage-namespaces'],
+        labels: ['名前空間を管理']
+      },
+      {
+        cell: 1, // First cell
         links: ['getting-started-hashstore'],
         labels: ['ScalarDL HashStore を使用']
       },
       {
-        cell: 1, // Second cell
+        cell: 2, // Second cell
         links: ['getting-started-tablestore'],
         labels: ['ScalarDL TableStore を使用']
-      },
-      {
-        cell: 2, // Third cell
-        links: ['sql-grammar'],
-        labels: ['ScalarDL TableStore SQL 文法']
       }
     ]
   }
