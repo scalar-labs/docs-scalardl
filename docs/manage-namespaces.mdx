@@ -29,7 +29,7 @@ By default, all resources are stored in a namespace called `default`. You can cr
 There are two access models for namespaces:
 
 - **Cross-namespace access model:** A single application accesses assets across multiple namespaces.
-- **Restricted-namespace access model:** Multiple independent applications each have exclusive access to assets within their own namespace.
+- **Restricted access model:** Multiple independent applications each have exclusive access to assets within their own namespace.
 
 ## Cross-namespace access model
 
@@ -42,21 +42,21 @@ To perform cross-namespace data access, implement contracts by using namespace-a
 
 For details on developing namespace-aware contracts, see [Manage assets with a namespace](how-to-write-contract.mdx#manage-assets-with-a-namespace).
 
-## Restricted-namespace access model
+## Restricted access model
 
-The restricted-namespace access model is suitable for use cases such as the following:
+The restricted access model is suitable for use cases such as the following:
 
 - **SaaS applications:** Host multiple customers running the same application on a shared ScalarDL cluster while ensuring each customer's data and contracts are completely isolated from one another.
 - **Infrastructure consolidation:** Run multiple independent applications from different departments or business units on a single cluster, reducing infrastructure costs while maintaining secure isolation between each application's data and contracts.
 
-ScalarDL supports these scenarios through restricted namespaces, where each namespace is independently managed and inaccessible from other namespaces. To set up a restricted namespace, first create a namespace, and then register the certificates or secrets of tenant clients that will use each namespace. Then, register contracts and functions for their application through the registered clients. Only clients registered in a namespace can register and execute contracts and functions or validate assets within that namespace.
+ScalarDL supports these scenarios by restricting access to each namespace so that it is independently managed and inaccessible from other namespaces. To set up a namespace with restricted access, first create a namespace, and then register the certificates or secrets of tenant clients that will use each namespace. Then, register contracts and functions for their application through the registered clients. Only clients registered in a namespace can register and execute contracts and functions or validate assets within that namespace.
 
-Unlike contracts registered in the `default` namespace, contracts registered in restricted namespaces have only a local access scope and cannot access assets in other namespaces.
+Unlike contracts registered in the `default` namespace, contracts registered in namespaces with restricted access have only a local access scope and cannot access assets in other namespaces.
 
-For details on restricted namespaces, see [Use Restricted Namespaces](use-restricted-namespaces.mdx).
+For details on how to set up namespaces and access them in a restricted manner, see [Access Namespaces in a Restricted Manner](access-namespaces-in-a-restricted-manner.mdx).
 
 ## See also
 
 - [A Guide on How to Write a Good Contract](how-to-write-contract.mdx)
-- [Use Restricted Namespaces](use-restricted-namespaces.mdx)
+- [Access Namespaces in a Restricted Manner](access-namespaces-in-a-restricted-manner.mdx)
 - [ScalarDL Client Command Reference](scalardl-command-reference.mdx)
