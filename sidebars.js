@@ -881,8 +881,8 @@ const sidebars = {
             },
             {
               type: 'doc',
-              id: 'use-restricted-namespaces',
-              label: '制限名前空間を使用',
+              id: 'access-namespaces-in-a-restricted-manner',
+              label: '名前空間に制限付きでアクセス',
             },
             {
               type: 'doc',
