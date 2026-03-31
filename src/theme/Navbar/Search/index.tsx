@@ -13,12 +13,15 @@ export default function SearchWrapper(props: Props): ReactNode {
   const locale = match?.[1] ?? '';
   const version = match?.[2] ?? 'latest';
 
+  // Determine button label based on locale
+  const tryNowLabel = locale === '/ja-jp' ? '今すぐ試す' : 'Try now';
+
   return (
     <>
       <Search {...props} />
       <GoogleAIModeSearch />
       <div>
-        <a href={`${locale}/docs/${version}/scalar-licensing/trial`} className="navbar__link--cta">Try now</a>
+        <a href={`${locale}/docs/${version}/scalar-licensing/trial`} className="navbar__link--cta">{tryNowLabel}</a>
       </div>
     </>
   );
