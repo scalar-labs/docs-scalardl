@@ -1,0 +1,58 @@
+---
+tags:
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+# ScalarDL をスケーリングする方法
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このガイドでは、ScalarDL をスケーリングする方法について説明します。ここでは、[Scalar Helm Chart](https://github.com/scalar-labs/helm-charts) (推奨されているデプロイ方法) を使用して ScalarDL をデプロイしていることを前提としています。
+
+:::note
+
+ScalarDL 側にボトルネックがある場合は、ScalarDL をスケーリングすることでパフォーマンスの問題を解決できる場合があります。ただし、パフォーマンスの問題はバックエンドデータベースのボトルネックによって発生することがあります。このような場合、ScalarDL をスケーリングしてもパフォーマンスの問題は解決されません。
+
+代わりに、ボトルネックが存在する場所を確認してください。ボトルネックがバックエンドデータベースに存在する場合は、バックエンドデータベースのスケーリングを検討してください。
+
+:::
+
+<Tabs groupId="components" queryString>
+  <TabItem value="scalardl-ledger" label="ScalarDL Ledger" default>
+
+  1. カスタム値ファイルに以下を追加します。`<NUMBER_OF_PODS>` を、スケーリングするポッドの数に置き換えます。
+
+     ```yaml
+     ledger:
+       replicaCount: <NUMBER_OF_PODS>
+     ```
+
+  1. 更新されたカスタム値ファイルを使用する次の `helm upgrade` コマンドを実行して、ScalarDL Ledger のデプロイメントをアップグレードします。説明に従って、山括弧内の内容を必ず置き換えてください。
+
+     ```console
+     helm upgrade <RELEASE_NAME> scalar-labs/scalardl -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDL_LEDGER> --version <CHART_VERSION>
+     ```
+
+  </TabItem>
+  <TabItem value="scalardl-auditor" label="ScalarDL Auditor" default>
+
+  1. カスタム値ファイルに以下を追加します。`<NUMBER_OF_PODS>` を、スケーリングするポッドの数に置き換えます。
+
+     ```yaml
+     auditor:
+       replicaCount: <NUMBER_OF_PODS>
+     ```
+
+  1. 更新されたカスタム値ファイルを使用する次の `helm upgrade` コマンドを実行して、ScalarDL Auditor のデプロイメントをアップグレードします。説明に従って、山括弧内の内容を必ず置き換えてください。
+
+     ```console
+     helm upgrade <RELEASE_NAME> scalar-labs/scalardl-audit -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDL_AUDITOR> --version <CHART_VERSION>
+     ```
+
+  </TabItem>
+</Tabs>

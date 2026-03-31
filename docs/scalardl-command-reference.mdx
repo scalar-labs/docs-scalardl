@@ -24,6 +24,10 @@ This page introduces `scalardl`, which is a client command for interacting with 
 - **Execute and list the registered business logic**
   - [`execute-contract`](#execute-contract): Execute a specified contract.
   - [`list-contracts`](#list-contracts): List registered contracts.
+- **Manage namespaces**
+  - [`create-namespace`](#create-namespace): Create a namespace.
+  - [`list-namespaces`](#list-namespaces): List namespaces.
+  - [`drop-namespace`](#drop-namespace): Drop a namespace.
 - **Validate a ledger**
   - [`validate-ledger`](#validate-ledger): Validate a specified asset in a ledger.
 - **Run commands for generic-contracts**
@@ -58,16 +62,30 @@ Register a specified certificate.
 
 ### Options
 
-| Option                     | Description                                |
-|:---------------------------|:-------------------------------------------|
-| `--config`, `--properties` | A configuration file in properties format. |
+| Option                     | Description                                                    |
+|:---------------------------|:---------------------------------------------------------------|
+| `--config`, `--properties` | A configuration file in properties format.                     |
+| `--namespace`              | A namespace where the certificate is registered.               |
+| `--entity-id`              | An entity ID for the certificate.                              |
+| `--cert-path`              | A path to a PEM-formatted certificate file.                    |
+| `--cert-version`           | The version of the certificate (default: 1).                   |
+
+When `--namespace` is specified, `--entity-id` and `--cert-path` are also required. When `--namespace` is not specified, the identity information from the properties file is used.
 
 [Common utility options](#common-utility-options) are also available.
 
 ### Examples
 
+Register a certificate by using identity information from the properties file.
+
 ```console
 scalardl register-cert --properties client.properties
+```
+
+Register a certificate to a specific namespace.
+
+```console
+scalardl register-cert --properties client.properties --namespace my_namespace --entity-id my_entity --cert-path /path/to/cert.pem
 ```
 
 ## `register-secret`
@@ -76,16 +94,30 @@ Register a specified secret.
 
 ### Options
 
-| Option                     | Description                                |
-|:---------------------------|:-------------------------------------------|
-| `--config`, `--properties` | A configuration file in properties format. |
+| Option                     | Description                                                    |
+|:---------------------------|:---------------------------------------------------------------|
+| `--config`, `--properties` | A configuration file in properties format.                     |
+| `--namespace`              | A namespace where the secret is registered.                    |
+| `--entity-id`              | An entity ID for the secret.                                   |
+| `--secret-key`             | A secret key for HMAC authentication.                          |
+| `--secret-key-version`     | The version of the secret key (default: 1).                    |
+
+When `--namespace` is specified, `--entity-id` and `--secret-key` are also required. When `--namespace` is not specified, the identity information from the properties file is used.
 
 [Common utility options](#common-utility-options) are also available.
 
 ### Examples
 
+Register a secret by using identity information from the properties file.
+
 ```console
 scalardl register-secret --properties client.properties
+```
+
+Register a secret to a specific namespace.
+
+```console
+scalardl register-secret --properties client.properties --namespace my_namespace --entity-id my_entity --secret-key my-secret-key
 ```
 
 ## `register-contract`
@@ -255,6 +287,89 @@ Show a specified contract only.
 scalardl list-contracts --properties client.properties --contract-id StateUpdater
 ```
 
+## `create-namespace`
+
+:::warning
+
+The namespace feature is currently in Public Preview. The feature and related documentation are subject to change.
+
+:::
+
+Create a namespace. A namespace name must start with an alphabetic character and can only contain alphanumeric characters and underscores (pattern: `[a-zA-Z][a-zA-Z0-9_]*`). The default namespace `default` is reserved and cannot be created or dropped.
+
+### Options
+
+| Option                     | Description                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | A configuration file in properties format. |
+| `--namespace`              | A name for the namespace that will be created.                |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+```console
+scalardl create-namespace --properties client.properties --namespace my_namespace
+```
+
+## `list-namespaces`
+
+:::warning
+
+The namespace feature is currently in Public Preview. The feature and related documentation are subject to change.
+
+:::
+
+List namespaces.
+
+### Options
+
+| Option                     | Description                                   |
+|:---------------------------|:----------------------------------------------|
+| `--config`, `--properties` | A configuration file in properties format.    |
+| `--pattern`                | A pattern to filter namespaces (partial match). |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+List all namespaces.
+
+```console
+scalardl list-namespaces --properties client.properties
+```
+
+List namespaces that match a specified pattern.
+
+```console
+scalardl list-namespaces --properties client.properties --pattern my_
+```
+
+## `drop-namespace`
+
+:::warning
+
+The namespace feature is currently in Public Preview. The feature and related documentation are subject to change.
+
+:::
+
+Drop a namespace. This command requires confirmation by typing the namespace name.
+
+### Options
+
+| Option                     | Description                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | A configuration file in properties format. |
+| `--namespace`              | The name of the namespace to drop.         |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+```console
+scalardl drop-namespace --properties client.properties --namespace my_namespace
+```
+
 ## `validate-ledger`
 
 Validate a specified asset in a ledger.
@@ -264,6 +379,7 @@ Validate a specified asset in a ledger.
 | Option                     | Description                                                                            |
 |:---------------------------|:---------------------------------------------------------------------------------------|
 | `--config`, `--properties` | A configuration file in properties format.                                             |
+| `--namespace`              | The namespace of the asset. If not specified, the `scalar.dl.client.context.namespace` value in the properties file will be used. If that is also not configured, the `default` namespace will be used. |
 | `--asset-id`               | The ID of an asset or the ID and the ages of an asset. Format: 'ASSET_ID', the ID of an asset to validate, or 'ASSET_ID,START_AGE,END_AGE', the ID and the ages of an asset to validate. |
 
 [Common utility options](#common-utility-options) are also available.

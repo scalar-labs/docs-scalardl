@@ -1,0 +1,115 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+# TableStore 抽象化を使用して ScalarDL アプリケーションを書く
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+import JavadocLink from "/src/theme/JavadocLink.js";
+
+このドキュメントでは、TableStore 抽象化を使用して ScalarDL アプリケーションを作成する方法について説明します。アプリケーションで ScalarDL TableStore を使用する方法、エラーを処理する方法、データを検証する方法について学習します。
+
+## ScalarDL TableStore Client SDK の使用
+
+ScalarDL TableStore を使用するには、次の2つのオプションがあります:
+
+- [ScalarDL TableStore をはじめよう](getting-started-tablestore.mdx)で示されているように[コマンド](scalardl-tablestore-command-reference.mdx)を使用する
+- [TableStore Java Client SDK](https://javadoc.io/doc/com.scalar-labs/scalardl-tablestore-java-client-sdk/) を使用する
+
+コマンドの使用は、アプリケーションを作成せずに TableStore を試す便利な方法です。ただし、TableStore ベースのアプリケーションを構築する場合は、各操作で個別のプロセスを起動することなく、より効率的に動作する TableStore Client SDK が推奨されます。
+
+TableStore Client SDK は [Maven Central](https://central.sonatype.com/artifact/com.scalar-labs/scalardl-tablestore-java-client-sdk) で利用できます。Gradle などのビルドツールを使用して、アプリケーションにインストールできます。たとえば、Gradle では、次の依存関係を `build.gradle` に追加できます。`VERSION` は使用したい ScalarDL のバージョンに置き換えてください。
+
+```gradle
+dependencies {
+    implementation group: 'com.scalar-labs', name: 'scalardl-tablestore-java-client-sdk', version: '<VERSION>'
+}
+```
+
+TableStore の Client SDK API は、<JavadocLink packageName="scalardl-tablestore-java-client-sdk" path="com/scalar/dl/tablestore/client/service" className="TableStoreClientService" /> というサービスクラスによって提供されます。以下は、`TableStoreClientService` を使用してテーブルの真正性を管理する方法を示すコードスニペットです。`TableStoreClientService` は、[ScalarDL TableStore をはじめよう](getting-started-tablestore.mdx)で示された TableStore クライアントコマンドと同じ機能を提供します。
+
+```java
+  // TableStoreClientServiceFactory は常に再利用する必要があります。
+  TableStoreClientServiceFactory factory = new TableStoreClientServiceFactory();
+
+  // TableStoreClientServiceFactory は create メソッドの呼び出しごとに新しい TableStoreClientService オブジェクトを作成しますが、
+  // パフォーマンスとリソース使用量を向上させるために、内部オブジェクトと接続をできるだけ再利用します。
+  TableStoreClientService service = factory.create(new ClientConfig(new File(properties)));
+  try {
+    // SQL ステートメントを実行します。
+    String sql = "SELECT * FROM employee WHERE id = '1001'";
+    ExecutionResult result = service.executeStatement(sql);
+    result.getResult().ifPresent(System.out::println);
+  } catch (ClientException e) {
+    System.err.println(e.getStatusCode());
+    System.err.println(e.getMessage());
+  }
+
+  factory.close();
+```
+
+:::note
+
+`TableStoreClientService` オブジェクトを作成するには、常に `TableStoreClientServiceFactory` を使用する必要があります。`TableStoreClientServiceFactory` は `TableStoreClientService` の作成に必要なオブジェクトをキャッシュし、指定された設定に基づいてそれらを再利用するため、`TableStoreClientServiceFactory` オブジェクトは常に再利用する必要があります。
+
+:::
+
+`TableStoreClientServiceFactory` と `TableStoreClientService` の詳細については、[`scalardl-tablestore-java-client-sdk` Javadoc](https://javadoc.io/doc/com.scalar-labs/scalardl-tablestore-java-client-sdk/latest/index.html) を参照してください。
+
+## エラーの処理
+
+アプリケーションでエラーが発生した場合、Client SDK はステータスコードとエラーコードを含むエラーメッセージを持つ例外を返します。エラーの原因を特定するには、ステータスコードとエラーコードを確認する必要があります。ステータスコードとエラーコードの詳細については、[ステータスコード](how-to-write-applications.mdx#ステータスコード)と[エラーコード](how-to-write-applications.mdx#エラーコード)を参照してください。
+
+### エラー処理の実装
+
+エラーが発生すると、SDK は <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/exception" className="ClientException" /> をスローします。次のように例外をキャッチしてエラーを処理できます:
+
+```java
+TableStoreClientService service = ...;
+try {
+    // TableStoreClientService オブジェクトを通じて ScalarDL TableStore とやり取りする
+} catch (ClientException e) {
+    // e.getStatusCode() はエラーのステータスを返す
+}
+```
+
+## データの検証
+
+ScalarDL では、すべてのデータが有効な状態であることを確認するために、データを検証する必要があることがあります。ScalarDL がデータを検証する方法の基本については[Java で ScalarDL アプリケーションを書く](how-to-write-applications.mdx#データを検証する)で学習できるため、このセクションでは主に TableStore で検証を実行する方法について説明します。
+
+TableStore で [アセット](data-modeling.mdx#アセット) (ここではレコード、インデックスレコード、テーブルスキーマ) を検証する場合、テーブルと、必要に応じてプライマリキーまたはインデックスキーを指定する必要があります。TableStore でアセットを検証するコード例は次のとおりです:
+
+```java
+  TableStoreClientService service = ...
+  String tableName = "employee";
+  String primaryKeyColumn = "id";
+  String indexKeyColumn = "department";
+  TextNode primaryKeyValue = TextNode.valueOf("1001");
+  TextNode indexKeyValue = TextNode.valueOf("sales");
+  try {
+    LedgerValidationResult result1 =
+        service.validateRecord(tableName, primaryKeyColumn, primaryKeyValue);
+    LedgerValidationResult result2 =
+        service.validateIndexRecord(tableName, indexKeyColumn, indexKeyValue);
+    LedgerValidationResult result3 = service.validateTableSchema(tableName);
+    // 世代範囲を指定することもできます。
+    // LedgerValidationResult result1 =
+    //     service.validateRecord(tableName, primaryKeyColumn, primaryKeyValue, startAge, endAge);
+    // LedgerValidationResult result2 =
+    //     service.validateIndexRecord(tableName, indexKeyColumn, indexKeyValue, startAge, endAge);
+    // LedgerValidationResult result3 = service.validateTableSchema(tableName, startAge, endAge);
+  } catch (ClientException e) {
+  }
+```
+
+:::note
+
+TableStore は内部的に、レコード、インデックスレコード、テーブルスキーマを表すアセットに専用のアセット ID を割り当てます。アセット ID は、アセットタイプを示すプレフィックスとキーで構成されます。たとえば、レコードのアセット ID にはプレフィックス `rec_`、プライマリキー列名、プライマリキー値が使用されます。これらの生のアセット ID は、`LedgerValidationResult` の `AssetProof` で確認できます。
+
+:::

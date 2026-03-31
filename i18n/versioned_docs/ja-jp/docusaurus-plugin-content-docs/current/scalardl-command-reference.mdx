@@ -28,6 +28,10 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 - **登録されたビジネスロジックを実行して一覧表示する**
   - [`execute-contract`](#execute-contract): 指定されたコントラクトを実行します。
   - [`list-contracts`](#list-contracts): 登録されたコントラクトを一覧表示します。
+- **名前空間を管理する**
+  - [`create-namespace`](#create-namespace): 名前空間を作成します。
+  - [`list-namespaces`](#list-namespaces): 名前空間を一覧表示します。
+  - [`drop-namespace`](#drop-namespace): 名前空間を削除します。
 - **台帳を検証します**
   - [`validate-ledger`](#validate-ledger): 台帳内の指定されたアセットを検証します。
 - **汎用コントラクト向けにコマンドを実行します**
@@ -62,16 +66,30 @@ scalardl bootstrap --properties client.properties
 
 ### オプション
 
-| オプション                   | 説明                      |
-|:---------------------------|:--------------------------|
-| `--config`, `--properties` | プロパティ形式の設定ファイル。 |
+| オプション                   | 説明                            |
+|:---------------------------|:--------------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。       |
+| `--namespace`              | 証明書が登録される名前空間。        |
+| `--entity-id`              | 証明書のエンティティID。            |
+| `--cert-path`              | PEM形式の証明書ファイルへのパス。    |
+| `--cert-version`           | 証明書のバージョン (デフォルト: 1)。 |
+
+`--namespace` が指定されている場合、`--entity-id` と `--cert-path` も必要です。`--namespace` が指定されていない場合は、プロパティファイルの認証情報が使用されます。
 
 [共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
 
 ### 例
 
+プロパティファイルの認証情報を使用して証明書を登録する。
+
 ```console
 scalardl register-cert --properties client.properties
+```
+
+指定された名前空間に証明書を登録する。
+
+```console
+scalardl register-cert --properties admin.properties --namespace tenant_a --entity-id foo --cert-path ./fixture/client.pem
 ```
 
 ## `register-secret`
@@ -80,16 +98,30 @@ scalardl register-cert --properties client.properties
 
 ### オプション
 
-| オプション                   | 説明                      |
-|:---------------------------|:-------------------------------------------|
-| `--config`, `--properties` | プロパティ形式の設定ファイル。 |
+| オプション                   | 説明                                    |
+|:---------------------------|:----------------------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。               |
+| `--namespace`              | シークレットが登録される名前空間。            |
+| `--entity-id`              | シークレットのエンティティID。               |
+| `--secret-key`             | HMAC認証用のシークレットキー。               |
+| `--secret-key-version`     | シークレットキーのバージョン (デフォルト: 1)。 |
+
+`--namespace` が指定されている場合、`--entity-id` と `--secret-key` も必要です。`--namespace` が指定されていない場合は、プロパティファイルの認証情報が使用されます。
 
 [共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
 
 ### 例
 
+プロパティファイルの認証情報を使用してシークレットを登録する。
+
 ```console
 scalardl register-secret --properties client.properties
+```
+
+指定された名前空間にシークレットを登録する。
+
+```console
+scalardl register-secret --properties admin.properties --namespace tenant_a --entity-id foo --secret-key some_secret
 ```
 
 ## `register-contract`
@@ -259,6 +291,89 @@ scalardl list-contracts --properties client.properties
 scalardl list-contracts --properties client.properties --contract-id StateUpdater
 ```
 
+## `create-namespace`
+
+:::warning
+
+名前空間機能は現在パブリックプレビュー中です。この機能と関連ドキュメントは変更される可能性があります。
+
+:::
+
+名前空間を作成します。名前空間名は英字で始まり、英数字とアンダースコアのみを含むことができます (パターン: `[a-zA-Z][a-zA-Z0-9_]*`)。デフォルトの名前空間である `default` は予約されており、作成または削除することはできません。
+
+### オプション
+
+| オプション                   | 説明                      |
+|:---------------------------|:--------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。 |
+| `--namespace`              | 作成する名前空間の名前。      |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用可能です。
+
+### 例
+
+```console
+scalardl create-namespace --properties client.properties --namespace my_namespace
+```
+
+## `list-namespaces`
+
+:::warning
+
+名前空間機能は現在パブリックプレビュー中です。この機能と関連ドキュメントは変更される可能性があります。
+
+:::
+
+名前空間を一覧表示します。
+
+### オプション
+
+| オプション                   | 説明                                     |
+|:---------------------------|:-----------------------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。                |
+| `--pattern`                | 名前空間をフィルタリングするパターン（部分一致）。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用可能です。
+
+### 例
+
+すべての名前空間を一覧表示します。
+
+```console
+scalardl list-namespaces --properties client.properties
+```
+
+指定されたパターンにマッチする名前空間を一覧表示します。
+
+```console
+scalardl list-namespaces --properties client.properties --pattern my_
+```
+
+## `drop-namespace`
+
+:::warning
+
+名前空間機能は現在パブリックプレビュー中です。この機能と関連ドキュメントは変更される可能性があります。
+
+:::
+
+名前空間を削除します。このコマンドは、確認のために名前空間名を入力する必要があります。
+
+### オプション
+
+| オプション                   | 説明                      |
+|:---------------------------|:--------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。 |
+| `--namespace`              | 削除する名前空間の名前。      |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用可能です。
+
+### 例
+
+```console
+scalardl drop-namespace --properties client.properties --namespace my_namespace
+```
+
 ## `validate-ledger`
 
 元帳内の指定されたアセットを検証します。
@@ -268,6 +383,7 @@ scalardl list-contracts --properties client.properties --contract-id StateUpdate
 | オプション                   | 説明                                                                                                                                             |
 |:---------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------|
 | `--config`, `--properties` | プロパティ形式の設定ファイル。                                                                                                                        |
+| `--namespace`              | アセットの名前空間。指定されていない場合は、プロパティファイルの`scalar.dl.client.context.namespace`値が使用されます。それも設定されていない場合は、`default`名前空間が使用されます。 |
 | `--asset-id`               | アセットの ID またはアセットの ID と経過時間。形式: 'ASSET_ID' (検証するアセットの ID)、または 'ASSET_ID,START_AGE,END_AGE' (検証するアセットの ID と経過時間)。 |
 
 [共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。

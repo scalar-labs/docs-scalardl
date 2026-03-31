@@ -216,6 +216,16 @@ const sidebars = {
             },
             {
               type: 'doc',
+              id: 'manage-namespaces',
+              label: 'Manage Namespaces',
+            },
+            {
+              type: 'doc',
+              id: 'use-restricted-namespaces',
+              label: 'Use Restricted Namespaces',
+            },
+            {
+              type: 'doc',
               id: 'scalardl-benchmarks/README',
               label: 'Run Benchmarks',
             },
@@ -223,7 +233,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          key: 'develop-reference-en-us-3.12',
+          key: 'develop-reference-en-us-3.13',
           label: 'Reference',
           collapsible: true,
           items: [
@@ -326,7 +336,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          key: 'deploy-reference-en-us-3.12',
+          key: 'deploy-reference-en-us-3.13',
           label: 'Reference',
           collapsible: true,
           items: [
@@ -559,7 +569,7 @@ const sidebars = {
             },
             {
               type: 'category',
-              key: 'manage-monitor-reference-en-us-3.12',
+              key: 'manage-monitor-reference-en-us-3.13',
               label: 'Reference',
               collapsible: true,
               items: [
@@ -639,7 +649,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      key: 'reference-en-us-3.12',
+      key: 'reference-en-us-3.13',
       label: 'Reference',
       collapsible: true,
       items: [
@@ -866,6 +876,16 @@ const sidebars = {
             },
             {
               type: 'doc',
+              id: 'manage-namespaces',
+              label: '名前空間を管理',
+            },
+            {
+              type: 'doc',
+              id: 'use-restricted-namespaces',
+              label: '制限名前空間を使用',
+            },
+            {
+              type: 'doc',
               id: 'scalardl-benchmarks/README',
               label: 'ベンチマークを実行',
             },
@@ -873,7 +893,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          key: 'develop-reference-ja-jp-3.12',
+          key: 'develop-reference-ja-jp-3.13',
           label: '詳細',
           collapsible: true,
           items: [
@@ -976,7 +996,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          key: 'deploy-reference-ja-jp-3.12',
+          key: 'deploy-reference-ja-jp-3.13',
           label: '詳細',
           collapsible: true,
           items: [
@@ -1209,7 +1229,7 @@ const sidebars = {
             },
             {
               type: 'category',
-              key: 'manage-monitor-reference-ja-jp-3.12',
+              key: 'manage-monitor-reference-ja-jp-3.13',
               label: '詳細',
               collapsible: true,
               items: [
@@ -1289,7 +1309,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      key: 'reference-ja-jp-3.12',
+      key: 'reference-ja-jp-3.13',
       label: '詳細',
       collapsible: true,
       items: [
