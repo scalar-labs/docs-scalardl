@@ -7,8 +7,8 @@ const notificationsList = [
       ja: 'ScalarDL 3.13 での名前空間管理について知る'
     },
     url: {
-      en: 'managed-namespaces?utm_source=docs-site&utm_medium=notifications',
-      ja: 'managed-namespaces?utm_source=docs-site&utm_medium=notifications'
+      en: 'manage-namespaces?utm_source=docs-site&utm_medium=notifications',
+      ja: 'manage-namespaces?utm_source=docs-site&utm_medium=notifications'
     },
     unread: true
   },
