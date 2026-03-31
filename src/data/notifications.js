@@ -4,22 +4,22 @@ const notificationsList = [
   {
     message: {
       en: 'Find out about how to manage namespaces in ScalarDL 3.13',
-      ja: 'ScalarDL HashStore を使用して、オブジェクトとコレクションを改ざん検知可能な方法で管理する方法を学ぶ'
+      ja: 'ScalarDL 3.13 での名前空間管理について知る'
     },
     url: {
       en: 'managed-namespaces?utm_source=docs-site&utm_medium=notifications',
-      ja: 'getting-started-hashstore?utm_source=docs-site&utm_medium=notifications'
+      ja: 'managed-namespaces?utm_source=docs-site&utm_medium=notifications'
     },
     unread: true
   },
   {
     message: {
-      en: 'Learn how to use restricted namespaces in ScalarDL 3.13',
-      ja: 'ScalarDL TableStore を使用して、テーブルとレコードを改ざん検知可能な方法で管理する方法を学ぶ'
+      en: 'Learn how to access namespaces in a restricted manner in ScalarDL 3.13',
+      ja: 'ScalarDL 3.13 で名前空間に制限付きでアクセスする方法を学ぶ'
     },
     url: {
-      en: 'use-restricted-namespaces?utm_source=docs-site&utm_medium=notifications',
-      ja: 'getting-started-tablestore?utm_source=docs-site&utm_medium=notifications'
+      en: 'access-namespaces-in-a-restricted-manner?utm_source=docs-site&utm_medium=notifications',
+      ja: 'access-namespaces-in-a-restricted-manner?utm_source=docs-site&utm_medium=notifications'
     },
     unread: true
   },

@@ -7,7 +7,7 @@ displayed_sidebar: docsEnglish
 
 import StartupLedger from '/src/components/en-us/_getting-started-startup-ledger.mdx';
 
-# Use Restricted Namespaces
+# Access Namespaces in a Restricted Manner
 
 :::warning
 
@@ -15,15 +15,15 @@ The namespace feature is currently in Public Preview. The feature and related do
 
 :::
 
-This document explains how to set up and use restricted namespaces in a multi-tenant deployment of ScalarDL.
+This document explains how to set up namespaces and access them in a restricted manner in a multi-tenant deployment of ScalarDL.
 
-## What are restricted namespaces?
+## What is restricted access to namespaces?
 
-Restricted namespaces allow you to host multiple tenants on a single ScalarDL cluster while ensuring strict data isolation between them. Each tenant operates within its own namespace and can only access assets within that namespace.
+Restricting access to namespaces allows you to host multiple tenants on a single ScalarDL cluster while ensuring strict data isolation between them. Each tenant operates within its own namespace and can only access assets within that namespace.
 
 ### Security model
 
-The restricted namespace feature relies on port-based access control:
+Restricted access to namespaces relies on port-based access control:
 
 - **Privileged port:** Used by administrators for namespace management and credential registration. Only administrators should have access to this port.
 - **Non-privileged port:** Used by tenant clients for contract registration and execution. Tenants access this port with their credentials registered to their specific namespace.

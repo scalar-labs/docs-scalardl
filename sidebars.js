@@ -221,8 +221,8 @@ const sidebars = {
             },
             {
               type: 'doc',
-              id: 'use-restricted-namespaces',
-              label: 'Use Restricted Namespaces',
+              id: 'access-namespaces-in-a-restricted-manner',
+              label: 'Access Namespaces in a Restricted Manner',
             },
             {
               type: 'doc',
