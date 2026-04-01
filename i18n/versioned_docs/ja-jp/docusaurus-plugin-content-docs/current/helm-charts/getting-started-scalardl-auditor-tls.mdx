@@ -10,8 +10,8 @@ displayed_sidebar: docsJapanese
 
 ## 要件
 
-* ScalarDLのライセンスキー (試用ライセンスまたは商用ライセンス) を取得する必要があります。ライセンスキーをお持ちでない場合は、[お問い合わせ](https://www.scalar-labs.com/contact)してください。
-* TLSに対応したScalarDL v3.9以降を使用する必要があります。
+* ScalarDL のライセンスキー (試用ライセンスまたは商用ライセンス) を取得する必要があります。ライセンスキーをお持ちでない場合は、[お問い合わせ](https://www.scalar-labs.com/contact)してください。
+* TLS に対応した ScalarDL v3.9以降を使用する必要があります。
 
 :::note
 
@@ -462,8 +462,10 @@ Helm Chart を使用して、Kubernetes クラスターに2つの ScalarDL Schem
 1. ライセンスキーと証明書を環境変数に設定します。ライセンスキーをお持ちでない場合は、[お問い合わせ](https://www.scalar-labs.com/contact)してください。`<CERT_PEM_FOR_YOUR_SCALAR_DL_LEDGER_LICENSE_KEY>` および `<CERT_PEM_FOR_YOUR_SCALAR_DL_AUDITOR_LICENSE_KEY>` の値の詳細については、[ライセンスキーの設定方法](../scalar-licensing/index.mdx)を参照してください。
 
    ```console
-   SCALAR_DL_LICENSE_KEY=<YOUR_LICENSE_KEY>
-   SCALAR_DL_LICENSE_CHECK_CERT_PEM=<CERT_PEM_FOR_YOUR_LICENSE_KEY>
+   SCALAR_DL_LEDGER_LICENSE_KEY='<YOUR_SCALAR_DL_LEDGER_LICENSE_KEY>'
+   SCALAR_DL_LEDGER_LICENSE_CHECK_CERT_PEM='<CERT_PEM_FOR_YOUR_SCALAR_DL_LEDGER_LICENSE_KEY>'
+   SCALAR_DL_AUDITOR_LICENSE_KEY='<YOUR_SCALAR_DL_AUDITOR_LICENSE_KEY>'
+   SCALAR_DL_AUDITOR_LICENSE_CHECK_CERT_PEM='<CERT_PEM_FOR_YOUR_SCALAR_DL_AUDITOR_LICENSE_KEY>'
    ```
 
 1. ScalarDL Ledger のカスタム値ファイル (`scalardl-ledger-custom-values.yaml`) を作成します。
@@ -503,12 +505,12 @@ Helm Chart を使用して、Kubernetes クラスターに2つの ScalarDL Schem
 
          ### TLS configurations
          scalar.dl.ledger.server.tls.enabled=true
-         scalar.dl.ledger.server.tls.cert_chain_path=/tls/scalardl-auditor/certs/tls.crt
-         scalar.dl.ledger.server.tls.private_key_path=/tls/scalardl-auditor/certs/tls.key
+         scalar.dl.ledger.server.tls.cert_chain_path=/tls/scalardl-ledger/certs/tls.crt
+         scalar.dl.ledger.server.tls.private_key_path=/tls/scalardl-ledger/certs/tls.key
 
          ### License key configurations
-         scalar.dl.licensing.license_key=${env:SCALAR_DL_LICENSE_KEY}
-         scalar.dl.licensing.license_check_cert_pem=${env:SCALAR_DL_LICENSE_CHECK_CERT_PEM}
+         scalar.dl.licensing.license_key=${env:SCALAR_DL_LEDGER_LICENSE_KEY}
+         scalar.dl.licensing.license_check_cert_pem=${env:SCALAR_DL_LEDGER_LICENSE_CHECK_CERT_PEM}
 
        tls:
          enabled: true
@@ -564,8 +566,8 @@ Helm Chart を使用して、Kubernetes クラスターに2つの ScalarDL Schem
          scalar.dl.auditor.tls.override_authority=envoy.scalar.example.com
 
          ### License key configurations
-         scalar.dl.licensing.license_key=${env:SCALAR_DL_LICENSE_KEY}
-         scalar.dl.licensing.license_check_cert_pem=${env:SCALAR_DL_LICENSE_CHECK_CERT_PEM}
+         scalar.dl.licensing.license_key=${env:SCALAR_DL_AUDITOR_LICENSE_KEY}
+         scalar.dl.licensing.license_check_cert_pem=${env:SCALAR_DL_AUDITOR_LICENSE_CHECK_CERT_PEM}
 
        tls:
          enabled: true
@@ -587,8 +589,9 @@ Helm Chart を使用して、Kubernetes クラスターに2つの ScalarDL Schem
      --from-literal=SCALAR_DL_LEDGER_POSTGRES_PASSWORD=postgres \
      --from-literal=SCALAR_DL_LEDGER_HMAC_CIPHER_KEY=ledger-hmac-cipher-key \
      --from-literal=SCALAR_DL_LEDGER_HMAC_SECRET_KEY=scalardl-hmac-secret-key \
-     --from-literal=SCALAR_DL_LICENSE_KEY=${SCALAR_DL_LICENSE_KEY} \
-     --from-literal=SCALAR_DL_LICENSE_CHECK_CERT_PEM=${SCALAR_DL_LICENSE_CHECK_CERT_PEM} \
+     --from-literal=SCALAR_DL_LEDGER_LICENSE_KEY="${SCALAR_DL_LEDGER_LICENSE_KEY}" \
+     --from-file=SCALAR_DL_LEDGER_LICENSE_CHECK_CERT_PEM=<(echo ${SCALAR_DL_LEDGER_LICENSE_CHECK_CERT_PEM} | sed 's/\\n/\
+     /g') \
      -n default
    ```
 
@@ -600,8 +603,9 @@ Helm Chart を使用して、Kubernetes クラスターに2つの ScalarDL Schem
      --from-literal=SCALAR_DL_AUDITOR_POSTGRES_PASSWORD=postgres \
      --from-literal=SCALAR_DL_AUDITOR_HMAC_CIPHER_KEY=auditor-hmac-cipher-key \
      --from-literal=SCALAR_DL_AUDITOR_HMAC_SECRET_KEY=scalardl-hmac-secret-key \
-     --from-literal=SCALAR_DL_LICENSE_KEY=${SCALAR_DL_LICENSE_KEY} \
-     --from-literal=SCALAR_DL_LICENSE_CHECK_CERT_PEM=${SCALAR_DL_LICENSE_CHECK_CERT_PEM} \
+     --from-literal=SCALAR_DL_AUDITOR_LICENSE_KEY="${SCALAR_DL_AUDITOR_LICENSE_KEY}" \
+     --from-file=SCALAR_DL_AUDITOR_LICENSE_CHECK_CERT_PEM=<(echo ${SCALAR_DL_AUDITOR_LICENSE_CHECK_CERT_PEM} | sed 's/\\n/\
+     /g') \
      -n default
    ```
 
@@ -727,7 +731,7 @@ Helm Chart を使用して、Kubernetes クラスターに2つの ScalarDL Schem
 1. シークレットリソース `client-ca-cert` を作成します。
 
    ```console
-   kubectl create secret generic client-ca-cert --from-file=certificate=${HOME}/scalardl-test/certs/ca.pem -n default
+   kubectl create secret generic client-ca-cert --from-file=ca.crt=${HOME}/scalardl-test/certs/ca.pem -n default
    ```
 
 1. クライアントポッドのマニフェストファイル (`scalardl-client-pod.yaml`) を作成します。
@@ -749,8 +753,7 @@ Helm Chart を使用して、Kubernetes クラスターに2つの ScalarDL Schem
              value: SCALAR_DL_CLIENT_POD_SCALAR_DL_VERSION
          volumeMounts:
            - name: "client-ca-cert"
-             mountPath: "/certs/ca/ca.pem"
-             subPath: certificate
+             mountPath: "/certs/"
              readOnly: true
      volumes:
        - name: "client-ca-cert"
@@ -797,7 +800,8 @@ Helm Chart を使用して、Kubernetes クラスターに2つの ScalarDL Schem
    ```console
    kubectl exec -it scalardl-client -n default -- bash
    ```
-   次の手順移行のコマンドは、クライアントコンテナ無いで実行する必要があります。
+
+   次の手順以降のコマンドは、クライアントコンテナ内で実行する必要があります。
 
 1. git、curl、および unzip コマンドをクライアントコンテナにインストールします。
 
@@ -859,14 +863,14 @@ Helm Chart を使用して、Kubernetes クラスターに2つの ScalarDL Schem
    # Ledger configuration
    scalar.dl.client.server.host=scalardl-ledger-envoy.default.svc.cluster.local
    scalar.dl.client.tls.enabled=true
-   scalar.dl.client.tls.ca_root_cert_path=/certs/ca/ca.pem
+   scalar.dl.client.tls.ca_root_cert_path=/certs/ca.crt
    scalar.dl.client.tls.override_authority=envoy.scalar.example.com
 
    # Auditor configuration
    scalar.dl.client.auditor.enabled=true
    scalar.dl.client.auditor.host=scalardl-auditor-envoy.default.svc.cluster.local
    scalar.dl.client.auditor.tls.enabled=true
-   scalar.dl.client.auditor.tls.ca_root_cert_path=/certs/ca/ca.pem
+   scalar.dl.client.auditor.tls.ca_root_cert_path=/certs/ca.crt
    scalar.dl.client.auditor.tls.override_authority=envoy.scalar.example.com
 
    # Client configuration
@@ -981,6 +985,12 @@ Helm Chart を使用して、Kubernetes クラスターに2つの ScalarDL Schem
        "error_message" : "The results from Ledger and Auditor don't match"
      }
      ```
+
+1. クライアントコンテナから退出します。
+
+   ```console
+   exit
+   ```
 
 ## ステップ9. すべてのリソースを削除する
 
