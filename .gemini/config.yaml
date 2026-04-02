@@ -1,5 +1,4 @@
-# This is a configuration file for the Gemini code review tool. It specifies patterns for files that should be ignored during code review. In this case, it ignores any files in the "dist" directory, any files in the "tests/fixtures" directory, and any files that end with ".generated.js".
-# Lorem ipsum dolor
+# This is a configuration file for the Gemini code review tool. It disables Gemini auto code review for the entire repository by ignoring all files and turning off code reviews.
 
 have_fun: false
 ignore_patterns:
