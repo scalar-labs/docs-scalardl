@@ -559,13 +559,28 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              id: 'scalar-kubernetes/alerts/Envoy',
-              label: 'Envoy Alerts',
+              id: 'scalar-manager/overview',
+              label: 'Scalar Manager Overview',
             },
             {
               type: 'doc',
-              id: 'scalar-kubernetes/alerts/Ledger',
-              label: 'Ledger Alerts',
+              id: 'scalar-manager/how-to-use-scalar-manager',
+              label: 'How to Use Scalar Manager',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-manager/metrics-reference',
+              label: 'Scalar Manager Metrics Reference',
+            },
+            {
+              type: 'doc',
+              id: 'scalar-kubernetes/K8sMonitorGuide',
+              label: 'Kubernetes Monitoring Guide',
+            },
+            {
+              type: 'doc',
+              id: 'helm-charts/how-to-deploy-scalar-admin-for-kubernetes',
+              label: 'Deploy Scalar Admin for Kubernetes',
             },
             {
               type: 'category',
@@ -575,22 +590,17 @@ const sidebars = {
               items: [
                 {
                   type: 'doc',
-                  id: 'scalar-kubernetes/K8sMonitorGuide',
-                  label: 'Kubernetes Monitoring Guide',
+                  id: 'scalar-kubernetes/alerts/Envoy',
+                  label: 'Envoy Alerts',
                 },
                 {
                   type: 'doc',
-                  id: 'scalar-manager/overview',
-                  label: 'Scalar Manager Overview',
+                  id: 'scalar-kubernetes/alerts/Ledger',
+                  label: 'Ledger Alerts',
                 },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/how-to-deploy-scalar-admin-for-kubernetes',
-                  label: 'Deploy Scalar Admin for Kubernetes',
-                },
-              ]
+              ],
             },
-          ]
+          ],
         },
         {
           type: 'category',
@@ -1218,14 +1228,29 @@ const sidebars = {
           },
           items: [
             {
-              type: 'doc',
-              id: 'scalar-kubernetes/alerts/Envoy',
-              label: 'Envoy アラート',
+              type: "doc",
+              id: "scalar-manager/overview",
+              label: "Scalar Manager の概要"
             },
             {
-              type: 'doc',
-              id: 'scalar-kubernetes/alerts/Ledger',
-              label: 'Ledger アラート',
+              type: "doc",
+              id: "scalar-manager/how-to-use-scalar-manager",
+              label: "Scalar Manager の使用方法"
+            },
+            {
+              type: "doc",
+              id: "scalar-manager/metrics-reference",
+              label: "Scalar Manager メトリクスリファレンス"
+            },
+            {
+              type: "doc",
+              id: "scalar-kubernetes/K8sMonitorGuide",
+              label: "Kubernetes モニタリングガイド"
+            },
+            {
+              type: "doc",
+              id: "helm-charts/how-to-deploy-scalar-admin-for-kubernetes",
+              label: "Helm Chart を使用して Scalar Admin for Kubernetes をデプロイ"
             },
             {
               type: 'category',
@@ -1235,22 +1260,17 @@ const sidebars = {
               items: [
                 {
                   type: 'doc',
-                  id: 'scalar-kubernetes/K8sMonitorGuide',
-                  label: 'Kubernetes モニタリングガイド',
+                  id: 'scalar-kubernetes/alerts/Envoy',
+                  label: 'Envoy アラート',
                 },
                 {
                   type: 'doc',
-                  id: 'scalar-manager/overview',
-                  label: 'Scalar Manager の概要',
+                  id: 'scalar-kubernetes/alerts/Ledger',
+                  label: 'Ledger アラート',
                 },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/how-to-deploy-scalar-admin-for-kubernetes',
-                  label: 'Helm Chart を使用して Scalar Admin for Kubernetes をデプロイ',
-                },
-              ]
-            }
-          ]
+              ],
+            },
+          ],
         },
         {
           type: 'category',
