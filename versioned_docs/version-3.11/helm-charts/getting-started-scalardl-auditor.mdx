@@ -10,7 +10,7 @@ This document explains how to get started with ScalarDL Ledger and Auditor using
 
 ## Requirement
 
-You need to subscribe to ScalarDL Ledger and ScalarDL Auditor in the [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2) or [Azure Marketplace](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardb) to get the following container images.
+You need to subscribe to ScalarDL Ledger and ScalarDL Auditor in the [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2) to get the following container images.
    * AWS Marketplace
       * scalar-ledger
       * scalar-ledger-envoy
@@ -18,17 +18,11 @@ You need to subscribe to ScalarDL Ledger and ScalarDL Auditor in the [AWS Market
       * scalar-auditor
       * scalar-auditor-envoy
       * scalardl-schema-loader-auditor
-   * Azure Marketplace
-      * scalar-ledger
-      * scalar-auditor
-      * scalardl-envoy
-      * scalardl-schema-loader
 
-Please refer to the following documents for more details.
-   * [How to install Scalar products through AWS Marketplace](../scalar-kubernetes/AwsMarketplaceGuide.mdx)
-   * [How to install Scalar products through Azure Marketplace](../scalar-kubernetes/AzureMarketplaceGuide.mdx)
+For more details, refer to [How to install Scalar products through AWS Marketplace](../scalar-kubernetes/AwsMarketplaceGuide.mdx).
 
 ## Note
+
 To make Byzantine fault detection with auditing work properly, Ledger and Auditor should be deployed and managed in different administrative domains. However, in this guide, we will deploy Ledger and Auditor in the same Kubernetes cluster to make the test easier.  
 
 ## What we create
@@ -244,7 +238,7 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
    helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
    ```
 
-1. Create a secret resource to pull the ScalarDL container images from AWS/Azure Marketplace.
+1. Create a secret resource to pull the ScalarDL container images from AWS.
    * AWS Marketplace
      ```console
      kubectl create secret docker-registry reg-ecr-mp-secrets \
@@ -252,51 +246,21 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
        --docker-username=AWS \
        --docker-password=$(aws ecr get-login-password --region us-east-1)
      ```
-   * Azure Marketplace
-     ```console
-     kubectl create secret docker-registry reg-acr-secrets \
-       --docker-server=<your private container registry login server> \
-       --docker-username=<Service principal ID> \
-       --docker-password=<Service principal password>
-     ```
 
-   Please refer to the following documents for more details.
-   
-   * [How to install Scalar products through AWS Marketplace](../scalar-kubernetes/AwsMarketplaceGuide.mdx)
-   * [How to install Scalar products through Azure Marketplace](../scalar-kubernetes/AzureMarketplaceGuide.mdx)
+   For more details, refer to [How to install Scalar products through AWS Marketplace](../scalar-kubernetes/AwsMarketplaceGuide.mdx).
 
 1. Create a custom values file for ScalarDL Schema Loader for Ledger (schema-loader-ledger-custom-values.yaml).
    * AWS Marketplace
 
      ```console
      cat << 'EOF' > ~/scalardl-test/schema-loader-ledger-custom-values.yaml
-     schemaLoading:
+   For more details, refer to [How to install Scalar products through AWS Marketplace](../scalar-kubernetes/AwsMarketplaceGuide.mdx).
        schemaType: "ledger"
        image:
          repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-ledger"
          version: "3.6.0"
        imagePullSecrets:
          - name: "reg-ecr-mp-secrets"
-       databaseProperties: |
-         scalar.db.contact_points=jdbc:postgresql://postgresql-ledger.default.svc.cluster.local:5432/postgres
-         scalar.db.username={{ default .Env.SCALAR_DL_LEDGER_POSTGRES_USERNAME "" }}
-         scalar.db.password={{ default .Env.SCALAR_DL_LEDGER_POSTGRES_PASSWORD "" }}
-         scalar.db.storage=jdbc
-       secretName: "ledger-credentials-secret"
-     EOF
-     ```
-
-   * Azure Marketplace
-
-     ```console
-     cat << 'EOF' > ~/scalardl-test/schema-loader-ledger-custom-values.yaml
-     schemaLoading:
-       schemaType: "ledger"
-       image:
-         repository: "<your private container registry>/scalarinc/scalardl-schema-loader"
-         version: "3.6.0"
-       imagePullSecrets:
-         - name: "reg-acr-secrets"
        databaseProperties: |
          scalar.db.contact_points=jdbc:postgresql://postgresql-ledger.default.svc.cluster.local:5432/postgres
          scalar.db.username={{ default .Env.SCALAR_DL_LEDGER_POSTGRES_USERNAME "" }}
@@ -318,26 +282,6 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
          version: "3.6.0"
        imagePullSecrets:
          - name: "reg-ecr-mp-secrets"
-       databaseProperties: |
-         scalar.db.contact_points=jdbc:postgresql://postgresql-auditor.default.svc.cluster.local:5432/postgres
-         scalar.db.username={{ default .Env.SCALAR_DL_AUDITOR_POSTGRES_USERNAME "" }}
-         scalar.db.password={{ default .Env.SCALAR_DL_AUDITOR_POSTGRES_PASSWORD "" }}
-         scalar.db.storage=jdbc
-       secretName: "auditor-credentials-secret"
-     EOF
-     ```
-
-   * Azure Marketplace
-
-     ```console
-     cat << 'EOF' > ~/scalardl-test/schema-loader-auditor-custom-values.yaml
-     schemaLoading:
-       schemaType: "auditor"
-       image:
-         repository: "<your private container registry>/scalarinc/scalardl-schema-loader"
-         version: "3.6.0"
-       imagePullSecrets:
-         - name: "reg-acr-secrets"
        databaseProperties: |
          scalar.db.contact_points=jdbc:postgresql://postgresql-auditor.default.svc.cluster.local:5432/postgres
          scalar.db.username={{ default .Env.SCALAR_DL_AUDITOR_POSTGRES_USERNAME "" }}
@@ -425,42 +369,6 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
      EOF
      ```
 
-   * Azure Marketplace
-
-     ```console
-     cat << 'EOF' > ~/scalardl-test/scalardl-ledger-custom-values.yaml
-     envoy:
-       image:
-         repository: "<your private container registry>/scalarinc/scalardl-envoy"
-         version: "1.3.0"
-       imagePullSecrets:
-         - name: "reg-acr-secrets"
-     
-     ledger:
-       image:
-         repository: "<your private container registry>/scalarinc/scalar-ledger"
-         version: "3.6.0"
-       imagePullSecrets:
-         - name: "reg-acr-secrets"
-       ledgerProperties: |
-         scalar.db.contact_points=jdbc:postgresql://postgresql-ledger.default.svc.cluster.local:5432/postgres
-         scalar.db.username={{ default .Env.SCALAR_DL_LEDGER_POSTGRES_USERNAME "" }}
-         scalar.db.password={{ default .Env.SCALAR_DL_LEDGER_POSTGRES_PASSWORD "" }}
-         scalar.db.storage=jdbc
-         scalar.dl.ledger.proof.enabled=true
-         scalar.dl.ledger.proof.private_key_path=/keys/private-key
-       secretName: "ledger-credentials-secret"
-       extraVolumes:
-         - name: "ledger-keys"
-           secret:
-             secretName: "ledger-keys"
-       extraVolumeMounts:
-         - name: "ledger-keys"
-           mountPath: "/keys"
-           readOnly: true
-     EOF
-     ```
-
 1. Create a custom values file for ScalarDL Auditor (scalardl-auditor-custom-values.yaml).
    * AWS Marketplace
 
@@ -479,42 +387,6 @@ The ScalarDL Schema Loader will create the DB schemas for ScalarDL Ledger and Au
          version: "3.6.0"
        imagePullSecrets:
          - name: "reg-ecr-mp-secrets"
-       auditorProperties: |
-         scalar.db.contact_points=jdbc:postgresql://postgresql-auditor.default.svc.cluster.local:5432/postgres
-         scalar.db.username={{ default .Env.SCALAR_DL_AUDITOR_POSTGRES_USERNAME "" }}
-         scalar.db.password={{ default .Env.SCALAR_DL_AUDITOR_POSTGRES_PASSWORD "" }}
-         scalar.db.storage=jdbc
-         scalar.dl.auditor.ledger.host=scalardl-ledger-envoy.default.svc.cluster.local
-         scalar.dl.auditor.private_key_path=/keys/private-key
-       secretName: "auditor-credentials-secret"
-       extraVolumes:
-         - name: "auditor-keys"
-           secret:
-             secretName: "auditor-keys"
-       extraVolumeMounts:
-         - name: "auditor-keys"
-           mountPath: "/keys"
-           readOnly: true
-     EOF
-     ```
-
-   * Azure Marketplace
-
-     ```console
-     cat << 'EOF' > ~/scalardl-test/scalardl-auditor-custom-values.yaml
-     envoy:
-       image:
-         repository: "<your private container registry>/scalarinc/scalardl-envoy"
-         version: "1.3.0"
-       imagePullSecrets:
-         - name: "reg-acr-secrets"
-     
-     auditor:
-       image:
-         repository: "<your private container registry>/scalarinc/scalar-auditor"
-         version: "3.6.0"
-       imagePullSecrets:
-         - name: "reg-acr-secrets"
        auditorProperties: |
          scalar.db.contact_points=jdbc:postgresql://postgresql-auditor.default.svc.cluster.local:5432/postgres
          scalar.db.username={{ default .Env.SCALAR_DL_AUDITOR_POSTGRES_USERNAME "" }}
