@@ -266,8 +266,8 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB �
          - name: "reg-ecr-mp-secrets"
        databaseProperties: |
          scalar.db.contact_points=jdbc:postgresql://postgresql-ledger.default.svc.cluster.local:5432/postgres
-         scalar.db.username=\{\{ default .Env.SCALAR_DL_LEDGER_POSTGRES_USERNAME "" \}\}
-         scalar.db.password=\{\{ default .Env.SCALAR_DL_LEDGER_POSTGRES_PASSWORD "" \}\}
+         scalar.db.username={{ default .Env.SCALAR_DL_LEDGER_POSTGRES_USERNAME "" }}
+         scalar.db.password={{ default .Env.SCALAR_DL_LEDGER_POSTGRES_PASSWORD "" }}
          scalar.db.storage=jdbc
        secretName: "ledger-credentials-secret"
      EOF
@@ -287,8 +287,8 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB �
          - name: "reg-ecr-mp-secrets"
        databaseProperties: |
          scalar.db.contact_points=jdbc:postgresql://postgresql-auditor.default.svc.cluster.local:5432/postgres
-         scalar.db.username=\{\{ default .Env.SCALAR_DL_AUDITOR_POSTGRES_USERNAME "" \}\}
-         scalar.db.password=\{\{ default .Env.SCALAR_DL_AUDITOR_POSTGRES_PASSWORD "" \}\}
+         scalar.db.username={{ default .Env.SCALAR_DL_AUDITOR_POSTGRES_USERNAME "" }}
+         scalar.db.password={{ default .Env.SCALAR_DL_AUDITOR_POSTGRES_PASSWORD "" }}
          scalar.db.storage=jdbc
        secretName: "auditor-credentials-secret"
      EOF
@@ -354,8 +354,8 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB �
          - name: "reg-ecr-mp-secrets"
        ledgerProperties: |
          scalar.db.contact_points=jdbc:postgresql://postgresql-ledger.default.svc.cluster.local:5432/postgres
-         scalar.db.username=\{\{ default .Env.SCALAR_DL_LEDGER_POSTGRES_USERNAME "" \}\}
-         scalar.db.password=\{\{ default .Env.SCALAR_DL_LEDGER_POSTGRES_PASSWORD "" \}\}
+         scalar.db.username={{ default .Env.SCALAR_DL_LEDGER_POSTGRES_USERNAME "" }}
+         scalar.db.password={{ default .Env.SCALAR_DL_LEDGER_POSTGRES_PASSWORD "" }}
          scalar.db.storage=jdbc
          scalar.dl.ledger.proof.enabled=true
          scalar.dl.ledger.auditor.enabled=true
@@ -392,8 +392,8 @@ ScalarDL Schema Loader は、PostgreSQL で ScalarDL Ledger と Auditor の DB �
          - name: "reg-ecr-mp-secrets"
        auditorProperties: |
          scalar.db.contact_points=jdbc:postgresql://postgresql-auditor.default.svc.cluster.local:5432/postgres
-         scalar.db.username=\{\{ default .Env.SCALAR_DL_AUDITOR_POSTGRES_USERNAME "" \}\}
-         scalar.db.password=\{\{ default .Env.SCALAR_DL_AUDITOR_POSTGRES_PASSWORD "" \}\}
+         scalar.db.username={{ default .Env.SCALAR_DL_AUDITOR_POSTGRES_USERNAME "" }}
+         scalar.db.password={{ default .Env.SCALAR_DL_AUDITOR_POSTGRES_PASSWORD "" }}
          scalar.db.storage=jdbc
          scalar.dl.auditor.ledger.host=scalardl-ledger-envoy.default.svc.cluster.local
          scalar.dl.auditor.private_key_path=/keys/private-key
