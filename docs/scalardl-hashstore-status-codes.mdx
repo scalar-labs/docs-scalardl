@@ -1,0 +1,36 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsEnglish
+---
+
+# ScalarDL HashStore Error Codes
+
+This page provides a list of error codes in ScalarDL HashStore.
+
+## Error code classes and descriptions
+
+| Class                 | Description                        |
+|:----------------------|:-----------------------------------|
+| `DL-HASH-STORE-4xxxx` | Errors for the user error category |
+
+## `DL-HASH-STORE-4xxxx` status codes
+
+The following are status codes and messages for the user error category.
+
+### `DL-HASH-STORE-414001`
+
+**Message**
+
+```markdown
+The PUT operation for the mutable database must have a namespace and table.
+```
+
+### `DL-HASH-STORE-414002`
+
+**Message**
+
+```markdown
+An unsupported data type is specified in the PUT operation. Data type: %s
+```
