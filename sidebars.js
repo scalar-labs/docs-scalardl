@@ -1335,6 +1335,16 @@ const sidebars = {
           id: 'scalardl-client-status-codes',
           label: 'ScalarDL クライアントエラーコード',
         },
+        {
+          type: 'doc',
+          id: 'scalardl-hashstore-status-codes',
+          label: 'ScalarDL HashStore エラーコード',
+        },
+        {
+          type: 'doc',
+          id: 'scalardl-tablestore-status-codes',
+          label: 'ScalarDL TableStore エラーコード',
+        },
       ],
     },
     {
