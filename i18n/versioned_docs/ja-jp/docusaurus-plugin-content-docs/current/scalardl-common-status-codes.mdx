@@ -197,6 +197,14 @@ The specified contract is already registered.
 The specified contract binary name has been already registered with a different byte code.
 ```
 
+### `DL-COMMON-407001`
+
+**メッセージ**
+
+```markdown
+Accessing the specified namespace is not allowed. Namespace: %s, context namespace: %s
+```
+
 ### `DL-COMMON-413001`
 
 **メッセージ**
@@ -349,6 +357,54 @@ The argument format is illegal.
 The deserialization type is not supported. Type: %s
 ```
 
+### `DL-COMMON-414019`
+
+**メッセージ**
+
+```markdown
+The namespace name is invalid. Name: %s
+```
+
+### `DL-COMMON-414020`
+
+**メッセージ**
+
+```markdown
+Namespace-aware interfaces are not supported in deprecated contracts.
+```
+
+### `DL-COMMON-414021`
+
+**メッセージ**
+
+```markdown
+The specified namespace is reserved and cannot be created or deleted. Name: %s
+```
+
+### `DL-COMMON-415001`
+
+**メッセージ**
+
+```markdown
+The specified secret is not found.
+```
+
+### `DL-COMMON-416001`
+
+**メッセージ**
+
+```markdown
+The specified namespace already exists.
+```
+
+### `DL-COMMON-417001`
+
+**メッセージ**
+
+```markdown
+The specified namespace is not found. Namespace: %s
+```
+
 ## `DL-COMMON-5xxxx` ステータスコード
 
 以下は、内部エラーカテゴリのステータスコードとメッセージです。
@@ -423,6 +479,38 @@ Getting the contract failed. Details: %s
 
 ```markdown
 Scanning the contracts failed. Details: %s
+```
+
+### `DL-COMMON-500010`
+
+**メッセージ**
+
+```markdown
+Creating the namespace table failed. Details: %s
+```
+
+### `DL-COMMON-500011`
+
+**メッセージ**
+
+```markdown
+Creating the namespace failed. Details: %s
+```
+
+### `DL-COMMON-500012`
+
+**メッセージ**
+
+```markdown
+Scanning the namespaces failed. Details: %s
+```
+
+### `DL-COMMON-500013`
+
+**メッセージ**
+
+```markdown
+Dropping the namespace failed. Details: %s
 ```
 
 ### `DL-COMMON-502001`
