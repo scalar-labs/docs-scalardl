@@ -655,6 +655,16 @@ const sidebars = {
           id: 'scalardl-client-status-codes',
           label: 'ScalarDL Client Error Codes',
         },
+        {
+          type: 'doc',
+          id: 'scalardl-hashstore-status-codes',
+          label: 'ScalarDL HashStore Error Codes',
+        },
+        {
+          type: 'doc',
+          id: 'scalardl-tablestore-status-codes',
+          label: 'ScalarDL TableStore Error Codes',
+        },
       ],
     },
     {

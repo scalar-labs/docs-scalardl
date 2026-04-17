@@ -193,6 +193,14 @@ The specified contract is already registered.
 The specified contract binary name has been already registered with a different byte code.
 ```
 
+### `DL-COMMON-407001`
+
+**Message**
+
+```markdown
+Accessing the specified namespace is not allowed. Namespace: %s, context namespace: %s
+```
+
 ### `DL-COMMON-413001`
 
 **Message**
@@ -345,6 +353,54 @@ The argument format is illegal.
 The deserialization type is not supported. Type: %s
 ```
 
+### `DL-COMMON-414019`
+
+**Message**
+
+```markdown
+The namespace name is invalid. Name: %s
+```
+
+### `DL-COMMON-414020`
+
+**Message**
+
+```markdown
+Namespace-aware interfaces are not supported in deprecated contracts.
+```
+
+### `DL-COMMON-414021`
+
+**Message**
+
+```markdown
+The specified namespace is reserved and cannot be created or deleted. Name: %s
+```
+
+### `DL-COMMON-415001`
+
+**Message**
+
+```markdown
+The specified secret is not found.
+```
+
+### `DL-COMMON-416001`
+
+**Message**
+
+```markdown
+The specified namespace already exists.
+```
+
+### `DL-COMMON-417001`
+
+**Message**
+
+```markdown
+The specified namespace is not found. Namespace: %s
+```
+
 ## `DL-COMMON-5xxxx` status codes
 
 The following are status codes and messages for the internal error category.
@@ -419,6 +475,38 @@ Getting the contract failed. Details: %s
 
 ```markdown
 Scanning the contracts failed. Details: %s
+```
+
+### `DL-COMMON-500010`
+
+**Message**
+
+```markdown
+Creating the namespace table failed. Details: %s
+```
+
+### `DL-COMMON-500011`
+
+**Message**
+
+```markdown
+Creating the namespace failed. Details: %s
+```
+
+### `DL-COMMON-500012`
+
+**Message**
+
+```markdown
+Scanning the namespaces failed. Details: %s
+```
+
+### `DL-COMMON-500013`
+
+**Message**
+
+```markdown
+Dropping the namespace failed. Details: %s
 ```
 
 ### `DL-COMMON-502001`
