@@ -107,6 +107,7 @@ An example code for validating a collection is as follows:
 
 :::note
 
-HashStore internally assigns a dedicated asset ID to an asset that represents an object or a collection. The asset ID consists of a prefix to show the asset type and a key; for example, a prefix `o_` and an object ID for objects, and a prefix `c_` and a collection ID for collections are used. You will see such raw asset IDs in `AssetProof` in `LedgerValidationResult`.
+- The error-handling behavior of the validation methods differs when using Ledger compared to when using both Ledger and Auditor. For details, see [Validate your data](how-to-write-applications.mdx#validate-your-data).
+- HashStore internally assigns a dedicated asset ID to an asset that represents an object or a collection. The asset ID consists of a prefix to show the asset type and a key; for example, a prefix `o_` and an object ID for objects, and a prefix `c_` and a collection ID for collections are used. You will see such raw asset IDs in `AssetProof` in `LedgerValidationResult`.
 
 :::
