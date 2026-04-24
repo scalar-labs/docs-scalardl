@@ -107,6 +107,7 @@ When validating [assets](data-modeling.mdx#asset) (records, index records, and t
 
 :::note
 
-TableStore internally assigns a dedicated asset ID to an asset that represents a record, an index record, and a table schema. The asset ID consists of a prefix to show the asset type and a key; for example, a prefix `rec_`, a primary key column name, and a primary key value are used for asset IDs of records. You will see such raw asset IDs in `AssetProof` in `LedgerValidationResult`.
+- The error-handling behavior of the validation methods differs when using Ledger compared to when using both Ledger and Auditor. For details, see [Validate your data](how-to-write-applications.mdx#validate-your-data).
+- TableStore internally assigns a dedicated asset ID to an asset that represents a record, an index record, and a table schema. The asset ID consists of a prefix to show the asset type and a key; for example, a prefix `rec_`, a primary-key column name, and a primary-key value are used for asset IDs of records. You will see such raw asset IDs in `AssetProof` in `LedgerValidationResult`.
 
 :::
