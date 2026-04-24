@@ -103,21 +103,69 @@ When using only Ledger, the valid state means that the hash-chain structure wher
 
 When using Ledger and Auditor, the valid state means that the data in Ledger and Auditor are not discrepant. So, even if a malicious user alters the Ledger program, the alteration is detected as long as Auditor is correct and the alteration affects the data or the output. Auditor checks for discrepancies for referenced and generated states of Ledger and Auditor in every execution; thus, those states are guaranteed to be correct at the time of execution.
 
-Due to this difference, what the validation does differs depending on whether you use Auditor. When using only Ledger, the validation traverses assets to see if the assets can be re-computed and have a valid hash-chain structure. When using Ledger and Auditor, the validation checks for discrepancies between the states of Ledger and Auditor without centralized coordination.
+Due to this difference, what the validation does differs when using Ledger compared to when using both Ledger and Auditor. When using only Ledger, the validation traverses assets to see if the assets can be re-computed and have a valid hash-chain structure. When using Ledger and Auditor, the validation checks for discrepancies between the states of Ledger and Auditor without centralized coordination.
 
 Also, what and when to validate can be different. When using only Ledger, you should validate assets whenever you want them to be trustworthy since they are not validated without explicit validation. When using Ledger and Auditor, you should validate when you want to use assets that have not been read recently since assets that are read or written by contract execution are validated at execution time.
 
-You can do validation by using the `validateLedger` method as follows:
+You can do validation by using the `validateLedger` method. However, the error-handling behavior differs when using Ledger compared to when using both Ledger and Auditor.
+
+#### When using only Ledger
+
+When using only Ledger, `validateLedger` does **not** throw an exception on validation failure. Instead, you must check the status code of the returned `LedgerValidationResult` to determine whether the data is valid.
 
 ```java
   ClientService service = ...
   try {
     LedgerValidationResult result = service.validateLedger(assetId);
-    // You can also specify age range.
+    // You can also specify an age range.
     // LedgerValidationResult result = service.validateLedger(assetId, startAge, endAge);
+    if (result.getCode() != StatusCode.OK) {
+      // Validation failed. The status code indicates the type of invalidity.
+      // For example, StatusCode.INVALID_OUTPUT means data has been tampered with.
+      System.err.println("Validation failed: " + result.getCode());
+    }
   } catch (ClientException e) {
+    // An exception here indicates a system error (e.g., network issue),
+    // not a validation failure.
+    System.err.println(e.getStatusCode());
+    System.err.println(e.getMessage());
   }
 ```
+
+Common validation-related status codes include:
+
+- `INVALID_HASH`: The hash value of an asset record differs from the expected value.
+- `INVALID_PREV_HASH`: The previous hash value differs from the expected value.
+- `INVALID_CONTRACT`: A previously executed contract produced an invalid asset record.
+- `INVALID_OUTPUT`: The data value of an asset record differs from the expected value.
+
+#### When using Ledger and Auditor
+
+When using Ledger and Auditor, `validateLedger` throws a `ClientException` if it detects an inconsistency between Ledger and Auditor. You must catch the exception and check its status code.
+
+```java
+  ClientService service = ...
+  try {
+    LedgerValidationResult result = service.validateLedger(assetId);
+    // You can also specify an age range.
+    // LedgerValidationResult result = service.validateLedger(assetId, startAge, endAge);
+    // If no exception is thrown, the data is consistent between Ledger and Auditor.
+  } catch (ClientException e) {
+    if (e.getStatusCode() == StatusCode.INCONSISTENT_STATES) {
+      // The states between Ledger and Auditor are inconsistent,
+      // which means data may have been tampered with.
+      System.err.println("Inconsistency detected: " + e.getMessage());
+    } else {
+      // Handle other errors (e.g., network issues, server errors).
+      System.err.println(e.getStatusCode());
+      System.err.println(e.getMessage());
+    }
+  }
+```
+
+The key status code for Auditor-based validation is:
+
+- `INCONSISTENT_STATES`: The states between Ledger and Auditor are inconsistent, indicating possible tampering.
 
 When using only Ledger, you can enhance the detection capability by using information called Asset Proof. When using Ledger and Auditor, you do not need to use Asset Proof explicitly, but Auditor internally uses it to achieve the Byzantine-fault detection feature. For more details about Auditor, see [ScalarDL Design](design.mdx).
 
