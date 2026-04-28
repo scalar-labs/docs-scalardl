@@ -319,6 +319,29 @@ html[data-theme="dark"] .category-cell-multiple-links {
   }
 }
 
+/* Recent Features row background */
+.recent-features-cell-bg {
+  background-color: rgba(120, 199, 64, 0.08);
+  border-top: 1px solid #78C740;
+  border-bottom: 1px solid #78C740;
+  box-shadow: 0 1px 4px 0 rgba(60,60,60,0.04);
+}
+
+/* First recent features cell: left border */
+.category-label + .recent-features-cell-bg {
+  border-left: 1px solid #78C740;
+}
+
+/* Last recent features cell: right border */
+.recent-features-cell-bg:nth-child(4n) {
+  border-right: 1px solid #78C740;
+}
+
+html[data-theme="dark"] .recent-features-cell-bg {
+  background-color: rgba(120, 199, 64, 0.13);
+  box-shadow: 0 1px 6px 0 rgba(0,0,0,0.10);
+}
+
 /* Target first cell in each row that follows a category-label. */
 html[data-theme="dark"] .category-label + .category-cell-multiple-links {
   border-left: 1px solid #6a6969;
