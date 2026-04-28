@@ -795,6 +795,13 @@ html[data-theme="dark"] .notification-dropdown {
   opacity: 88%;
 }
 
+/* Hide CTA button on mobile to prevent overlapping the search button */
+@media (max-width: 996px) {
+  .navbar__link--cta {
+    display: none;
+  }
+}
+
 /* Ask AI button styles */
 .ask-ai-button {
   display: inline-flex;
