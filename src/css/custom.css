@@ -220,7 +220,11 @@ table, pre, code, img, iframe { /* Fix for common elements that might cause over
 
   &:hover {
     color: var(--ifm-color-primary);
-    text-decoration: underline;
+    text-decoration: none;
+
+    .category-cell-link-text {
+      text-decoration: underline;
+    }
   }
 }
 
@@ -317,6 +321,27 @@ html[data-theme="dark"] .category-cell-multiple-links {
     border-top: 0;
     border-bottom: 0;
   }
+}
+
+/* NEW badge for items in the recent column and sidebar navigation */
+.badge--new {
+  background-color: #78C740;
+  border-radius: 3px;
+  color: #fff;
+  display: inline-block;
+  font-size: 0.65em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-left: 4px;
+  padding: 2px 5px;
+  text-decoration: none;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+a:hover .badge--new {
+  text-decoration: none;
 }
 
 /* Recent Features row background */

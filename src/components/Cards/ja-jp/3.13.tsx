@@ -16,7 +16,18 @@ import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 
-const recentFeatures = [
+type CategoryLinkCell = {
+  cell: number;
+  links: string[];
+  labels: React.ReactNode[];
+};
+
+type Category = {
+  name: string;
+  categoryLinks: CategoryLinkCell[];
+};
+
+const recentFeatures: Category[] = [
   {
     name: '最近の機能',
     categoryLinks: [
@@ -26,7 +37,7 @@ const recentFeatures = [
       {
         cell: 0, // Third cell
         links: ['manage-namespaces'],
-        labels: ['名前空間を管理']
+        labels: ['名前空間を管理 [NEW]']
       },
       {
         cell: 1, // First cell
@@ -42,7 +53,7 @@ const recentFeatures = [
   }
 ];
 
-const categories = [
+const categories: Category[] = [
   {
     name: 'ScalarDL について',
     categoryLinks: [
@@ -188,11 +199,11 @@ const CategoryGrid = () => {
                 {categoryLinkCell.links.map((cellLink, k) => (
                   cellLink ? (
                     <Link key={`${j}-${k}`} className="category-cell-link" to={cellLink}>
-                      {categoryLinkCell.labels[k]}
+                      <span className="category-cell-link-text">{categoryLinkCell.labels[k]}</span>
                     </Link>
                   ) : (
                     <span key={`${j}-${k}`} className="recent-features-cell">
-                      {categoryLinkCell.labels[k]}
+                      <span className="category-cell-link-text">{categoryLinkCell.labels[k]}</span>
                     </span>
                   )
                 ))}
@@ -210,11 +221,11 @@ const CategoryGrid = () => {
                 {categoryLinkCell.links.map((cellLink, k) => (
                   cellLink ? (
                     <Link key={`${j}-${k}`} className="category-cell-link" to={cellLink}>
-                      {categoryLinkCell.labels[k]}
+                      <span className="category-cell-link-text">{categoryLinkCell.labels[k]}</span>
                     </Link>
                   ) : (
                     <span key={`${j}-${k}`} className="category-cell">
-                      {categoryLinkCell.labels[k]}
+                      <span className="category-cell-link-text">{categoryLinkCell.labels[k]}</span>
                     </span>
                   )
                 ))}

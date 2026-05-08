@@ -16,7 +16,18 @@ import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 
-const recentFeatures = [
+type CategoryLinkCell = {
+  cell: number;
+  links: string[];
+  labels: React.ReactNode[];
+};
+
+type Category = {
+  name: string;
+  categoryLinks: CategoryLinkCell[];
+};
+
+const recentFeatures: Category[] = [
   {
     name: 'Recent features',
     categoryLinks: [
@@ -26,12 +37,12 @@ const recentFeatures = [
       {
         cell: 0, // First cell
         links: ['use-generic-contracts'],
-        labels: ['Use Generic Contracts and Functions']
+        labels: ['Use Generic Contracts and Functions [NEW]']
       },
       {
         cell: 1, // Second cell
         links: ['how-to-write-applications-with-generic-contracts'],
-        labels: ['Write a ScalarDL Application with Generic Contracts']
+        labels: ['Write a ScalarDL Application with Generic Contracts [NEW]']
       },
       {
         cell: 2, // Third cell
@@ -42,7 +53,7 @@ const recentFeatures = [
   }
 ];
 
-const categories = [
+const categories: Category[] = [
   {
     name: 'About ScalarDL',
     categoryLinks: [
@@ -188,11 +199,11 @@ const CategoryGrid = () => {
                 {categoryLinkCell.links.map((cellLink, k) => (
                   cellLink ? (
                     <Link key={`${j}-${k}`} className="category-cell-link" to={cellLink}>
-                      {categoryLinkCell.labels[k]}
+                      <span className="category-cell-link-text">{categoryLinkCell.labels[k]}</span>
                     </Link>
                   ) : (
                     <span key={`${j}-${k}`} className="recent-features-cell">
-                      {categoryLinkCell.labels[k]}
+                      <span className="category-cell-link-text">{categoryLinkCell.labels[k]}</span>
                     </span>
                   )
                 ))}
@@ -210,11 +221,11 @@ const CategoryGrid = () => {
                 {categoryLinkCell.links.map((cellLink, k) => (
                   cellLink ? (
                     <Link key={`${j}-${k}`} className="category-cell-link" to={cellLink}>
-                      {categoryLinkCell.labels[k]}
+                      <span className="category-cell-link-text">{categoryLinkCell.labels[k]}</span>
                     </Link>
                   ) : (
                     <span key={`${j}-${k}`} className="category-cell">
-                      {categoryLinkCell.labels[k]}
+                      <span className="category-cell-link-text">{categoryLinkCell.labels[k]}</span>
                     </span>
                   )
                 ))}
