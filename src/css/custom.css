@@ -1204,3 +1204,8 @@ html[data-theme="dark"] .googleAiModeModalSubmitIcon:hover:not(:disabled) {
 .DocSearch-Button-Key {
   padding: 0;
 }
+
+.breadcrumbsContainer {
+  --ifm-breadcrumb-size-multiplier: 0.8;
+  margin-bottom: 0.8rem;
+}
