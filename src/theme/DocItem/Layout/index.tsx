@@ -53,7 +53,7 @@ const DocItemLayout: React.FC<DocItemLayoutProps> = ({ children }) => {
         <ContentVisibility metadata={metadata} />
         <DocVersionBanner />
         <div className={styles.docItemContainer}>
-          <article>
+          <article className={clsx(frontMatter['new'] && 'doc-new')}>
             <DocBreadcrumbs />
             <DocVersionBadge />
             {docTOC.mobile}
