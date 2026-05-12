@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { useLocation } from '@docusaurus/router';
+import { useLocation, useHistory } from '@docusaurus/router';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 // Magic number constants
@@ -15,6 +15,7 @@ export default function GoogleAIModeSearch() {
   // Place hooks at the top
   const { siteConfig } = useDocusaurusContext();
   const location = useLocation();
+  const history = useHistory();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -96,12 +97,19 @@ export default function GoogleAIModeSearch() {
 
   const closeModal = useCallback(() => {
     setIsClosing(true);
+    // Strip ?ask-ai from the URL when the user closes the modal
+    const params = new URLSearchParams(location.search);
+    if (params.has('ask-ai')) {
+      params.delete('ask-ai');
+      const newSearch = params.toString();
+      history.replace(location.pathname + (newSearch ? `?${newSearch}` : '') + location.hash);
+    }
     setTimeout(() => {
       setIsModalOpen(false);
       setIsClosing(false);
       setSearchQuery('');
     }, MODAL_CLOSE_TIMEOUT_MS);
-  }, []);
+  }, [location.search, location.pathname, location.hash, history]);
 
   const handleSearch = useCallback((e) => {
     e.preventDefault();
@@ -176,18 +184,23 @@ export default function GoogleAIModeSearch() {
     ? '提供元: '
     : 'Powered by ';
 
-  // Auto-open modal if URL contains the ?ask-ai query parameter
+  // Auto-open modal if URL contains the ?ask-ai query parameter.
+  // The parameter stays in the URL while the modal is open and is removed when the user closes it.
+  // On non-latest versions, always strip the parameter since the modal can't be shown.
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     if (params.has('ask-ai')) {
-      setIsModalOpen(true);
-      // Clean up the parameter from the URL without triggering a navigation
-      params.delete('ask-ai');
-      const newSearch = params.toString();
-      const newUrl = location.pathname + (newSearch ? `?${newSearch}` : '') + location.hash;
-      window.history.replaceState({}, '', newUrl);
+      if (currentVersion === 'latest') {
+        setIsModalOpen(true);
+        // Leave the parameter in the URL — it will be removed when the modal is closed
+      } else {
+        // Strip the parameter on non-latest versions where the modal is unavailable
+        params.delete('ask-ai');
+        const newSearch = params.toString();
+        history.replace(location.pathname + (newSearch ? `?${newSearch}` : '') + location.hash);
+      }
     }
-  }, [location.search, location.pathname, location.hash]);
+  }, [currentVersion, location.search, location.pathname, location.hash, history]);
 
   // Only render the button and modal if on latest docs version
   if (currentVersion !== 'latest') {
