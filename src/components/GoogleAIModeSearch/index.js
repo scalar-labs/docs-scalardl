@@ -1,5 +1,4 @@
-
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useLocation } from '@docusaurus/router';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
@@ -176,6 +175,19 @@ export default function GoogleAIModeSearch() {
   const poweredBy = currentLanguage === 'ja-jp'
     ? '提供元: '
     : 'Powered by ';
+
+  // Auto-open modal if URL contains the ?ask-ai query parameter
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.has('ask-ai')) {
+      setIsModalOpen(true);
+      // Clean up the parameter from the URL without triggering a navigation
+      params.delete('ask-ai');
+      const newSearch = params.toString();
+      const newUrl = location.pathname + (newSearch ? `?${newSearch}` : '') + location.hash;
+      window.history.replaceState({}, '', newUrl);
+    }
+  }, [location.search, location.pathname, location.hash]);
 
   // Only render the button and modal if on latest docs version
   if (currentVersion !== 'latest') {
