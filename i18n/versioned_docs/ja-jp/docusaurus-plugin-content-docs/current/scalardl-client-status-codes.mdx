@@ -33,6 +33,12 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 The results from Ledger and Auditor don't match.
 ```
 
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ## `DL-CLIENT-4xxxx` ステータスコード
 
 以下は、ユーザーエラーカテゴリのステータスコードとメッセージです。
@@ -45,12 +51,24 @@ The results from Ledger and Auditor don't match.
 The specified option --asset-id is malformed. The format should be "[assetId]" or "[assetId],[startAge],[endAge]".
 ```
 
+**対処法**
+
+```markdown
+Provide the asset ID in the correct format: "[assetId]" or "[assetId],[startAge],[endAge]".
+```
+
 ### `DL-CLIENT-414002`
 
 **メッセージ**
 
 ```markdown
 The specified option --asset-id contains an invalid integer.
+```
+
+**対処法**
+
+```markdown
+Provide valid integers for startAge and endAge in the asset ID.
 ```
 
 ### `DL-CLIENT-414003`
@@ -61,12 +79,24 @@ The specified option --asset-id contains an invalid integer.
 The authentication method for the client mode must be either digital-signature or hmac.
 ```
 
+**対処法**
+
+```markdown
+Set the authentication method to either 'digital-signature' or 'hmac' in your configuration.
+```
+
 ### `DL-CLIENT-414004`
 
 **メッセージ**
 
 ```markdown
 The authentication method for the intermediary mode must be pass-through.
+```
+
+**対処法**
+
+```markdown
+Set the authentication method to 'pass-through' in your configuration.
 ```
 
 ### `DL-CLIENT-414005`
@@ -77,12 +107,24 @@ The authentication method for the intermediary mode must be pass-through.
 Both the certificate and the private key must be set to use digital signature.
 ```
 
+**対処法**
+
+```markdown
+Provide both the certificate and the private key in your configuration.
+```
+
 ### `DL-CLIENT-414006`
 
 **メッセージ**
 
 ```markdown
 The secret key must be set to use HMAC authentication.
+```
+
+**対処法**
+
+```markdown
+Provide the secret key in your configuration.
 ```
 
 ### `DL-CLIENT-414007`
@@ -93,12 +135,24 @@ The secret key must be set to use HMAC authentication.
 %s and %s are missing, but either is required.
 ```
 
+**対処法**
+
+```markdown
+Provide either the entity ID or the certificate holder ID in your configuration.
+```
+
 ### `DL-CLIENT-414008`
 
 **メッセージ**
 
 ```markdown
 Digital signature authentication is not configured.
+```
+
+**対処法**
+
+```markdown
+Configure digital signature authentication with the required certificate and private key.
 ```
 
 ### `DL-CLIENT-414009`
@@ -109,12 +163,24 @@ Digital signature authentication is not configured.
 HMAC authentication is not configured.
 ```
 
+**対処法**
+
+```markdown
+Configure HMAC authentication with the required secret key.
+```
+
 ### `DL-CLIENT-414010`
 
 **メッセージ**
 
 ```markdown
 validateLedger with Auditor is not supported in the intermediary mode. Please execute the ValidateLedger contract to validate assets.
+```
+
+**対処法**
+
+```markdown
+Execute the ValidateLedger contract to validate assets in intermediary mode.
 ```
 
 ### `DL-CLIENT-414011`
@@ -125,12 +191,24 @@ validateLedger with Auditor is not supported in the intermediary mode. Please ex
 The specified client mode is incorrect.
 ```
 
+**対処法**
+
+```markdown
+Provide a valid client mode in your configuration.
+```
+
 ### `DL-CLIENT-414012`
 
 **メッセージ**
 
 ```markdown
 The contract ID cannot be null.
+```
+
+**対処法**
+
+```markdown
+Provide a non-null contract ID.
 ```
 
 ### `DL-CLIENT-414013`
@@ -141,12 +219,24 @@ The contract ID cannot be null.
 The contract name cannot be null.
 ```
 
+**対処法**
+
+```markdown
+Provide a non-null contract name.
+```
+
 ### `DL-CLIENT-414014`
 
 **メッセージ**
 
 ```markdown
 The contractBytes cannot be null.
+```
+
+**対処法**
+
+```markdown
+Provide non-null contract bytes.
 ```
 
 ### `DL-CLIENT-414015`
@@ -157,12 +247,24 @@ The contractBytes cannot be null.
 The contractArgument cannot be null.
 ```
 
+**対処法**
+
+```markdown
+Provide a non-null contract argument.
+```
+
 ### `DL-CLIENT-414016`
 
 **メッセージ**
 
 ```markdown
 The contractPath cannot be null.
+```
+
+**対処法**
+
+```markdown
+Provide a non-null contract path.
 ```
 
 ### `DL-CLIENT-414017`
@@ -173,12 +275,24 @@ The contractPath cannot be null.
 The function ID cannot be null.
 ```
 
+**対処法**
+
+```markdown
+Provide a non-null function ID.
+```
+
 ### `DL-CLIENT-414018`
 
 **メッセージ**
 
 ```markdown
 The function name cannot be null.
+```
+
+**対処法**
+
+```markdown
+Provide a non-null function name.
 ```
 
 ### `DL-CLIENT-414019`
@@ -189,12 +303,24 @@ The function name cannot be null.
 The functionBytes cannot be null.
 ```
 
+**対処法**
+
+```markdown
+Provide non-null function bytes.
+```
+
 ### `DL-CLIENT-414020`
 
 **メッセージ**
 
 ```markdown
 The functionPath cannot be null.
+```
+
+**対処法**
+
+```markdown
+Provide a non-null function path.
 ```
 
 ### `DL-CLIENT-414021`
@@ -205,12 +331,24 @@ The functionPath cannot be null.
 The asset ID cannot be null.
 ```
 
+**対処法**
+
+```markdown
+Provide a non-null asset ID.
+```
+
 ### `DL-CLIENT-414022`
 
 **メッセージ**
 
 ```markdown
 The specified asset ages are invalid.
+```
+
+**対処法**
+
+```markdown
+Ensure that startAge is non-negative (>= 0) and endAge is greater than or equal to startAge.
 ```
 
 ### `DL-CLIENT-414023`
@@ -221,12 +359,24 @@ The specified asset ages are invalid.
 The specified asset type is incorrect.
 ```
 
+**対処法**
+
+```markdown
+Provide a valid asset type.
+```
+
 ### `DL-CLIENT-414024`
 
 **メッセージ**
 
 ```markdown
 The specified keys are incorrect for the asset type.
+```
+
+**対処法**
+
+```markdown
+Provide valid keys for the asset type.
 ```
 
 ### `DL-CLIENT-414025`
@@ -237,12 +387,24 @@ The specified keys are incorrect for the asset type.
 The namespace name cannot be null.
 ```
 
+**対処法**
+
+```markdown
+Provide a non-null namespace name.
+```
+
 ### `DL-CLIENT-414026`
 
 **メッセージ**
 
 ```markdown
 The entity ID cannot be null.
+```
+
+**対処法**
+
+```markdown
+Provide a non-null entity ID in your service request.
 ```
 
 ### `DL-CLIENT-414027`
@@ -253,12 +415,24 @@ The entity ID cannot be null.
 The certificate in PEM format cannot be null.
 ```
 
+**対処法**
+
+```markdown
+Provide a valid certificate in PEM format in your service request.
+```
+
 ### `DL-CLIENT-414028`
 
 **メッセージ**
 
 ```markdown
 The secret key cannot be null.
+```
+
+**対処法**
+
+```markdown
+Provide a non-null secret key in your service request.
 ```
 
 ## `DL-CLIENT-5xxxx` ステータスコード
@@ -273,12 +447,24 @@ The secret key cannot be null.
 Reading the file failed. File: %s; Details: %s
 ```
 
+**対処法**
+
+```markdown
+Verify that the file exists and has the correct permissions.
+```
+
 ### `DL-CLIENT-502002`
 
 **メッセージ**
 
 ```markdown
 Configuring SSL failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify that the SSL configuration is correct.
 ```
 
 ### `DL-CLIENT-502003`
@@ -289,12 +475,24 @@ Configuring SSL failed. Details: %s
 Shutting down the channel failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Check the error details in the logs and verify that the channel is in a valid state.
+```
+
 ### `DL-CLIENT-502004`
 
 **メッセージ**
 
 ```markdown
 Processing JSON failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify that the JSON data is well-formed.
 ```
 
 ### `DL-CLIENT-502005`
@@ -305,10 +503,22 @@ Processing JSON failed. Details: %s
 Failed to load the class file. File: %s
 ```
 
+**対処法**
+
+```markdown
+Verify that the class file exists and is in the correct format.
+```
+
 ### `DL-CLIENT-502006`
 
 **メッセージ**
 
 ```markdown
 Failed to write the result to a file. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify that the file path is valid and writable.
 ```
