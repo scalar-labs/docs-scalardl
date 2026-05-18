@@ -31,10 +31,22 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 The PUT operation for the mutable database must have a namespace and table.
 ```
 
+**対処法**
+
+```markdown
+Provide both a namespace and table name for the PUT operation.
+```
+
 ### `DL-HASH-STORE-414002`
 
 **メッセージ**
 
 ```markdown
 An unsupported data type is specified in the PUT operation. Data type: %s
+```
+
+**対処法**
+
+```markdown
+Use a supported data type for the PUT operation. Check the documentation for valid data types.
 ```
