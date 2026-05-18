@@ -27,12 +27,24 @@ The following are status codes and messages for the user error category.
 Syntax error. Line=%d, Offset=%d, Length=%d, Code=%s
 ```
 
+**Solution**
+
+```markdown
+Fix the syntax error at the specified location in your query.
+```
+
 ### `DL-TABLE-STORE-414002`
 
 **Message**
 
 ```markdown
 Syntax error. The primary key column must be specified only once in a table.
+```
+
+**Solution**
+
+```markdown
+Fix the primary key specification to specify each primary key column only once.
 ```
 
 ### `DL-TABLE-STORE-414003`
@@ -43,12 +55,24 @@ Syntax error. The primary key column must be specified only once in a table.
 Syntax error. The specified column constraint is invalid.
 ```
 
+**Solution**
+
+```markdown
+Fix the column constraints to use valid syntax.
+```
+
 ### `DL-TABLE-STORE-414004`
 
 **Message**
 
 ```markdown
 Syntax error. The specified data type is invalid.
+```
+
+**Solution**
+
+```markdown
+Fix the data type to use a valid type.
 ```
 
 ### `DL-TABLE-STORE-414005`
@@ -59,12 +83,24 @@ Syntax error. The specified data type is invalid.
 Syntax error. The specified INSERT statement is invalid.
 ```
 
+**Solution**
+
+```markdown
+Fix the syntax error in the INSERT statement.
+```
+
 ### `DL-TABLE-STORE-414006`
 
 **Message**
 
 ```markdown
 Syntax error. The specified statement is invalid.
+```
+
+**Solution**
+
+```markdown
+Fix the syntax error in the statement.
 ```
 
 ### `DL-TABLE-STORE-414007`
@@ -75,12 +111,24 @@ Syntax error. The specified statement is invalid.
 Syntax error. The specified expression is invalid. Expression: %s
 ```
 
+**Solution**
+
+```markdown
+Fix the syntax error in the expression.
+```
+
 ### `DL-TABLE-STORE-414008`
 
 **Message**
 
 ```markdown
 Syntax error. The specified literal is invalid. Literal: %s
+```
+
+**Solution**
+
+```markdown
+Fix the syntax error in the literal.
 ```
 
 ### `DL-TABLE-STORE-414009`
@@ -91,12 +139,24 @@ Syntax error. The specified literal is invalid. Literal: %s
 Syntax error. The specified format of the update target column is invalid.
 ```
 
+**Solution**
+
+```markdown
+Fix the update target column format to use valid syntax.
+```
+
 ### `DL-TABLE-STORE-414010`
 
 **Message**
 
 ```markdown
 Syntax error. The specified table is invalid. Table: %s
+```
+
+**Solution**
+
+```markdown
+Fix the syntax error in the table specification.
 ```
 
 ### `DL-TABLE-STORE-414011`
@@ -107,12 +167,24 @@ Syntax error. The specified table is invalid. Table: %s
 Syntax error. The specified column is invalid. Column: %s
 ```
 
+**Solution**
+
+```markdown
+Fix the syntax error in the column specification.
+```
+
 ### `DL-TABLE-STORE-414012`
 
 **Message**
 
 ```markdown
 Syntax error. The specified condition is invalid. Condition: %s
+```
+
+**Solution**
+
+```markdown
+Fix the syntax error in the condition.
 ```
 
 ### `DL-TABLE-STORE-414013`
@@ -123,12 +195,24 @@ Syntax error. The specified condition is invalid. Condition: %s
 Syntax error. The specified JOIN condition is invalid. Condition: %s
 ```
 
+**Solution**
+
+```markdown
+Fix the syntax error in the JOIN condition.
+```
+
 ### `DL-TABLE-STORE-414014`
 
 **Message**
 
 ```markdown
 Syntax error. The specified JOIN type is invalid.
+```
+
+**Solution**
+
+```markdown
+Fix the syntax error in the JOIN type.
 ```
 
 ### `DL-TABLE-STORE-414015`
@@ -139,12 +223,24 @@ Syntax error. The specified JOIN type is invalid.
 Syntax error. The specified projection is invalid. Projection: %s
 ```
 
+**Solution**
+
+```markdown
+Fix the syntax error in the projection.
+```
+
 ### `DL-TABLE-STORE-414016`
 
 **Message**
 
 ```markdown
 Syntax error. The specified LIMIT clause is invalid.
+```
+
+**Solution**
+
+```markdown
+Fix the syntax error in the LIMIT clause.
 ```
 
 ### `DL-TABLE-STORE-414017`
@@ -155,12 +251,24 @@ Syntax error. The specified LIMIT clause is invalid.
 Syntax error. The specified SELECT statement is invalid.
 ```
 
+**Solution**
+
+```markdown
+Fix the syntax error in the SELECT statement.
+```
+
 ### `DL-TABLE-STORE-414018`
 
 **Message**
 
 ```markdown
 Syntax error. The specified WITH clause is not supported.
+```
+
+**Solution**
+
+```markdown
+Remove the WITH clause from your query as it is not supported.
 ```
 
 ### `DL-TABLE-STORE-414019`
@@ -171,12 +279,24 @@ Syntax error. The specified WITH clause is not supported.
 Syntax error. The specified ORDER BY clause is not supported.
 ```
 
+**Solution**
+
+```markdown
+Remove the ORDER BY clause from your query as it is not supported.
+```
+
 ### `DL-TABLE-STORE-414020`
 
 **Message**
 
 ```markdown
 Syntax error. The specified OFFSET clause is not supported.
+```
+
+**Solution**
+
+```markdown
+Remove the OFFSET clause from your query as it is not supported.
 ```
 
 ### `DL-TABLE-STORE-414021`
@@ -187,12 +307,24 @@ Syntax error. The specified OFFSET clause is not supported.
 Syntax error. The specified LET clause is not supported.
 ```
 
+**Solution**
+
+```markdown
+Remove the LET clause from your query as it is not supported.
+```
+
 ### `DL-TABLE-STORE-414022`
 
 **Message**
 
 ```markdown
 Syntax error. The specified EXCLUDE clause is not supported.
+```
+
+**Solution**
+
+```markdown
+Remove the EXCLUDE clause from your query as it is not supported.
 ```
 
 ### `DL-TABLE-STORE-414023`
@@ -203,12 +335,24 @@ Syntax error. The specified EXCLUDE clause is not supported.
 Syntax error. The specified GROUP BY clause is not supported.
 ```
 
+**Solution**
+
+```markdown
+Remove the GROUP BY clause from your query as it is not supported.
+```
+
 ### `DL-TABLE-STORE-414024`
 
 **Message**
 
 ```markdown
 Syntax error. The specified HAVING clause is not supported.
+```
+
+**Solution**
+
+```markdown
+Remove the HAVING clause from your query as it is not supported.
 ```
 
 ### `DL-TABLE-STORE-414025`
@@ -219,12 +363,24 @@ Syntax error. The specified HAVING clause is not supported.
 Syntax error. The cross join and implicit join using comma-separated tables are not supported. Use a JOIN clause instead.
 ```
 
+**Solution**
+
+```markdown
+Use a JOIN clause instead of cross join or comma-separated tables.
+```
+
 ### `DL-TABLE-STORE-414026`
 
 **Message**
 
 ```markdown
 Syntax error. The specified set quantifier is not supported.
+```
+
+**Solution**
+
+```markdown
+Remove the set quantifier from your query as it is not supported.
 ```
 
 ### `DL-TABLE-STORE-414027`
@@ -235,12 +391,24 @@ Syntax error. The specified set quantifier is not supported.
 The LIMIT clause is not supported except in the history query.
 ```
 
+**Solution**
+
+```markdown
+Remove the LIMIT clause from your query or use it only in history queries.
+```
+
 ### `DL-TABLE-STORE-414028`
 
 **Message**
 
 ```markdown
 The table alias is not supported in the information schema and history query.
+```
+
+**Solution**
+
+```markdown
+Remove the table alias from your information schema or history query.
 ```
 
 ### `DL-TABLE-STORE-414029`
@@ -251,6 +419,12 @@ The table alias is not supported in the information schema and history query.
 Projection is not supported for the information schema query. Specify '*' instead.
 ```
 
+**Solution**
+
+```markdown
+Use '*' instead of specific column projections in your information schema query.
+```
+
 ### `DL-TABLE-STORE-414030`
 
 **Message**
@@ -259,10 +433,22 @@ Projection is not supported for the information schema query. Specify '*' instea
 The specified condition for the information schema query is invalid.
 ```
 
+**Solution**
+
+```markdown
+Fix the condition in your information schema query to use valid syntax and supported operators.
+```
+
 ### `DL-TABLE-STORE-414031`
 
 **Message**
 
 ```markdown
 Multiple statements are not supported.
+```
+
+**Solution**
+
+```markdown
+Execute one statement at a time instead of multiple statements in a single request.
 ```
