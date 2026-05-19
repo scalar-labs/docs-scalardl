@@ -32,12 +32,24 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 The nonce has already been used.
 ```
 
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ### `DL-AUDITOR-305001`
 
 **メッセージ**
 
 ```markdown
-The request is tampered.
+The request has been tampered with.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
 ```
 
 ### `DL-AUDITOR-305002`
@@ -48,12 +60,24 @@ The request is tampered.
 The specified asset proof doesn't exist in Ledger.
 ```
 
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ### `DL-AUDITOR-305003`
 
 **メッセージ**
 
 ```markdown
 The specified request proof doesn't exist.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
 ```
 
 ### `DL-AUDITOR-305004`
@@ -64,12 +88,24 @@ The specified request proof doesn't exist.
 Hash validation failed.
 ```
 
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ### `DL-AUDITOR-305005`
 
 **メッセージ**
 
 ```markdown
 The specified lock entry doesn't exist. A bug might exist, or tampering might have occurred.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
 ```
 
 ### `DL-AUDITOR-305006`
@@ -80,6 +116,12 @@ The specified lock entry doesn't exist. A bug might exist, or tampering might ha
 An invalid asset proof is given for %s.
 ```
 
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ### `DL-AUDITOR-305007`
 
 **メッセージ**
@@ -88,12 +130,66 @@ An invalid asset proof is given for %s.
 The expected asset record doesn't exist.
 ```
 
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ### `DL-AUDITOR-305008`
 
 **メッセージ**
 
 ```markdown
 The specified asset and the asset lock are inconsistent.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+### `DL-AUDITOR-305009`
+
+**メッセージ**
+
+```markdown
+The specified lock type is not supported. Type: %s
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+### `DL-AUDITOR-305010`
+
+**メッセージ**
+
+```markdown
+readUnlock is used for unlocked or write-locked assets.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+### `DL-AUDITOR-305011`
+
+**メッセージ**
+
+```markdown
+writeUnlock is used for unlocked or read-locked assets.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
 ```
 
 ## `DL-AUDITOR-4xxxx` ステータスコード
@@ -108,12 +204,24 @@ The specified asset and the asset lock are inconsistent.
 The lock must be validated before it can be released.
 ```
 
+**対処法**
+
+```markdown
+Validate the lock before attempting to release it.
+```
+
 ### `DL-AUDITOR-409001`
 
 **メッセージ**
 
 ```markdown
 The specified asset is not found.
+```
+
+**対処法**
+
+```markdown
+Verify the asset ID and namespace are correct and the asset has been created.
 ```
 
 ### `DL-AUDITOR-414001`
@@ -124,12 +232,38 @@ The specified asset is not found.
 %s must be set if HMAC authentication is used.
 ```
 
+**対処法**
+
+```markdown
+Set 'scalar.dl.auditor.authentication.hmac.cipher_key' in the Auditor configuration file (e.g., auditor.properties). Use an unpredictable and long value for security.
+```
+
 ### `DL-AUDITOR-414002`
 
 **メッセージ**
 
 ```markdown
-Authentication between Ledger and Auditor is not correctly configured. Set %s or set %s along with a private key with %s or %s.
+Authentication between Ledger and Auditor is not correctly configured. Set %s along with a private key with %s or %s if you use digital signature authentication.
+```
+
+**対処法**
+
+```markdown
+For digital signature authentication, set these properties in auditor.properties: 'scalar.dl.auditor.cert_holder_id' and either 'scalar.dl.auditor.private_key_path' (path to PEM file) or 'scalar.dl.auditor.private_key_pem' (PEM-encoded data). Ensure the authentication method matches the Ledger configuration.
+```
+
+### `DL-AUDITOR-414003`
+
+**メッセージ**
+
+```markdown
+Authentication between Ledger and Auditor is not correctly configured. Set %s if you use HMAC authentication.
+```
+
+**対処法**
+
+```markdown
+For HMAC authentication between Ledger and Auditor, set 'scalar.dl.auditor.servers.authentication.hmac.secret_key' in auditor.properties with a shared secret. This must match the Ledger's corresponding HMAC secret key.
 ```
 
 ## `DL-AUDITOR-5xxxx` ステータスコード
@@ -144,12 +278,24 @@ Authentication between Ledger and Auditor is not correctly configured. Set %s or
 Binding the request proof failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
+```
+
 ### `DL-AUDITOR-500002`
 
 **メッセージ**
 
 ```markdown
 Getting the request proof failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
 ```
 
 ### `DL-AUDITOR-500003`
@@ -160,12 +306,24 @@ Getting the request proof failed. Details: %s
 Binding the asset record failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
+```
+
 ### `DL-AUDITOR-500004`
 
 **メッセージ**
 
 ```markdown
 Retrieving the asset records failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
 ```
 
 ### `DL-AUDITOR-500005`
@@ -176,28 +334,10 @@ Retrieving the asset records failed. Details: %s
 Getting the asset lock for %s failed. Details: %s
 ```
 
-### `DL-AUDITOR-502001`
-
-**メッセージ**
+**対処法**
 
 ```markdown
-The specified lock type is not supported. Type: %s
-```
-
-### `DL-AUDITOR-502002`
-
-**メッセージ**
-
-```markdown
-readUnlock is used for unlocked or write-locked assets.
-```
-
-### `DL-AUDITOR-502003`
-
-**メッセージ**
-
-```markdown
-writeUnlock is used for unlocked or read-locked assets.
+Check the error details in the logs and verify your database configuration and connection.
 ```
 
 ### `DL-AUDITOR-504001`
@@ -205,7 +345,13 @@ writeUnlock is used for unlocked or read-locked assets.
 **メッセージ**
 
 ```markdown
-The specified lock entry has been taken by write.
+The specified lock entry is currently held by a writer.
+```
+
+**対処法**
+
+```markdown
+Retry the operation.
 ```
 
 ### `DL-AUDITOR-504002`
@@ -216,10 +362,22 @@ The specified lock entry has been taken by write.
 The specified asset record is in use.
 ```
 
+**対処法**
+
+```markdown
+Retry the operation.
+```
+
 ### `DL-AUDITOR-504003`
 
 **メッセージ**
 
 ```markdown
 The entry has already been recovered, or an issue might have occurred.
+```
+
+**対処法**
+
+```markdown
+Retry the operation. Contact your system administrator to check for any signs of malicious activity if the issue persists.
 ```
