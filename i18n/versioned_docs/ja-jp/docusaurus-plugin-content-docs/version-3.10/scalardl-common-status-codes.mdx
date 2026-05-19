@@ -33,6 +33,12 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 The format of the contract ID is invalid.
 ```
 
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ### `DL-COMMON-302002`
 
 **メッセージ**
@@ -41,12 +47,24 @@ The format of the contract ID is invalid.
 Contract validation failed. A bug might exist, or tampering might have occurred.
 ```
 
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ### `DL-COMMON-305001`
 
 **メッセージ**
 
 ```markdown
 An unexpected record value is observed. A bug might exist, or tampering might have occurred. Details: %s
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
 ```
 
 ## `DL-COMMON-4xxxx` ステータスコード
@@ -61,12 +79,24 @@ An unexpected record value is observed. A bug might exist, or tampering might ha
 Signing failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Verify that your private key is valid and accessible. Check the error details for specific issues.
+```
+
 ### `DL-COMMON-400002`
 
 **メッセージ**
 
 ```markdown
 Validating signature failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Verify that the certificate matches the private key used for signing and that both are valid.
 ```
 
 ### `DL-COMMON-400003`
@@ -77,12 +107,24 @@ Validating signature failed. Details: %s
 The request signature can't be validated.
 ```
 
+**対処法**
+
+```markdown
+Verify that the certificate used for signing the request is registered and matches the private key.
+```
+
 ### `DL-COMMON-400004`
 
 **メッセージ**
 
 ```markdown
 The proof signature can't be validated.
+```
+
+**対処法**
+
+```markdown
+Verify that the proof configuration is correct and that the certificate used for signing is valid.
 ```
 
 ### `DL-COMMON-401001`
@@ -93,12 +135,24 @@ The proof signature can't be validated.
 Loading the key failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+If using a key file, verify that it exists at the specified path, is readable, and has the correct format. If using a PEM-formatted string, verify that the key has the correct format.
+```
+
 ### `DL-COMMON-401002`
 
 **メッセージ**
 
 ```markdown
 Loading the certificate failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+If using a certificate file, verify that it exists at the specified path, is readable, and has the correct format. If using a PEM-formatted string, verify that the certificate has the correct format.
 ```
 
 ### `DL-COMMON-401003`
@@ -109,12 +163,24 @@ Loading the certificate failed. Details: %s
 Creating a cipher key failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Verify that the cipher configuration is correct and that the key material is valid.
+```
+
 ### `DL-COMMON-401004`
 
 **メッセージ**
 
 ```markdown
 Invalid private key. File: %s
+```
+
+**対処法**
+
+```markdown
+Provide a valid private key file in PEM format at the specified path.
 ```
 
 ### `DL-COMMON-401005`
@@ -125,12 +191,24 @@ Invalid private key. File: %s
 Invalid certificate. File: %s
 ```
 
+**対処法**
+
+```markdown
+Provide a valid certificate file in PEM format at the specified path.
+```
+
 ### `DL-COMMON-401006`
 
 **メッセージ**
 
 ```markdown
 Reading the private key failed. File: %s; Details: %s
+```
+
+**対処法**
+
+```markdown
+Verify that the private key file exists, is readable, and has the correct permissions and format.
 ```
 
 ### `DL-COMMON-401007`
@@ -141,12 +219,24 @@ Reading the private key failed. File: %s; Details: %s
 Reading the certificate failed. File: %s; Details: %s
 ```
 
+**対処法**
+
+```markdown
+Verify that the certificate file exists, is readable, and has the correct permissions and format.
+```
+
 ### `DL-COMMON-401008`
 
 **メッセージ**
 
 ```markdown
 Creating a key store failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Verify that the key store configuration is correct and that all required files are accessible.
 ```
 
 ### `DL-COMMON-402001`
@@ -157,12 +247,24 @@ Creating a key store failed. Details: %s
 Loading the contract failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Verify that the contract class is valid and all dependencies are available. Check the error details for specific issues.
+```
+
 ### `DL-COMMON-403001`
 
 **メッセージ**
 
 ```markdown
 The specified certificate is not found.
+```
+
+**対処法**
+
+```markdown
+Before using the certificate, register it by using the register-cert command.
 ```
 
 ### `DL-COMMON-404001`
@@ -173,12 +275,24 @@ The specified certificate is not found.
 The specified contract is not found.
 ```
 
+**対処法**
+
+```markdown
+Before executing the contract, register it by using the register-contract command.
+```
+
 ### `DL-COMMON-405001`
 
 **メッセージ**
 
 ```markdown
 The specified certificate is already registered.
+```
+
+**対処法**
+
+```markdown
+Use the existing certificate or register it with a new version number.
 ```
 
 ### `DL-COMMON-406001`
@@ -189,12 +303,24 @@ The specified certificate is already registered.
 The specified contract is already registered.
 ```
 
+**対処法**
+
+```markdown
+Use the existing contract or register it with a different contract ID.
+```
+
 ### `DL-COMMON-406002`
 
 **メッセージ**
 
 ```markdown
 The specified contract binary name has been already registered with a different byte code.
+```
+
+**対処法**
+
+```markdown
+Use a different contract ID or class name to register this version of the contract.
 ```
 
 ### `DL-COMMON-413001`
@@ -205,12 +331,24 @@ The specified contract binary name has been already registered with a different 
 The specified secret is already registered.
 ```
 
+**対処法**
+
+```markdown
+Use the existing secret or register it with a new version number.
+```
+
 ### `DL-COMMON-414001`
 
 **メッセージ**
 
 ```markdown
 The specified value of the property '%s' is not a number. Value: %s
+```
+
+**対処法**
+
+```markdown
+Set the property to a valid numeric value in your configuration.
 ```
 
 ### `DL-COMMON-414002`
@@ -221,12 +359,24 @@ The specified value of the property '%s' is not a number. Value: %s
 The specified value of the property '%s' is not a boolean. Value: %s
 ```
 
+**対処法**
+
+```markdown
+Set the property to 'true' or 'false' in your configuration.
+```
+
 ### `DL-COMMON-414003`
 
 **メッセージ**
 
 ```markdown
 Reading the file failed. File: %s
+```
+
+**対処法**
+
+```markdown
+Verify that the file exists at the specified path and is readable.
 ```
 
 ### `DL-COMMON-414004`
@@ -237,12 +387,24 @@ Reading the file failed. File: %s
 Please set your license key to %s.
 ```
 
+**対処法**
+
+```markdown
+Set your license key to the specified configuration property.
+```
+
 ### `DL-COMMON-414005`
 
 **メッセージ**
 
 ```markdown
 Please set your certificate for checking the corresponding license key to %s or %s.
+```
+
+**対処法**
+
+```markdown
+Set your certificate to one of the specified configuration properties.
 ```
 
 ### `DL-COMMON-414006`
@@ -253,12 +415,24 @@ Please set your certificate for checking the corresponding license key to %s or 
 The license key is not for the product '%s'. Please set the correct license key.
 ```
 
+**対処法**
+
+```markdown
+Set the correct license key for the product in your configuration.
+```
+
 ### `DL-COMMON-414007`
 
 **メッセージ**
 
 ```markdown
 The license type of the license key must be ENTERPRISE or TRIAL. Please set the correct license key.
+```
+
+**対処法**
+
+```markdown
+Set a valid ENTERPRISE or TRIAL license key in your configuration.
 ```
 
 ### `DL-COMMON-414008`
@@ -269,12 +443,24 @@ The license type of the license key must be ENTERPRISE or TRIAL. Please set the 
 The port and privileged port must be greater than or equal to zero.
 ```
 
+**対処法**
+
+```markdown
+Set the port and privileged port to valid values (>= 0) in your configuration.
+```
+
 ### `DL-COMMON-414009`
 
 **メッセージ**
 
 ```markdown
 The private key and certificate are required.
+```
+
+**対処法**
+
+```markdown
+Provide both the private key and certificate in your configuration.
 ```
 
 ### `DL-COMMON-414010`
@@ -285,12 +471,24 @@ The private key and certificate are required.
 The certificate version must be greater than or equal to zero.
 ```
 
+**対処法**
+
+```markdown
+Set the certificate version to a value greater than zero.
+```
+
 ### `DL-COMMON-414011`
 
 **メッセージ**
 
 ```markdown
 A secret key is required for HMAC authentication.
+```
+
+**対処法**
+
+```markdown
+Provide a secret key in your configuration for HMAC authentication.
 ```
 
 ### `DL-COMMON-414012`
@@ -301,12 +499,24 @@ A secret key is required for HMAC authentication.
 The secret version for HMAC authentication must be greater than or equal to zero.
 ```
 
+**対処法**
+
+```markdown
+Set the secret version to a value greater than zero.
+```
+
 ### `DL-COMMON-414013`
 
 **メッセージ**
 
 ```markdown
 The grpc deadline duration must be greater than or equal to zero.
+```
+
+**対処法**
+
+```markdown
+Set the gRPC deadline duration to a value greater than or equal to zero in your configuration.
 ```
 
 ### `DL-COMMON-414014`
@@ -317,12 +527,24 @@ The grpc deadline duration must be greater than or equal to zero.
 The grpc max inbound message size must be greater than or equal to zero.
 ```
 
+**対処法**
+
+```markdown
+Set the gRPC max inbound message size to a value greater than or equal to zero in your configuration.
+```
+
 ### `DL-COMMON-414015`
 
 **メッセージ**
 
 ```markdown
 The grpc max inbound metadata size must be greater than or equal to zero.
+```
+
+**対処法**
+
+```markdown
+Set the gRPC max inbound metadata size to a value greater than or equal to zero in your configuration.
 ```
 
 ### `DL-COMMON-414016`
@@ -333,6 +555,12 @@ The grpc max inbound metadata size must be greater than or equal to zero.
 The authentication method name is invalid. Name: %s
 ```
 
+**対処法**
+
+```markdown
+Set the authentication method to a valid value (like 'digital-signature' or 'hmac') in your configuration.
+```
+
 ### `DL-COMMON-414017`
 
 **メッセージ**
@@ -341,12 +569,38 @@ The authentication method name is invalid. Name: %s
 The argument format is illegal.
 ```
 
+**対処法**
+
+```markdown
+Provide the argument in the correct format. Check the documentation for the expected format.
+```
+
 ### `DL-COMMON-414018`
 
 **メッセージ**
 
 ```markdown
 The deserialization type is not supported. Type: %s
+```
+
+**対処法**
+
+```markdown
+Use a supported deserialization type. Check the documentation for valid types.
+```
+
+### `DL-COMMON-415001`
+
+**メッセージ**
+
+```markdown
+The specified secret is not found.
+```
+
+**対処法**
+
+```markdown
+Before using the secret, register it by using the register-secret command.
 ```
 
 ## `DL-COMMON-5xxxx` ステータスコード
@@ -361,12 +615,24 @@ The deserialization type is not supported. Type: %s
 Binding the certificate failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Check the database connection and ensure the database is accessible. Review the error details for more information.
+```
+
 ### `DL-COMMON-500002`
 
 **メッセージ**
 
 ```markdown
 Unbinding the certificate failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the database connection and ensure the database is accessible. Review the error details for more information.
 ```
 
 ### `DL-COMMON-500003`
@@ -377,12 +643,24 @@ Unbinding the certificate failed. Details: %s
 Getting the certificate failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Check the database connection and ensure the database is accessible. Review the error details for more information.
+```
+
 ### `DL-COMMON-500004`
 
 **メッセージ**
 
 ```markdown
 Binding the secret key failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the database connection and ensure the database is accessible. Review the error details for more information.
 ```
 
 ### `DL-COMMON-500005`
@@ -393,12 +671,24 @@ Binding the secret key failed. Details: %s
 Unbinding the secret key failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Check the database connection and ensure the database is accessible. Review the error details for more information.
+```
+
 ### `DL-COMMON-500006`
 
 **メッセージ**
 
 ```markdown
 Getting the secret key failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the database connection and ensure the database is accessible. Review the error details for more information.
 ```
 
 ### `DL-COMMON-500007`
@@ -409,12 +699,24 @@ Getting the secret key failed. Details: %s
 Binding the contract failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Check the database connection and ensure the database is accessible. Review the error details for more information.
+```
+
 ### `DL-COMMON-500008`
 
 **メッセージ**
 
 ```markdown
 Getting the contract failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the database connection and ensure the database is accessible. Review the error details for more information.
 ```
 
 ### `DL-COMMON-500009`
@@ -425,12 +727,24 @@ Getting the contract failed. Details: %s
 Scanning the contracts failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Check the database connection and ensure the database is accessible. Review the error details for more information.
+```
+
 ### `DL-COMMON-502001`
 
 **メッセージ**
 
 ```markdown
 Serializing the specified json failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details and verify that the data structure is valid for JSON serialization.
 ```
 
 ### `DL-COMMON-502002`
@@ -441,12 +755,24 @@ Serializing the specified json failed. Details: %s
 Deserializing the specified json string failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Check the error details and verify that the JSON string is valid and well-formed.
+```
+
 ### `DL-COMMON-502003`
 
 **メッセージ**
 
 ```markdown
 The required fields are not specified.
+```
+
+**対処法**
+
+```markdown
+Provide all required fields in your request.
 ```
 
 ### `DL-COMMON-502004`
@@ -457,6 +783,12 @@ The required fields are not specified.
 The metadata is not available since the asset has not been committed yet.
 ```
 
+**対処法**
+
+```markdown
+Commit the asset before accessing its metadata.
+```
+
 ### `DL-COMMON-502005`
 
 **メッセージ**
@@ -465,10 +797,22 @@ The metadata is not available since the asset has not been committed yet.
 The specified transaction state is invalid.
 ```
 
+**対処法**
+
+```markdown
+Check the error details in the logs and verify the transaction state.
+```
+
 ### `DL-COMMON-502006`
 
 **メッセージ**
 
 ```markdown
 The contract type or instance is not supported.
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify that the contract type is supported.
 ```
