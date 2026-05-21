@@ -14,6 +14,17 @@ const notificationsList = [
   // },
   {
     message: {
+      en: 'Blog post: ScalarDL 3.13 has been released!',
+      ja: 'ブログ記事: ScalarDL 3.13 をリリースしました！'
+    },
+    url: {
+      en: 'https://medium.com/scalar-engineering/scalardl-3-13-has-been-released-a790a3b8a065?utm_source=docs-site&utm_medium=notifications',
+      ja: 'https://medium.com/scalar-engineering-ja/scalardl-3-13-%E3%81%8C%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%B9%E3%81%95%E3%82%8C%E3%81%BE%E3%81%97%E3%81%9F-8c6ea26c2bf2?utm_source=docs-site&utm_medium=notifications'
+    },
+    unread: true
+  },
+  {
+    message: {
       en: 'Find out about how to manage namespaces in ScalarDL 3.13',
       ja: 'ScalarDL 3.13 での名前空間管理について知る'
     },
