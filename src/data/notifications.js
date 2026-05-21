@@ -1,6 +1,17 @@
 // This file contains the notifications data and a function to retrieve it.
 // The notifications are stored in an array of objects, each containing a message in multiple languages and URLs for those messages.
 const notificationsList = [
+  // {
+  //   message: {
+  //     en: 'XXX',
+  //     ja: 'XXX'
+  //   },
+  //   url: {
+  //     en: 'XXX?utm_source=docs-site&utm_medium=notifications',
+  //     ja: 'XXX?utm_source=docs-site&utm_medium=notifications'
+  //   },
+  //   unread: true
+  // },
   {
     message: {
       en: 'Find out about how to manage namespaces in ScalarDL 3.13',
