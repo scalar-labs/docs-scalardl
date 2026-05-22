@@ -295,7 +295,7 @@ const config = {
         title: '',
         logo: {
           alt: 'ScalarDL logo',
-          src: 'img/scalardl-logo.png',
+          src: 'img/scalardl-logo-02.png',
           href: '/docs/latest/',
           target: '_self',
         },
