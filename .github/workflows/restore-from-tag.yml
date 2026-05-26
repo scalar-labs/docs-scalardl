@@ -123,42 +123,20 @@ jobs:
           echo "Main branch SHA at workflow start: $main_head_sha" >> "$changes_summary"
           echo "" >> "$changes_summary"
 
-          # Get file changes
-          echo "## Files changed since tag" >> "$changes_summary"
+          # Get all changed files (added, modified, and deleted) as a flat list
+          total_changes=$(git diff "$current_tag" "$main_head_sha" --name-only 2>/dev/null | wc -l | tr -d ' ')
+
+          echo "## What is excluded from this restored version of the docs site ($total_changes files)" >> "$changes_summary"
           echo "" >> "$changes_summary"
-          echo "Below is a list of files that have changed since the specified tag." >> "$changes_summary"
+          echo "The following files were added or modified after the tag was created. Their additions or changes are temporarily excluded from the site until the issue is fixed and the site is rebuilt from the \`main\` branch:" >> "$changes_summary"
           echo "" >> "$changes_summary"
-
-          # Added files
-          added=$(git diff "$current_tag" "$main_head_sha" --diff-filter=A --name-only 2>/dev/null | wc -l)
-          if [ "$added" -gt 0 ]; then
-            echo "### Added ($added files)" >> "$changes_summary"
-            echo "" >> "$changes_summary"
-            git diff "$current_tag" "$main_head_sha" --diff-filter=A --name-only 2>/dev/null | sed 's/^/- /' >> "$changes_summary"
-            echo "" >> "$changes_summary"
+          if [ "$total_changes" -gt 0 ]; then
+            git diff "$current_tag" "$main_head_sha" --name-only 2>/dev/null | sed 's/^/- /' >> "$changes_summary"
           fi
-
-          # Modified files
-          modified=$(git diff "$current_tag" "$main_head_sha" --diff-filter=M --name-only 2>/dev/null | wc -l)
-          if [ "$modified" -gt 0 ]; then
-            echo "### Modified ($modified files)" >> "$changes_summary"
-            echo "" >> "$changes_summary"
-            git diff "$current_tag" "$main_head_sha" --diff-filter=M --name-only 2>/dev/null | sed 's/^/- /' >> "$changes_summary"
-            echo "" >> "$changes_summary"
-          fi
-
-          # Deleted files
-          deleted=$(git diff "$current_tag" "$main_head_sha" --diff-filter=D --name-only 2>/dev/null | wc -l)
-          if [ "$deleted" -gt 0 ]; then
-            echo "### Deleted ($deleted files)" >> "$changes_summary"
-            git diff "$current_tag" "$main_head_sha" --diff-filter=D --name-only 2>/dev/null | sed 's/^/- /' >> "$changes_summary"
-            echo "" >> "$changes_summary"
-          fi
-
-          total_changes=$((added + modified + deleted))
+          echo "" >> "$changes_summary"
           echo "## Summary" >> "$changes_summary"
           echo "" >> "$changes_summary"
-          echo "Total changes: $total_changes" >> "$changes_summary"
+          echo "Total files affected: $total_changes" >> "$changes_summary"
           echo "" >> "$changes_summary"
           echo "## To re-apply changes" >> "$changes_summary"
           echo "" >> "$changes_summary"
