@@ -674,6 +674,11 @@ const sidebars = {
       collapsible: true,
       items: [
         {
+          type: 'doc',
+          id: 'libraries-and-tools',
+          label: 'Libraries and Tools',
+        },
+        {
           type: 'category',
           label: 'Configure a License Key',
           collapsible: true,
