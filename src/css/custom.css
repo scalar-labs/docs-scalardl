@@ -37,6 +37,11 @@
   --ifm-h1-font-size: 2.25rem;
 }
 
+/* Horizontal line separating tab labels from tab content */
+.tabs {
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+
 /* Make the sidebar navigation text smaller (default font size is 12pt). */
 .menu {
   font-size: 0.875rem;
