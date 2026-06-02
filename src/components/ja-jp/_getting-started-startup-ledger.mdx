@@ -2,12 +2,12 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import JavadocLink from "/src/theme/JavadocLink.js";
 import DbSpecificSteps from '/src/components/ja-jp/_getting-started-db-specific-steps.mdx';
+import JDKVersions from '/src/components/ja-jp/_prerequisites-jdk-versions.mdx';
 
 ## 前提条件
 
 - 以下のいずれかの Java Development Kit (JDK):
-  - **[Oracle JDK](https://www.oracle.com/java/):** 8、11、17、または 21 (LTS バージョン)
-  - **[OpenJDK](https://openjdk.org/) ([Eclipse Temurin](https://adoptium.net/temurin/)、[Amazon Corretto](https://aws.amazon.com/corretto/)、または [Microsoft Build of OpenJDK](https://learn.microsoft.com/ja-jp/java/openjdk/)):** 8、11、17、または 21 (LTS バージョン)
+  <JDKVersions versionNumbers="8、11、17、または 21" />
 - [Docker](https://www.docker.com/get-started/) 20.10以降と[Docker Compose](https://docs.docker.com/compose/install/) v2.20.0以降
 
 ## ScalarDL サンプルリポジトリをクローンする
