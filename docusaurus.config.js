@@ -97,12 +97,6 @@ const config = {
                 banner: 'none',
                 className: '3.10.4',
               },
-              "3.9": {
-                label: '3.9',
-                path: '3.9',
-                banner: 'none',
-                className: '3.9.7',
-              },
             },
           },
           googleTagManager: {
