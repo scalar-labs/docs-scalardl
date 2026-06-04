@@ -7,6 +7,8 @@ displayed_sidebar: docsEnglish
 
 # Use Generic Contracts and Functions
 
+import JDKVersions from '/src/components/en-us/_prerequisites-jdk-versions.mdx';
+
 :::tip
 
 Although generic contracts were introduced in ScalarDL 3.10, HashStore, released in ScalarDL 3.12, provides a higher-level abstraction that wraps generic contracts. For most use cases, using HashStore is simpler and more efficient than using generic contracts directly. For details, see [Get Started with ScalarDL HashStore](https://scalardl.scalar-labs.com/docs/latest/getting-started-hashstore) in the latest version of ScalarDL.
@@ -41,8 +43,7 @@ In this section, you'll try using generic contracts and functions through the Sc
 
 In this guide, you'll only use a Java runtime environment for seeing how generic contracts and functions work. However, it is recommended that you install one of the following Java Development Kits (JDKs), which will be required to build your own ScalarDL application outside of this guide.
 
-- [Oracle JDK](https://www.oracle.com/java/technologies/downloads/) LTS version (8, 11, or 17)
-- [OpenJDK](https://openjdk.org/install/) LTS version (8, 11, or 17)
+<JDKVersions versionNumbers="8, 11, 17, or 21" />  
 
 ### Set up a ScalarDL environment 
 
