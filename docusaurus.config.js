@@ -97,12 +97,6 @@ const config = {
                 banner: 'none',
                 className: '3.10.4',
               },
-              "3.9": {
-                label: '3.9',
-                path: '3.9',
-                banner: 'none',
-                className: '3.9.7',
-              },
             },
           },
           googleTagManager: {
@@ -162,10 +156,6 @@ const config = {
           {
             to: '/docs/3.10/how-to-run-applications-with-auditor',
             from: '/docs/3.10/getting-started-auditor',
-          },
-          {
-            to: '/docs/3.9/how-to-run-applications-with-auditor',
-            from: '/docs/3.9/getting-started-auditor',
           },
           {
             to: '/docs/latest/releases/release-support-policy',
