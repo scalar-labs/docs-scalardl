@@ -163,6 +163,27 @@ client/bin/scalardl register-contract --properties tenant.properties --contract-
 client/bin/scalardl execute-contract --properties tenant.properties --contract-id StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}'
 ```
 
+### ファンクションを登録して実行する
+
+デフォルトでは、テナントは非特権ポートを通じてコントラクトを登録できますが、ファンクションは登録できません。テナントがファンクションを登録できるようにするには、管理者が以下の Ledger 設定オプションを有効にする必要があります:
+
+- `scalar.dl.ledger.function.non_privileged_port_registration.enabled`: `true` に設定すると、テナントが非特権ポートを通じてファンクションを登録できるようになります。デフォルトは `false` です。
+- `scalar.dl.ledger.function.non_privileged_port_registration.overwrite.enabled`: `true` に設定すると、テナントが非特権ポートを通じて既存のファンクションを上書きできるようになります。デフォルトは `false` です。
+
+ファンクションの登録が有効になると、テナントはデフォルト名前空間と同じ方法で名前空間内のファンクションを登録して実行できます。例えば、ファンクションを登録するには、以下のコマンドを実行します:
+
+```console
+client/bin/scalardl register-function --properties tenant.properties --function-id test-function --function-binary-name com.example.function.TestFunction --function-class-file /path/to/TestFunction.class
+```
+
+ファンクションをコントラクトと一緒に実行するには、以下のコマンドを実行します:
+
+```console
+client/bin/scalardl execute-contract --properties tenant.properties --contract-id StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}' --function-id test-function --function-argument '{}'
+```
+
+コントラクトとファンクションの更新の詳細については、[コントラクトとファンクションのライフサイクルを管理する](manage-contract-and-function-lifecycle.mdx)を参照してください。
+
 ### アセットを検証する
 
 以下のコマンドを実行することで、デフォルト名前空間と同様に通常通りアセットを検証できます:
