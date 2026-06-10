@@ -1,0 +1,159 @@
+name: Create restoration tag
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Enter a tag name (format: YYYYMMDD)'
+        required: true
+        type: string
+      tag_description:
+        description: 'Enter a tag description (reason for tagging)'
+        required: false
+        type: string
+      should_validate:
+        description: 'Validate build before tagging'
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: create-tag
+  cancel-in-progress: false
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      tag_created: ${{ steps.create-tag-step.outputs.success }}
+      tag_name: ${{ steps.create-tag-step.outputs.tag_name }}
+      timestamp: ${{ steps.create-tag-step.outputs.timestamp }}
+      commit_sha: ${{ steps.create-tag-step.outputs.commit_sha }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Validate branch
+        run: |
+          if [ "$GITHUB_REF_NAME" != "main" ]; then
+            echo "Error: This workflow must run on the main branch"
+            echo "Current branch: $GITHUB_REF_NAME"
+            exit 1
+          fi
+          echo "✓ Workflow running on main branch"
+
+      - name: Validate tag name format
+        env:
+          TAG_NAME: ${{ github.event.inputs.tag_name }}
+        run: |
+          tag_name="$TAG_NAME"
+          if ! [[ $tag_name =~ ^[0-9]{8}$ ]]; then
+            echo "Error: Tag name must follow format 'YYYYMMDD'"
+            echo "Provided: $tag_name"
+            exit 1
+          fi
+          echo "✓ Tag name format is valid: $tag_name"
+
+      - name: Check if tag already exists
+        env:
+          TAG_NAME: ${{ github.event.inputs.tag_name }}
+        run: |
+          tag_name="$TAG_NAME"
+          if git rev-parse "refs/tags/$tag_name" >/dev/null 2>&1; then
+            echo "Error: Tag '$tag_name' already exists"
+            exit 1
+          fi
+          echo "✓ Tag does not already exist"
+
+      - name: Setup Node.js
+        if: ${{ github.event.inputs.should_validate == 'true' }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+
+      - name: Install Python dependencies
+        if: ${{ github.event.inputs.should_validate == 'true' }}
+        run: python3 -m pip install --user gitingest
+
+      - name: Validate build
+        if: ${{ github.event.inputs.should_validate == 'true' }}
+        run: |
+          echo "Running build validation..."
+          npm ci
+          npm run build
+          if [ ! -d "build" ]; then
+            echo "Error: Build directory not created"
+            exit 1
+          fi
+          echo "✓ Build validation successful"
+
+      - name: Create tag
+        id: create-tag-step
+        env:
+          TAG_NAME: ${{ github.event.inputs.tag_name }}
+          TAG_DESCRIPTION: ${{ github.event.inputs.tag_description }}
+        run: |
+          tag_name="$TAG_NAME"
+          tag_description="$TAG_DESCRIPTION"
+          timestamp=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          commit_sha=$(git rev-parse HEAD)
+
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+
+          # Create annotated tag with metadata
+          if [ -z "$tag_description" ]; then
+            tag_msg="Restoration tag created on $timestamp"
+          else
+            tag_msg="$tag_description | Created on $timestamp"
+          fi
+
+          git tag -a "$tag_name" -m "$tag_msg"
+
+          echo "success=true" >> $GITHUB_OUTPUT
+          echo "tag_name=$tag_name" >> $GITHUB_OUTPUT
+          echo "timestamp=$timestamp" >> $GITHUB_OUTPUT
+          echo "commit_sha=$commit_sha" >> $GITHUB_OUTPUT
+
+          echo "✓ Tag created: $tag_name"
+          echo "  Message: $tag_msg"
+          echo "  Commit: $commit_sha"
+
+      - name: Push tag
+        run: |
+          git push origin "${{ steps.create-tag-step.outputs.tag_name }}"
+          echo "✓ Tag pushed to repository"
+
+      - name: Output summary
+        run: |
+          echo "## Tag creation summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✓ **Tag created successfully**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Property | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Tag name | \`${{ steps.create-tag-step.outputs.tag_name }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Commit SHA | \`${{ steps.create-tag-step.outputs.commit_sha }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Created | ${{ steps.create-tag-step.outputs.timestamp }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "This tag can now be used as a restoration point." >> $GITHUB_STEP_SUMMARY
+
+      - name: Error handling
+        if: failure()
+        run: |
+          echo "## Tag creation failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "❌ **Tag creation did not complete successfully**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Troubleshooting:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "1. Verify that the tag name follows this format: \`YYYYMMDD\`" >> $GITHUB_STEP_SUMMARY
+          echo "2. Ensure that the tag does not already exist" >> $GITHUB_STEP_SUMMARY
+          echo "3. Check that the workflow is running on the \`main\` branch" >> $GITHUB_STEP_SUMMARY
+          echo "4. If build validation failed, review the build logs" >> $GITHUB_STEP_SUMMARY
+          echo "5. Check that the GitHub Actions permissions allow \`contents: write\`" >> $GITHUB_STEP_SUMMARY

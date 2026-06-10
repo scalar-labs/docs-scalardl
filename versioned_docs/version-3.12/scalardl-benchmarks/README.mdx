@@ -9,6 +9,7 @@ displayed_sidebar: docsEnglish
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import JDKVersions from '/src/components/en-us/_prerequisites-jdk-versions.mdx';
 
 This tutorial describes how to run benchmarking tools for ScalarDL. Benchmarking is helpful for evaluating how a system performs against a set of standards.
 
@@ -21,17 +22,10 @@ This tutorial describes how to run benchmarking tools for ScalarDL. Benchmarking
 ## Prerequisites
 
 - One of the following Java Development Kits (JDKs):
-  - [Oracle JDK](https://www.oracle.com/java/technologies/downloads/) LTS version 8
-  - [OpenJDK](https://openjdk.org/install/) LTS version 8
+  <JDKVersions versionNumbers="8" />
 - Gradle
 - [Kelpie](https://github.com/scalar-labs/kelpie)
   - Kelpie is a framework for performing end-to-end testing, such as system benchmarking and verification. Get the latest version from [Kelpie Releases](https://github.com/scalar-labs/kelpie/releases), and unzip the archive file.
-
-:::note
-
-Currently, only JDK 8 can be used when running the benchmarking tools.
-
-:::
 
 ### Set up your environment
 

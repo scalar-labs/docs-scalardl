@@ -97,12 +97,6 @@ const config = {
                 banner: 'none',
                 className: '3.10.4',
               },
-              "3.9": {
-                label: '3.9',
-                path: '3.9',
-                banner: 'none',
-                className: '3.9.7',
-              },
             },
           },
           googleTagManager: {
@@ -162,10 +156,6 @@ const config = {
           {
             to: '/docs/3.10/how-to-run-applications-with-auditor',
             from: '/docs/3.10/getting-started-auditor',
-          },
-          {
-            to: '/docs/3.9/how-to-run-applications-with-auditor',
-            from: '/docs/3.9/getting-started-auditor',
           },
           {
             to: '/docs/latest/releases/release-support-policy',
@@ -295,7 +285,7 @@ const config = {
         title: '',
         logo: {
           alt: 'ScalarDL logo',
-          src: 'img/scalardl-logo.png',
+          src: 'img/scalardl-logo-02.png',
           href: '/docs/latest/',
           target: '_self',
         },
@@ -468,8 +458,7 @@ const config = {
       announcementBar: {
         id: 'new_version',
         content:
-          'Announcing the release of ScalarDL 3.13!🚀 For details on what\'s included in this new version, see the <a target="_self" href="/docs/latest/releases/release-notes?utm_source=docs-site&utm_medium=announcementbar">release notes</a>.',
-          // '<b>Announcing the release of ScalarDL X.X!🚀 For details on what\'s included in this new version, see the <a target="_self" href="/docs/latest/releases/release-notes?utm_source=docs-site&utm_medium=announcementbar">release notes</a>.</b>',
+          'Announcing the release of ScalarDL 3.13!🚀 For details on what\'s included in this new version, see the <a target="_self" href="/docs/latest/releases/release-notes?utm_source=docs-site&utm_medium=announcementbar">release notes</a> and <a target="_blank" href="https://medium.com/scalar-engineering/scalardl-3-13-has-been-released-a790a3b8a065?utm_source=docs-site&utm_medium=announcementbar">blog post</a>.',
         backgroundColor: '#2673BB',
         textColor: '#FFFFFF',
         isCloseable: false,

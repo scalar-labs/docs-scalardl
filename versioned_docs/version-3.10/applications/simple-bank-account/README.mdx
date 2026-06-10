@@ -7,6 +7,8 @@ displayed_sidebar: docsEnglish
 
 # A simple bank account application
 
+import JDKVersions from '/src/components/en-us/_prerequisites-jdk-versions.mdx';
+
 ## Overview
 
 This is a simple bank account application, which can be found in the [`scalardl` repository](https://github.com/scalar-labs/scalardl/tree/master/docs/applications/simple-bank-account/). The actions that a user can perform are: create an account, view an account history, deposit funds to an account, withdraw funds from an account, and transfer funds between accounts. All actions performed on an account are recorded in ScalarDL, which means that the account history is recorded in a tamper-evident way, similar to how blockchains record blocks. This means that if an account history was altered (either intentionally or not), it is possible to detect this.  
@@ -29,14 +31,8 @@ The overall architecture of this application can be viewed as follows. (Note aga
 
 ## Prerequisites for this sample application
 
-- OpenJDK LTS version (8, 11, 17, or 21) from [Eclipse Temurin](https://adoptium.net/temurin/releases/)
-
-:::note
-
-- Using an LTS version mentioned above is recommended, but other non-LTS versions may work.
-- Other JDKs should work with this sample application, but they haven't been tested.
-
-:::
+- One of the following Java Development Kits (JDKs):
+  <JDKVersions versionNumbers="8, 11, 17, or 21" />
 
 ## Trying out the application
 

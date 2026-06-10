@@ -674,6 +674,11 @@ const sidebars = {
       collapsible: true,
       items: [
         {
+          type: 'doc',
+          id: 'libraries-and-tools',
+          label: 'Libraries and Tools',
+        },
+        {
           type: 'category',
           label: 'Configure a License Key',
           collapsible: true,
@@ -1353,6 +1358,11 @@ const sidebars = {
       label: '詳細',
       collapsible: true,
       items: [
+        {
+          type: 'doc',
+          id: 'libraries-and-tools',
+          label: 'ライブラリとツール',
+        },
         {
           type: 'category',
           label: 'ライセンスキーの設定',

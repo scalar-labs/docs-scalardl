@@ -2,12 +2,12 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import JavadocLink from "/src/theme/JavadocLink.js";
 import DbSpecificSteps from '/src/components/en-us/_getting-started-db-specific-steps.mdx';
+import JDKVersions from '/src/components/en-us/_prerequisites-jdk-versions.mdx';
 
 ## Prerequisites
 
 - One of the following Java Development Kits (JDKs):
-  - **[Oracle JDK](https://www.oracle.com/java/):** 8, 11, 17, or 21 (LTS versions)
-  - **[OpenJDK](https://openjdk.org/) ([Eclipse Temurin](https://adoptium.net/temurin/), [Amazon Corretto](https://aws.amazon.com/corretto/), or [Microsoft Build of OpenJDK](https://learn.microsoft.com/en-us/java/openjdk/)):** 8, 11, 17, or 21 (LTS versions)
+  <JDKVersions versionNumbers="8, 11, 17, or 21" />
 - [Docker](https://www.docker.com/get-started/) 20.10 or later with [Docker Compose](https://docs.docker.com/compose/install/) v2.20.0 or later
 
 ## Clone the ScalarDL samples repository

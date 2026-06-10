@@ -33,12 +33,24 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 Validation failed for the hash.
 ```
 
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ### `DL-LEDGER-301001`
 
 **メッセージ**
 
 ```markdown
 Validation failed for the previous hash.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
 ```
 
 ### `DL-LEDGER-302001`
@@ -49,12 +61,24 @@ Validation failed for the previous hash.
 Validation failed for the contract.
 ```
 
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ### `DL-LEDGER-303001`
 
 **メッセージ**
 
 ```markdown
 Validation failed for the output. Recomputed: %s; Stored: %s
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
 ```
 
 ### `DL-LEDGER-304001`
@@ -65,6 +89,12 @@ Validation failed for the output. Recomputed: %s; Stored: %s
 Validation failed for nonce. %s contains the nonce '%s' more than once.
 ```
 
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ### `DL-LEDGER-305001`
 
 **メッセージ**
@@ -73,12 +103,24 @@ Validation failed for nonce. %s contains the nonce '%s' more than once.
 The specified asset and the asset metadata are inconsistent.
 ```
 
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ### `DL-LEDGER-305002`
 
 **メッセージ**
 
 ```markdown
 The asset specified by input dependencies is not found.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
 ```
 
 ## `DL-LEDGER-4xxxx` ステータスコード
@@ -93,12 +135,24 @@ The asset specified by input dependencies is not found.
 The request signature can't be validated.
 ```
 
+**対処法**
+
+```markdown
+Verify that the certificate used to sign the request is registered and valid.
+```
+
 ### `DL-LEDGER-400002`
 
 **メッセージ**
 
 ```markdown
 The request signature from Auditor can't be validated.
+```
+
+**対処法**
+
+```markdown
+Verify that the certificate used by Auditor is registered and valid.
 ```
 
 ### `DL-LEDGER-407001`
@@ -109,12 +163,24 @@ The request signature from Auditor can't be validated.
 The specified contract class is not allowed to be executed.
 ```
 
+**対処法**
+
+```markdown
+Verify the contract binary name and ensure it is listed in the configuration file specified by scalar.dl.ledger.executable_contracts.
+```
+
 ### `DL-LEDGER-407002`
 
 **メッセージ**
 
 ```markdown
 A configuration mismatch is detected. Check the Auditor setting in the client or Ledger.
+```
+
+**対処法**
+
+```markdown
+Verify that the Auditor settings in the client and Ledger configurations are consistent.
 ```
 
 ### `DL-LEDGER-407003`
@@ -125,12 +191,24 @@ A configuration mismatch is detected. Check the Auditor setting in the client or
 The Auditor signature must be included in the request when Auditor is enabled.
 ```
 
+**対処法**
+
+```markdown
+Verify that the Auditor settings in the client and Ledger configurations are consistent.
+```
+
 ### `DL-LEDGER-407004`
 
 **メッセージ**
 
 ```markdown
 %s must be enabled to make auditing work.
+```
+
+**対処法**
+
+```markdown
+Verify that the Auditor settings in the client and Ledger configurations are consistent.
 ```
 
 ### `DL-LEDGER-407005`
@@ -141,12 +219,24 @@ The Auditor signature must be included in the request when Auditor is enabled.
 Registering a function via a non-privileged port is not allowed. Use a privileged port or enable %s.
 ```
 
+**対処法**
+
+```markdown
+Use a privileged port for function registration, or enable the appropriate configuration property to allow function registration from non-privileged ports.
+```
+
 ### `DL-LEDGER-407006`
 
 **メッセージ**
 
 ```markdown
 Overwriting an existing function is not allowed. Enable %s to allow overwriting.
+```
+
+**対処法**
+
+```markdown
+Enable the function overwrite configuration property to allow overwriting existing functions.
 ```
 
 ### `DL-LEDGER-409001`
@@ -157,12 +247,24 @@ Overwriting an existing function is not allowed. Enable %s to allow overwriting.
 The specified asset is not found.
 ```
 
+**対処法**
+
+```markdown
+Verify the asset ID and namespace are correct and the asset has been created.
+```
+
 ### `DL-LEDGER-410001`
 
 **メッセージ**
 
 ```markdown
 The specified function is not found.
+```
+
+**対処法**
+
+```markdown
+Register the function first before executing it.
 ```
 
 ### `DL-LEDGER-411001`
@@ -173,12 +275,24 @@ The specified function is not found.
 Loading the function failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Check the error details and verify that the function class is valid and accessible.
+```
+
 ### `DL-LEDGER-412001`
 
 **メッセージ**
 
 ```markdown
 The function is not allowed to access the specified namespace.
+```
+
+**対処法**
+
+```markdown
+Functions cannot access system namespaces or namespaces with reserved prefixes. Disallowed namespaces: system, system_schema, system_auth, system_distributed, system_traces, coordinator. Disallowed namespace prefixes: scalar, auditor. Use a different namespace for your function operations.
 ```
 
 ### `DL-LEDGER-412002`
@@ -189,12 +303,24 @@ The function is not allowed to access the specified namespace.
 The database operation in the function failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Verify that the arguments passed to the database operation are valid and correct.
+```
+
 ### `DL-LEDGER-414001`
 
 **メッセージ**
 
 ```markdown
 %s must be set if HMAC authentication is used.
+```
+
+**対処法**
+
+```markdown
+Set the cipher key configuration property for HMAC authentication.
 ```
 
 ### `DL-LEDGER-414002`
@@ -205,12 +331,24 @@ The database operation in the function failed. Details: %s
 %s must be set to true if Auditor is enabled.
 ```
 
+**対処法**
+
+```markdown
+Set the proof configuration property to true when Auditor is enabled.
+```
+
 ### `DL-LEDGER-414003`
 
 **メッセージ**
 
 ```markdown
 Authentication between Ledger and Auditor is not correctly configured. Set a private key with %s or %s if you use digital signature authentication with Auditor enabled.
+```
+
+**対処法**
+
+```markdown
+Set the private key configuration property for digital signature authentication between Ledger and Auditor.
 ```
 
 ### `DL-LEDGER-414004`
@@ -221,12 +359,24 @@ Authentication between Ledger and Auditor is not correctly configured. Set a pri
 Authentication between Ledger and Auditor is not correctly configured. Set %s if you use HMAC authentication with Auditor enabled.
 ```
 
+**対処法**
+
+```markdown
+Set the required configuration property for HMAC authentication between Ledger and Auditor.
+```
+
 ### `DL-LEDGER-414005`
 
 **メッセージ**
 
 ```markdown
 Either %s or %s must be set if proof is enabled.
+```
+
+**対処法**
+
+```markdown
+Set either the private key PEM or path configuration property when proof is enabled.
 ```
 
 ### `DL-LEDGER-414006`
@@ -237,6 +387,12 @@ Either %s or %s must be set if proof is enabled.
 %s must be set to true when using the JDBC transaction manager in the Auditor mode.
 ```
 
+**対処法**
+
+```markdown
+Set the transaction state management configuration property to true when using JDBC transaction manager in Auditor mode.
+```
+
 ### `DL-LEDGER-414007`
 
 **メッセージ**
@@ -245,12 +401,24 @@ Either %s or %s must be set if proof is enabled.
 %s must be disabled when using the Consensus Commit transaction manager for performance reasons.
 ```
 
+**対処法**
+
+```markdown
+Set the transaction state management configuration property to false when using Consensus Commit transaction manager.
+```
+
 ### `DL-LEDGER-414008`
 
 **メッセージ**
 
 ```markdown
 %s must be disabled because group commit is not supported.
+```
+
+**対処法**
+
+```markdown
+Set the group commit configuration property to false as it is not supported.
 ```
 
 ## `DL-LEDGER-5xxxx` ステータスコード
@@ -265,12 +433,24 @@ Either %s or %s must be set if proof is enabled.
 Binding the function failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
+```
+
 ### `DL-LEDGER-500002`
 
 **メッセージ**
 
 ```markdown
 Unbinding the function failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
 ```
 
 ### `DL-LEDGER-500003`
@@ -281,12 +461,24 @@ Unbinding the function failed. Details: %s
 Getting the function failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
+```
+
 ### `DL-LEDGER-500004`
 
 **メッセージ**
 
 ```markdown
 Starting a transaction failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
 ```
 
 ### `DL-LEDGER-500005`
@@ -297,12 +489,24 @@ Starting a transaction failed. Details: %s
 Getting the transaction state failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
+```
+
 ### `DL-LEDGER-500006`
 
 **メッセージ**
 
 ```markdown
 Putting or committing asset records failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
 ```
 
 ### `DL-LEDGER-500007`
@@ -313,12 +517,24 @@ Putting or committing asset records failed. Details: %s
 Aborting the transaction failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
+```
+
 ### `DL-LEDGER-500008`
 
 **メッセージ**
 
 ```markdown
 Retrieving the asset records failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
 ```
 
 ### `DL-LEDGER-500009`
@@ -329,12 +545,24 @@ Retrieving the asset records failed. Details: %s
 Retrieving the asset metadata failed. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
+```
+
 ### `DL-LEDGER-500010`
 
 **メッセージ**
 
 ```markdown
 Putting the asset metadata failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
 ```
 
 ### `DL-LEDGER-500011`
@@ -345,12 +573,24 @@ Putting the asset metadata failed. Details: %s
 The database operation in the function failed due to a database error. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
+```
+
 ### `DL-LEDGER-501001`
 
 **メッセージ**
 
 ```markdown
 The asset status is unknown. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the asset status manually and review the error details in the logs.
 ```
 
 ### `DL-LEDGER-502001`
@@ -361,12 +601,24 @@ The asset status is unknown. Details: %s
 The function type or instance is not supported.
 ```
 
+**対処法**
+
+```markdown
+Check the error details in the logs and verify that the function type is supported.
+```
+
 ### `DL-LEDGER-504001`
 
 **メッセージ**
 
 ```markdown
 The transaction state has already been %s.
+```
+
+**対処法**
+
+```markdown
+Retry the operation.
 ```
 
 ### `DL-LEDGER-504002`
@@ -377,12 +629,24 @@ The transaction state has already been %s.
 Retrieving the asset records failed due to a conflict. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Retry the operation.
+```
+
 ### `DL-LEDGER-504003`
 
 **メッセージ**
 
 ```markdown
 Putting the asset records failed due to a conflict. Details: %s
+```
+
+**対処法**
+
+```markdown
+Retry the operation.
 ```
 
 ### `DL-LEDGER-504004`
@@ -393,12 +657,24 @@ Putting the asset records failed due to a conflict. Details: %s
 Committing the asset records failed due to a conflict. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Retry the operation.
+```
+
 ### `DL-LEDGER-504005`
 
 **メッセージ**
 
 ```markdown
 Retrieving the asset metadata failed due to a conflict. Details: %s
+```
+
+**対処法**
+
+```markdown
+Retry the operation.
 ```
 
 ### `DL-LEDGER-504006`
@@ -409,10 +685,22 @@ Retrieving the asset metadata failed due to a conflict. Details: %s
 Putting the asset metadata failed due to a conflict. Details: %s
 ```
 
+**対処法**
+
+```markdown
+Retry the operation.
+```
+
 ### `DL-LEDGER-504007`
 
 **メッセージ**
 
 ```markdown
 The database operation in the function failed due to a conflict. Details: %s
+```
+
+**対処法**
+
+```markdown
+Retry the operation.
 ```

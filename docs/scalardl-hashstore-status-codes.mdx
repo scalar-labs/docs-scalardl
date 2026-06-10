@@ -27,10 +27,22 @@ The following are status codes and messages for the user error category.
 The PUT operation for the mutable database must have a namespace and table.
 ```
 
+**Solution**
+
+```markdown
+Provide both a namespace and table name for the PUT operation.
+```
+
 ### `DL-HASH-STORE-414002`
 
 **Message**
 
 ```markdown
 An unsupported data type is specified in the PUT operation. Data type: %s
+```
+
+**Solution**
+
+```markdown
+Use a supported data type for the PUT operation. Check the documentation for valid data types.
 ```

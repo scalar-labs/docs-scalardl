@@ -288,6 +288,12 @@ scalardl validate-ledger --properties client.properties --asset-id 'some_asset,0
 
 ## `generic-contracts`
 
+:::tip
+
+汎用コントラクトは ScalarDL 3.10 で導入されましたが、ScalarDL 3.12 でリリースされた HashStore は、汎用コントラクトをラップしたより高次の抽象化を提供します。ほとんどのユースケースでは、汎用コントラクトを直接使用するよりも、HashStore を使用する方がシンプルで効率的です。詳細については、ScalarDL の最新版の [ScalarDL HashStore をはじめよう](./getting-started-hashstore.mdx)をご参照ください。
+
+:::
+
 汎用コントラクトベースの構成向けにコマンドを実行します。これは、`scalardl` コマンドのサブコマンドとほぼ同じです。唯一の違いは、`validate-ledger` サブコマンドで、生のアセット ID ではなく、汎用コントラクトで用いられるオブジェクト ID でアセットを指定できることです。他のサブコマンドについては、次の[サブコマンド](#サブコマンド)セクションの対応する各コマンドを参照してください。
 
 :::tip

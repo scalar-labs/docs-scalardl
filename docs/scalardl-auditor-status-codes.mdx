@@ -28,12 +28,24 @@ The following are status codes and messages for the validation error category.
 The nonce has already been used.
 ```
 
+**Solution**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ### `DL-AUDITOR-305001`
 
 **Message**
 
 ```markdown
-The request is tampered.
+The request has been tampered with.
+```
+
+**Solution**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
 ```
 
 ### `DL-AUDITOR-305002`
@@ -44,12 +56,24 @@ The request is tampered.
 The specified asset proof doesn't exist in Ledger.
 ```
 
+**Solution**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ### `DL-AUDITOR-305003`
 
 **Message**
 
 ```markdown
 The specified request proof doesn't exist.
+```
+
+**Solution**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
 ```
 
 ### `DL-AUDITOR-305004`
@@ -60,12 +84,24 @@ The specified request proof doesn't exist.
 Hash validation failed.
 ```
 
+**Solution**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ### `DL-AUDITOR-305005`
 
 **Message**
 
 ```markdown
 The specified lock entry doesn't exist. A bug might exist, or tampering might have occurred.
+```
+
+**Solution**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
 ```
 
 ### `DL-AUDITOR-305006`
@@ -76,6 +112,12 @@ The specified lock entry doesn't exist. A bug might exist, or tampering might ha
 An invalid asset proof is given. Namespace: %s; Asset ID: %s
 ```
 
+**Solution**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ### `DL-AUDITOR-305007`
 
 **Message**
@@ -84,12 +126,66 @@ An invalid asset proof is given. Namespace: %s; Asset ID: %s
 The expected asset record doesn't exist.
 ```
 
+**Solution**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ### `DL-AUDITOR-305008`
 
 **Message**
 
 ```markdown
 The specified asset and the asset lock are inconsistent.
+```
+
+**Solution**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+### `DL-AUDITOR-305009`
+
+**Message**
+
+```markdown
+The specified lock type is not supported. Type: %s
+```
+
+**Solution**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+### `DL-AUDITOR-305010`
+
+**Message**
+
+```markdown
+readUnlock is used for unlocked or write-locked assets.
+```
+
+**Solution**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+### `DL-AUDITOR-305011`
+
+**Message**
+
+```markdown
+writeUnlock is used for unlocked or read-locked assets.
+```
+
+**Solution**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
 ```
 
 ## `DL-AUDITOR-4xxxx` status codes
@@ -104,12 +200,24 @@ The following are status codes and messages for the user error category.
 The lock must be validated before it can be released.
 ```
 
+**Solution**
+
+```markdown
+Validate the lock before attempting to release it.
+```
+
 ### `DL-AUDITOR-409001`
 
 **Message**
 
 ```markdown
 The specified asset is not found.
+```
+
+**Solution**
+
+```markdown
+Verify the asset ID and namespace are correct and the asset has been created.
 ```
 
 ### `DL-AUDITOR-414001`
@@ -120,6 +228,12 @@ The specified asset is not found.
 %s must be set if HMAC authentication is used.
 ```
 
+**Solution**
+
+```markdown
+Set 'scalar.dl.auditor.authentication.hmac.cipher_key' in the Auditor configuration file (e.g., auditor.properties). Use an unpredictable and long value for security.
+```
+
 ### `DL-AUDITOR-414002`
 
 **Message**
@@ -128,12 +242,24 @@ The specified asset is not found.
 Authentication between Ledger and Auditor is not correctly configured. Set %s along with a private key with %s or %s if you use digital signature authentication.
 ```
 
+**Solution**
+
+```markdown
+For digital signature authentication, set these properties in auditor.properties: 'scalar.dl.auditor.cert_holder_id' and either 'scalar.dl.auditor.private_key_path' (path to PEM file) or 'scalar.dl.auditor.private_key_pem' (PEM-encoded data). Ensure the authentication method matches the Ledger configuration.
+```
+
 ### `DL-AUDITOR-414003`
 
 **Message**
 
 ```markdown
 Authentication between Ledger and Auditor is not correctly configured. Set %s if you use HMAC authentication.
+```
+
+**Solution**
+
+```markdown
+For HMAC authentication between Ledger and Auditor, set 'scalar.dl.auditor.servers.authentication.hmac.secret_key' in auditor.properties with a shared secret. This must match the Ledger's corresponding HMAC secret key.
 ```
 
 ## `DL-AUDITOR-5xxxx` status codes
@@ -148,12 +274,24 @@ The following are status codes and messages for the internal error category.
 Binding the request proof failed. Details: %s
 ```
 
+**Solution**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
+```
+
 ### `DL-AUDITOR-500002`
 
 **Message**
 
 ```markdown
 Getting the request proof failed. Details: %s
+```
+
+**Solution**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
 ```
 
 ### `DL-AUDITOR-500003`
@@ -164,12 +302,24 @@ Getting the request proof failed. Details: %s
 Binding the asset record failed. Details: %s
 ```
 
+**Solution**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
+```
+
 ### `DL-AUDITOR-500004`
 
 **Message**
 
 ```markdown
 Retrieving the asset records failed. Details: %s
+```
+
+**Solution**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
 ```
 
 ### `DL-AUDITOR-500005`
@@ -180,28 +330,10 @@ Retrieving the asset records failed. Details: %s
 Getting the asset lock failed. Namespace: %s; Asset ID: %s; Details: %s
 ```
 
-### `DL-AUDITOR-502001`
-
-**Message**
+**Solution**
 
 ```markdown
-The specified lock type is not supported. Type: %s
-```
-
-### `DL-AUDITOR-502002`
-
-**Message**
-
-```markdown
-readUnlock is used for unlocked or write-locked assets.
-```
-
-### `DL-AUDITOR-502003`
-
-**Message**
-
-```markdown
-writeUnlock is used for unlocked or read-locked assets.
+Check the error details in the logs and verify your database configuration and connection.
 ```
 
 ### `DL-AUDITOR-504001`
@@ -209,7 +341,13 @@ writeUnlock is used for unlocked or read-locked assets.
 **Message**
 
 ```markdown
-The specified lock entry has been taken by write.
+The specified lock entry is currently held by a writer.
+```
+
+**Solution**
+
+```markdown
+Retry the operation.
 ```
 
 ### `DL-AUDITOR-504002`
@@ -220,10 +358,22 @@ The specified lock entry has been taken by write.
 The specified asset record is in use.
 ```
 
+**Solution**
+
+```markdown
+Retry the operation.
+```
+
 ### `DL-AUDITOR-504003`
 
 **Message**
 
 ```markdown
 The entry has already been recovered, or an issue might have occurred.
+```
+
+**Solution**
+
+```markdown
+Retry the operation. Contact your system administrator to check for any signs of malicious activity if the issue persists.
 ```

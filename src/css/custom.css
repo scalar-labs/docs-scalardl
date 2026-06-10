@@ -37,6 +37,11 @@
   --ifm-h1-font-size: 2.25rem;
 }
 
+/* Horizontal line separating tab labels from tab content */
+.tabs {
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+
 /* Make the sidebar navigation text smaller (default font size is 12pt). */
 .menu {
   font-size: 0.875rem;
@@ -868,6 +873,13 @@ html[data-theme="dark"] .notification-dropdown {
 .navbar__link--cta:hover, .navbar__link--cta:focus {
   color: white;
   opacity: 88%;
+}
+
+/* Hide CTA button on mobile to prevent overlapping the search button */
+@media (max-width: 996px) {
+  .navbar__link--cta {
+    display: none;
+  }
 }
 
 /* Ask AI button styles */

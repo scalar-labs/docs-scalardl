@@ -400,6 +400,12 @@ scalardl validate-ledger --properties client.properties --asset-id 'some_asset,0
 
 ## `generic-contracts`
 
+:::tip
+
+Although generic contracts were introduced in ScalarDL 3.10, HashStore, released in ScalarDL 3.12, provides a higher-level abstraction that wraps generic contracts. For most use cases, using HashStore is simpler and more efficient than using generic contracts directly. For details, see [Get Started with ScalarDL HashStore](./getting-started-hashstore.mdx) in the latest version of ScalarDL.
+
+:::
+
 Run commands for a generic-contracts-based setup, which are almost the same subcommands for the `scalardl` command. The only difference is in the `validate-ledger` subcommand, where you can specify assets by object IDs of the generic-contracts context instead of the raw asset IDs. For the other subcommands, see each corresponding command in the following [Subcommands](#subcommands) section.
 
 :::tip

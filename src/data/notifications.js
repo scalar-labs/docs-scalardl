@@ -1,6 +1,28 @@
 // This file contains the notifications data and a function to retrieve it.
 // The notifications are stored in an array of objects, each containing a message in multiple languages and URLs for those messages.
 const notificationsList = [
+  // {
+  //   message: {
+  //     en: 'XXX',
+  //     ja: 'XXX'
+  //   },
+  //   url: {
+  //     en: 'XXX?utm_source=docs-site&utm_medium=notifications',
+  //     ja: 'XXX?utm_source=docs-site&utm_medium=notifications'
+  //   },
+  //   unread: true
+  // },
+  {
+    message: {
+      en: 'Blog post: ScalarDL 3.13 has been released!',
+      ja: 'ブログ記事: ScalarDL 3.13 をリリースしました！'
+    },
+    url: {
+      en: 'https://medium.com/scalar-engineering/scalardl-3-13-has-been-released-a790a3b8a065?utm_source=docs-site&utm_medium=notifications',
+      ja: 'https://medium.com/scalar-engineering-ja/scalardl-3-13-%E3%81%8C%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%B9%E3%81%95%E3%82%8C%E3%81%BE%E3%81%97%E3%81%9F-8c6ea26c2bf2?utm_source=docs-site&utm_medium=notifications'
+    },
+    unread: true
+  },
   {
     message: {
       en: 'Find out about how to manage namespaces in ScalarDL 3.13',
