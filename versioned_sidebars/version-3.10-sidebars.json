@@ -107,6 +107,11 @@
             },
             {
               "type": "doc",
+              "id": "manage-contract-and-function-lifecycle",
+              "label": "Manage Contract and Function Lifecycle"
+            },
+            {
+              "type": "doc",
               "id": "use-generic-contracts",
               "label": "Use Generic Contracts"
             }
@@ -747,6 +752,11 @@
               "type": "doc",
               "id": "how-to-write-function",
               "label": "ファンクションを作成"
+            },
+            {
+              "type": "doc",
+              "id": "manage-contract-and-function-lifecycle",
+              "label": "コントラクトとファンクションのライフサイクルを管理"
             },
             {
               "type": "doc",

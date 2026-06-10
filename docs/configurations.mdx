@@ -79,6 +79,18 @@ This configuration is deprecated and will be deleted in release 5.0.0 since Ledg
 - **Description:** A flag to enable function for mutable database. This field determines whether the function for mutable database is enabled.
 - **Default value:** `true`
 
+### `function.non_privileged_port_registration.enabled`
+
+- **Field:** `scalar.dl.ledger.function.non_privileged_port_registration.enabled`
+- **Description:** A flag to enable function registration via the non-privileged port. When set to `true`, tenants can register functions through the non-privileged port.
+- **Default value:** `false`
+
+### `function.non_privileged_port_registration.overwrite.enabled`
+
+- **Field:** `scalar.dl.ledger.function.non_privileged_port_registration.overwrite.enabled`
+- **Description:** A flag to allow overwriting an existing function when registering via the non-privileged port. When set to `true`, tenants can overwrite existing functions through the non-privileged port.
+- **Default value:** `false`
+
 ### `name`
 
 - **Field:** `scalar.dl.ledger.name`
