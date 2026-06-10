@@ -135,6 +135,11 @@ const sidebars = {
               id: 'how-to-write-function',
               label: 'Write a Function',
             },
+            {
+              type: 'doc',
+              id: 'manage-contract-and-function-lifecycle',
+              label: 'Manage Contract and Function Lifecycle',
+            },
           ],
         },
         {
@@ -819,6 +824,11 @@ const sidebars = {
               type: 'doc',
               id: 'how-to-write-function',
               label: 'ファンクションを作成',
+            },
+            {
+              type: 'doc',
+              id: 'manage-contract-and-function-lifecycle',
+              label: 'コントラクトとファンクションのライフサイクルを管理',
             },
           ],
         },
