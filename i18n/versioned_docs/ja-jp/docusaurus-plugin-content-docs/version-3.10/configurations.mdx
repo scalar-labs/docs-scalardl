@@ -82,6 +82,18 @@ Ledger サーバーでは、サービスポート設定、認証設定、TLS 設
 - **説明:** 変更可能なデータベースの機能を有効にするオプション。このフィールドは、変更可能なデータベースの機能が有効かどうかを決定します。
 - **デフォルト値:** `true`
 
+### `function.non_privileged_port_registration.enabled`
+
+- **フィールド:** `scalar.dl.ledger.function.non_privileged_port_registration.enabled`
+- **説明:** 非特権ポートを通じたファンクション登録を有効にするオプション。`true` に設定すると、クライアントが非特権ポートを通じてファンクションを登録できるようになります。
+- **デフォルト値:** `false`
+
+### `function.non_privileged_port_registration.overwrite.enabled`
+
+- **フィールド:** `scalar.dl.ledger.function.non_privileged_port_registration.overwrite.enabled`
+- **説明:** 非特権ポートを通じたファンクション登録時に既存のファンクションの上書きを許可するオプション。`true` に設定すると、クライアントが非特権ポートを通じて既存のファンクションを上書きできるようになります。
+- **デフォルト値:** `false`
+
 ### `name`
 
 - **フィールド:** `scalar.dl.ledger.name`
