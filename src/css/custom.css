@@ -487,16 +487,6 @@ html[data-theme="dark"] a[class^='tag_'] {
   vertical-align: middle;
 }
 
-/* Scale <NewBadge /> to a fixed size so it matches across all heading levels */
-.markdown h1 .badge--new,
-.markdown h2 .badge--new,
-.markdown h3 .badge--new,
-.markdown h4 .badge--new,
-.markdown h5 .badge--new,
-.markdown h6 .badge--new {
-  font-size: 0.75rem;
-}
-
 /* The following Font Awesome-related styles are for the question mark next to the Editions tags. These styles are currently not being used but might be useful later. */
 a[class^='fa-solid fa-circle-question'] {
   color: #6B7280;
