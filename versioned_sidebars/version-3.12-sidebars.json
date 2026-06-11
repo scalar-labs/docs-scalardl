@@ -68,12 +68,12 @@
         {
           "type": "doc",
           "id": "getting-started-hashstore",
-          "label": "Use HashStore"
+          "label": "Use HashStore [NEW]"
         },
         {
           "type": "doc",
           "id": "getting-started-tablestore",
-          "label": "Use TableStore"
+          "label": "Use TableStore [NEW]"
         },
         {
           "type": "doc",
@@ -129,12 +129,12 @@
             {
               "type": "doc",
               "id": "how-to-write-applications-with-hashstore",
-              "label": "Write an Application with HashStore"
+              "label": "Write an Application with HashStore [NEW]"
             },
             {
               "type": "doc",
               "id": "how-to-write-applications-with-tablestore",
-              "label": "Write an Application with TableStore"
+              "label": "Write an Application with TableStore [NEW]"
             },
             {
               "type": "doc",
@@ -225,12 +225,12 @@
             {
               "type": "doc",
               "id": "scalardl-hashstore-command-reference",
-              "label": "HashStore Commands"
+              "label": "HashStore Commands [NEW]"
             },
             {
               "type": "doc",
               "id": "scalardl-tablestore-command-reference",
-              "label": "TableStore Commands"
+              "label": "TableStore Commands [NEW]"
             },
             {
               "type": "doc",
@@ -245,7 +245,7 @@
             {
               "type": "doc",
               "id": "sql-grammar",
-              "label": "ScalarDL TableStore SQL Grammar"
+              "label": "ScalarDL TableStore SQL Grammar [NEW]"
             }
           ]
         }
@@ -628,12 +628,12 @@
         {
           "type": "doc",
           "id": "scalardl-hashstore-status-codes",
-          "label": "ScalarDL HashStore Error Codes"
+          "label": "ScalarDL HashStore Error Codes [NEW]"
         },
         {
           "type": "doc",
           "id": "scalardl-tablestore-status-codes",
-          "label": "ScalarDL TableStore Error Codes"
+          "label": "ScalarDL TableStore Error Codes [NEW]"
         }
       ]
     },
@@ -741,12 +741,12 @@
         {
           "type": "doc",
           "id": "getting-started-hashstore",
-          "label": "HashStore を使用"
+          "label": "HashStore を使用 [NEW]"
         },
         {
           "type": "doc",
           "id": "getting-started-tablestore",
-          "label": "TableStore を使用"
+          "label": "TableStore を使用 [NEW]"
         },
         {
           "type": "doc",
@@ -802,12 +802,12 @@
             {
               "type": "doc",
               "id": "how-to-write-applications-with-hashstore",
-              "label": "HashStore を使用してアプリケーションを書く"
+              "label": "HashStore を使用してアプリケーションを書く [NEW]"
             },
             {
               "type": "doc",
               "id": "how-to-write-applications-with-tablestore",
-              "label": "TableStore を使用してアプリケーションを書く"
+              "label": "TableStore を使用してアプリケーションを書く [NEW]"
             },
             {
               "type": "doc",
@@ -898,12 +898,12 @@
             {
               "type": "doc",
               "id": "scalardl-hashstore-command-reference",
-              "label": "HashStore コマンドリファレンス"
+              "label": "HashStore コマンドリファレンス [NEW]"
             },
             {
               "type": "doc",
               "id": "scalardl-tablestore-command-reference",
-              "label": "TableStore コマンドリファレンス"
+              "label": "TableStore コマンドリファレンス [NEW]"
             },
             {
               "type": "doc",
@@ -918,7 +918,7 @@
             {
               "type": "doc",
               "id": "sql-grammar",
-              "label": "ScalarDL TableStore SQL の文法"
+              "label": "ScalarDL TableStore SQL の文法 [NEW]"
             }
           ]
         }
@@ -1301,12 +1301,12 @@
         {
           "type": "doc",
           "id": "scalardl-hashstore-status-codes",
-          "label": "ScalarDL HashStore エラーコード"
+          "label": "ScalarDL HashStore エラーコード [NEW]"
         },
         {
           "type": "doc",
           "id": "scalardl-tablestore-status-codes",
-          "label": "ScalarDL TableStore エラーコード"
+          "label": "ScalarDL TableStore エラーコード [NEW]"
         }
       ]
     },

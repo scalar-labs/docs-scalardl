@@ -16,6 +16,13 @@ import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 
+function parseBadgeLabel(label: React.ReactNode): React.ReactNode {
+  if (typeof label !== 'string') return label;
+  const match = label.match(/^(.+?)\s*\[([A-Z]+)\]$/);
+  if (!match) return label;
+  return <>{match[1]}<span className={`badge--${match[2].toLowerCase()}`}> {match[2].charAt(0) + match[2].slice(1).toLowerCase()}</span></>;
+}
+
 type CategoryLinkCell = {
   cell: number;
   links: string[];
@@ -199,11 +206,11 @@ const CategoryGrid = () => {
                 {categoryLinkCell.links.map((cellLink, k) => (
                   cellLink ? (
                     <Link key={`${j}-${k}`} className="category-cell-link" to={cellLink}>
-                      <span className="category-cell-link-text">{categoryLinkCell.labels[k]}</span>
+                      <span className="category-cell-link-text">{parseBadgeLabel(categoryLinkCell.labels[k])}</span>
                     </Link>
                   ) : (
                     <span key={`${j}-${k}`} className="recent-features-cell">
-                      <span className="category-cell-link-text">{categoryLinkCell.labels[k]}</span>
+                      <span className="category-cell-link-text">{parseBadgeLabel(categoryLinkCell.labels[k])}</span>
                     </span>
                   )
                 ))}
@@ -221,11 +228,11 @@ const CategoryGrid = () => {
                 {categoryLinkCell.links.map((cellLink, k) => (
                   cellLink ? (
                     <Link key={`${j}-${k}`} className="category-cell-link" to={cellLink}>
-                      <span className="category-cell-link-text">{categoryLinkCell.labels[k]}</span>
+                      <span className="category-cell-link-text">{parseBadgeLabel(categoryLinkCell.labels[k])}</span>
                     </Link>
                   ) : (
                     <span key={`${j}-${k}`} className="category-cell">
-                      <span className="category-cell-link-text">{categoryLinkCell.labels[k]}</span>
+                      <span className="category-cell-link-text">{parseBadgeLabel(categoryLinkCell.labels[k])}</span>
                     </span>
                   )
                 ))}

@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { useWindowSize } from '@docusaurus/theme-common';
-import { useDoc } from '@docusaurus/plugin-content-docs/client';
+import { useDoc, useDocsSidebar } from '@docusaurus/plugin-content-docs/client';
 import DocItemPaginator from '@theme/DocItem/Paginator';
 import DocVersionBanner from '@theme/DocVersionBanner';
 import DocVersionBadge from '@theme/DocVersionBadge';
@@ -13,6 +13,21 @@ import DocBreadcrumbs from '@theme/DocBreadcrumbs';
 import ContentVisibility from '@theme/ContentVisibility';
 
 import styles from './styles.module.css';
+
+const BADGE_PATTERN = /\[[A-Z]+\]$/;
+
+// Recursively search sidebar items for a link matching permalink that has a badge marker.
+function sidebarItemHasBadge(items: any[], permalink: string): boolean {
+  for (const item of items) {
+    if (item.type === 'link' && item.href === permalink && BADGE_PATTERN.test(item.label ?? '')) {
+      return true;
+    }
+    if (item.type === 'category' && Array.isArray(item.items)) {
+      if (sidebarItemHasBadge(item.items, permalink)) return true;
+    }
+  }
+  return false;
+}
 
 // Define the type for the useDocTOC return value.
 interface DocTOC {
@@ -44,8 +59,10 @@ function useDocTOC(): DocTOC {
 const DocItemLayout: React.FC<DocItemLayoutProps> = ({ children }) => {
   const docTOC = useDocTOC();
   const { metadata, frontMatter } = useDoc();
+  const sidebar = useDocsSidebar();
   const hideTOC = frontMatter.hide_table_of_contents;
   const windowSize = useWindowSize();
+  const isNew = frontMatter['new'] || (sidebar != null && sidebarItemHasBadge(sidebar.items, metadata.permalink));
 
   return (
     <div className="row">
@@ -53,7 +70,7 @@ const DocItemLayout: React.FC<DocItemLayoutProps> = ({ children }) => {
         <ContentVisibility metadata={metadata} />
         <DocVersionBanner />
         <div className={styles.docItemContainer}>
-          <article className={clsx(frontMatter['new'] && 'doc-new')}>
+          <article className={clsx(isNew && 'doc-new')}>
             <DocBreadcrumbs />
             <DocVersionBadge />
             {docTOC.mobile}
