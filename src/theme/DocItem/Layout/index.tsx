@@ -16,8 +16,15 @@ import styles from './styles.module.css';
 
 const BADGE_PATTERN = /\[[A-Z]+\]$/;
 
+type SidebarItem = {
+  type: string;
+  href?: string;
+  label?: string;
+  items?: SidebarItem[];
+};
+
 // Recursively search sidebar items for a link matching permalink that has a badge marker.
-function sidebarItemHasBadge(items: any[], permalink: string): boolean {
+function sidebarItemHasBadge(items: SidebarItem[], permalink: string): boolean {
   for (const item of items) {
     if (item.type === 'link' && item.href === permalink && BADGE_PATTERN.test(item.label ?? '')) {
       return true;
@@ -73,6 +80,7 @@ const DocItemLayout: React.FC<DocItemLayoutProps> = ({ children }) => {
           <article className={clsx(isNew && 'doc-new')}>
             <DocBreadcrumbs />
             <DocVersionBadge />
+            {isNew && <span className="sr-only">New</span>}
             {docTOC.mobile}
             <DocItemContent>{children}</DocItemContent>
             <DocItemFooter />
