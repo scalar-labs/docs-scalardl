@@ -159,6 +159,27 @@ Execute the contract by running the following command:
 client/bin/scalardl execute-contract --properties tenant.properties --contract-id StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}'
 ```
 
+### Register and execute functions
+
+By default, tenants can register contracts through the non-privileged port but cannot register functions. To allow tenants to register functions, administrators must set the following Ledger configuration options:
+
+- `scalar.dl.ledger.function.non_privileged_port_registration.enabled`: Set to `true` to allow tenants to register functions through the non-privileged port. The default is `false`.
+- `scalar.dl.ledger.function.non_privileged_port_registration.overwrite.enabled`: Set to `true` to allow tenants to overwrite existing functions through the non-privileged port. The default is `false`.
+
+Once function registration is enabled, tenants can register and execute functions within their namespace in the same way as in the default namespace. For example, to register a function, run the following command:
+
+```console
+client/bin/scalardl register-function --properties tenant.properties --function-id test-function --function-binary-name com.example.function.TestFunction --function-class-file /path/to/TestFunction.class
+```
+
+To execute a function along with a contract, run the following command:
+
+```console
+client/bin/scalardl execute-contract --properties tenant.properties --contract-id StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}' --function-id test-function --function-argument '{}'
+```
+
+For details on updating contracts and functions, see [Manage Contract and Function Lifecycle](manage-contract-and-function-lifecycle.mdx).
+
 ### Validate assets
 
 You can also validate assets as usual, like in the default namespace, by running the following command:
