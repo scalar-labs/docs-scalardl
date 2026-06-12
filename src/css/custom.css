@@ -1546,3 +1546,14 @@ html[data-theme='dark'] .copy-contents-dropdown {
     padding: 0.5rem 0.75rem;
   }
 }
+
+/* Hide copy and chat controls on mobile/narrow screens */
+@media (max-width: 768px) {
+  .copy-contents-actions {
+    display: none;
+  }
+
+  .chat-with-page-wrapper {
+    display: none;
+  }
+}
