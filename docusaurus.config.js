@@ -136,6 +136,7 @@ const config = {
   },
 
   plugins: [
+    './src/plugins/copy-page-source.js',
     [
       '@docusaurus/plugin-client-redirects',
       {

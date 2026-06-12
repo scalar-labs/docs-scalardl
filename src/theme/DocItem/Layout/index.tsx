@@ -11,6 +11,8 @@ import DocItemTOCDesktop from '@theme/DocItem/TOC/Desktop';
 import DocItemContent from '@theme/DocItem/Content';
 import DocBreadcrumbs from '@theme/DocBreadcrumbs';
 import ContentVisibility from '@theme/ContentVisibility';
+import CopyContents from '@site/src/components/CopyContents';
+import ChatWithPage from '@site/src/components/ChatWithPage';
 
 import styles from './styles.module.css';
 
@@ -46,15 +48,24 @@ const DocItemLayout: React.FC<DocItemLayoutProps> = ({ children }) => {
   const { metadata, frontMatter } = useDoc();
   const hideTOC = frontMatter.hide_table_of_contents;
   const windowSize = useWindowSize();
+  const isHomePage = metadata.slug === '/';
 
   return (
+    <>
     <div className="row">
       <div className={clsx('col', !docTOC.hidden && styles.docItemCol)}>
         <ContentVisibility metadata={metadata} />
         <DocVersionBanner />
         <div className={styles.docItemContainer}>
           <article>
-            <DocBreadcrumbs />
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'nowrap', gap: '0.5rem' }}>
+              <div style={{ minWidth: 0, flex: '1 1 auto' }}>
+                <DocBreadcrumbs />
+              </div>
+              <div style={{ flex: '0 0 auto' }}>
+                <CopyContents showLlmsButtons={isHomePage} />
+              </div>
+            </div>
             <DocVersionBadge />
             {docTOC.mobile}
             <DocItemContent>{children}</DocItemContent>
@@ -72,6 +83,10 @@ const DocItemLayout: React.FC<DocItemLayoutProps> = ({ children }) => {
         </div>
       )}
     </div>
+
+    {/* Floating action button - fixed position, outside the grid */}
+    {!isHomePage && <ChatWithPage />}
+    </>
   );
 };
 
