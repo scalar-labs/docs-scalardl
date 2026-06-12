@@ -183,8 +183,12 @@ const config = {
       {
         generateLLMsTxt: true,
         generateLLMsFullTxt: false, // Disabled. We're currently using gitingest to generate a more detailed llms-full.txt file. For details, see /scripts/README.md.
+        // llmsTxtFilename: 'llms-latest.txt',
         docsDir: 'docs',
         version: 'latest',
+        pathTransformation: {
+          addPaths: ['latest'],
+        },
         title: 'ScalarDL Documentation',
         description: 'Scalable and practical Byzantine-fault detection middleware for transactional database systems',
         // Content cleaning options
