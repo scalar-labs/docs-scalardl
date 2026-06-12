@@ -27,7 +27,9 @@ jobs:
                 '',
                 'Before merging this PR, confirm the following:',
                 '',
-                '- [ ] I have updated the side navigation to include new docs or remove deleted docs (if necessary).',
+                '- [ ] I have updated the side navigation to include new docs or remove deleted docs (if necessary). If this PR introduces a new doc, I have added `[NEW]` to the:',
+                '  - [ ] Relevant sidebar `label` entries in `sidebars.js` (latest).',
+                '  - [ ] Appropriate `versioned_sidebars/version-X.Y-sidebars.json`, and to any corresponding label strings in the **Recent Features** docs under `src/components/Cards/` (and `src/components/Cards/ja-jp/` for Japanese).',
                 '- [ ] I have confirmed that this PR can be merged without waiting (if necessary).',
                 '  - An example of when a PR must wait to be merged is when the docs are part of a pending release of a new product version.'
               ].join('\n')

@@ -14,7 +14,9 @@
 
 > The following is a best-effort checklist. If any items in this checklist are not applicable to this PR or are dependent on other, unmerged PRs, please still mark the checkboxes after you have read and understood each item.
 
-- [ ] I have updated the side navigation as necessary.
+- [ ] I have updated the side navigation as necessary. If this PR introduces a new doc, I have added `[NEW]` to the:
+  - [ ] Relevant sidebar `label` entries in `sidebars.js` (latest).
+  - [ ] Appropriate `versioned_sidebars/version-X.Y-sidebars.json`, and to any corresponding label strings in the **Recent Features** docs under `src/components/Cards/` (and `src/components/Cards/ja-jp/` for Japanese).
 - [ ] I have commented my code, particularly in hard-to-understand areas.
 - [ ] I have updated the documentation to reflect the changes.
 - [ ] Any remaining open issues linked to this PR are documented and up-to-date (Jira, GitHub, etc.).
