@@ -473,7 +473,7 @@ html[data-theme="dark"] a[class^='tag_'] {
   } */
 }
 
-/* NEW badge next to H1 title on pages with new: true in frontmatter */
+/* NEW badge next to H1 title for docs marked new (sidebar label ending in [NEW]). */
 .doc-new .markdown h1:first-of-type::after {
   background-color: var(--scalar-green);
   border-radius: 3px;
