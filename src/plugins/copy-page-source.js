@@ -71,6 +71,8 @@ function resolveSource(importPath, siteDir) {
  * @returns {Promise<string>}
  */
 async function inlineMdxComponents(source, siteDir, cache) {
+  // 1. Collect all `import X from '.../file.mdx'` statements.
+  //    Only local `.mdx` files are inlinable; theme/npm imports are skipped.
   const importLineRegex =
     /^import\s+([A-Za-z0-9_]+)\s+from\s+['"]([^'"]+\.mdx)['"]\s*;?\s*$/gm;
 
@@ -84,6 +86,7 @@ async function inlineMdxComponents(source, siteDir, cache) {
 
   if (mdxImports.size === 0) return source;
 
+  // 2. Read and pre-process each referenced component file (deduplicated).
   /** @type {Map<string, string>} name → processed component body */
   const componentBodies = new Map();
   for (const [name, filePath] of mdxImports) {
@@ -94,6 +97,8 @@ async function inlineMdxComponents(source, siteDir, cache) {
       } else {
         body = await fs.promises.readFile(filePath, 'utf8');
         body = stripFrontMatter(body);
+        // Strip nested import lines (for example `import Tabs from '@theme/Tabs'`)
+        // so the inlined content doesn't contain unresolvable MDX imports.
         body = body.replace(
           /^import\s+[A-Za-z0-9_{}, *]+\s+from\s+['"][^'"]+['"]\s*;?\s*\n?/gm,
           '',
@@ -107,13 +112,22 @@ async function inlineMdxComponents(source, siteDir, cache) {
     }
   }
 
+  // 3. Replace self-closing JSX tags `<ComponentName key="val" />` with the
+  //    inlined component body (props substituted). Handles optional line breaks
+  //    inside the tag (multi-line attribute lists).
+  //    Regex breakdown:
+  //      <ComponentName   - opening
+  //      ([\s\S]*?)       - any attributes (non-greedy, allows newlines)
+  //      \s*\/>           - self-closing
   for (const [name, body] of componentBodies) {
+    // Escape the component name for use in a regex.
     const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const tagRegex = new RegExp(
       `<${escapedName}([\\s\\S]*?)\\s*\\/>`,
       'g',
     );
     source = source.replace(tagRegex, (_fullMatch, propsStr) => {
+      // Parse prop values: key="value" (double-quoted only).
       /** @type {Record<string, string>} */
       const props = {};
       const propRegex = /([A-Za-z0-9_]+)="([^"]*)"/g;
@@ -121,6 +135,7 @@ async function inlineMdxComponents(source, siteDir, cache) {
       while ((pm = propRegex.exec(propsStr)) !== null) {
         props[pm[1]] = pm[2];
       }
+      // Substitute {props.key} -> value.
       return body.replace(
         /\{props\.([A-Za-z0-9_]+)\}/g,
         (_, key) => props[key] ?? `{props.${key}}`,
@@ -128,6 +143,8 @@ async function inlineMdxComponents(source, siteDir, cache) {
     });
   }
 
+  // 4. Remove the import lines for all resolved `.mdx` components (both those
+  //    that were inlined above and any that were imported but never used).
   for (const name of componentBodies.keys()) {
     const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     source = source.replace(
@@ -158,7 +175,14 @@ module.exports = function copyPageSourcePlugin(context) {
   return {
     name: 'copy-page-source-plugin',
 
+    /**
+     * allContentLoaded is the only lifecycle hook that receives allContent
+     * (the loaded content from every other plugin, including the docs plugin).
+     * We capture the permalink -> source path mapping here for use in postBuild.
+     */
+
     async allContentLoaded({ allContent }) {
+      // The docs plugin registers its content under this well-known key.
       const docsContent =
         allContent?.['docusaurus-plugin-content-docs']?.['default'];
 
