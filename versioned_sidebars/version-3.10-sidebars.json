@@ -113,7 +113,7 @@
             {
               "type": "doc",
               "id": "use-generic-contracts",
-              "label": "Use Generic Contracts"
+              "label": "Use Generic Contracts [NEW]"
             }
           ]
         },
@@ -134,7 +134,7 @@
             {
               "type": "doc",
               "id": "how-to-write-applications-with-generic-contracts",
-              "label": "Write an Application with Generic Contracts"
+              "label": "Write an Application with Generic Contracts [NEW]"
             }
           ]
         },
@@ -761,7 +761,7 @@
             {
               "type": "doc",
               "id": "use-generic-contracts",
-              "label": "汎用コントラクトを使用"
+              "label": "汎用コントラクトを使用 [NEW]"
             }
           ]
         },
@@ -782,7 +782,7 @@
             {
               "type": "doc",
               "id": "how-to-write-applications-with-generic-contracts",
-              "label": "汎用コントラクトを用いたアプリケーションを作成"
+              "label": "汎用コントラクトを用いたアプリケーションを作成 [NEW]"
             }
           ]
         },
