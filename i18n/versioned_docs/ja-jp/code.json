@@ -99,12 +99,16 @@
     "description": "The label used to tell the user that he's browsing an unreleased doc version"
   },
   "theme.docs.versions.unmaintainedVersionLabel": {
-    "message": "これはバージョン{versionLabel}の {siteTitle} のドキュメントで現在はメンテナンスされていません。",
+    "message": "これは {siteTitle} {versionLabel} のドキュメントです。このソフトウェアバージョンは現在アクティブにメンテナンスされていません。",
     "description": "The label used to tell the user that he's browsing an unmaintained doc version"
   },
   "theme.docs.versions.latestVersionSuggestionLabel": {
-    "message": "最新のドキュメントは{latestVersionLink} ({versionLabel}) を見てください。",
+    "message": "ScalarDL {versionLabel} への{upgradeVersionLink}をご検討ください。",
     "description": "The label used to tell the user to check the latest version"
+  },
+  "theme.docs.versions.upgradeVersionLinkLabel": {
+    "message": "アップグレード",
+    "description": "The label used for the latest version suggestion link label when the banner is 'unmaintained'"
   },
   "theme.docs.versions.latestVersionLinkLabel": {
     "message": "最新バージョン",
