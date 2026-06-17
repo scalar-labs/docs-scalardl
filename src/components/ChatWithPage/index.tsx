@@ -11,7 +11,7 @@ const PERPLEXITY_URL = 'https://www.perplexity.ai/';
 
 function buildAIPrompt(pageUrl: string, isJapanese: boolean): string {
   if (isJapanese) {
-    return `${pageUrl} のドキュメントを使って、このトピックについて理解するのを助けてください。`;
+    return `${pageUrl} のドキュメントを使って、このトピックを理解するのを手伝ってほしいです。`;
   }
   return `Using the documentation at ${pageUrl}, please help me understand this topic.`;
 }

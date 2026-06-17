@@ -286,14 +286,6 @@
     "message": "このページは非公開です。 検索対象外となり、このページのリンクに直接アクセスできるユーザーのみに公開されます。",
     "description": "The unlisted content banner message"
   },
-  "copyContents.trigger": {
-    "message": "コンテンツをコピー",
-    "description": "Left label in the inline copy card"
-  },
-  "copyContents.inlineCopyBtn": {
-    "message": "コンテンツをコピー",
-    "description": "Label for the Copy dropdown trigger"
-  },
   "copyContents.copyMarkdown": {
     "message": "ページを Markdown でコピー",
     "description": "Label for the copy-page-as-markdown button"
