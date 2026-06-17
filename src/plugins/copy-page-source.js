@@ -59,6 +59,97 @@ function resolveSource(importPath, siteDir) {
 }
 
 /**
+ * Check whether a URL should be treated as external and left unchanged.
+ * @param {string} url
+ * @returns {boolean}
+ */
+function isExternalOrSpecialUrl(url) {
+  return /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(url);
+}
+
+/**
+ * Remove markdown/MDX extension from route-like paths.
+ * @param {string} pathname
+ * @returns {string}
+ */
+function stripDocExtension(pathname) {
+  return pathname.replace(/\.mdx?$/i, '');
+}
+
+/**
+ * Convert a markdown link destination to an absolute URL based on page permalink.
+ * Keeps external/special links unchanged and resolves relative links version-safely.
+ *
+ * @param {string} destination
+ * @param {URL} pageUrl
+ * @param {string} siteOrigin
+ * @returns {string}
+ */
+function absolutizeDestination(destination, pageUrl, siteOrigin) {
+  if (!destination) return destination;
+
+  const trimmed = destination.trim();
+  if (!trimmed) return destination;
+
+  const angleWrapped = trimmed.startsWith('<') && trimmed.endsWith('>');
+  const raw = angleWrapped ? trimmed.slice(1, -1).trim() : trimmed;
+
+  if (!raw || isExternalOrSpecialUrl(raw)) {
+    return destination;
+  }
+
+  /** @type {URL} */
+  let resolved;
+  if (raw.startsWith('#')) {
+    resolved = new URL(pageUrl.toString());
+    resolved.hash = raw;
+  } else if (raw.startsWith('/')) {
+    resolved = new URL(raw, siteOrigin);
+  } else {
+    resolved = new URL(raw, pageUrl);
+  }
+
+  resolved.pathname = stripDocExtension(resolved.pathname);
+
+  const normalized = `${resolved.origin}${resolved.pathname}${resolved.search}${resolved.hash}`;
+  return angleWrapped ? `<${normalized}>` : normalized;
+}
+
+/**
+ * Rewrite markdown inline links/images into absolute URLs using the page permalink.
+ * The rewrite is skipped inside fenced code blocks.
+ *
+ * @param {string} markdown
+ * @param {string} permalink
+ * @param {string} siteUrl
+ * @returns {string}
+ */
+function absolutizeMarkdownLinks(markdown, permalink, siteUrl) {
+  const pageUrl = new URL(permalink, siteUrl);
+  const siteOrigin = new URL('/', siteUrl).toString();
+
+  const lines = markdown.split('\n');
+  let inFence = false;
+  const rewritten = lines.map((line) => {
+    if (/^\s*(```|~~~)/.test(line)) {
+      inFence = !inFence;
+      return line;
+    }
+
+    if (inFence) return line;
+
+    // Matches inline markdown links/images with destinations that don't contain whitespace.
+    // Titles are uncommon in this docs set; we keep this intentionally strict to avoid over-rewriting.
+    return line.replace(/(!?\[[^\]]*\])\((<[^>]+>|[^\s)]+)\)/g, (_match, text, dest) => {
+      const normalizedDest = absolutizeDestination(dest, pageUrl, siteOrigin);
+      return `${text}(${normalizedDest})`;
+    });
+  });
+
+  return rewritten.join('\n');
+}
+
+/**
  * For a doc's MDX source string, find every `import X from '.../file.mdx'`
  * statement, read the referenced `.mdx` file, and replace any self-closing JSX
  * usage `<X prop="val" />` with the inlined component content (with props
@@ -171,6 +262,7 @@ module.exports = function copyPageSourcePlugin(context) {
   let docEntries = [];
   /** @type {Map<string, string>} Absolute path → processed component body, shared across all docs. */
   const componentCache = new Map();
+  const siteUrl = context.siteConfig?.url;
 
   return {
     name: 'copy-page-source-plugin',
@@ -182,25 +274,33 @@ module.exports = function copyPageSourcePlugin(context) {
      */
 
     async allContentLoaded({ allContent }) {
-      // The docs plugin registers its content under this well-known key.
-      const docsContent =
-        allContent?.['docusaurus-plugin-content-docs']?.['default'];
+      // The docs plugin can register multiple instances (for example, per locale).
+      const docsInstances = allContent?.['docusaurus-plugin-content-docs'];
 
-      if (!docsContent?.loadedVersions) {
-        console.warn('[copy-page-source] No docs content found in allContentLoaded.');
+      if (!docsInstances || typeof docsInstances !== 'object') {
+        console.warn('[copy-page-source] No docs instances found in allContentLoaded.');
         return;
       }
 
       docEntries = [];
-      for (const version of docsContent.loadedVersions) {
-        for (const doc of version.docs) {
-          const { permalink, source } = doc;
-          if (!permalink || !source) continue;
-          docEntries.push({
-            permalink,
-            sourcePath: resolveSource(source, context.siteDir),
-          });
+
+      for (const docsContent of Object.values(docsInstances)) {
+        if (!docsContent?.loadedVersions) continue;
+        for (const version of docsContent.loadedVersions) {
+          for (const doc of version.docs) {
+            const { permalink, source } = doc;
+            if (!permalink || !source) continue;
+            docEntries.push({
+              permalink,
+              sourcePath: resolveSource(source, context.siteDir),
+            });
+          }
         }
+      }
+
+      if (docEntries.length === 0) {
+        console.warn('[copy-page-source] No docs were found across docs instances.');
+        return;
       }
 
       console.log(`[copy-page-source] Captured ${docEntries.length} doc entries.`);
@@ -212,13 +312,22 @@ module.exports = function copyPageSourcePlugin(context) {
         return;
       }
 
+      const localeDir = path.basename(outDir);
+
       const writes = docEntries.map(({ permalink, sourcePath }) => {
-        const destPath = path.join(outDir, permalink, 'source.md');
+        const permalinkPath = permalink.replace(/^\//, '');
+        const outputPath = permalinkPath.startsWith(`${localeDir}/`)
+          ? permalinkPath.slice(localeDir.length + 1)
+          : permalinkPath;
+        const destPath = path.join(outDir, outputPath, 'source.md');
         return fs.promises
           .readFile(sourcePath, 'utf8')
           .then(async (raw) => {
             let content = stripFrontMatter(raw);
             content = await inlineMdxComponents(content, context.siteDir, componentCache);
+            if (siteUrl) {
+              content = absolutizeMarkdownLinks(content, permalink, siteUrl);
+            }
             content = content.trimStart();
             await fs.promises.mkdir(path.dirname(destPath), { recursive: true });
             await fs.promises.writeFile(destPath, content, 'utf8');
