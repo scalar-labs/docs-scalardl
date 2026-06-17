@@ -118,7 +118,7 @@
             {
               "type": "doc",
               "id": "use-table-oriented-generic-contracts",
-              "label": "Use Table-Oriented Generic Contracts"
+              "label": "Use Table-Oriented Generic Contracts [NEW]"
             }
           ]
         },
@@ -771,7 +771,7 @@
             {
               "type": "doc",
               "id": "use-table-oriented-generic-contracts",
-              "label": "テーブル指向汎用コントラクトの使用"
+              "label": "テーブル指向汎用コントラクトの使用 [NEW]"
             }
           ]
         },

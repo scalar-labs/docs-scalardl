@@ -15,6 +15,9 @@
   --ifm-color-primary-lightest: #2673BB;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --scalar-green: #78C740;
+  --scalar-green-alpha-low: rgba(120, 199, 64, 0.08);
+  --scalar-green-alpha-medium: rgba(120, 199, 64, 0.13);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -225,7 +228,11 @@ table, pre, code, img, iframe { /* Fix for common elements that might cause over
 
   &:hover {
     color: var(--ifm-color-primary);
-    text-decoration: underline;
+    text-decoration: none;
+
+    .category-cell-link-text {
+      text-decoration: underline;
+    }
   }
 }
 
@@ -299,7 +306,7 @@ table, pre, code, img, iframe { /* Fix for common elements that might cause over
 }
 
 .recent-features-icon {
-  color: #78C740;
+  color: var(--scalar-green);
   /* Fix for FontAwesome icon FOUC. */
   width: 1em !important;
   height: 1em !important;
@@ -322,6 +329,50 @@ html[data-theme="dark"] .category-cell-multiple-links {
     border-top: 0;
     border-bottom: 0;
   }
+}
+
+/* NEW badge for items in the recent column and sidebar navigation */
+.badge--new {
+  background-color: var(--scalar-green);
+  border-radius: 3px;
+  color: #fff;
+  display: inline-block;
+  font-size: 0.65em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-left: 4px;
+  padding: 2px 5px;
+  text-decoration: none;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+a:hover .badge--new {
+  text-decoration: none;
+}
+
+/* Recent Features row background */
+.recent-features-cell-bg {
+  background-color: var(--scalar-green-alpha-low);
+  border-top: 1px solid var(--scalar-green);
+  border-bottom: 1px solid var(--scalar-green);
+  box-shadow: 0 1px 4px 0 rgba(60,60,60,0.04);
+}
+
+/* First recent features cell: left border */
+.category-label + .recent-features-cell-bg {
+  border-left: 1px solid var(--scalar-green);
+}
+
+/* Last recent features cell: right border */
+.recent-features-cell-bg:nth-child(4n) {
+  border-right: 1px solid var(--scalar-green);
+}
+
+html[data-theme="dark"] .recent-features-cell-bg {
+  background-color: var(--scalar-green-alpha-medium);
+  box-shadow: 0 1px 6px 0 rgba(0,0,0,0.10);
 }
 
 /* Target first cell in each row that follows a category-label. */
@@ -422,13 +473,30 @@ html[data-theme="dark"] a[class^='tag_'] {
   } */
 }
 
+/* NEW badge next to H1 title for docs marked new (sidebar label ending in [NEW]). */
+.doc-new .markdown h1:first-of-type::after {
+  background-color: var(--scalar-green);
+  border-radius: 3px;
+  color: #fff;
+  content: "NEW";
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-left: 10px;
+  padding: 3px 6px;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
 /* The following Font Awesome-related styles are for the question mark next to the Editions tags. These styles are currently not being used but might be useful later. */
 a[class^='fa-solid fa-circle-question'] {
   color: #6B7280;
   vertical-align: middle;
 
   &:hover {
-    color: #78C740;
+    color: var(--scalar-green);
   }
 }
 
@@ -437,7 +505,7 @@ html[data-theme="dark"] a[class^='fa-solid fa-circle-question'] {
   vertical-align: middle;
 
   &:hover {
-    color: #78C740;
+    color: var(--scalar-green);
   }
 }
 
@@ -1556,4 +1624,23 @@ html[data-theme='dark'] .copy-contents-dropdown {
   .chat-with-page-wrapper {
     display: none;
   }
+}
+
+.breadcrumbsContainer {
+  --ifm-breadcrumb-size-multiplier: 0.8;
+  margin-bottom: 0.8rem;
+}
+
+/* Screen-reader-only utility: visually hidden but announced by assistive technology. */
+.sr-only {
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }

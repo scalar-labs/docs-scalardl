@@ -15,8 +15,20 @@ import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
+import { parseBadgeLabel } from './utils';
 
-const recentFeatures = [
+type CategoryLinkCell = {
+  cell: number;
+  links: string[];
+  labels: React.ReactNode[];
+};
+
+type Category = {
+  name: string;
+  categoryLinks: CategoryLinkCell[];
+};
+
+const recentFeatures: Category[] = [
   {
     name: 'Recent features',
     categoryLinks: [
@@ -26,7 +38,7 @@ const recentFeatures = [
       {
         cell: 0, // First cell
         links: ['manage-namespaces'],
-        labels: ['Manage Namespaces']
+        labels: ['Manage Namespaces [NEW]']
       },
       {
         cell: 1, // Second cell
@@ -42,7 +54,7 @@ const recentFeatures = [
   }
 ];
 
-const categories = [
+const categories: Category[] = [
   {
     name: 'About ScalarDL',
     categoryLinks: [
@@ -184,15 +196,15 @@ const CategoryGrid = () => {
               {doc.name}
             </div>
             {doc.categoryLinks.map((categoryLinkCell, j) => (
-              <div key={j} className="category-cell-multiple-links">
+              <div key={j} className="category-cell-multiple-links recent-features-cell-bg">
                 {categoryLinkCell.links.map((cellLink, k) => (
                   cellLink ? (
                     <Link key={`${j}-${k}`} className="category-cell-link" to={cellLink}>
-                      {categoryLinkCell.labels[k]}
+                      <span className="category-cell-link-text">{parseBadgeLabel(categoryLinkCell.labels[k])}</span>
                     </Link>
                   ) : (
                     <span key={`${j}-${k}`} className="recent-features-cell">
-                      {categoryLinkCell.labels[k]}
+                      <span className="category-cell-link-text">{parseBadgeLabel(categoryLinkCell.labels[k])}</span>
                     </span>
                   )
                 ))}
@@ -210,11 +222,11 @@ const CategoryGrid = () => {
                 {categoryLinkCell.links.map((cellLink, k) => (
                   cellLink ? (
                     <Link key={`${j}-${k}`} className="category-cell-link" to={cellLink}>
-                      {categoryLinkCell.labels[k]}
+                      <span className="category-cell-link-text">{parseBadgeLabel(categoryLinkCell.labels[k])}</span>
                     </Link>
                   ) : (
                     <span key={`${j}-${k}`} className="category-cell">
-                      {categoryLinkCell.labels[k]}
+                      <span className="category-cell-link-text">{parseBadgeLabel(categoryLinkCell.labels[k])}</span>
                     </span>
                   )
                 ))}
