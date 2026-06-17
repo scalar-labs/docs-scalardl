@@ -77,6 +77,16 @@ function stripDocExtension(pathname) {
 }
 
 /**
+ * Normalize Docusaurus doc routes by collapsing trailing index/README segments.
+ * @param {string} pathname
+ * @returns {string}
+ */
+function normalizeDocPathname(pathname) {
+  const collapsed = pathname.replace(/\/(?:index|README)$/i, '');
+  return collapsed || '/';
+}
+
+/**
  * Convert a markdown link destination to an absolute URL based on page permalink.
  * Keeps external/special links unchanged and resolves relative links version-safely.
  *
@@ -94,6 +104,22 @@ function absolutizeDestination(destination, pageUrl, siteOrigin) {
   const angleWrapped = trimmed.startsWith('<') && trimmed.endsWith('>');
   const raw = angleWrapped ? trimmed.slice(1, -1).trim() : trimmed;
 
+  const siteOriginUrl = new URL(siteOrigin);
+
+  if (/^https?:\/\//i.test(raw)) {
+    try {
+      const absolute = new URL(raw);
+      if (absolute.origin === siteOriginUrl.origin) {
+        absolute.pathname = normalizeDocPathname(stripDocExtension(absolute.pathname));
+        const normalized = `${absolute.origin}${absolute.pathname}${absolute.search}${absolute.hash}`;
+        return angleWrapped ? `<${normalized}>` : normalized;
+      }
+    } catch {
+      return destination;
+    }
+    return destination;
+  }
+
   if (!raw || isExternalOrSpecialUrl(raw)) {
     return destination;
   }
@@ -109,7 +135,7 @@ function absolutizeDestination(destination, pageUrl, siteOrigin) {
     resolved = new URL(raw, pageUrl);
   }
 
-  resolved.pathname = stripDocExtension(resolved.pathname);
+  resolved.pathname = normalizeDocPathname(stripDocExtension(resolved.pathname));
 
   const normalized = `${resolved.origin}${resolved.pathname}${resolved.search}${resolved.hash}`;
   return angleWrapped ? `<${normalized}>` : normalized;
