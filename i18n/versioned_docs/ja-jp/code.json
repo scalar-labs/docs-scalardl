@@ -95,12 +95,16 @@
     "message": "バージョン: {versionLabel}"
   },
   "theme.docs.versions.unreleasedVersionLabel": {
-    "message": "これはリリース前のバージョン{versionLabel}の {siteTitle} のドキュメントです。",
+    "message": "これはリリース前のバージョン{versionLabel}の ScalarDL のドキュメンテーションです。",
     "description": "The label used to tell the user that he's browsing an unreleased doc version"
   },
   "theme.docs.versions.unmaintainedVersionLabel": {
-    "message": "これは {siteTitle} {versionLabel} のドキュメントです。このソフトウェアバージョンは現在アクティブにメンテナンスされていません。",
+    "message": "これは ScalarDL {versionLabel} のドキュメンテーションです。このソフトウェアバージョンはすでに Maintenance Support の対象外です。詳細は{releaseSupportPolicyLink}を参照してください。",
     "description": "The label used to tell the user that he's browsing an unmaintained doc version"
+  },
+  "theme.docs.versions.releaseSupportPolicyLinkLabel": {
+    "message": "リリースサポートポリシー",
+    "description": "The label used for the release support policy link label when the banner is 'unmaintained'"
   },
   "theme.docs.versions.latestVersionSuggestionLabel": {
     "message": "ScalarDL {versionLabel} への{upgradeVersionLink}をご検討ください。",

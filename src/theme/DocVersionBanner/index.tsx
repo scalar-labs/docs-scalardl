@@ -23,11 +23,13 @@ import type {
 type BannerLabelComponentProps = {
   siteTitle: string;
   versionMetadata: PropVersionMetadata;
+  releaseSupportPolicyDocPath: string;
 };
 
 function UnreleasedVersionLabel({
   siteTitle,
   versionMetadata,
+  releaseSupportPolicyDocPath,
 }: BannerLabelComponentProps) {
   return (
     <Translate
@@ -38,7 +40,7 @@ function UnreleasedVersionLabel({
         versionLabel: <b>{versionMetadata.label}</b>,
       }}>
       {
-        'This is unreleased documentation for {siteTitle} {versionLabel} version.'
+        'This is unreleased documentation for ScalarDL {versionLabel}.'
       }
     </Translate>
   );
@@ -47,6 +49,7 @@ function UnreleasedVersionLabel({
 function UnmaintainedVersionLabel({
   siteTitle,
   versionMetadata,
+  releaseSupportPolicyDocPath,
 }: BannerLabelComponentProps) {
   return (
     <Translate
@@ -55,9 +58,20 @@ function UnmaintainedVersionLabel({
       values={{
         siteTitle,
         versionLabel: <b>{versionMetadata.label}</b>,
+        releaseSupportPolicyLink: (
+          <b>
+            <Link to={releaseSupportPolicyDocPath}>
+              <Translate
+                id="theme.docs.versions.releaseSupportPolicyLinkLabel"
+                description="The label used for the release support policy link label when the banner is 'unmaintained'">
+                Release Support Policy
+              </Translate>
+            </Link>
+          </b>
+        ),
       }}>
       {
-        'This is documentation for {siteTitle} {versionLabel}, which is no longer actively maintained.'
+        'This is documentation for ScalarDL {versionLabel}, which is no longer under Maintenance Support. For details, see the {releaseSupportPolicyLink}.'
       }
     </Translate>
   );
@@ -119,7 +133,7 @@ function LatestVersionSuggestionLabel({
         ),
       }}>
       {
-        'Please consider {upgradeVersionLink} to {versionLabel}.'
+        'Please consider {upgradeVersionLink} to ScalarDL {versionLabel}.'
       }
     </Translate>
   );
@@ -150,16 +164,12 @@ function DocVersionBannerEnabled({
   const latestVersionSuggestedDoc =
     latestDocSuggestion ?? getVersionMainDoc(latestVersionSuggestion);
 
-  // Find the upgrade doc in the current version
-  const getUpgradeDocPath = (): string => {
-    const upgradeDoc = activeVersion?.docs.find(
-      (doc) => doc.id.includes('HowToUpgradeScalarDL')
-    );
-    if (upgradeDoc) {
-      return upgradeDoc.path;
-    }
-    // Fallback to latest suggested doc if upgrade doc is not available
-    return latestVersionSuggestedDoc.path;
+  const getDocPathInCurrentVersion = (
+    docIdPart: string,
+    fallbackPath: string
+  ): string => {
+    const doc = activeVersion?.docs.find((item) => item.id.includes(docIdPart));
+    return doc?.path ?? fallbackPath;
   };
 
   return (
@@ -171,14 +181,24 @@ function DocVersionBannerEnabled({
       )}
       role="alert">
       <div>
-        <BannerLabel siteTitle={siteTitle} versionMetadata={versionMetadata} />
+        <BannerLabel
+          siteTitle="ScalarDL"
+          versionMetadata={versionMetadata}
+          releaseSupportPolicyDocPath={getDocPathInCurrentVersion(
+            'releases/release-support-policy',
+            latestVersionSuggestedDoc.path
+          )}
+        />
       </div>
       <div className="margin-top--md">
         <LatestVersionSuggestionLabel
           versionLabel={latestVersionSuggestion.label}
           to={latestVersionSuggestedDoc.path}
           onClick={() => savePreferredVersionName(latestVersionSuggestion.name)}
-          upgradeDocPath={getUpgradeDocPath()}
+          upgradeDocPath={getDocPathInCurrentVersion(
+            'HowToUpgradeScalarDL',
+            latestVersionSuggestedDoc.path
+          )}
         />
       </div>
     </div>
