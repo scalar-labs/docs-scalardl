@@ -70,7 +70,7 @@ ledger:
 
 Kubernetes のリクエストと制限を使用してポッドリソースを制御したい場合は、`ledger.resources` を使用できます。
 
-商用ライセンスの観点から、Scalar 製品の1つのポッドのリソースは 2vCPU / 4GB メモリに制限されていることに注意してください。また、AWS Marketplace から提供される従量課金制のコンテナを取得する場合、`resources.limits` で 2vCPU / 4GB を超えるメモリ構成でそれらのコンテナを実行することはできません。この制限を超えると、ポッドは自動的に停止されます。
+Bring-your-own-license (BYOL) コンテナを使用する場合は、少なくとも 2vCPU / 4GB メモリを設定することをお勧めします。また、AWS Marketplace が提供する従量課金制 (PAYG) のコンテナを使用する場合、`resources.limits` の 2vCPU / 4GB メモリ構成を超えるコンテナを実行することはできません。このリソース制限を超えると、ポッドは自動的に停止します。
 
 これらは、Kubernetes のリクエストと制限と同じ構文を使用して構成できます。そのため、Kubernetes の要求と制限の詳細については、公式ドキュメント [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) を参照してください。
 
