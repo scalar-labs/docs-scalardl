@@ -94,7 +94,7 @@ const config = {
               "3.10": {
                 label: '3.10',
                 path: '3.10',
-                banner: 'none',
+                banner: 'unmaintained',
                 className: '3.10.5',
               },
             },
