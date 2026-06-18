@@ -55,7 +55,7 @@ scalardbCluster:
 
 Kubernetes でリクエストと制限を使用してポッドリソースを制御するには、`scalardbCluster.resources` を使用できます。
 
-商用ライセンスの場合、Scalar 製品の各ポッドのリソースは 2vCPU / 4GB メモリに制限されることに注意してください。また、AWS Marketplace が提供する従量課金制のコンテナを使用する場合、`resources.limits` の 2vCPU / 4GB メモリ構成を超えるコンテナを実行することはできません。このリソース制限を超えると、ポッドは自動的に停止します。
+Bring-your-own-license (BYOL) コンテナを使用する場合は、少なくとも 2vCPU / 4GB メモリを設定することをお勧めします。また、AWS Marketplace が提供する従量課金制 (PAYG) のコンテナを使用する場合、`resources.limits` の 2vCPU / 4GB メモリ構成を超えるコンテナを実行することはできません。このリソース制限を超えると、ポッドは自動的に停止します。
 
 Kubernetes のリクエストと制限と同じ構文を使用して、リクエストと制限を構成できます。Kubernetes のリクエストと制限の詳細については、[Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) を参照してください。
 
