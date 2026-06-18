@@ -55,7 +55,7 @@ scalardbCluster:
 
 To control pod resources by using requests and limits in Kubernetes, you can use `scalardbCluster.resources`.
 
-Note that, for commercial licenses, the resources for each pod of Scalar products are limited to 2vCPU / 4GB memory. Also, if you use the pay-as-you-go containers that the AWS Marketplace provides, you will not be able to run any containers that exceed the 2vCPU / 4GB memory configuration in `resources.limits`. If you exceed this resource limitation, the pods will automatically stop.
+Note that it is recommended to set at least 2vCPU / 4GB memory if you use the bring-your-own-license (BYOL) containers. Also, if you use the pay-as-you-go (PAYG) containers that the AWS Marketplace provides, you will not be able to run any containers that exceed the 2vCPU / 4GB memory configuration in `resources.limits`. If you exceed this resource limitation, the pods will automatically stop.
 
 You can configure requests and limits by using the same syntax as requests and limits in Kubernetes. For more details on requests and limits in Kubernetes, see [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
 
