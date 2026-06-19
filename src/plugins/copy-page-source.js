@@ -298,7 +298,6 @@ module.exports = function copyPageSourcePlugin(context) {
      * (the loaded content from every other plugin, including the docs plugin).
      * We capture the permalink -> source path mapping here for use in postBuild.
      */
-
     async allContentLoaded({ allContent }) {
       // The docs plugin can register multiple instances (for example, per locale).
       const docsInstances = allContent?.['docusaurus-plugin-content-docs'];
