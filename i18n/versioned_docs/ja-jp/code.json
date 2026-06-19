@@ -99,7 +99,7 @@
     "description": "The label used to tell the user that he's browsing an unreleased doc version"
   },
   "theme.docs.versions.unmaintainedVersionLabel": {
-    "message": "これは ScalarDL {versionLabel} のドキュメンテーションです。このソフトウェアバージョンはすでに Maintenance Support の対象外です。詳細は{releaseSupportPolicyLink}を参照してください。",
+    "message": "これは ScalarDL {versionLabel} のドキュメンテーションです。このバージョンはすでに Maintenance Support の対象外です。詳細は{releaseSupportPolicyLink}を参照してください。",
     "description": "The label used to tell the user that he's browsing an unmaintained doc version"
   },
   "theme.docs.versions.releaseSupportPolicyLinkLabel": {
