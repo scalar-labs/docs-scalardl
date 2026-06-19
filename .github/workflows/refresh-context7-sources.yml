@@ -1,13 +1,5 @@
 name: Refresh Context7 library (llms-full.txt)
 
-# Behavior:
-# - Scheduled to run every Sunday at 00:00 UTC (Monday at 9:00 AM JST).
-# - workflow_dispatch can run immediately and optionally override the library ID via input.
-#
-# Configuration (Repository Settings -> Secrets and variables -> Actions):
-# - Secret: CONTEXT7_API_KEY
-# - Variable: CONTEXT7_LIBRARY_NAME (for example: /llmstxt/example_com)
-
 on:
   schedule:
     - cron: "0 0 * * 1" # Run every Monday at 00:00 UTC (9:00 AM JST).
