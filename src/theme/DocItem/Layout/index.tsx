@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { useWindowSize } from '@docusaurus/theme-common';
-import { useDoc, useDocsSidebar } from '@docusaurus/plugin-content-docs/client';
+import { useDoc, useDocsSidebar, useDocsVersion } from '@docusaurus/plugin-content-docs/client';
 import DocItemPaginator from '@theme/DocItem/Paginator';
 import DocVersionBanner from '@theme/DocVersionBanner';
 import DocVersionBadge from '@theme/DocVersionBadge';
@@ -11,6 +11,8 @@ import DocItemTOCDesktop from '@theme/DocItem/TOC/Desktop';
 import DocItemContent from '@theme/DocItem/Content';
 import DocBreadcrumbs from '@theme/DocBreadcrumbs';
 import ContentVisibility from '@theme/ContentVisibility';
+import CopyContents from '@site/src/components/CopyContents';
+import ChatWithPage from '@site/src/components/ChatWithPage';
 
 import styles from './styles.module.css';
 
@@ -66,19 +68,30 @@ function useDocTOC(): DocTOC {
 const DocItemLayout: React.FC<DocItemLayoutProps> = ({ children }) => {
   const docTOC = useDocTOC();
   const { metadata, frontMatter } = useDoc();
+  const versionMetadata = useDocsVersion();
   const sidebar = useDocsSidebar();
   const hideTOC = frontMatter.hide_table_of_contents;
   const windowSize = useWindowSize();
+  const isHomePage = metadata.slug === '/';
+  const isLatestVersion = versionMetadata.isLast;
   const isNew = frontMatter['new'] || (sidebar != null && sidebarItemHasBadge(sidebar.items, metadata.permalink));
 
   return (
+    <>
     <div className="row">
       <div className={clsx('col', !docTOC.hidden && styles.docItemCol)}>
         <ContentVisibility metadata={metadata} />
         <DocVersionBanner />
         <div className={styles.docItemContainer}>
           <article className={clsx(isNew && 'doc-new')}>
-            <DocBreadcrumbs />
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'nowrap', gap: '0.5rem' }}>
+              <div style={{ minWidth: 0, flex: '1 1 auto' }}>
+                <DocBreadcrumbs />
+              </div>
+              <div style={{ flex: '0 0 auto' }}>
+                <CopyContents showLlmsButtons={isHomePage && isLatestVersion} hideMarkdownButton={isHomePage} />
+              </div>
+            </div>
             <DocVersionBadge />
             {isNew && <span className="sr-only">New</span>}
             {docTOC.mobile}
@@ -97,6 +110,10 @@ const DocItemLayout: React.FC<DocItemLayoutProps> = ({ children }) => {
         </div>
       )}
     </div>
+
+    {/* Floating action button - fixed position, outside the grid */}
+    {!isHomePage && <ChatWithPage />}
+    </>
   );
 };
 

@@ -52,6 +52,7 @@ export default function Root({ children }) {
           style={{
             backgroundColor: "#2673bb",
             padding: "20px",
+            zIndex: 1011,
           }}
           buttonStyle={{
             backgroundColor: "#fff",

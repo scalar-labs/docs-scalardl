@@ -293,5 +293,49 @@
   "theme.unlistedContent.message": {
     "message": "このページは非公開です。 検索対象外となり、このページのリンクに直接アクセスできるユーザーのみに公開されます。",
     "description": "The unlisted content banner message"
+  },
+  "copyContents.copyMarkdown": {
+    "message": "ページを Markdown でコピー",
+    "description": "Label for the copy-page-as-markdown button"
+  },
+  "copyContents.copyLlms": {
+    "message": "llms.txt をコピー",
+    "description": "Label for the copy llms.txt button"
+  },
+  "copyContents.copyLlmsFull": {
+    "message": "llms-full.txt をコピー",
+    "description": "Label for the copy llms-full.txt button"
+  },
+  "copyContents.copied": {
+    "message": "コピーしました！",
+    "description": "Status shown after a successful copy"
+  },
+  "copyContents.copyFailed": {
+    "message": "失敗",
+    "description": "Status shown after a failed copy"
+  },
+  "chatWithPage.panelAriaLabel": {
+    "message": "ページとチャットのオプション",
+    "description": "Aria label for the Chat with page options panel"
+  },
+  "chatWithPage.title": {
+    "message": "ページとチャット",
+    "description": "Title shown in the Chat with page panel and on the FAB button"
+  },
+  "chatWithPage.close": {
+    "message": "閉じる",
+    "description": "Aria label for the close button in the Chat with page panel"
+  },
+  "chatWithPage.openInChatGPT": {
+    "message": "ChatGPT で開く",
+    "description": "Tooltip and label for the ChatGPT button"
+  },
+  "chatWithPage.openInClaude": {
+    "message": "Claude で開く",
+    "description": "Tooltip and label for the Claude button"
+  },
+  "chatWithPage.openInPerplexity": {
+    "message": "Perplexity で開く",
+    "description": "Tooltip and label for the Perplexity button"
   }
 }
