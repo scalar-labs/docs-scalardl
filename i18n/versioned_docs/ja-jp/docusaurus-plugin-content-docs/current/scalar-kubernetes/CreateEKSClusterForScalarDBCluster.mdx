@@ -40,7 +40,7 @@ EKS クラスターの高可用性を確保するには、少なくとも3つの
 
 ### ScalarDB Cluster  ノードグループのワーカーノードには 4vCPU / 8GB メモリノードを使用します。
 
-商用ライセンスの観点から、ScalarDB Cluster を実行する1つのポッドのリソースは 2vCPU / 4GB メモリに制限されます。ScalarDB Cluster ポッドに加えて、Kubernetes は次のコンポーネントの一部を各ワーカーノードにデプロイできます。
+Bring-your-own-license (BYOL) コンテナを使用する場合は、少なくとも 2vCPU / 4GB メモリを設定することをお勧めします。ScalarDB Cluster ポッドに加えて、Kubernetes は次のコンポーネントの一部を各ワーカーノードにデプロイできます。
 
 * ScalarDB Cluster ポッド (2vCPU / 4GB)
 * Envoy プロキシ (`indirect` クライアントモードを使用する場合、または Java 以外のプログラミング言語を使用する場合)
