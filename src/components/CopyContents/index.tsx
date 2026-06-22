@@ -170,9 +170,10 @@ function FileIcon(): JSX.Element {
 
 interface CopyContentsProps {
   showLlmsButtons?: boolean;
+  hideMarkdownButton?: boolean;
 }
 
-export default function CopyContents({ showLlmsButtons = false }: CopyContentsProps): JSX.Element {
+export default function CopyContents({ showLlmsButtons = false, hideMarkdownButton = false }: CopyContentsProps): JSX.Element {
   const [copyStatus, setCopyStatus] = useState<Record<string, CopyStatus>>({});
   const location = useLocation();
   const { siteConfig } = useDocusaurusContext();
@@ -246,7 +247,7 @@ export default function CopyContents({ showLlmsButtons = false }: CopyContentsPr
 
   return (
     <div className="copy-contents-actions">
-      {!showLlmsButtons && (
+      {!showLlmsButtons && !hideMarkdownButton && (
         <button className="copy-contents-trigger" onClick={handleCopyMarkdown}>
           <CopyIcon />
           {/* Grid overlay keeps button width fixed at the longest label's width */}
