@@ -176,9 +176,21 @@ interface CopyContentsProps {
 export default function CopyContents({ showLlmsButtons = false, hideMarkdownButton = false }: CopyContentsProps): JSX.Element {
   const [copyStatus, setCopyStatus] = useState<Record<string, CopyStatus>>({});
   const location = useLocation();
-  const { siteConfig } = useDocusaurusContext();
+  const { siteConfig, i18n } = useDocusaurusContext();
+  const currentLocale = i18n?.currentLocale ?? '';
 
   const currentPageUrl = `${siteConfig.url}${location.pathname}`;
+
+  const getNonLocalizedBaseUrl = useCallback((): string => {
+    const baseUrl = siteConfig.baseUrl.endsWith('/') ? siteConfig.baseUrl : `${siteConfig.baseUrl}/`;
+    if (!currentLocale) return baseUrl;
+    // Docusaurus localizes baseUrl (for example, '/ja-jp/'). Strip the locale segment
+    // so llms-full.txt can be fetched from the shared root location.
+    const localeSuffix = `/${currentLocale}/`;
+    return baseUrl.endsWith(localeSuffix)
+      ? baseUrl.replace(new RegExp(`${localeSuffix}$`), '/')
+      : baseUrl;
+  }, [siteConfig.baseUrl, currentLocale]);
 
   const trackEvent = useCallback((action: string) => {
     if (typeof gtag !== 'undefined') {
@@ -230,7 +242,7 @@ export default function CopyContents({ showLlmsButtons = false, hideMarkdownButt
   const handleCopyLlmsFullTxt = async () => {
     trackEvent('copy_llms_full_txt');
     try {
-      const text = await fetchTextFile(`${siteConfig.baseUrl}llms-full.txt`);
+      const text = await fetchTextFile(`${getNonLocalizedBaseUrl()}llms-full.txt`);
       await copyToClipboard(text);
       setCopied('llmsFull', true);
     } catch {
