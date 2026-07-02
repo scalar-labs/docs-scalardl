@@ -13,7 +13,6 @@ import DocBreadcrumbs from '@theme/DocBreadcrumbs';
 import ContentVisibility from '@theme/ContentVisibility';
 import CopyContents from '@site/src/components/CopyContents';
 import ChatWithPage from '@site/src/components/ChatWithPage';
-
 import styles from './styles.module.css';
 
 const BADGE_PATTERN = /\[[A-Z]+\]$/;
@@ -75,6 +74,7 @@ const DocItemLayout: React.FC<DocItemLayoutProps> = ({ children }) => {
   const isHomePage = metadata.slug === '/';
   const isLatestVersion = versionMetadata.isLast;
   const isNew = frontMatter['new'] || (sidebar != null && sidebarItemHasBadge(sidebar.items, metadata.permalink));
+  const tags = metadata.tags ?? [];
 
   return (
     <>
@@ -92,7 +92,7 @@ const DocItemLayout: React.FC<DocItemLayoutProps> = ({ children }) => {
                 <CopyContents showLlmsButtons={isHomePage && isLatestVersion} hideMarkdownButton={isHomePage} />
               </div>
             </div>
-            <DocVersionBadge />
+            <DocVersionBadge tags={tags} />
             {isNew && <span className="sr-only">New</span>}
             {docTOC.mobile}
             <DocItemContent>{children}</DocItemContent>
