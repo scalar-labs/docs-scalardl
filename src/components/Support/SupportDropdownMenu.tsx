@@ -171,7 +171,9 @@ const SupportDropdownMenu: React.FC = () => {
         bottom: showBackToTop ? '80px' : '20px', // Move up when back-to-top is visible
         right: '20px',
         transition: 'bottom 0.3s ease',
-        zIndex: 1000
+        // Stay below the PWA "New version available" popup (z-index 999) and the
+        // cookie consent banner (z-index 1011), but above normal page content.
+        zIndex: 500
       }}
     >
       <button className="supportDropBtn" onClick={toggleDropdown}>
