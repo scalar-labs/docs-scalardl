@@ -51,7 +51,7 @@ The restricted access model is suitable for use cases such as the following:
 
 ScalarDL supports these scenarios by restricting access to each namespace so that it is independently managed and inaccessible from other namespaces. To set up a namespace with restricted access, first create a namespace, and then register the certificates or secrets of tenant clients that will use each namespace. Then, register contracts and functions for their application through the registered clients. Only clients registered in a namespace can register and execute contracts and functions or validate assets within that namespace.
 
-Unlike contracts registered in the `default` namespace, contracts registered in namespaces with restricted access have only a local access scope and cannot access assets in other namespaces.
+Unlike contracts registered in the `default` namespace, contracts registered in namespaces with restricted access have only a local access scope and cannot access assets in other namespaces. Likewise, functions registered in namespaces with restricted access can only access the ScalarDB namespace that has the same name as their namespace or a namespace whose name starts with their namespace followed by an underscore, and cannot access any other namespace.
 
 For details on how to set up namespaces and access them in a restricted manner, see [Access Namespaces in a Restricted Manner](access-namespaces-in-a-restricted-manner.mdx).
 
