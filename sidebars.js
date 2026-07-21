@@ -299,6 +299,10 @@ const sidebars = {
           type: 'category',
           label: 'In Your Local Environment',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'deploy-local-environment-overview',
+          },
           items: [
             {
               type: 'doc',
@@ -316,6 +320,10 @@ const sidebars = {
           type: 'category',
           label: 'In Managed Kubernetes Environments',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'deploy-managed-kubernetes-environment-overview',
+          },
           items: [
             {
               type: 'doc',
@@ -989,6 +997,10 @@ const sidebars = {
           type: 'category',
           label: 'ローカル環境で',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'deploy-local-environment-overview',
+          },
           items: [
             {
               type: 'doc',
@@ -1006,6 +1018,10 @@ const sidebars = {
           type: 'category',
           label: 'マネージド Kubernetes 環境で',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'deploy-managed-kubernetes-environment-overview',
+          },
           items: [
             {
               type: 'doc',
