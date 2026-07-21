@@ -5,7 +5,7 @@ tags:
 displayed_sidebar: docsJapanese
 ---
 
-import StartupLedger from '/src/components/ja-jp/_getting-started-startup-ledger.mdx';
+import StartupLedger from './components/_getting-started-startup-ledger.mdx';
 
 # 名前空間に制限付きでアクセスする
 
@@ -170,7 +170,17 @@ client/bin/scalardl execute-contract --properties tenant.properties --contract-i
 - `scalar.dl.ledger.function.non_privileged_port_registration.enabled`: `true` に設定すると、テナントが非特権ポートを通じてファンクションを登録できるようになります。デフォルトは `false` です。
 - `scalar.dl.ledger.function.non_privileged_port_registration.overwrite.enabled`: `true` に設定すると、テナントが非特権ポートを通じて既存のファンクションを上書きできるようになります。デフォルトは `false` です。
 
-ファンクションの登録が有効になると、テナントはデフォルト名前空間と同じ方法で名前空間内のファンクションを登録して実行できます。例えば、ファンクションを登録するには、以下のコマンドを実行します:
+ファンクションの登録が有効になると、テナントはデフォルト名前空間と同じ方法で名前空間内のファンクションを登録して実行できます。
+
+:::note
+
+ファンクションは、テナントのコンテキスト名前空間（`scalar.dl.client.context.namespace` で設定された名前空間）と同じ名前を持つ ScalarDB 名前空間、またはコンテキスト名前空間の後にアンダースコアが続く名前で始まる名前空間にのみアクセスできます。例えば、コンテキスト名前空間が `tenant_a` の場合、ファンクションは `tenant_a`、`tenant_a_logs`、`tenant_a_2024` にアクセスできますが、`tenant_ax` や無関係な名前空間にはアクセスできません。ファンクションが `Get`、`Scan`、`Put`、`Delete` の各操作を実行する際、その操作で指定する名前空間はこれらのアクセス可能な名前空間のいずれかである必要があります。それ以外の名前空間を対象とする操作や、名前空間を指定しない操作は拒否されます。
+
+ファンクションがアクセスする ScalarDB 名前空間は、テナントの名前空間をプレフィックスとして作成してください。このアクセスルールはプレフィックスベースであるため階層的です。短いコンテキスト名前空間は、そのプレフィックスを共有するより長い名前空間にアクセスできます（例えば、`tenant_a` は `tenant_a_logs` にアクセスできます）。テナント間の意図したアクセス境界がプレフィックスに反映されるよう、名前空間の命名を設計してください。なお、それらの名前空間内のテーブル名は任意です。
+
+:::
+
+例えば、ファンクションを登録するには、以下のコマンドを実行します:
 
 ```console
 client/bin/scalardl register-function --properties tenant.properties --function-id test-function --function-binary-name com.example.function.TestFunction --function-class-file /path/to/TestFunction.class

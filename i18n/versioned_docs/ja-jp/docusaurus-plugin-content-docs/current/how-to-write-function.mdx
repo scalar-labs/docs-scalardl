@@ -118,6 +118,12 @@ public class Payment extends JacksonBasedFunction {
 
 `contractArgument` と `contractProperties` は、対応するコントラクトの引数とプロパティです。コントラクト内容を理解するには、[コントラクトの書き方](how-to-write-contract.mdx)を参照してください。
 
+### 名前空間のアクセス制御
+
+ファンクションは基盤となる ScalarDB データベースに直接アクセスするため、上記の `Payment` の例のように、`Get`、`Scan`、`Put`、`Delete` の各操作で対象の名前空間を指定します。
+
+ファンクションがデフォルト以外のコンテキスト名前空間で実行される場合（例えば、[アクセスを制限したマルチテナント環境](access-namespaces-in-a-restricted-manner.mdx)など）、そのファンクションは自身のコンテキスト名前空間と同じ名前を持つ ScalarDB 名前空間、またはコンテキスト名前空間の後にアンダースコアが続く名前で始まる名前空間にのみアクセスできます（例えば、コンテキスト名前空間が `tenant_a` の場合、`tenant_a`、`tenant_a_logs`、`tenant_a_2024` にはアクセスできますが、`tenant_ax` にはアクセスできません）。各操作で指定する名前空間はこれらのアクセス可能な名前空間のいずれかである必要があり、それ以外の名前空間を対象とする操作や名前空間を指定しない操作は拒否されます。`default` コンテキスト名前空間で実行されるファンクションはこの制限を受けませんが、システム名前空間や予約済みプレフィックスを持つ名前空間（`system`、`coordinator`、`scalar`、`auditor` など）には決してアクセスできません。
+
 ### コントラクトから情報を受け取る
 
 `JacksonBasedFunction` のような非推奨ではないファンクションでは、 `T getContractContext()` を呼び出すことでコントラクトから情報を受け取ることができます。

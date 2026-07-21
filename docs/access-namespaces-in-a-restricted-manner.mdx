@@ -5,7 +5,7 @@ tags:
 displayed_sidebar: docsEnglish
 ---
 
-import StartupLedger from '/src/components/en-us/_getting-started-startup-ledger.mdx';
+import StartupLedger from './components/_getting-started-startup-ledger.mdx';
 
 # Access Namespaces in a Restricted Manner
 
@@ -166,7 +166,17 @@ By default, tenants can register contracts through the non-privileged port but c
 - `scalar.dl.ledger.function.non_privileged_port_registration.enabled`: Set to `true` to allow tenants to register functions through the non-privileged port. The default is `false`.
 - `scalar.dl.ledger.function.non_privileged_port_registration.overwrite.enabled`: Set to `true` to allow tenants to overwrite existing functions through the non-privileged port. The default is `false`.
 
-Once function registration is enabled, tenants can register and execute functions within their namespace in the same way as in the default namespace. For example, to register a function, run the following command:
+Once function registration is enabled, tenants can register and execute functions within their namespace in the same way as in the default namespace.
+
+:::note
+
+A function can access only the ScalarDB namespace that has the same name as the tenant's context namespace (the namespace configured in `scalar.dl.client.context.namespace`) or a namespace whose name starts with the context namespace followed by an underscore. For example, with a context namespace of `tenant_a`, a function can access `tenant_a`, `tenant_a_logs`, and `tenant_a_2024` but not `tenant_ax` or any unrelated namespace. When a function issues a `Get`, `Scan`, `Put`, or `Delete` operation, the namespace specified in that operation must be one of these accessible namespaces. Operations that target any other namespace or that do not specify a namespace are rejected. 
+
+Make sure to create the ScalarDB namespaces that the function accesses with the tenant's namespace as the prefix. Because this access rule is prefix-based, it is hierarchical: a shorter context namespace can access longer namespaces that share its prefix (for example, `tenant_a` can access `tenant_a_logs`). Design your namespace names so that these prefixes reflect the intended access boundaries between tenants. Note that the tables that the function accesses can have any name within those namespaces.
+
+:::
+
+For example, to register a function, run the following command:
 
 ```console
 client/bin/scalardl register-function --properties tenant.properties --function-id test-function --function-binary-name com.example.function.TestFunction --function-class-file /path/to/TestFunction.class

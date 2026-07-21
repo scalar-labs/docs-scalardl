@@ -117,6 +117,12 @@ A `functionArgument` is a runtime argument for the Function specified by the req
 
 `contractArgument` and `contractProperties` are the corresponding contract's argument and properties. See [How to Write a Contract](how-to-write-contract.mdx) to understand what they are.
 
+### Namespace access control
+
+A Function accesses the underlying ScalarDB database directly, so you specify the target namespace in each `Get`, `Scan`, `Put`, or `Delete` operation, as shown in the `Payment` example above.
+
+When a Function is executed in a non-default context namespace (for example, in a [restricted-access, multi-tenant deployment](access-namespaces-in-a-restricted-manner.mdx)), it can access only the ScalarDB namespace that has the same name as its context namespace or a namespace whose name starts with the context namespace followed by an underscore (for example, a context namespace of `tenant_a` allows `tenant_a`, `tenant_a_logs`, and `tenant_a_2024` but not `tenant_ax`). The namespace specified in each operation must be one of these accessible namespaces, and operations that target any other namespace or that do not specify a namespace are rejected. Functions executed in the `default` context namespace are not restricted in this way, but they can never access system namespaces or namespaces with reserved prefixes (such as `system`, `coordinator`, `scalar`, and `auditor`).
+
 ### Receive information from Contracts
 
 In non-deprecated Functions like `JacksonBasedFunction`, you can receive some information from Contracts by calling `T getContractContext()`.

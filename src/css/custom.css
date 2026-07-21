@@ -1255,7 +1255,9 @@ html[data-theme="dark"] .googleAiModeModalSubmitIcon:hover:not(:disabled) {
   gap: 0.5rem;
   position: fixed;
   right: calc(20px + 3rem + 0.625rem);
-  z-index: 1010;
+  /* Stay below the PWA "New version available" popup (z-index 999) and the
+     cookie consent banner (z-index 1011), but above normal page content. */
+  z-index: 500;
 }
 
 /* FAB trigger button */
