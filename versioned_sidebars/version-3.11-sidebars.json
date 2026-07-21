@@ -155,12 +155,12 @@
             {
               "type": "doc",
               "id": "how-to-run-applications",
-              "label": "Run a ScalarDL Application Through ScalarDL Ledger"
+              "label": "Use ScalarDL Ledger to Run a ScalarDL Application"
             },
             {
               "type": "doc",
               "id": "how-to-run-applications-with-auditor",
-              "label": "Run a ScalarDL Application Through ScalarDL Ledger and Auditor"
+              "label": "Use ScalarDL Ledger and Auditor to Run a ScalarDL Application"
             }
           ]
         },
