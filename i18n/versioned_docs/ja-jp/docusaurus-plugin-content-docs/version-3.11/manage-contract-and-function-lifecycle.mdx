@@ -69,7 +69,7 @@ scalardl register-function --properties client.properties --function-id test-fun
 
 コントラクトのバージョニングには、一般的に2つのアプローチがあります:
 
-**パッケージベースのバージョニング (本番環境に推奨):** Java パッケージ名にバージョン番号を含めます。ScalarDL の HashStore や TableStore などの抽象化が内部的に使用する[定義済みコントラクト](https://github.com/scalar-labs/scalardl/tree/master/generic-contracts/src/main/java/com/scalar/dl/genericcontracts)もこのアプローチを採用しています。
+**パッケージベースのバージョニング (本番環境に推奨):** Java パッケージ名にバージョン番号を含めます。ScalarDL の HashStore や TableStore (ScalarDL 3.12 以降で利用可能) などの抽象化が内部的に使用する[定義済みコントラクト](https://github.com/scalar-labs/scalardl/tree/master/generic-contracts/src/main/java/com/scalar/dl/genericcontracts)もこのアプローチを採用しています。
 
 例えば、元のコントラクトが `com.example.contract.v1.StateUpdater` にある場合、更新されたバージョンは `com.example.contract.v2.StateUpdater` になります。同様に、コントラクト ID も `v1.StateUpdater` や `v2.StateUpdater` のようにバージョンを反映する必要があります。
 
