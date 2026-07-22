@@ -66,7 +66,7 @@ Since contracts are immutable, you cannot modify or overwrite an existing contra
 
 There are two common approaches for versioning contracts:
 
-**Package-based versioning (recommended for production):** Include the version number in the Java package name. The [predefined contracts](https://github.com/scalar-labs/scalardl/tree/master/generic-contracts/src/main/java/com/scalar/dl/genericcontracts) used internally by ScalarDL abstractions such as HashStore and TableStore also follow this approach.
+**Package-based versioning (recommended for production):** Include the version number in the Java package name. The [predefined contracts](https://github.com/scalar-labs/scalardl/tree/master/generic-contracts/src/main/java/com/scalar/dl/genericcontracts) used internally by ScalarDL abstractions such as HashStore and TableStore (available in ScalarDL 3.12 and later) also follow this approach.
 
 For example, if your original contract is in `com.example.contract.v1.StateUpdater`, the updated version would be in `com.example.contract.v2.StateUpdater`. Similarly, the contract ID should reflect the version, such as `v1.StateUpdater` and `v2.StateUpdater`.
 
