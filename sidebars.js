@@ -180,12 +180,12 @@ const sidebars = {
             {
               type: 'doc',
               id: 'how-to-run-applications',
-              label: 'Run a ScalarDL Application Through ScalarDL Ledger',
+              label: 'Use ScalarDL Ledger to Run a ScalarDL Application',
             },
             {
               type: 'doc',
               id: 'how-to-run-applications-with-auditor',
-              label: 'Run a ScalarDL Application Through ScalarDL Ledger and Auditor',
+              label: 'Use ScalarDL Ledger and Auditor to Run a ScalarDL Application',
             },
           ]
         },
@@ -299,6 +299,10 @@ const sidebars = {
           type: 'category',
           label: 'In Your Local Environment',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'deploy-local-environment-overview',
+          },
           items: [
             {
               type: 'doc',
@@ -316,6 +320,10 @@ const sidebars = {
           type: 'category',
           label: 'In Managed Kubernetes Environments',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'deploy-managed-kubernetes-environment-overview',
+          },
           items: [
             {
               type: 'doc',
@@ -989,6 +997,10 @@ const sidebars = {
           type: 'category',
           label: 'ローカル環境で',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'deploy-local-environment-overview',
+          },
           items: [
             {
               type: 'doc',
@@ -1006,6 +1018,10 @@ const sidebars = {
           type: 'category',
           label: 'マネージド Kubernetes 環境で',
           collapsible: true,
+          link: {
+            type: 'doc',
+            id: 'deploy-managed-kubernetes-environment-overview',
+          },
           items: [
             {
               type: 'doc',
