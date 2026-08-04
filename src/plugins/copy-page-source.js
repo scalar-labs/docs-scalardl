@@ -228,6 +228,7 @@ async function inlineMdxComponents(source, siteDir, cache, docDir) {
         // Recursively inline any nested local .mdx components.
         body = await inlineMdxComponents(body, siteDir, cache, path.dirname(filePath));
         body = body.trim();
+        // Update cache with fully resolved body.
         cache.set(filePath, body);
       }
       componentBodies.set(name, body);
@@ -346,30 +347,27 @@ module.exports = function copyPageSourcePlugin(context) {
 
       const localeDir = path.basename(outDir);
 
-      const writes = docEntries.map(({ permalink, sourcePath }) => {
+      // Sequential so the shared componentCache is never read mid-update.
+      for (const { permalink, sourcePath } of docEntries) {
         const permalinkPath = permalink.replace(/^\//, '');
         const outputPath = permalinkPath.startsWith(`${localeDir}/`)
           ? permalinkPath.slice(localeDir.length + 1)
           : permalinkPath;
         const destPath = path.join(outDir, outputPath, 'source.md');
-        return fs.promises
-          .readFile(sourcePath, 'utf8')
-          .then(async (raw) => {
-            let content = stripFrontMatter(raw);
-            content = await inlineMdxComponents(content, context.siteDir, componentCache, path.dirname(sourcePath));
-            if (siteUrl) {
-              content = absolutizeMarkdownLinks(content, permalink, siteUrl);
-            }
-            content = content.trimStart();
-            await fs.promises.mkdir(path.dirname(destPath), { recursive: true });
-            await fs.promises.writeFile(destPath, content, 'utf8');
-          })
-          .catch((err) => {
-            console.warn(`[copy-page-source] Skipping ${sourcePath}: ${err.message}`);
-          });
-      });
-
-      await Promise.all(writes);
+        try {
+          const raw = await fs.promises.readFile(sourcePath, 'utf8');
+          let content = stripFrontMatter(raw);
+          content = await inlineMdxComponents(content, context.siteDir, componentCache, path.dirname(sourcePath));
+          if (siteUrl) {
+            content = absolutizeMarkdownLinks(content, permalink, siteUrl);
+          }
+          content = content.trimStart();
+          await fs.promises.mkdir(path.dirname(destPath), { recursive: true });
+          await fs.promises.writeFile(destPath, content, 'utf8');
+        } catch (err) {
+          console.warn(`[copy-page-source] Skipping ${sourcePath}: ${err.message}`);
+        }
+      }
       console.log(`[copy-page-source] Wrote source.md for ${docEntries.length} pages to ${outDir}.`);
     },
   };
