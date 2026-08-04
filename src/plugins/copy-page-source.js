@@ -14,13 +14,13 @@
  * during `allContentLoaded` and then write the files in `postBuild` (which runs
  * after the Webpack/Rspack build so the `outDir` already exists).
  *
- * MDX component inlining: When a doc imports a local `.mdx` component (e.g.
- * `import Foo from '/src/components/en-us/_foo.mdx'`) and uses it as a JSX
- * self-closing tag (e.g., `<Foo bar="baz" />`), this plugin reads the component
- * file, substitutes `{props.bar}` with `"baz"`, and replaces the JSX tag with
- * the inlined content. This ensures the copied Markdown is fully readable
- * outside Docusaurus (e.g., admonitions from `_warning-*.mdx` are inlined as
- * `:::warning` blocks). Import lines for inlined `.mdx` components are removed.
+ * MDX component inlining: When a doc imports a local `.mdx` component (e.g.,
+ * `import Foo from './components/_foo.mdx'`) and uses it as a JSX self-closing
+ * tag (e.g., `<Foo bar="baz" />`), this plugin reads the component file,
+ * substitutes `{props.bar}` with `"baz"`, and replaces the JSX tag with the
+ * inlined content. Nesting is handled recursively, so a component that itself
+ * imports other `.mdx` partials is fully resolved. Import lines for inlined
+ * `.mdx` components are removed from the output.
  */
 
 'use strict';
@@ -42,20 +42,22 @@ function stripFrontMatter(content) {
 }
 
 /**
- * Resolve a path (possibly `@site/`-prefixed or root-relative `/src/...`) to an
- * absolute filesystem path.
- * @param {string} importPath  e.g., "/src/components/en-us/_foo.mdx"
+ * Resolve a path (possibly `@site/`-prefixed, root-relative `/src/...`, or
+ * doc-relative `./components/...`) to an absolute filesystem path.
+ * @param {string} importPath  e.g., "./components/_foo.mdx"
  * @param {string} siteDir     absolute path to the Docusaurus site root
+ * @param {string} docDir      absolute path to the importing doc's directory
  * @returns {string}
  */
-function resolveSource(importPath, siteDir) {
+function resolveSource(importPath, siteDir, docDir = siteDir) {
   if (importPath.startsWith('@site/')) {
     return path.join(siteDir, importPath.slice('@site/'.length));
   }
   if (path.isAbsolute(importPath)) {
     return path.join(siteDir, importPath);
   }
-  return path.join(siteDir, importPath);
+  // Relative paths (e.g. `./components/_foo.mdx`) are relative to the importing doc.
+  return path.resolve(docDir, importPath);
 }
 
 /**
@@ -203,9 +205,10 @@ function absolutizeMarkdownLinks(markdown, permalink, siteUrl) {
  * @param {string} source
  * @param {string} siteDir
  * @param {Map<string, string>} cache  Shared across all docs; maps absolute path → processed body.
+ * @param {string} docDir  Absolute path to the importing doc's directory.
  * @returns {Promise<string>}
  */
-async function inlineMdxComponents(source, siteDir, cache) {
+async function inlineMdxComponents(source, siteDir, cache, docDir) {
   // 1. Collect all `import X from '.../file.mdx'` statements.
   //    Only local `.mdx` files are inlinable; theme/npm imports are skipped.
   const importLineRegex =
@@ -216,7 +219,7 @@ async function inlineMdxComponents(source, siteDir, cache) {
   let m;
   while ((m = importLineRegex.exec(source)) !== null) {
     const [, name, importPath] = m;
-    mdxImports.set(name, resolveSource(importPath, siteDir));
+    mdxImports.set(name, resolveSource(importPath, siteDir, docDir));
   }
 
   if (mdxImports.size === 0) return source;
@@ -232,13 +235,18 @@ async function inlineMdxComponents(source, siteDir, cache) {
       } else {
         body = await fs.promises.readFile(filePath, 'utf8');
         body = stripFrontMatter(body);
-        // Strip nested import lines (e.g., `import Tabs from '@theme/Tabs'`)
-        // so the inlined content doesn't contain unresolvable MDX imports.
+        // Strip non-.mdx imports (e.g., `import Tabs from '@theme/Tabs'`); local
+        // .mdx imports are left for the recursive inlineMdxComponents call below.
         body = body.replace(
-          /^import\s+[A-Za-z0-9_{}, *]+\s+from\s+['"][^'"]+['"]\s*;?\s*\n?/gm,
+          /^import\s+[A-Za-z0-9_{}, *]+\s+from\s+['"][^'"]*(?<!\.mdx)['"]\s*;?\s*\n?/gm,
           '',
         );
+        // Seed cache before recursing so circular imports don't loop.
+        cache.set(filePath, body.trim());
+        // Recursively inline any nested local .mdx components.
+        body = await inlineMdxComponents(body, siteDir, cache, path.dirname(filePath));
         body = body.trim();
+        // Update cache with fully-resolved body.
         cache.set(filePath, body);
       }
       componentBodies.set(name, body);
@@ -365,45 +373,42 @@ module.exports = function copyPageSourcePlugin(context) {
           : permalinkPath;
       };
 
-      const writes = docEntries.map(({ permalink, sourcePath }) => {
+      // Sequential so the shared componentCache is never read mid-update.
+      for (const { permalink, sourcePath } of docEntries) {
         const outputPath = toOutputPath(permalink);
         const destPath = path.join(outDir, outputPath, 'source.md');
-        return fs.promises
-          .readFile(sourcePath, 'utf8')
-          .then(async (raw) => {
-            let content = stripFrontMatter(raw);
-            content = await inlineMdxComponents(content, context.siteDir, componentCache);
-            if (siteUrl) {
-              content = absolutizeMarkdownLinks(content, permalink, siteUrl);
-            }
-            content = content.trimStart();
-            await fs.promises.mkdir(path.dirname(destPath), { recursive: true });
-            await fs.promises.writeFile(destPath, content, 'utf8');
+        try {
+          const raw = await fs.promises.readFile(sourcePath, 'utf8');
+          let content = stripFrontMatter(raw);
+          content = await inlineMdxComponents(content, context.siteDir, componentCache, path.dirname(sourcePath));
+          if (siteUrl) {
+            content = absolutizeMarkdownLinks(content, permalink, siteUrl);
+          }
+          content = content.trimStart();
+          await fs.promises.mkdir(path.dirname(destPath), { recursive: true });
+          await fs.promises.writeFile(destPath, content, 'utf8');
 
-            // Skip twin write and tag injection for the site root: `<outDir>/.md`
-            // is nonsensical and no doc renders there in practice.
-            if (permalink === '/') return;
+          // Skip twin write and tag injection for the site root: `<outDir>/.md`
+          // is nonsensical and no doc renders there in practice.
+          if (permalink === '/') continue;
 
-            // The `.md` twin lives as a sibling of the `<outputPath>/` directory
-            // that already holds source.md, at `<outDir>/<outputPath>.md`.
-            const twinPath = path.join(outDir, outputPath.replace(/\/$/, '') + '.md');
-            await fs.promises.mkdir(path.dirname(twinPath), { recursive: true });
-            await fs.promises.writeFile(twinPath, content, 'utf8');
+          // The `.md` twin lives as a sibling of the `<outputPath>/` directory
+          // that already holds source.md, at `<outDir>/<outputPath>.md`.
+          const twinPath = path.join(outDir, outputPath.replace(/\/$/, '') + '.md');
+          await fs.promises.mkdir(path.dirname(twinPath), { recursive: true });
+          await fs.promises.writeFile(twinPath, content, 'utf8');
 
-            if (siteUrl) {
-              const htmlPath = path.join(outDir, outputPath, 'index.html');
-              const twinUrl = `${siteUrl}${permalink.replace(/\/$/, '')}.md`;
-              const html = await fs.promises.readFile(htmlPath, 'utf8');
-              const injected = injectAlternateLinkTag(html, twinUrl);
-              await fs.promises.writeFile(htmlPath, injected, 'utf8');
-            }
-          })
-          .catch((err) => {
-            console.warn(`[copy-page-source] Skipping ${sourcePath}: ${err.message}`);
-          });
-      });
-
-      await Promise.all(writes);
+          if (siteUrl) {
+            const htmlPath = path.join(outDir, outputPath, 'index.html');
+            const twinUrl = `${siteUrl}${permalink.replace(/\/$/, '')}.md`;
+            const html = await fs.promises.readFile(htmlPath, 'utf8');
+            const injected = injectAlternateLinkTag(html, twinUrl);
+            await fs.promises.writeFile(htmlPath, injected, 'utf8');
+          }
+        } catch (err) {
+          console.warn(`[copy-page-source] Skipping ${sourcePath}: ${err.message}`);
+        }
+      }
       console.log(`[copy-page-source] Wrote source.md for ${docEntries.length} pages to ${outDir}.`);
 
       // Audit: fail the build loudly if any doc is missing its twin or alternate
