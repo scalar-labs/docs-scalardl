@@ -385,6 +385,8 @@ module.exports = function copyPageSourcePlugin(context) {
             content = absolutizeMarkdownLinks(content, permalink, siteUrl);
           }
           content = content.trimStart();
+          // Ensure headings are preceded by a blank line (MDX doesn't require it, Markdown does).
+          content = content.replace(/([^\n])\n(#{1,6} )/g, '$1\n\n$2');
           await fs.promises.mkdir(path.dirname(destPath), { recursive: true });
           await fs.promises.writeFile(destPath, content, 'utf8');
 
