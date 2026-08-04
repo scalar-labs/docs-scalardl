@@ -216,7 +216,7 @@ export default function CopyContents({ showLlmsButtons = false, hideMarkdownButt
       let markdown: string;
       try {
         const pathname = location.pathname.replace(/\/$/, '');
-        markdown = await fetchTextFile(`${pathname}/source.md`);
+        markdown = await fetchTextFile(`${pathname}.md`);
       } catch {
         markdown = getPageMarkdown();
         if (!markdown) throw new Error('No content found');

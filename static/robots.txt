@@ -1,3 +1,2 @@
 User-agent: *
-Disallow: */source.md
 Disallow: /*.md$

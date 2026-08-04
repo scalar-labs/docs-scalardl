@@ -1,7 +1,7 @@
 // @ts-check
 /**
  * Docusaurus plugin that writes each doc's raw MDX source (front matter
- * stripped) to `build/<permalink>/source.md` during the build.
+ * stripped) to `build/<permalink>.md` during the build.
  *
  * The "Copy page as Markdown" button in CopyContents/index.tsx fetches this
  * file instead of scraping the rendered HTML, which preserves Mermaid diagrams,
@@ -360,7 +360,7 @@ module.exports = function copyPageSourcePlugin(context) {
 
     async postBuild({ outDir }) {
       if (docEntries.length === 0) {
-        console.warn('[copy-page-source] No docs were captured; skipping source.md writes.');
+        console.warn('[copy-page-source] No docs were captured; skipping .md writes.');
         return;
       }
 
@@ -376,8 +376,10 @@ module.exports = function copyPageSourcePlugin(context) {
 
       // Sequential so the shared componentCache is never read mid-update.
       for (const { permalink, sourcePath } of docEntries) {
+        // No .md file for the site root: `<outDir>/.md` is nonsensical.
+        if (permalink === '/') continue;
         const outputPath = toOutputPath(permalink);
-        const destPath = path.join(outDir, outputPath, 'source.md');
+        const twinPath = path.join(outDir, outputPath.replace(/\/$/, '') + '.md');
         try {
           const raw = await fs.promises.readFile(sourcePath, 'utf8');
           let content = stripFrontMatter(raw);
@@ -388,16 +390,6 @@ module.exports = function copyPageSourcePlugin(context) {
           content = content.trimStart();
           // Ensure headings are preceded by a blank line (MDX doesn't require it, Markdown does).
           content = content.replace(/([^\n])\n(#{1,6} )/g, '$1\n\n$2');
-          await fs.promises.mkdir(path.dirname(destPath), { recursive: true });
-          await fs.promises.writeFile(destPath, content, 'utf8');
-
-          // Skip twin write and tag injection for the site root: `<outDir>/.md`
-          // is nonsensical and no doc renders there in practice.
-          if (permalink === '/') continue;
-
-          // The `.md` twin lives as a sibling of the `<outputPath>/` directory
-          // that already holds source.md, at `<outDir>/<outputPath>.md`.
-          const twinPath = path.join(outDir, outputPath.replace(/\/$/, '') + '.md');
           await fs.promises.mkdir(path.dirname(twinPath), { recursive: true });
           await fs.promises.writeFile(twinPath, content, 'utf8');
 
@@ -412,7 +404,7 @@ module.exports = function copyPageSourcePlugin(context) {
           console.warn(`[copy-page-source] Skipping ${sourcePath}: ${err.message}`);
         }
       }
-      console.log(`[copy-page-source] Wrote source.md for ${docEntries.length} pages to ${outDir}.`);
+      console.log(`[copy-page-source] Wrote .md files for ${docEntries.length} pages to ${outDir}.`);
 
       // Audit: fail the build loudly if any doc is missing its twin or alternate
       // tag. The dominant failure mode of this feature is silent drift as new
