@@ -374,6 +374,8 @@ module.exports = function copyPageSourcePlugin(context) {
           : permalinkPath;
       };
 
+      /** @type {Set<string>} Permalinks whose HTML was successfully tagged; used by the audit to skip re-reads. */
+      const tagInjected = new Set();
       // Sequential so the shared componentCache is never read mid-update.
       for (const { permalink, sourcePath } of docEntries) {
         // No .md file for the site root: `<outDir>/.md` is nonsensical.
@@ -399,9 +401,10 @@ module.exports = function copyPageSourcePlugin(context) {
             const html = await fs.promises.readFile(htmlPath, 'utf8');
             const injected = injectAlternateLinkTag(html, twinUrl);
             await fs.promises.writeFile(htmlPath, injected, 'utf8');
+            tagInjected.add(permalink);
           }
         } catch (err) {
-          console.warn(`[copy-page-source] Skipping ${sourcePath}: ${err.message}`);
+          console.warn(`[copy-page-source] Skipping ${sourcePath}: ${err instanceof Error ? err.message : String(err)}`);
         }
       }
       console.log(`[copy-page-source] Wrote .md files for ${docEntries.length} pages to ${outDir}.`);
@@ -430,13 +433,15 @@ module.exports = function copyPageSourcePlugin(context) {
           failures.push(`Missing .md twin: ${twinPath}`);
         }
 
-        try {
-          const html = await fs.promises.readFile(htmlPath, 'utf8');
-          if (!html.includes(expectedTag)) {
-            failures.push(`Missing alternate tag in ${htmlPath} (expected href=${twinUrl})`);
+        if (!tagInjected.has(permalink)) {
+          try {
+            const html = await fs.promises.readFile(htmlPath, 'utf8');
+            if (!html.includes(expectedTag)) {
+              failures.push(`Missing alternate tag in ${htmlPath} (expected href=${twinUrl})`);
+            }
+          } catch (err) {
+            failures.push(`Cannot read ${htmlPath}: ${err instanceof Error ? err.message : String(err)}`);
           }
-        } catch (err) {
-          failures.push(`Cannot read ${htmlPath}: ${err.message}`);
         }
       }
 
