@@ -222,12 +222,12 @@ const sidebars = {
             {
               type: 'doc',
               id: 'manage-namespaces',
-              label: 'Manage Namespaces [NEW]',
+              label: 'Manage Namespaces',
             },
             {
               type: 'doc',
               id: 'access-namespaces-in-a-restricted-manner',
-              label: 'Access Namespaces in a Restricted Manner [NEW]',
+              label: 'Access Namespaces in a Restricted Manner',
             },
             {
               type: 'doc',
@@ -920,12 +920,12 @@ const sidebars = {
             {
               type: 'doc',
               id: 'manage-namespaces',
-              label: '名前空間を管理 [NEW]',
+              label: '名前空間を管理',
             },
             {
               type: 'doc',
               id: 'access-namespaces-in-a-restricted-manner',
-              label: '名前空間に制限付きでアクセス [NEW]',
+              label: '名前空間に制限付きでアクセス',
             },
             {
               type: 'doc',
