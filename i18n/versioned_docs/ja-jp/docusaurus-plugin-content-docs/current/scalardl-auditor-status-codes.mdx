@@ -1,0 +1,481 @@
+---
+tags:
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+# ScalarDL Auditor エラーコード
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このページでは、ScalarDL Auditor のエラーコードの一覧を示します。
+
+## エラーコードのクラスと説明
+
+| クラス              | 説明                       |
+|:-------------------|:--------------------------|
+| `DL-AUDITOR-3xxxx` | 検証エラーカテゴリのエラー    |
+| `DL-AUDITOR-4xxxx` | ユーザーエラーカテゴリのエラー |
+| `DL-AUDITOR-5xxxx` | 内部エラーカテゴリのエラー    |
+
+## `DL-AUDITOR-3xxxx` ステータスコード
+
+以下は、検証エラーカテゴリのステータスコードとメッセージです。
+
+### `DL-AUDITOR-304001`
+
+**メッセージ**
+
+```markdown
+The nonce has already been used.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+### `DL-AUDITOR-305001`
+
+**メッセージ**
+
+```markdown
+The request has been tampered with.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+### `DL-AUDITOR-305002`
+
+**メッセージ**
+
+```markdown
+The specified asset proof doesn't exist in Ledger.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+### `DL-AUDITOR-305003`
+
+**メッセージ**
+
+```markdown
+The specified request proof doesn't exist.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+### `DL-AUDITOR-305004`
+
+**メッセージ**
+
+```markdown
+Hash validation failed.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+### `DL-AUDITOR-305005`
+
+**メッセージ**
+
+```markdown
+The specified lock entry doesn't exist. A bug might exist, or tampering might have occurred.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+### `DL-AUDITOR-305006`
+
+**メッセージ**
+
+```markdown
+An invalid asset proof is given. Namespace: %s; Asset ID: %s
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+### `DL-AUDITOR-305007`
+
+**メッセージ**
+
+```markdown
+The expected asset record doesn't exist.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+### `DL-AUDITOR-305008`
+
+**メッセージ**
+
+```markdown
+The specified asset and the asset lock are inconsistent.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+### `DL-AUDITOR-305009`
+
+**メッセージ**
+
+```markdown
+The specified lock type is not supported. Type: %s
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+### `DL-AUDITOR-305010`
+
+**メッセージ**
+
+```markdown
+readUnlock is used for unlocked or write-locked assets.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+### `DL-AUDITOR-305011`
+
+**メッセージ**
+
+```markdown
+writeUnlock is used for unlocked or read-locked assets.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+## `DL-AUDITOR-4xxxx` ステータスコード
+
+以下は、ユーザーエラーカテゴリのステータスコードとメッセージです。
+
+### `DL-AUDITOR-407001`
+
+**メッセージ**
+
+```markdown
+The lock must be validated before it can be released.
+```
+
+**対処法**
+
+```markdown
+Validate the lock before attempting to release it.
+```
+
+### `DL-AUDITOR-407002`
+
+**メッセージ**
+
+```markdown
+Transaction state purge is disabled.
+```
+
+**対処法**
+
+```markdown
+Set 'scalar.dl.auditor.transaction_state_purge.enabled' to true in the Auditor configuration (for example, auditor.properties) and restart the Auditor to allow purge.
+```
+
+### `DL-AUDITOR-409001`
+
+**メッセージ**
+
+```markdown
+The specified asset is not found.
+```
+
+**対処法**
+
+```markdown
+Verify the asset ID and namespace are correct and the asset has been created.
+```
+
+### `DL-AUDITOR-414001`
+
+**メッセージ**
+
+```markdown
+%s must be set if HMAC authentication is used.
+```
+
+**対処法**
+
+```markdown
+Set 'scalar.dl.auditor.authentication.hmac.cipher_key' in the Auditor configuration file (e.g., auditor.properties). Use an unpredictable and long value for security.
+```
+
+### `DL-AUDITOR-414002`
+
+**メッセージ**
+
+```markdown
+Authentication between Ledger and Auditor is not correctly configured. Set %s along with a private key with %s or %s if you use digital signature authentication.
+```
+
+**対処法**
+
+```markdown
+For digital signature authentication, set these properties in auditor.properties: 'scalar.dl.auditor.cert_holder_id' and either 'scalar.dl.auditor.private_key_path' (path to PEM file) or 'scalar.dl.auditor.private_key_pem' (PEM-encoded data). Ensure the authentication method matches the Ledger configuration.
+```
+
+### `DL-AUDITOR-414003`
+
+**メッセージ**
+
+```markdown
+Authentication between Ledger and Auditor is not correctly configured. Set %s if you use HMAC authentication.
+```
+
+**対処法**
+
+```markdown
+For HMAC authentication between Ledger and Auditor, set 'scalar.dl.auditor.servers.authentication.hmac.secret_key' in auditor.properties with a shared secret. This must match the Ledger's corresponding HMAC secret key.
+```
+
+### `DL-AUDITOR-414004`
+
+**メッセージ**
+
+```markdown
+Transaction state purge is enabled, but the request proof table schema is too old to support it. With this schema, request proofs are stored in a legacy format that can never be purged, so they would accumulate indefinitely.
+```
+
+**対処法**
+
+```markdown
+Upgrade the request proof table schema to the version that supports transaction state purge and restart the Auditor. Alternatively, disable transaction state purge by setting 'scalar.dl.auditor.transaction_state_purge.enabled' to false in the Auditor configuration (for example, auditor.properties).
+```
+
+## `DL-AUDITOR-5xxxx` ステータスコード
+
+以下は、内部エラーカテゴリのステータスコードとメッセージです。
+
+### `DL-AUDITOR-500001`
+
+**メッセージ**
+
+```markdown
+Binding the request proof failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
+```
+
+### `DL-AUDITOR-500002`
+
+**メッセージ**
+
+```markdown
+Getting the request proof failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
+```
+
+### `DL-AUDITOR-500003`
+
+**メッセージ**
+
+```markdown
+Binding the asset record failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
+```
+
+### `DL-AUDITOR-500004`
+
+**メッセージ**
+
+```markdown
+Retrieving the asset records failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
+```
+
+### `DL-AUDITOR-500005`
+
+**メッセージ**
+
+```markdown
+Getting the asset lock failed. Namespace: %s; Asset ID: %s; Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
+```
+
+### `DL-AUDITOR-500006`
+
+**メッセージ**
+
+```markdown
+Deleting the request proof failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
+```
+
+### `DL-AUDITOR-500007`
+
+**メッセージ**
+
+```markdown
+Scanning request proofs failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
+```
+
+### `DL-AUDITOR-500008`
+
+**メッセージ**
+
+```markdown
+Getting the request proof table metadata failed. Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the error details in the logs and verify your database configuration and connection.
+```
+
+### `DL-AUDITOR-503001`
+
+**メッセージ**
+
+```markdown
+Calling Ledger failed. Status code: %s; Details: %s
+```
+
+**対処法**
+
+```markdown
+Ledger may be temporarily unavailable. Check the error details in the logs, the availability of Ledger, and the connection and authentication settings between Ledger and Auditor.
+```
+
+### `DL-AUDITOR-504001`
+
+**メッセージ**
+
+```markdown
+The specified lock entry is currently held by a writer.
+```
+
+**対処法**
+
+```markdown
+Retry the operation.
+```
+
+### `DL-AUDITOR-504002`
+
+**メッセージ**
+
+```markdown
+The specified asset record is in use.
+```
+
+**対処法**
+
+```markdown
+Retry the operation.
+```
+
+### `DL-AUDITOR-504003`
+
+**メッセージ**
+
+```markdown
+The entry has already been recovered, or an issue might have occurred.
+```
+
+**対処法**
+
+```markdown
+Retry the operation. Contact your system administrator to check for any signs of malicious activity if the issue persists.
+```
+
+### `DL-AUDITOR-504004`
+
+**メッセージ**
+
+```markdown
+Another transaction state purge is already in progress.
+```
+
+**対処法**
+
+```markdown
+Retry the operation after the current purge completes.
+```

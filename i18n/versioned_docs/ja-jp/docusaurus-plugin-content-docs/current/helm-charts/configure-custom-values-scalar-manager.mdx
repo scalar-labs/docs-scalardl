@@ -1,0 +1,153 @@
+---
+tags:
+  - Enterprise Option
+displayed_sidebar: docsJapanese
+---
+
+# Scalar Manager のカスタム値ファイルを設定する
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このドキュメントでは、Scalar Manager Helm Chart のカスタム値ファイルを設定する方法について説明します。使用可能なパラメータの詳細については、Scalar Manager チャートリポジトリの [README](https://github.com/scalar-labs/helm-charts/blob/main/charts/scalar-manager/README.md) を参照してください。
+
+## 必要な設定
+
+このセクションでは、Scalar Manager の値ファイルに含める必要があるサービス、イメージ、および Scalar Manager の設定について説明します。
+
+### サービス設定
+
+Kubernetes の Service リソースのタイプを定義するには、`web.service.type` を設定する必要があります。クラウドサービスプロバイダーがサービスを公開するために提供するロードバランサーを使用するには、`web.service.type` を `LoadBalancer` に設定します。
+
+```yaml
+web:
+  service:
+    type: LoadBalancer
+  # other web configurations
+```
+
+#### Scalar Manager を公開する際のセキュリティ上の考慮事項
+
+`web.service.type` を `LoadBalancer` に設定すると、デフォルトでは Scalar Manager が `HTTP` 経由で外部に公開されます。信頼できないネットワーク上に公開する場合は、暗号化されていないトラフィックによるセキュリティリスクが発生します。外部アクセスが不要な場合は、プライベートネットワークを使用するか、Kubernetes クラスターへのネットワークアクセスを適切に設定することをお勧めします。
+
+Scalar Manager は、認証および認可メカニズムをサポートしています。これらのメカニズムを設定することで、Scalar 製品を一時停止するジョブのスケジュール設定などの機能に対して認可されたアクションを確実に実行できます。詳細については、[Scalar Manager の認証設定](#scalar-manager-の認証設定) を参照してください。
+
+### コンテナイメージ設定
+
+`api.image.repository` と `web.image.repository` を設定する必要があります。これらの設定は Scalar Manager コンテナイメージを指定し、コンテナリポジトリからそれらをプルできるようにします。
+
+```yaml
+api:
+  image:
+    repository: <SCALAR_MANAGER_API_IMAGE>
+web:
+  image:
+    repository: <SCALAR_MANAGER_WEB_IMAGE>
+```
+
+## オプション設定
+
+このセクションでは、Scalar Manager の値ファイルをカスタマイズするためのオプションの設定について説明します。
+
+### Scalar Manager 設定 (環境に応じてオプション)
+
+`api.applicationProperties` の設定を上書きして、デフォルトの Scalar Manager 設定を変更できます。
+
+```yaml
+api:
+  applicationProperties: |
+    prometheus.kubernetes-service-label-name="app"
+    prometheus.kubernetes-service-label-value="kube-prometheus-stack-prometheus"
+    prometheus.kubernetes-service-port-name="http-web"
+    # other application properties
+```
+
+Scalar Manager には、クラスター内の Scalar 製品のデプロイメントと Prometheus サービスを検出するためのデフォルト設定が含まれています。ほとんどのシナリオでは、特にガイドに従って `kube-prometheus-stack` と `loki-stack` をデプロイする場合は、これらのデフォルト設定で十分であり、変更する必要はありません。
+
+#### `api.applicationProperties` で設定可能なプロパティ
+
+Scalar Manager の設定は、Java アプリケーションプロパティの形式で、key=valueのペアです。これらのアプリケーションプロパティは、Scalar Manager Helm Chart の api.applicationProperties カスタム値を使用して設定できます。
+
+| 名前                                                                 | 説明                                                              | デフォルト値                                                                 |
+|:--------------------------------------------------------------------|:------------------------------------------------------------------|:---------------------------------------------------------------------------|
+| `prometheus.kubernetes-service-label-name`                          | Kubernetes で Prometheus サービスを検出するために使用されるラベル名      | `app`                                                                      |
+| `prometheus.kubernetes-service-label-value`                         | `prometheus.kubernetes-service-label-name` に対応するラベル値        | `kube-prometheus-stack-prometheus`                                         |
+| `prometheus.kubernetes-service-port-name`                           | Kubernetes で Prometheus サービスポートを検出するために使用されるポート名 | `http-web`                                                                 |
+| `springdoc.swagger-ui.enabled`                                      | Swagger UI を有効にするかどうか                                      | `false`                                                                    |
+| `springdoc.swagger-ui.path`                                         | Swagger UI のパス                                                  | `/swagger-ui.html`                                                         |
+| `app.cors.allowed-origins`                                          | CORS の許可されたオリジン                                            | `*`                                                                        |
+| `app.cors.allowed-methods`                                          | CORS で許可されるメソッド                                            | `*`                                                                        |
+| `app.cors.allowed-headers`                                          | CORS で許可されるヘッダー                                            | `*`                                                                         |
+| `authentication.providers.static-jwt.secret`                        | JWT トークンの署名に使用される秘密鍵。最小 32 文字                       | `example-jwt-secret-with-minimum-32-characters`                            |
+| `authentication.providers.static-jwt.issuer-uri`                    | JWT トークンの発行者 URI                                             | `https://scalar-manager.example.com`                                      |
+| `authentication.providers.static-jwt.access-token-expiration-time`  | アクセストークンの有効期限                                            | `1h`                                                                       |
+| `authentication.providers.static-jwt.refresh-token-expiration-time` | リフレッシュトークンの有効期限                                         | `3d`                                                                       |
+| `app.initial-admin-user.enabled`                                    | 初期管理者ユーザーを有効にするかどうか                                   | `true`                                                                    |
+| `app.initial-admin-user.email`                                      | 初期管理者ユーザーのメールアドレス                                      | `admin@example.com`                                                        |
+| `app.initial-admin-user.name`                                       | 初期管理者ユーザーの名前                                              | `Administrator`                                                            |
+| `app.initial-admin-user.password`                                   | 初期管理者ユーザーのパスワード                                         | `Password@123!`                                                            |
+| `spring.jpa.hibernate.ddl-auto`                                     | Hibernate の DDL モード                                            | `update`                                                                   |
+| `spring.jpa.show-sql`                                               | SQL クエリを表示するかどうか                                          | `false`                                                                    |
+| `spring.jpa.properties.hibernate.format_sql`                        | SQL クエリをフォーマットするかどうか                                   | `false`                                                                    |
+| `spring.datasource.url`                                             | データベースの URL                                                  | `jdbc:postgresql://scalar-manager-postgres-postgresql:5432/scalar-manager` |
+| `spring.datasource.username`                                        | データベースのユーザー名                                              | `scalar-manager`                                                           |
+| `spring.datasource.password`                                        | データベースのパスワード                                              | `scalar-manager`                                                           |
+| `spring.datasource.driver-class-name`                               | データベースのドライバークラス名                                        | `org.postgresql.Driver`                                                    |
+
+:::note
+
+`api.applicationProperties` では、JPA、Hibernate、Spring Data に関して設定できる項目が他にもあります。これらの設定に精通している場合は、データベース接続と Scalar Manager の動作をカスタマイズするように設定できます。
+
+:::
+
+#### Scalar Manager の認証設定
+
+デフォルトでは、Scalar Manager にアクセスするには、ユーザー名とパスワードを使用して認証する必要があります。
+
+認証を設定するための前提条件は次のとおりです。
+
+- 独自の PostgreSQL データベース、またはクラウドサービスプロバイダーがホストする PostgreSQL データベースが必要です。たとえば、[PostgreSQL 用の Bitnami パッケージ](https://artifacthub.io/packages/helm/bitnami/postgresql) を使用して、Kubernetes クラスターに PostgreSQL データベースをデプロイできます。
+- `authentication.providers.static-jwt.secret` 設定を設定する必要があります。この設定は JWT トークンの署名に使用され、シークレットの文字数は最小 32 文字です。
+
+以下は、上記の前提条件を適用するために `api.applicationProperties` で設定する必要がある追加の設定の例です。環境に合わせて設定を必ず変更してください。
+
+```properties
+# JWT configuration
+# Secret key used for signing JWT tokens, minimum 32 characters
+authentication.providers.static-jwt.secret=${AUTHENTICATION_PROVIDERS_STATIC_JWT_SECRET:example-jwt-secret-with-minimum-32-characters}
+authentication.providers.static-jwt.issuer-uri=${AUTHENTICATION_PROVIDERS_STATIC_JWT_ISSUER_URI:https://scalar-manager.example.com}
+authentication.providers.static-jwt.access-token-expiration-time=${AUTHENTICATION_PROVIDERS_STATIC_JWT_ACCESS_TOKEN_EXPIRATION_TIME:1h}
+authentication.providers.static-jwt.refresh-token-expiration-time=${AUTHENTICATION_PROVIDERS_STATIC_JWT_REFRESH_TOKEN_EXPIRATION_TIME:3d}
+
+# Initial admin configuration
+app.initial-admin-user.enabled=${APP_INITIAL_ADMIN_USER_ENABLED:true}
+app.initial-admin-user.email=${APP_INITIAL_ADMIN_USER_EMAIL:admin@example.com}
+app.initial-admin-user.name=${APP_INITIAL_ADMIN_USER_NAME:Administrator}
+app.initial-admin-user.password=${APP_INITIAL_ADMIN_USER_PASSWORD:Password@123!}
+
+# JPA configuration
+spring.jpa.hibernate.ddl-auto=${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
+spring.jpa.show-sql=${SPRING_JPA_SHOW_SQL:false}
+spring.jpa.properties.hibernate.format_sql=${SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL:false}
+
+# Database configuration
+spring.datasource.url=jdbc:postgresql://${DATABASE_HOST:scalar-manager-postgres-postgresql}:${DATABASE_PORT:5432}/${DATABASE_NAME:scalar-manager}
+spring.datasource.username=${DATABASE_USERNAME:scalar-manager}
+spring.datasource.password=${DATABASE_PASSWORD:scalar-manager}
+spring.datasource.driver-class-name=org.postgresql.Driver
+```
+
+#### サービスディスカバリー
+
+Scalar Manager はラベルを使用して Kubernetes 内の Prometheus サービスを検出し、ポート名を使用してサービスに接続します。`prometheus.kubernetes-service-label-name`、`prometheus.kubernetes-service-label-value`、および `prometheus.kubernetes-service-port-name` を設定することで、ラベルとポート名を変更できます。
+
+一般的に、これらの設定を変更する必要はありません。ただし、Prometheus サービスの Helm Chart をインストールする際にラベルまたはポート名をカスタマイズした場合は、カスタマイズに合わせてこれらの設定を調整する必要があります。
+
+#### `web.env` で設定可能な環境変数
+
+| Name                 | Description                                  |Default Value                                                         |
+|:---------------------|:---------------------------------------------|:---------------------------------------------------------------------|
+| `GRAFANA_SERVER_URL` | Kubernetes クラスター内の Grafana サービスの URL | `http://scalar-monitoring-grafana.monitoring.svc.cluster.local:3000` |
+
+現在、`GRAFANA_SERVER_URL` 変数を `web.env` で設定して、Scalar Manager Web UI から Grafana UI へのプロキシをカスタマイズできます。デフォルトでは、変数は `monitoring` 名前空間にインストールされた Grafana サービス `scalar-monitoring-grafana` に設定されています。Grafana を別の名前空間にインストールした場合、または Grafana サービスの名前を変更した場合は、それに応じて `GRAFANA_SERVER_URL` 変数を更新する必要があります。

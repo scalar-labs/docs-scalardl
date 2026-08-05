@@ -1,0 +1,50 @@
+---
+tags:
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+# ScalarDL Ledger のデプロイ方法
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このドキュメントでは、Scalar Helm Chart を使用して ScalarDL Ledger をデプロイする方法について説明します。カスタム値ファイルを準備する必要があります。ScalarDL Ledger および ScalarDL Schema Loader のカスタム値ファイルの詳細については、次のドキュメントを参照してください。
+
+* [ScalarDL Ledger のカスタム値ファイルを構成する](configure-custom-values-scalardl-ledger.mdx)
+* [ScalarDL Schema Loaderのカスタム値ファイルを構成する](configure-custom-values-scalardl-schema-loader.mdx)
+
+## 秘密鍵ファイルを準備します (オプション / ScalarDL Auditor を使用する場合は必要です)
+
+ScalarDL Ledger の [asset proofs](https://scalardl.scalar-labs.com/ja-jp/docs/latest/how-to-write-applications#アセットプルーフとは) を使用する場合は、秘密鍵ファイルを ScalarDL Ledger ポッドにマウントするための Secrete リソースを作成する必要があります。ScalarDL Auditor を使用する場合はアセットプルーフが必要です。
+
+ScalarDL ポッドにキー/証明書ファイルをマウントする方法の詳細については、次のドキュメントを参照してください。
+
+* [ScalarDL Helm Charts のポッドに秘密鍵ファイルと証明書ファイルをマウントする](mount-files-or-volumes-on-scalar-pods.mdx#scalardl-helm-charts-のポッドに秘密鍵ファイルと証明書ファイルをマウントする)
+
+## ScalarDL Ledger のスキーマの作成 (ScalarDL Schema Loader のデプロイ)
+
+ScalarDL Ledger をデプロイする前に、バックエンドデータベースに ScalarDL Ledger のスキーマを作成する必要があります。
+
+```console
+helm install <RELEASE_NAME> scalar-labs/schema-loading -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDL_SCHEMA_LOADER> --version <CHART_VERSION>
+```
+
+## ScalarDL Ledger のデプロイ
+
+```console
+helm install <RELEASE_NAME> scalar-labs/scalardl -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDL_LEDGER> --version <CHART_VERSION>
+```
+
+## ScalarDL Ledger の展開をアップグレードする
+
+```console
+helm upgrade <RELEASE_NAME> scalar-labs/scalardl -n <NAMESPACE> -f /<PATH_TO_YOUR_CUSTOM_VALUES_FILE_FOR_SCALARDL_LEDGER> --version <CHART_VERSION>
+```
+
+## ScalarDL Ledger および ScalarDL Schema Loader のデプロイメントを削除する
+
+```console
+helm uninstall <RELEASE_NAME> -n <NAMESPACE>
+```

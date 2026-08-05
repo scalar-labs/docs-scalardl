@@ -1,0 +1,293 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+# ScalarDL TableStore SQL の文法
+
+<TranslationBanner />
+
+このページでは、ScalarDL TableStore SQL でサポートされているコマンドのリストを提供します。
+
+:::note
+
+ScalarDL TableStore SQL は [PartiQL ベース](https://partiql.org/)の言語であり、標準 SQL と完全に互換性があるわけではありません。
+
+:::
+
+- DDL
+  - [CREATE TABLE](#create-table)
+- DML
+  - [SELECT](#select)
+  - [INSERT](#insert)
+  - [UPDATE](#update)
+- その他
+  - [テーブルの表示](#テーブルの表示)
+  - [レコード履歴の表示](#レコード履歴の表示)
+- リテラル
+  - [文字列](#文字列)
+  - [数値](#数値)
+  - [真偽値](#真偽値)
+
+## DDL
+
+データ定義言語 (DDL) コマンドは、テーブルなどのデータベースオブジェクトの構造を定義および変更するために使用されます。
+
+### CREATE TABLE
+
+`CREATE TABLE` コマンドはテーブルを作成します。
+
+#### 文法
+
+```sql
+CREATE TABLE <table name> (
+  <primary key column name> data_type PRIMARY KEY [, <index key column name> data_type,] ...
+)
+
+data_type: BOOLEAN | INT | BIGINT | FLOAT | DOUBLE PRECISION | STRING
+```
+
+#### 注意事項
+
+- テーブルを作成する際に厳密なスキーマを指定する必要はありませんが、少なくともプライマリキーカラムを指定する必要があります。
+- インデックスキーカラムを指定することで、セカンダリインデックスを作成できます。
+- ScalarDL TableStore は、すべての数値データ型 (`INT`、`BIGINT`、`FLOAT`、および `DOUBLE PRECISION`) を JSON 形式で `NUMBER` データ型として扱い、それらを区別しません。
+
+#### 例
+
+`CREATE TABLE` の例は以下の通りです:
+
+```sql
+-- プライマリキー ("c1") とインデックスキー ("c2"、"c3"、および "c4") を持つテーブルを作成する。
+CREATE TABLE tbl (
+  c1 INT PRIMARY KEY,
+  c2 STRING,
+  c3 FLOAT,
+  c4 BIGINT
+);
+```
+
+## DML
+
+データ操作言語 (DML) コマンドは、テーブル内のデータのクエリと変更に使用されます。
+
+### SELECT
+
+`SELECT` コマンドは、TableStore で管理されているテーブル内のレコードを取得します。
+
+#### 文法
+
+```sql
+SELECT projection [, projection] ...
+  FROM <table name> [AS <alias>] [join_specification [join_specification] ...]
+  WHERE predicate [AND predicate ...]
+
+projection: * | identifier
+join_specification: JOIN <table name> [AS <alias>] ON join_predicate
+join_predicate: identifier = identifier
+predicate: identifier operator <literal> | identifier IS [NOT] NULL
+identifier: [<table name>.]<column name> | [alias.]<column name>
+operator: = | <> | != | > | >= | < | <=
+```
+
+##### 注意事項
+
+- `SELECT` 句では、JSON レコードオブジェクトのトップレベルフィールドをプロジェクションカラムとして指定できます。
+- `JOIN` 句では、`join_predicate` は右側のテーブルからプライマリキーカラムまたはインデックスキーカラムのいずれかを含む必要があります。
+- `WHERE` 句では、任意のカラムに対する述語を指定できますが、等価条件または `IS NULL` 条件でプライマリキーカラムまたはインデックスキーカラムに対する述語を少なくとも 1 つ含める必要があります。
+
+#### 例
+
+例えば、以下のようなプライマリキーとインデックスキーを持つテーブルがある場合:
+
+```sql
+CREATE TABLE tbl (
+  c1 INT PRIMARY KEY,
+  c2 STRING,
+  c3 FLOAT,
+  c4 BIGINT
+);
+```
+
+`SELECT` の例は以下の通りです:
+
+```sql
+-- プライマリキーを使用
+SELECT * FROM tbl WHERE c1 = 10;
+
+-- プライマリキーと非プライマリキーカラムの述語を使用
+SELECT * FROM tbl WHERE c1 = 10 AND c2 = 'aaa' AND c3 = 1.23 AND c4 < 100;
+
+-- プロジェクションとプライマリキーを使用
+SELECT c1, c2, c3, c5 FROM tbl WHERE c1 = 10;
+
+-- インデックス化されたカラムの等価述語を使用
+SELECT * FROM tbl WHERE c4 = 100;
+
+-- インデックス化されたカラムの等価述語と非キーカラムの述語を使用
+SELECT * FROM tbl WHERE c4 = 100 AND c5 = false;
+
+-- IS NULL 述語を使用
+SELECT * FROM tbl WHERE c2 IS NULL AND c3 IS NOT NULL;
+
+-- JOIN 句を使用
+SELECT * FROM tbl1 as t1 JOIN tbl2 as t2 on t1.c2=t2.id WHERE t1.c1=1;
+```
+
+### INSERT
+
+`INSERT` コマンドは、指定されたテーブルに新しいレコードを挿入します。対象のレコードが既に存在する場合、例外がスローされます。ScalarDL TableStore では、レコードは JSON オブジェクトとして表現されます。PartiQL 構造体形式を使用して JSON オブジェクトを指定することもできます。
+
+#### 文法
+
+```sql
+INSERT INTO <table name> VALUES record_specification
+
+record_specification: `<JSON object>` | <PartiQL struct>
+```
+
+##### 注意事項
+
+挿入するレコードにプライマリキーカラムを含める必要があります。
+
+#### 例
+
+`INSERT` の例は以下の通りです:
+
+```sql
+-- JSON 形式を使用してレコードを挿入
+INSERT INTO tbl VALUES `{"c1": 10, "c2": "aaa", "c3": 1.23, "c4": 100, "c5": true}`;
+
+-- PartiQL 構造体形式を使用してレコードを挿入
+INSERT INTO tbl VALUES {'c1': 10, 'c2': 'aaa', 'c3': 1.23, 'c4': 100, 'c5': true};
+```
+
+### UPDATE
+
+`UPDATE` コマンドは、指定されたテーブル内の既存のレコードを更新します。`SELECT` コマンドと同様に、`WHERE` 句で条件を指定してレコードをフィルタリングできますが、等価条件または `IS NULL` 条件でプライマリキーカラムまたはインデックスキーカラムに対する述語を少なくとも1つ含める必要があります。
+
+#### 文法
+
+```sql
+UPDATE <table name>
+  SET <column name> = <literal> [, <column name> = <literal>] ...
+  WHERE predicate [AND predicate ...]
+
+predicate: <column name> operator <literal> | <column name> IS [NOT] NULL
+operator: = | <> | != | > | >= | < | <=
+```
+
+##### 注意事項
+
+- `SET` 句では、指定されたカラムがレコードに存在しない場合、レコードの JSON オブジェクトに新しく追加されます。
+- `WHERE` 句では、任意のカラムに対する述語を指定できますが、等価条件または `IS NULL` 条件でプライマリキーカラムまたはインデックスキーカラムに対する述語を少なくとも 1 つ含める必要があります。
+
+#### 例
+
+例えば、以下のようなテーブルがある場合:
+
+```sql
+CREATE TABLE tbl (
+  c1 INT PRIMARY KEY,
+  c2 STRING,
+  c3 FLOAT,
+  c4 BIGINT
+);
+```
+
+完全なプライマリキーが指定された `UPDATE` の例は以下の通りです:
+
+```sql
+-- プライマリキー述語でレコードを更新
+UPDATE tbl SET c4 = 200, c5 = false WHERE c1 = 10;
+
+-- インデックスキー述語でレコードを更新
+UPDATE tbl SET c4 = 200, c5 = false WHERE c2 = 'aaa';
+
+-- プライマリキーと非キー述語でレコードを更新
+UPDATE tbl SET c4 = 200, c5 = false WHERE c1 = 10 AND c5 = true;
+```
+
+## その他
+
+このセクションでは、標準の DDL および DML カテゴリを超えた追加のコマンドと関数について説明します。
+
+### テーブルの表示
+
+`information_schema.tables` テーブルをクエリすることで、TableStore で管理されているテーブルを表示できます。
+
+#### 文法
+
+```sql
+SELECT *
+  FROM information_schema.tables
+  [WHERE table_name = <table name>]
+```
+
+#### 例
+
+`information_schema.tables` テーブルのクエリ例は以下の通りです:
+
+```sql
+-- TableStore で管理されているすべてのテーブルを表示
+SELECT * FROM information_schema.tables;
+
+-- 指定されたテーブルのみを表示
+SELECT * FROM information_schema.tables WHERE table_name = 'tbl';
+```
+
+### レコード履歴の表示
+
+`history()` 関数を使用して、指定されたレコードの履歴を表示できます。
+
+#### 文法
+
+```sql
+SELECT history()
+  FROM <table name>
+  WHERE predicate
+  [LIMIT <limit>]
+
+predicate: <column name> = <literal>
+```
+
+#### 注意事項
+
+- `WHERE` 句でプライマリキーを指定する必要があります。
+- コマンドは、最新から最古にソートされたレコードを返します。
+- `LIMIT` 句を使用すると、コマンドは最新から最古にソートされた最新の `<limit>` 行を返します。
+
+#### 例
+
+指定されたレコードの履歴を表示する例は以下の通りです:
+
+```sql
+-- 指定されたレコードの履歴を表示
+SELECT history() FROM tbl WHERE c1 = 10;
+
+-- 制限付きで指定されたレコードの履歴を表示
+SELECT history() FROM tbl WHERE c1 = 10 LIMIT 10;
+```
+
+## リテラル
+
+リテラルは、SQL ステートメントを記述するときに使用される固定データ値を指します。例えば、`1`、`'abc'`、`1.23`、および `true` はリテラルです。
+
+### 文字列
+
+文字列リテラルは、`'abc'` や `'abc def'` のように、単一引用符 `'` で囲まれた文字列です。
+
+### 数値
+
+数値リテラルには、正確値 (`INTEGER` および `BIGINT`) と近似値 (`FLOAT` および `DOUBLE PRECISION`) のリテラルが含まれます:
+
+- 正確値リテラルは、`123` や `-5` のような数字の列です。
+- 近似値リテラルは、`4.754` や `-1.2` のように小数点を含む数字の列です。
+
+### 真偽値
+
+真偽値リテラルは、真偽値を表現するために `true` または `false` のいずれかです。

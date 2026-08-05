@@ -1,0 +1,51 @@
+---
+tags:
+  - Enterprise Standard
+  - Enterprise Premium
+displayed_sidebar: docsJapanese
+---
+
+# 踏み台サーバーを作成する
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このドキュメントでは、踏み台サーバーを作成し、Scalar 製品を展開するためのいくつかのツールをインストールする方法について説明します。
+
+## Kubernetes クラスターと同じプライベートネットワーク上にサーバーを作成します
+
+Scalar 製品用の Kubernetes クラスターはプライベートネットワーク上に作成することをお勧めします。プライベートネットワーク上に Kubernetes クラスターを作成する場合は、Kubernetes クラスターにアクセスするために、同じプライベートネットワーク上に踏み台サーバーを作成する必要があります。
+
+## ツールをインストールする
+
+公式ドキュメントに従って、次のツールを踏み台サーバーにインストールしてください。
+
+* [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+* [helm](https://helm.sh/docs/intro/install/)
+
+## kubeconfig の構成
+
+kubectl コマンドをインストールした後、Kubernetes クラスターにアクセスできるように **kubeconfig** を構成する必要があります。各マネージド Kubernetes での kubeconfig の設定方法の詳細については、次の公式ドキュメントを参照してください。
+
+Amazon EKS (Amazon Elastic Kubernetes Service) を使用する場合は、公式ドキュメント [Installing or updating the latest version of the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) に従って **AWS CLI** をインストールする必要があります。その後、[Creating or updating a kubeconfig file for an Amazon EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html) で kubeconfig を設定する方法を確認できます。
+
+AKS (Azure Kubernetes Service) を使用する場合は、公式ドキュメント [How to install the Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) に従って **Azure CLI** をインストールする必要があります。その後、[az aks get-credentials](https://learn.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az-aks-get-credentials) で kubeconfig を構成する方法を確認できます。
+
+## インストールを確認する
+
+ツールがインストールされているかどうかは、次のようにして確認できます。
+
+* kubectl
+  ```console
+  kubectl version --client
+  ```
+* helm
+  ```console
+  helm version
+  ```
+
+次のように、kubeconfig が適切に構成されているかどうかを確認することもできます。URL 応答が表示された場合、kubectl はクラスターにアクセスするように正しく構成されています。
+```console
+kubectl cluster-info
+```

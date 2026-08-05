@@ -1,0 +1,52 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+# ScalarDL HashStore エラーコード
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このページでは、ScalarDL HashStore のエラーコードの一覧を示します。
+
+## エラーコードのクラスと説明
+
+| クラス                 | 説明                      |
+|:----------------------|:--------------------------|
+| `DL-HASH-STORE-4xxxx` | ユーザーエラーカテゴリのエラー |
+
+## `DL-HASH-STORE-4xxxx` ステータスコード
+
+以下は、ユーザーエラーカテゴリのステータスコードとメッセージです。
+
+### `DL-HASH-STORE-414001`
+
+**メッセージ**
+
+```markdown
+The PUT operation for the mutable database must have a namespace and table.
+```
+
+**対処法**
+
+```markdown
+Provide both a namespace and table name for the PUT operation.
+```
+
+### `DL-HASH-STORE-414002`
+
+**メッセージ**
+
+```markdown
+An unsupported data type is specified in the PUT operation. Data type: %s
+```
+
+**対処法**
+
+```markdown
+Use a supported data type for the PUT operation. Check the documentation for valid data types.
+```
