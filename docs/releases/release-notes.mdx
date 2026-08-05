@@ -15,4 +15,37 @@ This page includes a list of release notes for ScalarDL 3.14.
 
 ### Summary
 
+This release introduces the transaction state purge feature, which reclaims residual transaction states, and includes several improvements and bug fixes. For detailed changes, see the following.
 
+### Community and Enterprise editions
+
+#### Enhancements
+
+- Added transaction state purge, which reclaims stale Coordinator/transaction states left in the database. States are purged when a transaction finishes, by a periodic background scan, or on demand via the new `purge-state` CLI command. ([#552](https://github.com/scalar-labs/scalardl/pull/552), [#555](https://github.com/scalar-labs/scalardl/pull/555), [#564](https://github.com/scalar-labs/scalardl/pull/564), [#579](https://github.com/scalar-labs/scalardl/pull/579), [#583](https://github.com/scalar-labs/scalardl/pull/583), [#623](https://github.com/scalar-labs/scalardl/pull/623))
+
+#### Improvements
+
+- Added asset lock recovery RPC for the ScalarDL cleanup tool. ([#543](https://github.com/scalar-labs/scalardl/pull/543))
+- Upgraded ScalarDB to 3.19.0. ([#638](https://github.com/scalar-labs/scalardl/pull/638))
+
+#### Bug fixes
+
+- Fixed an issue where contracts could not access a JDBC database (e.g., PostgreSQL). ([#558](https://github.com/scalar-labs/scalardl/pull/558))
+- Fixed the Ledger to reject unsupported ScalarDB transaction managers at startup instead of silently accepting them. ([#585](https://github.com/scalar-labs/scalardl/pull/585))
+- Restricted function execution so that a function registered in a non-default namespace can only access the ScalarDB namespace with the same name as its context namespace, or a namespace whose name starts with the context namespace followed by an underscore. ([#570](https://github.com/scalar-labs/scalardl/pull/570))
+- Fixed contract execution failing with an `AccessControlException` when ScalarDL runs on a ScalarDB multi-storage configuration, by granting the required sandbox permissions regardless of the configured storage type. ([#588](https://github.com/scalar-labs/scalardl/pull/588))
+- Fixed several vulnerabilities in grpc-health-probe. ([#589](https://github.com/scalar-labs/scalardl/pull/589))
+- Fixed an issue where contract execution failed when database connections needed to be re-established (for example, after a database restart or an idle timeout) with the SecurityManager enabled. ([#621](https://github.com/scalar-labs/scalardl/pull/621))
+- Removed the top-level `create-namespace` command. Use `scalardl create-namespace` instead, which is consistent with the other namespace commands (`scalardl drop-namespace`, `scalardl list-namespaces`). ([#622](https://github.com/scalar-labs/scalardl/pull/622))
+- Fixed a race condition where pausing a Ledger (or Auditor/Gateway) server could report success while the server remained unpaused. ([#637](https://github.com/scalar-labs/scalardl/pull/637))
+
+### Enterprise edition
+
+#### Bug fixes
+
+- Fixed read lock count corruption caused by concurrent recovery and eliminated unnecessary CAS failures when recovering multiple read lock nonces.
+- Fixed an issue in the Auditor where a Ledger call failure during asset lock recovery was reported to clients as a generic runtime error, or its cause was lost by being treated as an unknown transaction state.
+- Fixed an issue where the Auditor on JDBC databases (Oracle) could fail to execute contracts with a `DL-COMMON-305001` error caused by reading an asset lock entry whose value was stored as `NULL`.
+- Fixed an issue where Gateway log lines were recorded under the wrong logger category.
+- Fixed an issue where contract execution on Auditor failed when database connections needed to be re-established (for example, after a database restart or an idle timeout) with the SecurityManager enabled.
+- Fixed an issue where retrying a read lock release could fail with a misleading `INCONSISTENT_STATES` error when a concurrent recovery had already released the lock.
