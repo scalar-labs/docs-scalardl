@@ -12,21 +12,21 @@ const notificationsList = [
   //   },
   //   unread: true
   // },
+  // {
+  //   message: {
+  //     en: 'Blog post: ScalarDL 3.14 has been released!',
+  //     ja: 'ブログ記事: ScalarDL 3.14 をリリースしました！'
+  //   },
+  //   url: {
+  //     en: 'XXX?utm_source=docs-site&utm_medium=notifications',
+  //     ja: 'XXX?utm_source=docs-site&utm_medium=notifications'
+  //   },
+  //   unread: true
+  // },
   {
     message: {
-      en: 'Blog post: ScalarDL 3.13 has been released!',
-      ja: 'ブログ記事: ScalarDL 3.13 をリリースしました！'
-    },
-    url: {
-      en: 'https://medium.com/scalar-engineering/scalardl-3-13-has-been-released-a790a3b8a065?utm_source=docs-site&utm_medium=notifications',
-      ja: 'https://medium.com/scalar-engineering-ja/scalardl-3-13-%E3%81%8C%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%B9%E3%81%95%E3%82%8C%E3%81%BE%E3%81%97%E3%81%9F-8c6ea26c2bf2?utm_source=docs-site&utm_medium=notifications'
-    },
-    unread: true
-  },
-  {
-    message: {
-      en: 'Find out about how to manage namespaces in ScalarDL 3.13',
-      ja: 'ScalarDL 3.13 での名前空間管理について知る'
+      en: 'Find out about how to manage namespaces',
+      ja: '名前空間管理について知る'
     },
     url: {
       en: 'manage-namespaces?utm_source=docs-site&utm_medium=notifications',
@@ -36,8 +36,8 @@ const notificationsList = [
   },
   {
     message: {
-      en: 'Learn how to access namespaces in a restricted manner in ScalarDL 3.13',
-      ja: 'ScalarDL 3.13 で名前空間に制限付きでアクセスする方法を学ぶ'
+      en: 'Learn how to access namespaces in a restricted manner',
+      ja: '名前空間に制限付きでアクセスする方法を学ぶ'
     },
     url: {
       en: 'access-namespaces-in-a-restricted-manner?utm_source=docs-site&utm_medium=notifications',

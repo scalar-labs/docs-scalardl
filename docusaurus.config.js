@@ -74,8 +74,14 @@ const config = {
               },
               */
               current: { // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
-                label: '3.13',
+                label: '3.14',
                 path: 'latest', // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
+                banner: 'none',
+                className: '3.14.0',
+              },
+              "3.13": { // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
+                label: '3.13',
+                path: '3.13', // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
                 banner: 'none',
                 className: '3.13.0',
               },
@@ -470,7 +476,8 @@ const config = {
       announcementBar: {
         id: 'new_version',
         content:
-          'Announcing the release of ScalarDL 3.13!🚀 For details on what\'s included in this new version, see the <a target="_self" href="/docs/latest/releases/release-notes?utm_source=docs-site&utm_medium=announcementbar">release notes</a> and <a target="_blank" href="https://medium.com/scalar-engineering/scalardl-3-13-has-been-released-a790a3b8a065?utm_source=docs-site&utm_medium=announcementbar">blog post</a>.',
+          'Announcing the release of ScalarDL 3.14!🚀 For details on what\'s included in this new version, see the <a target="_self" href="/docs/latest/releases/release-notes?utm_source=docs-site&utm_medium=announcementbar">release notes</a>.',
+          // and <a target="_blank" href="https://medium.com/scalar-engineering/scalardl-3-13-has-been-released-a790a3b8a065?utm_source=docs-site&utm_medium=announcementbar">blog post</a>.',
         backgroundColor: '#2673BB',
         textColor: '#FFFFFF',
         isCloseable: false,
