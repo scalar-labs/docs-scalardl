@@ -5,45 +5,47 @@ tags:
 displayed_sidebar: docsEnglish
 ---
 
-# ScalarDL 3.13 Release Notes
+# ScalarDL 3.14 Release Notes
 
-This page includes a list of release notes for ScalarDL 3.13.
+This page includes a list of release notes for ScalarDL 3.14.
 
-## v3.13.0
+## v3.14.0
 
-**Release date:** March 25, 2026
+**Release date:** August 5, 2026
 
 ### Summary
 
-This release introduces several enhancements related to the namespace feature and includes several improvements and bug fixes. For detailed changes, see the following.
+This release introduces the transaction state purge feature, which reclaims residual transaction states, and includes several improvements and bug fixes. For detailed changes, see the following.
 
 ### Community and Enterprise editions
 
 #### Enhancements
 
-- Added support for namespace management functionalities. ([#322](https://github.com/scalar-labs/scalardl/pull/322), [#345](https://github.com/scalar-labs/scalardl/pull/345), [#387](https://github.com/scalar-labs/scalardl/pull/387), [#392](https://github.com/scalar-labs/scalardl/pull/392))
-- Added support for namespace-aware contract execution. ([#357](https://github.com/scalar-labs/scalardl/pull/357))
-- Added support for isolated namespaces. ([#430](https://github.com/scalar-labs/scalardl/pull/430))
+- Added transaction state purge, which reclaims stale Coordinator/transaction states left in the database. States are purged when a transaction finishes, by a periodic background scan, or on demand via the new `purge-state` CLI command. ([#552](https://github.com/scalar-labs/scalardl/pull/552), [#555](https://github.com/scalar-labs/scalardl/pull/555), [#564](https://github.com/scalar-labs/scalardl/pull/564), [#579](https://github.com/scalar-labs/scalardl/pull/579), [#583](https://github.com/scalar-labs/scalardl/pull/583), [#623](https://github.com/scalar-labs/scalardl/pull/623))
 
 #### Improvements
 
-- Upgraded server-side Java versions to Java 21. ([#395](https://github.com/scalar-labs/scalardl/pull/395))
+- Added asset lock recovery RPC for the ScalarDL cleanup tool. ([#543](https://github.com/scalar-labs/scalardl/pull/543))
+- Upgraded ScalarDB to 3.19.0. ([#638](https://github.com/scalar-labs/scalardl/pull/638))
 
 #### Bug fixes
 
-- Fixed the JSON Schema Validator repository and version. ([#277](https://github.com/scalar-labs/scalardl/pull/277))
-- Fixed bugs to handle FLOAT and BLOB data types in the PutToMutable function. ([#297](https://github.com/scalar-labs/scalardl/pull/297))
-- Fixed NullPointerException when a client is misconfigured with a digital signature. ([#302](https://github.com/scalar-labs/scalardl/pull/302))
-- Fixed status code handling. ([#323](https://github.com/scalar-labs/scalardl/pull/323))
-- Fixed the parameter name for the client entity ID. ([#376](https://github.com/scalar-labs/scalardl/pull/376))
-- Fixed a bug where users cannot register a custom ValidateLedger contract after bootstrapping. ([#404](https://github.com/scalar-labs/scalardl/pull/404))
-- Fixed [CVE-2025-47907](https://github.com/advisories/GHSA-j5pm-7495-qmr3 "CVE-2025-47907") and [CVE-2025-58183](https://github.com/advisories/GHSA-9gcr-gp5f-jw27 "CVE-2025-58183"). ([#364](https://github.com/scalar-labs/scalardl/pull/364))
-- Fixed [CVE-2025-61726](https://github.com/advisories/GHSA-gm9r-q53w-2gh4 "CVE-2025-61726"), [CVE-2025-61728](https://github.com/advisories/GHSA-g9q4-qjx4-2v7q "CVE-2025-61728"), [CVE-2025-61729](https://github.com/advisories/GHSA-7c64-f9jr-v9h2 "CVE-2025-61729") and [CVE-2025-68121](https://github.com/advisories/GHSA-h355-32pf-p2xm "CVE-2025-68121"). ([#472](https://github.com/scalar-labs/scalardl/pull/472))
+- Fixed an issue where contracts could not access a JDBC database (e.g., PostgreSQL). ([#558](https://github.com/scalar-labs/scalardl/pull/558))
+- Fixed the Ledger to reject unsupported ScalarDB transaction managers at startup instead of silently accepting them. ([#585](https://github.com/scalar-labs/scalardl/pull/585))
+- Restricted function execution so that a function registered in a non-default namespace can only access the ScalarDB namespace with the same name as its context namespace, or a namespace whose name starts with the context namespace followed by an underscore. ([#570](https://github.com/scalar-labs/scalardl/pull/570))
+- Fixed contract execution failing with an `AccessControlException` when ScalarDL runs on a ScalarDB multi-storage configuration, by granting the required sandbox permissions regardless of the configured storage type. ([#588](https://github.com/scalar-labs/scalardl/pull/588))
+- Fixed several vulnerabilities in grpc-health-probe. ([#589](https://github.com/scalar-labs/scalardl/pull/589))
+- Fixed an issue where contract execution failed when database connections needed to be re-established (for example, after a database restart or an idle timeout) with the SecurityManager enabled. ([#621](https://github.com/scalar-labs/scalardl/pull/621))
+- Removed the top-level `create-namespace` command. Use `scalardl create-namespace` instead, which is consistent with the other namespace commands (`scalardl drop-namespace`, `scalardl list-namespaces`). ([#622](https://github.com/scalar-labs/scalardl/pull/622))
+- Fixed a race condition where pausing a Ledger (or Auditor/Gateway) server could report success while the server remained unpaused. ([#637](https://github.com/scalar-labs/scalardl/pull/637))
 
 ### Enterprise edition
 
 #### Bug fixes
 
-- Fixed duplicated read lock.
-- Fixed Gateway exception handling.
-- Fixed an SLF4J version conflict in BYOL Docker images.
+- Fixed read lock count corruption caused by concurrent recovery and eliminated unnecessary CAS failures when recovering multiple read lock nonces.
+- Fixed an issue in the Auditor where a Ledger call failure during asset lock recovery was reported to clients as a generic runtime error, or its cause was lost by being treated as an unknown transaction state.
+- Fixed an issue where the Auditor on JDBC databases (Oracle) could fail to execute contracts with a `DL-COMMON-305001` error caused by reading an asset lock entry whose value was stored as `NULL`.
+- Fixed an issue where Gateway log lines were recorded under the wrong logger category.
+- Fixed an issue where contract execution on Auditor failed when database connections needed to be re-established (for example, after a database restart or an idle timeout) with the SecurityManager enabled.
+- Fixed an issue where retrying a read lock release could fail with a misleading `INCONSISTENT_STATES` error when a concurrent recovery had already released the lock.

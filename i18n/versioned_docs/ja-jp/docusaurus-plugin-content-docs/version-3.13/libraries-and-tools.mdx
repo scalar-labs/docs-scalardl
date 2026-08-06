@@ -1,0 +1,45 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+# ScalarDL のライブラリとツール
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+ScalarDL は、スケーラブルで信頼性の高いアプリケーションの構築と運用を支援するさまざまなライブラリとツールを提供します。以下は、利用可能な主要なライブラリとツールです。
+
+## ライブラリ
+
+ScalarDL で利用可能なライブラリは以下の通りです。
+
+| ライブラリ                            | エディション             | Maven パッケージ                                                                                                        | コンテナイメージ  | リファレンス                                                                                                  |
+|-------------------------------------|------------------------|-----------------------------------------------------------------------------------------------------------------------|-----------------|------------------------------------------------------------------------------------------------------------|
+| ScalarDL Java Client SDK            | Community & Enterprise | [Maven Central Repository](https://central.sonatype.com/artifact/com.scalar-labs/scalardl-java-client-sdk)            | N/A             | [ドキュメンテーション](./how-to-write-applications.mdx#scalardl-client-sdk-を使用する)                            |
+| ScalarDL HashStore Java Client SDK  | Community & Enterprise | [Maven Central Repository](https://central.sonatype.com/artifact/com.scalar-labs/scalardl-hashstore-java-client-sdk)  | N/A             | [ドキュメンテーション](./how-to-write-applications-with-hashstore.mdx#scalardl-hashstore-client-sdk-の使用)   |
+| ScalarDL TableStore Java Client SDK | Community & Enterprise | [Maven Central Repository](https://central.sonatype.com/artifact/com.scalar-labs/scalardl-tablestore-java-client-sdk) | N/A             | [ドキュメンテーション](./how-to-write-applications-with-tablestore.mdx#scalardl-tablestore-client-sdk-の使用) |
+
+## ツール
+
+ScalarDL で利用可能なツールは以下の通りです。
+
+| ツール                       | エディション              | Maven パッケージ                                                                                               | コンテナイメージ                                                                                        | リファレンス                                                                      |
+|-----------------------------|------------------------|---------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| ScalarDL Client Command     | Community & Enterprise | N/A                                                                                                           | [GitHub](https://github.com/scalar-labs/scalardl/pkgs/container/scalardl-client)                     | [ドキュメンテーション](./scalardl-command-reference.mdx)                            |
+| ScalarDL Schema Loader      | Community & Enterprise | N/A                                                                                                           | [GitHub](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader)      | [ドキュメンテーション](./schema-loader.mdx)                                         |
+| Helm Charts                 | Community & Enterprise | N/A                                                                                                           | N/A                                                                                                  | [ドキュメンテーション](./helm-charts/getting-started-scalar-helm-charts.mdx)        |
+| Scalar Admin for Kubernetes | Community & Enterprise | [Maven Central Repository](https://central.sonatype.com/artifact/com.scalar-labs/scalar-admin-for-kubernetes) | [GitHub](https://github.com/orgs/scalar-labs/packages/container/package/scalar-admin-for-kubernetes) | [ドキュメンテーション](./helm-charts/how-to-deploy-scalar-admin-for-kubernetes.mdx) |
+
+### コンポーネント
+
+ScalarDL で利用可能なコンポーネントは以下の通りです。
+
+| コンポーネント            | エディション  | コンテナイメージ                                                                                 | リファレンス                     |
+|-------------------------|------------|------------------------------------------------------------------------------------------------|-------------------------------|
+| ScalarDL Ledger         | Community  | [GitHub](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-ledger)       | ドキュメンテーション (近日公開予定) |
+| ScalarDL Ledger (BYOL)  | Enterprise | [GitHub](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-ledger-byol)  | ドキュメンテーション (近日公開予定) |
+| ScalarDL Auditor (BYOL) | Enterprise | [GitHub](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-auditor-byol) | ドキュメンテーション (近日公開予定) |

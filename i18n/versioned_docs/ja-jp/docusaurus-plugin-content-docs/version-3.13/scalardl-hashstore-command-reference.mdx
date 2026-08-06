@@ -1,0 +1,319 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+# ScalarDL HashStore コマンドリファレンス
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このページでは、ScalarDL HashStore とやりとりするためのクライアントコマンドである `scalardl-hashstore` について説明します。
+
+## コマンドの概要
+
+- **HashStore のブートストラップ**
+  - [`bootstrap`](#bootstrap): HashStore を使用するために必要な ID と事前定義されたコントラクトを登録してブートストラップを実行します。
+- **オブジェクトの管理**
+  - [`get-object`](#get-object): HashStore からオブジェクトを取得します。
+  - [`put-object`](#put-object): HashStore にオブジェクトを保存します。
+  - [`compare-object-versions`](#compare-object-versions): オブジェクトのバージョンを比較します。
+- **コレクションの管理**
+  - [`create-collection`](#create-collection): 新しいコレクションを作成します。
+  - [`get-collection`](#get-collection): HashStore からコレクションを取得します。
+  - [`add-to-collection`](#add-to-collection): オブジェクトをコレクションに追加します。
+  - [`remove-from-collection`](#remove-from-collection): コレクションからオブジェクトを削除します。
+  - [`get-collection-history`](#get-collection-history): コレクションの履歴を取得します。
+- **台帳の検証**
+  - [`validate-ledger`](#validate-ledger): HashStore 内の指定されたオブジェクトまたはコレクションを検証します。
+
+## `bootstrap`
+
+HashStore を使用するために必要な ID と事前定義されたコントラクトを登録してブートストラップを実行します。
+
+### オプション
+
+| オプション                     | 説明                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | .properties 形式の設定ファイル。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+```console
+scalardl-hashstore bootstrap --properties client.properties
+```
+
+## `get-object`
+
+HashStore からオブジェクトを取得します。
+
+### オプション
+
+| オプション                     | 説明                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | .properties 形式の設定ファイル。 |
+| `--object-id`              | 取得するオブジェクトの ID。          |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+```console
+scalardl-hashstore get-object --properties client.properties --object-id foo
+```
+
+## `put-object`
+
+HashStore にオブジェクトを保存します。
+
+### オプション
+
+| オプション                     | 説明                                                 |
+|:---------------------------|:------------------------------------------------------------|
+| `--config`, `--properties` | .properties 形式の設定ファイル。                  |
+| `--object-id`              | 保存するオブジェクトの ID。                              |
+| `--hash`                   | オブジェクトのハッシュ値。                               |
+| `--metadata`               | オプションのメタデータ (JSON 文字列)。                           |
+| `--put-to-mutable`         | ミュータブルデータベースに対するオプションの Put 操作 (JSON 文字列)。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+ハッシュ値を持つオブジェクトを保存します。
+
+```console
+scalardl-hashstore put-object --properties client.properties --object-id foo --hash b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c
+```
+
+メタデータを持つオブジェクトを保存します。
+
+```console
+scalardl-hashstore put-object --properties client.properties --object-id foo --hash b97a42c87a46ffebe1439f8c1cd2f86e2f9b84dad89c8e9ebb257a19b6fdfe1c --metadata '{"note": "updated"}'
+```
+
+## `compare-object-versions`
+
+オブジェクトのバージョンを比較します。
+
+### オプション
+
+| オプション                     | 説明                                                   |
+|:---------------------------|:--------------------------------------------------------------|
+| `--config`, `--properties` | .properties 形式の設定ファイル。                    |
+| `--object-id`              | バージョンを比較するオブジェクトの ID。                     |
+| `--versions`               | 比較するオブジェクトのバージョン (JSON 配列)。                     |
+| `--all`                    | 台帳に保存されているすべてのバージョンを含めて比較します。 |
+| `--verbose`                | 詳細な検証情報を表示します。                         |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+引数で指定された最新バージョンを比較します。
+
+```console
+scalardl-hashstore compare-object-versions --properties client.properties --object-id foo --versions '[{"version_id": "v1", "hash_value": "hash1"}, {"version_id": "v2", "hash_value": "hash2", "metadata": {"note": "updated"}}]'
+```
+
+HashStore に保存されているすべてのバージョンを比較します。
+
+```console
+scalardl-hashstore compare-object-versions --properties client.properties --object-id foo --versions '[{"version_id": "v1", "hash_value": "hash1"}, {"version_id": "v2", "hash_value": "hash2", "metadata": {"note": "updated"}}]' --all
+```
+
+詳細出力で比較します。
+
+```console
+scalardl-hashstore compare-object-versions --properties client.properties --object-id foo --versions '[{"version_id": "v1", "hash_value": "hash1"}]' --verbose
+```
+
+## `create-collection`
+
+新しいコレクションを作成します。
+
+### オプション
+
+| オプション                     | 説明                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | .properties 形式の設定ファイル。 |
+| `--collection-id`          | 作成するコレクションの ID。        |
+| `--object-ids`             | コレクションに含めるオブジェクト ID。   |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+空のコレクションを作成します。
+
+```console
+scalardl-hashstore create-collection --properties client.properties --collection-id audit_set
+```
+
+初期オブジェクトを含むコレクションを作成します。
+
+```console
+scalardl-hashstore create-collection --properties client.properties --collection-id audit_set --object-ids object1 --object-ids object2
+```
+
+## `get-collection`
+
+HashStore からコレクションを取得します。
+
+### オプション
+
+| オプション                     | 説明                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | .properties 形式の設定ファイル。 |
+| `--collection-id`          | 取得するコレクションの ID。      |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+```console
+scalardl-hashstore get-collection --properties client.properties --collection-id audit_set
+```
+
+## `add-to-collection`
+
+オブジェクトをコレクションに追加します。
+
+### オプション
+
+| オプション                     | 説明                                                         |
+|:---------------------------|:--------------------------------------------------------------------|
+| `--config`, `--properties` | .properties 形式の設定ファイル。                          |
+| `--collection-id`          | コレクションの ID。                                           |
+| `--object-ids`             | コレクションに追加するオブジェクト ID。                                |
+| `--force`                  | コレクションに既に存在する重複オブジェクト ID の検証をスキップします。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+オブジェクトをコレクションに追加します。
+
+```console
+scalardl-hashstore add-to-collection --properties client.properties --collection-id audit_set --object-ids object3 --object-ids object4
+```
+
+force オプションを使用してオブジェクトを追加します。
+
+```console
+scalardl-hashstore add-to-collection --properties client.properties --collection-id audit_set --object-ids object3 --force
+```
+
+## `remove-from-collection`
+
+コレクションからオブジェクトを削除します。
+
+### オプション
+
+| オプション                     | 説明                                                    |
+|:---------------------------|:---------------------------------------------------------------|
+| `--config`, `--properties` | .properties 形式の設定ファイル。                     |
+| `--collection-id`          | コレクションの ID。                                      |
+| `--object-ids`             | コレクションから削除するオブジェクト ID。                      |
+| `--force`                  | コレクションに存在しないオブジェクト ID の検証をスキップします。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+コレクションからオブジェクトを削除します。
+
+```console
+scalardl-hashstore remove-from-collection --properties client.properties --collection-id audit_set --object-ids object1 --object-ids object2
+```
+
+force オプションを使用してオブジェクトを削除します。
+
+```console
+scalardl-hashstore remove-from-collection --properties client.properties --collection-id audit_set --object-ids object1 --force
+```
+
+## `get-collection-history`
+
+コレクションの履歴を取得します。
+
+### オプション
+
+| オプション                     | 説明                                         |
+|:---------------------------|:----------------------------------------------------|
+| `--config`, `--properties` | .properties 形式の設定ファイル。          |
+| `--collection-id`          | コレクションの ID。                           |
+| `--limit`                  | 取得する最新の履歴エントリの最大数。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+コレクションのすべての履歴を取得します。
+
+```console
+scalardl-hashstore get-collection-history --properties client.properties --collection-id audit_set
+```
+
+コレクションの限定された履歴を取得します。
+
+```console
+scalardl-hashstore get-collection-history --properties client.properties --collection-id audit_set --limit 10
+```
+
+## `validate-ledger`
+
+HashStore 内の指定されたオブジェクトまたはコレクションを検証します。
+
+### オプション
+
+| オプション                     | 説明                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | .properties 形式の設定ファイル。 |
+| `--object-id`              | 検証するオブジェクトの ID。          |
+| `--collection-id`          | 検証するコレクションの ID。      |
+| `--start-age`              | 検証範囲の開始世代。        |
+| `--end-age`                | 検証範囲の終了世代。          |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+すべての世代のオブジェクトを検証します。
+
+```console
+scalardl-hashstore validate-ledger --properties client.properties --object-id foo
+```
+
+世代 0 から世代 10 までのオブジェクトのみを検証します。
+
+```console
+scalardl-hashstore validate-ledger --properties client.properties --object-id foo --start-age 0 --end-age 10
+```
+
+すべての世代のコレクションを検証します。
+
+```console
+scalardl-hashstore validate-ledger --properties client.properties --collection-id audit_set
+```
+
+世代 0 から世代 5 までのコレクションのみを検証します。
+
+```console
+scalardl-hashstore validate-ledger --properties client.properties --collection-id audit_set --start-age 0 --end-age 5
+```
+
+## 共通ユーティリティオプション
+
+上記のすべてのコマンドで、以下のオプションを使用できます。
+
+| オプション                | 説明                                 |
+|:----------------------|:--------------------------------------------|
+| `-g`, `--use-gateway` | ゲートウェイを使用するオプション。                  |
+| `-h`, `--help`        | コマンドのヘルプメッセージを表示します。      |
+| `--stacktrace`        | Java スタックトレースを `stderr` ストリームに出力します。 |

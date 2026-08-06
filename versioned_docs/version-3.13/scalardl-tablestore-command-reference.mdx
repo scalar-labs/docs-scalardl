@@ -1,0 +1,114 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsEnglish
+---
+
+# ScalarDL TableStore Command Reference
+
+This page introduces `scalardl-tablestore`, which is a client command for interacting with ScalarDL TableStore.
+
+## Overview of commands
+
+- **Bootstrap TableStore**
+  - [`bootstrap`](#bootstrap): Bootstrap by registering identity and predefined contracts required to use TableStore.
+- **Execute a statement**
+  - [`execute-statement`](#execute-statement): Execute a specified statement.
+- **Validate the ledger**
+  - [`validate-ledger`](#validate-ledger): Validate a specified record, index record, or table schema in TableStore.
+
+## `bootstrap`
+
+Bootstrap by registering identity and predefined contracts required to use TableStore.
+
+### Options
+
+| Option                     | Description                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | A configuration file in the .properties format. |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+```console
+scalardl-tablestore bootstrap --properties client.properties
+```
+
+## `execute-statement`
+
+Execute a specified statement.
+
+### Options
+
+| Option                     | Description                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | A configuration file in the .properties format. |
+| `--statement`              | A statement to interact with TableStore.   |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+Execute a statement.
+
+```console
+scalardl-tablestore execute-statement --properties client.properties --statement "SELECT * FROM employee WHERE id = '1001'"
+```
+
+For details about the grammar of SQL statements, see [ScalarDL TableStore SQL Grammar](sql-grammar.mdx).
+
+## `validate-ledger`
+
+Validate a specified record, index record or table schema in TableStore.
+
+### Options
+
+| Option                          | Description                                                            |
+|:--------------------------------|:-----------------------------------------------------------------------|
+| `--config`, `--properties`      | A configuration file in the .properties format.                             |
+| `--table-name`                  | The name of the table.                                                 |
+| `--primary-key-column-name`     | The primary key column name of the record.                             |
+| `--index-key-column-name`       | The index key column name of the record.                               |
+| `--column-value`                | The column value of the primary key or the index key as a JSON string. |
+| `--start-age`                   | The start age for the validation range.                                    |
+| `--end-age`                     | The end age for the validation range.                                      |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+Validate a record with primary key for all ages.
+
+```console
+scalardl-tablestore validate-ledger --properties client.properties --table-name employee --primary-key-column-name id --column-value '"1001"'
+```
+
+Validate a record with primary key from age 0 to age 10 only.
+
+```console
+scalardl-tablestore validate-ledger --properties client.properties --table-name employee --primary-key-column-name id --column-value '"1001"' --start-age 0 --end-age 10
+```
+
+Validate an index record.
+
+```console
+scalardl-tablestore validate-ledger --properties client.properties --table-name employee --index-key-column-name department --column-value '"sales"'
+```
+
+Validate a table schema.
+
+```console
+scalardl-tablestore validate-ledger --properties client.properties --table-name employee
+```
+
+## Common utility options
+
+You can use the following options in all the commands above.
+
+| Option                | Description                                 |
+|:----------------------|:--------------------------------------------|
+| `-g`, `--use-gateway` | A flag to use the gateway.                  |
+| `-h`, `--help`        | Display the help message of a command.      |
+| `--stacktrace`        | Output the Java stack trace to the `stderr` stream. |

@@ -1,0 +1,137 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+# コントラクトとファンクションのライフサイクルを管理する
+
+import JavadocLink from '/src/theme/JavadocLink.js';
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このドキュメントでは、ScalarDL におけるコントラクトとファンクションのライフサイクルについて、作成や登録からバグ修正や機能追加が必要な場合の更新まで説明します。
+
+## 作成
+
+ScalarDL では、ビジネスロジックをコントラクトとファンクションという2種類の Java プログラムとして実装します。コントラクトは Ledger 内の改ざん検知可能なアセットレコードを管理し、ファンクションはコントラクトと連携して ScalarDB を通じた外部データベース内の可変レコードを管理します。
+
+コントラクトまたはファンクションを作成するには、コントラクトの場合は <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="JacksonBasedContract" />、ファンクションの場合は <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/function" className="JacksonBasedFunction" /> などの定義済みベースクラスを拡張する Java クラスを作成します。
+
+コントラクトとファンクションの書き方の詳細については、以下を参照してください:
+
+- [ScalarDL の適切なコントラクトを作成する方法に関するガイド](how-to-write-contract.mdx)
+- [ScalarDL のファンクションの書き方に関するガイド](how-to-write-function.mdx)
+
+## 登録
+
+コントラクトまたはファンクションを作成した後、使用する前に ScalarDL に登録する必要があります。
+
+コントラクトを登録するには:
+
+```console
+scalardl register-contract --properties client.properties --contract-id StateUpdater --contract-binary-name com.org1.contract.StateUpdater --contract-class-file build/classes/java/main/com/org1/contract/StateUpdater.class
+```
+
+ファンクションを登録するには:
+
+```console
+scalardl register-function --properties client.properties --function-id test-function --function-binary-name com.example.function.TestFunction --function-class-file /path/to/TestFunction.class
+```
+
+登録コマンドとオプションの詳細については、[ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx)を参照してください。
+
+### コントラクトの登録制約
+
+コントラクトを登録する際、以下の制約に注意してください:
+
+- **一意なコントラクト ID:** 各コントラクトには一意なコントラクト ID が必要です。既に存在する ID でコントラクトを登録しようとすると、登録は失敗します。
+- **一貫したバイナリ名とバイトコード:** あるバイナリ名が特定のバイトコードで既に登録されている場合、同じバイナリ名で異なるバイトコードを登録できません。ただし、同じバイナリ名で同じバイトコードであっても、異なるクライアントや異なるコントラクト ID であれば登録できます。
+
+### ファンクションの登録制約
+
+コントラクトとは異なり、ファンクションは同じファンクション ID で再登録できます。動作は ScalarDL へのアクセス方法によって異なります:
+
+- **特権ポート (デフォルト: 50052):** ファンクションは常に制限なく登録および上書きできます。
+- **非特権ポート (デフォルト: 50051):** ファンクションの登録と上書きは管理者の設定によって制御されます。詳細については、[名前空間に制限付きでアクセスする](access-namespaces-in-a-restricted-manner.mdx)を参照してください。
+
+## 更新
+
+コントラクトとファンクションは ScalarDL において異なるアーキテクチャ上の役割を担っているため、更新のメカニズムが異なります。コントラクトは Ledger 内の改ざん検知可能なアセットレコードを管理し、ScalarDL はアセット更新の完全な履歴を再生して検証できる必要があるため、コントラクトは不変 (追記のみ) です。一方、ファンクションは ScalarDB を通じて外部データベース内の可変レコードを管理するため、過去のバージョンを保持する必要がなく、上書きが可能です。
+
+### コントラクトを更新する
+
+コントラクトは不変であるため、既存のコントラクトを変更したり上書きしたりできません。代わりに、**新しいコントラクト ID** と**新しいバイナリ名**で新しいバージョンのコントラクトを登録する必要があります。
+
+#### バージョニングのベストプラクティス
+
+コントラクトのバージョニングには、一般的に2つのアプローチがあります:
+
+**パッケージベースのバージョニング (本番環境に推奨):** Java パッケージ名にバージョン番号を含めます。ScalarDL の HashStore や TableStore などの抽象化が内部的に使用する[定義済みコントラクト](https://github.com/scalar-labs/scalardl/tree/master/generic-contracts/src/main/java/com/scalar/dl/genericcontracts)もこのアプローチを採用しています。
+
+例えば、元のコントラクトが `com.example.contract.v1.StateUpdater` にある場合、更新されたバージョンは `com.example.contract.v2.StateUpdater` になります。同様に、コントラクト ID も `v1.StateUpdater` や `v2.StateUpdater` のようにバージョンを反映する必要があります。
+
+```console
+scalardl register-contract --properties client.properties --contract-id v2.StateUpdater --contract-binary-name com.example.contract.v2.StateUpdater --contract-class-file build/classes/java/main/com/example/contract/v2/StateUpdater.class
+```
+
+**クラス名ベースのバージョニング (小規模やテストに適している):** `StateUpdaterV2` のように、クラス名にバージョン番号を直接追加します。このアプローチはよりシンプルですが、大規模プロジェクトではやや整理しにくくなる場合があります。
+
+```console
+scalardl register-contract --properties client.properties --contract-id StateUpdaterV2 --contract-binary-name com.example.contract.StateUpdaterV2 --contract-class-file build/classes/java/main/com/example/contract/StateUpdaterV2.class
+```
+
+#### アプリケーションコードを更新する
+
+新しいコントラクトバージョンを登録した後、新しいコントラクト ID を使用するようにアプリケーションコードを更新します。例えば、<JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を使用している場合は、`executeContract` メソッドに渡すコントラクト ID を更新します。
+
+:::note
+
+古いコントラクトバージョンは ScalarDL に登録されたまま残ります。これは意図的な設計です。ScalarDL はアセットの検証と履歴の再生のためにそれらを必要とします。古いコントラクトバージョンを削除しようとしないでください。
+
+:::
+
+### ファンクションを更新する
+
+ファンクションは可変であるため、同じファンクション ID で再登録することで更新できます。新しいバイトコードが古いバイトコードを上書きします。
+
+```console
+scalardl register-function --properties client.properties --function-id test-function --function-binary-name com.example.function.TestFunction --function-class-file /path/to/TestFunction.class
+```
+
+ファンクションを上書きする際、必要に応じてバイナリ名を変更することもできます。同じでなければならない識別子はファンクション ID のみです。
+
+:::note
+
+マルチテナント (名前空間) 構成では、非特権ポートを通じたファンクションの登録と上書きは管理者の設定によって制御されます。詳細については、[名前空間に制限付きでアクセスする](access-namespaces-in-a-restricted-manner.mdx)を参照してください。
+
+:::
+
+### 更新されたコントラクトとファンクションを実行する
+
+コントラクトを更新した後は、実行時に**新しいコントラクト ID** を使用します。古いコントラクト ID は引き続き古いバージョンを参照します。
+
+```console
+scalardl execute-contract --properties client.properties --contract-id v2.StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}'
+```
+
+ファンクションを更新した後は、以前と**同じファンクション ID** を使用でき、更新されたファンクションが自動的に実行されます。
+
+```console
+scalardl execute-contract --properties client.properties --contract-id v2.StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}' --function-id test-function --function-argument '{...}'
+```
+
+コントラクトとファンクションの実行の詳細については、以下を参照してください:
+
+- [Ledger 抽象化を使用して ScalarDL アプリケーションを書く](how-to-write-applications.mdx)
+- [ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx)
+
+## 参照
+
+- [ScalarDL の適切なコントラクトを作成する方法に関するガイド](how-to-write-contract.mdx)
+- [ScalarDL のファンクションの書き方に関するガイド](how-to-write-function.mdx)
+- [ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx)
+- [Ledger 抽象化を使用して ScalarDL アプリケーションを書く](how-to-write-applications.mdx)
+- [名前空間に制限付きでアクセスする](access-namespaces-in-a-restricted-manner.mdx)

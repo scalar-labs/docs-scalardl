@@ -1,0 +1,520 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsEnglish
+---
+
+# ScalarDL Client Error Codes
+
+This page provides a list of error codes in ScalarDL clients.
+
+## Error code classes and descriptions
+
+| Class             | Description                              |
+|:------------------|:-----------------------------------------|
+| `DL-CLIENT-3xxxx` | Errors for the validation error category |
+| `DL-CLIENT-4xxxx` | Errors for the user error category       |
+| `DL-CLIENT-5xxxx` | Errors for the internal error category   |
+
+## `DL-CLIENT-3xxxx` status codes
+
+The following are status codes and messages for the validation error category.
+
+### `DL-CLIENT-305001`
+
+**Message**
+
+```markdown
+The results from Ledger and Auditor don't match.
+```
+
+**Solution**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
+## `DL-CLIENT-4xxxx` status codes
+
+The following are status codes and messages for the user error category.
+
+### `DL-CLIENT-414001`
+
+**Message**
+
+```markdown
+The specified option --asset-id is malformed. The format should be "[assetId]" or "[assetId],[startAge],[endAge]".
+```
+
+**Solution**
+
+```markdown
+Provide the asset ID in the correct format: "[assetId]" or "[assetId],[startAge],[endAge]".
+```
+
+### `DL-CLIENT-414002`
+
+**Message**
+
+```markdown
+The specified option --asset-id contains an invalid integer.
+```
+
+**Solution**
+
+```markdown
+Provide valid integers for startAge and endAge in the asset ID.
+```
+
+### `DL-CLIENT-414003`
+
+**Message**
+
+```markdown
+The authentication method for the client mode must be either digital-signature or hmac.
+```
+
+**Solution**
+
+```markdown
+Set the authentication method to either 'digital-signature' or 'hmac' in your configuration.
+```
+
+### `DL-CLIENT-414004`
+
+**Message**
+
+```markdown
+The authentication method for the intermediary mode must be pass-through.
+```
+
+**Solution**
+
+```markdown
+Set the authentication method to 'pass-through' in your configuration.
+```
+
+### `DL-CLIENT-414005`
+
+**Message**
+
+```markdown
+Both the certificate and the private key must be set to use digital signature.
+```
+
+**Solution**
+
+```markdown
+Provide both the certificate and the private key in your configuration.
+```
+
+### `DL-CLIENT-414006`
+
+**Message**
+
+```markdown
+The secret key must be set to use HMAC authentication.
+```
+
+**Solution**
+
+```markdown
+Provide the secret key in your configuration.
+```
+
+### `DL-CLIENT-414007`
+
+**Message**
+
+```markdown
+%s and %s are missing, but either is required.
+```
+
+**Solution**
+
+```markdown
+Provide either the entity ID or the certificate holder ID in your configuration.
+```
+
+### `DL-CLIENT-414008`
+
+**Message**
+
+```markdown
+Digital signature authentication is not configured.
+```
+
+**Solution**
+
+```markdown
+Configure digital signature authentication with the required certificate and private key.
+```
+
+### `DL-CLIENT-414009`
+
+**Message**
+
+```markdown
+HMAC authentication is not configured.
+```
+
+**Solution**
+
+```markdown
+Configure HMAC authentication with the required secret key.
+```
+
+### `DL-CLIENT-414010`
+
+**Message**
+
+```markdown
+validateLedger with Auditor is not supported in the intermediary mode. Please execute the ValidateLedger contract to validate assets.
+```
+
+**Solution**
+
+```markdown
+Execute the ValidateLedger contract to validate assets in intermediary mode.
+```
+
+### `DL-CLIENT-414011`
+
+**Message**
+
+```markdown
+The specified client mode is incorrect.
+```
+
+**Solution**
+
+```markdown
+Provide a valid client mode in your configuration.
+```
+
+### `DL-CLIENT-414012`
+
+**Message**
+
+```markdown
+The contract ID cannot be null.
+```
+
+**Solution**
+
+```markdown
+Provide a non-null contract ID.
+```
+
+### `DL-CLIENT-414013`
+
+**Message**
+
+```markdown
+The contract name cannot be null.
+```
+
+**Solution**
+
+```markdown
+Provide a non-null contract name.
+```
+
+### `DL-CLIENT-414014`
+
+**Message**
+
+```markdown
+The contractBytes cannot be null.
+```
+
+**Solution**
+
+```markdown
+Provide non-null contract bytes.
+```
+
+### `DL-CLIENT-414015`
+
+**Message**
+
+```markdown
+The contractArgument cannot be null.
+```
+
+**Solution**
+
+```markdown
+Provide a non-null contract argument.
+```
+
+### `DL-CLIENT-414016`
+
+**Message**
+
+```markdown
+The contractPath cannot be null.
+```
+
+**Solution**
+
+```markdown
+Provide a non-null contract path.
+```
+
+### `DL-CLIENT-414017`
+
+**Message**
+
+```markdown
+The function ID cannot be null.
+```
+
+**Solution**
+
+```markdown
+Provide a non-null function ID.
+```
+
+### `DL-CLIENT-414018`
+
+**Message**
+
+```markdown
+The function name cannot be null.
+```
+
+**Solution**
+
+```markdown
+Provide a non-null function name.
+```
+
+### `DL-CLIENT-414019`
+
+**Message**
+
+```markdown
+The functionBytes cannot be null.
+```
+
+**Solution**
+
+```markdown
+Provide non-null function bytes.
+```
+
+### `DL-CLIENT-414020`
+
+**Message**
+
+```markdown
+The functionPath cannot be null.
+```
+
+**Solution**
+
+```markdown
+Provide a non-null function path.
+```
+
+### `DL-CLIENT-414021`
+
+**Message**
+
+```markdown
+The asset ID cannot be null.
+```
+
+**Solution**
+
+```markdown
+Provide a non-null asset ID.
+```
+
+### `DL-CLIENT-414022`
+
+**Message**
+
+```markdown
+The specified asset ages are invalid.
+```
+
+**Solution**
+
+```markdown
+Ensure that startAge is non-negative (>= 0) and endAge is greater than or equal to startAge.
+```
+
+### `DL-CLIENT-414023`
+
+**Message**
+
+```markdown
+The specified asset type is incorrect.
+```
+
+**Solution**
+
+```markdown
+Provide a valid asset type.
+```
+
+### `DL-CLIENT-414024`
+
+**Message**
+
+```markdown
+The specified keys are incorrect for the asset type.
+```
+
+**Solution**
+
+```markdown
+Provide valid keys for the asset type.
+```
+
+### `DL-CLIENT-414025`
+
+**Message**
+
+```markdown
+The namespace name cannot be null.
+```
+
+**Solution**
+
+```markdown
+Provide a non-null namespace name.
+```
+
+### `DL-CLIENT-414026`
+
+**Message**
+
+```markdown
+The entity ID cannot be null.
+```
+
+**Solution**
+
+```markdown
+Provide a non-null entity ID in your service request.
+```
+
+### `DL-CLIENT-414027`
+
+**Message**
+
+```markdown
+The certificate in PEM format cannot be null.
+```
+
+**Solution**
+
+```markdown
+Provide a valid certificate in PEM format in your service request.
+```
+
+### `DL-CLIENT-414028`
+
+**Message**
+
+```markdown
+The secret key cannot be null.
+```
+
+**Solution**
+
+```markdown
+Provide a non-null secret key in your service request.
+```
+
+## `DL-CLIENT-5xxxx` status codes
+
+The following are status codes and messages for the internal error category.
+
+### `DL-CLIENT-502001`
+
+**Message**
+
+```markdown
+Reading the file failed. File: %s; Details: %s
+```
+
+**Solution**
+
+```markdown
+Verify that the file exists and has the correct permissions.
+```
+
+### `DL-CLIENT-502002`
+
+**Message**
+
+```markdown
+Configuring SSL failed. Details: %s
+```
+
+**Solution**
+
+```markdown
+Check the error details in the logs and verify that the SSL configuration is correct.
+```
+
+### `DL-CLIENT-502003`
+
+**Message**
+
+```markdown
+Shutting down the channel failed. Details: %s
+```
+
+**Solution**
+
+```markdown
+Check the error details in the logs and verify that the channel is in a valid state.
+```
+
+### `DL-CLIENT-502004`
+
+**Message**
+
+```markdown
+Processing JSON failed. Details: %s
+```
+
+**Solution**
+
+```markdown
+Check the error details in the logs and verify that the JSON data is well-formed.
+```
+
+### `DL-CLIENT-502005`
+
+**Message**
+
+```markdown
+Failed to load the class file. File: %s
+```
+
+**Solution**
+
+```markdown
+Verify that the class file exists and is in the correct format.
+```
+
+### `DL-CLIENT-502006`
+
+**Message**
+
+```markdown
+Failed to write the result to a file. Details: %s
+```
+
+**Solution**
+
+```markdown
+Check the error details in the logs and verify that the file path is valid and writable.
+```

@@ -5,49 +5,51 @@ tags:
 displayed_sidebar: docsJapanese
 ---
 
-# ScalarDL 3.13 リリースノート
+# ScalarDL 3.14 リリースノート
 
 import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-このページには、ScalarDL 3.13 のリリースノートのリストが含まれています。
+このページには、ScalarDL 3.14 のリリースノートのリストが含まれています。
 
-## v3.13.0
+## v3.14.0
 
-**発売日:** 2026年3月25日
+**発売日:** 2026年8月5日
 
 ### まとめ
 
-このリリースでは、名前空間機能に関連するいくつかの機能強化が導入され、いくつかの改善点とバグの修正が含まれています。詳細な変更については、以下を参照してください。
+このリリースでは、トランザクション状態のパージ機能を導入し、残存するトランザクション状態を回収します。また、いくつかの改善点とバグの修正が含まれています。詳細な変更については、以下を参照してください。
 
 ### Community と Enterprise editions
 
-### 機能強化
+#### 機能強化
 
-- 名前空間管理機能のサポートを追加しました。 ([#322](https://github.com/scalar-labs/scalardl/pull/322), [#345](https://github.com/scalar-labs/scalardl/pull/345), [#387](https://github.com/scalar-labs/scalardl/pull/387), [#392](https://github.com/scalar-labs/scalardl/pull/392))
-- 名前空間対応のコントラクト実行のサポートを追加しました。 ([#357](https://github.com/scalar-labs/scalardl/pull/357))
-- 分離された名前空間のサポートを追加しました。 ([#430](https://github.com/scalar-labs/scalardl/pull/430))
+- トランザクション状態のパージ機能を追加しました。これにより、データベースに残存する Coordinator/トランザクション状態を回収します。トランザクションの完了時、定期的なバックグラウンドスキャン、または新しい `purge-state` CLI コマンドでオンデマンドにパージできます。 ([#552](https://github.com/scalar-labs/scalardl/pull/552), [#555](https://github.com/scalar-labs/scalardl/pull/555), [#564](https://github.com/scalar-labs/scalardl/pull/564), [#579](https://github.com/scalar-labs/scalardl/pull/579), [#583](https://github.com/scalar-labs/scalardl/pull/583), [#623](https://github.com/scalar-labs/scalardl/pull/623))
 
-### 改善点
+#### 改善点
 
-- サーバー側の Java バージョンを Java 21 にアップグレードしました。 ([#395](https://github.com/scalar-labs/scalardl/pull/395))
+- ScalarDL クリーンアップツール用のアセットロックリカバリー RPC を追加しました。 ([#543](https://github.com/scalar-labs/scalardl/pull/543))
+- ScalarDB を 3.19.0 にアップグレードしました。 ([#638](https://github.com/scalar-labs/scalardl/pull/638))
 
-### バグの修正
+#### バグの修正
 
-- JSON スキーマバリデータのリポジトリとバージョンを修正しました。 ([#277](https://github.com/scalar-labs/scalardl/pull/277))
-- PutToMutable 関数で FLOAT および BLOB データ型を処理するバグを修正しました。 ([#297](https://github.com/scalar-labs/scalardl/pull/297))
-- クライアントが電子署名で誤って設定されている場合の NullPointerException を修正しました。 ([#302](https://github.com/scalar-labs/scalardl/pull/302))
-- ステータスコードの処理を修正しました。 ([#323](https://github.com/scalar-labs/scalardl/pull/323))
-- クライアントエンティティIDのパラメータ名を修正しました。 ([#376](https://github.com/scalar-labs/scalardl/pull/376))
-- ブートストラップ後にカスタム ValidateLedger コントラクトを登録できないバグを修正しました。 ([#404](https://github.com/scalar-labs/scalardl/pull/404))
-- [CVE-2025-47907](https://github.com/advisories/GHSA-j5pm-7495-qmr3 "CVE-2025-47907") および [CVE-2025-58183](https://github.com/advisories/GHSA-9gcr-gp5f-jw27 "CVE-2025-58183") を修正しました。 ([#364](https://github.com/scalar-labs/scalardl/pull/364))
-- [CVE-2025-61726](https://github.com/advisories/GHSA-gm9r-q53w-2gh4 "CVE-2025-61726"), [CVE-2025-61728](https://github.com/advisories/GHSA-g9q4-qjx4-2v7q "CVE-2025-61728"), [CVE-2025-61729](https://github.com/advisories/GHSA-7c64-f9jr-v9h2 "CVE-2025-61729") および [CVE-2025-68121](https://github.com/advisories/GHSA-h355-32pf-p2xm "CVE-2025-68121") を修正しました。 ([#472](https://github.com/scalar-labs/scalardl/pull/472))
+- コントラクトが JDBC データベース (例: PostgreSQL) にアクセスできない問題を修正しました。 ([#558](https://github.com/scalar-labs/scalardl/pull/558))
+- Ledger が、サポートされていない ScalarDB トランザクションマネージャーをサイレント受け入れする代わりに、スタートアップ時に拒否するように修正しました。 ([#585](https://github.com/scalar-labs/scalardl/pull/585))
+- 関数実行を制限し、デフォルト以外の名前空間に登録された関数が、そのコンテキスト名前空間と同じ名前の ScalarDB 名前空間、またはコンテキスト名前空間に続くアンダースコアで始まる名前を持つ名前空間にのみアクセスできるようにしました。 ([#570](https://github.com/scalar-labs/scalardl/pull/570))
+- ScalarDL が ScalarDB マルチストレージ設定で実行される場合、必須のサンドボックス許可を設定されたストレージタイプに関わらず付与することで、コントラクト実行が `AccessControlException` で失敗する問題を修正しました。 ([#588](https://github.com/scalar-labs/scalardl/pull/588))
+- grpc-health-probe のいくつかの脆弱性を修正しました。 ([#589](https://github.com/scalar-labs/scalardl/pull/589))
+- SecurityManager が有効な状態で、データベース接続を再確立する必要がある場合 (例: データベース再起動またはアイドル タイムアウト後) にコントラクト実行が失敗する問題を修正しました。 ([#621](https://github.com/scalar-labs/scalardl/pull/621))
+- トップレベル `create-namespace` コマンドを削除しました。代わりに他の名前空間コマンド (`scalardl drop-namespace`, `scalardl list-namespaces`) と一貫性のある `scalardl create-namespace` を使用してください。 ([#622](https://github.com/scalar-labs/scalardl/pull/622))
+- Ledger (または Auditor/Gateway) サーバーのポーズが成功を報告しながらサーバーがポーズされたままになるレース条件を修正しました。 ([#637](https://github.com/scalar-labs/scalardl/pull/637))
 
 ### Enterprise edition
 
 #### バグの修正
 
-- 重複した読み取りロックを修正しました。
-- ゲートウェイの例外処理を修正しました。
-- BYOL Docker イメージでの SLF4J バージョンの競合を修正しました。
+- 同時リカバリーによるリードロック数の破損を修正し、複数のリードロックノンスのリカバリー時の不要な CAS 失敗を排除しました。
+- Auditor の Ledger コール失敗がアセットロックリカバリー中にクライアントに一般的なランタイムエラーとして報告されたり、未知のトランザクション状態として扱われて原因が失われたりする問題を修正しました。
+- Auditor が JDBC データベース (Oracle) でコントラクト実行が `DL-COMMON-305001` エラーで失敗する問題を修正しました。このエラーは `NULL` として保存されたアセットロックエントリを読み取ることが原因でした。
+- Gateway ログ行が間違ったロガーカテゴリーの下に記録される問題を修正しました。
+- SecurityManager が有効な状態で、データベース接続を再確立する必要がある場合 (例: データベース再起動またはアイドルタイムアウト後) に Auditor でのコントラクト実行が失敗する問題を修正しました。
+- 同時リカバリーによってロックが既にリリースされている場合に、リードロックリリースの再試行が誤解を招く `INCONSISTENT_STATES` エラーで失敗する可能性がある問題を修正しました。

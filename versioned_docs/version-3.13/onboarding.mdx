@@ -1,0 +1,28 @@
+---
+id: onboarding
+title: Redirecting ...
+---
+
+<!-- Onboarding contents are only available in English. This page is necessary so that the sidebar on the Japanese site can be built properly. This page doesn't appear in English and instead redirects to the onboarding page in Japanese. -->
+
+import {useEffect} from 'react';
+import {useLocation} from '@docusaurus/router';
+
+export default function Redirect() {
+  const location = useLocation();
+
+  useEffect(() => {
+    let path = location.pathname;
+
+    if (path.startsWith('/en-us/')) {
+      path = path.replace('/en-us/', '/ja-jp/');
+    } else if (!path.startsWith('/ja-jp/')) {
+      path = `/ja-jp${path}`;
+    }
+
+    // 🔥 Force full reload (fixes broken page issue)
+    window.location.replace(path);
+  }, [location]);
+
+  return <p>This page doesn't exist in English. Redirecting to Japanese version...</p>;
+}

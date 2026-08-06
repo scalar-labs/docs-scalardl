@@ -1,0 +1,118 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+# ScalarDL TableStore コマンドリファレンス
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+このページでは、ScalarDL TableStore とやりとりするためのクライアントコマンドである `scalardl-tablestore` について説明します。
+
+## コマンドの概要
+
+- **TableStore のブートストラップ**
+  - [`bootstrap`](#bootstrap): TableStore を使用するために必要な ID と事前定義されたコントラクトを登録してブートストラップを実行します。
+- **ステートメントの実行**
+  - [`execute-statement`](#execute-statement): 指定されたステートメントを実行します。
+- **台帳の検証**
+  - [`validate-ledger`](#validate-ledger): TableStore 内の指定されたレコード、インデックスレコード、またはテーブルスキーマを検証します。
+
+## `bootstrap`
+
+TableStore を使用するために必要な ID と事前定義されたコントラクトを登録してブートストラップを実行します。
+
+### オプション
+
+| オプション                     | 説明                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | .properties 形式の設定ファイル。 |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+```console
+scalardl-tablestore bootstrap --properties client.properties
+```
+
+## `execute-statement`
+
+指定されたステートメントを実行します。
+
+### オプション
+
+| オプション                     | 説明                                |
+|:---------------------------|:-------------------------------------------|
+| `--config`, `--properties` | .properties 形式の設定ファイル。 |
+| `--statement`              | TableStore とやりとりするためのステートメント。   |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+ステートメントを実行します。
+
+```console
+scalardl-tablestore execute-statement --properties client.properties --statement "SELECT * FROM employee WHERE id = '1001'"
+```
+
+SQL ステートメントの文法の詳細については、[ScalarDL TableStore SQL の文法](sql-grammar.mdx)を参照してください。
+
+## `validate-ledger`
+
+TableStore 内の指定されたレコード、インデックスレコード、またはテーブルスキーマを検証します。
+
+### オプション
+
+| オプション                          | 説明                                                            |
+|:--------------------------------|:-----------------------------------------------------------------------|
+| `--config`, `--properties`      | .properties 形式の設定ファイル。                             |
+| `--table-name`                  | テーブルの名前。                                                 |
+| `--primary-key-column-name`     | レコードのプライマリキー列名。                             |
+| `--index-key-column-name`       | レコードのインデックスキー列名。                               |
+| `--column-value`                | プライマリキーまたはインデックスキーの列値 (JSON 文字列)。 |
+| `--start-age`                   | 検証範囲の開始世代。                                    |
+| `--end-age`                     | 検証範囲の終了世代。                                      |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+すべての世代のプライマリキーを持つレコードを検証します。
+
+```console
+scalardl-tablestore validate-ledger --properties client.properties --table-name employee --primary-key-column-name id --column-value '"1001"'
+```
+
+世代 0 から世代 10 までのプライマリキーを持つレコードのみを検証します。
+
+```console
+scalardl-tablestore validate-ledger --properties client.properties --table-name employee --primary-key-column-name id --column-value '"1001"' --start-age 0 --end-age 10
+```
+
+インデックスレコードを検証します。
+
+```console
+scalardl-tablestore validate-ledger --properties client.properties --table-name employee --index-key-column-name department --column-value '"sales"'
+```
+
+テーブルスキーマを検証します。
+
+```console
+scalardl-tablestore validate-ledger --properties client.properties --table-name employee
+```
+
+## 共通ユーティリティオプション
+
+上記のすべてのコマンドで、以下のオプションを使用できます。
+
+| オプション                | 説明                                 |
+|:----------------------|:--------------------------------------------|
+| `-g`, `--use-gateway` | ゲートウェイを使用するオプション。                  |
+| `-h`, `--help`        | コマンドのヘルプメッセージを表示します。      |
+| `--stacktrace`        | Java スタックトレースを `stderr` ストリームに出力します。 |
