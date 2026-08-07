@@ -28,6 +28,8 @@ This page introduces `scalardl`, which is a client command for interacting with 
   - [`create-namespace`](#create-namespace): Create a namespace.
   - [`list-namespaces`](#list-namespaces): List namespaces.
   - [`drop-namespace`](#drop-namespace): Drop a namespace.
+- **Manage transaction state**
+  - [`purge-state`](#purge-state): Purge residual transaction state that ScalarDL retains.
 - **Validate a ledger**
   - [`validate-ledger`](#validate-ledger): Validate a specified asset in a ledger.
 - **Run commands for generic-contracts**
@@ -368,6 +370,48 @@ Drop a namespace. This command requires confirmation by typing the namespace nam
 
 ```console
 scalardl drop-namespace --properties client.properties --namespace my_namespace
+```
+
+## `purge-state`
+
+Purge residual transaction state (Coordinator state records and request proofs) that ScalarDL retains for completed transactions. This command is available only when Auditor is enabled and transaction state purge is enabled on both Ledger and Auditor (`scalar.dl.ledger.transaction_state_purge.enabled` and `scalar.dl.auditor.transaction_state_purge.enabled` set to `true`). For more details, see [Purge Residual Transaction State](purge-residual-transaction-state.mdx).
+
+By default, this command prompts for confirmation before purging. To skip the prompt (for example, in a non-interactive environment), use the `--force` option.
+
+### Options
+
+| Option                     | Description                                                     |
+|:---------------------------|:---------------------------------------------------------------|
+| `--config`, `--properties` | A configuration file in properties format.                     |
+| `-f`, `--force`            | Purge residual transaction state without prompting for confirmation. |
+
+[Common utility options](#common-utility-options) are also available.
+
+### Examples
+
+Purge residual transaction state. This prompts for confirmation before purging.
+
+```console
+scalardl purge-state --properties client.properties
+```
+
+Purge residual transaction state without the confirmation prompt.
+
+```console
+scalardl purge-state --properties client.properties --force
+```
+
+The command returns a summary of how many transactions were targeted, purged, and skipped.
+
+```json
+{
+  "status_code": "OK",
+  "output": {
+    "total_targets": 5,
+    "purged": 4,
+    "skipped": 1
+  }
+}
 ```
 
 ## `validate-ledger`

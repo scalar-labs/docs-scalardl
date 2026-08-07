@@ -231,6 +231,11 @@ const sidebars = {
             },
             {
               type: 'doc',
+              id: 'purge-residual-transaction-state',
+              label: 'Purge the Residual Transaction State [NEW]',
+            },
+            {
+              type: 'doc',
               id: 'scalardl-benchmarks/README',
               label: 'Run Benchmarks',
             },
@@ -926,6 +931,11 @@ const sidebars = {
               type: 'doc',
               id: 'access-namespaces-in-a-restricted-manner',
               label: '名前空間に制限付きでアクセス',
+            },
+            {
+              type: 'doc',
+              id: 'purge-residual-transaction-state',
+              label: '残留トランザクション状態をパージ [NEW]',
             },
             {
               type: 'doc',

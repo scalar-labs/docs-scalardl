@@ -37,18 +37,18 @@ const recentFeatures: Category[] = [
       // To add a label, use the format ['label1', 'label2'].
       {
         cell: 0, // Third cell
+        links: ['purge-residual-transaction-state'],
+        labels: ['残留トランザクション状態をパージ [NEW]']
+      },
+      {
+        cell: 1, // First cell
         links: ['manage-namespaces'],
         labels: ['名前空間を管理']
       },
       {
-        cell: 1, // First cell
-        links: ['getting-started-hashstore'],
-        labels: ['ScalarDL HashStore を使用']
-      },
-      {
         cell: 2, // Second cell
-        links: ['getting-started-tablestore'],
-        labels: ['ScalarDL TableStore を使用']
+        links: ['access-namespaces-in-a-restricted-manner'],
+        labels: ['制限付きで名前空間にアクセス']
       }
     ]
   }
