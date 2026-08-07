@@ -1,0 +1,184 @@
+---
+tags:
+  - Enterprise
+displayed_sidebar: docsEnglish
+---
+
+# Purge the Residual Transaction State
+
+When using ScalarDL Ledger and Auditor, each transaction produces a transaction state that ScalarDL uses to process and, if necessary, recover the transaction. After a transaction has fully served this purpose, the state that it leaves behind—its residual transaction state—is no longer required for ScalarDL to operate and can be purged. Because ScalarDL does not purge this state by default, it accumulates over time and consumes storage. This guide explains what the residual transaction state is, when you can purge it, and how to purge it by using one or more of the available purge options.
+
+The residual transaction state consists of the following:
+
+- **Coordinator state records:** The transaction state records that ScalarDB manages in the Coordinator table on the Ledger side.
+- **Request proofs:** The records that Auditor stores for each client request to detect Byzantine faults.
+
+## Why purge the residual transaction state
+
+The residual transaction state exists to serve specific roles while a transaction is being processed and, if necessary, recovered:
+
+- A **Coordinator state record** determines the final outcome of a transaction (committed or aborted). ScalarDL relies on it to settle the transaction consistently, including when recovering from a failure that occurs midway.
+- A **request proof** lets ScalarDL recover a transaction that did not finish cleanly and detect Byzantine faults.
+
+Once a transaction has been settled and no longer needs to be recovered, this state has fulfilled its role and is no longer required for ScalarDL to operate. Purging reclaims it so that the Coordinator table and the Auditor request-proof table do not grow indefinitely. Because ScalarDL does not purge this state by default, it accumulates over time and consumes storage.
+
+In most cases, the main reason to retain the residual transaction state is that your application still needs to determine how a specific transaction was settled—that is, whether it committed or aborted. Keep the state for such transactions until your application no longer needs to look up their outcomes.
+
+:::warning
+
+Purging a request proof also removes the information that ScalarDL uses to detect a replayed request. If a man-in-the-middle intercepts a contract execution request and re-executes it after its request proof has been purged, ScalarDL can no longer detect the replay. To prevent this, protecting all communication paths between clients, Ledger, and Auditor with TLS is strongly recommended. For details about TLS configurations, see [ScalarDL Configurations](configurations.mdx).
+
+:::
+
+## Prerequisites
+
+Before purging the residual transaction state, ensure that the following are true:
+
+- You are running your application through Ledger and Auditor. Purge is not supported in a Ledger-only configuration. If you have not set up this environment yet, see [Run a ScalarDL Application Through ScalarDL Ledger and Auditor](how-to-run-applications-with-auditor.mdx).
+- The schemas of both Ledger and Auditor support purge. For how to prepare the schemas, see [Prepare the database schema for purge](#prepare-the-database-schema-for-purge).
+
+## Prepare the database schema for purge
+
+Purge requires that the schemas of both Ledger and Auditor support purge. Schemas created with a version of ScalarDL that supports purge (ScalarDL 3.14.0 or later) already support it, and you can prepare a schema for those versions by using [ScalarDL Schema Loader](schema-loader.mdx). How you prepare the schema depends on whether you are creating a new schema or upgrading an existing one.
+
+### For a new deployment
+
+Load the schema as described in [Run a ScalarDL Application Through ScalarDL Ledger and Auditor](how-to-run-applications-with-auditor.mdx). When you load the Ledger schema, enable write-set logging by adding the following to the Ledger Schema Loader properties file:
+
+```properties
+scalar.db.consensus_commit.coordinator.write_set_logging.enabled=true
+```
+
+No extra option is needed when you load the Auditor schema.
+
+### For an existing deployment
+
+If your deployment was set up with a version of ScalarDL that does not support purge (a version earlier than ScalarDL 3.14.0), upgrade the schema by using ScalarDL Schema Loader for a version that supports purge. The following procedure shows one example.
+
+1. Enable write-set logging for the Coordinator table by adding the following to the Ledger Schema Loader properties file:
+
+   ```properties
+   scalar.db.consensus_commit.coordinator.write_set_logging.enabled=true
+   ```
+
+2. Upgrade the Ledger schema, replacing the contents in the angle brackets as described:
+
+   ```console
+   docker run --rm \
+     -v <PROPERTIES_FILE_PATH>:/scalardl-schema-loader/database.properties \
+     ghcr.io/scalar-labs/scalardl-schema-loader:<VERSION> \
+     --config database.properties --coordinator --repair-all
+   ```
+
+3. Create the Auditor tables that purge requires but that do not exist yet, replacing the contents in the angle brackets as described:
+
+   ```console
+   docker run --rm --env SCHEMA_TYPE=auditor \
+     -v <PROPERTIES_FILE_PATH>:/scalardl-schema-loader/database.properties \
+     ghcr.io/scalar-labs/scalardl-schema-loader:<VERSION> \
+     --config database.properties
+   ```
+
+   Running Schema Loader without an option creates only the tables that do not exist yet and leaves the existing tables as they are.
+
+4. Upgrade the Auditor schema, replacing the contents in the angle brackets as described:
+
+   ```console
+   docker run --rm --env SCHEMA_TYPE=auditor \
+     -v <PROPERTIES_FILE_PATH>:/scalardl-schema-loader/database.properties \
+     ghcr.io/scalar-labs/scalardl-schema-loader:<VERSION> \
+     --config database.properties --alter
+   ```
+
+   Be sure to run this step after the previous one. The `--alter` option only adds columns to existing tables, and it fails if a table in the schema does not exist yet.
+
+Upgrading the schemas does not remove the residual transaction state that has already accumulated. Before you enable purge, remove that state by using the cleanup tool, as described in [Purge options](#purge-options).
+
+## Purge options
+
+ScalarDL provides three purge options that you can combine. To use any of them, you must enable purge on both Ledger and Auditor by setting the following master switches to `true` (both are `false` by default):
+
+- `scalar.dl.ledger.transaction_state_purge.enabled` in the Ledger configuration
+- `scalar.dl.auditor.transaction_state_purge.enabled` in the Auditor configuration
+
+While purge is disabled, ScalarDL does not purge any state, and manual purge requests are rejected. You then choose which options to use through the additional Auditor settings described in this section.
+
+:::info
+
+Enabling purge does not remove the residual transaction state that has already accumulated. Because such state lacks the information that purge requires, none of the purge options remove it, including manual purge. As a rule, before you enable purge in an existing deployment, you should remove that state by using the cleanup tool.
+
+If you want to use the cleanup tool for purging existing residual transaction states, please [contact support](https://www.scalar-labs.com/support).
+
+:::
+
+The following table summarizes the options.
+
+| Option              | How it is triggered                                              | Enabled by                                                                  | Typical use                                                                    |
+|---------------------|------------------------------------------------------------------|-----------------------------------------------------------------------------|--------------------------------------------------------------------------------|
+| **On-completion purge** | Automatically, right after each transaction completes            | `scalar.dl.auditor.transaction_state_purge.on_completion.enabled`           | Keep the residual state to a minimum during normal operation.                      |
+| **Scheduled purge**     | Automatically, as a periodic background scan                     | `scalar.dl.auditor.transaction_state_purge.scan.interval_secs` (`> 0`)      | Reclaim the state that on-completion purge did not remove (for example, after a failure). |
+| **Manual purge**        | On demand, when you run the `purge-state` command                | The master switches only (available whenever purge is enabled)              | Delete at a time you choose while automatic purge is disabled (for example, once your application no longer needs the outcomes). |
+
+:::note
+
+Because these settings are read only at startup, you must restart Ledger and Auditor for any change to take effect.
+
+:::
+
+### On-completion purge
+
+On-completion purge removes the residual state of each transaction asynchronously, right after the transaction completes (commits or aborts) and its locks are released. This keeps the residual state to a minimum during normal operation.
+
+To enable on-completion purge, in addition to the master switches, set `scalar.dl.auditor.transaction_state_purge.on_completion.enabled` to `true` in the Auditor configuration.
+
+On-completion purge is best-effort. If it fails to remove some state, that state will remain until it is picked up by scheduled purge or manual purge.
+
+### Scheduled purge
+
+Scheduled purge periodically scans request proofs in the background and purges the residual state of completed transactions. To avoid removing the state of transactions that are still in progress or that have just completed, the scan skips transactions that completed within a short grace period. Scheduled purge is useful for reclaiming the state that on-completion purge did not remove.
+
+To enable scheduled purge, in addition to the master switches, set `scalar.dl.auditor.transaction_state_purge.scan.interval_secs` to the scan interval in seconds (a value greater than `0`) in the Auditor configuration.
+
+You can also limit how many records a single scan processes by setting `scalar.dl.auditor.transaction_state_purge.scan.limit`.
+
+:::note
+
+If you have multiple Auditor nodes deployed, scheduled purge will run on only one node at a time to avoid redundant scans.
+
+:::
+
+### Manual purge
+
+Manual purge lets you delete the residual transaction state at a time that you choose, instead of having ScalarDL remove it automatically. This suits the case where your application may still need to look up transaction outcomes: you keep both on-completion purge and scheduled purge disabled so that no state is removed automatically, and then run manual purge once the state is no longer needed. It performs the same scan-based cleanup as scheduled purge and returns a summary of the result.
+
+Manual purge is available whenever the master switches are enabled, even if on-completion purge and scheduled purge are disabled. To run it, use the [`scalardl purge-state`](scalardl-command-reference.mdx#purge-state) command:
+
+```console
+scalardl purge-state --properties client.properties
+```
+
+The command returns a summary that shows how many transactions were targeted, purged, and skipped:
+
+```json
+{
+  "status_code": "OK",
+  "output": {
+    "total_targets": 5,
+    "purged": 4,
+    "skipped": 1
+  }
+}
+```
+
+:::note
+
+Manual purge requires Auditor to be enabled. If purge is disabled, the command is rejected.
+
+:::
+
+## See also
+
+For details about the related configurations and commands, see the following:
+
+- [ScalarDL Configurations](configurations.mdx#auditor-configurations)
+- [ScalarDL Client Command Reference](scalardl-command-reference.mdx)
