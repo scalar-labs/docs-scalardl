@@ -32,6 +32,8 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
   - [`create-namespace`](#create-namespace): 名前空間を作成します。
   - [`list-namespaces`](#list-namespaces): 名前空間を一覧表示します。
   - [`drop-namespace`](#drop-namespace): 名前空間を削除します。
+- **トランザクション状態を管理します**
+  - [`purge-state`](#purge-state): ScalarDL が保持する残留トランザクション状態をパージします。
 - **台帳を検証します**
   - [`validate-ledger`](#validate-ledger): 台帳内の指定されたアセットを検証します。
 - **汎用コントラクト向けにコマンドを実行します**
@@ -372,6 +374,48 @@ scalardl list-namespaces --properties client.properties --pattern my_
 
 ```console
 scalardl drop-namespace --properties client.properties --namespace my_namespace
+```
+
+## `purge-state`
+
+ScalarDL が完了したトランザクションについて保持している残留トランザクション状態 (Coordinator state レコードと request proof) をパージします。このコマンドは、Auditor が有効で、かつ Ledger と Auditor の両方でトランザクション状態のパージが有効 (`scalar.dl.ledger.transaction_state_purge.enabled` と `scalar.dl.auditor.transaction_state_purge.enabled` が `true`) になっている場合にのみ利用できます。詳細については、[残留トランザクション状態のパージ](purge-residual-transaction-state.mdx)を参照してください。
+
+デフォルトでは、このコマンドはパージ前に確認を求めます。確認プロンプトをスキップするには (たとえば非対話環境で実行する場合)、`--force` オプションを使用します。
+
+### オプション
+
+| オプション                   | 説明                                             |
+|:---------------------------|:-------------------------------------------------|
+| `--config`, `--properties` | プロパティ形式の設定ファイル。                        |
+| `-f`, `--force`            | 確認を求めずに残留トランザクション状態をパージします。       |
+
+[共通ユーティリティオプション](#共通ユーティリティオプション)も利用できます。
+
+### 例
+
+残留トランザクション状態をパージします。実行前に確認を求められます。
+
+```console
+scalardl purge-state --properties client.properties
+```
+
+確認プロンプトなしで残留トランザクション状態をパージします。
+
+```console
+scalardl purge-state --properties client.properties --force
+```
+
+このコマンドは、対象となったトランザクション、パージされたトランザクション、およびスキップされたトランザクションの数のサマリーを返します。
+
+```json
+{
+  "status_code": "OK",
+  "output": {
+    "total_targets": 5,
+    "purged": 4,
+    "skipped": 1
+  }
+}
 ```
 
 ## `validate-ledger`

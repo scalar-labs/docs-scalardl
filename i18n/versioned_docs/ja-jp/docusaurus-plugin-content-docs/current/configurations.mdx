@@ -190,6 +190,12 @@ Ledger サーバーでは、サービスポート設定、認証設定、TLS 設
 - **説明:** (Ledger と Auditor) サーバー間のメッセージ認証のための HMAC の秘密鍵。このフィールドは、Ledger と Auditor サーバー間の認証のための HMAC の秘密鍵を指定します。
 - **デフォルト値:** 空
 
+### `transaction_state_purge.enabled`
+
+- **フィールド:** `scalar.dl.ledger.transaction_state_purge.enabled`
+- **説明:** Ledger 側で Coordinator state レコードをパージするためのマスタースイッチ。これが `false` に設定されている間、Ledger はトランザクション状態のパージリクエストを拒否し、Coordinator state レコードが意図せず削除されないようにします。これは `scalar.dl.auditor.transaction_state_purge.enabled` とあわせて有効にする必要があります。トランザクション状態のパージは Auditor が有効な場合にのみサポートされます。詳細については、[残留トランザクション状態のパージ](purge-residual-transaction-state.mdx)を参照してください。
+- **デフォルト値:** `false` (オプション)
+
 ### `tx_state_management.enabled`
 
 - **フィールド:** `scalar.dl.ledger.tx_state_management.enabled`
@@ -415,6 +421,30 @@ Auditor サーバーでは、サービスポート設定、認証設定、TLS �
 - **フィールド:** `scalar.dl.auditor.tls.override_authority`
 - **説明:** TLS 通信のためのカスタム権限。
 - **デフォルト値:** 空
+
+### `transaction_state_purge.enabled`
+
+- **フィールド:** `scalar.dl.auditor.transaction_state_purge.enabled`
+- **説明:** 残留トランザクション状態 (Coordinator state レコードと request proof) をパージするためのマスタースイッチ。これが `false` に設定されている間は、状態はパージされず、手動パージのリクエストは拒否されます。詳細については、[残留トランザクション状態のパージ](purge-residual-transaction-state.mdx)を参照してください。
+- **デフォルト値:** `false` (オプション)
+
+### `transaction_state_purge.on_completion.enabled`
+
+- **フィールド:** `scalar.dl.auditor.transaction_state_purge.on_completion.enabled`
+- **説明:** 各トランザクションの残留状態をトランザクション完了直後にパージする、完了時パージを有効にするフラグ。これは `scalar.dl.auditor.transaction_state_purge.enabled` が `true` に設定されている場合にのみ有効です。
+- **デフォルト値:** `false` (オプション)
+
+### `transaction_state_purge.scan.interval_secs`
+
+- **フィールド:** `scalar.dl.auditor.transaction_state_purge.scan.interval_secs`
+- **説明:** 定期パージがバックグラウンドで残留トランザクション状態をスキャンしてパージする間隔 (秒単位)。これが `0` に設定されている場合、定期パージは実行されませんが、手動パージは引き続き利用できます。これは `scalar.dl.auditor.transaction_state_purge.enabled` が `true` に設定されている場合にのみ有効です。
+- **デフォルト値:** `0` (オプション)
+
+### `transaction_state_purge.scan.limit`
+
+- **フィールド:** `scalar.dl.auditor.transaction_state_purge.scan.limit`
+- **説明:** 定期パージまたは手動パージの際に、1回のスキャンで処理するレコードの最大数。
+- **デフォルト値:** `1000` (オプション)
 
 ## クライアントの設定
 
