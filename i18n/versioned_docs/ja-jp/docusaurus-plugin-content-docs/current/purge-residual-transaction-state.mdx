@@ -1,0 +1,188 @@
+---
+tags:
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+# 残留トランザクション状態をパージする
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+ScalarDL Ledger と Auditor を使用する際、各トランザクションはトランザクション状態を生成します。ScalarDL はこの状態を使用してトランザクションを処理し、必要に応じて回復します。トランザクションがこの目的を完全に果たした後、それが残す状態 (残留トランザクション状態) は、ScalarDL の動作にはもはや必要なく、パージできます。ScalarDL はデフォルトではこの状態をパージしないため、時間の経過とともに蓄積してストレージを消費します。このガイドでは、残留トランザクション状態とは何か、いつパージできるか、そして利用可能な1つ以上のパージオプションを使用してどのようにパージするかについて説明します。
+
+残留トランザクション状態は、以下で構成されます。
+
+- **Coordinator state レコード:** ScalarDB が Ledger 側の Coordinator テーブルで管理するトランザクション状態レコード。
+- **Request proof:** Auditor がビザンチン故障を検出するために各クライアントリクエストについて保存するレコード。
+
+## 残留トランザクション状態をパージする理由
+
+残留トランザクション状態は、トランザクションが処理され、必要に応じて回復される間、特定の役割を果たすために存在します。
+
+- **Coordinator state レコード**は、トランザクションの最終結果 (コミットまたはアボート) を決定します。ScalarDL は、途中で発生した障害から回復する場合を含め、トランザクションを一貫して確定するためにこれに依存します。
+- **Request proof** は、正常に完了しなかったトランザクションを ScalarDL が回復し、ビザンチン故障を検出できるようにします。
+
+トランザクションが確定され、回復する必要がなくなると、この状態は役割を果たしたことになり、ScalarDL の動作にはもはや必要ありません。パージによってこれを回収することで、Coordinator テーブルと Auditor の request proof テーブルが際限なく増大しないようにします。ScalarDL はデフォルトではこの状態をパージしないため、時間の経過とともに蓄積してストレージを消費します。
+
+ほとんどの場合、残留トランザクション状態を保持する主な理由は、アプリケーションが特定のトランザクションがどのように確定されたか (つまり、コミットされたかアボートされたか) を判断する必要があることです。そのようなトランザクションについては、アプリケーションがそれらの結果を参照する必要がなくなるまで状態を保持してください。
+
+:::warning
+
+Request proof をパージすると、リプレイされたリクエストを検出するために ScalarDL が使用する情報も削除されます。中間者がコントラクト実行リクエストを傍受し、その request proof がパージされた後に再実行した場合、ScalarDL はそのリプレイを検出できなくなります。これを防ぐため、クライアント、Ledger、Auditor 間のすべての通信経路を TLS で保護することを強くお勧めします。TLS の設定の詳細については、[ScalarDL の設定](configurations.mdx)を参照してください。
+
+:::
+
+## 前提条件
+
+残留トランザクション状態をパージする前に、以下が満たされていることを確認してください。
+
+- アプリケーションを Ledger と Auditor を通じて実行していること。パージは Ledger のみの構成ではサポートされていません。この環境をまだセットアップしていない場合は、[ScalarDL Ledger と Auditor を通じて ScalarDL アプリケーションを実行する](how-to-run-applications-with-auditor.mdx)を参照してください。
+- Ledger と Auditor の両方のスキーマがパージをサポートしていること。スキーマの準備方法については、[パージ用のデータベーススキーマの準備](#パージ用のデータベーススキーマの準備)を参照してください。
+
+## パージ用のデータベーススキーマの準備
+
+パージを使用するには、Ledger と Auditor の両方のスキーマがパージに対応している必要があります。パージをサポートするバージョンの ScalarDL (ScalarDL 3.14.0 以降) で作成されたスキーマは、すでにパージに対応しています。スキーマを準備するには、そのようなバージョンの [ScalarDL Schema Loader](schema-loader.mdx) を使用します。その方法は、新しいスキーマを作成するか、既存のスキーマをアップグレードするかによって異なります。
+
+### 新規デプロイの場合
+
+[ScalarDL Ledger と Auditor を通じて ScalarDL アプリケーションを実行する](how-to-run-applications-with-auditor.mdx)で説明されているようにスキーマをロードします。Ledger スキーマをロードする際、Ledger の Schema Loader のプロパティファイルに次の内容を追加して write-set ロギングを有効にします。
+
+```properties
+scalar.db.consensus_commit.coordinator.write_set_logging.enabled=true
+```
+
+Auditor スキーマをロードする際に追加のオプションは必要ありません。
+
+### 既存デプロイの場合
+
+デプロイがパージをサポートしないバージョンの ScalarDL (ScalarDL 3.14.0 より前のバージョン) でセットアップされている場合は、パージをサポートするバージョンの ScalarDL Schema Loader を使用してスキーマをアップグレードします。以下の手順はその一例を示しています。
+
+1. Ledger の Schema Loader のプロパティファイルに次の内容を追加して、Coordinator テーブルの write-set ロギングを有効にします。
+
+   ```properties
+   scalar.db.consensus_commit.coordinator.write_set_logging.enabled=true
+   ```
+
+2. Ledger のスキーマをアップグレードします。
+
+   ```console
+   docker run --rm \
+     -v <PROPERTIES_FILE_PATH>:/scalardl-schema-loader/database.properties \
+     ghcr.io/scalar-labs/scalardl-schema-loader:<VERSION> \
+     --config database.properties --coordinator --repair-all
+   ```
+
+3. パージに必要だがまだ存在しない Auditor のテーブルを作成します。
+
+   ```console
+   docker run --rm --env SCHEMA_TYPE=auditor \
+     -v <PROPERTIES_FILE_PATH>:/scalardl-schema-loader/database.properties \
+     ghcr.io/scalar-labs/scalardl-schema-loader:<VERSION> \
+     --config database.properties
+   ```
+
+   オプションを指定せずに Schema Loader を実行すると、まだ存在しないテーブルのみが作成され、既存のテーブルはそのまま維持されます。
+
+4. Auditor のスキーマをアップグレードします。
+
+   ```console
+   docker run --rm --env SCHEMA_TYPE=auditor \
+     -v <PROPERTIES_FILE_PATH>:/scalardl-schema-loader/database.properties \
+     ghcr.io/scalar-labs/scalardl-schema-loader:<VERSION> \
+     --config database.properties --alter
+   ```
+
+   この手順は必ず前の手順の後に実行してください。`--alter` オプションは既存のテーブルにカラムを追加するだけであり、スキーマ内にまだ存在しないテーブルがある場合は失敗します。
+
+スキーマをアップグレードしても、すでに蓄積されている残留トランザクション状態は削除されません。パージを有効にする前に、[パージオプション](#パージオプション)で説明しているとおり、cleanup tool を使用してそれらの状態を削除してください。
+
+## パージオプション
+
+ScalarDL は、組み合わせて使用できる3つのパージオプションを提供します。いずれかを使用するには、以下のマスタースイッチを両方とも `true` に設定して、Ledger と Auditor の両方でパージを有効にする必要があります (どちらもデフォルトは `false`)。
+
+- Ledger の設定内の `scalar.dl.ledger.transaction_state_purge.enabled`
+- Auditor の設定内の `scalar.dl.auditor.transaction_state_purge.enabled`
+
+パージが無効になっている間、ScalarDL はいかなる状態もパージせず、手動パージのリクエストは拒否されます。どのオプションを使用するかは、このセクションで説明する Auditor の追加設定で選択します。
+
+:::info
+
+パージを有効にしても、すでに蓄積されている残留トランザクション状態は削除されません。そのような状態にはパージが必要とする情報が欠けているため、手動パージを含むどのパージオプションでも削除されません。既存のデプロイでパージを有効にする場合は、原則として事前に cleanup tool を使用してそれらの状態を削除してください。
+
+既存の残留トランザクション状態をパージするために cleanup tool を使用したい場合は、[サポートにお問い合わせ](https://www.scalar-labs.com/support)ください。
+
+:::
+
+次の表にオプションをまとめます。
+
+| オプション         | トリガー方法                                                    | 有効化する設定                                                              | 一般的な用途                                                                    |
+|-------------------|------------------------------------------------------------------|-----------------------------------------------------------------------------|--------------------------------------------------------------------------------|
+| 完了時パージ       | 自動的に、各トランザクションの完了直後                             | `scalar.dl.auditor.transaction_state_purge.on_completion.enabled`           | 通常運用中に残留状態を最小限に抑える。                                            |
+| 定期パージ         | 自動的に、定期的なバックグラウンドスキャンとして                    | `scalar.dl.auditor.transaction_state_purge.scan.interval_secs` (`> 0`)      | 完了時パージが削除しなかった状態 (たとえば障害後) を回収する。                    |
+| 手動パージ         | オンデマンドで、`purge-state` コマンドを実行したとき                | マスタースイッチのみ (パージが有効な場合はいつでも利用可能)                    | 自動パージが無効な状態で、任意のタイミングで削除する (たとえば、アプリケーションが結果を必要としなくなった時点)。 |
+
+:::note
+
+これらの設定は起動時にのみ読み込まれるため、変更を反映するには Ledger と Auditor を再起動する必要があります。
+
+:::
+
+### 完了時パージ
+
+完了時パージは、各トランザクションの完了 (コミットまたはアボート) 直後、そのロックが解放された後に、そのトランザクションの残留状態を非同期に削除します。これにより、通常運用中に残留状態を最小限に抑えます。
+
+完了時パージを有効にするには、マスタースイッチに加えて、Auditor の設定で `scalar.dl.auditor.transaction_state_purge.on_completion.enabled` を `true` に設定します。
+
+完了時パージはベストエフォートです。一部の状態の削除に失敗した場合、その状態は定期パージまたは手動パージによって処理されるまで残ります。
+
+### 定期パージ
+
+定期パージは、バックグラウンドで request proof を定期的にスキャンし、完了したトランザクションの残留状態をパージします。まだ進行中のトランザクションや完了したばかりのトランザクションの状態を削除しないように、スキャンは短い猶予期間内に完了したトランザクションをスキップします。定期パージは、完了時パージが削除しなかった状態を回収するのに役立ちます。
+
+定期パージを有効にするには、マスタースイッチに加えて、Auditor の設定で `scalar.dl.auditor.transaction_state_purge.scan.interval_secs` をスキャン間隔 (秒単位、`0` より大きい値) に設定します。
+
+`scalar.dl.auditor.transaction_state_purge.scan.limit` を設定することで、1回のスキャンで処理するレコード数を制限することもできます。
+
+:::note
+
+複数の Auditor ノードをデプロイする場合、冗長なスキャンを避けるため、定期パージは一度に1つのノードでのみ実行されます。
+
+:::
+
+### 手動パージ
+
+手動パージを使用すると、ScalarDL に自動的に削除させる代わりに、任意のタイミングで残留トランザクション状態を削除できます。これは、アプリケーションがトランザクションの結果をまだ参照する必要がある場合に適しています。完了時パージと定期パージの両方を無効にしておくことで、状態が自動的に削除されないようにし、状態が不要になった時点で手動パージを実行します。手動パージは定期パージと同じスキャンベースのクリーンアップを実行し、結果のサマリーを返します。
+
+手動パージは、マスタースイッチが有効になっている場合は、完了時パージと定期パージが無効であってもいつでも利用できます。実行するには、[`scalardl purge-state`](scalardl-command-reference.mdx#purge-state) コマンドを使用します。
+
+```console
+scalardl purge-state --properties client.properties
+```
+
+このコマンドは、対象となったトランザクション、パージされたトランザクション、およびスキップされたトランザクションの数を示すサマリーを返します。
+
+```json
+{
+  "status_code": "OK",
+  "output": {
+    "total_targets": 5,
+    "purged": 4,
+    "skipped": 1
+  }
+}
+```
+
+:::note
+
+手動パージには Auditor が有効になっている必要があります。パージが無効な場合、コマンドは拒否されます。
+
+:::
+
+## 関連項目
+
+関連する設定とコマンドの詳細については、以下を参照してください。
+
+- [ScalarDL の設定](configurations.mdx#auditor-の設定)
+- [ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx)
