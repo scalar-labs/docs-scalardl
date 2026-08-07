@@ -25,6 +25,17 @@ const notificationsList = [
   // },
   {
     message: {
+      en: 'Learn how to purge the residual transaction state in ScalarDL 3.14',
+      ja: 'ScalarDL 3.14 で残留トランザクション状態をパージする方法を学ぶ'
+    },
+    url: {
+      en: 'purge-residual-transaction-state?utm_source=docs-site&utm_medium=notifications',
+      ja: 'purge-residual-transaction-state?utm_source=docs-site&utm_medium=notifications'
+    },
+    unread: true
+  },
+  {
+    message: {
       en: 'Find out about how to manage namespaces',
       ja: '名前空間管理について知る'
     },

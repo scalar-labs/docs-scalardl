@@ -37,18 +37,18 @@ const recentFeatures: Category[] = [
       // To add a label, use the format ['label1', 'label2'].
       {
         cell: 0, // First cell
+        links: ['purge-residual-transaction-state'],
+        labels: ['Purge the Residual Transaction State [NEW]']
+      },
+      {
+        cell: 1, // Second cell
         links: ['manage-namespaces'],
         labels: ['Manage Namespaces']
       },
       {
-        cell: 1, // Second cell
-        links: ['getting-started-hashstore'],
-        labels: ['Get Started with ScalarDL HashStore']
-      },
-      {
         cell: 2, // Third cell
-        links: ['getting-started-tablestore'],
-        labels: ['Get Started with ScalarDL TableStore']
+        links: ['access-namespaces-in-a-restricted-manner'],
+        labels: ['Access Namespaces in a Restricted Manner']
       }
     ]
   }
