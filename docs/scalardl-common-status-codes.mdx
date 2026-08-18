@@ -869,62 +869,6 @@ Dropping the namespace failed. Details: %s
 Check the database connection and ensure the database is accessible. Review the error details for more information.
 ```
 
-### `DL-COMMON-500014`
-
-**Message**
-
-```markdown
-Reading the lease failed. Details: %s
-```
-
-**Solution**
-
-```markdown
-Check the database connection and ensure the database is accessible. Review the error details for more information.
-```
-
-### `DL-COMMON-500015`
-
-**Message**
-
-```markdown
-Acquiring or renewing the lease failed. Details: %s
-```
-
-**Solution**
-
-```markdown
-Check the database connection and ensure the database is accessible. Review the error details for more information.
-```
-
-### `DL-COMMON-500016`
-
-**Message**
-
-```markdown
-Creating the lease table failed. Details: %s
-```
-
-**Solution**
-
-```markdown
-Check the database connection and ensure the database is accessible. Review the error details for more information.
-```
-
-### `DL-COMMON-500017`
-
-**Message**
-
-```markdown
-The lease table does not exist.
-```
-
-**Solution**
-
-```markdown
-Create the lease table by running Schema Loader. It is also created automatically on the next coordination round if the database user has permission to create tables.
-```
-
 ### `DL-COMMON-502001`
 
 **Message**
@@ -1007,18 +951,4 @@ The contract type or instance is not supported.
 
 ```markdown
 Check the error details in the logs and verify that the contract type is supported.
-```
-
-### `DL-COMMON-502007`
-
-**Message**
-
-```markdown
-The specified lock recovery result is invalid.
-```
-
-**Solution**
-
-```markdown
-Check the error details in the logs and verify the lock recovery result.
 ```

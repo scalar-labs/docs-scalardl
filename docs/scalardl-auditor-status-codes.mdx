@@ -206,20 +206,6 @@ The lock must be validated before it can be released.
 Validate the lock before attempting to release it.
 ```
 
-### `DL-AUDITOR-407002`
-
-**Message**
-
-```markdown
-Transaction state purge is disabled.
-```
-
-**Solution**
-
-```markdown
-Set 'scalar.dl.auditor.transaction_state_purge.enabled' to true in the Auditor configuration (for example, auditor.properties) and restart Auditor to allow purge.
-```
-
 ### `DL-AUDITOR-409001`
 
 **Message**
@@ -274,20 +260,6 @@ Authentication between Ledger and Auditor is not correctly configured. Set %s if
 
 ```markdown
 For HMAC authentication between Ledger and Auditor, set 'scalar.dl.auditor.servers.authentication.hmac.secret_key' in auditor.properties with a shared secret. This must match the Ledger's corresponding HMAC secret key.
-```
-
-### `DL-AUDITOR-414004`
-
-**Message**
-
-```markdown
-Transaction state purge is enabled, but the request proof table schema is too old to support it. With this schema, request proofs are stored in a legacy format that can never be purged, so they would accumulate indefinitely.
-```
-
-**Solution**
-
-```markdown
-Upgrade the request proof table schema to the version that supports transaction state purge and restart Auditor. Alternatively, disable transaction state purge by setting 'scalar.dl.auditor.transaction_state_purge.enabled' to false in the Auditor configuration (for example, auditor.properties).
 ```
 
 ## `DL-AUDITOR-5xxxx` status codes
@@ -364,62 +336,6 @@ Getting the asset lock failed. Namespace: %s; Asset ID: %s; Details: %s
 Check the error details in the logs and verify your database configuration and connection.
 ```
 
-### `DL-AUDITOR-500006`
-
-**Message**
-
-```markdown
-Deleting the request proof failed. Details: %s
-```
-
-**Solution**
-
-```markdown
-Check the error details in the logs and verify your database configuration and connection.
-```
-
-### `DL-AUDITOR-500007`
-
-**Message**
-
-```markdown
-Scanning request proofs failed. Details: %s
-```
-
-**Solution**
-
-```markdown
-Check the error details in the logs and verify your database configuration and connection.
-```
-
-### `DL-AUDITOR-500008`
-
-**Message**
-
-```markdown
-Getting the request proof table metadata failed. Details: %s
-```
-
-**Solution**
-
-```markdown
-Check the error details in the logs and verify your database configuration and connection.
-```
-
-### `DL-AUDITOR-503001`
-
-**Message**
-
-```markdown
-Calling Ledger failed. Status code: %s; Details: %s
-```
-
-**Solution**
-
-```markdown
-Ledger may be temporarily unavailable. Check the error details in the logs, the availability of Ledger, and the connection and authentication settings between Ledger and Auditor.
-```
-
 ### `DL-AUDITOR-504001`
 
 **Message**
@@ -460,18 +376,4 @@ The entry has already been recovered, or an issue might have occurred.
 
 ```markdown
 Retry the operation. Contact your system administrator to check for any signs of malicious activity if the issue persists.
-```
-
-### `DL-AUDITOR-504004`
-
-**Message**
-
-```markdown
-Another transaction state purge is already in progress.
-```
-
-**Solution**
-
-```markdown
-Retry the operation after the current purge completes.
 ```

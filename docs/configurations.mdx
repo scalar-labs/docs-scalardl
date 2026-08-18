@@ -187,12 +187,6 @@ This configuration is deprecated and will be deleted in release 5.0.0 since Ledg
 - **Description:** A secret key of HMAC for the authentication of messages between (Ledger and Auditor) servers. This field specifies the secret key of HMAC for authentication between Ledger and Auditor servers.
 - **Default value:** empty
 
-### `transaction_state_purge.enabled`
-
-- **Field:** `scalar.dl.ledger.transaction_state_purge.enabled`
-- **Description:** The master switch on the Ledger side for purging Coordinator state records. While this is set to `false`, Ledger rejects transaction state purge requests so that Coordinator state records are not deleted unintentionally. This must be enabled together with `scalar.dl.auditor.transaction_state_purge.enabled`. Transaction state purge is supported only when Auditor is enabled. For more details, see [Purge Residual Transaction State](purge-residual-transaction-state.mdx).
-- **Default value:** `false` (Optional)
-
 ### `tx_state_management.enabled`
 
 - **Field:** `scalar.dl.ledger.tx_state_management.enabled`
@@ -418,30 +412,6 @@ This configuration is deprecated and will be deleted in release 5.0.0 since Ledg
 - **Field:** `scalar.dl.auditor.tls.override_authority`
 - **Description:** Custom authority for TLS communication.
 - **Default value:** empty
-
-### `transaction_state_purge.enabled`
-
-- **Field:** `scalar.dl.auditor.transaction_state_purge.enabled`
-- **Description:** The master switch for purging residual transaction state (Coordinator state records and request proofs). While this is set to `false`, no state is purged and manual purge requests are rejected. For more details, see [Purge Residual Transaction State](purge-residual-transaction-state.mdx).
-- **Default value:** `false` (Optional)
-
-### `transaction_state_purge.on_completion.enabled`
-
-- **Field:** `scalar.dl.auditor.transaction_state_purge.on_completion.enabled`
-- **Description:** A flag to enable on-completion purge, which purges the residual state of each transaction right after the transaction completes. This is effective only when `scalar.dl.auditor.transaction_state_purge.enabled` is set to `true`.
-- **Default value:** `false` (Optional)
-
-### `transaction_state_purge.scan.interval_secs`
-
-- **Field:** `scalar.dl.auditor.transaction_state_purge.scan.interval_secs`
-- **Description:** The interval, in seconds, at which scheduled purge scans and purges residual transaction state in the background. If this is set to `0`, scheduled purge does not run, but manual purge is still available. This is effective only when `scalar.dl.auditor.transaction_state_purge.enabled` is set to `true`.
-- **Default value:** `0` (Optional)
-
-### `transaction_state_purge.scan.limit`
-
-- **Field:** `scalar.dl.auditor.transaction_state_purge.scan.limit`
-- **Description:** The maximum number of records that a single scan processes during scheduled purge or manual purge.
-- **Default value:** `1000` (Optional)
 
 ## Client configurations
 

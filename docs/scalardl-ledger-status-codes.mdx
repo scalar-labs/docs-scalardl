@@ -235,20 +235,6 @@ Overwriting an existing function is not allowed. Enable %s to allow overwriting.
 Enable the function overwrite configuration property to allow overwriting existing functions.
 ```
 
-### `DL-LEDGER-407007`
-
-**Message**
-
-```markdown
-Transaction state purge is disabled.
-```
-
-**Solution**
-
-```markdown
-Set 'scalar.dl.ledger.transaction_state_purge.enabled' to true in the Ledger configuration (for example, ledger.properties) and restart Ledger to allow purge.
-```
-
 ### `DL-LEDGER-409001`
 
 **Message**
@@ -445,48 +431,6 @@ Set the transaction state management configuration property to false when using 
 Set the group commit configuration property to false as it is not supported.
 ```
 
-### `DL-LEDGER-414009`
-
-**Message**
-
-```markdown
-%s is not supported when Auditor is disabled.
-```
-
-**Solution**
-
-```markdown
-Enable Auditor (scalar.dl.ledger.auditor.enabled=true), or disable transaction state purge.
-```
-
-### `DL-LEDGER-414010`
-
-**Message**
-
-```markdown
-%s is not supported when using the '%s' transaction manager.
-```
-
-**Solution**
-
-```markdown
-Use the Consensus Commit transaction manager, or disable transaction state purge.
-```
-
-### `DL-LEDGER-414011`
-
-**Message**
-
-```markdown
-The transaction manager '%s' is not supported. The supported transaction managers are: %s.
-```
-
-**Solution**
-
-```markdown
-Set the transaction manager configuration property to one of the supported values.
-```
-
 ## `DL-LEDGER-5xxxx` status codes
 
 The following are status codes and messages for the internal error category.
@@ -637,20 +581,6 @@ Check the error details in the logs and verify your database configuration and c
 
 ```markdown
 The database operation in the function failed due to a database error. Details: %s
-```
-
-**Solution**
-
-```markdown
-Check the error details in the logs and verify your database configuration and connection.
-```
-
-### `DL-LEDGER-500012`
-
-**Message**
-
-```markdown
-Finishing the transaction failed. Details: %s
 ```
 
 **Solution**

@@ -105,10 +105,6 @@ While ScalarDL leverages ScalarDB, the following ScalarDB features are not compa
 - [Group commit for the Coordinator table](https://scalardb.scalar-labs.com/docs/latest/api-guide/#group-commit-for-the-coordinator-table) (`scalar.db.consensus_commit.coordinator.group_commit.enabled` must be `false`.)
 - Coordinator write omission optimization in [Performance-related configurations](https://scalardb.scalar-labs.com/docs/latest/configurations#performance-related-configurations) (`scalar.db.consensus_commit.coordinator.write_omission_on_read_only.enabled` must be `false`.)
 
-### Decide whether to purge residual transaction state
-
-Over time, completed transactions leave behind residual transaction state (Coordinator state records and request proofs) that consumes storage. You can configure ScalarDL to purge this state automatically or on demand. Because enabling or changing purge requires restarting Ledger and Auditor, decide on this before you start them. For details, see [Purge Residual Transaction State](purge-residual-transaction-state.mdx).
-
 ### Decide which other configurations to use
 
 You can also apply other configurations, such as TLS and gRPC configurations, for the client, Ledger, and Auditor. For details about the configurations, see the following:
