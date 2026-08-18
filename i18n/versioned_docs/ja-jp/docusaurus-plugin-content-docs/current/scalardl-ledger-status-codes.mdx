@@ -239,20 +239,6 @@ Overwriting an existing function is not allowed. Enable %s to allow overwriting.
 Enable the function overwrite configuration property to allow overwriting existing functions.
 ```
 
-### `DL-LEDGER-407007`
-
-**メッセージ**
-
-```markdown
-Transaction state purge is disabled.
-```
-
-**対処法**
-
-```markdown
-Set 'scalar.dl.ledger.transaction_state_purge.enabled' to true in the Ledger configuration (for example, ledger.properties) and restart the Ledger to allow purge.
-```
-
 ### `DL-LEDGER-409001`
 
 **メッセージ**
@@ -449,48 +435,6 @@ Set the transaction state management configuration property to false when using 
 Set the group commit configuration property to false as it is not supported.
 ```
 
-### `DL-LEDGER-414009`
-
-**メッセージ**
-
-```markdown
-%s is not supported when Auditor is disabled.
-```
-
-**対処法**
-
-```markdown
-Enable Auditor (scalar.dl.ledger.auditor.enabled=true), or disable transaction state purge.
-```
-
-### `DL-LEDGER-414010`
-
-**メッセージ**
-
-```markdown
-%s is not supported when using the '%s' transaction manager.
-```
-
-**対処法**
-
-```markdown
-Use the Consensus Commit transaction manager, or disable transaction state purge.
-```
-
-### `DL-LEDGER-414011`
-
-**メッセージ**
-
-```markdown
-The transaction manager '%s' is not supported. The supported transaction managers are: %s.
-```
-
-**対処法**
-
-```markdown
-Set the transaction manager configuration property to one of the supported values.
-```
-
 ## `DL-LEDGER-5xxxx` ステータスコード
 
 以下は、内部エラーカテゴリのステータスコードとメッセージです。
@@ -641,20 +585,6 @@ Check the error details in the logs and verify your database configuration and c
 
 ```markdown
 The database operation in the function failed due to a database error. Details: %s
-```
-
-**対処法**
-
-```markdown
-Check the error details in the logs and verify your database configuration and connection.
-```
-
-### `DL-LEDGER-500012`
-
-**メッセージ**
-
-```markdown
-Finishing the transaction failed. Details: %s
 ```
 
 **対処法**

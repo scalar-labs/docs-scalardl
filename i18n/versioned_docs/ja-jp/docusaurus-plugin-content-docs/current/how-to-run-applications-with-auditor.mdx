@@ -112,10 +112,6 @@ ScalarDL は ScalarDB を活用していますが、以下の ScalarDB 機能は
 - [コーディネーターテーブルのグループコミット](https://scalardb.scalar-labs.com/ja-jp/docs/latest/api-guide/#coordinator-テーブルのグループコミット) (`scalar.db.consensus_commit.coordinator.group_commit.enabled` は `false` である必要があります。)
 - [パフォーマンス関連設定](https://scalardb.scalar-labs.com/ja-jp/docs/latest/configurations/#パフォーマンス関連の設定)のコーディネーター書き込み省略最適化 (`scalar.db.consensus_commit.coordinator.write_omission_on_read_only.enabled` は `false` である必要があります。)
 
-### 残留トランザクション状態をパージするかどうかを決定する
-
-完了したトランザクションは、時間の経過とともにストレージを消費する残留トランザクション状態 (Coordinator state レコードと request proof) を残します。ScalarDL がこの状態を自動的に、またはオンデマンドでパージするように設定できます。パージの有効化や変更には Ledger と Auditor の再起動が必要なため、これらを起動する前に方針を決定してください。詳細については、[残留トランザクション状態のパージ](purge-residual-transaction-state.mdx)を参照してください。
-
 ### その他の設定を決定する
 
 クライアント、Ledger、および Auditor には TLS や gRPC などの設定を追加で設定可能です。詳細は以下を参照してください。
