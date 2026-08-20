@@ -403,11 +403,6 @@ const sidebars = {
                   id: 'helm-charts/getting-started-logging',
                   label: 'Loki Stack for Logging by Using a Helm Chart',
                 },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalar-manager',
-                  label: 'Scalar Manager by Using a Helm Chart',
-                },
               ]
             },
             {
@@ -523,11 +518,6 @@ const sidebars = {
                 },
                 {
                   type: 'doc',
-                  id: 'helm-charts/configure-custom-values-scalar-manager',
-                  label: 'Configure a Custom Values File for Scalar Manager',
-                },
-                {
-                  type: 'doc',
                   id: 'helm-charts/configure-custom-values-envoy',
                   label: 'Configure a Custom Values File for Scalar Envoy',
                 },
@@ -575,21 +565,6 @@ const sidebars = {
             id: 'manage-monitor-overview',
           },
           items: [
-            {
-              type: 'doc',
-              id: 'scalar-manager/overview',
-              label: 'Scalar Manager Overview',
-            },
-            {
-              type: 'doc',
-              id: 'scalar-manager/how-to-use-scalar-manager',
-              label: 'How to Use Scalar Manager',
-            },
-            {
-              type: 'doc',
-              id: 'scalar-manager/metrics-reference',
-              label: 'Scalar Manager Metrics Reference',
-            },
             {
               type: 'doc',
               id: 'scalar-kubernetes/K8sMonitorGuide',
@@ -1106,11 +1081,6 @@ const sidebars = {
                   id: 'helm-charts/getting-started-logging',
                   label: 'Helm Chart を使用したログ記録用 Loki スタック',
                 },
-                {
-                  type: 'doc',
-                  id: 'helm-charts/getting-started-scalar-manager',
-                  label: 'Helm Chart を使用した Scalar Manager',
-                },
               ]
             },
             {
@@ -1226,11 +1196,6 @@ const sidebars = {
                 },
                 {
                   type: 'doc',
-                  id: 'helm-charts/configure-custom-values-scalar-manager',
-                  label: 'Scalar Manager のカスタム値ファイルを構成',
-                },
-                {
-                  type: 'doc',
                   id: 'helm-charts/configure-custom-values-envoy',
                   label: 'Scalar Envoy のカスタム値ファイルを構成',
                 },
@@ -1278,21 +1243,6 @@ const sidebars = {
             id: 'manage-monitor-overview',
           },
           items: [
-            {
-              type: "doc",
-              id: "scalar-manager/overview",
-              label: "Scalar Manager の概要"
-            },
-            {
-              type: "doc",
-              id: "scalar-manager/how-to-use-scalar-manager",
-              label: "Scalar Manager の使用方法"
-            },
-            {
-              type: "doc",
-              id: "scalar-manager/metrics-reference",
-              label: "Scalar Manager メトリクスリファレンス"
-            },
             {
               type: "doc",
               id: "scalar-kubernetes/K8sMonitorGuide",

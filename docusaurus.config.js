@@ -168,10 +168,6 @@ const config = {
             to: '/docs/latest/releases/release-support-policy',
             from: '/docs/releases/release-support-policy',
           },
-          {
-            to: '/docs/3.12/helm-charts/getting-started-scalar-manager',
-            from: '/docs/3.12/helm-charts/how-to-deploy-scalar-manager',
-          },
         ],
         createRedirects(existingPath) {
           const redirects = [];
