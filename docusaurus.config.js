@@ -6,6 +6,9 @@
 
 import {themes as prismThemes} from 'prism-react-renderer';
 import { getNotifications } from './src/data/notifications';
+import fs from 'fs';
+import path from 'path';
+import { execFileSync } from 'child_process';
 
 const config = {
   title: 'ScalarDL Documentation',
@@ -153,21 +156,12 @@ const config = {
             from: ['/', '/docs'],
           },
           {
-            to: '/docs/3.12/how-to-run-applications-with-auditor',
-            from: '/docs/3.12/getting-started-auditor',
-          },
-          {
-            to: '/docs/3.11/how-to-run-applications-with-auditor',
-            from: '/docs/3.11/getting-started-auditor',
-          },
-          {
-            to: '/docs/3.10/how-to-run-applications-with-auditor',
-            from: '/docs/3.10/getting-started-auditor',
-          },
-          {
             to: '/docs/latest/releases/release-support-policy',
             from: '/docs/releases/release-support-policy',
           },
+          // Redirects pages removed from latest to the homepage so bots with cached old URLs
+          // don't land on a 404.
+          ...buildRemovedPageRedirects(),
         ],
         createRedirects(existingPath) {
           const redirects = [];
@@ -178,8 +172,7 @@ const config = {
           if (existingPath.startsWith('/docs/latest/')) {
             // Redirect from /docs/<OLD_VERSION>/X to /docs/latest/X for versions
             // that are no longer built (3.4 through 3.9).
-            const retiredVersions = ['3.9', '3.8', '3.7', '3.6', '3.5', '3.4'];
-            for (const version of retiredVersions) {
+            for (const version of getRetiredVersions()) {
               redirects.push(existingPath.replace('/docs/latest/', `/docs/${version}/`));
             }
           }
@@ -497,3 +490,108 @@ const config = {
 };
 
 export default config;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Redirect helpers — referenced in the config above via function hoisting.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Returns retired version strings derived from versions.json.
+function getRetiredVersions() {
+  const active = JSON.parse(fs.readFileSync('./versions.json', 'utf8'));
+  const oldest = Math.min(...active.map(v => parseInt(v.split('.')[1])));
+  return Array.from({ length: oldest - 4 }, (_, i) => `3.${oldest - 1 - i}`);
+}
+
+// Returns a Set of URL paths (no extension, README/index treated as directory index) for all
+// non-partial docs in `dir`.
+function getDocPaths(dir) {
+  const paths = new Set();
+  if (!fs.existsSync(dir)) return paths;
+  function walk(currentDir, relPath) {
+    for (const entry of fs.readdirSync(currentDir)) {
+      if (entry.startsWith('_')) continue; // Docusaurus excludes underscore-prefixed files
+      const full = path.join(currentDir, entry);
+      const rel = relPath ? `${relPath}/${entry}` : entry;
+      if (fs.statSync(full).isDirectory()) {
+        walk(full, rel);
+      } else if (/\.(mdx|md)$/.test(entry)) {
+        let urlPath = rel.replace(/\.(mdx|md)$/, '');
+        // README and index files are directory indices in Docusaurus
+        if (urlPath.endsWith('/README') || urlPath.endsWith('/index')) {
+          urlPath = urlPath.slice(0, urlPath.lastIndexOf('/'));
+        } else if (urlPath === 'README' || urlPath === 'index') {
+          urlPath = '';
+        }
+        if (urlPath) paths.add(urlPath);
+      }
+    }
+  }
+  walk(dir, '');
+  return paths;
+}
+
+// Generates redirects to /docs/latest/ for pages that exist in versioned docs but not in
+// latest, so bots and crawlers don't land on a 404 when following cached old-version URLs.
+function buildRemovedPageRedirects() {
+  const latestPaths = getDocPaths('./docs');
+
+  const versionedDocsBase = './versioned_docs';
+  const versionedDirs = fs.readdirSync(versionedDocsBase)
+    .filter(d => /^version-/.test(d) && fs.statSync(path.join(versionedDocsBase, d)).isDirectory())
+    .map(d => ({ version: d.replace('version-', ''), dir: path.join(versionedDocsBase, d) }));
+
+  // Map each removed-from-latest path to the set of active versions that still have it.
+  const pathToActiveVersions = new Map();
+  for (const { version, dir } of versionedDirs) {
+    for (const p of getDocPaths(dir)) {
+      if (!latestPaths.has(p)) {
+        if (!pathToActiveVersions.has(p)) pathToActiveVersions.set(p, new Set());
+        pathToActiveVersions.get(p).add(version);
+      }
+    }
+  }
+
+  // Also detect pages from versioned_docs directories that have since been deleted from the repo.
+  try {
+    // maxBuffer raised from the 1MB default; large repos exceed it, causing a silent ENOBUFS failure that produces no redirects.
+    const gitOutput = execFileSync(
+      'git', ['log', '--diff-filter=D', '--name-only', '--format=', '--', 'versioned_docs/'],
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 10 * 1024 * 1024 }
+    );
+    for (const file of gitOutput.split('\n')) {
+      const match = file.match(/^versioned_docs\/version-[\d.]+\/(.+)$/);
+      if (!match) continue;
+      const relativePath = match[1];
+      if (!/\.(mdx|md)$/.test(relativePath)) continue;
+      if (relativePath.split('/').some(p => p.startsWith('_'))) continue;
+      let urlPath = relativePath.replace(/\.(mdx|md)$/, '');
+      if (urlPath.endsWith('/README') || urlPath.endsWith('/index')) {
+        urlPath = urlPath.slice(0, urlPath.lastIndexOf('/'));
+      } else if (urlPath === 'README' || urlPath === 'index') {
+        continue;
+      }
+      if (urlPath && !latestPaths.has(urlPath) && !pathToActiveVersions.has(urlPath)) {
+        pathToActiveVersions.set(urlPath, new Set());
+      }
+    }
+  } catch {
+    // git unavailable or no history (e.g., shallow clone); pages from deleted versioned_docs
+    // directories will not have redirects generated for those paths.
+  }
+
+  const activeVersions = versionedDirs.map(({ version }) => version);
+  const redirects = [];
+  for (const [p, versionsWithPage] of pathToActiveVersions) {
+    // Redirect every version (and /latest) that does NOT have the page to /docs/latest/.
+    // Use a Set to deduplicate versions that appear in both RETIRED_VERSIONS and activeVersions.
+    const versionsNeedingRedirect = new Set([
+      'latest',
+      ...getRetiredVersions(),
+      ...activeVersions.filter(v => !versionsWithPage.has(v)),
+    ]);
+    for (const v of versionsNeedingRedirect) {
+      redirects.push({ to: '/docs/latest/', from: `/docs/${v}/${p}` });
+    }
+  }
+  return redirects;
+}
