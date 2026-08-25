@@ -544,7 +544,7 @@ function buildRedirectsConfig() {
       }
       if (existingPath.startsWith('/docs/latest/')) {
         // Redirect from /docs/<OLD_VERSION>/X to /docs/latest/X for versions
-        // that are no longer built (3.4 through 3.9).
+        // that are no longer built (derived from versions.json by getRetiredVersions).
         for (const version of getRetiredVersions()) {
           redirects.push(existingPath.replace('/docs/latest/', `/docs/${version}/`));
         }
