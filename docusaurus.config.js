@@ -148,37 +148,7 @@ const config = {
     './src/plugins/copy-page-source.js',
     [
       '@docusaurus/plugin-client-redirects',
-      {
-        redirects: [
-          // This redirect takes the user to the latest version of the English docs when they land on the English versions of the docs site.
-          {
-            to: '/docs/latest/',
-            from: ['/', '/docs'],
-          },
-          {
-            to: '/docs/latest/releases/release-support-policy',
-            from: '/docs/releases/release-support-policy',
-          },
-          // Redirects pages removed from latest to the homepage so bots with cached old URLs
-          // don't land on a 404.
-          ...buildRemovedPageRedirects(),
-        ],
-        createRedirects(existingPath) {
-          const redirects = [];
-          if (existingPath.includes('/ja-jp/docs')) {
-            // Redirect from /docs/ja-jp/X to /ja-jp/docs/X.
-            redirects.push(existingPath.replace('/ja-jp/docs', '/docs/ja-jp'));
-          }
-          if (existingPath.startsWith('/docs/latest/')) {
-            // Redirect from /docs/<OLD_VERSION>/X to /docs/latest/X for versions
-            // that are no longer built (3.4 through 3.9).
-            for (const version of getRetiredVersions()) {
-              redirects.push(existingPath.replace('/docs/latest/', `/docs/${version}/`));
-            }
-          }
-          return redirects.length ? redirects : undefined;
-        },
-      },
+      buildRedirectsConfig(),
     ],
     require.resolve('docusaurus-plugin-image-zoom'),
     [
@@ -495,11 +465,19 @@ export default config;
 // Redirect helpers — referenced in the config above via function hoisting.
 // ─────────────────────────────────────────────────────────────────────────────
 
+// Cached so the per-page createRedirects() calls don't re-read versions.json each time.
+// Must be var (not let/const) — getRetiredVersions() is called during config object
+// initialization via hoisting, before a let/const declaration here would be initialized.
+var _retiredVersions;
+
 // Returns retired version strings derived from versions.json.
 function getRetiredVersions() {
+  if (_retiredVersions) return _retiredVersions;
   const active = JSON.parse(fs.readFileSync('./versions.json', 'utf8'));
+  if (active.length === 0) return (_retiredVersions = []);
   const oldest = Math.min(...active.map(v => parseInt(v.split('.')[1])));
-  return Array.from({ length: oldest - 4 }, (_, i) => `3.${oldest - 1 - i}`);
+  // 4 = minor version of the oldest version ever retired (3.4); update if the floor changes.
+  return (_retiredVersions = Array.from({ length: oldest - 4 }, (_, i) => `3.${oldest - 1 - i}`));
 }
 
 // Returns a Set of URL paths (no extension, README/index treated as directory index) for all
@@ -532,7 +510,51 @@ function getDocPaths(dir) {
 
 // Generates redirects to /docs/latest/ for pages that exist in versioned docs but not in
 // latest, so bots and crawlers don't land on a 404 when following cached old-version URLs.
-function buildRemovedPageRedirects() {
+// Returns the plugin-client-redirects configuration object. Defining the static
+// redirects here (rather than inline in the config above) lets the exclusion set
+// for buildRemovedPageRedirects be derived automatically from the same array,
+// avoiding two lists that must be kept in sync.
+function buildRedirectsConfig() {
+  const staticRedirects = [
+    // This redirect takes the user to the latest version of the English docs when they land on the English versions of the docs site.
+    {
+      to: '/docs/latest/',
+      from: ['/', '/docs'],
+    },
+    {
+      to: '/docs/latest/releases/release-support-policy',
+      from: '/docs/releases/release-support-policy',
+    },
+  ];
+  const existingFromPaths = new Set(
+    staticRedirects.flatMap(r => (Array.isArray(r.from) ? r.from : [r.from]))
+  );
+  return {
+    redirects: [
+      ...staticRedirects,
+      // Redirects pages removed from latest to the homepage so bots with cached old URLs
+      // don't land on a 404.
+      ...buildRemovedPageRedirects(existingFromPaths),
+    ],
+    createRedirects(existingPath) {
+      const redirects = [];
+      if (existingPath.includes('/ja-jp/docs')) {
+        // Redirect from /docs/ja-jp/X to /ja-jp/docs/X.
+        redirects.push(existingPath.replace('/ja-jp/docs', '/docs/ja-jp'));
+      }
+      if (existingPath.startsWith('/docs/latest/')) {
+        // Redirect from /docs/<OLD_VERSION>/X to /docs/latest/X for versions
+        // that are no longer built (3.4 through 3.9).
+        for (const version of getRetiredVersions()) {
+          redirects.push(existingPath.replace('/docs/latest/', `/docs/${version}/`));
+        }
+      }
+      return redirects.length ? redirects : undefined;
+    },
+  };
+}
+
+function buildRemovedPageRedirects(existingFromPaths = new Set()) {
   const latestPaths = getDocPaths('./docs');
 
   const versionedDocsBase = './versioned_docs';
@@ -574,9 +596,12 @@ function buildRemovedPageRedirects() {
         pathToActiveVersions.set(urlPath, new Set());
       }
     }
-  } catch {
-    // git unavailable or no history (e.g., shallow clone); pages from deleted versioned_docs
-    // directories will not have redirects generated for those paths.
+  } catch (err) {
+    // Swallow ENOBUFS (repo history too large), ENOENT (git not available), and shallow-clone
+    // failures. Warn on anything else so unexpected errors don't vanish silently.
+    if (err.code !== 'ENOBUFS' && err.code !== 'ENOENT' && !String(err.message).includes('ENOBUFS')) {
+      console.warn('[buildRemovedPageRedirects] Unexpected git error:', err.message);
+    }
   }
 
   const activeVersions = versionedDirs.map(({ version }) => version);
@@ -590,7 +615,10 @@ function buildRemovedPageRedirects() {
       ...activeVersions.filter(v => !versionsWithPage.has(v)),
     ]);
     for (const v of versionsNeedingRedirect) {
-      redirects.push({ to: '/docs/latest/', from: `/docs/${v}/${p}` });
+      const from = `/docs/${v}/${p}`;
+      if (!existingFromPaths.has(from)) {
+        redirects.push({ to: '/docs/latest/', from });
+      }
     }
   }
   return redirects;
