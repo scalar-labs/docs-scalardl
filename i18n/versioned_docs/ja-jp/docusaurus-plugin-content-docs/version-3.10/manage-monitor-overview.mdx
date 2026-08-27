@@ -10,22 +10,10 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 <TranslationBanner />
 
-Scalar Manager は、Kubernetes クラスター環境内の ScalarDL の集中管理および監視ソリューションであり、次のことが可能になります。
-
-- ScalarDL の可用性を確認します。
-- ScalarDL が使用するデータベースでトランザクションの一貫性のある期間を作成する一時停止ジョブをスケジュールまたは実行します。
-- Grafana ダッシュボードを介して ScalarDL の時系列メトリックとログを確認します。
-
-Scalar Manager の詳細については、[Scalar Manager 概要](scalar-manager/overview.mdx)を参照してください。
+監視は、ScalarDL デプロイメントの健全性とパフォーマンスを維持するために不可欠です。このセクションでは、Kubernetes クラスター環境での ScalarDL の監視に関するガイダンスを提供します。これにはシステムの可用性の確認、時系列メトリックの収集、および監視ダッシュボードを通じたログの表示が含まれます。
 
 :::note
 
 ScalarDL はデータ管理と Function 機能に ScalarDB を使用するため、デプロイメントで ScalarDL と ScalarDB の両方を使用する場合があります。このような場合は、ScalarDL に加えて ScalarDB も監視する必要があります。
 
 :::
-
-## Scalar Manager をデプロイする
-
-Helm Chart を使用して Scalar Manager をデプロイできます。
-
-Scalar Manager をデプロイする方法の詳細については、[Scalar Manager のデプロイ](helm-charts/getting-started-scalar-manager.mdx)を参照してください。
