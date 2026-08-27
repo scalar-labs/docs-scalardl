@@ -82,14 +82,6 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
        * Helm Chart を使用して Prometheus Operator デプロイメントをカスタマイズする場合は、Scalar 製品を監視するために次の構成を設定する必要があります。
            * Prometheus Operator が Scalar 製品の `ServiceMonitor` および `PrometheusRule` を検出できるように、`serviceMonitorSelectorNilUsesHelmValues` および `ruleSelectorNilUsesHelmValues` を `false` (デフォルトでは `true`) に設定します。
 
-       * Scalar Manager を使用する場合は、Scalar Manager が CPU およびメモリリソースを収集できるように次の構成を設定する必要があります。
-           * `kubeStateMetrics.enabled`、`nodeExporter.enabled`、および `kubelet.enabled` を `true` に設定します。
-
-       * Scalar Manager を使用する場合は、Scalar Manager が Grafana を組み込みきるように次の構成を設定する必要があります。
-           * `grafana.ini.security.allow_embedding` および `grafana.ini.auth.anonymous.enabled` を `true` に設定します。
-           * `grafana.ini.auth.anonymous.org_name` を使用中の組織に設定します。Scalar のサンプルを使う場合では、`Main Org.` に設定します。
-           * `grafana.ini.auth.anonymous.org_role` を `Editor` に設定します。
-
 ## ステップ3. `kube-prometheus-stack` をデプロイする
 
 1. `prometheus-community` helm リポジトリを追加します。
