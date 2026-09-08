@@ -13,13 +13,15 @@ This page includes a list of release notes for ScalarDL 3.11.
 
 **Release date:** September 8, 2026
 
-## Summary
+### Summary
 
 This release includes several improvements, bug fixes, and vulnerability fixes. For detailed changes, see the following.
 
 :::warning Backward-incompatible changes
 
 **The nonce of a contract execution request must now be a canonical UUID.** A request whose nonce is not a canonical UUID (36 characters in the `8-4-4-4-12` hyphenated form; uppercase and lowercase hex are both accepted) is now rejected. The client SDKs have always generated UUID nonces, so this affects only applications that pass their own nonce through the deprecated `executeContract` methods that take a nonce argument. If your application does this, either stop passing a nonce and let the SDK generate one, or make sure the value you pass is a canonical UUID. ([#662](https://github.com/scalar-labs/scalardl/pull/662))
+
+:::
 
 ### Community and Enterprise editions
 
