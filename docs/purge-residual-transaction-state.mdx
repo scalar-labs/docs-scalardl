@@ -22,7 +22,9 @@ The residual transaction state exists to serve specific roles while a transactio
 
 Once a transaction has been settled and no longer needs to be recovered, this state has fulfilled its role and is no longer required for ScalarDL to operate. Purging reclaims it so that the Coordinator table and the Auditor request-proof table do not grow indefinitely. Because ScalarDL does not purge this state by default, it accumulates over time and consumes storage.
 
-In most cases, the main reason to retain the residual transaction state is that your application still needs to determine how a specific transaction was settled—that is, whether it committed or aborted. Keep the state for such transactions until your application no longer needs to look up their outcomes.
+The main reason to retain the residual transaction state is to keep a record of how each transaction was settled. If a request's result does not reach the client—for example, after a timeout or a connection failure—the Coordinator state record preserves whether that transaction committed or aborted, so that the outcome can still be determined afterward.
+
+If your operations require transaction outcomes to remain determinable after the fact, keep automatic purge disabled and use [manual purge](#manual-purge) once you no longer need those outcomes. Otherwise, you can let ScalarDL purge the state automatically.
 
 :::warning
 
@@ -92,7 +94,23 @@ If your deployment was set up with a version of ScalarDL that does not support p
 
    Be sure to run this step after the previous one. The `--alter` option only adds columns to existing tables, and it fails if a table in the schema does not exist yet.
 
-Upgrading the schemas does not remove the residual transaction state that has already accumulated. Before you enable purge, remove that state by using the cleanup tool, as described in [Purge options](#purge-options).
+Upgrading the schemas does not remove the residual transaction state that has already accumulated, and neither does enabling purge. Because such state lacks the information that purge requires, none of the purge options can remove it—only the cleanup tool can. In an existing deployment, the recommended order is therefore as follows:
+
+1. Enable purge on both Ledger and Auditor and enable on-completion purge, as described in [Purge options](#purge-options). Transactions from this point on no longer leave the residual state behind. On-completion purge acts on each transaction as it completes, so the state that has already accumulated does not affect it. If you need to be able to determine a transaction's outcome after the fact, keep on-completion purge disabled and use [manual purge](#manual-purge) instead. For details, see [Why purge the residual transaction state](#why-purge-the-residual-transaction-state).
+2. Remove the state that has already accumulated by using the cleanup tool.
+3. Enable scheduled purge, or run manual purge, as needed.
+
+Until the cleanup tool has removed the state that has already accumulated, enabling scheduled purge or running manual purge is not recommended. Both work by scanning the request proofs, and a single run processes only a limited number of records. While a large amount of state that only the cleanup tool can remove is present, a single run can be filled entirely by records that it can never purge, so purging makes little or no progress. Auditor logs a warning when most of the records that a run visits are such records, so that you can notice the situation and address it.
+
+Because on-completion purge is best-effort, a small amount of residual state can remain even after the first step. Scheduled purge in the last step reclaims it.
+
+:::info
+
+The cleanup tool currently supports only Azure Cosmos DB for NoSQL as the underlying database and does not support multi-storage configurations.
+
+If you want to use the cleanup tool for purging existing residual transaction states, please [contact support](https://www.scalar-labs.com/support).
+
+:::
 
 ## Purge options
 
@@ -103,21 +121,13 @@ ScalarDL provides three purge options that you can combine. To use any of them, 
 
 While purge is disabled, ScalarDL does not purge any state, and manual purge requests are rejected. You then choose which options to use through the additional Auditor settings described in this section.
 
-:::info
-
-Enabling purge does not remove the residual transaction state that has already accumulated. Because such state lacks the information that purge requires, none of the purge options remove it, including manual purge. As a rule, before you enable purge in an existing deployment, you should remove that state by using the cleanup tool.
-
-If you want to use the cleanup tool for purging existing residual transaction states, please [contact support](https://www.scalar-labs.com/support).
-
-:::
-
 The following table summarizes the options.
 
 | Option              | How it is triggered                                              | Enabled by                                                                  | Typical use                                                                    |
 |---------------------|------------------------------------------------------------------|-----------------------------------------------------------------------------|--------------------------------------------------------------------------------|
 | **On-completion purge** | Automatically, right after each transaction completes            | `scalar.dl.auditor.transaction_state_purge.on_completion.enabled`           | Keep the residual state to a minimum during normal operation.                      |
 | **Scheduled purge**     | Automatically, as a periodic background scan                     | `scalar.dl.auditor.transaction_state_purge.scan.interval_secs` (`> 0`)      | Reclaim the state that on-completion purge did not remove (for example, after a failure). |
-| **Manual purge**        | On demand, when you run the `purge-state` command                | The master switches only (available whenever purge is enabled)              | Delete at a time you choose while automatic purge is disabled (for example, once your application no longer needs the outcomes). |
+| **Manual purge**        | On demand, when you run the `purge-state` command                | The master switches only (available whenever purge is enabled)              | Delete at a time you choose while automatic purge is disabled (for example, once you no longer need to determine transaction outcomes). |
 
 :::note
 
@@ -145,11 +155,13 @@ You can also limit how many records a single scan processes by setting `scalar.d
 
 If you have multiple Auditor nodes deployed, scheduled purge will run on only one node at a time to avoid redundant scans.
 
+In an existing deployment, do not enable scheduled purge until the cleanup tool has removed the residual transaction state that already exists. For details, see [For an existing deployment](#for-an-existing-deployment).
+
 :::
 
 ### Manual purge
 
-Manual purge lets you delete the residual transaction state at a time that you choose, instead of having ScalarDL remove it automatically. This suits the case where your application may still need to look up transaction outcomes: you keep both on-completion purge and scheduled purge disabled so that no state is removed automatically, and then run manual purge once the state is no longer needed. It performs the same scan-based cleanup as scheduled purge and returns a summary of the result.
+Manual purge lets you delete the residual transaction state at a time that you choose, instead of having ScalarDL remove it automatically. This suits the case where you need transaction outcomes to remain determinable after the fact: you keep both on-completion purge and scheduled purge disabled so that no state is removed automatically, and then run manual purge once the state is no longer needed. It performs the same scan-based cleanup as scheduled purge and returns a summary of the result.
 
 Manual purge is available whenever the master switches are enabled, even if on-completion purge and scheduled purge are disabled. To run it, use the [`scalardl purge-state`](scalardl-command-reference.mdx#purge-state) command:
 
@@ -173,6 +185,8 @@ The command returns a summary that shows how many transactions were targeted, pu
 :::note
 
 Manual purge requires Auditor to be enabled. If purge is disabled, the command is rejected.
+
+Also, manual purge cannot remove the residual transaction state that already existed before the schema upgrade, and running it before the cleanup tool has removed that state is not recommended. For details, see [For an existing deployment](#for-an-existing-deployment).
 
 :::
 
