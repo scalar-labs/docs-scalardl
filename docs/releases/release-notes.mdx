@@ -9,6 +9,39 @@ displayed_sidebar: docsEnglish
 
 This page includes a list of release notes for ScalarDL 3.14.
 
+## v3.14.1
+
+**Release date:** September 8, 2026
+
+### Summary
+
+This release includes several improvements, bug fixes, and vulnerability fixes. For detailed changes, see the following.
+
+:::warning Backward-incompatible changes
+
+**The nonce of a contract execution request must now be a canonical UUID.** A request whose nonce is not a canonical UUID (36 characters in the `8-4-4-4-12` hyphenated form; uppercase and lowercase hex are both accepted) is now rejected. The client SDKs have always generated UUID nonces, so this affects only applications that pass their own nonce through the deprecated `executeContract` methods that take a nonce argument. If your application does this, either stop passing a nonce and let the SDK generate one, or make sure the value you pass is a canonical UUID. ([#662](https://github.com/scalar-labs/scalardl/pull/662))
+
+:::
+
+### Community and Enterprise editions
+
+#### Improvements
+
+- Added validation that the nonce of a contract execution request is a canonical UUID. Rejecting a malformed nonce at the server entry point prevents it from corrupting downstream bookkeeping. ([#662](https://github.com/scalar-labs/scalardl/pull/662))
+- Upgraded ScalarDB to 3.19.1. ([#687](https://github.com/scalar-labs/scalardl/pull/687))
+
+#### Bug fixes
+
+- Fixed [CVE-2026-33818](https://github.com/advisories/GHSA-xc2p-8ggw-6cr5 "CVE-2026-33818"), [CVE-2026-39821](https://github.com/advisories/GHSA-w2q5-6q6x-x959 "CVE-2026-39821"), [CVE-2026-46600](https://github.com/advisories/GHSA-gg3m-vvp2-p2c5 "CVE-2026-46600"), [CVE-2026-56852](https://github.com/advisories/GHSA-jpjm-c3r5-q96r "CVE-2026-56852"), [CVE-2026-56853](https://github.com/advisories/GHSA-xphw-4f88-5f39 "CVE-2026-56853"), [CVE-2026-56858](https://github.com/advisories/GHSA-c974-w86c-vpfw "CVE-2026-56858"), [CVE-2026-56859](https://github.com/advisories/GHSA-76p8-fhrm-vpc7 "CVE-2026-56859"), [CVE-2026-56860](https://github.com/advisories/GHSA-25mv-j2qr-v5jq "CVE-2026-56860"), [CVE-2026-56862](https://github.com/advisories/GHSA-7qch-w8m5-g3h3 "CVE-2026-56862"), [CVE-2026-84304](https://github.com/advisories/GHSA-vp52-pcj8-j9qc "CVE-2026-84304"), and [GHSA-hrxh-6v49-42gf](https://github.com/advisories/GHSA-hrxh-6v49-42gf "GHSA-hrxh-6v49-42gf"). ([#681](https://github.com/scalar-labs/scalardl/pull/681))
+
+### Enterprise edition
+
+#### Bug fixes
+
+- Fixed an issue where retrying a read lock release could fail with a `StackOverflowError` and retry without any wait when the underlying storage kept failing conditional writes.
+- Fixed an issue where releasing a write lock during cleanup could throw a misleading `INCONSISTENT_STATES` error, or release another transaction's write lock, when a concurrent recovery had already released the lock.
+- Fixed an issue where releasing a read lock could leave the lock owner list and the lock count inconsistent.
+
 ## v3.14.0
 
 **Release date:** August 5, 2026

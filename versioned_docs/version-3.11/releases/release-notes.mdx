@@ -9,6 +9,51 @@ displayed_sidebar: docsEnglish
 
 This page includes a list of release notes for ScalarDL 3.11.
 
+## v3.11.4
+
+**Release date:** September 8, 2026
+
+### Summary
+
+This release includes several improvements, bug fixes, and vulnerability fixes. For detailed changes, see the following.
+
+:::warning Backward-incompatible changes
+
+**The nonce of a contract execution request must now be a canonical UUID.** A request whose nonce is not a canonical UUID (36 characters in the `8-4-4-4-12` hyphenated form; uppercase and lowercase hex are both accepted) is now rejected. The client SDKs have always generated UUID nonces, so this affects only applications that pass their own nonce through the deprecated `executeContract` methods that take a nonce argument. If your application does this, either stop passing a nonce and let the SDK generate one, or make sure the value you pass is a canonical UUID. ([#662](https://github.com/scalar-labs/scalardl/pull/662))
+
+:::
+
+### Community and Enterprise editions
+
+#### Improvements
+
+- Added validation that the nonce of a contract execution request is a canonical UUID. Rejecting a malformed nonce at the server entry point prevents it from corrupting downstream bookkeeping. ([#662](https://github.com/scalar-labs/scalardl/pull/662))
+- Upgraded ScalarDB to 3.15.8, which replaces MySQL Connector/J with MariaDB Connector/J. ([#609](https://github.com/scalar-labs/scalardl/pull/609))
+
+#### Bug fixes
+
+- Fixed an issue where contracts could not access a JDBC database (e.g., PostgreSQL). ([#558](https://github.com/scalar-labs/scalardl/pull/558))
+- Fixed the Ledger to reject unsupported ScalarDB transaction managers at startup instead of silently accepting them. ([#585](https://github.com/scalar-labs/scalardl/pull/585))
+- Fixed contract execution failing with an `AccessControlException` when ScalarDL runs on a ScalarDB multi-storage configuration backed by JDBC (or DynamoDB / Cloud Storage), by granting the required sandbox permissions regardless of the configured storage type. ([#588](https://github.com/scalar-labs/scalardl/pull/588))
+- Fixed an issue where contract execution failed when database connections needed to be re-established (for example, after a database restart or an idle timeout) with the SecurityManager enabled. ([#621](https://github.com/scalar-labs/scalardl/pull/621))
+- Fixed a race condition where pausing a Ledger (or Auditor/Gateway) server could report success while the server remained unpaused. ([#637](https://github.com/scalar-labs/scalardl/pull/637))
+- Fixed several vulnerabilities in grpc-health-probe. ([#589](https://github.com/scalar-labs/scalardl/pull/589))
+- Fixed [CVE-2026-54512](https://github.com/advisories/GHSA-j3rv-43j4-c7qm "CVE-2026-54512") and [CVE-2026-54513](https://github.com/advisories/GHSA-rmj7-2vxq-3g9f "CVE-2026-54513"). ([#592](https://github.com/scalar-labs/scalardl/pull/592))
+- Fixed [CVE-2026-33818](https://github.com/advisories/GHSA-xc2p-8ggw-6cr5 "CVE-2026-33818"), [CVE-2026-39821](https://github.com/advisories/GHSA-w2q5-6q6x-x959 "CVE-2026-39821"), [CVE-2026-46600](https://github.com/advisories/GHSA-gg3m-vvp2-p2c5 "CVE-2026-46600"), [CVE-2026-56852](https://github.com/advisories/GHSA-jpjm-c3r5-q96r "CVE-2026-56852"), [CVE-2026-56853](https://github.com/advisories/GHSA-xphw-4f88-5f39 "CVE-2026-56853"), [CVE-2026-56858](https://github.com/advisories/GHSA-c974-w86c-vpfw "CVE-2026-56858"), [CVE-2026-56859](https://github.com/advisories/GHSA-76p8-fhrm-vpc7 "CVE-2026-56859"), [CVE-2026-56860](https://github.com/advisories/GHSA-25mv-j2qr-v5jq "CVE-2026-56860"), [CVE-2026-56862](https://github.com/advisories/GHSA-7qch-w8m5-g3h3 "CVE-2026-56862"), [CVE-2026-84304](https://github.com/advisories/GHSA-vp52-pcj8-j9qc "CVE-2026-84304"), and [GHSA-hrxh-6v49-42gf](https://github.com/advisories/GHSA-hrxh-6v49-42gf "GHSA-hrxh-6v49-42gf"). ([#681](https://github.com/scalar-labs/scalardl/pull/681))
+
+### Enterprise edition
+
+#### Bug fixes
+
+- Fixed lock-related error codes and their solutions.
+- Fixed read lock count corruption caused by concurrent recovery and eliminated unnecessary CAS failures when recovering multiple read lock nonces.
+- Fixed an issue in the Auditor where a Ledger call failure during asset lock recovery was reported to clients as a generic runtime error, or its cause was lost by being treated as an unknown transaction state.
+- Fixed an issue where the Auditor on JDBC databases (Oracle) could fail to execute contracts with a `DL-COMMON-305001` error caused by reading an asset lock entry whose value was stored as `NULL`.
+- Fixed an issue where contract execution on Auditor failed when database connections needed to be re-established (for example, after a database restart or an idle timeout) with the SecurityManager enabled.
+- Fixed an issue where releasing a read or write lock could fail with a misleading `INCONSISTENT_STATES` error, or release another transaction's write lock, when a concurrent recovery had already released the lock.
+- Fixed an issue where retrying a read lock release could fail with a `StackOverflowError` and retry without any wait when the underlying storage kept failing conditional writes.
+- Fixed an issue where releasing a read lock could leave the lock owner list and the lock count inconsistent.
+
 ## v3.11.3
 
 **Release date:** March 26, 2026

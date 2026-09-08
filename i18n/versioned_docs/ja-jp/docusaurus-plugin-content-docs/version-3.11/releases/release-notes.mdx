@@ -13,6 +13,51 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 このページには、ScalarDL 3.11 のリリースノートのリストが含まれています。
 
+## v3.11.4
+
+**発売日:** 2026年09月08日
+
+### まとめ
+
+このリリースには、いくつかの改善点、バグの修正、および脆弱性の修正が含まれています。詳細な変更については、以下を参照してください。
+
+:::warning 破壊的変更
+
+**コントラクト実行リクエストのノンスは、正規形式の UUID でなければならなくなりました。** ノンスが正規形式の UUID ではないリクエスト (ハイフンで区切られた `8-4-4-4-12` 形式の 36 文字。16 進数の大文字と小文字の両方を受け付けます) は、拒否されるようになりました。クライアント SDK はこれまで常に UUID ノンスを生成しているため、これはノンス引数を受け取る非推奨の `executeContract` メソッドを通じて独自のノンスを渡すアプリケーションにのみ影響します。該当する場合は、ノンスを渡さずに SDK に生成させるか、渡す値が正規形式の UUID であることを確認してください。 ([#662](https://github.com/scalar-labs/scalardl/pull/662))
+
+:::
+
+### Community と Enterprise editions
+
+#### 改善点
+
+- コントラクト実行リクエストのノンスが正規形式の UUID であることを検証するようにしました。サーバーのエントリポイントで不正な形式のノンスを拒否することで、後続の管理情報が破損することを防ぎます。 ([#662](https://github.com/scalar-labs/scalardl/pull/662))
+- ScalarDB を 3.15.8 にアップグレードしました。これにより、MySQL Connector/J が MariaDB Connector/J に置き換えられます。 ([#609](https://github.com/scalar-labs/scalardl/pull/609))
+
+#### バグの修正
+
+- コントラクトが JDBC データベース (例: PostgreSQL) にアクセスできない問題を修正しました。 ([#558](https://github.com/scalar-labs/scalardl/pull/558))
+- Ledger が、サポートされていない ScalarDB トランザクションマネージャーをサイレント受け入れする代わりに、スタートアップ時に拒否するように修正しました。 ([#585](https://github.com/scalar-labs/scalardl/pull/585))
+- ScalarDL が JDBC (または DynamoDB / Cloud Storage) をバックエンドとする ScalarDB マルチストレージ設定で実行される場合、必須のサンドボックス許可を設定されたストレージタイプに関わらず付与することで、コントラクト実行が `AccessControlException` で失敗する問題を修正しました。 ([#588](https://github.com/scalar-labs/scalardl/pull/588))
+- SecurityManager が有効な状態で、データベース接続を再確立する必要がある場合 (例: データベース再起動またはアイドルタイムアウト後) にコントラクト実行が失敗する問題を修正しました。 ([#621](https://github.com/scalar-labs/scalardl/pull/621))
+- Ledger (または Auditor/Gateway) サーバーのポーズが成功を報告しながらサーバーがポーズされたままになるレース条件を修正しました。 ([#637](https://github.com/scalar-labs/scalardl/pull/637))
+- grpc-health-probe のいくつかの脆弱性を修正しました。 ([#589](https://github.com/scalar-labs/scalardl/pull/589))
+- [CVE-2026-54512](https://github.com/advisories/GHSA-j3rv-43j4-c7qm "CVE-2026-54512") および [CVE-2026-54513](https://github.com/advisories/GHSA-rmj7-2vxq-3g9f "CVE-2026-54513") の脆弱性を修正しました。 ([#592](https://github.com/scalar-labs/scalardl/pull/592))
+- [CVE-2026-33818](https://github.com/advisories/GHSA-xc2p-8ggw-6cr5 "CVE-2026-33818")、[CVE-2026-39821](https://github.com/advisories/GHSA-w2q5-6q6x-x959 "CVE-2026-39821")、[CVE-2026-46600](https://github.com/advisories/GHSA-gg3m-vvp2-p2c5 "CVE-2026-46600")、[CVE-2026-56852](https://github.com/advisories/GHSA-jpjm-c3r5-q96r "CVE-2026-56852")、[CVE-2026-56853](https://github.com/advisories/GHSA-xphw-4f88-5f39 "CVE-2026-56853")、[CVE-2026-56858](https://github.com/advisories/GHSA-c974-w86c-vpfw "CVE-2026-56858")、[CVE-2026-56859](https://github.com/advisories/GHSA-76p8-fhrm-vpc7 "CVE-2026-56859")、[CVE-2026-56860](https://github.com/advisories/GHSA-25mv-j2qr-v5jq "CVE-2026-56860")、[CVE-2026-56862](https://github.com/advisories/GHSA-7qch-w8m5-g3h3 "CVE-2026-56862")、[CVE-2026-84304](https://github.com/advisories/GHSA-vp52-pcj8-j9qc "CVE-2026-84304")、および[GHSA-hrxh-6v49-42gf](https://github.com/advisories/GHSA-hrxh-6v49-42gf "GHSA-hrxh-6v49-42gf") の脆弱性を修正しました。 ([#681](https://github.com/scalar-labs/scalardl/pull/681))
+
+### Enterprise edition
+
+#### バグの修正
+
+- ロック関連のエラーコードとその解決策を修正しました。
+- 同時リカバリーによるリードロック数の破損を修正し、複数のリードロックノンスのリカバリー時の不要な CAS 失敗を排除しました。
+- Auditor の Ledger コール失敗がアセットロックリカバリー中にクライアントに一般的なランタイムエラーとして報告されたり、未知のトランザクション状態として扱われて原因が失われたりする問題を修正しました。
+- Auditor が JDBC データベース (Oracle) でコントラクト実行が `DL-COMMON-305001` エラーで失敗する問題を修正しました。このエラーは `NULL` として保存されたアセットロックエントリを読み取ることが原因でした。
+- SecurityManager が有効な状態で、データベース接続を再確立する必要がある場合 (例: データベース再起動またはアイドルタイムアウト後) に Auditor でのコントラクト実行が失敗する問題を修正しました。
+- 同時リカバリーによってロックが既にリリースされている場合に、リードロックまたはライトロックのリリースが誤解を招く `INCONSISTENT_STATES` エラーで失敗したり、別のトランザクションのライトロックがリリースされたりする問題を修正しました。
+- 下位のストレージで条件付き書き込みの失敗が継続する場合に、リードロックリリースの再試行が `StackOverflowError` で失敗したり、待機時間なしで再試行されたりする問題を修正しました。
+- リードロックのリリースによって、ロック所有者リストとロック数の整合性が失われる問題を修正しました。
+
 ## v3.11.3
 
 **発売日:** 2026年03月26日
