@@ -21,7 +21,7 @@ export default function SearchWrapper(props: Props): ReactNode {
       <Search {...props} />
       <GoogleAIModeSearch />
       <div>
-        <a href={`${locale}/docs/${version}/scalar-licensing/trial`} className="navbar__link--cta">{tryNowLabel}</a>
+        <a href={`${locale}/docs/${version}/quickstart-overview`} className="navbar__link--cta">{tryNowLabel}</a>
       </div>
     </>
   );
