@@ -97,7 +97,7 @@ const config = {
               "3.11": { // When a new version is released and this is no longer the current version, change this to the version number and then delete this comment.
                 label: '3.11',
                 path: '3.11',
-                banner: 'none',
+                banner: 'unmaintained',
                 className: '3.11.4',
               },
               "3.10": {
