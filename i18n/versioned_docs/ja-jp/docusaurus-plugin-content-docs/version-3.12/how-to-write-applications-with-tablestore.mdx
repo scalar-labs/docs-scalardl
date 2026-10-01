@@ -24,11 +24,11 @@ ScalarDL TableStore を使用するには、次の2つのオプションがあ�
 
 コマンドの使用は、アプリケーションを作成せずに TableStore を試す便利な方法です。ただし、TableStore ベースのアプリケーションを構築する場合は、各操作で個別のプロセスを起動することなく、より効率的に動作する TableStore Client SDK が推奨されます。
 
-TableStore Client SDK は [Maven Central](https://central.sonatype.com/artifact/com.scalar-labs/scalardl-tablestore-java-client-sdk) で利用できます。Gradle などのビルドツールを使用して、アプリケーションにインストールできます。たとえば、Gradle では、次の依存関係を `build.gradle` に追加できます。`VERSION` は使用したい ScalarDL のバージョンに置き換えてください。
+TableStore Client SDK は [Maven Central](https://central.sonatype.com/artifact/com.scalar-labs/scalardl-tablestore-java-client-sdk) で利用できます。Gradle などのビルドツールを使用して、アプリケーションにインストールできます。たとえば、Gradle では、次の依存関係を `build.gradle` に追加できます。`<X.Y.Z>` は使用したい ScalarDL のバージョンに置き換えてください。
 
 ```gradle
 dependencies {
-    implementation group: 'com.scalar-labs', name: 'scalardl-tablestore-java-client-sdk', version: '<VERSION>'
+    implementation group: 'com.scalar-labs', name: 'scalardl-tablestore-java-client-sdk', version: '<X.Y.Z>'
 }
 ```
 
