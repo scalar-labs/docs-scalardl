@@ -69,13 +69,13 @@ cd scalardl-benchmarks
 
 ### クライアント SDK バージョンの変更
 
-[ScalarDL と Client SDK の互換性](../compatibility.mdx) に基づいて、ScalarDL Java Client SDK のバージョンが対象の ScalarDL Ledger および Auditor でサポートされているバージョンであるかどうかを `build.gradle` ファイルで確認します。サポートされていない場合は、`build.gradle` ファイル内の次の部分の `<VERSION>` を `X.Y.Z` のようなバージョン (たとえば `3.12.3`) に変更します。
+[ScalarDL と Client SDK の互換性](../compatibility.mdx) に基づいて、ScalarDL Java Client SDK のバージョンが対象の ScalarDL Ledger および Auditor でサポートされているバージョンであるかどうかを `build.gradle` ファイルで確認します。サポートされていない場合は、`build.gradle` ファイル内の次の部分の `<X.Y.Z>` を使用するバージョンに変更します。
 
 ```gradle
 dependencies {
     implementation group: 'com.google.inject', name: 'guice', version: '5.0.1'
     implementation group: 'com.scalar-labs', name: 'kelpie', version: '1.2.3'
-    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '<VERSION>'
+    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '<X.Y.Z>'
     implementation group: 'io.github.resilience4j', name: 'resilience4j-retry', version: '1.3.1'
 }
 ```
