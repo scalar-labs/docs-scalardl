@@ -29,11 +29,11 @@ import JavadocLink from "/src/theme/JavadocLink.js";
 
 コマンドを使用すると、アプリケーションを作成する必要がないため便利です。ただし、コマンドは実行ごとにプロセスを呼び出すため、時間がかかります。そのため、コマンドは主に汎用コントラクトをすばやくテストするために使用されます。ScalarDL ベースのアプリケーションを作成する場合は、より効率的な Client SDK を使用することをお勧めします。
 
-Client SDK は [Maven Central](https://search.maven.org/search?q=a:scalardl-java-client-sdk) で入手できます。Gradle などのビルドツールを使用して、アプリケーションにインストールできます。たとえば、Gradle では、次のように `build.gradle` に依存関係を追加できます。`VERSION` は使用する ScalarDL のバージョンに置き換えてください。
+Client SDK は [Maven Central](https://search.maven.org/search?q=a:scalardl-java-client-sdk) で入手できます。Gradle などのビルドツールを使用して、アプリケーションにインストールできます。たとえば、Gradle では、次のように `build.gradle` に依存関係を追加できます。`<X.Y.Z>` は使用する ScalarDL のバージョンに置き換えてください。
 
 ```gradle
 dependencies {
-    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '<VERSION>'
+    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '<X.Y.Z>'
 }
 ```
 
