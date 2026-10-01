@@ -237,11 +237,11 @@ If you were running the application itself, you could execute these commands usi
 
 You should now have your contracts registered on the ScalarDL network. In order to execute these contracts from an application we will make use of `ClientService` class from the [ScalarDL Client SDK](https://github.com/scalar-labs/scalardl-client-sdk).
 
-The Client SDK is available on [Maven Central](https://search.maven.org/search?q=a:scalardl-client-sdk), and it can be installed in your application using Gradle by adding the following dependency to your `build.gradle`:
+The Client SDK is available on [Maven Central](https://search.maven.org/search?q=a:scalardl-client-sdk), and it can be installed in your application using Gradle by adding the following dependency to your `build.gradle`, replacing `<X.Y.Z>` with the version of the ScalarDL Java Client SDK that you want to use:
 
 ```groovy
 dependencies {
-    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '3.12.3'
+    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '<X.Y.Z>'
 }
 ```
 
