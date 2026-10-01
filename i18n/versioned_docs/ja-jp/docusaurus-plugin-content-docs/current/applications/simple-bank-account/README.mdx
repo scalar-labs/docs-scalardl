@@ -240,11 +240,11 @@ Contract result:
 
 これで、コントラクトが ScalarDL ネットワークに登録されたはずです。アプリケーションからこれらのコントラクトを実行するには、[ScalarDL Client SDK](https://github.com/scalar-labs/scalardl-client-sdk) の `ClientService` クラスを利用します。
 
-Client SDK は [Maven Central](https://search.maven.org/search?q=a:scalardl-client-sdk) で入手でき、次の依存関係を追加することで Gradle を使用してアプリケーションにインストールできます。あなたの `build.gradle`:
+Client SDK は [Maven Central](https://search.maven.org/search?q=a:scalardl-client-sdk) で入手でき、`build.gradle` に次の依存関係を追加することで、Gradle を使用してアプリケーションにインストールできます。`<X.Y.Z>` は使用する ScalarDL Java Client SDK のバージョンに置き換えてください。
 
 ```groovy
 dependencies {
-    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '3.14.0'
+    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '<X.Y.Z>'
 }
 ```
 
