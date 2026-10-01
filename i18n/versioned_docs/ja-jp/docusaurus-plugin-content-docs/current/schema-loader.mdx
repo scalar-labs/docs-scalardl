@@ -17,39 +17,51 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ### Cosmos DB の場合
 
+次のコマンドを実行します。`<X.Y.Z>` は使用したい ScalarDL Schema Loader のバージョンに、その他の山括弧内の内容は説明どおりに置き換えてください。
+
 ```console
-docker run --rm [--env SCHEMA_TYPE=auditor] ghcr.io/scalar-labs/scalardl-schema-loader:<version> \
+docker run --rm [--env SCHEMA_TYPE=auditor] ghcr.io/scalar-labs/scalardl-schema-loader:<X.Y.Z> \
   --cosmos -h <YOUR_ACCOUNT_URI> -p <YOUR_ACCOUNT_PASSWORD> [-r BASE_RESOURCE_UNIT]
 ```
 
 ### DynamoDB の場合
 
+次のコマンドを実行します。`<X.Y.Z>` は使用したい ScalarDL Schema Loader のバージョンに、その他の山括弧内の内容は説明どおりに置き換えてください。
+
 ```console
-docker run --rm [--env SCHEMA_TYPE=auditor] ghcr.io/scalar-labs/scalardl-schema-loader:<version> \
+docker run --rm [--env SCHEMA_TYPE=auditor] ghcr.io/scalar-labs/scalardl-schema-loader:<X.Y.Z> \
   --dynamo --region <REGION> -u <ACCESS_KEY_ID> -p <SECRET_ACCESS_KEY> [-r BASE_RESOURCE_UNIT]
 ```
 
 ### Cassandra の場合
 
+次のコマンドを実行します。`<X.Y.Z>` は使用したい ScalarDL Schema Loader のバージョンに、その他の山括弧内の内容は説明どおりに置き換えてください。
+
 ```console
-docker run --rm [--env SCHEMA_TYPE=auditor] ghcr.io/scalar-labs/scalardl-schema-loader:<version> \
+docker run --rm [--env SCHEMA_TYPE=auditor] ghcr.io/scalar-labs/scalardl-schema-loader:<X.Y.Z> \
   --cassandra -h <CASSANDRA_IP> -u <CASSNDRA_USER> -p <CASSANDRA_PASSWORD> [-n <NETWORK_STRATEGY> -R <REPLICATION_FACTOR>]
 ```
 
 ### 設定ファイルを使用する場合
 
 * Ledger 用
+
+  次のコマンドを実行します。`<X.Y.Z>` は使用したい ScalarDL Schema Loader のバージョンに、その他の山括弧内の内容は説明どおりに置き換えてください。
+
   ```console
   docker run --rm \
     -v <PROPERTIES_FILE_PATH>:/scalardl-schema-loader/database.properties \
-    ghcr.io/scalar-labs/scalardl-schema-loader:<version> \
+    ghcr.io/scalar-labs/scalardl-schema-loader:<X.Y.Z> \
     --config database.properties --coordinator [<SOME_OPTIONS> [, ...]]
   ```
 
 * Auditor 用
+
+  次のコマンドを実行します。`<X.Y.Z>` は使用したい ScalarDL Schema Loader のバージョンに、その他の山括弧内の内容は説明どおりに置き換えてください。
+
   ```console
   docker run --rm --env SCHEMA_TYPE=auditor \
     -v <PROPERTIES_FILE_PATH>:/scalardl-schema-loader/database.properties \
-    ghcr.io/scalar-labs/scalardl-schema-loader:<version> \
+    ghcr.io/scalar-labs/scalardl-schema-loader:<X.Y.Z> \
     --config database.properties [<SOME_OPTIONS> [, ...]]
   ```
