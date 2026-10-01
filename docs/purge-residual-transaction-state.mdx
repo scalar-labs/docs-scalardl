@@ -68,7 +68,7 @@ If your deployment was set up with a version of ScalarDL that does not support p
    ```console
    docker run --rm \
      -v <PROPERTIES_FILE_PATH>:/scalardl-schema-loader/database.properties \
-     ghcr.io/scalar-labs/scalardl-schema-loader:<VERSION> \
+     ghcr.io/scalar-labs/scalardl-schema-loader:<X.Y.Z> \
      --config database.properties --coordinator --repair-all
    ```
 
@@ -77,7 +77,7 @@ If your deployment was set up with a version of ScalarDL that does not support p
    ```console
    docker run --rm --env SCHEMA_TYPE=auditor \
      -v <PROPERTIES_FILE_PATH>:/scalardl-schema-loader/database.properties \
-     ghcr.io/scalar-labs/scalardl-schema-loader:<VERSION> \
+     ghcr.io/scalar-labs/scalardl-schema-loader:<X.Y.Z> \
      --config database.properties
    ```
 
@@ -88,7 +88,7 @@ If your deployment was set up with a version of ScalarDL that does not support p
    ```console
    docker run --rm --env SCHEMA_TYPE=auditor \
      -v <PROPERTIES_FILE_PATH>:/scalardl-schema-loader/database.properties \
-     ghcr.io/scalar-labs/scalardl-schema-loader:<VERSION> \
+     ghcr.io/scalar-labs/scalardl-schema-loader:<X.Y.Z> \
      --config database.properties --alter
    ```
 
