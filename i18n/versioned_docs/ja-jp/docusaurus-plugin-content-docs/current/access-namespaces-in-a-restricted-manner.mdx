@@ -30,9 +30,9 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 名前空間への制限アクセスは、ポートベースのアクセス制御に依存します:
 
 - **特権ポート:** 管理者が名前空間管理と資格情報登録に使用します。管理者のみがこのポートにアクセスできる必要があります。
-- **非特権ポート:** テナントクライアントがコントラクト登録と実行に使用します。テナントは、特定の名前空間に登録された資格情報を使用してこのポートにアクセスします。
+- **非特権ポート:** テナントクライアントが Contract 登録と実行に使用します。テナントは、特定の名前空間に登録された資格情報を使用してこのポートにアクセスします。
 
-テナントの資格情報は特定の名前空間に登録されているため、これらの資格情報で実行されるすべての操作は自動的にその名前空間にスコープされます。テナントは、割り当てられた名前空間外でコントラクトを登録したり操作を実行したりできません。
+テナントの資格情報は特定の名前空間に登録されているため、これらの資格情報で実行されるすべての操作は自動的にその名前空間にスコープされます。テナントは、割り当てられた名前空間外で Contract を登録したり操作を実行したりできません。
 
 :::note
 
@@ -120,7 +120,7 @@ client/bin/scalardl register-cert --properties admin.properties --namespace tena
 
 ### テナントクライアントを設定する
 
-割り当てられた名前空間でコントラクトを登録して実行したり、アセットを検証したりするため、テナント用のクライアントプロパティを設定する必要があります。テナントクライアント用の最小必要プロパティを含む設定ファイルを作成するには、以下のコマンドを実行します:
+割り当てられた名前空間で Contract を登録して実行したり、アセットを検証したりするため、テナント用のクライアントプロパティを設定する必要があります。テナントクライアント用の最小必要プロパティを含む設定ファイルを作成するには、以下のコマンドを実行します:
 
 ```console
 cat << 'EOF' > tenant.properties
@@ -141,58 +141,58 @@ scalar.dl.client.entity.identity.digital_signature.private_key_path=./fixture/cl
 EOF
 ```
 
-### コントラクトを登録して実行する
+### Contract を登録して実行する
 
-テナントは、名前空間内でコントラクトを登録し実行できるようになりました。クライアントプロパティで設定された名前空間にすべての操作が自動的にスコープされるため、名前空間を意識することなく [ScalarDL Ledger をはじめよう](getting-started.mdx#コントラクトを作成する)で紹介された同じコントラクトを使用できます。
+テナントは、名前空間内で Contract を登録し実行できるようになりました。クライアントプロパティで設定された名前空間にすべての操作が自動的にスコープされるため、名前空間を意識することなく [ScalarDL Ledger をはじめよう](getting-started.mdx#contract-を作成する)で紹介された同じ Contract を使用できます。
 
-まず、以下のコマンドを実行して`scalardl-samples`内のコントラクトをコンパイルします:
+まず、以下のコマンドを実行して`scalardl-samples`内の Contract をコンパイルします:
 
 ```console
 ./gradlew assemble
 ```
 
-これにより `build/classes/java/main/com/org1/contract/StateUpdater.class` が生成されます。次に、以下のコマンドを実行してコントラクトを登録します:
+これにより `build/classes/java/main/com/org1/contract/StateUpdater.class` が生成されます。次に、以下のコマンドを実行して Contract を登録します:
 
 ```console
 client/bin/scalardl register-contract --properties tenant.properties --contract-id StateUpdater --contract-binary-name com.org1.contract.StateUpdater --contract-class-file build/classes/java/main/com/org1/contract/StateUpdater.class
 ```
 
-以下のコマンドを実行してコントラクトを実行します:
+以下のコマンドを実行して Contract を実行します:
 
 ```console
 client/bin/scalardl execute-contract --properties tenant.properties --contract-id StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}'
 ```
 
-### ファンクションを登録して実行する
+### Function を登録して実行する
 
-デフォルトでは、テナントは非特権ポートを通じてコントラクトを登録できますが、ファンクションは登録できません。テナントがファンクションを登録できるようにするには、管理者が以下の Ledger 設定オプションを有効にする必要があります:
+デフォルトでは、テナントは非特権ポートを通じて Contract を登録できますが、Function は登録できません。テナントが Function を登録できるようにするには、管理者が以下の Ledger 設定オプションを有効にする必要があります:
 
-- `scalar.dl.ledger.function.non_privileged_port_registration.enabled`: `true` に設定すると、テナントが非特権ポートを通じてファンクションを登録できるようになります。デフォルトは `false` です。
-- `scalar.dl.ledger.function.non_privileged_port_registration.overwrite.enabled`: `true` に設定すると、テナントが非特権ポートを通じて既存のファンクションを上書きできるようになります。デフォルトは `false` です。
+-- `scalar.dl.ledger.function.non_privileged_port_registration.enabled`: `true` に設定すると、テナントが非特権ポートを通じて Function を登録できるようになります。デフォルトは `false` です。
+-- `scalar.dl.ledger.function.non_privileged_port_registration.overwrite.enabled`: `true` に設定すると、テナントが非特権ポートを通じて既存の Function を上書きできるようになります。デフォルトは `false` です。
 
-ファンクションの登録が有効になると、テナントはデフォルト名前空間と同じ方法で名前空間内のファンクションを登録して実行できます。
+Function の登録が有効になると、テナントはデフォルト名前空間と同じ方法で名前空間内の Function を登録して実行できます。
 
 :::note
 
-ファンクションは、テナントのコンテキスト名前空間（`scalar.dl.client.context.namespace` で設定された名前空間）と同じ名前を持つ ScalarDB 名前空間、またはコンテキスト名前空間の後にアンダースコアが続く名前で始まる名前空間にのみアクセスできます。例えば、コンテキスト名前空間が `tenant_a` の場合、ファンクションは `tenant_a`、`tenant_a_logs`、`tenant_a_2024` にアクセスできますが、`tenant_ax` や無関係な名前空間にはアクセスできません。ファンクションが `Get`、`Scan`、`Put`、`Delete` の各操作を実行する際、その操作で指定する名前空間はこれらのアクセス可能な名前空間のいずれかである必要があります。それ以外の名前空間を対象とする操作や、名前空間を指定しない操作は拒否されます。
+Function は、テナントのコンテキスト名前空間（`scalar.dl.client.context.namespace` で設定された名前空間）と同じ名前を持つ ScalarDB 名前空間、またはコンテキスト名前空間の後にアンダースコアが続く名前で始まる名前空間にのみアクセスできます。例えば、コンテキスト名前空間が `tenant_a` の場合、Function は `tenant_a`、`tenant_a_logs`、`tenant_a_2024` にアクセスできますが、`tenant_ax` や無関係な名前空間にはアクセスできません。Function が `Get`、`Scan`、`Put`、`Delete` の各操作を実行する際、その操作で指定する名前空間はこれらのアクセス可能な名前空間のいずれかである必要があります。それ以外の名前空間を対象とする操作や、名前空間を指定しない操作は拒否されます。
 
-ファンクションがアクセスする ScalarDB 名前空間は、テナントの名前空間をプレフィックスとして作成してください。このアクセスルールはプレフィックスベースであるため階層的です。短いコンテキスト名前空間は、そのプレフィックスを共有するより長い名前空間にアクセスできます（例えば、`tenant_a` は `tenant_a_logs` にアクセスできます）。テナント間の意図したアクセス境界がプレフィックスに反映されるよう、名前空間の命名を設計してください。なお、それらの名前空間内のテーブル名は任意です。
+Function がアクセスする ScalarDB 名前空間は、テナントの名前空間をプレフィックスとして作成してください。このアクセスルールはプレフィックスベースであるため階層的です。短いコンテキスト名前空間は、そのプレフィックスを共有するより長い名前空間にアクセスできます（例えば、`tenant_a` は `tenant_a_logs` にアクセスできます）。テナント間の意図したアクセス境界がプレフィックスに反映されるよう、名前空間の命名を設計してください。なお、それらの名前空間内のテーブル名は任意です。
 
 :::
 
-例えば、ファンクションを登録するには、以下のコマンドを実行します:
+例えば、Function を登録するには、以下のコマンドを実行します:
 
 ```console
 client/bin/scalardl register-function --properties tenant.properties --function-id test-function --function-binary-name com.example.function.TestFunction --function-class-file /path/to/TestFunction.class
 ```
 
-ファンクションをコントラクトと一緒に実行するには、以下のコマンドを実行します:
+Function を Contract と一緒に実行するには、以下のコマンドを実行します:
 
 ```console
 client/bin/scalardl execute-contract --properties tenant.properties --contract-id StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}' --function-id test-function --function-argument '{}'
 ```
 
-コントラクトとファンクションの更新の詳細については、[コントラクトとファンクションのライフサイクルを管理する](manage-contract-and-function-lifecycle.mdx)を参照してください。
+Contract と Function の更新の詳細については、[Contract と Function のライフサイクルを管理する](manage-contract-and-function-lifecycle.mdx)を参照してください。
 
 ### アセットを検証する
 
@@ -204,9 +204,9 @@ client/bin/scalardl validate-ledger --properties tenant.properties --asset-id="s
 
 ## 参照
 
-独自のコントラクトを記述するには、以下を参照してください:
+独自の Contract を記述するには、以下を参照してください:
 
-- [ScalarDL の適切なコントラクトを作成する方法に関するガイド](how-to-write-contract.mdx)
+- [ScalarDL の適切な Contract を作成する方法に関するガイド](how-to-write-contract.mdx)
 
 Java アプリケーションで ScalarDL コンポーネントと対話するには、以下を参照してください:
 

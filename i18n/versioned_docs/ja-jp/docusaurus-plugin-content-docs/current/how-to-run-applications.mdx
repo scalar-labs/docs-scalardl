@@ -114,7 +114,7 @@ Docker Compose を使用して Ledger をローカルで起動する方法の詳
 
 <h3>HashStore クライアントをブートストラップする</h3>
 
-アプリケーションで `HashStoreClientService` を作成する際、クライアント証明書またはシークレットキーと HashStore を使用するために必要なコントラクトが、`ClientConfig` の設定に基づいて自動的に登録されます。したがって、HashStore クライアントを手動でブートストラップする必要はありません。テスト目的などで手動で実行したい場合は、[Client SDK をダウンロードする](getting-started-hashstore.mdx#download-the-client-sdk)に従って HashStore Client SDK をダウンロードし、以下のコマンドを実行してください。
+アプリケーションで `HashStoreClientService` を作成する際、クライアント証明書またはシークレットキーと HashStore を使用するために必要な Contract が、`ClientConfig` の設定に基づいて自動的に登録されます。したがって、HashStore クライアントを手動でブートストラップする必要はありません。テスト目的などで手動で実行したい場合は、[Client SDK をダウンロードする](getting-started-hashstore.mdx#download-the-client-sdk)に従って HashStore Client SDK をダウンロードし、以下のコマンドを実行してください。
 
 ```console
 scalardl-hashstore bootstrap --properties <CLIENT_PROPERTIES_FILE>
@@ -126,7 +126,7 @@ scalardl-hashstore bootstrap --properties <CLIENT_PROPERTIES_FILE>
 
 <h3>TableStore クライアントをブートストラップする</h3>
 
-アプリケーションで `TableStoreClientService` を作成する際、クライアント証明書またはシークレットキーと TableStore を使用するために必要なコントラクトが、`ClientConfig` の設定に基づいて自動的に登録されます。したがって、TableStore クライアントを手動でブートストラップする必要はありません。テスト目的などで手動で実行したい場合は、[Client SDK をダウンロードする](getting-started-tablestore.mdx#download-the-client-sdk)に従って TableStore Client SDK をダウンロードし、以下のコマンドを実行してください。
+アプリケーションで `TableStoreClientService` を作成する際、クライアント証明書またはシークレットキーと TableStore を使用するために必要な Contract が、`ClientConfig` の設定に基づいて自動的に登録されます。したがって、TableStore クライアントを手動でブートストラップする必要はありません。テスト目的などで手動で実行したい場合は、[Client SDK をダウンロードする](getting-started-tablestore.mdx#download-the-client-sdk)に従って TableStore Client SDK をダウンロードし、以下のコマンドを実行してください。
 
 ```console
 scalardl-tablestore bootstrap --properties <CLIENT_PROPERTIES_FILE>
@@ -142,7 +142,7 @@ Ledger クライアントを設定する際には、Client SDK に含まれる�
 
 <h3>Ledger クライアントをブートストラップする</h3>
 
-以下の `bootstrap` コマンドを実行して、クライアント ID とシステムコントラクトを登録します：
+以下の `bootstrap` コマンドを実行して、クライアント ID とシステム Contract を登録します：
 
 ```console
 scalardl bootstrap --properties <CLIENT_PROPERTIES_FILE>
@@ -152,21 +152,21 @@ scalardl bootstrap --properties <CLIENT_PROPERTIES_FILE>
 
 [ScalarDL Java Client SDK](how-to-write-applications.mdx#use-the-scalardl-client-sdk) の <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を使用してブートストラップすることもできます。
 
-<h3>コントラクトと関数を登録する</h3>
+<h3>Contract と Function を登録する</h3>
 
-`register-contract` コマンドを使用してコントラクトを登録できます。
+`register-contract` コマンドを使用して Contract を登録できます。
 
 ```console
 scalardl register-contract --properties <CLIENT_PROPERTIES_FILE> --contract-id <CONTRACT_ID> --contract-binary-name <CONTRACT_BINARY_NAME> --contract-class-file <CONTRACT_CLASS_FILE>
 ```
 
-`register-function` コマンドを使用して関数を登録できます。
+`register-function` コマンドを使用して Function を登録できます。
 
 ```console
 scalardl register-function --properties <CLIENT_PROPERTIES_FILE> --function-id <FUNCTION_ID> --function-binary-name <FUNCTION_BINARY_NAME> --function-class-file <FUNCTION_CLASS_FILE>
 ```
 
-[ScalarDL Java Client SDK](how-to-write-applications.mdx#use-the-scalardl-client-sdk) の <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を使用してコントラクトと関数を登録することもできます。
+[ScalarDL Java Client SDK](how-to-write-applications.mdx#use-the-scalardl-client-sdk) の <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を使用して Contract と Function を登録することもできます。
 
 </TabItem>
 
@@ -174,7 +174,7 @@ scalardl register-function --properties <CLIENT_PROPERTIES_FILE> --function-id <
 
 ## アプリケーションを実行する
 
-必要な ID とコントラクトを登録したので、ScalarDL を統合したアプリケーションを実行できます。
+必要な ID と Contract を登録したので、ScalarDL を統合したアプリケーションを実行できます。
 
 ## 参照
 
