@@ -74,6 +74,15 @@
   opacity: 85%;
 }
 
+/* Docusaurus styles native <details> elements with the blue "info" alert colors by default; use a neutral gray instead. */
+details.alert--info {
+  --ifm-alert-background-color: var(--ifm-color-secondary-contrast-background);
+  --ifm-alert-border-color: var(--ifm-color-secondary-dark);
+  --ifm-link-color: var(--ifm-color-primary);
+  --ifm-link-hover-color: var(--ifm-color-primary);
+  --ifm-link-decoration: none;
+}
+
 /* Announcement Bar */
 div[class^='announcementBar'] {
   font-size: 1.1rem;
