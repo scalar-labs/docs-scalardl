@@ -13,9 +13,9 @@ import JDKVersions from '../../components/_prerequisites-jdk-versions.mdx';
 
 This is a simple bank account application, which can be found in the [`scalardl` repository](https://github.com/scalar-labs/scalardl/tree/master/docs/applications/simple-bank-account/). The actions that a user can perform are: create an account, view an account history, deposit funds to an account, withdraw funds from an account, and transfer funds between accounts. All actions performed on an account are recorded in ScalarDL, which means that the account history is recorded in a tamper-evident way, similar to how blockchains record blocks. This means that if an account history was altered (either intentionally or not), it is possible to detect this.  
  
-To keep things simple here we are assuming that the bank holds the private key to execute all the contracts (see below for more explanation of how this works). This is probably not how you would want to use this bank application in practice. In this case a malicious account manager could actually change a user's account history, e.g., by simply recreating it and filling it with false data. A more meaningful setup is that the bank owns the private key to deposit to an account, and each user registers a withdrawal and transfer contract using their own private key. Then only the bank can move funds into an account, and only users can move funds out of their accounts.
+To keep things simple here we are assuming that the bank holds the private key to execute all the Contracts (see below for more explanation of how this works). This is probably not how you would want to use this bank application in practice. In this case a malicious account manager could actually change a user's account history, e.g., by simply recreating it and filling it with false data. A more meaningful setup is that the bank owns the private key to deposit to an account, and each user registers a withdrawal and transfer Contract using their own private key. Then only the bank can move funds into an account, and only users can move funds out of their accounts.
 
-This application uses five contracts:
+This application uses five Contracts:
 
 - [`AccountHistory.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/contract/src/main/java/com/scalar/application/bankaccount/contract/AccountHistory.java)
 - [`CreateAccount.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/contract/src/main/java/com/scalar/application/bankaccount/contract/CreateAccount.java)
@@ -23,7 +23,7 @@ This application uses five contracts:
 - [`Transfer.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/contract/src/main/java/com/scalar/application/bankaccount/contract/Transfer.java)
 - [`Withdraw.java`](https://github.com/scalar-labs/scalardl/blob/master/docs/applications/simple-bank-account/contract/src/main/java/com/scalar/application/bankaccount/contract/Withdraw.java)
 
-These contracts will be registered by the bank and will allow the bank to, respectively, view account histories, create accounts, deposit funds to an account, transfer funds between accounts, and withdraw funds from accounts.
+These Contracts will be registered by the bank and will allow the bank to, respectively, view account histories, create accounts, deposit funds to an account, transfer funds between accounts, and withdraw funds from accounts.
 
 The overall architecture of this application can be viewed as follows. (Note again that this use case is for simplicity, and in practice may look a bit different.)
 
@@ -36,7 +36,7 @@ The overall architecture of this application can be viewed as follows. (Note aga
 
 ## Trying out the application
 
-Download the [ScalarDL Client SDK](https://github.com/scalar-labs/scalardl-client-sdk). Make sure ScalarDL is running and register all the required contracts by executing
+Download the [ScalarDL Client SDK](https://github.com/scalar-labs/scalardl-client-sdk). Make sure ScalarDL is running and register all the required Contracts by executing
 
 ```console
 ./gradlew build
@@ -47,13 +47,13 @@ Run the application using IntelliJ (or the IDE of your choice), or by executing 
 
 ## A short tutorial on writing a ScalarDL application
 
-We decided to use Spring Boot to create a web service to interact with the contracts. This is, of course, not the only choice. Another choice would be to create a command line interface as was done, for example, in the [asset management application](https://github.com/indetail-blockchain/getting-started-with-scalardl). There you can also find a very nice tutorial for writing applications for ScalarDL.
+We decided to use Spring Boot to create a web service to interact with the Contracts. This is, of course, not the only choice. Another choice would be to create a command line interface as was done, for example, in the [asset management application](https://github.com/indetail-blockchain/getting-started-with-scalardl). There you can also find a very nice tutorial for writing applications for ScalarDL.
 
-In this tutorial we will not discuss the detail at the level of web services or command line interfaces, and instead focus on the interaction between our application and ScalarDL. We will discuss how to write contracts, register contracts, and then how to call these contracts from the application using the ScalarDL SDK.
+In this tutorial we will not discuss the detail at the level of web services or command line interfaces, and instead focus on the interaction between our application and ScalarDL. We will discuss how to write Contracts, register Contracts, and then how to call these Contracts from the application using the ScalarDL SDK.
 
 ### Contracts
 
-Contracts are Java classes which extend the `JacksonBasedContract` class and override the `invoke` method. Let's take a closer look at the `Deposit.java` contract.
+Contracts are Java classes which extend the `JacksonBasedContract` class and override the `invoke` method. Let's take a closer look at the `Deposit.java` Contract.
 
 ```java
 package com.scalar.application.bankaccount.contract;
@@ -100,31 +100,31 @@ public class Deposit extends JacksonBasedContract {
 }
 ```
 
-In order for this contract to function properly the user must supply an account `id` and an `amount`. So the first thing to do is check whether the argument contains these two keys, and if not, throw a `ContractContextException`.
+In order for this Contract to function properly the user must supply an account `id` and an `amount`. So the first thing to do is check whether the argument contains these two keys, and if not, throw a `ContractContextException`.
 
-**Note:** `ContractContextException` is the only throwable exception in a contract and it should be thrown whenever a non-recoverable error is encountered.
+**Note:** `ContractContextException` is the only throwable exception in a Contract and it should be thrown whenever a non-recoverable error is encountered.
  
 So, assuming that we have an `id` and an `amount`, we do a quick non-negative check on `amount` and again throw a `ContractContextException` if it is. Now we are ready to interact with the `ledger`.
 
 There are three methods that can be called on `ledger`: `get(String s)`, `put(String s, JsonNode jsonNode)`, and `scan(AssetFilter assetFilter)`. `get(String s)` will retrieve the asset `s` from the ledger. `put(String s, JsonNode jsonNode)` will associate the asset `s` with the data `jsonNode` and increase the age of the asset. `scan(AssetFilter assetFilter)` will return a version of the history of an asset as specified in the `AssetFilter`.
  
-**Note:** ledger does not permit blind writes, i.e., before performing a `put` on a particular asset, we must first `get` that asset. Furthermore `scan` is only allowed in read-only contracts, which means a single contract cannot both `scan` and `put`.
+**Note:** ledger does not permit blind writes, i.e., before performing a `put` on a particular asset, we must first `get` that asset. Furthermore `scan` is only allowed in read-only Contracts, which means a single Contract cannot both `scan` and `put`.
  
-The rest of the contract proceeds in a straightforward manner. We first `get` the asset from the ledger, retrieve its current balance, add the deposit amount to it, and finally `put` the asset back into the ledger with its new balance.
+The rest of the Contract proceeds in a straightforward manner. We first `get` the asset from the ledger, retrieve its current balance, add the deposit amount to it, and finally `put` the asset back into the ledger with its new balance.
 
-At the end we must return a `JsonNode`. What the `JsonNode` contains is up to the designer of the contract. Here we have decided to include a `status` message, the `old_balance`, and the `new_balance`.
+At the end we must return a `JsonNode`. What the `JsonNode` contains is up to the designer of the Contract. Here we have decided to include a `status` message, the `old_balance`, and the `new_balance`.
 
-If you wish, you can view the other contracts that this application uses in the [`contract` folder for this sample on GitHub](https://github.com/scalar-labs/scalardl/tree/master/docs/applications/simple-bank-account/contract/src/main/java/com/scalar/application/bankaccount/contract).
+If you wish, you can view the other Contracts that this application uses in the [`contract` folder for this sample on GitHub](https://github.com/scalar-labs/scalardl/tree/master/docs/applications/simple-bank-account/contract/src/main/java/com/scalar/application/bankaccount/contract).
  
-Once you have written your contracts you will need to compile them, and this can be done as
+Once you have written your Contracts you will need to compile them, and this can be done as
 
 ```console
 ./gradlew build
 ```
 
-### Registering your certification and contracts
+### Registering your certification and Contracts
 
-You should now have written and compiled your contracts. Before you can execute them, however, you will need to register them on the ScalarDL network. We will make use of the tools available in the [ScalarDL Client SDK](https://github.com/scalar-labs/scalardl-client-sdk) `client/bin` directory to register and execute the contracts. Please make sure you have access to this directory.
+You should now have written and compiled your Contracts. Before you can execute them, however, you will need to register them on the ScalarDL network. We will make use of the tools available in the [ScalarDL Client SDK](https://github.com/scalar-labs/scalardl-client-sdk) `client/bin` directory to register and execute the Contracts. Please make sure you have access to this directory.
 
 Now, you will need to have your certificate (e.g. `client.pem`) and its corresponding private key (e.g. `client-key.pem`), and ScalarDL up and running. Edit `client.properties` (found in the `conf` directory) to suit your configuration. It should contain lines that look something like:
 
@@ -145,7 +145,7 @@ ${SCALAR_SDK_HOME}/client/bin/scalardl register-cert --properties ../conf/client
 
 You should receive status code 200 if successful.
 
-To register your contracts you can create a `contracts.toml` file in the `conf` directory using the following format:
+To register your Contracts you can create a `contracts.toml` file in the `conf` directory using the following format:
 
 ```toml
 [[contracts]]
@@ -164,21 +164,21 @@ contract-binary-name = "com.scalar.application.bankaccount.contract.Transfer"
 contract-class-file = "build/classes/java/main/com/scalar/application/bankaccount/contract/Transfer.class"
 ```
 
-In this example we will register three contracts: `CreateAccount.java`, `Deposit.java`, and `Transfer.java`. The `contract-binary-name` and `contract-class-file` are determined, but you are free to choose the `contract-id` as you wish. The `contract-id` is how you can refer to a specific contract using `ClientService`, as we will see below.
+In this example we will register three Contracts: `CreateAccount.java`, `Deposit.java`, and `Transfer.java`. The `contract-binary-name` and `contract-class-file` are determined, but you are free to choose the `contract-id` as you wish. The `contract-id` is how you can refer to a specific Contract using `ClientService`, as we will see below.
 
-Once your toml file is written you can register all the specified contracts as
+Once your toml file is written you can register all the specified Contracts as
 
 ```console
 ${SCALAR_SDK_HOME}/client/bin/scalardl register-contracts --properties ../conf/client.properties --contracts-file ../conf/contracts.toml
 ```
 
-Each successfully registered contract should return status code 200.
+Each successfully registered Contract should return status code 200.
 
-### Executing contracts
+### Executing Contracts
 
-You can now execute any registered contracts if you would like. For example, use our register contracts to create a couple of accounts, deposit funds into one of the accounts, transfer some of these funds to the other account, and check the account history.
+You can now execute any registered Contracts if you would like. For example, use our register Contracts to create a couple of accounts, deposit funds into one of the accounts, transfer some of these funds to the other account, and check the account history.
 
-Create two accounts with ids `a111` and `b222`. (Contract ids can be any string.)
+Create two accounts with ids `a111` and `b222`. (Contract IDs can be any string.)
 
 ```console
 ${SCALAR_SDK_HOME}/client/bin/scalardl execute-contract --properties ../conf/client.properties --contract-id create-account --contract-argument '{"id": "a111"}'
@@ -235,7 +235,7 @@ If you were running the application itself, you could execute these commands usi
  
 ## ClientService
 
-You should now have your contracts registered on the ScalarDL network. In order to execute these contracts from an application we will make use of `ClientService` class from the [ScalarDL Client SDK](https://github.com/scalar-labs/scalardl-client-sdk).
+You should now have your Contracts registered on the ScalarDL network. In order to execute these Contracts from an application we will make use of `ClientService` class from the [ScalarDL Client SDK](https://github.com/scalar-labs/scalardl-client-sdk).
 
 The Client SDK is available on [Maven Central](https://search.maven.org/search?q=a:scalardl-client-sdk), and it can be installed in your application using Gradle by adding the following dependency to your `build.gradle`, replacing `<X.Y.Z>` with the version of the ScalarDL Java Client SDK that you want to use:
 
@@ -252,7 +252,7 @@ ClientServiceFactory factory = new ClientServiceFactory();
 ClientService service = factory.create(new ClientConfig(new File(properties)));
 ```
 
-`ClientService` contains a method `executeContract(String contractId, JsonNode contractArgument)` which can be used to, of course, execute a contract. For example:
+`ClientService` contains a method `executeContract(String contractId, JsonNode contractArgument)` which can be used to, of course, execute a Contract. For example:
 
 ```java
 ObjectMapper mapper = new ObjectMapper();
@@ -260,9 +260,9 @@ JsonNode argument = mapper.createObjectNode().put("id", "010-123456789");
 ContractExecutionResult result = clientService.executeContract("create-account", argument);
 ```
 
-will execute the `CreateAccount` contract with argument `{"id": "010-123456789"}`, as we did above. Note that we call the contract using the supplied id `create-account` that we chose when registering the contract.
+will execute the `CreateAccount` Contract with argument `{"id": "010-123456789"}`, as we did above. Note that we call the Contract using the supplied ID `create-account` that we chose when registering the Contract.
 
-The result of executing the contract is a `ContractExecutionResult`. It contains, result and proofs, each of which can be obtained respectively as
+The result of executing the Contract is a `ContractExecutionResult`. It contains, result and proofs, each of which can be obtained respectively as
 
 ```java
 result.getProofs();
@@ -274,5 +274,5 @@ result.getResult();
 We hope that this has provided you with enough information to get started writing your own apps. Here are some ideas of what you can try next.
  
  - Visit the [ScalarDL Client SDK](https://github.com/scalar-labs/scalardl-client-sdk) github page.
- - The [ScalarDL Emulator](https://github.com/scalar-labs/scalardl-emulator) lets you test your contracts on an in-memory ledger.
+ - The [ScalarDL Emulator](https://github.com/scalar-labs/scalardl-emulator) lets you test your Contracts on an in-memory ledger.
 

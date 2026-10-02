@@ -28,7 +28,7 @@ If your operations require transaction outcomes to remain determinable after the
 
 :::warning
 
-Purging a request proof also removes the information that ScalarDL uses to detect a replayed request. If a man-in-the-middle intercepts a contract execution request and re-executes it after its request proof has been purged, ScalarDL can no longer detect the replay. To prevent this, protecting all communication paths between clients, Ledger, and Auditor with TLS is strongly recommended. For details about TLS configurations, see [ScalarDL Configurations](configurations.mdx).
+Purging a request proof also removes the information that ScalarDL uses to detect a replayed request. If a man-in-the-middle intercepts a Contract execution request and re-executes it after its request proof has been purged, ScalarDL can no longer detect the replay. To prevent this, protecting all communication paths between clients, Ledger, and Auditor with TLS is strongly recommended. For details about TLS configurations, see [ScalarDL Configurations](configurations.mdx).
 
 :::
 
