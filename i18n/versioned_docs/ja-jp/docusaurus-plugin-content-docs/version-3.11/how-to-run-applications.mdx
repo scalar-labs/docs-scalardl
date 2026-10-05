@@ -121,22 +121,22 @@ scalardl register-secret --properties <CLIENT_PROPERTIES_FILE>
 
 また、<JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を利用して [ScalarDL Java Client SDK](how-to-write-applications.mdx#scalardl-client-sdk-を使用する) から証明書や秘密鍵の登録も可能です。
 
-## クライアントからコントラクトやファンクションを登録する
+## クライアントから Contract や Function を登録する
 
-以下のコマンドでコントラクトを Ledger に登録できます。詳細は [ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx#register-contract)を参照してください。
+以下のコマンドで Contract を Ledger に登録できます。詳細は [ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx#register-contract)を参照してください。
 
 ```shell
 scalardl register-contract --properties <CLIENT_PROPERTIES_FILE> --contract-id <CONTRACT_ID> --contract-binary-name <CONTRACT_BINARY_NAME> --contract-class-file <CONTRACT_CLASS_FILE>
 ```
 
-ファンクションは以下のコマンドで Ledger に登録できます。詳細は [ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx#register-function)を参照してください。
+Function は以下のコマンドで Ledger に登録できます。詳細は [ScalarDL クライアントコマンドリファレンス](scalardl-command-reference.mdx#register-function)を参照してください。
 
 ```shell
 scalardl register-function --properties <CLIENT_PROPERTIES_FILE> --function-id <FUNCTION_ID> --function-binary-name <FUNCTION_BINARY_NAME> --function-class-file <FUNCTION_CLASS_FILE>
 ```
 
-また、<JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を利用して [ScalarDL Java Client SDK](how-to-write-applications.mdx#scalardl-client-sdk-を使用する) からコントラクトやファンクションの登録も可能です。
+また、<JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を利用して [ScalarDL Java Client SDK](how-to-write-applications.mdx#scalardl-client-sdk-を使用する) から Contract や Function の登録も可能です。
 
 ## アプリケーションを実行する
 
-クライアントからコントラクトやファンクションの登録が完了したら、ScalarDL アプリケーションを実行できます。
+クライアントから Contract や Function の登録が完了したら、ScalarDL アプリケーションを実行できます。

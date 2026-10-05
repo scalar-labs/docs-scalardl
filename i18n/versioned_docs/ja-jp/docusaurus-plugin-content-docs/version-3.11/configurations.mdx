@@ -73,7 +73,7 @@ Ledger サーバーでは、サービスポート設定、認証設定、TLS 設
 ### `executable_contracts`
 
 - **フィールド:** `scalar.dl.ledger.executable_contracts`
-- **説明:** 実行可能なコントラクトのバイナリ名。このフィールドは、実行可能なコントラクトのバイナリ名を指定します。
+- **説明:** 実行可能な Contract のバイナリ名。このフィールドは、実行可能な Contract のバイナリ名を指定します。
 - **デフォルト値:** 空
 
 ### `function.enabled`
@@ -85,13 +85,13 @@ Ledger サーバーでは、サービスポート設定、認証設定、TLS 設
 ### `function.non_privileged_port_registration.enabled`
 
 - **フィールド:** `scalar.dl.ledger.function.non_privileged_port_registration.enabled`
-- **説明:** 非特権ポートを通じたファンクション登録を有効にするオプション。`true` に設定すると、クライアントが非特権ポートを通じてファンクションを登録できるようになります。
+- **説明:** 非特権ポートを通じた Function 登録を有効にするオプション。`true` に設定すると、テナントが非特権ポートを通じて Function を登録できるようになります。
 - **デフォルト値:** `false`
 
 ### `function.non_privileged_port_registration.overwrite.enabled`
 
 - **フィールド:** `scalar.dl.ledger.function.non_privileged_port_registration.overwrite.enabled`
-- **説明:** 非特権ポートを通じたファンクション登録時に既存のファンクションの上書きを許可するオプション。`true` に設定すると、クライアントが非特権ポートを通じて既存のファンクションを上書きできるようになります。
+- **説明:** 非特権ポートを通じた Function 登録時に既存の Function の上書きを許可するオプション。`true` に設定すると、テナントが非特権ポートを通じて既存の Function を上書きできるようになります。
 - **デフォルト値:** `false`
 
 ### `name`
@@ -109,7 +109,7 @@ Ledger サーバーでは、サービスポート設定、認証設定、TLS 設
 ### `proof.enabled`
 
 - **フィールド:** `scalar.dl.ledger.proof.enabled`
-- **説明:** アセットを検証するために使用されるアセット証明を有効にするオプション。このフィールドは、アセット証明が有効かどうかを決定します。
+- **説明:** アセットを検証するために使用される Asset Proof を有効にするオプション。このフィールドは、Asset Proof が有効かどうかを決定します。
 - **デフォルト値:** `false`
 
 ### `proof.private_key_path`
@@ -441,7 +441,7 @@ Auditor サーバーでは、サービスポート設定、認証設定、TLS �
 ### `auditor.linearizable_validation.contract_id`
 
 - **フィールド:** `scalar.dl.client.auditor.linearizable_validation.contract_id`
-- **説明:** ValidateLedger コントラクトの ID。
+- **説明:** ValidateLedger Contract の ID。
 - **デフォルト値:** `validate-ledger`
 
 ### `auditor.port`
