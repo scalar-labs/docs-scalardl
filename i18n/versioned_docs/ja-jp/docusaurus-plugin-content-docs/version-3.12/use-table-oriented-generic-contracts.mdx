@@ -6,7 +6,7 @@ tags:
 displayed_sidebar: docsJapanese
 ---
 
-# テーブル指向汎用コントラクトの使用
+# テーブル指向 Generic Contract の使用
 
 import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 import JDKVersions from './components/_prerequisites-jdk-versions.mdx';
@@ -15,25 +15,25 @@ import JDKVersions from './components/_prerequisites-jdk-versions.mdx';
 
 :::tip
 
-テーブル指向汎用コントラクトは ScalarDL 3.11 で導入されましたが、ScalarDL 3.12 でリリースされた TableStore は、テーブル指向汎用コントラクトをラップしたより高次の抽象化を提供します。ほとんどのユースケースでは、テーブル指向汎用コントラクトを直接使用するよりも、TableStore を使用する方がシンプルで効率的です。詳細については、ScalarDL の最新版の [ScalarDL TableStore をはじめよう](./getting-started-tablestore.mdx)をご参照ください。
+テーブル指向 Generic Contract は ScalarDL 3.11 で導入されましたが、ScalarDL 3.12 でリリースされた TableStore は、テーブル指向 Generic Contract をラップしたより高次の抽象化を提供します。ほとんどのユースケースでは、テーブル指向 Generic Contract を直接使用するよりも、TableStore を使用する方がシンプルで効率的です。詳細については、ScalarDL の最新版の [ScalarDL TableStore をはじめよう](./getting-started-tablestore.mdx)をご参照ください。
 
 :::
 
-ScalarDL のテーブル指向汎用コントラクトは、[汎用コントラクト](use-generic-contracts.mdx)の一種で、リレーショナルデータモデルに似たデータモデルと台帳データを管理するためのユーザーフレンドリーなインターフェースを提供し、容易なアプリケーション開発を可能にします。このガイドでは、テーブル指向汎用コントラクトの使用方法について説明します。
+ScalarDL のテーブル指向 Generic Contract は、[Generic Contract](use-generic-contracts.mdx)の一種で、リレーショナルデータモデルに似たデータモデルと台帳データを管理するためのユーザーフレンドリーなインターフェースを提供し、容易なアプリケーション開発を可能にします。このガイドでは、テーブル指向 Generic Contract の使用方法について説明します。
 
 :::note
 
-テーブル指向汎用コントラクトは現在プライベートプレビュー段階にあり、将来のバージョンでは下位互換性のない更新がある可能性があります。
+テーブル指向 Generic Contract は現在プライベートプレビュー段階にあり、将来のバージョンでは下位互換性のない更新がある可能性があります。
 
 :::
 
 ## 環境のセットアップ
 
-このセクションでは、ScalarDL クライアントツールを通じてテーブル指向汎用コントラクトを使用するための環境をセットアップします。アプリケーションで汎用コントラクトを操作したい場合は、ScalarDL Client SDK API を使用できます。詳細は、[汎用コントラクトを用いた ScalarDL アプリケーションを書く](how-to-write-applications-with-generic-contracts.mdx)を参照してください。さらに、SQL ベースのインターフェースも近い将来提供される予定です。
+このセクションでは、ScalarDL クライアントツールを通じてテーブル指向 Generic Contract を使用するための環境をセットアップします。アプリケーションで Generic Contract を操作したい場合は、ScalarDL Client SDK API を使用できます。詳細は、[Generic Contract を用いた ScalarDL アプリケーションを書く](how-to-write-applications-with-generic-contracts.mdx)を参照してください。さらに、SQL ベースのインターフェースも近い将来提供される予定です。
 
 ### JDKのインストール
 
-このガイドでは、汎用コントラクトの動作を確認するために Java ランタイム環境のみを使用します。ただし、このガイド以外で独自の ScalarDL アプリケーションを構築するには、以下のいずれかの Java Development Kit (JDK) をインストールすることをお勧めします。
+このガイドでは、Generic Contract の動作を確認するために Java ランタイム環境のみを使用します。ただし、このガイド以外で独自の ScalarDL アプリケーションを構築するには、以下のいずれかの Java Development Kit (JDK) をインストールすることをお勧めします。
 
 <JDKVersions versionNumbers="8、11、17、または 21" />
 
@@ -48,11 +48,11 @@ ScalarDL のテーブル指向汎用コントラクトは、[汎用コントラ�
 
 :::note
 
-テーブル指向汎用コントラクトは、ScalarDL のバージョン 3.11 以降でサポートされています。
+テーブル指向 Generic Contract は、ScalarDL のバージョン 3.11 以降でサポートされています。
 
 :::
 
-### 必要なツールと汎用コントラクトのダウンロード
+### 必要なツールと Generic Contract のダウンロード
 
 以下のコマンドを実行して、3.11.0 以上の ScalarDL バージョンを指定します。`<X.Y.Z>` は使用したいバージョンに置き換えてください。利用可能なバージョンについては、[タグ](https://github.com/scalar-labs/scalardl/tags)を参照してください。
 
@@ -60,9 +60,9 @@ ScalarDL のテーブル指向汎用コントラクトは、[汎用コントラ�
 VERSION=<X.Y.Z>
 ```
 
-また、以下のコマンドを実行して、`<X_Y_Z>` を下記のマッピング表に応じたテーブル指向汎用コントラクトのバージョンに置き換えて指定します。ScalarDL バージョンに対応するバージョンを特定するには、以下のマッピング表を使用してください。セパレータ `.` を `_` に置き換えることを忘れないでください。例えば、バージョン `1.0.0` の場合は `1_0_0` となります。
+また、以下のコマンドを実行して、`<X_Y_Z>` を下記のマッピング表に応じたテーブル指向 Generic Contract のバージョンに置き換えて指定します。ScalarDL バージョンに対応するバージョンを特定するには、以下のマッピング表を使用してください。セパレータ `.` を `_` に置き換えることを忘れないでください。例えば、バージョン `1.0.0` の場合は `1_0_0` となります。
 
-| ScalarDL バージョン | テーブル指向汎用コントラクトバージョン |
+| ScalarDL バージョン | テーブル指向 Generic Contract バージョン |
 |:------------------|:--------------------------------|
 | 3.11.0 以降        | 1.0.0                           |
 
@@ -70,7 +70,7 @@ VERSION=<X.Y.Z>
 TGC_VERSION=<X_Y_Z>
 ```
 
-次に、以下のコマンドを実行してツールと汎用コントラクトをダウンロードします:
+次に、以下のコマンドを実行してツールと Generic Contract をダウンロードします:
 
 ```console
 curl -OL https://github.com/scalar-labs/scalardl/releases/download/v$VERSION/scalardl-java-client-sdk-$VERSION.zip
@@ -81,9 +81,9 @@ unzip scalardl-generic-contracts-$VERSION.zip
 mv scalardl-generic-contracts-$VERSION generic-contracts
 ```
 
-## 証明書とテーブル指向汎用コントラクトの登録
+## 証明書とテーブル指向 Generic Contract の登録
 
-このセクションでは、証明書と汎用コントラクトを登録する方法について説明します。
+このセクションでは、証明書と Generic Contract を登録する方法について説明します。
 
 ### プロパティの設定
 
@@ -105,17 +105,17 @@ client/bin/scalardl generic-contracts register-cert --properties client.properti
 
 :::
 
-### テーブル指向汎用コントラクトの登録
+### テーブル指向 Generic Contract の登録
 
-証明書を登録した後、以下のコマンドを実行してテーブル指向汎用コントラクトを登録できます。
+証明書を登録した後、以下のコマンドを実行してテーブル指向 Generic Contract を登録できます。
 
 ```console
 client/bin/scalardl generic-contracts register-contracts --properties client.properties --contracts-file generic-contracts/conf/table-authenticity-management-contracts.toml
 ```
 
-## テーブル指向汎用コントラクトとの対話
+## テーブル指向 Generic Contract との対話
 
-これで、テーブル指向汎用コントラクトを実行できます。このセクションでは、部門のIDを介して結合できる2つのサンプルテーブル (`employee` と `department`) を通じて、次の機能を試します。
+これで、テーブル指向 Generic Contract を実行できます。このセクションでは、部門のIDを介して結合できる2つのサンプルテーブル (`employee` と `department`) を通じて、次の機能を試します。
 
 - [テーブルの作成と表示](#テーブルの作成と表示)
 - [レコードの挿入](#レコードの挿入)
@@ -290,7 +290,7 @@ client/bin/scalardl generic-contracts execute-contract --properties client.prope
 --contract-argument '{ "table": "employee", "values": {"salary": 754.3}, "conditions": [ {"column": "department", "value": "sales", "operator": "EQ"} ] }'
 ```
 
-`Select` コントラクトを使用する場合と同様に、レコードを更新するには少なくとも主キーまたはインデックスキーを指定する必要があります。
+`Select` Contract を使用する場合と同様に、レコードを更新するには少なくとも主キーまたはインデックスキーを指定する必要があります。
 
 ### レコード履歴の取得
 
@@ -348,9 +348,9 @@ Contract result:
 } ]
 ```
 
-## テーブル指向汎用コントラクトによって作成されたデータの検証
+## テーブル指向 Generic Contract によって作成されたデータの検証
 
-ScalarDL では、データがすべて有効な状態にあることを確認するために、時折データを検証する必要があります。`validate-ledger` コマンドを使用して、テーブル指向汎用コントラクトによって作成されたアセットを検証できます。アプリケーションでそれらを検証したい場合は、ScalarDL Client SDK API を使用できます。詳細は、[データを検証する](how-to-write-applications-with-generic-contracts.mdx#データを検証する)を参照してください。
+ScalarDL では、データがすべて有効な状態にあることを確認するために、時折データを検証する必要があります。`validate-ledger` コマンドを使用して、テーブル指向 Generic Contract によって作成されたアセットを検証できます。アプリケーションでそれらを検証したい場合は、ScalarDL Client SDK API を使用できます。詳細は、[データを検証する](how-to-write-applications-with-generic-contracts.mdx#データを検証する)を参照してください。
 
 次のコマンドを実行してテーブルスキーマを検証できます。
 
@@ -423,13 +423,13 @@ client/bin/scalardl generic-contracts validate-ledger --properties client.proper
 
 :::note
 
-汎用コントラクトは、内部的にテーブル指向汎用コントラクトによって作成されたアセットに専用のアセット ID を割り当てます。アセット ID は、アセットタイプのプレフィックスと識別用のキーで設定されています。例えば、レコードのアセット ID には、`rec_` というプレフィックス、テーブル名、主キー列名、および列値が使用されます。したがって、`validate-ledger` の結果には、そのような生のアセット ID が表示されます。
+Generic Contract は、内部的にテーブル指向 Generic Contract によって作成されたアセットに専用のアセット ID を割り当てます。アセット ID は、アセットタイプのプレフィックスと識別用のキーで設定されています。例えば、レコードのアセット ID には、`rec_` というプレフィックス、テーブル名、主キー列名、および列値が使用されます。したがって、`validate-ledger` の結果には、そのような生のアセット ID が表示されます。
 
 :::
 
 ## 参照
 
-Java アプリケーションでテーブル指向汎用コントラクトと対話するには、次を参照してください。
+Java アプリケーションでテーブル指向 Generic Contract と対話するには、次を参照してください。
 
-* [汎用コントラクトを用いた ScalarDL アプリケーションを書く](how-to-write-applications-with-generic-contracts.mdx)
+* [Generic Contract を用いた ScalarDL アプリケーションを書く](how-to-write-applications-with-generic-contracts.mdx)
 * [ScalarDL Java Client SDK の Javadocs](https://javadoc.io/doc/com.scalar-labs/scalardl-java-client-sdk/latest/index.html)
