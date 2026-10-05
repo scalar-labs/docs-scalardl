@@ -9,30 +9,30 @@ displayed_sidebar: docsEnglish
 
 import JavadocLink from '/src/theme/JavadocLink.js';
 
-This document explains the lifecycle of contracts and functions in ScalarDL—from creating and registering them to updating them when bug fixes or feature additions are needed.
+This document explains the lifecycle of Contracts and Functions in ScalarDL—from creating and registering them to updating them when bug fixes or feature additions are needed.
 
-## Create a contract or function
+## Create a Contract or Function
 
-In ScalarDL, you implement business logic as two types of Java programs: contracts and functions. Contracts manage tamper-evident asset records in the Ledger, while functions work alongside contracts to manage mutable records in an external database through ScalarDB.
+In ScalarDL, you implement business logic as two types of Java programs: Contracts and Functions. Contracts manage tamper-evident asset records in the Ledger, while Functions work alongside Contracts to manage mutable records in an external database through ScalarDB.
 
-To create a contract or function, write a Java class that extends one of the predefined base classes, such as <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="JacksonBasedContract" /> for contracts or <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/function" className="JacksonBasedFunction" /> for functions.
+To create a Contract or Function, write a Java class that extends one of the predefined base classes, such as <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="JacksonBasedContract" /> for Contracts or <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/function" className="JacksonBasedFunction" /> for Functions.
 
-For details on how to write contracts and functions, see the following:
+For details on how to write Contracts and Functions, see the following:
 
 - [A Guide on How to Write a Good Contract for ScalarDL](how-to-write-contract.mdx)
 - [A Guide on How to Write Function for ScalarDL](how-to-write-function.mdx)
 
-## Register a contract or function
+## Register a Contract or Function
 
-After creating a contract or function, you need to register it with ScalarDL before you can use it.
+After creating a Contract or Function, you need to register it with ScalarDL before you can use it.
 
-To register a contract:
+To register a Contract:
 
 ```console
 scalardl register-contract --properties client.properties --contract-id StateUpdater --contract-binary-name com.org1.contract.StateUpdater --contract-class-file build/classes/java/main/com/org1/contract/StateUpdater.class
 ```
 
-To register a function:
+To register a Function:
 
 ```console
 scalardl register-function --properties client.properties --function-id test-function --function-binary-name com.example.function.TestFunction --function-class-file /path/to/TestFunction.class
@@ -42,33 +42,33 @@ For details on registration commands and options, see [ScalarDL Client Command R
 
 ### Contract registration constraints
 
-When registering a contract, note the following constraints:
+When registering a Contract, note the following constraints:
 
-- **Unique contract ID:** Each contract must have a unique contract ID. If you try to register a contract with an ID that already exists, the registration will fail.
-- **Consistent binary name and byte code:** If a binary name has already been registered with a certain byte code, you cannot register a different byte code under the same binary name. However, you can register the same binary name and byte code under a different client or a different contract ID.
+- **Unique Contract ID:** Each Contract must have a unique Contract ID. If you try to register a Contract with an ID that already exists, the registration will fail.
+- **Consistent binary name and byte code:** If a binary name has already been registered with a certain byte code, you cannot register a different byte code under the same binary name. However, you can register the same binary name and byte code under a different client or a different Contract ID.
 
 ### Function registration constraints
 
-Unlike contracts, functions can be re-registered with the same function ID. The behavior depends on how you access ScalarDL:
+Unlike Contracts, Functions can be re-registered with the same Function ID. The behavior depends on how you access ScalarDL:
 
 - **Privileged port (default: 50052):** Functions can always be registered and overwritten without restrictions.
 - **Non-privileged port (default: 50051):** Function registration and overwriting are controlled by administrator settings.
 
-## Update a contract or function
+## Update a Contract or Function
 
-Contracts and functions have fundamentally different update mechanisms because they serve different architectural roles in ScalarDL. Contracts manage tamper-evident asset records in the Ledger, and ScalarDL needs to be able to replay the full history of asset updates to validate consistency with past contract executions. For this reason, contracts are immutable (append-only). Functions, on the other hand, manage mutable records in an external database through ScalarDB, so there is no need to preserve the history of past function versions, and they can be overwritten.
+Contracts and Functions have fundamentally different update mechanisms because they serve different architectural roles in ScalarDL. Contracts manage tamper-evident asset records in the Ledger, and ScalarDL needs to be able to replay the full history of asset updates to validate consistency with past Contract executions. For this reason, Contracts are immutable (append-only). Functions, on the other hand, manage mutable records in an external database through ScalarDB, so there is no need to preserve the history of past Function versions, and they can be overwritten.
 
-### Update a contract
+### Update a Contract
 
-Since contracts are immutable, you cannot modify or overwrite an existing contract. Instead, you must register a new version of the contract with a **new contract ID** and a **new binary name**.
+Since Contracts are immutable, you cannot modify or overwrite an existing Contract. Instead, you must register a new version of the Contract with a **new Contract ID** and a **new binary name**.
 
 #### Versioning best practices
 
-There are two common approaches for versioning contracts:
+There are two common approaches for versioning Contracts:
 
-**Package-based versioning (recommended for production):** Include the version number in the Java package name. The [predefined contracts](https://github.com/scalar-labs/scalardl/tree/master/generic-contracts/src/main/java/com/scalar/dl/genericcontracts) used internally by ScalarDL abstractions such as HashStore and TableStore (available in ScalarDL 3.12 and later) also follow this approach.
+**Package-based versioning (recommended for production):** Include the version number in the Java package name. The [predefined Contracts](https://github.com/scalar-labs/scalardl/tree/master/generic-contracts/src/main/java/com/scalar/dl/genericcontracts) used internally by ScalarDL abstractions such as HashStore and TableStore (available in ScalarDL 3.12 and later) also follow this approach.
 
-For example, if your original contract is in `com.example.contract.v1.StateUpdater`, the updated version would be in `com.example.contract.v2.StateUpdater`. Similarly, the contract ID should reflect the version, such as `v1.StateUpdater` and `v2.StateUpdater`.
+For example, if your original Contract is in `com.example.contract.v1.StateUpdater`, the updated version would be in `com.example.contract.v2.StateUpdater`. Similarly, the Contract ID should reflect the version, such as `v1.StateUpdater` and `v2.StateUpdater`.
 
 ```console
 scalardl register-contract --properties client.properties --contract-id v2.StateUpdater --contract-binary-name com.example.contract.v2.StateUpdater --contract-class-file build/classes/java/main/com/example/contract/v2/StateUpdater.class
@@ -82,39 +82,39 @@ scalardl register-contract --properties client.properties --contract-id StateUpd
 
 #### Update your application code
 
-After registering the new contract version, update your application code to use the new contract ID. For example, if you use <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" />, update the contract ID passed to the `executeContract` method.
+After registering the new Contract version, update your application code to use the new Contract ID. For example, if you use <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" />, update the Contract ID passed to the `executeContract` method.
 
 :::note
 
-Old contract versions remain registered in ScalarDL. This is by design—ScalarDL needs them for asset validation and history replay. Do not attempt to remove old contract versions.
+Old Contract versions remain registered in ScalarDL. This is by design—ScalarDL needs them for asset validation and history replay. Do not attempt to remove old Contract versions.
 
 :::
 
-### Update a function
+### Update a Function
 
-Since functions are mutable, you can update a function by re-registering it with the same function ID. The new byte code will overwrite the old one.
+Since Functions are mutable, you can update a Function by re-registering it with the same Function ID. The new byte code will overwrite the old one.
 
 ```console
 scalardl register-function --properties client.properties --function-id test-function --function-binary-name com.example.function.TestFunction --function-class-file /path/to/TestFunction.class
 ```
 
-When overwriting a function, you can also change the binary name if needed. The function ID is the only identifier that must remain the same.
+When overwriting a Function, you can also change the binary name if needed. The Function ID is the only identifier that must remain the same.
 
-### Execute updated contracts and functions
+### Execute updated Contracts and Functions
 
-After updating a contract, use the **new contract ID** when executing it. The old contract ID still references the old version.
+After updating a Contract, use the **new Contract ID** when executing it. The old Contract ID still references the old version.
 
 ```console
 scalardl execute-contract --properties client.properties --contract-id v2.StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}'
 ```
 
-After updating a function, you can use the **same function ID** as before, and the updated function will be executed automatically.
+After updating a Function, you can use the **same Function ID** as before, and the updated Function will be executed automatically.
 
 ```console
 scalardl execute-contract --properties client.properties --contract-id v2.StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}' --function-id test-function --function-argument '{...}'
 ```
 
-For details on executing contracts and functions, see the following:
+For details on executing Contracts and Functions, see the following:
 
 - [Write a ScalarDL Application in Java](how-to-write-applications.mdx)
 - [ScalarDL Client Command Reference](scalardl-command-reference.mdx)
