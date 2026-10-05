@@ -73,13 +73,13 @@ EOF
 client/bin/scalardl register-cert --properties client.properties
 ```
 
-登録された証明書を使用すると、コントラクトを登録および実行できるようになり、データベースのビザンチン故障の検知にも使用されます。セキュリティ上の理由から、新しい証明書の追加のみが可能で、既存の証明書を更新することはできません。新しい証明書を追加する場合は、登録ツールを実行する前に `scalar.dl.client.cert_version` に指定する値を増加させてください。
+登録された証明書を使用すると、Contract を登録および実行できるようになり、データベースのビザンチン故障の検知にも使用されます。セキュリティ上の理由から、新しい証明書の追加のみが可能で、既存の証明書を更新することはできません。新しい証明書を追加する場合は、登録ツールを実行する前に `scalar.dl.client.cert_version` に指定する値を増加させてください。
 
-## コントラクトを作成する
+## Contract を作成する
 
-ScalarDL は、単一のビジネスロジックを実装する Java プログラムであるコントラクトを通じて操作できます。このチュートリアルでは、アセットを作成し、それにいくつかの状態を関連付ける基本的なコントラクトの例を使用して、コントラクトがどのように作成、ビルドされ、機能するかを確認できます。
+ScalarDL は、単一のビジネスロジックを実装する Java プログラムである Contract を通じて操作できます。このチュートリアルでは、アセットを作成し、それにいくつかの状態を関連付ける基本的な Contract の例を使用して、Contract がどのように作成、ビルドされ、機能するかを確認できます。
 
-以下に、サンプルコントラクト [StateUpdater.java](https://github.com/scalar-labs/scalardl-samples/blob/master/src/main/java/com/org1/contract/StateUpdater.java) を示します。コントラクトは、定義済みの基本コントラクトクラス (<JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="JacksonBasedContract" /> クラスなど) を拡張し、`invoke` メソッドをオーバーライドする Java クラスです。ビジネスロジックは `invoke` メソッドに実装されています。
+以下に、サンプル Contract [StateUpdater.java](https://github.com/scalar-labs/scalardl-samples/blob/master/src/main/java/com/org1/contract/StateUpdater.java) を示します。Contract は、定義済みの基本 Contract クラス (<JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/ledger/contract" className="JacksonBasedContract" /> クラスなど) を拡張し、`invoke` メソッドをオーバーライドする Java クラスです。ビジネスロジックは `invoke` メソッドに実装されています。
 
 具体的には、`invoke` メソッドは引数からクライアント定義のアセット ID (`asset_id`) と状態 (`state`) を抽出し、指定された状態がアセットの現在の状態と異なる場合は、アセット ID を台帳内の状態に関連付けます。
 
@@ -100,8 +100,8 @@ public class StateUpdater extends JacksonBasedContract {
   @Override
   public JsonNode invoke(Ledger<JsonNode> ledger, JsonNode argument, @Nullable JsonNode properties) {
     if (!argument.has("asset_id") || !argument.has("state")) {
-      // ContractContextException is the only throwable exception in a contract and
-      // it should be thrown when a contract faces some non-recoverable error
+      // ContractContextException is the only throwable exception in a Contract and
+      // it should be thrown when a Contract faces some non-recoverable error
       throw new ContractContextException("please set asset_id and state in the argument");
     }
 
@@ -119,7 +119,7 @@ public class StateUpdater extends JacksonBasedContract {
 }
 ```
 
-次のコマンドを実行してコントラクトをコンパイルできます。
+次のコマンドを実行して Contract をコンパイルできます。
 
 ```console
 ./gradlew assemble
@@ -127,33 +127,33 @@ public class StateUpdater extends JacksonBasedContract {
 
 これにより、`build/classes/java/main/com/org1/contract/StateUpdater.class` が生成されます。
 
-## コントラクトを登録する
+## Contract を登録する
 
-次に、以下のコマンドを実行してコントラクトを登録します。
+次に、以下のコマンドを実行して Contract を登録します。
 
 ```console
 client/bin/scalardl register-contract --properties client.properties --contract-id StateUpdater --contract-binary-name com.org1.contract.StateUpdater --contract-class-file build/classes/java/main/com/org1/contract/StateUpdater.class
 ```
 
-コントラクト ID にはグローバルに一意の ID を設定してください (例: 上記のコマンドの `StateUpdater`)。
+Contract ID にはグローバルに一意の ID を設定してください (例: 上記のコマンドの `StateUpdater`)。
 
 :::tip
 
-改ざん検知可能な方法で「誰が何をしたか」を明確にするため、異なる証明書を使用することで、同じコントラクトに異なるコントラクト ID を設定できます。
+改ざん検知可能な方法で「誰が何をしたか」を明確にするため、異なる証明書を使用することで、同じ Contract に異なる Contract ID を設定できます。
 
-たとえば、投票アプリケーションについて考えてみましょう。 アプリケーションでは、誰でも同じ投票ロジックで投票できるため、同じコントラクトを使用できますが、A の投票と B の投票は適切かつ安全に区別する必要があります。A が B に投票することはできませんし、その逆も同様です。 同じコントラクトに異なるコントラクト ID を使用することで、A の投票と B の投票が互いに異なる方法で識別されることを保証できます。
+たとえば、投票アプリケーションについて考えてみましょう。 アプリケーションでは、誰でも同じ投票ロジックで投票できるため、同じ Contract を使用できますが、A の投票と B の投票は適切かつ安全に区別する必要があります。A が B に投票することはできませんし、その逆も同様です。 同じ Contract に異なる Contract ID を使用することで、A の投票と B の投票が互いに異なる方法で識別されることを保証できます。
 
 :::
 
-## コントラクトを実行する
+## Contract を実行する
 
-これで、次のコマンドでコントラクトを実行する準備が整いました。
+これで、次のコマンドで Contract を実行する準備が整いました。
 
 ```console
 client/bin/scalardl execute-contract --properties client.properties --contract-id StateUpdater --contract-argument '{"asset_id":"some_asset", "state":3}'
 ```
 
-コントラクト引数では、キー `asset_id` で指定された値は、各アセットに対してグローバルに一意である必要があります。
+Contract 引数では、キー `asset_id` で指定された値は、各アセットに対してグローバルに一意である必要があります。
 
 ## Ledger の状態を検証する
 
@@ -165,19 +165,19 @@ client/bin/scalardl validate-ledger --properties client.properties --asset-id="s
 
 検証が何を行うかは、ScalarDL の設定方法によって異なります。簡単に言うと、ScalarDL Ledger のみを使用する場合、検証はアセットを走査して、アセットが再計算可能で、有効なハッシュチェーン構造を持っているかどうかを確認します。ScalarDL Ledger と Auditor を使用する場合、検証は Ledger と Auditor の状態間の矛盾 (つまり、ビザンチン故障) を中央集権的な調整なしでチェックします。Auditor による検証の詳細については、[データを検証する](how-to-write-applications.mdx#データを検証する)と[ScalarDL Ledger と Auditor を介して ScalarDL アプリケーションを実行する](how-to-run-applications-with-auditor.mdx)を参照してください。
 
-## 独自のコントラクトを作成するか、汎用コントラクトを使用する
+## 独自の Contract を作成するか、定義済みの Contract を使用する
 
-コントラクトを準備するには、独自のコントラクトを作成するか、定義済みのコントラクトを使用するかの2つのオプションがあります。
+Contract を準備するには、独自の Contract を作成するか、定義済みの Contract を使用するかの2つのオプションがあります。
 
-上で説明したように、コントラクトを作成するには、定義済みの基本コントラクトクラスを拡張し、必要に応じて `invoke` メソッドをオーバーライドする必要があります。詳細については、[適切なコントラクトを作成する方法に関するガイド](how-to-write-contract.mdx)を参照してください。
+上で説明したように、Contract を作成するには、定義済みの基本 Contract クラスを拡張し、必要に応じて `invoke` メソッドをオーバーライドする必要があります。詳細については、[適切な Contract を作成する方法に関するガイド](how-to-write-contract.mdx)を参照してください。
 
-定義済みのコントラクトは汎用コントラクトと呼ばれ、一般的なユースケースの基本機能を提供します。詳細については、[汎用コントラクトおよびファンクションの使用](use-generic-contracts.mdx)を参照してください。
+定義済みの Contract は Generic Contract と呼ばれ、一般的なユースケースの基本機能を提供します。詳細については、[Generic Contract および Function の使用](use-generic-contracts.mdx)を参照してください。
 
 ## 参考文献
 
-独自のコントラクトを作成するには、以下を参照してください。
+独自の Contract を作成するには、以下を参照してください。
 
-* [適切なコントラクトを作成する方法に関するガイド](how-to-write-contract.mdx)
+* [適切な Contract を作成する方法に関するガイド](how-to-write-contract.mdx)
 
 汎用コントラクトを使用するには、以下を参照してください。
 

@@ -12,7 +12,7 @@ import JDKVersions from './_prerequisites-jdk-versions.mdx';
 
 :::warning
 
-ScalarDL は JDK 8 でビルドされているため、コントラクトは JDK 8 互換のバイナリである必要があります。JDK 8 以外のバージョンを使用する場合は、JDK 8 互換のバイナリをビルドするようにビルドツールを設定する必要があります。バイナリ互換性を指定する方法はいくつかあり、javac の `--release 8` オプションを使用するか、JDK 8 ツールチェーンを使用するように Gradle または Maven の設定を行う方法があります。以下は Gradle の設定例です:
+ScalarDL は JDK 8 でビルドされているため、Contract は JDK 8 互換のバイナリである必要があります。JDK 8 以外のバージョンを使用する場合は、JDK 8 互換のバイナリをビルドするようにビルドツールを設定する必要があります。バイナリ互換性を指定する方法はいくつかあり、javac の `--release 8` オプションを使用するか、JDK 8 ツールチェーンを使用するように Gradle または Maven の設定を行う方法があります。以下は Gradle の設定例です:
 
 ```gradle
 java {
