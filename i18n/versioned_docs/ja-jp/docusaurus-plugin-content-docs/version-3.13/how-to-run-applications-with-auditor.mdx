@@ -39,7 +39,7 @@ Ledger と Auditor を介してアプリケーションを実行するため、A
 - クライアントの設定で、`scalar.dl.client.auditor.enabled` を `true` に設定します。
 - Ledger の設定で、`scalar.dl.ledger.auditor.enabled` を `true` に設定します。
 
-次に、ScalarDL は Asset Proof を使用して Ledger と Auditor 間の整合性をチェックするため、`scalar.dl.ledger.proof.enabled` を `true` に設定して Ledger 設定で [Asset Proof](how-to-write-applications.mdx#アセットプルーフとは) を有効にする必要があります。また、[認証方式を決定する](#認証方式を決定する)セクションで選択した認証方式に応じて、Asset Proof に署名するために Ledger と Auditor の設定で適切な秘密鍵またはシークレットキーを設定する必要があります。
+次に、ScalarDL は Asset Proof を使用して Ledger と Auditor 間の整合性をチェックするため、`scalar.dl.ledger.proof.enabled` を `true` に設定して Ledger 設定で [Asset Proof](how-to-write-applications.mdx#asset-proof-とは) を有効にする必要があります。また、[認証方式を決定する](#認証方式を決定する)セクションで選択した認証方式に応じて、Asset Proof に署名するために Ledger と Auditor の設定で適切な秘密鍵またはシークレットキーを設定する必要があります。
 
 :::note
 
@@ -312,7 +312,7 @@ client/bin/scalardl register-cert --properties ./fixture/auditor.as.client.prope
 
 <h3>HashStore クライアントをブートストラップする</h3>
 
-アプリケーションで `HashStoreClientService` を作成する際、クライアント証明書またはシークレットキーと HashStore を使用するために必要なコントラクトが、`ClientConfig` の設定に基づいて自動的に登録されます。したがって、HashStore を手動でブートストラップする必要はありません。テスト目的などで手動で実行したい場合は、[Client SDK をダウンロードする](getting-started-hashstore.mdx#client-sdk-のダウンロード)に従って HashStore Client SDK をダウンロードし、以下のコマンドを実行してください。
+アプリケーションで `HashStoreClientService` を作成する際、クライアント証明書またはシークレットキーと HashStore を使用するために必要な Contract が、`ClientConfig` の設定に基づいて自動的に登録されます。したがって、HashStore を手動でブートストラップする必要はありません。テスト目的などで手動で実行したい場合は、[Client SDK をダウンロードする](getting-started-hashstore.mdx#client-sdk-のダウンロード)に従って HashStore Client SDK をダウンロードし、以下のコマンドを実行してください。
 
 ```console
 scalardl-hashstore bootstrap --properties <CLIENT_PROPERTIES_FILE>
@@ -324,7 +324,7 @@ scalardl-hashstore bootstrap --properties <CLIENT_PROPERTIES_FILE>
 
 <h3>TableStore クライアントをブートストラップする</h3>
 
-アプリケーションで `TableStoreClientService` を作成する際、クライアント証明書またはシークレットキーと TableStore を使用するために必要なコントラクトが、`ClientConfig` の設定に基づいて自動的に登録されます。したがって、TableStore を手動でブートストラップする必要はありません。テスト目的などで手動で実行したい場合は、[Client SDK をダウンロードする](getting-started-tablestore.mdx#client-sdk-のダウンロード)に従って TableStore Client SDK をダウンロードし、以下のコマンドを実行してください。
+アプリケーションで `TableStoreClientService` を作成する際、クライアント証明書またはシークレットキーと TableStore を使用するために必要な Contract が、`ClientConfig` の設定に基づいて自動的に登録されます。したがって、TableStore を手動でブートストラップする必要はありません。テスト目的などで手動で実行したい場合は、[Client SDK をダウンロードする](getting-started-tablestore.mdx#client-sdk-のダウンロード)に従って TableStore Client SDK をダウンロードし、以下のコマンドを実行してください。
 
 ```console
 scalardl-tablestore bootstrap --properties <CLIENT_PROPERTIES_FILE>
@@ -336,7 +336,7 @@ scalardl-tablestore bootstrap --properties <CLIENT_PROPERTIES_FILE>
 
 <h3>Ledger クライアントをブートストラップする</h3>
 
-以下の `bootstrap` コマンドを実行して、クライアント ID とシステムコントラクトを登録します:
+以下の `bootstrap` コマンドを実行して、クライアント ID とシステム Contract を登録します:
 
 ```console
 scalardl bootstrap --properties <CLIENT_PROPERTIES_FILE>
@@ -352,21 +352,21 @@ bootstrap コマンドは、[認証方式を決定する](#認証方式を決定
 
 [ScalarDL Java Client SDK](how-to-write-applications.mdx#scalardl-client-sdk-を使用する) の <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を使用してブートストラップすることもできます。
 
-<h3>コントラクトとファンクションを登録する</h3>
+<h3>Contract と Function を登録する</h3>
 
-`register-contract` コマンドを使用してコントラクトを登録できます。
+`register-contract` コマンドを使用して Contract を登録できます。
 
 ```console
 scalardl register-contract --properties <CLIENT_PROPERTIES_FILE> --contract-id <CONTRACT_ID> --contract-binary-name <CONTRACT_BINARY_NAME> --contract-class-file <CONTRACT_CLASS_FILE>
 ```
 
-`register-function` コマンドを使用してファンクションを登録できます。
+`register-function` コマンドを使用して Function を登録できます。
 
 ```console
 scalardl register-function --properties <CLIENT_PROPERTIES_FILE> --function-id <FUNCTION_ID> --function-binary-name <FUNCTION_BINARY_NAME> --function-class-file <FUNCTION_CLASS_FILE>
 ```
 
-[ScalarDL Java Client SDK](how-to-write-applications.mdx#scalardl-client-sdk-を使用する) の <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を使用してコントラクトとファンクションを登録することもできます。
+[ScalarDL Java Client SDK](how-to-write-applications.mdx#scalardl-client-sdk-を使用する) の <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> を使用して Contract と Function を登録することもできます。
 
 </TabItem>
 
@@ -374,7 +374,7 @@ scalardl register-function --properties <CLIENT_PROPERTIES_FILE> --function-id <
 
 ## アプリケーションを実行する
 
-必要な ID とコントラクトの登録が完了したら、ScalarDL を統合したアプリケーションを実行できます。
+必要な ID と Contract の登録が完了したら、ScalarDL を統合したアプリケーションを実行できます。
 
 ## 参照
 
