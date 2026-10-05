@@ -325,33 +325,33 @@ You can also register secrets by using <JavadocLink packageName="scalardl-java-c
   </TabItem>
 </Tabs>
 
-## Register contracts and functions
+## Register Contracts and Functions
 
-You can register contracts by using the `register-contract` command. For details about this command, see the [ScalarDL Client Command Reference](scalardl-command-reference.mdx#register-contract).
+You can register Contracts by using the `register-contract` command. For details about this command, see the [ScalarDL Client Command Reference](scalardl-command-reference.mdx#register-contract).
 
 ```console
 scalardl register-contract --properties <CLIENT_PROPERTIES_FILE> --contract-id <CONTRACT_ID> --contract-binary-name <CONTRACT_BINARY_NAME> --contract-class-file <CONTRACT_CLASS_FILE>
 ```
 
-You can register functions by using the `register-function` command. For details about this command, see the [ScalarDL Client Command Reference](scalardl-command-reference.mdx#register-function).
+You can register Functions by using the `register-function` command. For details about this command, see the [ScalarDL Client Command Reference](scalardl-command-reference.mdx#register-function).
 
 ```console
 scalardl register-function --properties <CLIENT_PROPERTIES_FILE> --function-id <FUNCTION_ID> --function-binary-name <FUNCTION_BINARY_NAME> --function-class-file <FUNCTION_CLASS_FILE>
 ```
 
-You can also register contracts and functions by using <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> in the [ScalarDL Java Client SDK](how-to-write-applications.mdx#use-the-scalardl-client-sdk).
+You can also register Contracts and Functions by using <JavadocLink packageName="scalardl-java-client-sdk" path="com/scalar/dl/client/service" className="ClientService" /> in the [ScalarDL Java Client SDK](how-to-write-applications.mdx#use-the-scalardl-client-sdk).
 
-If you are using generic contracts, see [Register the generic contracts and functions](use-generic-contracts.mdx#register-the-generic-contracts-and-functions) to register contracts and functions.
+If you are using Generic Contracts, see [Register the Generic Contracts and Functions](use-generic-contracts.mdx#register-the-generic-contracts-and-functions) to register Contracts and Functions.
 
 ## Run an application
 
-Now that you have registered contracts and functions from a client, you can now run your application that integrates ScalarDL.
+Now that you have registered Contracts and Functions from a client, you can now run your application that integrates ScalarDL.
 
 ## Validate your data in your application
 
-You can validate your data by using a `ClientService` API described in [Validate your data](how-to-write-applications.mdx#validate-your-data) or by using a client CLI command. For both cases, you need to build and register the [ValidateLedger](https://github.com/scalar-labs/scalardl-java-client-sdk/blob/master/src/main/java/com/scalar/dl/client/contract/ValidateLedger.java) contract before validation, because it internally uses contract execution when using ScalarDL Auditor.
+You can validate your data by using a `ClientService` API described in [Validate your data](how-to-write-applications.mdx#validate-your-data) or by using a client CLI command. For both cases, you need to build and register the [ValidateLedger](https://github.com/scalar-labs/scalardl-java-client-sdk/blob/master/src/main/java/com/scalar/dl/client/contract/ValidateLedger.java) Contract before validation, because it internally uses Contract execution when using ScalarDL Auditor.
 
-You can build the validation contract by running the following command in the ScalarDL Java Client SDK repository. Make sure to check out a specific version like `v3.11.0`.
+You can build the validation Contract by running the following command in the ScalarDL Java Client SDK repository. Make sure to check out a specific version like `v3.11.0`.
 
 ```console
 git clone https://github.com/scalar-labs/scalardl-java-client-sdk.git
@@ -360,7 +360,7 @@ git checkout <SCALARDL_VERSION>
 ./gradlew assemble
 ```
 
-Running the commands above will generate `build/classes/java/main/com/scalar/dl/client/contract/ValidateLedger.class`. Then, you can register it by using the `register-contract` command. `validate-ledger` is the default contract ID that the client specifies when doing validation. If you want to change it, set `scalar.dl.client.auditor.linearizable_validation.contract_id` to your own validation contract ID in the client configuration.
+Running the commands above will generate `build/classes/java/main/com/scalar/dl/client/contract/ValidateLedger.class`. Then, you can register it by using the `register-contract` command. `validate-ledger` is the default Contract ID that the client specifies when doing validation. If you want to change it, set `scalar.dl.client.auditor.linearizable_validation.contract_id` to your own validation Contract ID in the client configuration.
 
 ```console
 scalardl register-contract --properties <CLIENT_PROPERTIES_FILE> --contract-id validate-ledger --contract-binary-name com.scalar.dl.client.contract.ValidateLedger --contract-class-file <PATH_TO_VALIDATE_LEDGER_CLASS>
