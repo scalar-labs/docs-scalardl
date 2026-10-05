@@ -5,7 +5,7 @@ tags:
 displayed_sidebar: docsJapanese
 ---
 
-# 汎用コントラクトおよびファンクションのリファレンスガイド
+# Generic Contract および Function のリファレンスガイド
 
 import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
@@ -13,28 +13,28 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 :::tip
 
-汎用コントラクトは ScalarDL 3.10 で導入されましたが、ScalarDL 3.12 でリリースされた HashStore は、汎用コントラクトをラップしたより高次の抽象化を提供します。ほとんどのユースケースでは、汎用コントラクトを直接使用するよりも、HashStore を使用する方がシンプルで効率的です。詳細については、ScalarDL の最新版の [ScalarDL HashStore をはじめよう](./getting-started-hashstore.mdx)をご参照ください。
+Generic Contract は ScalarDL 3.10 で導入されましたが、ScalarDL 3.12 でリリースされた HashStore は、Generic Contract をラップしたより高次の抽象化を提供します。ほとんどのユースケースでは、Generic Contract を直接使用するよりも、HashStore を使用する方がシンプルで効率的です。詳細については、ScalarDL の最新版の [ScalarDL HashStore をはじめよう](./getting-started-hashstore.mdx)をご参照ください。
 
 :::
 
-このガイドでは、汎用コントラクトおよびファンクションの仕様について説明します。
+このガイドでは、Generic Contract および Function の仕様について説明します。
 
-## 汎用コントラクトおよびファンクションのリスト
+## Generic Contract および Function のリスト
 
 - **オブジェクト管理**
-  - [`object.Put`](#objectput-コントラクト) コントラクト: オブジェクトのハッシュ値を持つオブジェクトを配置します。
-  - [`object.PutToMutableDatabase`](#objectputtomutabledatabase-ファンクション) ファンクション: `object.Put` コントラクトと組み合わせて可変レコードを配置します。
-  - [`object.Get`](#objectget-コントラクト) コントラクト: オブジェクトを取得します。
-  - [`object.Validate`](#objectvalidate-コントラクト) コントラクト: オブジェクトのハッシュ値を検証します。
+  - [`object.Put`](#objectput-contract) Contract: オブジェクトのハッシュ値を持つオブジェクトを配置します。
+  - [`object.PutToMutableDatabase`](#objectputtomutabledatabase-function) Function: `object.Put` Contract と組み合わせて可変レコードを配置します。
+  - [`object.Get`](#objectget-contract) Contract: オブジェクトを取得します。
+  - [`object.Validate`](#objectvalidate-contract) Contract: オブジェクトのハッシュ値を検証します。
 - **コレクション管理**
-  - [`collection.Create`](#collectioncreate-コントラクト) コントラクト: コレクションを作成します。
-  - [`collection.Add`](#collectionadd-コントラクト) コントラクト: コレクションに ID を追加します。
-  - [`collection.Remove`](#collectionremove-コントラクト) コントラクト: コレクションから ID を削除します。
-  - [`collection.Get`](#collectionget-コントラクト) コントラクト: コレクションを取得します。
-  - [`collection.GetHistory`](#collectiongethistory-コントラクト) コントラクト: コレクションの変更履歴を取得します。
-  - [`collection.GetCheckpointInterval`](#collectiongetcheckpointinterval-コントラクト) コントラクト: チェックポイント間隔を取得します。
+  - [`collection.Create`](#collectioncreate-contract) Contract: コレクションを作成します。
+  - [`collection.Add`](#collectionadd-contract) Contract: コレクションに ID を追加します。
+  - [`collection.Remove`](#collectionremove-contract) Contract: コレクションから ID を削除します。
+  - [`collection.Get`](#collectionget-contract) Contract: コレクションを取得します。
+  - [`collection.GetHistory`](#collectiongethistory-contract) Contract: コレクションの変更履歴を取得します。
+  - [`collection.GetCheckpointInterval`](#collectiongetcheckpointinterval-contract) Contract: チェックポイント間隔を取得します。
 
-## `object.Put` コントラクト
+## `object.Put` Contract
 
 オブジェクトのハッシュ値を含むオブジェクト ID を入力します。オブジェクトがすでに存在する場合は、アセットレコードが更新されます。存在しない場合は、新しいアセットレコードが追加されます。
 
@@ -60,9 +60,9 @@ scalardl generic-contracts execute-contract --properties client.properties \
 --contract-argument '{"objct_id": "a.txt", "hash_value": "a3ae11", "metadata": {"note": "something"}}'
 ```
 
-## `object.PutToMutableDatabase` ファンクション
+## `object.PutToMutableDatabase` Function
 
-`object.Put` コントラクトと組み合わせて、変更可能なレコードを ScalarDB テーブルに格納します。レコードがすでに存在する場合は、レコードが更新されます。存在しない場合は、新しいレコードが追加されます。このファンクションの呼び出しはオプションです。
+`object.Put` Contract と組み合わせて、変更可能なレコードを ScalarDB テーブルに格納します。レコードがすでに存在する場合は、レコードが更新されます。存在しない場合は、新しいレコードが追加されます。この Function の呼び出しはオプションです。
 
 ### 入力
 
@@ -98,7 +98,7 @@ scalardl generic-contracts execute-contract --properties client.properties \
 --function-argument '{...}'
 ```
 
-ファンクションの引数については、次の JSON オブジェクトの例を参照してください。
+Function の引数については、次の JSON オブジェクトの例を参照してください。
 
 ```json
 {
@@ -119,7 +119,7 @@ scalardl generic-contracts execute-contract --properties client.properties \
 }
 ```
 
-## `object.Get` コントラクト
+## `object.Get` Contract
 
 指定された ID を持つオブジェクトを取得します。指定されたオブジェクトが存在しない場合は、null 値が返されます。
 
@@ -158,7 +158,7 @@ Contract result:
 }
 ```
 
-## `object.Validate` コントラクト
+## `object.Validate` Contract
 
 オブジェクトの指定されたハッシュ値が、オブジェクトの保存されたハッシュ値と同じかどうかを検証します。デフォルトでは、最新のハッシュ値から指定された数のハッシュ値のみが検証されます。`all` オプションを使用すると、指定されたバージョンの数が ScalarDL に保存されているバージョンの数と一致するかどうかも検証できます。
 
@@ -287,7 +287,7 @@ Contract result:
 }
 ```
 
-## `collection.Create` コントラクト
+## `collection.Create` Contract
 
 ID のセットであるコレクションを作成します。監査対象のオブジェクト ID のセット、コレクション ID のセット、ユーザーのセットなど、任意の ID を管理できます。
 
@@ -312,9 +312,9 @@ scalardl generic-contracts execute-contract --properties client.properties \
 --contract-argument '{"collection_id": "audit_set", "object_ids": ["a.txt"]}'
 ```
 
-## `collection.Add` コントラクト
+## `collection.Add` Contract
 
-コレクションに ID を追加します。通常、ID は汎用コントラクトによって管理されるオブジェクトとコレクション用です。
+コレクションに ID を追加します。通常、ID は Generic Contract によって管理されるオブジェクトとコレクション用です。
 
 ### 入力
 
@@ -324,7 +324,7 @@ scalardl generic-contracts execute-contract --properties client.properties \
 |:----------------|:----------------------------------------------------------------------------------------------------------------------------------|
 | `collection_id` | コレクションの ID。                                                                                                                       |
 | `object_ids`    | 文字列値の配列。                                                                                                                          |
-| `options`       | (オプション) オプションを指定するための JSON オブジェクト。使用可能なオプション:<br/><li>`force`: ID が存在する場合でもコントラクトが ID を追加するかどうかを指定するブール値。デフォルト値は `false` です。</li> |
+| `options`       | (オプション) オプションを指定するための JSON オブジェクト。使用可能なオプション:<br/><li>`force`: ID が存在する場合でも Contract が ID を追加するかどうかを指定するブール値。デフォルト値は `false` です。</li> |
 
 ### 出力
 
@@ -338,9 +338,9 @@ scalardl generic-contracts execute-contract --properties client.properties \
 --contract-argument '{"collection_id": "audit_set", "object_ids": ["a.txt"], "options": {"force": true}}'
 ```
 
-## `collection.Remove` コントラクト
+## `collection.Remove` Contract
 
-コレクションから ID を削除します。通常、ID は汎用コントラクトによって管理されるオブジェクトとコレクション用です。
+コレクションから ID を削除します。通常、ID は Generic Contract によって管理されるオブジェクトとコレクション用です。
 
 ### 入力
 
@@ -350,7 +350,7 @@ scalardl generic-contracts execute-contract --properties client.properties \
 |:----------------|:---------------------------------------------------------------------------------------------------------------------------------------------|
 | `collection_id` | 削除するコレクションの ID。                                                                                                                              |
 | `object_ids`    | 文字列値の配列。                                                                                                                                     |
-| `options`       | (オプション) オプションを指定するための JSON オブジェクト。使用可能なオプション:<br/><li>`force`: 指定された ID が存在しない場合でも、コントラクトが ID の削除を続行するかどうかを指定するブール値。デフォルト値は `false` です。</li> |
+| `options`       | (オプション) オプションを指定するための JSON オブジェクト。使用可能なオプション:<br/><li>`force`: 指定された ID が存在しない場合でも、Contract が ID の削除を続行するかどうかを指定するブール値。デフォルト値は `false` です。</li> |
 
 ### 出力
 
@@ -364,7 +364,7 @@ scalardl generic-contracts execute-contract --properties client.properties \
 --contract-argument '{"collection_id": "audit_set", "object_ids": ["a.txt"], "options": {"force": true}}'
 ```
 
-## `collection.Get` コントラクト
+## `collection.Get` Contract
 
 指定された ID のコレクションを取得します。指定されたコレクションが存在しない場合は、null 値が返されます。
 
@@ -395,7 +395,7 @@ Contract result:
 {"object_ids": ["a.txt", "b.txt"]}
 ```
 
-## `collection.GetHistory` コントラクト
+## `collection.GetHistory` Contract
 
 指定された ID のコレクションの変更イベント履歴を取得します。イベントは、`create`、`add`、および `remove` のいずれかです。指定されたコレクションが存在しない場合は、空の `collection_events` 配列を持つ JSON オブジェクトが返されます。
 
@@ -442,15 +442,15 @@ Contract result:
 }
 ```
 
-## `collection.GetCheckpointInterval` コントラクト
+## `collection.GetCheckpointInterval` Contract
 
-効率的なコレクション管理のために使用されるチェックポイント間隔を取得します。このコントラクトは他の汎用コントラクトから内部的に使用されるため、直接実行する必要はありませんが、このコントラクトを登録するときにコントラクトプロパティを介してチェックポイント間隔を設定できます。
+効率的なコレクション管理のために使用されるチェックポイント間隔を取得します。この Contract は他の Generic Contract から内部的に使用されるため、直接実行する必要はありませんが、この Contract を登録するときに Contract プロパティを介してチェックポイント間隔を設定できます。
 
 チェックポイント間隔は、コレクションのスナップショットが作成される頻度を設定します。コレクション内の ID を追加または削除する場合、新しいアセットレコードには、ストレージ効率のために、新しい ID セット全体ではなく差分データのみが保持されます。次に、コレクションを取得するときに、過去の差分データがマージされて返されます。毎回過去のデータをすべてマージしないようにするため、チェックポイントの経過時間 (バージョン) ごとにスナップショットを作成します。チェックポイント間隔は、前回のチェックポイント作成以降に待機する更新の数を示す整数です。
 
-### コントラクトプロパティ
+### Contract プロパティ
 
-チェックポイント間隔を変更する場合は、コントラクトプロパティとして次のフィールドを持つ JSON オブジェクトを指定します。
+チェックポイント間隔を変更する場合は、Contract プロパティとして次のフィールドを持つ JSON オブジェクトを指定します。
 
 | フィールド                 | 説明              |
 |:----------------------|:----------------|
@@ -458,7 +458,7 @@ Contract result:
 
 :::note
 
-`collection.GetCheckpointInterval` コントラクトが登録され、複数のクライアント ID (つまり `scalar.dl.client.entity.id`) によって使用される場合は、コントラクトを登録するときに同じチェックポイント間隔を設定する必要があります。
+`collection.GetCheckpointInterval` Contract が登録され、複数のクライアント ID (つまり `scalar.dl.client.entity.id`) によって使用される場合は、Contract を登録するときに同じチェックポイント間隔を設定する必要があります。
 
 :::
 
@@ -472,7 +472,7 @@ Contract result:
 
 | フィールド                 | 説明                                                       |
 |:----------------------|:---------------------------------------------------------|
-| `checkpoint_interval` | コントラクトプロパティで設定されたチェックポイント間隔の整数値。設定しない場合、デフォルト値は `10` です。 |
+| `checkpoint_interval` | Contract プロパティで設定されたチェックポイント間隔の整数値。設定しない場合、デフォルト値は `10` です。 |
 
 ### 例
 
