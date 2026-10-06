@@ -12,7 +12,7 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 ScalarDL Enterprise には以下の試用ライセンスキーをご利用いただけます。商用ライセンスキーをお持ちの場合は、[商用ライセンスキーの設定方法](./commercial.mdx)を参照してライセンスキーを設定してください。
 
-ScalarDL Enterprise を実行するには、`.properties` ファイルを作成し、試用ライセンスキーと証明書をファイルに追加する必要があります。`.properties` ファイルには、使用している製品に基づいて以下の設定をコピーし、ファイルに貼り付けてください。
+ScalarDL Enterprise を実行するには、設定ファイルを作成し、試用ライセンスキーと証明書をファイルに追加する必要があります。設定ファイルには、使用している製品に基づいて以下の設定をコピーし、ファイルに貼り付けてください。
 
 :::warning
 
@@ -37,9 +37,21 @@ scalar.dl.licensing.license_key={"organization_name":"Trial","product_name":"Sca
 scalar.dl.licensing.license_check_cert_pem=-----BEGIN CERTIFICATE-----\nMIICIzCCAcigAwIBAgIIKT9LIGX1TJQwCgYIKoZIzj0EAwIwZzELMAkGA1UEBhMC\nSlAxDjAMBgNVBAgTBVRva3lvMREwDwYDVQQHEwhTaGluanVrdTEVMBMGA1UEChMM\nU2NhbGFyLCBJbmMuMR4wHAYDVQQDExV0cmlhbC5zY2FsYXItbGFicy5jb20wHhcN\nMjMxMTE2MDcxMDM5WhcNMjQwMjE1MTMxNTM5WjBnMQswCQYDVQQGEwJKUDEOMAwG\nA1UECBMFVG9reW8xETAPBgNVBAcTCFNoaW5qdWt1MRUwEwYDVQQKEwxTY2FsYXIs\nIEluYy4xHjAcBgNVBAMTFXRyaWFsLnNjYWxhci1sYWJzLmNvbTBZMBMGByqGSM49\nAgEGCCqGSM49AwEHA0IABBSkIYAk7r5FRDf5qRQ7dbD3ib5g3fb643h4hqCtK+lC\nwM4AUr+PPRoquAy+Ey2sWEvYrWtl2ZjiYyyiZw8slGCjXjBcMA4GA1UdDwEB/wQE\nAwIFoDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDAYDVR0TAQH/BAIw\nADAdBgNVHQ4EFgQUbFyOWFrsjkkOvjw6vK3gGUADGOcwCgYIKoZIzj0EAwIDSQAw\nRgIhAKwigOb74z9BdX1+dUpeVG8WrzLTIqdIU0w+9jhAueXoAiEA6cniJ3qsP4j7\nsck62kHnFpH1fCUOc/b/B8ZtfeXI2Iw=\n-----END CERTIFICATE-----
 ```
 
+:::note
+
+Helm Chart を使用してデプロイする場合、これらの設定はカスタム values ファイル内に配置する必要があります。詳細については、[クラウドベースの Kubernetes 環境に ScalarDL のデプロイの概要](../deploy-managed-kubernetes-environment-overview.mdx)を参照してください。
+
+:::
+
 ## ScalarDL Auditor
 
 ```properties
 scalar.dl.licensing.license_key={"organization_name":"Trial","product_name":"ScalarDL Auditor","product_version":3,"license_type":"trial","signature":"MEQCIFk99kur0flbtcpGaP/fhW7Anu0OU/zLEnFJAQzI4G6+AiA6OraXkllCz/m6y19LFXaYgYp56uNEbiXL5SthYiEAlA==","expiration_date_time":"2026-09-30T10:33:06.718+09:00[Asia/Tokyo]"}
 scalar.dl.licensing.license_check_cert_pem=-----BEGIN CERTIFICATE-----\nMIICIzCCAcigAwIBAgIIKT9LIGX1TJQwCgYIKoZIzj0EAwIwZzELMAkGA1UEBhMC\nSlAxDjAMBgNVBAgTBVRva3lvMREwDwYDVQQHEwhTaGluanVrdTEVMBMGA1UEChMM\nU2NhbGFyLCBJbmMuMR4wHAYDVQQDExV0cmlhbC5zY2FsYXItbGFicy5jb20wHhcN\nMjMxMTE2MDcxMDM5WhcNMjQwMjE1MTMxNTM5WjBnMQswCQYDVQQGEwJKUDEOMAwG\nA1UECBMFVG9reW8xETAPBgNVBAcTCFNoaW5qdWt1MRUwEwYDVQQKEwxTY2FsYXIs\nIEluYy4xHjAcBgNVBAMTFXRyaWFsLnNjYWxhci1sYWJzLmNvbTBZMBMGByqGSM49\nAgEGCCqGSM49AwEHA0IABBSkIYAk7r5FRDf5qRQ7dbD3ib5g3fb643h4hqCtK+lC\nwM4AUr+PPRoquAy+Ey2sWEvYrWtl2ZjiYyyiZw8slGCjXjBcMA4GA1UdDwEB/wQE\nAwIFoDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDAYDVR0TAQH/BAIw\nADAdBgNVHQ4EFgQUbFyOWFrsjkkOvjw6vK3gGUADGOcwCgYIKoZIzj0EAwIDSQAw\nRgIhAKwigOb74z9BdX1+dUpeVG8WrzLTIqdIU0w+9jhAueXoAiEA6cniJ3qsP4j7\nsck62kHnFpH1fCUOc/b/B8ZtfeXI2Iw=\n-----END CERTIFICATE-----
 ```
+
+:::note
+
+Helm Chart を使用してデプロイする場合、これらの設定はカスタム values ファイル内に配置する必要があります。詳細については、[クラウドベースの Kubernetes 環境に ScalarDL のデプロイの概要](../deploy-managed-kubernetes-environment-overview.mdx)を参照してください。
+
+:::
