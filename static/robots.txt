@@ -1,2 +1,10 @@
 User-agent: *
+Allow: /
+
+# Keep search engines from indexing the Markdown versions of pages as duplicates.
+User-agent: Baiduspider
+User-agent: Bingbot
+User-agent: DuckDuckBot
+User-agent: Googlebot
+User-agent: Slurp
 Disallow: /*.md
