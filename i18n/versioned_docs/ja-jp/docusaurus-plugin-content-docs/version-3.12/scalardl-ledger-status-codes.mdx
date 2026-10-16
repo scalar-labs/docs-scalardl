@@ -58,7 +58,7 @@ Data or program tampering, or a software bug, may have occurred. Contact your sy
 **メッセージ**
 
 ```markdown
-Validation failed for the contract.
+Validation failed for the Contract.
 ```
 
 **対処法**
@@ -160,13 +160,13 @@ Verify that the certificate used by Auditor is registered and valid.
 **メッセージ**
 
 ```markdown
-The specified contract class is not allowed to be executed.
+The specified Contract class is not allowed to be executed.
 ```
 
 **対処法**
 
 ```markdown
-Verify the contract binary name and ensure it is listed in the configuration file specified by scalar.dl.ledger.executable_contracts.
+Verify the Contract binary name and ensure it is listed in the configuration file specified by scalar.dl.ledger.executable_contracts.
 ```
 
 ### `DL-LEDGER-407002`
@@ -230,13 +230,13 @@ Verify the asset ID and namespace are correct and the asset has been created.
 **メッセージ**
 
 ```markdown
-The specified function is not found.
+The specified Function is not found.
 ```
 
 **対処法**
 
 ```markdown
-Register the function first before executing it.
+Register the Function first before executing it.
 ```
 
 ### `DL-LEDGER-411001`
@@ -244,13 +244,13 @@ Register the function first before executing it.
 **メッセージ**
 
 ```markdown
-Loading the function failed. Details: %s
+Loading the Function failed. Details: %s
 ```
 
 **対処法**
 
 ```markdown
-Check the error details and verify that the function class is valid and accessible.
+Check the error details and verify that the Function class is valid and accessible.
 ```
 
 ### `DL-LEDGER-412001`
@@ -258,13 +258,13 @@ Check the error details and verify that the function class is valid and accessib
 **メッセージ**
 
 ```markdown
-The function is not allowed to access the specified namespace.
+The Function is not allowed to access the specified namespace.
 ```
 
 **対処法**
 
 ```markdown
-Function cannot access system namespaces or namespaces with reserved prefixes. Disallowed namespaces: system, system_schema, system_auth, system_distributed, system_traces, coordinator. Disallowed namespace prefixes: scalar, auditor. Use a different namespace for your function operations.
+Function cannot access system namespaces or namespaces with reserved prefixes. Disallowed namespaces: system, system_schema, system_auth, system_distributed, system_traces, coordinator. Disallowed namespace prefixes: scalar, auditor. Use a different namespace for your Function operations.
 ```
 
 ### `DL-LEDGER-412002`
@@ -272,7 +272,7 @@ Function cannot access system namespaces or namespaces with reserved prefixes. D
 **メッセージ**
 
 ```markdown
-The database operation in the function failed. Details: %s
+The database operation in the Function failed. Details: %s
 ```
 
 **対処法**
@@ -402,7 +402,7 @@ Set the group commit configuration property to false as it is not supported.
 **メッセージ**
 
 ```markdown
-Binding the function failed. Details: %s
+Binding the Function failed. Details: %s
 ```
 
 **対処法**
@@ -416,7 +416,7 @@ Check the error details in the logs and verify your database configuration and c
 **メッセージ**
 
 ```markdown
-Unbinding the function failed. Details: %s
+Unbinding the Function failed. Details: %s
 ```
 
 **対処法**
@@ -430,7 +430,7 @@ Check the error details in the logs and verify your database configuration and c
 **メッセージ**
 
 ```markdown
-Getting the function failed. Details: %s
+Getting the Function failed. Details: %s
 ```
 
 **対処法**
@@ -542,7 +542,7 @@ Check the error details in the logs and verify your database configuration and c
 **メッセージ**
 
 ```markdown
-The database operation in the function failed due to a database error. Details: %s
+The database operation in the Function failed due to a database error. Details: %s
 ```
 
 **対処法**
@@ -570,13 +570,13 @@ Check the asset status manually and review the error details in the logs.
 **メッセージ**
 
 ```markdown
-The function type or instance is not supported.
+The Function type or instance is not supported.
 ```
 
 **対処法**
 
 ```markdown
-Check the error details in the logs and verify that the function type is supported.
+Check the error details in the logs and verify that the Function type is supported.
 ```
 
 ### `DL-LEDGER-504001`
@@ -668,7 +668,7 @@ Retry the operation.
 **メッセージ**
 
 ```markdown
-The database operation in the function failed due to a conflict. Details: %s
+The database operation in the Function failed due to a conflict. Details: %s
 ```
 
 **対処法**
