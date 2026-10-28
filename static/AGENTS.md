@@ -8,7 +8,7 @@ ScalarDL is middleware for building tamper-evident database systems. It detects 
 
 The documentation is intended for application developers, database and platform engineers, and operators who evaluate, develop with, deploy, and manage ScalarDL.
 
-The site covers ScalarDL's architecture and implementation, requirements, application development, deployment, management, troubleshooting, and reference information. It documents components and interfaces such as ScalarDL Ledger, ScalarDL Auditor, client SDKs, the Ledger abstraction, HashStore, TableStore, and related libraries and tools. Check the relevant page to determine which component, abstraction, or edition applies to a particular capability.
+The site covers the architecture and implementation, requirements, application development, deployment, management, troubleshooting, and reference information of ScalarDL. It documents components and interfaces such as ScalarDL Ledger, ScalarDL Auditor, client SDKs, the Ledger abstraction, HashStore, TableStore, and related libraries and tools. Check the relevant page to determine which component, abstraction, or edition applies to a particular capability.
 
 ScalarDL uses ScalarDB for database interactions, but ScalarDL and ScalarDB are distinct products. Do not assume that a capability, configuration, compatibility rule, or behavior documented for ScalarDB applies to ScalarDL without evidence. Use the ScalarDL documentation first, and follow its links to ScalarDB documentation when details about the underlying database layer are needed.
 
@@ -21,7 +21,7 @@ Use the published ScalarDL documentation as the primary source for supported beh
 Use these resources according to the question:
 
 - **Latest English documentation:** https://scalardl.scalar-labs.com/docs/latest/ — Default starting point for current guidance.
-- **ScalarDL overview:** https://scalardl.scalar-labs.com/docs/latest/overview/ — Understand ScalarDL's purpose and primary use cases.
+- **ScalarDL overview:** https://scalardl.scalar-labs.com/docs/latest/overview/ — Understand the purpose and primary use cases of ScalarDL.
 - **Requirements and supported databases:** https://scalardl.scalar-labs.com/docs/latest/requirements/ — Check required software, supported database versions, platform requirements, and related version information.
 - **Libraries and tools:** https://scalardl.scalar-labs.com/docs/latest/libraries-and-tools/ — Check the documented libraries, tools, components, and their edition applicability.
 - **Compatibility matrix:** https://scalardl.scalar-labs.com/docs/latest/compatibility/ — Check compatibility among Ledger/Auditor, client SDKs, and ScalarDB Cluster. Verify the version shown on the page and select the corresponding version before making a version-specific claim.
@@ -46,7 +46,7 @@ Version, edition, component, abstraction, and deployment model can affect Scalar
 - Prefer `/docs/latest/` unless the user specifies a version or the question clearly concerns a historical release.
 - If behavior, configuration, APIs, compatibility, or feature availability may differ by version, identify the user's ScalarDL version and relevant client SDK version before giving version-specific guidance. Ask when necessary; otherwise state the version assumptions clearly.
 - Older published versions use paths such as `/docs/<major.minor>/`. Do not assume a particular version exists; check the published version selector and the [Release Support Policy](https://scalardl.scalar-labs.com/docs/latest/releases/release-support-policy/).
-- Versions that are no longer supported may be available in the [documentation archive](https://docs-archive.scalar-labs.com/?products=scalardl). A redirect to `/docs/latest/` does not mean the latest content is equivalent to the requested older version.
+- Versions that are no longer supported are available in the [documentation archive](https://docs-archive.scalar-labs.com/?products=scalardl). A redirect to `/docs/latest/` does not mean the latest content is equivalent to the requested older version.
 - If a version is no longer maintained or supported, explain its status and consult the support policy before recommending an upgrade or target version.
 - Use release notes and current documentation to verify released functionality. Roadmap items describe planned work and must not be presented as available features without confirmation.
 
@@ -60,7 +60,7 @@ Version, edition, component, abstraction, and deployment model can affect Scalar
 
 ### ScalarDB and underlying database behavior
 
-- Use ScalarDL's [Requirements](https://scalardl.scalar-labs.com/docs/latest/requirements/) and relevant compatibility documentation to verify supported underlying databases and versions for the ScalarDL release in question.
+- Check [Requirements](https://scalardl.scalar-labs.com/docs/latest/requirements/) and relevant compatibility documentation to verify supported underlying databases and versions for the ScalarDL release in question.
 - ScalarDL uses ScalarDB for database interactions, and the ScalarDL documentation may identify which ScalarDB version is used internally by a particular ScalarDL release. Verify that relationship from the applicable documentation rather than assuming the latest ScalarDB version is used.
 - Follow links to ScalarDB documentation for underlying database configuration or other details when the ScalarDL documentation directs you there. Do not transfer a standalone ScalarDB support claim or feature guarantee to ScalarDL without checking the ScalarDL-specific requirements and constraints.
 
@@ -72,7 +72,7 @@ Japanese documentation is available under `/ja-jp/docs/<version>/` for versions 
 
 Use the site's navigation, search, and cross-links to find the most relevant page for the question. As a general guide:
 
-- **Overview, design, and implementation:** Understand ScalarDL's purpose, architecture, and component roles.
+- **Overview, design, and implementation:** Understand the purpose, architecture, and component roles of ScalarDL.
 - **Requirements and compatibility:** Check required software, supported database versions, SDK compatibility, and deployment prerequisites.
 - **Quickstart and getting-started guides:** Follow an initial setup using the relevant interface or abstraction, such as Ledger, HashStore, or TableStore.
 - **Develop guides:** Learn how to model data, write contracts or functions, build applications, and run them through ScalarDL.
@@ -124,5 +124,5 @@ For further help:
 
 - **Product bug reports and feature requests:** https://github.com/scalar-labs/scalardl/issues
 - **Enterprise support:** https://www.scalar-labs.com/support
-- **Licensing questions:** https://www.scalar-labs.com/contact
+- **Licensing questions:** https://www.scalar-labs.com/contact-us
 - **Documentation errors:** Use the "Edit this page" link on the relevant page or open an issue at https://github.com/scalar-labs/docs-scalardl
