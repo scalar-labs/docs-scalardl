@@ -29,9 +29,9 @@ Use these resources according to the question:
 - **Release notes:** https://scalardl.scalar-labs.com/docs/latest/releases/release-notes/ — Check changes introduced in a release.
 - **Roadmap:** https://scalardl.scalar-labs.com/docs/latest/roadmap/ — Review planned work; roadmap items are not guarantees.
 - **`llms.txt`:** https://scalardl.scalar-labs.com/llms.txt — Discover links to the latest English documentation pages.
-- **`llms-full.txt`:** https://scalardl.scalar-labs.com/llms-full.txt — Get broad context from a build-generated snapshot of the latest English documentation.
-- **Sitemap:** https://scalardl.scalar-labs.com/sitemap.xml — Discover published documentation URLs, including older versions where listed.
-- **ScalarDL source repository:** https://github.com/scalar-labs/scalardl — Consult source code when the question specifically requires source-level verification; the default branch may differ from released versions.
+- **`llms-full.txt`:** https://scalardl.scalar-labs.com/llms-full.txt — Get broad context from a build-generated snapshot of the latest English documentation, including front matter and a directory tree.
+- **Sitemap:** https://scalardl.scalar-labs.com/sitemap.xml — Discover published English documentation URLs, including versions still under Maintenance Support.
+- **ScalarDL source repository:** https://github.com/scalar-labs/scalardl — Consult source code when the question specifically requires source-level verification. The default branch may differ from released versions, so branch names following the `major.minor` pattern should be checked for version-specific checks.
 
 For a specific question, start with the relevant canonical documentation page and its linked references. For broad discovery, use `llms.txt` to find relevant pages, then read those pages. Use `llms-full.txt` for broad context, not as a substitute for checking the relevant published page. Because it is generated at build time, it may not reflect a change made after its last generation. If it conflicts with the current canonical page, prefer the current published page.
 
