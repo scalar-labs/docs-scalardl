@@ -360,6 +360,11 @@ const sidebars = {
           items: [
             {
               type: 'doc',
+              id: 'network-requirements',
+              label: 'Network Requirements [NEW]',
+            },
+            {
+              type: 'doc',
               id: 'scalar-kubernetes/ProductionChecklistForScalarDLLedger',
               label: 'Production checklist for ScalarDL Ledger',
             },
