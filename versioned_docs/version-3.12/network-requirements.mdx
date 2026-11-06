@@ -1,0 +1,127 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsEnglish
+---
+
+# Network Requirements
+
+Before you deploy ScalarDL, you typically need to configure firewall rules so that the required network traffic between clients, ScalarDL components, and related Scalar products is allowed. This page lists the connections that you need to allow, including the direction, default port, and use case of each connection, for two common deployment patterns: ScalarDL Ledger only and ScalarDL Ledger with Auditor.
+
+:::note
+
+The port numbers in the following tables are the default values. If you have changed the default ports in your configuration, use your custom port numbers instead when you configure firewall rules.
+
+:::
+
+## ScalarDL Ledger–related connections
+
+If you're deploying ScalarDL Ledger, you must allow the following connections.
+
+| From                        | To                       | Port (default)      | Use case example                                       |
+|:----------------------------|:-------------------------|:--------------------|:-------------------------------------------------------|
+| Client (user applications)  | ScalarDL Ledger          | 50051/TCP           | Executing contracts/functions                          |
+| Client (user applications)  | ScalarDL Ledger          | 50052/TCP           | Registering certificates, secrets, etc.                |
+| Scalar Admin for Kubernetes | ScalarDL Ledger          | 50053/TCP           | Executing pause/unpause requests for backup operations |
+| Scalar Admin for Kubernetes | Kubernetes API server    | 443/TCP             | Getting pod, service, and deployment information       |
+| Client (monitoring tools)   | ScalarDL Ledger          | 8080/TCP            | Scraping metrics of ScalarDL Ledger                    |
+| ScalarDL Ledger             | Backend databases        | Depends on database | Reading/writing requests to backend databases          |
+| ScalarDL Ledger             | Cluster DNS (Kubernetes) | 53/UDP, 53/TCP      | Resolving hostname through DNS                         |
+
+<details id="envoy-related-connections">
+  <summary>Deprecated – Envoy-related connections</summary>
+
+:::caution
+
+Using Envoy in front of ScalarDL Ledger has been deprecated for performance reasons.
+
+:::
+
+If you use Envoy in front of ScalarDL Ledger, you must allow the following connections instead of the connections from the client to ScalarDL Ledger in the previous table.
+
+| From                        | To                          | Port (default) | Use case example                        |
+|:----------------------------|:----------------------------|:---------------|:----------------------------------------|
+| Client (user applications)  | Envoy (for ScalarDL Ledger) | 50051/TCP      | Executing contracts/functions           |
+| Envoy (for ScalarDL Ledger) | ScalarDL Ledger             | 50051/TCP      | Executing contracts/functions           |
+| Client (user applications)  | Envoy (for ScalarDL Ledger) | 50052/TCP      | Registering certificates, secrets, etc. |
+| Envoy (for ScalarDL Ledger) | ScalarDL Ledger             | 50052/TCP      | Registering certificates, secrets, etc. |
+
+In addition, if you use Envoy in front of ScalarDL Ledger, you must allow the following connections.
+
+| From                        | To                          | Port (default) | Use case example                         |
+|:----------------------------|:----------------------------|:---------------|:-----------------------------------------|
+| Client (monitoring tools)   | Envoy (for ScalarDL Ledger) | 9001/TCP       | Scraping metrics of Envoy                |
+| kubelet                     | Envoy (for ScalarDL Ledger) | 9001/TCP       | Executing Kubernetes health check probes |
+| Envoy (for ScalarDL Ledger) | Cluster DNS (Kubernetes)    | 53/UDP, 53/TCP | Resolving hostname through DNS           |
+
+</details>
+
+## ScalarDL Ledger–related and Auditor–related connections
+
+If you're deploying ScalarDL Ledger with Auditor, you must allow the following connections.
+
+| From                        | To                       | Port (default)      | Use case example                                                 |
+|:----------------------------|:-------------------------|:--------------------|:-----------------------------------------------------------------|
+| Client (user applications)  | ScalarDL Ledger          | 50051/TCP           | Executing contracts/functions                                    |
+| Client (user applications)  | ScalarDL Ledger          | 50052/TCP           | Registering certificates, secrets, etc.                          |
+| Scalar Admin for Kubernetes | ScalarDL Ledger          | 50053/TCP           | Executing pause/unpause requests for backup operations           |
+| Client (monitoring tools)   | ScalarDL Ledger          | 8080/TCP            | Scraping metrics of ScalarDL Ledger                              |
+| ScalarDL Ledger             | Backend databases        | Depends on database | Reading/writing requests to backend databases                    |
+| Client (user applications)  | ScalarDL Auditor         | 40051/TCP           | Executing contracts                                              |
+| Client (user applications)  | ScalarDL Auditor         | 40052/TCP           | Registering certificates, secrets, etc.                          |
+| Scalar Admin for Kubernetes | ScalarDL Auditor         | 40053/TCP           | Executing pause/unpause requests for backup operations           |
+| Client (monitoring tools)   | ScalarDL Auditor         | 8080/TCP            | Scraping metrics of ScalarDL Auditor                             |
+| ScalarDL Auditor            | Backend databases        | Depends on database | Reading/writing requests to backend databases                    |
+| ScalarDL Auditor            | ScalarDL Ledger          | 50051/TCP           | Recovering transactions                                          |
+| Scalar Admin for Kubernetes | Kubernetes API server    | 443/TCP             | Getting pod, service, and deployment information                 |
+| ScalarDL Ledger             | Cluster DNS (Kubernetes) | 53/UDP, 53/TCP      | Resolving hostname through DNS                                   |
+| ScalarDL Auditor            | Cluster DNS (Kubernetes) | 53/UDP, 53/TCP      | Resolving hostname through DNS                                   |
+
+### Certificate registration–related connections
+
+If you use `digital-signature` as the authentication method, you must register the ScalarDL Ledger certificate and the ScalarDL Auditor certificate with each other. To perform this registration, you must allow the following connections. For more details about authentication methods, see [ScalarDL Authentication Guide](./authentication.mdx).
+
+| From                                    | To               | Port (default) | Use case example         |
+|:----------------------------------------|:-----------------|:---------------|:-------------------------|
+| Client in Ledger administrative domain  | ScalarDL Ledger  | 50052/TCP      | Registering certificates |
+| Client in Ledger administrative domain  | ScalarDL Auditor | 40052/TCP      | Registering certificates |
+| Client in Auditor administrative domain | ScalarDL Ledger  | 50052/TCP      | Registering certificates |
+| Client in Auditor administrative domain | ScalarDL Auditor | 40052/TCP      | Registering certificates |
+
+<details>
+  <summary>Deprecated – Envoy-related connections for ScalarDL Ledger with Auditor</summary>
+
+:::caution
+
+Using Envoy in front of ScalarDL Ledger or ScalarDL Auditor has been deprecated for performance reasons.
+
+:::
+
+If you use Envoy in front of ScalarDL Ledger, you must allow the same connections described in [Envoy-related connections for Ledger](#envoy-related-connections) instead of the connections from the client to ScalarDL Ledger in the previous table.
+
+If you use Envoy in front of ScalarDL Auditor, you must allow the following connections instead of the connections from the client to ScalarDL Auditor in the previous table.
+
+| From                         | To                           | Port (default) | Use case example                        |
+|:-----------------------------|:-----------------------------|:---------------|:----------------------------------------|
+| Client (user applications)   | Envoy (for ScalarDL Auditor) | 40051/TCP      | Executing contracts                     |
+| Envoy (for ScalarDL Auditor) | ScalarDL Auditor             | 40051/TCP      | Executing contracts                     |
+| Client (user applications)   | Envoy (for ScalarDL Auditor) | 40052/TCP      | Registering certificates, secrets, etc. |
+| Envoy (for ScalarDL Auditor) | ScalarDL Auditor             | 40052/TCP      | Registering certificates, secrets, etc. |
+
+If you also use Envoy in front of ScalarDL Ledger, you must allow the following connection instead of the connection from ScalarDL Auditor to ScalarDL Ledger in the previous table.
+
+| From                        | To                          | Port (default) | Use case example        |
+|:----------------------------|:----------------------------|:---------------|:------------------------|
+| ScalarDL Auditor            | Envoy (for ScalarDL Ledger) | 50051/TCP      | Recovering transactions |
+| Envoy (for ScalarDL Ledger) | ScalarDL Ledger             | 50051/TCP      | Recovering transactions |
+
+In addition, if you use Envoy in front of both ScalarDL Ledger and Auditor, you must allow the following connections.
+
+| From                         | To                           | Port (default) | Use case example                         |
+|:-----------------------------|:-----------------------------|:---------------|:-----------------------------------------|
+| Client (monitoring tools)    | Envoy (for ScalarDL Auditor) | 9001/TCP       | Scraping metrics of Envoy                |
+| kubelet                      | Envoy (for ScalarDL Auditor) | 9001/TCP       | Executing Kubernetes health check probes |
+| Envoy (for ScalarDL Auditor) | Cluster DNS (Kubernetes)     | 53/UDP, 53/TCP | Resolving hostname through DNS           |
+
+</details>
