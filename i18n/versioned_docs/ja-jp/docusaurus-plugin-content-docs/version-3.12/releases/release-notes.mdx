@@ -13,6 +13,30 @@ import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
 
 このページには、ScalarDL 3.12 のリリースノートのリストが含まれています。
 
+## v3.12.5
+
+**発売日:** 2026年11月12日
+
+### まとめ
+
+このリリースには、いくつかの改善点、バグの修正、および脆弱性の修正が含まれています。詳細な変更については、以下を参照してください。
+
+### Community と Enterprise editions
+
+#### バグの修正
+
+- コンフリクトしたトランザクションによってコミットされていない状態で残されたアセットレコードを、Ledger がリカバリーしない問題を修正しました。 ([#694](https://github.com/scalar-labs/scalardl/pull/694))
+- [CVE-2025-59250](https://github.com/advisories/GHSA-m494-w24q-6f7w "CVE-2025-59250")、[CVE-2026-68497](https://github.com/advisories/GHSA-q4xh-88c3-wmh7 "CVE-2026-68497")、[CVE-2026-78667](https://github.com/advisories/GHSA-f4xw-m386-m277 "CVE-2026-78667")、CVE-2026-78669、[CVE-2026-89407](https://github.com/advisories/GHSA-p6pp-m3f8-5c89 "CVE-2026-89407")、[CVE-2026-89425](https://github.com/advisories/GHSA-7hhh-6rmp-j9qf "CVE-2026-89425")、[CVE-2026-91776](https://github.com/advisories/GHSA-wv8q-qhhj-9h54 "CVE-2026-91776")、[CVE-2026-91777](https://github.com/advisories/GHSA-cxp5-3px4-pw24 "CVE-2026-91777")、[CVE-2026-97031](https://github.com/advisories/GHSA-hq7w-2xrq-wp2j "CVE-2026-97031")、[CVE-2026-102554](https://github.com/advisories/GHSA-xxph-c9ww-hj94 "CVE-2026-102554")、[CVE-2026-111943](https://github.com/advisories/GHIS-6cqv-mx9q-x2j9 "CVE-2026-111943")、[CVE-2026-116587](https://github.com/advisories/GHSA-mgcc-cww5-fp2q "CVE-2026-116587") を修正しました。 ([#729](https://github.com/scalar-labs/scalardl/pull/729))
+- コンテナイメージの Java バージョンを、[CVE-2026-91403](https://github.com/advisories/GHSA-9h75-rf66-wh3r "CVE-2026-91403")、[CVE-2026-114820](https://github.com/advisories/GHSA-255q-pwv4-fjj7 "CVE-2026-114820") (eMudhra CA の侵害) を修正した OpenJDK リリースに更新しました。 ([#730](https://github.com/scalar-labs/scalardl/pull/730))
+- Bouncy Castle を 1.86 にアップグレードし、`jdk15on` アーティファクトはメンテナンスされなくなったため、`bcprov-jdk18on` および `bcpkix-jdk18on` アーティファクトに切り替えました。これにより、[CVE-2023-33201](https://github.com/advisories/GHSA-hr8g-6v94-x4m9 "CVE-2023-33201")、[CVE-2023-33202](https://github.com/advisories/GHSA-wjxj-5m7g-mg7q "CVE-2023-33202")、[CVE-2024-29857](https://github.com/advisories/GHSA-8xfc-gm6g-vgpv "CVE-2024-29857")、[CVE-2024-30171](https://github.com/advisories/GHSA-v435-xc8x-wvr9 "CVE-2024-30171")、[CVE-2024-34447](https://github.com/advisories/GHSA-4h8f-2wvx-gg5w "CVE-2024-34447")、[CVE-2025-8916](https://github.com/advisories/GHSA-4cx2-fc23-5wg6 "CVE-2025-8916")、[CVE-2025-14813](https://github.com/advisories/GHSA-574f-3g2m-x479 "CVE-2025-14813")、[CVE-2026-0636](https://github.com/advisories/GHSA-c3fc-8qff-9hwx "CVE-2026-0636")、[CVE-2026-5588](https://github.com/advisories/GHSA-wg6q-6289-32hp "CVE-2026-5588")、[CVE-2026-5598](https://github.com/advisories/GHSA-p93r-85wp-75v3 "CVE-2026-5598")、[CVE-2026-8763](https://github.com/advisories/GHSA-9pwp-9qqc-pr26 "CVE-2026-8763")、[CVE-2026-13506](https://github.com/advisories/GHSA-qp49-qgx5-5m26 "CVE-2026-13506") が修正されます。 ([#741](https://github.com/scalar-labs/scalardl/pull/741))
+- ScalarDB を 3.16.9 にアップグレードしました。これにより、修正済みバージョンの Netty と Micrometer が ScalarDL に適用され、[CVE-2026-40983](https://github.com/advisories/GHSA-w737-wx49-qj23 "CVE-2026-40983")、[CVE-2026-40984](https://github.com/advisories/GHSA-g3pr-3p32-fp23 "CVE-2026-40984")、[CVE-2026-75595](https://github.com/advisories/GHSA-c4c3-7fpv-j4q5 "CVE-2026-75595") が修正されます。 ([#758](https://github.com/scalar-labs/scalardl/pull/758))
+
+### Enterprise edition
+
+#### 改善点
+
+- Auditor に、Ledger への接続を確認する起動時チェックを追加しました。`scalar.dl.auditor.ledger.startup_check_timeout_secs` (デフォルトでは240秒) 以内に Ledger に到達できない場合、Auditor は起動に失敗します。このチェックを無効にするには、プロパティを `0` に設定します。
+
 ## v3.12.4
 
 **発売日:** 2026年09月08日
