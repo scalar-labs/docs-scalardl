@@ -1,0 +1,131 @@
+---
+tags:
+  - Community
+  - Enterprise
+displayed_sidebar: docsJapanese
+---
+
+# ネットワーク要件
+
+import TranslationBanner from '/src/components/_translation-ja-jp.mdx';
+
+<TranslationBanner />
+
+ScalarDL をデプロイする前に、通常はファイアウォールルールを設定して、クライアント、ScalarDL コンポーネント、および関連する Scalar 製品間で必要なネットワークトラフィックが許可されるようにする必要があります。このページでは、ScalarDL Ledger のみ、および ScalarDL Ledger と Auditor の組み合わせという2つの一般的なデプロイメントパターンについて、各接続の方向、デフォルトポート、ユースケースを含め、許可する必要がある接続を一覧で示します。
+
+:::note
+
+以下の表のポート番号はデフォルト値です。設定でデフォルトのポートを変更した場合は、ファイアウォールルールを設定する際にカスタムポート番号を使用してください。
+
+:::
+
+## ScalarDL Ledger 関連の接続
+
+ScalarDL Ledger をデプロイする場合は、以下の接続を許可する必要があります。
+
+| 送信元                             | 宛先                     | ポート (デフォルト) | ユースケースの例                                        |
+|:----------------------------------|:-------------------------|:-----------------|:----------------------------------------------------|
+| クライアント (ユーザーアプリケーション) | ScalarDL Ledger          | 50051/TCP        | Contract/Function の実行                             |
+| クライアント (ユーザーアプリケーション) | ScalarDL Ledger          | 50052/TCP        | 証明書、シークレットなどの登録、および名前空間の管理         |
+| Scalar Admin for Kubernetes       | ScalarDL Ledger          | 50053/TCP        | バックアップ操作のための一時停止/一時停止解除リクエストの実行 |
+| Scalar Admin for Kubernetes       | Kubernetes API server    | 443/TCP          | Pod、Service、Deployment 情報の取得                   |
+| クライアント (監視ツール)             | ScalarDL Ledger          | 8080/TCP         | ScalarDL Ledger のメトリクスのスクレイピング            |
+| ScalarDL Ledger                   | バックエンドデータベース     | データベースに依存   | バックエンドデータベースへの読み取り/書き込みリクエスト      |
+| ScalarDL Ledger                   | Cluster DNS (Kubernetes) | 53/UDP, 53/TCP   | DNS によるホスト名の解決                               |
+
+<details id="envoy-related-connections">
+  <summary>非推奨 – Envoy 関連の接続</summary>
+
+:::caution
+
+パフォーマンス上の理由から、ScalarDL Ledger の前に Envoy を使用することは非推奨になりました。
+
+:::
+
+ScalarDL Ledger の前に Envoy を使用する場合は、前の表のクライアントから ScalarDL Ledger への接続の代わりに、以下の接続を許可する必要があります。
+
+| 送信元                             | 宛先                       | ポート (デフォルト) | ユースケースの例                               |
+|:----------------------------------|:--------------------------|:-----------------|:--------------------------------------------|
+| クライアント (ユーザーアプリケーション) | Envoy (ScalarDL Ledger 用) | 50051/TCP        | Contract/Function の実行                     |
+| Envoy (ScalarDL Ledger 用)        | ScalarDL Ledger            | 50051/TCP        | Contract/Function の実行                     |
+| クライアント (ユーザーアプリケーション) | Envoy (ScalarDL Ledger 用) | 50052/TCP        | 証明書、シークレットなどの登録、および名前空間の管理 |
+| Envoy (ScalarDL Ledger 用)        | ScalarDL Ledger            | 50052/TCP        | 証明書、シークレットなどの登録、および名前空間の管理 |
+
+また、ScalarDL Ledger の前に Envoy を使用する場合は、以下の接続も許可する必要があります。
+
+| 送信元                     | 宛先                       | ポート (デフォルト) | ユースケースの例                      |
+|:--------------------------|:---------------------------|:----------------|:-----------------------------------|
+| クライアント (監視ツール)     | Envoy (ScalarDL Ledger 用) | 9001/TCP        | Envoy のメトリクスのスクレイピング      |
+| kubelet                   | Envoy (ScalarDL Ledger 用) | 9001/TCP        | Kubernetes ヘルスチェックプローブの実行 |
+| Envoy (ScalarDL Ledger 用) | Cluster DNS (Kubernetes)  | 53/UDP, 53/TCP  | DNS によるホスト名の解決               |
+
+</details>
+
+## ScalarDL Ledger 関連および Auditor 関連の接続
+
+ScalarDL Ledger と Auditor を組み合わせてデプロイする場合は、以下の接続を許可する必要があります。
+
+| 送信元                             | 宛先                     | ポート (デフォルト) | ユースケースの例                                        |
+|:----------------------------------|:-------------------------|:-----------------|:----------------------------------------------------|
+| クライアント (ユーザーアプリケーション) | ScalarDL Ledger          | 50051/TCP        | Contract/Function の実行                             |
+| クライアント (ユーザーアプリケーション) | ScalarDL Ledger          | 50052/TCP        | 証明書、シークレットなどの登録、および名前空間の管理         |
+| Scalar Admin for Kubernetes       | ScalarDL Ledger          | 50053/TCP        | バックアップ操作のための一時停止/一時停止解除リクエストの実行 |
+| クライアント (監視ツール)             | ScalarDL Ledger          | 8080/TCP         | ScalarDL Ledger のメトリクスのスクレイピング            |
+| ScalarDL Ledger                   | バックエンドデータベース     | データベースに依存   | バックエンドデータベースへの読み取り/書き込みリクエスト      |
+| クライアント (ユーザーアプリケーション) | ScalarDL Auditor         | 40051/TCP        | Contract の実行                                      |
+| クライアント (ユーザーアプリケーション) | ScalarDL Auditor         | 40052/TCP        | 証明書、シークレットなどの登録、および名前空間の管理         |
+| Scalar Admin for Kubernetes       | ScalarDL Auditor         | 40053/TCP        | バックアップ操作のための一時停止/一時停止解除リクエストの実行 |
+| クライアント (監視ツール)             | ScalarDL Auditor         | 8080/TCP         | ScalarDL Auditor のメトリクスのスクレイピング           |
+| ScalarDL Auditor                  | バックエンドデータベース     | データベースに依存   | バックエンドデータベースへの読み取り/書き込みリクエスト      |
+| ScalarDL Auditor                  | ScalarDL Ledger          | 50051/TCP        | トランザクションの復旧とトランザクション状態のパージ         |
+| Scalar Admin for Kubernetes       | Kubernetes API server    | 443/TCP          | Pod、Service、Deployment 情報の取得                   |
+| ScalarDL Ledger                   | Cluster DNS (Kubernetes) | 53/UDP, 53/TCP   | DNS によるホスト名の解決                               |
+| ScalarDL Auditor                  | Cluster DNS (Kubernetes) | 53/UDP, 53/TCP   | DNS によるホスト名の解決                               |
+
+### 証明書登録関連の接続
+
+認証方式として `digital-signature` を使用する場合は、ScalarDL Ledger の証明書と ScalarDL Auditor の証明書をそれぞれに登録する必要があります。この登録を行うには、以下の接続を許可する必要があります。認証方式の詳細については、[ScalarDL 認証ガイド](./authentication.mdx)を参照してください。
+
+| 送信元                         | 宛先              | ポート (デフォルト) | ユースケースの例 |
+|:------------------------------|:-----------------|:-----------------|:--------------|
+| Ledger 管理ドメインのクライアント  | ScalarDL Ledger  | 50052/TCP       | 証明書の登録     |
+| Ledger 管理ドメインのクライアント  | ScalarDL Auditor | 40052/TCP       | 証明書の登録     |
+| Auditor 管理ドメインのクライアント | ScalarDL Ledger  | 50052/TCP       | 証明書の登録     |
+| Auditor 管理ドメインのクライアント | ScalarDL Auditor | 40052/TCP       | 証明書の登録     |
+
+<details>
+  <summary>非推奨 – ScalarDL Ledger と Auditor 使用時の Envoy 関連の接続</summary>
+
+:::caution
+
+パフォーマンス上の理由から、ScalarDL Ledger または ScalarDL Auditor の前に Envoy を使用することは非推奨になりました。
+
+:::
+
+ScalarDL Ledger の前に Envoy を使用する場合は、前の表のクライアントから ScalarDL Ledger への接続の代わりに、[Ledger 用の Envoy 関連の接続](#envoy-related-connections)で説明した接続を許可する必要があります。
+
+ScalarDL Auditor の前に Envoy を使用する場合は、前の表のクライアントから ScalarDL Auditor への接続の代わりに、以下の接続を許可する必要があります。
+
+| 送信元                             | 宛先                         | ポート (デフォルト) | ユースケースの例                               |
+|:----------------------------------|:----------------------------|:-----------------|:---------------------------------------------|
+| クライアント (ユーザーアプリケーション) | Envoy (ScalarDL Auditor 用) | 40051/TCP         | Contract の実行                              |
+| Envoy (ScalarDL Auditor 用)       | ScalarDL Auditor            | 40051/TCP         | Contract の実行                              |
+| クライアント (ユーザーアプリケーション) | Envoy (ScalarDL Auditor 用) | 40052/TCP         | 証明書、シークレットなどの登録、および名前空間の管理 |
+| Envoy (ScalarDL Auditor 用)       | ScalarDL Auditor            | 40052/TCP        | 証明書、シークレットなどの登録、および名前空間の管理  |
+
+また、ScalarDL Ledger の前に Envoy を使用する場合は、前の表の ScalarDL Auditor から ScalarDL Ledger への接続の代わりに、以下の接続を許可する必要があります。
+
+| 送信元                      | 宛先                       | ポート (デフォルト) | ユースケースの例                               |
+|:---------------------------|:---------------------------|:-----------------|:--------------------------------------------|
+| ScalarDL Auditor           | Envoy (ScalarDL Ledger 用) | 50051/TCP        | トランザクションの復旧とトランザクション状態のパージ |
+| Envoy (ScalarDL Ledger 用) | ScalarDL Ledger            | 50051/TCP       | トランザクションの復旧とトランザクション状態のパージ  |
+
+加えて、ScalarDL Ledger と Auditor の両方の前に Envoy を使用する場合は、以下の接続も許可する必要があります。
+
+| 送信元                       | 宛先                        | ポート (デフォルト) | ユースケースの例                       |
+|:----------------------------|:----------------------------|:-----------------|:-----------------------------------|
+| クライアント (監視ツール)       | Envoy (ScalarDL Auditor 用) | 9001/TCP         | Envoy のメトリクスのスクレイピング      |
+| kubelet                     | Envoy (ScalarDL Auditor 用) | 9001/TCP         | Kubernetes ヘルスチェックプローブの実行 |
+| Envoy (ScalarDL Auditor 用) | Cluster DNS (Kubernetes)    | 53/UDP, 53/TCP   | DNS によるホスト名の解決               |
+
+</details>
