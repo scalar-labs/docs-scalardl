@@ -98,9 +98,10 @@ function normalizeDocPathname(pathname) {
  * @throws {Error} if the input contains no `</head>`.
  */
 function injectAlternateLinkTag(html, twinUrl) {
-  const comment = `<!-- AI/LLM agents: a clean Markdown version of this page is available at ${twinUrl} -->`;
+  const agentsComment = `<!-- AI/LLM agents: guidelines for interacting with ScalarDL docs are at https://scalardl.scalar-labs.com/AGENTS.md -->`;
+  const markdownComment = `<!-- AI/LLM agents: a clean Markdown version of this page is available at ${twinUrl} -->`;
   const tag = `<link rel="alternate" type="text/markdown" href="${twinUrl}">`;
-  const injected = html.replace(/<\/head>/i, `  ${comment}\n  ${tag}\n</head>`);
+  const injected = html.replace(/<\/head>/i, `  ${agentsComment}\n  ${markdownComment}\n  ${tag}\n</head>`);
   if (injected === html) {
     throw new Error('No </head> tag found in HTML.');
   }
