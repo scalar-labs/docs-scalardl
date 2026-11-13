@@ -1043,6 +1043,11 @@ const sidebars = {
           items: [
             {
               type: 'doc',
+              id: 'network-requirements',
+              label: 'ネットワーク要件 [NEW]'
+            },
+            {
+              type: 'doc',
               id: 'scalar-kubernetes/ProductionChecklistForScalarDLLedger',
               label: 'ScalarDL Ledger の本番環境チェックリスト',
             },
