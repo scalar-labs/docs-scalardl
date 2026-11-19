@@ -208,7 +208,7 @@ Verify that the Auditor settings in the client and Ledger configurations are con
 **対処法**
 
 ```markdown
-Verify that the Auditor settings in the client and Ledger configurations are consistent.
+Enable the Auditor in the configuration.
 ```
 
 ### `DL-LEDGER-407005`
@@ -250,7 +250,7 @@ The specified asset is not found.
 **対処法**
 
 ```markdown
-Verify the asset ID and namespace are correct and the asset has been created.
+Verify that the asset ID and namespace are correct and that the asset has been created.
 ```
 
 ### `DL-LEDGER-410001`
@@ -292,7 +292,7 @@ The Function is not allowed to access the specified namespace.
 **対処法**
 
 ```markdown
-Function cannot access system namespaces or namespaces with reserved prefixes. Disallowed namespaces: system, system_schema, system_auth, system_distributed, system_traces, coordinator. Disallowed namespace prefixes: scalar, auditor. Use a different namespace for your Function operations.
+Functions cannot access system namespaces or namespaces with reserved prefixes. Disallowed namespaces: system, system_schema, system_auth, system_distributed, system_traces, coordinator. Disallowed namespace prefixes: scalar, auditor. Use a different namespace for your Function operations.
 ```
 
 ### `DL-LEDGER-412002`
@@ -438,6 +438,20 @@ Set the group commit configuration property to false as it is not supported.
 ## `DL-LEDGER-5xxxx` ステータスコード
 
 以下は、内部エラーカテゴリのステータスコードとメッセージです。
+
+### `DL-LEDGER-414009`
+
+**メッセージ**
+
+```markdown
+The transaction manager '%s' is not supported. The supported transaction managers are: %s.
+```
+
+**対処法**
+
+```markdown
+Set the transaction manager configuration property to one of the supported values.
+```
 
 ### `DL-LEDGER-500001`
 
