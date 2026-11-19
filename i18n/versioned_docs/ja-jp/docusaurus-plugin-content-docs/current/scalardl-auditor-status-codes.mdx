@@ -38,6 +38,20 @@ The nonce has already been used.
 Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
 ```
 
+### `DL-AUDITOR-304002`
+
+**メッセージ**
+
+```markdown
+The specified nonce cannot be stored as a lock owner because it is missing, empty, or contains a comma. Such a nonce should have been rejected by the validation performed when the request was received.
+```
+
+**対処法**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ### `DL-AUDITOR-305001`
 
 **メッセージ**
@@ -221,7 +235,7 @@ Transaction state purge is disabled.
 **対処法**
 
 ```markdown
-Set 'scalar.dl.auditor.transaction_state_purge.enabled' to true in the Auditor configuration (for example, auditor.properties) and restart the Auditor to allow purge.
+Set 'scalar.dl.auditor.transaction_state_purge.enabled' to true in the Auditor configuration (for example, auditor.properties) and restart Auditor to allow purge.
 ```
 
 ### `DL-AUDITOR-409001`
@@ -249,7 +263,7 @@ Verify the asset ID and namespace are correct and the asset has been created.
 **対処法**
 
 ```markdown
-Set 'scalar.dl.auditor.authentication.hmac.cipher_key' in the Auditor configuration file (e.g., auditor.properties). Use an unpredictable and long value for security.
+Set 'scalar.dl.auditor.authentication.hmac.cipher_key' in the Auditor configuration file (for example, auditor.properties). Use an unpredictable and long value for security.
 ```
 
 ### `DL-AUDITOR-414002`
@@ -291,7 +305,7 @@ Transaction state purge is enabled, but the request proof table schema is too ol
 **対処法**
 
 ```markdown
-Upgrade the request proof table schema to the version that supports transaction state purge and restart the Auditor. Alternatively, disable transaction state purge by setting 'scalar.dl.auditor.transaction_state_purge.enabled' to false in the Auditor configuration (for example, auditor.properties).
+Upgrade the request proof table schema to the version that supports transaction state purge and restart Auditor. Alternatively, disable transaction state purge by setting 'scalar.dl.auditor.transaction_state_purge.enabled' to false in the Auditor configuration (for example, auditor.properties).
 ```
 
 ## `DL-AUDITOR-5xxxx` ステータスコード
@@ -422,6 +436,20 @@ Calling Ledger failed. Status code: %s; Details: %s
 
 ```markdown
 Ledger may be temporarily unavailable. Check the error details in the logs, the availability of Ledger, and the connection and authentication settings between Ledger and Auditor.
+```
+
+### `DL-AUDITOR-503002`
+
+**メッセージ**
+
+```markdown
+Checking the connection to Ledger failed within the startup check timeout. Ledger: %s:%d; Timeout: %d seconds; Details: %s
+```
+
+**対処法**
+
+```markdown
+Check the connection settings to Ledger (e.g., scalar.dl.auditor.ledger.host and scalar.dl.auditor.ledger.port) and the availability of Ledger. Auditor requires Ledger to be reachable at startup.
 ```
 
 ### `DL-AUDITOR-504001`
