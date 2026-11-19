@@ -134,7 +134,7 @@ The request signature can't be validated.
 **Solution**
 
 ```markdown
-Verify that the certificate used to sign the request is registered and valid.
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
 ```
 
 ### `DL-LEDGER-400002`
@@ -148,7 +148,7 @@ The request signature from Auditor can't be validated.
 **Solution**
 
 ```markdown
-Verify that the certificate used by Auditor is registered and valid.
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
 ```
 
 ### `DL-LEDGER-407001`
@@ -218,7 +218,7 @@ The specified asset is not found.
 **Solution**
 
 ```markdown
-Verify the asset ID and namespace are correct and the asset has been created.
+Verify the asset ID is correct and the asset has been created.
 ```
 
 ### `DL-LEDGER-410001`
@@ -232,7 +232,7 @@ The specified function is not found.
 **Solution**
 
 ```markdown
-Register the function first before executing it.
+Verify the function name is correct and the function has been bound.
 ```
 
 ### `DL-LEDGER-411001`
@@ -246,7 +246,7 @@ Loading the function failed. Details: %s
 **Solution**
 
 ```markdown
-Check the error details and verify that the function class is valid and accessible.
+Check the error details in the logs and verify your function configuration and implementation.
 ```
 
 ### `DL-LEDGER-412001`
@@ -260,7 +260,7 @@ The function is not allowed to access the specified namespace.
 **Solution**
 
 ```markdown
-Functions cannot access system namespaces or namespaces with reserved prefixes. Disallowed namespaces: system, system_schema, system_auth, system_distributed, system_traces, coordinator. Disallowed namespace prefixes: scalar, auditor. Use a different namespace for your function operations.
+Functions cannot access system namespaces (system, system_schema, system_auth, system_distributed, system_traces, scalar, coordinator). Use a different namespace for your function operations.
 ```
 
 ### `DL-LEDGER-412002`
@@ -310,7 +310,7 @@ Set the proof configuration property to true when Auditor is enabled.
 **Message**
 
 ```markdown
-Authentication between Ledger and Auditor is not correctly configured. Set %s or set a private key with %s or %s.
+Authentication between Ledger and Auditor is not correctly configured. Set a private key with %s or %s if you use digital signature authentication with Auditor enabled.
 ```
 
 **Solution**
@@ -387,6 +387,20 @@ Set the transaction state management configuration property to false when using 
 
 ```markdown
 Set the group commit configuration property to false as it is not supported.
+```
+
+### `DL-LEDGER-414009`
+
+**Message**
+
+```markdown
+The transaction manager '%s' is not supported. The supported transaction managers are: %s.
+```
+
+**Solution**
+
+```markdown
+Set the transaction manager configuration property to one of the supported values.
 ```
 
 ## `DL-LEDGER-5xxxx` status codes
@@ -572,7 +586,7 @@ The function type or instance is not supported.
 **Solution**
 
 ```markdown
-Check the error details in the logs and verify that the function type is supported.
+Verify the function type and instance are correct and supported.
 ```
 
 ### `DL-LEDGER-504001`
