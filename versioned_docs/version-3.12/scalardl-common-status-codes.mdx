@@ -506,7 +506,7 @@ Set the secret version to a value greater than zero.
 **Message**
 
 ```markdown
-The grpc deadline duration must be greater than or equal to zero.
+The gRPC deadline duration must be greater than or equal to zero.
 ```
 
 **Solution**
@@ -520,7 +520,7 @@ Set the gRPC deadline duration to a value greater than or equal to zero in your 
 **Message**
 
 ```markdown
-The grpc max inbound message size must be greater than or equal to zero.
+The gRPC max inbound message size must be greater than or equal to zero.
 ```
 
 **Solution**
@@ -534,7 +534,7 @@ Set the gRPC max inbound message size to a value greater than or equal to zero i
 **Message**
 
 ```markdown
-The grpc max inbound metadata size must be greater than or equal to zero.
+The gRPC max inbound metadata size must be greater than or equal to zero.
 ```
 
 **Solution**
@@ -583,6 +583,20 @@ The deserialization type is not supported. Type: %s
 
 ```markdown
 Use a supported deserialization type. Check the documentation for valid types.
+```
+
+### `DL-COMMON-414022`
+
+**Message**
+
+```markdown
+The format of the nonce is invalid. Nonce: %s
+```
+
+**Solution**
+
+```markdown
+Specify the nonce in the canonical UUID format.
 ```
 
 ### `DL-COMMON-415001`
