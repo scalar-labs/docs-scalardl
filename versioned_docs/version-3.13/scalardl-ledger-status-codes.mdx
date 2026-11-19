@@ -204,7 +204,7 @@ Verify that the Auditor settings in the client and Ledger configurations are con
 **Solution**
 
 ```markdown
-Verify that the Auditor settings in the client and Ledger configurations are consistent.
+Enable the Auditor in the configuration.
 ```
 
 ### `DL-LEDGER-407005`
@@ -246,7 +246,7 @@ The specified asset is not found.
 **Solution**
 
 ```markdown
-Verify the asset ID and namespace are correct and the asset has been created.
+Verify that the asset ID and namespace are correct and that the asset has been created.
 ```
 
 ### `DL-LEDGER-410001`
@@ -434,6 +434,20 @@ Set the group commit configuration property to false as it is not supported.
 ## `DL-LEDGER-5xxxx` status codes
 
 The following are status codes and messages for the internal error category.
+
+### `DL-LEDGER-414009`
+
+**Message**
+
+```markdown
+The transaction manager '%s' is not supported. The supported transaction managers are: %s.
+```
+
+**Solution**
+
+```markdown
+Set the transaction manager configuration property to one of the supported values.
+```
 
 ### `DL-LEDGER-500001`
 

@@ -34,6 +34,20 @@ The nonce has already been used.
 Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
 ```
 
+### `DL-AUDITOR-304002`
+
+**Message**
+
+```markdown
+The specified nonce cannot be stored as a lock owner because it is missing, empty, or contains a comma. Such a nonce should have been rejected by the validation performed when the request was received.
+```
+
+**Solution**
+
+```markdown
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
+```
+
 ### `DL-AUDITOR-305001`
 
 **Message**
@@ -334,6 +348,34 @@ Getting the asset lock failed. Namespace: %s; Asset ID: %s; Details: %s
 
 ```markdown
 Check the error details in the logs and verify your database configuration and connection.
+```
+
+### `DL-AUDITOR-503001`
+
+**Message**
+
+```markdown
+Calling Ledger failed. Status code: %s; Details: %s
+```
+
+**Solution**
+
+```markdown
+Ledger may be temporarily unavailable. Check the error details in the logs, the availability of Ledger, and the connection and authentication settings between Ledger and Auditor.
+```
+
+### `DL-AUDITOR-503002`
+
+**Message**
+
+```markdown
+Checking the connection to Ledger failed within the startup check timeout. Ledger: %s:%d; Timeout: %d seconds; Details: %s
+```
+
+**Solution**
+
+```markdown
+Check the connection settings to Ledger (e.g., scalar.dl.auditor.ledger.host and scalar.dl.auditor.ledger.port) and the availability of Ledger. Auditor requires Ledger to be reachable at startup.
 ```
 
 ### `DL-AUDITOR-504001`
