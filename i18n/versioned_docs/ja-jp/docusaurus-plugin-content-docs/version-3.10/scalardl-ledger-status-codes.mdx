@@ -138,7 +138,7 @@ The request signature can't be validated.
 **対処法**
 
 ```markdown
-Verify that the certificate used to sign the request is registered and valid.
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
 ```
 
 ### `DL-LEDGER-400002`
@@ -152,7 +152,7 @@ The request signature from Auditor can't be validated.
 **対処法**
 
 ```markdown
-Verify that the certificate used by Auditor is registered and valid.
+Data or program tampering, or a software bug, may have occurred. Contact your system administrator to check for any signs of malicious activity.
 ```
 
 ### `DL-LEDGER-407001`
@@ -236,7 +236,7 @@ The specified function is not found.
 **対処法**
 
 ```markdown
-Register the function first before executing it.
+Verify the function name is correct and the function has been bound.
 ```
 
 ### `DL-LEDGER-411001`
@@ -250,7 +250,7 @@ Loading the function failed. Details: %s
 **対処法**
 
 ```markdown
-Check the error details and verify that the function class is valid and accessible.
+Check the error details in the logs and verify your function configuration and implementation.
 ```
 
 ### `DL-LEDGER-412001`
@@ -314,7 +314,7 @@ Set the proof configuration property to true when Auditor is enabled.
 **メッセージ**
 
 ```markdown
-Authentication between Ledger and Auditor is not correctly configured. Set %s or set a private key with %s or %s.
+Authentication between Ledger and Auditor is not correctly configured. Set a private key with %s or %s if you use digital signature authentication with Auditor enabled.
 ```
 
 **対処法**
@@ -391,6 +391,20 @@ Set the transaction state management configuration property to false when using 
 
 ```markdown
 Set the group commit configuration property to false as it is not supported.
+```
+
+### `DL-LEDGER-414009`
+
+**メッセージ**
+
+```markdown
+The transaction manager '%s' is not supported. The supported transaction managers are: %s.
+```
+
+**対処法**
+
+```markdown
+Set the transaction manager configuration property to one of the supported values.
 ```
 
 ## `DL-LEDGER-5xxxx` ステータスコード
@@ -576,7 +590,7 @@ The function type or instance is not supported.
 **対処法**
 
 ```markdown
-Check the error details in the logs and verify that the function type is supported.
+Verify the function type and instance are correct and supported.
 ```
 
 ### `DL-LEDGER-504001`

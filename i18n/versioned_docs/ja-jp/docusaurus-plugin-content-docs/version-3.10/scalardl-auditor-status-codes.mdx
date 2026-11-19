@@ -221,7 +221,7 @@ The specified asset is not found.
 **対処法**
 
 ```markdown
-Verify the asset ID and namespace are correct and the asset has been created.
+Verify the asset ID is correct and the asset has been created.
 ```
 
 ### `DL-AUDITOR-414001`
@@ -338,6 +338,20 @@ Getting the asset lock for %s failed. Details: %s
 
 ```markdown
 Check the error details in the logs and verify your database configuration and connection.
+```
+
+### `DL-AUDITOR-503001`
+
+**メッセージ**
+
+```markdown
+Calling Ledger failed. Status code: %s; Details: %s
+```
+
+**対処法**
+
+```markdown
+Ledger may be temporarily unavailable. Check the error details in the logs, the availability of Ledger, and the connection and authentication settings between Ledger and Auditor.
 ```
 
 ### `DL-AUDITOR-504001`
