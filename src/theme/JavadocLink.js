@@ -10,10 +10,6 @@ export default function JavadocLink({ packageName, path, className }) {
   const docsClassName =
     siteConfig.presets?.[0]?.[1]?.docs?.versions?.[activeVersion.name]?.className;
 
-  // Log for debugging
-  console.log('Active Version:', activeVersion?.name);
-  console.log('Docs ClassName:', docsClassName);
-
   // The link in the <a> code below is generated based on the following JavadocLink component that must be added in place of a static Javadoc link in the doc:
   // <JavadocLink packageName="<PACKAGE_NAME>" path="<PATH>" className="<CLASS_NAME>" />
   // In addition, be sure to add the following below the title to import the component:
