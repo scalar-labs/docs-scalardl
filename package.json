@@ -5,7 +5,7 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
-    "build": "docusaurus build 2>&1 | tee brokenLinks.log && node scripts/filter-broken-link-warnings.js && node scripts/generate-glossary-json.js && npm run generate-llms-full",
+    "build": "docusaurus build > brokenLinks.log 2>&1 || { cat brokenLinks.log; exit 1; } && cat brokenLinks.log && node scripts/filter-broken-link-warnings.js && node scripts/generate-glossary-json.js && npm run generate-llms-full",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
