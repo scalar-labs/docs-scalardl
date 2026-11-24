@@ -5,7 +5,7 @@
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
 import {themes as prismThemes} from 'prism-react-renderer';
-import { getNotifications } from './src/data/notifications';
+import { getNotifications } from './src/data/notifications.js';
 import fs from 'fs';
 import path from 'path';
 import { execFileSync } from 'child_process';
